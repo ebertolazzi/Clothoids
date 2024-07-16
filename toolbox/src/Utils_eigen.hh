@@ -28,14 +28,21 @@
 #define UTILS_EIGEN_dot_HH
 
 #include "Utils.hh"
+#include "Utils_fmt.hh"
 
 #ifdef __clang__
-  #pragma clang diagnostic push
   #pragma clang diagnostic ignored "-Wdeprecated-copy-with-dtor"
+  #pragma clang diagnostic ignored "-Wdocumentation-unknown-command"
+  #pragma clang diagnostic ignored "-Wold-style-cast"
+  #pragma clang diagnostic ignored "-Wmissing-noreturn"
+  #pragma clang diagnostic ignored "-Wzero-as-null-pointer-constant"
+  #pragma clang diagnostic ignored "-Wused-but-marked-unused"
+  #pragma clang diagnostic ignored "-Wglobal-constructors"
+  #pragma clang diagnostic ignored "-Wextra-semi"
+  #pragma clang diagnostic ignored "-Wunused-template"
 #endif
 
 #ifdef _MSC_VER
-  #pragma warning( push )
   #pragma warning( disable : 4127 )
 #endif
 
@@ -64,14 +71,6 @@ namespace fmt {
   template <typename EXPR>
   struct formatter<Eigen::WithFormat<EXPR>> : ostream_formatter {};
 }
-
-#ifdef __clang__
-  #pragma clang diagnostic pop
-#endif
-
-#ifdef _MSC_VER
-  #pragma warning( pop )
-#endif
 
 #endif
 

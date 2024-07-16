@@ -1,4 +1,8 @@
-require_relative "./cmake_utils/Rakefile_common.rb"
+if File.exist?(File.expand_path('./cmake_utils/Rakefile_common.rb', File.dirname(__FILE__))) then
+  require_relative "./cmake_utils/Rakefile_common.rb"
+else
+  require_relative "../Rakefile_common.rb"
+end
 
 CLEAN.include   ["./**/*.o", "./**/*.obj", "./bin/**/example*", "./build"]
 CLEAN.clear_exclude.exclude { |fn| fn.pathmap("%f").downcase == "core" }

@@ -18,7 +18,7 @@
 \*--------------------------------------------------------------------------*/
 
 ///
-/// eof: ThreadUtils.hxx
+/// file: ThreadUtils.hxx
 ///
 
 namespace Utils {
@@ -42,31 +42,11 @@ namespace Utils {
 
   public:
 
-    WinMutex() : m_mutex(NULL) {
-      m_mutex = CreateMutex(
-        NULL,  // no security descriptor
-        FALSE, // mutex not owned
-        NULL   // object name
-      );
-      UTILS_ASSERT(
-        m_mutex != NULL,
-        "WinMutex(): error: {}.\n", GetLastError()
-      );
-    }
-
+    WinMutex();
     ~WinMutex() { CloseHandle(m_mutex); }
 
-    void
-    lock() {
-    	DWORD res = WaitForSingleObject(m_mutex, INFINITE);
-      UTILS_ASSERT0( res == WAIT_OBJECT_0, "WinMutex::lock, WAIT_TIMEOUT" );
-    }
-
-    void
-    unlock() {
-    	DWORD res = ReleaseMutex(m_mutex);
-      UTILS_ASSERT0( res == WAIT_OBJECT_0, "WinMutex::lock, WAIT_TIMEOUT" );
-    }
+    void lock();
+    void unlock();
 
   };
 

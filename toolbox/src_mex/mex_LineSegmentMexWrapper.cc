@@ -22,6 +22,7 @@
 #endif
 
 #include "Clothoids.hh"
+#include "Clothoids_fmt.hh"
 #include "Utils_mex.hh"
 #include "mex_info.hxx"
 
@@ -98,7 +99,7 @@ namespace G2lib {
     );
     #undef CMD
 
-    LineSegment * ptr = new LineSegment();
+    LineSegment * ptr = new LineSegment("line segment");
     arg_out_0 = Utils::mex_convert_ptr_to_mx<LineSegment>(ptr);
 
     if ( nrhs == 5 ) {

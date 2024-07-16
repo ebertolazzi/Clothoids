@@ -22,6 +22,7 @@
 #endif
 
 #include "Clothoids.hh"
+#include "Clothoids_fmt.hh"
 #include "Utils_mex.hh"
 #include "mex_info.hxx"
 
@@ -261,7 +262,7 @@ namespace G2lib {
 
     mwSize size = nrx*ncx;
     for ( mwSize i = 0; i < size; ++i )
-      *dst++ = ptr->distMin( *x++, *y++ );
+      *dst++ = ptr->dist_min( *x++, *y++ );
 
     #undef CMD
   }
@@ -300,7 +301,7 @@ namespace G2lib {
 
     mwSize size = nrx*ncx;
     for ( mwSize i = 0; i < size; ++i )
-      *dst++ = ptr->distMax( *x++, *y++ );
+      *dst++ = ptr->dist_max( *x++, *y++ );
 
     #undef CMD
   }
@@ -339,7 +340,7 @@ namespace G2lib {
 
     mwSize size = nrx*ncx;
     for ( mwSize i = 0; i < size; ++i )
-      *icode++ = int64_t(ptr->isInside( *x++, *y++ ));
+      *icode++ = int64_t(ptr->is_inside( *x++, *y++ ));
 
     #undef CMD
   }

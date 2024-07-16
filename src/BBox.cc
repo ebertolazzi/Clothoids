@@ -26,6 +26,7 @@
 ///
 
 #include "Clothoids.hh"
+#include "Clothoids_fmt.hh"
 
 // Workaround for Visual Studio
 #ifdef min
@@ -115,6 +116,15 @@ namespace G2lib {
     return hypot(dx,dy);
   }
 
+  // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+  void
+  BBox::print( ostream_type & stream ) const {
+    fmt::print( stream,
+      "BBOX (xmin,ymin,xmax,ymax) = ( {}, {}, {}, {} )\n",
+      x_min(), y_min(), x_max(), y_max()
+    );
+  }
 }
 
 ///

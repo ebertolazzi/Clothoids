@@ -18,6 +18,7 @@
 \*--------------------------------------------------------------------------*/
 
 #include "Utils.hh"
+#include "Utils_fmt.hh"
 
 #if defined(UTILS_OS_WINDOWS)
   // MINGW is contained in WINDOWS

@@ -37,13 +37,7 @@ namespace G2lib {
   //!
   //! Class to manage a list of biarc Curve (not necessarily G2 or G1 connected)
   //!
-  //! \rst
-  //!
-  //!   .. image:: ../../images/biarc_list.jpg
-  //!      :width: 80%
-  //!      :align: center
-  //!
-  //! \endrst
+  //! \image html biarc_list.jpg "Biarc" width=8cm
   //!
   class BiarcList : public BaseCurve {
 
@@ -53,9 +47,9 @@ namespace G2lib {
     vector<Biarc>     m_biarc_list;
 
     #ifdef CLOTHOIDS_USE_THREADS
-    mutable Utils::BinarySearch<integer> m_lastInterval;
+    mutable Utils::BinarySearch<integer> m_last_interval;
     #else
-    mutable integer m_lastInterval{0};
+    mutable integer m_last_interval{0};
     #endif
 
     mutable bool               m_aabb_done{false};
@@ -70,14 +64,14 @@ namespace G2lib {
     #endif
 
     void
-    resetLastInterval() {
+    reset_last_interval() {
       #ifdef CLOTHOIDS_USE_THREADS
       bool ok;
-      integer & lastInterval = *m_lastInterval.search( std::this_thread::get_id(), ok );
+      integer & last_interval = *m_last_interval.search( std::this_thread::get_id(), ok );
       #else
-      integer & lastInterval = m_lastInterval;
+      integer & last_interval = m_last_interval;
       #endif
-      lastInterval = 0;
+      last_interval = 0;
     }
 
     integer
@@ -98,8 +92,8 @@ namespace G2lib {
     //!
     //! Build an empty biarc spline.
     //!
-    BiarcList()
-    { this->resetLastInterval(); }
+    BiarcList( string const & name ) : BaseCurve( name )
+    { this->reset_last_interval(); }
 
     ~BiarcList() override {
       m_s0.clear();
@@ -107,10 +101,12 @@ namespace G2lib {
       m_aabb_triangles.clear();
     }
 
+    void setup( GenericContainer const & gc ) override;
+
     //!
     //! Build a copy of another biarc spline.
     //!
-    BiarcList( BiarcList const & s ) : BiarcList()
+    BiarcList( BiarcList const & s ) : BiarcList( s.name() )
     { this->copy(s); }
 
     //!
@@ -169,6 +165,7 @@ namespace G2lib {
     void build( PolyLine const & );
     void build( ClothoidList const & );
     void build( Dubins const & );
+    void build( Dubins3p const & );
 
     //!
     //! Append a line segment to the biarc list
@@ -234,9 +231,9 @@ namespace G2lib {
     //!
     bool
     build_G1(
-      integer           n,
-      real_type const * x,
-      real_type const * y
+      integer         n,
+      real_type const x[],
+      real_type const y[]
     );
 
     //!
@@ -250,10 +247,10 @@ namespace G2lib {
     //!
     bool
     build_G1(
-      integer           n,
-      real_type const * x,
-      real_type const * y,
-      real_type const * theta
+      integer         n,
+      real_type const x[],
+      real_type const y[],
+      real_type const theta[]
     );
 
     //!
@@ -303,7 +300,7 @@ namespace G2lib {
     \*/
 
     void
-    bbTriangles_ISO(
+    bb_triangles_ISO(
       real_type            offs,
       vector<Triangle2D> & tvec,
       real_type            max_angle = Utils::m_pi/6, // 30 degree
@@ -312,7 +309,7 @@ namespace G2lib {
     ) const override;
 
     void
-    bbTriangles_SAE(
+    bb_triangles_SAE(
       real_type            offs,
       vector<Triangle2D> & tvec,
       real_type            max_angle = Utils::m_pi/6, // 30 degree
@@ -321,7 +318,7 @@ namespace G2lib {
     ) const override;
 
     void
-    bbTriangles(
+    bb_triangles(
       vector<Triangle2D> & tvec,
       real_type            max_angle = Utils::m_pi/6, // 30 degree
       real_type            max_size  = 1e100,
@@ -689,9 +686,7 @@ namespace G2lib {
       real_type & dst
     ) const override;
 
-    string
-    info() const
-    { return fmt::format( "BiarcList\n{}\n", *this ); }
+    string info() const;
 
     void
     info( ostream_type & stream ) const override
@@ -715,14 +710,6 @@ namespace G2lib {
       real_type * theta,
       real_type * kappa
     ) const;
-
-    void
-    getSTK(
-      real_type * s,
-      real_type * theta,
-      real_type * kappa
-    ) const
-    { get_STK( s, theta, kappa ); }
 
     //!
     //! Return the biarc XY nodes

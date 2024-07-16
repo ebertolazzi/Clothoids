@@ -1,0 +1,167 @@
+\doxysection{Clothoids.\+hh}
+\hypertarget{_clothoids_8hh_source}{}\label{_clothoids_8hh_source}\index{/Users/enrico/Ricerca/develop/PINS/pins-\/mechatronix/LibSources/submodules/Clothoids/src/Clothoids.hh@{/Users/enrico/Ricerca/develop/PINS/pins-\/mechatronix/LibSources/submodules/Clothoids/src/Clothoids.hh}}
+\mbox{\hyperlink{_clothoids_8hh}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{comment}{/*-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/*\(\backslash\)}}
+\DoxyCodeLine{00002\ \textcolor{comment}{\ |\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ |}}
+\DoxyCodeLine{00003\ \textcolor{comment}{\ |\ \ Copyright\ (C)\ 2018\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ |}}
+\DoxyCodeLine{00004\ \textcolor{comment}{\ |\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ |}}
+\DoxyCodeLine{00005\ \textcolor{comment}{\ |\ \ \ \ \ \ \ \ \ ,\ \_\_\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ ,\ \_\_\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ |}}
+\DoxyCodeLine{00006\ \textcolor{comment}{\ |\ \ \ \ \ \ \ \ /|/\ \ \(\backslash\)\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ /|/\ \ \(\backslash\)\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ |}}
+\DoxyCodeLine{00007\ \textcolor{comment}{\ |\ \ \ \ \ \ \ \ \ |\ \_\_/\ \_\ \ \ ,\_\ \ \ \ \ \ \ \ \ |\ \_\_/\ \_\ \ \ ,\_\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ |}}
+\DoxyCodeLine{00008\ \textcolor{comment}{\ |\ \ \ \ \ \ \ \ \ |\ \ \ \(\backslash\)|/\ \ /\ \ |\ \ |\ \ \ |\ |\ \ \ \(\backslash\)|/\ \ /\ \ |\ \ |\ \ \ |\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ |}}
+\DoxyCodeLine{00009\ \textcolor{comment}{\ |\ \ \ \ \ \ \ \ \ |(\_\_/|\_\_/\ \ \ |\_/\ \(\backslash\)\_/|/|(\_\_/|\_\_/\ \ \ |\_/\ \(\backslash\)\_/|/\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ |}}
+\DoxyCodeLine{00010\ \textcolor{comment}{\ |\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ /|\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ /|\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ |}}
+\DoxyCodeLine{00011\ \textcolor{comment}{\ |\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)|\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)|\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ |}}
+\DoxyCodeLine{00012\ \textcolor{comment}{\ |\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ |}}
+\DoxyCodeLine{00013\ \textcolor{comment}{\ |\ \ \ \ \ \ Paolo\ Bevilacqua\ and\ Enrico\ Bertolazzi\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ |}}
+\DoxyCodeLine{00014\ \textcolor{comment}{\ |\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ |}}
+\DoxyCodeLine{00015\ \textcolor{comment}{\ |\ \ \ \ \ \ (1)\ Dipartimento\ di\ Ingegneria\ e\ Scienza\ dell'Informazione\ \ \ \ \ \ \ \ \ \ |}}
+\DoxyCodeLine{00016\ \textcolor{comment}{\ |\ \ \ \ \ \ (2)\ Dipartimento\ di\ Ingegneria\ Industriale\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ |}}
+\DoxyCodeLine{00017\ \textcolor{comment}{\ |\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ |}}
+\DoxyCodeLine{00018\ \textcolor{comment}{\ |\ \ \ \ \ \ Universita`\ degli\ Studi\ di\ Trento\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ |}}
+\DoxyCodeLine{00019\ \textcolor{comment}{\ |\ \ \ \ \ \ email:\ paolo.bevilacqua@unitn.it\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ |}}
+\DoxyCodeLine{00020\ \textcolor{comment}{\ |\ \ \ \ \ \ email:\ enrico.bertolazzi@unitn.it\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ |}}
+\DoxyCodeLine{00021\ \textcolor{comment}{\ |\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ |}}
+\DoxyCodeLine{00022\ \textcolor{comment}{\(\backslash\)*-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/*/}}
+\DoxyCodeLine{00023\ }
+\DoxyCodeLine{00027\ }
+\DoxyCodeLine{00028\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00029\ }
+\DoxyCodeLine{00030\ \textcolor{preprocessor}{\#ifndef\ CLOTHOIDS\_dot\_HH}}
+\DoxyCodeLine{00031\ \textcolor{preprocessor}{\#define\ CLOTHOIDS\_dot\_HH}}
+\DoxyCodeLine{00032\ }
+\DoxyCodeLine{00033\ \textcolor{comment}{//\ comment\ to\ disable\ threads\ support}}
+\DoxyCodeLine{00034\ \textcolor{preprocessor}{\#define\ CLOTHOIDS\_USE\_THREADS\ 1}}
+\DoxyCodeLine{00035\ }
+\DoxyCodeLine{00036\ \textcolor{preprocessor}{\#ifdef\ NO\_SYSTEM\_UTILS}}
+\DoxyCodeLine{00037\ \textcolor{preprocessor}{\ \ \#include\ "{}Utils.hh"{}}}
+\DoxyCodeLine{00038\ \textcolor{preprocessor}{\ \ \#include\ "{}Utils\_AABB\_tree.hh"{}}}
+\DoxyCodeLine{00039\ \textcolor{preprocessor}{\#else}}
+\DoxyCodeLine{00040\ \textcolor{preprocessor}{\ \ \#include\ <Utils.hh>}}
+\DoxyCodeLine{00041\ \textcolor{preprocessor}{\ \ \#include\ <Utils\_AABB\_tree.hh>}}
+\DoxyCodeLine{00042\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00043\ }
+\DoxyCodeLine{00044\ \textcolor{preprocessor}{\#include\ "{}GenericContainer/GenericContainer.hh"{}}}
+\DoxyCodeLine{00045\ }
+\DoxyCodeLine{00046\ \textcolor{preprocessor}{\#include\ <string>}}
+\DoxyCodeLine{00047\ \textcolor{preprocessor}{\#include\ <fstream>}}
+\DoxyCodeLine{00048\ \textcolor{preprocessor}{\#include\ <iostream>}}
+\DoxyCodeLine{00049\ \textcolor{preprocessor}{\#include\ <iomanip>}}
+\DoxyCodeLine{00050\ \textcolor{preprocessor}{\#include\ <cmath>}}
+\DoxyCodeLine{00051\ }
+\DoxyCodeLine{00052\ \textcolor{preprocessor}{\#include\ <vector>}}
+\DoxyCodeLine{00053\ \textcolor{preprocessor}{\#include\ <map>}}
+\DoxyCodeLine{00054\ \textcolor{preprocessor}{\#include\ <utility>}}
+\DoxyCodeLine{00055\ \textcolor{preprocessor}{\#include\ <algorithm>}}
+\DoxyCodeLine{00056\ \textcolor{preprocessor}{\#include\ <iterator>}}
+\DoxyCodeLine{00057\ }
+\DoxyCodeLine{00058\ \textcolor{preprocessor}{\#include\ <memory>}\ \ \textcolor{comment}{//\ shared\_ptr}}
+\DoxyCodeLine{00059\ }
+\DoxyCodeLine{00060\ \textcolor{preprocessor}{\#ifdef\ G2LIB\_DEBUG}}
+\DoxyCodeLine{00061\ \textcolor{preprocessor}{\ \ \#define\ G2LIB\_DEBUG\_MESSAGE(...)\ std::cout\ <<\ fmt::format(\_\_VA\_ARGS\_\_)\ <<\ std::flush}}
+\DoxyCodeLine{00062\ \textcolor{preprocessor}{\#else}}
+\DoxyCodeLine{00063\ \textcolor{preprocessor}{\ \ \#define\ G2LIB\_DEBUG\_MESSAGE(...)}}
+\DoxyCodeLine{00064\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00065\ }
+\DoxyCodeLine{00066\ \textcolor{preprocessor}{\#ifndef\ GLIB2\_TOL\_ANGLE}}
+\DoxyCodeLine{00067\ \textcolor{preprocessor}{\ \ \#define\ GLIB2\_TOL\_ANGLE\ 1e-\/8}}
+\DoxyCodeLine{00068\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00069\ }
+\DoxyCodeLine{00070\ \textcolor{keyword}{namespace\ }\mbox{\hyperlink{namespace_g2lib}{G2lib}}\ \{}
+\DoxyCodeLine{00071\ }
+\DoxyCodeLine{00072\ \ \ \textcolor{keyword}{using\ }std::string;}
+\DoxyCodeLine{00073\ \ \ \textcolor{keyword}{using\ }std::vector;}
+\DoxyCodeLine{00074\ \ \ \textcolor{keyword}{using\ }std::map;}
+\DoxyCodeLine{00075\ \ \ \textcolor{keyword}{using\ }std::set;}
+\DoxyCodeLine{00076\ }
+\DoxyCodeLine{00077\ \ \ \textcolor{keyword}{using\ }\mbox{\hyperlink{namespace_g2lib_a7ed8321a8bada9eae2f914f6fb70a208}{istream\_type}}\ \ \ \ \ =\ std::basic\_istream<char>;}
+\DoxyCodeLine{00078\ \ \ \textcolor{keyword}{using\ }\mbox{\hyperlink{namespace_g2lib_a8fcbace87db5a5e71391e0040878f2c3}{ostream\_type}}\ \ \ \ \ =\ std::basic\_ostream<char>;}
+\DoxyCodeLine{00079\ \ \ \textcolor{keyword}{using\ }\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\_type}}\ \ \ \ \ \ \ \ =\ double;}
+\DoxyCodeLine{00080\ \ \ \textcolor{keyword}{using\ }\mbox{\hyperlink{namespace_g2lib_a17146eb1606475bedc9a2d27f3b29e34}{integer}}\ \ \ \ \ \ \ \ \ \ =\ int;}
+\DoxyCodeLine{00081\ \ \ \textcolor{keyword}{using\ }\mbox{\hyperlink{namespace_g2lib_ae1a048466025088b97bf20caddd13693}{AABB\_TREE}}\ \ \ \ \ \ \ \ =\ Utils::AABBtree<real\_type>;}
+\DoxyCodeLine{00082\ \ \ \textcolor{keyword}{using\ }\mbox{\hyperlink{namespace_g2lib_a5f1ad3dfe878836c222addf6619be7b6}{AABB\_SET}}\ \ \ \ \ \ \ \ \ =\ Utils::AABBtree<real\_type>::AABB\_SET;}
+\DoxyCodeLine{00083\ \ \ \textcolor{keyword}{using\ }\mbox{\hyperlink{namespace_g2lib_a5dd1788676dfa912a9389cd18ed753a5}{AABB\_MAP}}\ \ \ \ \ \ \ \ \ =\ Utils::AABBtree<real\_type>::AABB\_MAP;}
+\DoxyCodeLine{00084\ \ \ \textcolor{keyword}{using\ }\mbox{\hyperlink{namespace_g2lib_a2bee1fb11cb401bacb26ad157b301feb}{GenericContainer}}\ =\ GC\_namespace::GenericContainer;}
+\DoxyCodeLine{00085\ }
+\DoxyCodeLine{00086\ \ \ \textcolor{keyword}{using\ }\mbox{\hyperlink{namespace_g2lib_ac18621126b9485db2bc878d6a1c8b0c9}{CurveType}}\ =\ \textcolor{keyword}{enum\ class}\ \mbox{\hyperlink{namespace_g2lib_ac18621126b9485db2bc878d6a1c8b0c9}{CurveType}}\ :\ \mbox{\hyperlink{namespace_g2lib_a17146eb1606475bedc9a2d27f3b29e34}{integer}}\ \{}
+\DoxyCodeLine{00087\ \ \ \ \ LINE,}
+\DoxyCodeLine{00088\ \ \ \ \ POLYLINE,}
+\DoxyCodeLine{00089\ \ \ \ \ CIRCLE,}
+\DoxyCodeLine{00090\ \ \ \ \ BIARC,}
+\DoxyCodeLine{00091\ \ \ \ \ BIARC\_LIST,}
+\DoxyCodeLine{00092\ \ \ \ \ CLOTHOID,}
+\DoxyCodeLine{00093\ \ \ \ \ CLOTHOID\_LIST,}
+\DoxyCodeLine{00094\ \ \ \ \ DUBINS,}
+\DoxyCodeLine{00095\ \ \ \ \ DUBINS3P}
+\DoxyCodeLine{00096\ \ \ \};}
+\DoxyCodeLine{00097\ }
+\DoxyCodeLine{00098\ \ \ \textcolor{keyword}{inline}}
+\DoxyCodeLine{00099\ \ \ \textcolor{keywordtype}{string}}
+\DoxyCodeLine{00100\ \ \ \mbox{\hyperlink{namespace_g2lib_a3b5a717bff4e10ce2a9b52cb628f2227}{to\_string}}(\ \mbox{\hyperlink{namespace_g2lib_ac18621126b9485db2bc878d6a1c8b0c9}{CurveType}}\ n\ )\ \{}
+\DoxyCodeLine{00101\ \ \ \ \ \textcolor{keywordtype}{string}\ res\{\textcolor{stringliteral}{"{}"{}}\};}
+\DoxyCodeLine{00102\ \ \ \ \ \textcolor{keywordflow}{switch}\ (\ n\ )\ \{}
+\DoxyCodeLine{00103\ \ \ \ \ \textcolor{keywordflow}{case}\ CurveType::LINE:\ \ \ \ \ \ \ \ \ \ res\ =\ \textcolor{stringliteral}{"{}LINE"{}};\ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{00104\ \ \ \ \ \textcolor{keywordflow}{case}\ CurveType::POLYLINE:\ \ \ \ \ \ res\ =\ \textcolor{stringliteral}{"{}POLYLINE"{}};\ \ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{00105\ \ \ \ \ \textcolor{keywordflow}{case}\ CurveType::CIRCLE:\ \ \ \ \ \ \ \ res\ =\ \textcolor{stringliteral}{"{}CIRCLE"{}};\ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{00106\ \ \ \ \ \textcolor{keywordflow}{case}\ CurveType::BIARC:\ \ \ \ \ \ \ \ \ res\ =\ \textcolor{stringliteral}{"{}BIARC"{}};\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{00107\ \ \ \ \ \textcolor{keywordflow}{case}\ CurveType::BIARC\_LIST:\ \ \ \ res\ =\ \textcolor{stringliteral}{"{}BIARC\_LIST"{}};\ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{00108\ \ \ \ \ \textcolor{keywordflow}{case}\ CurveType::CLOTHOID:\ \ \ \ \ \ res\ =\ \textcolor{stringliteral}{"{}CLOTHOID"{}};\ \ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{00109\ \ \ \ \ \textcolor{keywordflow}{case}\ CurveType::CLOTHOID\_LIST:\ res\ =\ \textcolor{stringliteral}{"{}CLOTHOID\_LIST"{}};\ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{00110\ \ \ \ \ \textcolor{keywordflow}{case}\ CurveType::DUBINS:\ \ \ \ \ \ \ \ res\ =\ \textcolor{stringliteral}{"{}DUBINS"{}};\ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{00111\ \ \ \ \ \textcolor{keywordflow}{case}\ CurveType::DUBINS3P:\ \ \ \ \ \ res\ =\ \textcolor{stringliteral}{"{}DUBINS3P"{}};\ \ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{00112\ \ \ \ \ \}}
+\DoxyCodeLine{00113\ \ \ \ \ \textcolor{keywordflow}{return}\ res;}
+\DoxyCodeLine{00114\ \ \ \};}
+\DoxyCodeLine{00115\ }
+\DoxyCodeLine{00116\ \ \ \textcolor{keyword}{extern}\ \mbox{\hyperlink{namespace_g2lib_ac18621126b9485db2bc878d6a1c8b0c9}{CurveType}}\ \mbox{\hyperlink{namespace_g2lib_a10b486198edf32e38559a8310723f5ba}{curve\_promote}}(\ \mbox{\hyperlink{namespace_g2lib_ac18621126b9485db2bc878d6a1c8b0c9}{CurveType}},\ \mbox{\hyperlink{namespace_g2lib_ac18621126b9485db2bc878d6a1c8b0c9}{CurveType}}\ );}
+\DoxyCodeLine{00117\ }
+\DoxyCodeLine{00118\ \ \ \textcolor{keyword}{class\ }LineSegment;}
+\DoxyCodeLine{00119\ \ \ \textcolor{keyword}{class\ }CircleArc;}
+\DoxyCodeLine{00120\ \ \ \textcolor{keyword}{class\ }Biarc;}
+\DoxyCodeLine{00121\ \ \ \textcolor{keyword}{class\ }ClothoidCurve;}
+\DoxyCodeLine{00122\ \ \ \textcolor{keyword}{class\ }PolyLine;}
+\DoxyCodeLine{00123\ \ \ \textcolor{keyword}{class\ }BiarcList;}
+\DoxyCodeLine{00124\ \ \ \textcolor{keyword}{class\ }ClothoidList;}
+\DoxyCodeLine{00125\ \ \ \textcolor{keyword}{class\ }Dubins;}
+\DoxyCodeLine{00126\ \ \ \textcolor{keyword}{class\ }Dubins3p;}
+\DoxyCodeLine{00127\ \}}
+\DoxyCodeLine{00128\ }
+\DoxyCodeLine{00129\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{_g2lib_8hxx}{Clothoids/G2lib.hxx}}"{}}}
+\DoxyCodeLine{00130\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{_triangle2_d_8hxx}{Clothoids/Triangle2D.hxx}}"{}}}
+\DoxyCodeLine{00131\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{_b_box_8hxx}{Clothoids/BBox.hxx}}"{}}}
+\DoxyCodeLine{00132\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{_base_curve_8hxx}{Clothoids/BaseCurve.hxx}}"{}}}
+\DoxyCodeLine{00133\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{_fresnel_8hxx}{Clothoids/Fresnel.hxx}}"{}}}
+\DoxyCodeLine{00134\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{_line_8hxx}{Clothoids/Line.hxx}}"{}}}
+\DoxyCodeLine{00135\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{_circle_8hxx}{Clothoids/Circle.hxx}}"{}}}
+\DoxyCodeLine{00136\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{_biarc_8hxx}{Clothoids/Biarc.hxx}}"{}}}
+\DoxyCodeLine{00137\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{_clothoid_8hxx}{Clothoids/Clothoid.hxx}}"{}}}
+\DoxyCodeLine{00138\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{_poly_line_8hxx}{Clothoids/PolyLine.hxx}}"{}}}
+\DoxyCodeLine{00139\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{_biarc_list_8hxx}{Clothoids/BiarcList.hxx}}"{}}}
+\DoxyCodeLine{00140\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{_clothoid_list_8hxx}{Clothoids/ClothoidList.hxx}}"{}}}
+\DoxyCodeLine{00141\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{_clothoid_asy_plot_8hxx}{Clothoids/ClothoidAsyPlot.hxx}}"{}}}
+\DoxyCodeLine{00142\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{_dubins_8hxx}{Clothoids/Dubins.hxx}}"{}}}
+\DoxyCodeLine{00143\ \textcolor{preprocessor}{\#include\ "{}\mbox{\hyperlink{_dubins3p_8hxx}{Clothoids/Dubins3p.hxx}}"{}}}
+\DoxyCodeLine{00144\ }
+\DoxyCodeLine{00145\ \textcolor{keyword}{namespace\ }\mbox{\hyperlink{namespace_g2lib}{G2lib}}\ \{}
+\DoxyCodeLine{00146\ }
+\DoxyCodeLine{00147\ \ \ \textcolor{keyword}{using\ }std::string;}
+\DoxyCodeLine{00148\ \ \ \textcolor{keyword}{using\ }std::vector;}
+\DoxyCodeLine{00149\ \ \ \textcolor{keyword}{using\ }std::map;}
+\DoxyCodeLine{00150\ \ \ \textcolor{keyword}{using\ }std::set;}
+\DoxyCodeLine{00151\ }
+\DoxyCodeLine{00152\ \ \ \textcolor{keyword}{using\ }\mbox{\hyperlink{namespace_g2lib_a7ed8321a8bada9eae2f914f6fb70a208}{istream\_type}}\ =\ std::basic\_istream<char>;}
+\DoxyCodeLine{00153\ \ \ \textcolor{keyword}{using\ }\mbox{\hyperlink{namespace_g2lib_a8fcbace87db5a5e71391e0040878f2c3}{ostream\_type}}\ =\ std::basic\_ostream<char>;}
+\DoxyCodeLine{00154\ \ \ \textcolor{keyword}{using\ }\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\_type}}\ \ \ \ =\ double;}
+\DoxyCodeLine{00155\ \ \ \textcolor{keyword}{using\ }\mbox{\hyperlink{namespace_g2lib_a17146eb1606475bedc9a2d27f3b29e34}{integer}}\ \ \ \ \ \ =\ int;}
+\DoxyCodeLine{00156\ \ \ \textcolor{keyword}{using\ }\mbox{\hyperlink{namespace_g2lib_ae1a048466025088b97bf20caddd13693}{AABB\_TREE}}\ \ \ \ =\ Utils::AABBtree<real\_type>;}
+\DoxyCodeLine{00157\ \ \ \textcolor{keyword}{using\ }\mbox{\hyperlink{namespace_g2lib_a5f1ad3dfe878836c222addf6619be7b6}{AABB\_SET}}\ \ \ \ \ =\ Utils::AABBtree<real\_type>::AABB\_SET;}
+\DoxyCodeLine{00158\ \ \ \textcolor{keyword}{using\ }\mbox{\hyperlink{namespace_g2lib_a5dd1788676dfa912a9389cd18ed753a5}{AABB\_MAP}}\ \ \ \ \ =\ Utils::AABBtree<real\_type>::AABB\_MAP;}
+\DoxyCodeLine{00159\ }
+\DoxyCodeLine{00160\ \ \ \textcolor{keyword}{extern}\ \mbox{\hyperlink{namespace_g2lib_ac18621126b9485db2bc878d6a1c8b0c9}{CurveType}}\ \mbox{\hyperlink{namespace_g2lib_a10b486198edf32e38559a8310723f5ba}{curve\_promote}}(\ \mbox{\hyperlink{namespace_g2lib_ac18621126b9485db2bc878d6a1c8b0c9}{CurveType}},\ \mbox{\hyperlink{namespace_g2lib_ac18621126b9485db2bc878d6a1c8b0c9}{CurveType}}\ );}
+\DoxyCodeLine{00161\ \}}
+\DoxyCodeLine{00162\ }
+\DoxyCodeLine{00163\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00164\ }
+
+\end{DoxyCode}

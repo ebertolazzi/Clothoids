@@ -1,5 +1,7 @@
 //#define _USE_MATH_DEFINES
 #include "Clothoids.hh"
+#include "Clothoids_fmt.hh"
+
 #include <stack>
 #include <ctime>
 
@@ -43,8 +45,8 @@ main() {
   //int iter = g2solve3arc.build( x0, y0, th0, k0, x1, y1, th1, k1 );
   fmt::print( "iter = {}\n", iter );
 
-  G2lib::ClothoidCurve const & S0 = g2sol.getS0();
-  G2lib::ClothoidCurve const & S1 = g2sol.getS1();
+  G2lib::ClothoidCurve const & S0 = g2sol.S0();
+  G2lib::ClothoidCurve const & S1 = g2sol.S1();
 
   fmt::print( "\n\nS0 (NEW)\n{}\n", S0 );
   fmt::print( "\n\nS1 (NEW)\n{}\n", S1 );

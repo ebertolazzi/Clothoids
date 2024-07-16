@@ -1,0 +1,2570 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.11.0" xml:lang="en-US">
+  <compounddef id="class_g2lib_1_1_clothoid_data" kind="class" language="C++" prot="public">
+    <compoundname>G2lib::ClothoidData</compoundname>
+    <includes refid="_fresnel_8hxx" local="no">Fresnel.hxx</includes>
+    <sectiondef kind="public-attrib">
+      <memberdef kind="variable" id="class_g2lib_1_1_clothoid_data_1a32aca3681f3516e26bd2af7fa31e81d3" prot="public" static="no" mutable="no">
+        <type><ref refid="namespace_g2lib_1acc8095aa40beedee44352de62f232033" kindref="member">real_type</ref></type>
+        <definition>real_type G2lib::ClothoidData::m_x0</definition>
+        <argsstring></argsstring>
+        <name>m_x0</name>
+        <qualifiedname>G2lib::ClothoidData::m_x0</qualifiedname>
+        <initializer>{0}</initializer>
+        <briefdescription>
+<para>initial x coordinate of the clothoid </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Clothoids/Fresnel.hxx" line="120" column="15" bodyfile="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Clothoids/Fresnel.hxx" bodystart="120" bodyend="120"/>
+      </memberdef>
+      <memberdef kind="variable" id="class_g2lib_1_1_clothoid_data_1a61a1c27ac90cf876a78ac120228daf21" prot="public" static="no" mutable="no">
+        <type><ref refid="namespace_g2lib_1acc8095aa40beedee44352de62f232033" kindref="member">real_type</ref></type>
+        <definition>real_type G2lib::ClothoidData::m_y0</definition>
+        <argsstring></argsstring>
+        <name>m_y0</name>
+        <qualifiedname>G2lib::ClothoidData::m_y0</qualifiedname>
+        <initializer>{0}</initializer>
+        <briefdescription>
+<para>initial y coordinate of the clothoid </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Clothoids/Fresnel.hxx" line="121" column="15" bodyfile="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Clothoids/Fresnel.hxx" bodystart="121" bodyend="121"/>
+      </memberdef>
+      <memberdef kind="variable" id="class_g2lib_1_1_clothoid_data_1a7d3690073d80810208367fb2381336f2" prot="public" static="no" mutable="no">
+        <type><ref refid="namespace_g2lib_1acc8095aa40beedee44352de62f232033" kindref="member">real_type</ref></type>
+        <definition>real_type G2lib::ClothoidData::m_theta0</definition>
+        <argsstring></argsstring>
+        <name>m_theta0</name>
+        <qualifiedname>G2lib::ClothoidData::m_theta0</qualifiedname>
+        <initializer>{0}</initializer>
+        <briefdescription>
+<para>initial angle of the clothoid </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Clothoids/Fresnel.hxx" line="122" column="15" bodyfile="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Clothoids/Fresnel.hxx" bodystart="122" bodyend="122"/>
+      </memberdef>
+      <memberdef kind="variable" id="class_g2lib_1_1_clothoid_data_1a082460eb18f78b94a2e1af0444ba373b" prot="public" static="no" mutable="no">
+        <type><ref refid="namespace_g2lib_1acc8095aa40beedee44352de62f232033" kindref="member">real_type</ref></type>
+        <definition>real_type G2lib::ClothoidData::m_kappa0</definition>
+        <argsstring></argsstring>
+        <name>m_kappa0</name>
+        <qualifiedname>G2lib::ClothoidData::m_kappa0</qualifiedname>
+        <initializer>{0}</initializer>
+        <briefdescription>
+<para>initial curvature </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Clothoids/Fresnel.hxx" line="123" column="15" bodyfile="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Clothoids/Fresnel.hxx" bodystart="123" bodyend="123"/>
+      </memberdef>
+      <memberdef kind="variable" id="class_g2lib_1_1_clothoid_data_1abbd10647189e5320e17e4d46414f0618" prot="public" static="no" mutable="no">
+        <type><ref refid="namespace_g2lib_1acc8095aa40beedee44352de62f232033" kindref="member">real_type</ref></type>
+        <definition>real_type G2lib::ClothoidData::m_dk</definition>
+        <argsstring></argsstring>
+        <name>m_dk</name>
+        <qualifiedname>G2lib::ClothoidData::m_dk</qualifiedname>
+        <initializer>{0}</initializer>
+        <briefdescription>
+<para>curvature derivative </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Clothoids/Fresnel.hxx" line="124" column="15" bodyfile="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Clothoids/Fresnel.hxx" bodystart="124" bodyend="124"/>
+      </memberdef>
+    </sectiondef>
+    <sectiondef kind="public-func">
+      <memberdef kind="function" id="class_g2lib_1_1_clothoid_data_1a2986e6a133fc7dd3e87992ba1f0ccb9a" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type></type>
+        <definition>G2lib::ClothoidData::ClothoidData</definition>
+        <argsstring>()=default</argsstring>
+        <name>ClothoidData</name>
+        <qualifiedname>G2lib::ClothoidData::ClothoidData</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Clothoids/Fresnel.hxx" line="126" column="5"/>
+      </memberdef>
+      <memberdef kind="function" id="class_g2lib_1_1_clothoid_data_1ad863f56df1690ea2098df9be8a18ce3a" prot="public" static="no" const="yes" explicit="no" inline="yes" virt="non-virtual">
+        <type><ref refid="namespace_g2lib_1acc8095aa40beedee44352de62f232033" kindref="member">real_type</ref></type>
+        <definition>real_type G2lib::ClothoidData::delta_theta</definition>
+        <argsstring>(real_type s) const</argsstring>
+        <name>delta_theta</name>
+        <qualifiedname>G2lib::ClothoidData::delta_theta</qualifiedname>
+        <param>
+          <type><ref refid="namespace_g2lib_1acc8095aa40beedee44352de62f232033" kindref="member">real_type</ref></type>
+          <declname>s</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Clothoids/Fresnel.hxx" line="129" column="5" bodyfile="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Clothoids/Fresnel.hxx" bodystart="129" bodyend="130"/>
+      </memberdef>
+      <memberdef kind="function" id="class_g2lib_1_1_clothoid_data_1ad7f0443009265270a2a74349b97578b8" prot="public" static="no" const="yes" explicit="no" inline="yes" virt="non-virtual">
+        <type><ref refid="namespace_g2lib_1acc8095aa40beedee44352de62f232033" kindref="member">real_type</ref></type>
+        <definition>real_type G2lib::ClothoidData::deltaTheta</definition>
+        <argsstring>(real_type s) const</argsstring>
+        <name>deltaTheta</name>
+        <qualifiedname>G2lib::ClothoidData::deltaTheta</qualifiedname>
+        <param>
+          <type><ref refid="namespace_g2lib_1acc8095aa40beedee44352de62f232033" kindref="member">real_type</ref></type>
+          <declname>s</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Clothoids/Fresnel.hxx" line="132" column="15" bodyfile="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Clothoids/Fresnel.hxx" bodystart="132" bodyend="132"/>
+      </memberdef>
+      <memberdef kind="function" id="class_g2lib_1_1_clothoid_data_1a2e3e5acc94506d8e6fd8f0c73dd419a2" prot="public" static="no" const="yes" explicit="no" inline="yes" virt="non-virtual">
+        <type><ref refid="namespace_g2lib_1acc8095aa40beedee44352de62f232033" kindref="member">real_type</ref></type>
+        <definition>real_type G2lib::ClothoidData::theta</definition>
+        <argsstring>(real_type s) const</argsstring>
+        <name>theta</name>
+        <qualifiedname>G2lib::ClothoidData::theta</qualifiedname>
+        <param>
+          <type><ref refid="namespace_g2lib_1acc8095aa40beedee44352de62f232033" kindref="member">real_type</ref></type>
+          <declname>s</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Return angle at curvilinear coordinate <computeroutput>s</computeroutput> </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Clothoids/Fresnel.hxx" line="138" column="5" bodyfile="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Clothoids/Fresnel.hxx" bodystart="138" bodyend="139"/>
+      </memberdef>
+      <memberdef kind="function" id="class_g2lib_1_1_clothoid_data_1a733c9f293a684857077ae0ff44144745" prot="public" static="no" const="yes" explicit="no" inline="yes" virt="non-virtual">
+        <type><ref refid="namespace_g2lib_1acc8095aa40beedee44352de62f232033" kindref="member">real_type</ref></type>
+        <definition>real_type G2lib::ClothoidData::theta_D</definition>
+        <argsstring>(real_type s) const</argsstring>
+        <name>theta_D</name>
+        <qualifiedname>G2lib::ClothoidData::theta_D</qualifiedname>
+        <param>
+          <type><ref refid="namespace_g2lib_1acc8095aa40beedee44352de62f232033" kindref="member">real_type</ref></type>
+          <declname>s</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Clothoids/Fresnel.hxx" line="141" column="15" bodyfile="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Clothoids/Fresnel.hxx" bodystart="141" bodyend="141"/>
+      </memberdef>
+      <memberdef kind="function" id="class_g2lib_1_1_clothoid_data_1a2bacb6433efb986c927580a5a7f76480" prot="public" static="no" const="yes" explicit="no" inline="yes" virt="non-virtual">
+        <type><ref refid="namespace_g2lib_1acc8095aa40beedee44352de62f232033" kindref="member">real_type</ref></type>
+        <definition>real_type G2lib::ClothoidData::theta_DD</definition>
+        <argsstring>(real_type) const</argsstring>
+        <name>theta_DD</name>
+        <qualifiedname>G2lib::ClothoidData::theta_DD</qualifiedname>
+        <param>
+          <type><ref refid="namespace_g2lib_1acc8095aa40beedee44352de62f232033" kindref="member">real_type</ref></type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Clothoids/Fresnel.hxx" line="142" column="15" bodyfile="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Clothoids/Fresnel.hxx" bodystart="142" bodyend="142"/>
+      </memberdef>
+      <memberdef kind="function" id="class_g2lib_1_1_clothoid_data_1a06139bd616b804148bb597cefa42e015" prot="public" static="no" const="yes" explicit="no" inline="yes" virt="non-virtual">
+        <type><ref refid="namespace_g2lib_1acc8095aa40beedee44352de62f232033" kindref="member">real_type</ref></type>
+        <definition>real_type G2lib::ClothoidData::theta_DDD</definition>
+        <argsstring>(real_type) const</argsstring>
+        <name>theta_DDD</name>
+        <qualifiedname>G2lib::ClothoidData::theta_DDD</qualifiedname>
+        <param>
+          <type><ref refid="namespace_g2lib_1acc8095aa40beedee44352de62f232033" kindref="member">real_type</ref></type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Clothoids/Fresnel.hxx" line="143" column="15" bodyfile="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Clothoids/Fresnel.hxx" bodystart="143" bodyend="143"/>
+      </memberdef>
+      <memberdef kind="function" id="class_g2lib_1_1_clothoid_data_1a36ba3617c981e50be132e098d3ac5a12" prot="public" static="no" const="yes" explicit="no" inline="yes" virt="non-virtual">
+        <type><ref refid="namespace_g2lib_1acc8095aa40beedee44352de62f232033" kindref="member">real_type</ref></type>
+        <definition>real_type G2lib::ClothoidData::kappa</definition>
+        <argsstring>(real_type s) const</argsstring>
+        <name>kappa</name>
+        <qualifiedname>G2lib::ClothoidData::kappa</qualifiedname>
+        <param>
+          <type><ref refid="namespace_g2lib_1acc8095aa40beedee44352de62f232033" kindref="member">real_type</ref></type>
+          <declname>s</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Return curvature at curvilinear coordinate <computeroutput>s</computeroutput> </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Clothoids/Fresnel.hxx" line="148" column="15" bodyfile="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Clothoids/Fresnel.hxx" bodystart="148" bodyend="148"/>
+      </memberdef>
+      <memberdef kind="function" id="class_g2lib_1_1_clothoid_data_1ad6700a98b70deafee9d131900aac9bec" prot="public" static="no" const="yes" explicit="no" inline="yes" virt="non-virtual">
+        <type><ref refid="namespace_g2lib_1acc8095aa40beedee44352de62f232033" kindref="member">real_type</ref></type>
+        <definition>real_type G2lib::ClothoidData::kappa_D</definition>
+        <argsstring>(real_type) const</argsstring>
+        <name>kappa_D</name>
+        <qualifiedname>G2lib::ClothoidData::kappa_D</qualifiedname>
+        <param>
+          <type><ref refid="namespace_g2lib_1acc8095aa40beedee44352de62f232033" kindref="member">real_type</ref></type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Clothoids/Fresnel.hxx" line="149" column="15" bodyfile="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Clothoids/Fresnel.hxx" bodystart="149" bodyend="149"/>
+      </memberdef>
+      <memberdef kind="function" id="class_g2lib_1_1_clothoid_data_1a6b503c2bb737925360e934f666de3afe" prot="public" static="no" const="yes" explicit="no" inline="yes" virt="non-virtual">
+        <type><ref refid="namespace_g2lib_1acc8095aa40beedee44352de62f232033" kindref="member">real_type</ref></type>
+        <definition>real_type G2lib::ClothoidData::kappa_DD</definition>
+        <argsstring>(real_type) const</argsstring>
+        <name>kappa_DD</name>
+        <qualifiedname>G2lib::ClothoidData::kappa_DD</qualifiedname>
+        <param>
+          <type><ref refid="namespace_g2lib_1acc8095aa40beedee44352de62f232033" kindref="member">real_type</ref></type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Clothoids/Fresnel.hxx" line="150" column="15" bodyfile="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Clothoids/Fresnel.hxx" bodystart="150" bodyend="150"/>
+      </memberdef>
+      <memberdef kind="function" id="class_g2lib_1_1_clothoid_data_1a86eeddbbf7cd1de004ceede9734d650b" prot="public" static="no" const="yes" explicit="no" inline="yes" virt="non-virtual">
+        <type><ref refid="namespace_g2lib_1acc8095aa40beedee44352de62f232033" kindref="member">real_type</ref></type>
+        <definition>real_type G2lib::ClothoidData::kappa_DDD</definition>
+        <argsstring>(real_type) const</argsstring>
+        <name>kappa_DDD</name>
+        <qualifiedname>G2lib::ClothoidData::kappa_DDD</qualifiedname>
+        <param>
+          <type><ref refid="namespace_g2lib_1acc8095aa40beedee44352de62f232033" kindref="member">real_type</ref></type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Clothoids/Fresnel.hxx" line="151" column="15" bodyfile="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Clothoids/Fresnel.hxx" bodystart="151" bodyend="151"/>
+      </memberdef>
+      <memberdef kind="function" id="class_g2lib_1_1_clothoid_data_1a44a1d6559de1f4c8b2dcffb71f597757" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="namespace_g2lib_1acc8095aa40beedee44352de62f232033" kindref="member">real_type</ref></type>
+        <definition>real_type G2lib::ClothoidData::X</definition>
+        <argsstring>(real_type s) const</argsstring>
+        <name>X</name>
+        <qualifiedname>G2lib::ClothoidData::X</qualifiedname>
+        <param>
+          <type><ref refid="namespace_g2lib_1acc8095aa40beedee44352de62f232033" kindref="member">real_type</ref></type>
+          <declname>s</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Clothoids/Fresnel.hxx" line="153" column="15" bodyfile="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Fresnel.cc" bodystart="836" bodyend="840"/>
+      </memberdef>
+      <memberdef kind="function" id="class_g2lib_1_1_clothoid_data_1a17a6bd51b93b1e9b8b29920dc15f5f64" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="namespace_g2lib_1acc8095aa40beedee44352de62f232033" kindref="member">real_type</ref></type>
+        <definition>real_type G2lib::ClothoidData::Y</definition>
+        <argsstring>(real_type s) const</argsstring>
+        <name>Y</name>
+        <qualifiedname>G2lib::ClothoidData::Y</qualifiedname>
+        <param>
+          <type><ref refid="namespace_g2lib_1acc8095aa40beedee44352de62f232033" kindref="member">real_type</ref></type>
+          <declname>s</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Clothoids/Fresnel.hxx" line="154" column="15" bodyfile="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Fresnel.cc" bodystart="845" bodyend="849"/>
+      </memberdef>
+      <memberdef kind="function" id="class_g2lib_1_1_clothoid_data_1a12eae52ff1b391762396906332181880" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="namespace_g2lib_1acc8095aa40beedee44352de62f232033" kindref="member">real_type</ref></type>
+        <definition>real_type G2lib::ClothoidData::X_D</definition>
+        <argsstring>(real_type s) const</argsstring>
+        <name>X_D</name>
+        <qualifiedname>G2lib::ClothoidData::X_D</qualifiedname>
+        <param>
+          <type><ref refid="namespace_g2lib_1acc8095aa40beedee44352de62f232033" kindref="member">real_type</ref></type>
+          <declname>s</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Clothoids/Fresnel.hxx" line="155" column="15" bodyfile="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Fresnel.cc" bodystart="854" bodyend="855"/>
+      </memberdef>
+      <memberdef kind="function" id="class_g2lib_1_1_clothoid_data_1a42b2f398c97c1eab722f056b4e2842e9" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="namespace_g2lib_1acc8095aa40beedee44352de62f232033" kindref="member">real_type</ref></type>
+        <definition>real_type G2lib::ClothoidData::Y_D</definition>
+        <argsstring>(real_type s) const</argsstring>
+        <name>Y_D</name>
+        <qualifiedname>G2lib::ClothoidData::Y_D</qualifiedname>
+        <param>
+          <type><ref refid="namespace_g2lib_1acc8095aa40beedee44352de62f232033" kindref="member">real_type</ref></type>
+          <declname>s</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Clothoids/Fresnel.hxx" line="156" column="15" bodyfile="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Fresnel.cc" bodystart="860" bodyend="861"/>
+      </memberdef>
+      <memberdef kind="function" id="class_g2lib_1_1_clothoid_data_1ae2de0dd16e891b64b3be7061d2cf4aba" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="namespace_g2lib_1acc8095aa40beedee44352de62f232033" kindref="member">real_type</ref></type>
+        <definition>real_type G2lib::ClothoidData::X_DD</definition>
+        <argsstring>(real_type s) const</argsstring>
+        <name>X_DD</name>
+        <qualifiedname>G2lib::ClothoidData::X_DD</qualifiedname>
+        <param>
+          <type><ref refid="namespace_g2lib_1acc8095aa40beedee44352de62f232033" kindref="member">real_type</ref></type>
+          <declname>s</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Clothoids/Fresnel.hxx" line="157" column="15" bodyfile="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Fresnel.cc" bodystart="866" bodyend="871"/>
+      </memberdef>
+      <memberdef kind="function" id="class_g2lib_1_1_clothoid_data_1a7636ab8934da9c4cf92e825313c866e4" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="namespace_g2lib_1acc8095aa40beedee44352de62f232033" kindref="member">real_type</ref></type>
+        <definition>real_type G2lib::ClothoidData::Y_DD</definition>
+        <argsstring>(real_type s) const</argsstring>
+        <name>Y_DD</name>
+        <qualifiedname>G2lib::ClothoidData::Y_DD</qualifiedname>
+        <param>
+          <type><ref refid="namespace_g2lib_1acc8095aa40beedee44352de62f232033" kindref="member">real_type</ref></type>
+          <declname>s</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Clothoids/Fresnel.hxx" line="158" column="15" bodyfile="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Fresnel.cc" bodystart="876" bodyend="881"/>
+      </memberdef>
+      <memberdef kind="function" id="class_g2lib_1_1_clothoid_data_1abf6c76cddbccc9bebf24f358e74a92d8" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="namespace_g2lib_1acc8095aa40beedee44352de62f232033" kindref="member">real_type</ref></type>
+        <definition>real_type G2lib::ClothoidData::X_DDD</definition>
+        <argsstring>(real_type s) const</argsstring>
+        <name>X_DDD</name>
+        <qualifiedname>G2lib::ClothoidData::X_DDD</qualifiedname>
+        <param>
+          <type><ref refid="namespace_g2lib_1acc8095aa40beedee44352de62f232033" kindref="member">real_type</ref></type>
+          <declname>s</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Clothoids/Fresnel.hxx" line="159" column="15" bodyfile="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Fresnel.cc" bodystart="886" bodyend="891"/>
+      </memberdef>
+      <memberdef kind="function" id="class_g2lib_1_1_clothoid_data_1a29930c2fbb56801d536874ef1b6bc4da" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="namespace_g2lib_1acc8095aa40beedee44352de62f232033" kindref="member">real_type</ref></type>
+        <definition>real_type G2lib::ClothoidData::Y_DDD</definition>
+        <argsstring>(real_type s) const</argsstring>
+        <name>Y_DDD</name>
+        <qualifiedname>G2lib::ClothoidData::Y_DDD</qualifiedname>
+        <param>
+          <type><ref refid="namespace_g2lib_1acc8095aa40beedee44352de62f232033" kindref="member">real_type</ref></type>
+          <declname>s</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Clothoids/Fresnel.hxx" line="160" column="15" bodyfile="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Fresnel.cc" bodystart="896" bodyend="901"/>
+      </memberdef>
+      <memberdef kind="function" id="class_g2lib_1_1_clothoid_data_1a5c54decf91f262947c3cb68ab9d9acc4" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="namespace_g2lib_1acc8095aa40beedee44352de62f232033" kindref="member">real_type</ref></type>
+        <definition>real_type G2lib::ClothoidData::X_ISO</definition>
+        <argsstring>(real_type s, real_type offs) const</argsstring>
+        <name>X_ISO</name>
+        <qualifiedname>G2lib::ClothoidData::X_ISO</qualifiedname>
+        <param>
+          <type><ref refid="namespace_g2lib_1acc8095aa40beedee44352de62f232033" kindref="member">real_type</ref></type>
+          <declname>s</declname>
+        </param>
+        <param>
+          <type><ref refid="namespace_g2lib_1acc8095aa40beedee44352de62f232033" kindref="member">real_type</ref></type>
+          <declname>offs</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Clothoids/Fresnel.hxx" line="163" column="15" bodyfile="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Fresnel.cc" bodystart="906" bodyend="907"/>
+      </memberdef>
+      <memberdef kind="function" id="class_g2lib_1_1_clothoid_data_1ac015f96754f9a0c176138e17b8a33262" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="namespace_g2lib_1acc8095aa40beedee44352de62f232033" kindref="member">real_type</ref></type>
+        <definition>real_type G2lib::ClothoidData::Y_ISO</definition>
+        <argsstring>(real_type s, real_type offs) const</argsstring>
+        <name>Y_ISO</name>
+        <qualifiedname>G2lib::ClothoidData::Y_ISO</qualifiedname>
+        <param>
+          <type><ref refid="namespace_g2lib_1acc8095aa40beedee44352de62f232033" kindref="member">real_type</ref></type>
+          <declname>s</declname>
+        </param>
+        <param>
+          <type><ref refid="namespace_g2lib_1acc8095aa40beedee44352de62f232033" kindref="member">real_type</ref></type>
+          <declname>offs</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Clothoids/Fresnel.hxx" line="164" column="15" bodyfile="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Fresnel.cc" bodystart="910" bodyend="911"/>
+      </memberdef>
+      <memberdef kind="function" id="class_g2lib_1_1_clothoid_data_1ab7702f37eba8e301bdaf61948714f3ae" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="namespace_g2lib_1acc8095aa40beedee44352de62f232033" kindref="member">real_type</ref></type>
+        <definition>real_type G2lib::ClothoidData::X_ISO_D</definition>
+        <argsstring>(real_type s, real_type offs) const</argsstring>
+        <name>X_ISO_D</name>
+        <qualifiedname>G2lib::ClothoidData::X_ISO_D</qualifiedname>
+        <param>
+          <type><ref refid="namespace_g2lib_1acc8095aa40beedee44352de62f232033" kindref="member">real_type</ref></type>
+          <declname>s</declname>
+        </param>
+        <param>
+          <type><ref refid="namespace_g2lib_1acc8095aa40beedee44352de62f232033" kindref="member">real_type</ref></type>
+          <declname>offs</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Clothoids/Fresnel.hxx" line="165" column="15" bodyfile="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Fresnel.cc" bodystart="914" bodyend="915"/>
+      </memberdef>
+      <memberdef kind="function" id="class_g2lib_1_1_clothoid_data_1adbc5ac108bdf382ff6f0683f2d7cb60e" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="namespace_g2lib_1acc8095aa40beedee44352de62f232033" kindref="member">real_type</ref></type>
+        <definition>real_type G2lib::ClothoidData::Y_ISO_D</definition>
+        <argsstring>(real_type s, real_type offs) const</argsstring>
+        <name>Y_ISO_D</name>
+        <qualifiedname>G2lib::ClothoidData::Y_ISO_D</qualifiedname>
+        <param>
+          <type><ref refid="namespace_g2lib_1acc8095aa40beedee44352de62f232033" kindref="member">real_type</ref></type>
+          <declname>s</declname>
+        </param>
+        <param>
+          <type><ref refid="namespace_g2lib_1acc8095aa40beedee44352de62f232033" kindref="member">real_type</ref></type>
+          <declname>offs</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Clothoids/Fresnel.hxx" line="166" column="15" bodyfile="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Fresnel.cc" bodystart="918" bodyend="919"/>
+      </memberdef>
+      <memberdef kind="function" id="class_g2lib_1_1_clothoid_data_1a254cf7db769bb999291ab174f8cc0faf" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="namespace_g2lib_1acc8095aa40beedee44352de62f232033" kindref="member">real_type</ref></type>
+        <definition>real_type G2lib::ClothoidData::X_ISO_DD</definition>
+        <argsstring>(real_type s, real_type offs) const</argsstring>
+        <name>X_ISO_DD</name>
+        <qualifiedname>G2lib::ClothoidData::X_ISO_DD</qualifiedname>
+        <param>
+          <type><ref refid="namespace_g2lib_1acc8095aa40beedee44352de62f232033" kindref="member">real_type</ref></type>
+          <declname>s</declname>
+        </param>
+        <param>
+          <type><ref refid="namespace_g2lib_1acc8095aa40beedee44352de62f232033" kindref="member">real_type</ref></type>
+          <declname>offs</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Clothoids/Fresnel.hxx" line="167" column="15" bodyfile="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Fresnel.cc" bodystart="922" bodyend="923"/>
+      </memberdef>
+      <memberdef kind="function" id="class_g2lib_1_1_clothoid_data_1a2dfc628ae951c3eb7f5ab685de272acf" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="namespace_g2lib_1acc8095aa40beedee44352de62f232033" kindref="member">real_type</ref></type>
+        <definition>real_type G2lib::ClothoidData::Y_ISO_DD</definition>
+        <argsstring>(real_type s, real_type offs) const</argsstring>
+        <name>Y_ISO_DD</name>
+        <qualifiedname>G2lib::ClothoidData::Y_ISO_DD</qualifiedname>
+        <param>
+          <type><ref refid="namespace_g2lib_1acc8095aa40beedee44352de62f232033" kindref="member">real_type</ref></type>
+          <declname>s</declname>
+        </param>
+        <param>
+          <type><ref refid="namespace_g2lib_1acc8095aa40beedee44352de62f232033" kindref="member">real_type</ref></type>
+          <declname>offs</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Clothoids/Fresnel.hxx" line="168" column="15" bodyfile="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Fresnel.cc" bodystart="926" bodyend="927"/>
+      </memberdef>
+      <memberdef kind="function" id="class_g2lib_1_1_clothoid_data_1acfca1c88549375e3d5bf3cb4d1963f94" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="namespace_g2lib_1acc8095aa40beedee44352de62f232033" kindref="member">real_type</ref></type>
+        <definition>real_type G2lib::ClothoidData::X_ISO_DDD</definition>
+        <argsstring>(real_type s, real_type offs) const</argsstring>
+        <name>X_ISO_DDD</name>
+        <qualifiedname>G2lib::ClothoidData::X_ISO_DDD</qualifiedname>
+        <param>
+          <type><ref refid="namespace_g2lib_1acc8095aa40beedee44352de62f232033" kindref="member">real_type</ref></type>
+          <declname>s</declname>
+        </param>
+        <param>
+          <type><ref refid="namespace_g2lib_1acc8095aa40beedee44352de62f232033" kindref="member">real_type</ref></type>
+          <declname>offs</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Clothoids/Fresnel.hxx" line="169" column="15" bodyfile="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Fresnel.cc" bodystart="930" bodyend="931"/>
+      </memberdef>
+      <memberdef kind="function" id="class_g2lib_1_1_clothoid_data_1a2d1e82652beccd761c577a84d5e0dd53" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="namespace_g2lib_1acc8095aa40beedee44352de62f232033" kindref="member">real_type</ref></type>
+        <definition>real_type G2lib::ClothoidData::Y_ISO_DDD</definition>
+        <argsstring>(real_type s, real_type offs) const</argsstring>
+        <name>Y_ISO_DDD</name>
+        <qualifiedname>G2lib::ClothoidData::Y_ISO_DDD</qualifiedname>
+        <param>
+          <type><ref refid="namespace_g2lib_1acc8095aa40beedee44352de62f232033" kindref="member">real_type</ref></type>
+          <declname>s</declname>
+        </param>
+        <param>
+          <type><ref refid="namespace_g2lib_1acc8095aa40beedee44352de62f232033" kindref="member">real_type</ref></type>
+          <declname>offs</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Clothoids/Fresnel.hxx" line="170" column="15" bodyfile="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Fresnel.cc" bodystart="934" bodyend="935"/>
+      </memberdef>
+      <memberdef kind="function" id="class_g2lib_1_1_clothoid_data_1afd56e883e84775f4a609b0f6906ef15b" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="namespace_g2lib_1acc8095aa40beedee44352de62f232033" kindref="member">real_type</ref></type>
+        <definition>real_type G2lib::ClothoidData::X_SAE</definition>
+        <argsstring>(real_type s, real_type offs) const</argsstring>
+        <name>X_SAE</name>
+        <qualifiedname>G2lib::ClothoidData::X_SAE</qualifiedname>
+        <param>
+          <type><ref refid="namespace_g2lib_1acc8095aa40beedee44352de62f232033" kindref="member">real_type</ref></type>
+          <declname>s</declname>
+        </param>
+        <param>
+          <type><ref refid="namespace_g2lib_1acc8095aa40beedee44352de62f232033" kindref="member">real_type</ref></type>
+          <declname>offs</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Clothoids/Fresnel.hxx" line="174" column="15" bodyfile="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Fresnel.cc" bodystart="940" bodyend="941"/>
+      </memberdef>
+      <memberdef kind="function" id="class_g2lib_1_1_clothoid_data_1a5a9da2e441d8996852c05c45d96c52a5" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="namespace_g2lib_1acc8095aa40beedee44352de62f232033" kindref="member">real_type</ref></type>
+        <definition>real_type G2lib::ClothoidData::Y_SAE</definition>
+        <argsstring>(real_type s, real_type offs) const</argsstring>
+        <name>Y_SAE</name>
+        <qualifiedname>G2lib::ClothoidData::Y_SAE</qualifiedname>
+        <param>
+          <type><ref refid="namespace_g2lib_1acc8095aa40beedee44352de62f232033" kindref="member">real_type</ref></type>
+          <declname>s</declname>
+        </param>
+        <param>
+          <type><ref refid="namespace_g2lib_1acc8095aa40beedee44352de62f232033" kindref="member">real_type</ref></type>
+          <declname>offs</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Clothoids/Fresnel.hxx" line="175" column="15" bodyfile="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Fresnel.cc" bodystart="944" bodyend="945"/>
+      </memberdef>
+      <memberdef kind="function" id="class_g2lib_1_1_clothoid_data_1a225377b009a58fac652c6d57426fd3d9" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="namespace_g2lib_1acc8095aa40beedee44352de62f232033" kindref="member">real_type</ref></type>
+        <definition>real_type G2lib::ClothoidData::X_SAE_D</definition>
+        <argsstring>(real_type s, real_type offs) const</argsstring>
+        <name>X_SAE_D</name>
+        <qualifiedname>G2lib::ClothoidData::X_SAE_D</qualifiedname>
+        <param>
+          <type><ref refid="namespace_g2lib_1acc8095aa40beedee44352de62f232033" kindref="member">real_type</ref></type>
+          <declname>s</declname>
+        </param>
+        <param>
+          <type><ref refid="namespace_g2lib_1acc8095aa40beedee44352de62f232033" kindref="member">real_type</ref></type>
+          <declname>offs</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Clothoids/Fresnel.hxx" line="176" column="15" bodyfile="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Fresnel.cc" bodystart="948" bodyend="949"/>
+      </memberdef>
+      <memberdef kind="function" id="class_g2lib_1_1_clothoid_data_1ad2672756ec4852061811bceaf0583e4d" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="namespace_g2lib_1acc8095aa40beedee44352de62f232033" kindref="member">real_type</ref></type>
+        <definition>real_type G2lib::ClothoidData::Y_SAE_D</definition>
+        <argsstring>(real_type s, real_type offs) const</argsstring>
+        <name>Y_SAE_D</name>
+        <qualifiedname>G2lib::ClothoidData::Y_SAE_D</qualifiedname>
+        <param>
+          <type><ref refid="namespace_g2lib_1acc8095aa40beedee44352de62f232033" kindref="member">real_type</ref></type>
+          <declname>s</declname>
+        </param>
+        <param>
+          <type><ref refid="namespace_g2lib_1acc8095aa40beedee44352de62f232033" kindref="member">real_type</ref></type>
+          <declname>offs</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Clothoids/Fresnel.hxx" line="177" column="15" bodyfile="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Fresnel.cc" bodystart="952" bodyend="953"/>
+      </memberdef>
+      <memberdef kind="function" id="class_g2lib_1_1_clothoid_data_1ac58d0da5eeaf6882ea4e4f4338b5ffd3" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="namespace_g2lib_1acc8095aa40beedee44352de62f232033" kindref="member">real_type</ref></type>
+        <definition>real_type G2lib::ClothoidData::X_SAE_DD</definition>
+        <argsstring>(real_type s, real_type offs) const</argsstring>
+        <name>X_SAE_DD</name>
+        <qualifiedname>G2lib::ClothoidData::X_SAE_DD</qualifiedname>
+        <param>
+          <type><ref refid="namespace_g2lib_1acc8095aa40beedee44352de62f232033" kindref="member">real_type</ref></type>
+          <declname>s</declname>
+        </param>
+        <param>
+          <type><ref refid="namespace_g2lib_1acc8095aa40beedee44352de62f232033" kindref="member">real_type</ref></type>
+          <declname>offs</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Clothoids/Fresnel.hxx" line="178" column="15" bodyfile="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Fresnel.cc" bodystart="956" bodyend="957"/>
+      </memberdef>
+      <memberdef kind="function" id="class_g2lib_1_1_clothoid_data_1a5eb5c39f965506beb5d8af87843bcdf8" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="namespace_g2lib_1acc8095aa40beedee44352de62f232033" kindref="member">real_type</ref></type>
+        <definition>real_type G2lib::ClothoidData::Y_SAE_DD</definition>
+        <argsstring>(real_type s, real_type offs) const</argsstring>
+        <name>Y_SAE_DD</name>
+        <qualifiedname>G2lib::ClothoidData::Y_SAE_DD</qualifiedname>
+        <param>
+          <type><ref refid="namespace_g2lib_1acc8095aa40beedee44352de62f232033" kindref="member">real_type</ref></type>
+          <declname>s</declname>
+        </param>
+        <param>
+          <type><ref refid="namespace_g2lib_1acc8095aa40beedee44352de62f232033" kindref="member">real_type</ref></type>
+          <declname>offs</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Clothoids/Fresnel.hxx" line="179" column="15" bodyfile="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Fresnel.cc" bodystart="960" bodyend="961"/>
+      </memberdef>
+      <memberdef kind="function" id="class_g2lib_1_1_clothoid_data_1aca3725ea30679ef3f580e2e338e0e5c9" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="namespace_g2lib_1acc8095aa40beedee44352de62f232033" kindref="member">real_type</ref></type>
+        <definition>real_type G2lib::ClothoidData::X_SAE_DDD</definition>
+        <argsstring>(real_type s, real_type offs) const</argsstring>
+        <name>X_SAE_DDD</name>
+        <qualifiedname>G2lib::ClothoidData::X_SAE_DDD</qualifiedname>
+        <param>
+          <type><ref refid="namespace_g2lib_1acc8095aa40beedee44352de62f232033" kindref="member">real_type</ref></type>
+          <declname>s</declname>
+        </param>
+        <param>
+          <type><ref refid="namespace_g2lib_1acc8095aa40beedee44352de62f232033" kindref="member">real_type</ref></type>
+          <declname>offs</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Clothoids/Fresnel.hxx" line="180" column="15" bodyfile="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Fresnel.cc" bodystart="964" bodyend="965"/>
+      </memberdef>
+      <memberdef kind="function" id="class_g2lib_1_1_clothoid_data_1a1634bc4cd74eb7c8012c7cc49d3c0368" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="namespace_g2lib_1acc8095aa40beedee44352de62f232033" kindref="member">real_type</ref></type>
+        <definition>real_type G2lib::ClothoidData::Y_SAE_DDD</definition>
+        <argsstring>(real_type s, real_type offs) const</argsstring>
+        <name>Y_SAE_DDD</name>
+        <qualifiedname>G2lib::ClothoidData::Y_SAE_DDD</qualifiedname>
+        <param>
+          <type><ref refid="namespace_g2lib_1acc8095aa40beedee44352de62f232033" kindref="member">real_type</ref></type>
+          <declname>s</declname>
+        </param>
+        <param>
+          <type><ref refid="namespace_g2lib_1acc8095aa40beedee44352de62f232033" kindref="member">real_type</ref></type>
+          <declname>offs</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Clothoids/Fresnel.hxx" line="181" column="15" bodyfile="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Fresnel.cc" bodystart="968" bodyend="969"/>
+      </memberdef>
+      <memberdef kind="function" id="class_g2lib_1_1_clothoid_data_1afd664c96c0e887cb011dc31ee07f49ef" prot="public" static="no" const="yes" explicit="no" inline="yes" virt="non-virtual">
+        <type><ref refid="namespace_g2lib_1acc8095aa40beedee44352de62f232033" kindref="member">real_type</ref></type>
+        <definition>real_type G2lib::ClothoidData::tg0_x</definition>
+        <argsstring>() const</argsstring>
+        <name>tg0_x</name>
+        <qualifiedname>G2lib::ClothoidData::tg0_x</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Clothoids/Fresnel.hxx" line="185" column="15" bodyfile="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Clothoids/Fresnel.hxx" bodystart="185" bodyend="185"/>
+      </memberdef>
+      <memberdef kind="function" id="class_g2lib_1_1_clothoid_data_1ae7d8e3783aadf6639f9e17b449cea380" prot="public" static="no" const="yes" explicit="no" inline="yes" virt="non-virtual">
+        <type><ref refid="namespace_g2lib_1acc8095aa40beedee44352de62f232033" kindref="member">real_type</ref></type>
+        <definition>real_type G2lib::ClothoidData::tg0_y</definition>
+        <argsstring>() const</argsstring>
+        <name>tg0_y</name>
+        <qualifiedname>G2lib::ClothoidData::tg0_y</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Clothoids/Fresnel.hxx" line="186" column="15" bodyfile="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Clothoids/Fresnel.hxx" bodystart="186" bodyend="186"/>
+      </memberdef>
+      <memberdef kind="function" id="class_g2lib_1_1_clothoid_data_1abd3eb4b59b3542ff6012d96285c1a44a" prot="public" static="no" const="yes" explicit="no" inline="yes" virt="non-virtual">
+        <type><ref refid="namespace_g2lib_1acc8095aa40beedee44352de62f232033" kindref="member">real_type</ref></type>
+        <definition>real_type G2lib::ClothoidData::tg_x</definition>
+        <argsstring>(real_type s) const</argsstring>
+        <name>tg_x</name>
+        <qualifiedname>G2lib::ClothoidData::tg_x</qualifiedname>
+        <param>
+          <type><ref refid="namespace_g2lib_1acc8095aa40beedee44352de62f232033" kindref="member">real_type</ref></type>
+          <declname>s</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Clothoids/Fresnel.hxx" line="188" column="15" bodyfile="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Clothoids/Fresnel.hxx" bodystart="188" bodyend="188"/>
+      </memberdef>
+      <memberdef kind="function" id="class_g2lib_1_1_clothoid_data_1a2ec76ecc1c68547ae82f365954c51a39" prot="public" static="no" const="yes" explicit="no" inline="yes" virt="non-virtual">
+        <type><ref refid="namespace_g2lib_1acc8095aa40beedee44352de62f232033" kindref="member">real_type</ref></type>
+        <definition>real_type G2lib::ClothoidData::tg_y</definition>
+        <argsstring>(real_type s) const</argsstring>
+        <name>tg_y</name>
+        <qualifiedname>G2lib::ClothoidData::tg_y</qualifiedname>
+        <param>
+          <type><ref refid="namespace_g2lib_1acc8095aa40beedee44352de62f232033" kindref="member">real_type</ref></type>
+          <declname>s</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Clothoids/Fresnel.hxx" line="189" column="15" bodyfile="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Clothoids/Fresnel.hxx" bodystart="189" bodyend="189"/>
+      </memberdef>
+      <memberdef kind="function" id="class_g2lib_1_1_clothoid_data_1a309ee73c0aa09003bef19ebca62b3a4b" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="namespace_g2lib_1acc8095aa40beedee44352de62f232033" kindref="member">real_type</ref></type>
+        <definition>real_type G2lib::ClothoidData::tg_x_D</definition>
+        <argsstring>(real_type s) const</argsstring>
+        <name>tg_x_D</name>
+        <qualifiedname>G2lib::ClothoidData::tg_x_D</qualifiedname>
+        <param>
+          <type><ref refid="namespace_g2lib_1acc8095aa40beedee44352de62f232033" kindref="member">real_type</ref></type>
+          <declname>s</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Clothoids/Fresnel.hxx" line="191" column="15" bodyfile="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Fresnel.cc" bodystart="710" bodyend="712"/>
+      </memberdef>
+      <memberdef kind="function" id="class_g2lib_1_1_clothoid_data_1a1941e240e04db2d7b70145f3a278817e" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="namespace_g2lib_1acc8095aa40beedee44352de62f232033" kindref="member">real_type</ref></type>
+        <definition>real_type G2lib::ClothoidData::tg_y_D</definition>
+        <argsstring>(real_type s) const</argsstring>
+        <name>tg_y_D</name>
+        <qualifiedname>G2lib::ClothoidData::tg_y_D</qualifiedname>
+        <param>
+          <type><ref refid="namespace_g2lib_1acc8095aa40beedee44352de62f232033" kindref="member">real_type</ref></type>
+          <declname>s</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Clothoids/Fresnel.hxx" line="192" column="15" bodyfile="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Fresnel.cc" bodystart="717" bodyend="719"/>
+      </memberdef>
+      <memberdef kind="function" id="class_g2lib_1_1_clothoid_data_1a961c8aa50e8f490d814c733083817476" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="namespace_g2lib_1acc8095aa40beedee44352de62f232033" kindref="member">real_type</ref></type>
+        <definition>real_type G2lib::ClothoidData::tg_x_DD</definition>
+        <argsstring>(real_type s) const</argsstring>
+        <name>tg_x_DD</name>
+        <qualifiedname>G2lib::ClothoidData::tg_x_DD</qualifiedname>
+        <param>
+          <type><ref refid="namespace_g2lib_1acc8095aa40beedee44352de62f232033" kindref="member">real_type</ref></type>
+          <declname>s</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Clothoids/Fresnel.hxx" line="194" column="15" bodyfile="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Fresnel.cc" bodystart="724" bodyend="731"/>
+      </memberdef>
+      <memberdef kind="function" id="class_g2lib_1_1_clothoid_data_1a3f5b84876889aaf87b6387c7d7f26470" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="namespace_g2lib_1acc8095aa40beedee44352de62f232033" kindref="member">real_type</ref></type>
+        <definition>real_type G2lib::ClothoidData::tg_y_DD</definition>
+        <argsstring>(real_type s) const</argsstring>
+        <name>tg_y_DD</name>
+        <qualifiedname>G2lib::ClothoidData::tg_y_DD</qualifiedname>
+        <param>
+          <type><ref refid="namespace_g2lib_1acc8095aa40beedee44352de62f232033" kindref="member">real_type</ref></type>
+          <declname>s</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Clothoids/Fresnel.hxx" line="195" column="15" bodyfile="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Fresnel.cc" bodystart="736" bodyend="743"/>
+      </memberdef>
+      <memberdef kind="function" id="class_g2lib_1_1_clothoid_data_1ab0b497deec72be91f3f963baca22e680" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="namespace_g2lib_1acc8095aa40beedee44352de62f232033" kindref="member">real_type</ref></type>
+        <definition>real_type G2lib::ClothoidData::tg_x_DDD</definition>
+        <argsstring>(real_type s) const</argsstring>
+        <name>tg_x_DDD</name>
+        <qualifiedname>G2lib::ClothoidData::tg_x_DDD</qualifiedname>
+        <param>
+          <type><ref refid="namespace_g2lib_1acc8095aa40beedee44352de62f232033" kindref="member">real_type</ref></type>
+          <declname>s</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Clothoids/Fresnel.hxx" line="197" column="15" bodyfile="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Fresnel.cc" bodystart="748" bodyend="756"/>
+      </memberdef>
+      <memberdef kind="function" id="class_g2lib_1_1_clothoid_data_1a953d4233358fa9a9a0cf7e04235c04b2" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="namespace_g2lib_1acc8095aa40beedee44352de62f232033" kindref="member">real_type</ref></type>
+        <definition>real_type G2lib::ClothoidData::tg_y_DDD</definition>
+        <argsstring>(real_type s) const</argsstring>
+        <name>tg_y_DDD</name>
+        <qualifiedname>G2lib::ClothoidData::tg_y_DDD</qualifiedname>
+        <param>
+          <type><ref refid="namespace_g2lib_1acc8095aa40beedee44352de62f232033" kindref="member">real_type</ref></type>
+          <declname>s</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Clothoids/Fresnel.hxx" line="198" column="15" bodyfile="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Fresnel.cc" bodystart="761" bodyend="769"/>
+      </memberdef>
+      <memberdef kind="function" id="class_g2lib_1_1_clothoid_data_1a7a92c9cf8f3a37fc342205b33b8ad6e8" prot="public" static="no" const="yes" explicit="no" inline="yes" virt="non-virtual">
+        <type><ref refid="namespace_g2lib_1acc8095aa40beedee44352de62f232033" kindref="member">real_type</ref></type>
+        <definition>real_type G2lib::ClothoidData::nor0_x_ISO</definition>
+        <argsstring>() const</argsstring>
+        <name>nor0_x_ISO</name>
+        <qualifiedname>G2lib::ClothoidData::nor0_x_ISO</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Clothoids/Fresnel.hxx" line="200" column="15" bodyfile="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Clothoids/Fresnel.hxx" bodystart="200" bodyend="200"/>
+      </memberdef>
+      <memberdef kind="function" id="class_g2lib_1_1_clothoid_data_1a138e6692acfb5b0e8dfdca9b8bdddfd6" prot="public" static="no" const="yes" explicit="no" inline="yes" virt="non-virtual">
+        <type><ref refid="namespace_g2lib_1acc8095aa40beedee44352de62f232033" kindref="member">real_type</ref></type>
+        <definition>real_type G2lib::ClothoidData::nor0_y_ISO</definition>
+        <argsstring>() const</argsstring>
+        <name>nor0_y_ISO</name>
+        <qualifiedname>G2lib::ClothoidData::nor0_y_ISO</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Clothoids/Fresnel.hxx" line="201" column="15" bodyfile="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Clothoids/Fresnel.hxx" bodystart="201" bodyend="201"/>
+      </memberdef>
+      <memberdef kind="function" id="class_g2lib_1_1_clothoid_data_1a4dc9faac8b594ab68ec72a5512ede0b5" prot="public" static="no" const="yes" explicit="no" inline="yes" virt="non-virtual">
+        <type><ref refid="namespace_g2lib_1acc8095aa40beedee44352de62f232033" kindref="member">real_type</ref></type>
+        <definition>real_type G2lib::ClothoidData::nor_x_ISO</definition>
+        <argsstring>(real_type s) const</argsstring>
+        <name>nor_x_ISO</name>
+        <qualifiedname>G2lib::ClothoidData::nor_x_ISO</qualifiedname>
+        <param>
+          <type><ref refid="namespace_g2lib_1acc8095aa40beedee44352de62f232033" kindref="member">real_type</ref></type>
+          <declname>s</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Clothoids/Fresnel.hxx" line="203" column="15" bodyfile="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Clothoids/Fresnel.hxx" bodystart="203" bodyend="203"/>
+      </memberdef>
+      <memberdef kind="function" id="class_g2lib_1_1_clothoid_data_1aa1ea6fe37a6a4995fbe723cca0b2f24e" prot="public" static="no" const="yes" explicit="no" inline="yes" virt="non-virtual">
+        <type><ref refid="namespace_g2lib_1acc8095aa40beedee44352de62f232033" kindref="member">real_type</ref></type>
+        <definition>real_type G2lib::ClothoidData::nor_y_ISO</definition>
+        <argsstring>(real_type s) const</argsstring>
+        <name>nor_y_ISO</name>
+        <qualifiedname>G2lib::ClothoidData::nor_y_ISO</qualifiedname>
+        <param>
+          <type><ref refid="namespace_g2lib_1acc8095aa40beedee44352de62f232033" kindref="member">real_type</ref></type>
+          <declname>s</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Clothoids/Fresnel.hxx" line="204" column="15" bodyfile="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Clothoids/Fresnel.hxx" bodystart="204" bodyend="204"/>
+      </memberdef>
+      <memberdef kind="function" id="class_g2lib_1_1_clothoid_data_1a4ab7f46e194bc6ebc261f8942521766e" prot="public" static="no" const="yes" explicit="no" inline="yes" virt="non-virtual">
+        <type><ref refid="namespace_g2lib_1acc8095aa40beedee44352de62f232033" kindref="member">real_type</ref></type>
+        <definition>real_type G2lib::ClothoidData::nor_x_ISO_D</definition>
+        <argsstring>(real_type s) const</argsstring>
+        <name>nor_x_ISO_D</name>
+        <qualifiedname>G2lib::ClothoidData::nor_x_ISO_D</qualifiedname>
+        <param>
+          <type><ref refid="namespace_g2lib_1acc8095aa40beedee44352de62f232033" kindref="member">real_type</ref></type>
+          <declname>s</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Clothoids/Fresnel.hxx" line="206" column="15" bodyfile="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Clothoids/Fresnel.hxx" bodystart="206" bodyend="206"/>
+      </memberdef>
+      <memberdef kind="function" id="class_g2lib_1_1_clothoid_data_1a7871e2688e341c52cea6afdf4e5a6052" prot="public" static="no" const="yes" explicit="no" inline="yes" virt="non-virtual">
+        <type><ref refid="namespace_g2lib_1acc8095aa40beedee44352de62f232033" kindref="member">real_type</ref></type>
+        <definition>real_type G2lib::ClothoidData::nor_y_ISO_D</definition>
+        <argsstring>(real_type s) const</argsstring>
+        <name>nor_y_ISO_D</name>
+        <qualifiedname>G2lib::ClothoidData::nor_y_ISO_D</qualifiedname>
+        <param>
+          <type><ref refid="namespace_g2lib_1acc8095aa40beedee44352de62f232033" kindref="member">real_type</ref></type>
+          <declname>s</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Clothoids/Fresnel.hxx" line="207" column="15" bodyfile="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Clothoids/Fresnel.hxx" bodystart="207" bodyend="207"/>
+      </memberdef>
+      <memberdef kind="function" id="class_g2lib_1_1_clothoid_data_1a22b26c8b7e53c611f3c5994f5e1c4df4" prot="public" static="no" const="yes" explicit="no" inline="yes" virt="non-virtual">
+        <type><ref refid="namespace_g2lib_1acc8095aa40beedee44352de62f232033" kindref="member">real_type</ref></type>
+        <definition>real_type G2lib::ClothoidData::nor_x_ISO_DD</definition>
+        <argsstring>(real_type s) const</argsstring>
+        <name>nor_x_ISO_DD</name>
+        <qualifiedname>G2lib::ClothoidData::nor_x_ISO_DD</qualifiedname>
+        <param>
+          <type><ref refid="namespace_g2lib_1acc8095aa40beedee44352de62f232033" kindref="member">real_type</ref></type>
+          <declname>s</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Clothoids/Fresnel.hxx" line="209" column="15" bodyfile="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Clothoids/Fresnel.hxx" bodystart="209" bodyend="209"/>
+      </memberdef>
+      <memberdef kind="function" id="class_g2lib_1_1_clothoid_data_1a1cc51f349e6c003ba912d4982c599002" prot="public" static="no" const="yes" explicit="no" inline="yes" virt="non-virtual">
+        <type><ref refid="namespace_g2lib_1acc8095aa40beedee44352de62f232033" kindref="member">real_type</ref></type>
+        <definition>real_type G2lib::ClothoidData::nor_y_ISO_DD</definition>
+        <argsstring>(real_type s) const</argsstring>
+        <name>nor_y_ISO_DD</name>
+        <qualifiedname>G2lib::ClothoidData::nor_y_ISO_DD</qualifiedname>
+        <param>
+          <type><ref refid="namespace_g2lib_1acc8095aa40beedee44352de62f232033" kindref="member">real_type</ref></type>
+          <declname>s</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Clothoids/Fresnel.hxx" line="210" column="15" bodyfile="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Clothoids/Fresnel.hxx" bodystart="210" bodyend="210"/>
+      </memberdef>
+      <memberdef kind="function" id="class_g2lib_1_1_clothoid_data_1ab376f2a1a79eaa87c8257477ae5580c5" prot="public" static="no" const="yes" explicit="no" inline="yes" virt="non-virtual">
+        <type><ref refid="namespace_g2lib_1acc8095aa40beedee44352de62f232033" kindref="member">real_type</ref></type>
+        <definition>real_type G2lib::ClothoidData::nor_x_ISO_DDD</definition>
+        <argsstring>(real_type s) const</argsstring>
+        <name>nor_x_ISO_DDD</name>
+        <qualifiedname>G2lib::ClothoidData::nor_x_ISO_DDD</qualifiedname>
+        <param>
+          <type><ref refid="namespace_g2lib_1acc8095aa40beedee44352de62f232033" kindref="member">real_type</ref></type>
+          <declname>s</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Clothoids/Fresnel.hxx" line="212" column="15" bodyfile="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Clothoids/Fresnel.hxx" bodystart="212" bodyend="212"/>
+      </memberdef>
+      <memberdef kind="function" id="class_g2lib_1_1_clothoid_data_1a5a6e828a08dc654116816e9bb26a92d2" prot="public" static="no" const="yes" explicit="no" inline="yes" virt="non-virtual">
+        <type><ref refid="namespace_g2lib_1acc8095aa40beedee44352de62f232033" kindref="member">real_type</ref></type>
+        <definition>real_type G2lib::ClothoidData::nor_y_ISO_DDD</definition>
+        <argsstring>(real_type s) const</argsstring>
+        <name>nor_y_ISO_DDD</name>
+        <qualifiedname>G2lib::ClothoidData::nor_y_ISO_DDD</qualifiedname>
+        <param>
+          <type><ref refid="namespace_g2lib_1acc8095aa40beedee44352de62f232033" kindref="member">real_type</ref></type>
+          <declname>s</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Clothoids/Fresnel.hxx" line="213" column="15" bodyfile="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Clothoids/Fresnel.hxx" bodystart="213" bodyend="213"/>
+      </memberdef>
+      <memberdef kind="function" id="class_g2lib_1_1_clothoid_data_1a3073a0c56bafec20b2b430aa5bfcb39c" prot="public" static="no" const="yes" explicit="no" inline="yes" virt="non-virtual">
+        <type><ref refid="namespace_g2lib_1acc8095aa40beedee44352de62f232033" kindref="member">real_type</ref></type>
+        <definition>real_type G2lib::ClothoidData::nor0_x_SAE</definition>
+        <argsstring>() const</argsstring>
+        <name>nor0_x_SAE</name>
+        <qualifiedname>G2lib::ClothoidData::nor0_x_SAE</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Clothoids/Fresnel.hxx" line="215" column="15" bodyfile="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Clothoids/Fresnel.hxx" bodystart="215" bodyend="215"/>
+      </memberdef>
+      <memberdef kind="function" id="class_g2lib_1_1_clothoid_data_1ac55b809ef045967680ab9c51e75f84a9" prot="public" static="no" const="yes" explicit="no" inline="yes" virt="non-virtual">
+        <type><ref refid="namespace_g2lib_1acc8095aa40beedee44352de62f232033" kindref="member">real_type</ref></type>
+        <definition>real_type G2lib::ClothoidData::nor0_y_SAE</definition>
+        <argsstring>() const</argsstring>
+        <name>nor0_y_SAE</name>
+        <qualifiedname>G2lib::ClothoidData::nor0_y_SAE</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Clothoids/Fresnel.hxx" line="216" column="15" bodyfile="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Clothoids/Fresnel.hxx" bodystart="216" bodyend="216"/>
+      </memberdef>
+      <memberdef kind="function" id="class_g2lib_1_1_clothoid_data_1a8cecf09c6452eb9409d21b8431ac4cce" prot="public" static="no" const="yes" explicit="no" inline="yes" virt="non-virtual">
+        <type><ref refid="namespace_g2lib_1acc8095aa40beedee44352de62f232033" kindref="member">real_type</ref></type>
+        <definition>real_type G2lib::ClothoidData::nor_x_SAE</definition>
+        <argsstring>(real_type s) const</argsstring>
+        <name>nor_x_SAE</name>
+        <qualifiedname>G2lib::ClothoidData::nor_x_SAE</qualifiedname>
+        <param>
+          <type><ref refid="namespace_g2lib_1acc8095aa40beedee44352de62f232033" kindref="member">real_type</ref></type>
+          <declname>s</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Clothoids/Fresnel.hxx" line="218" column="15" bodyfile="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Clothoids/Fresnel.hxx" bodystart="218" bodyend="218"/>
+      </memberdef>
+      <memberdef kind="function" id="class_g2lib_1_1_clothoid_data_1a286c8dce3ff9cc9ee89279e78402aeb7" prot="public" static="no" const="yes" explicit="no" inline="yes" virt="non-virtual">
+        <type><ref refid="namespace_g2lib_1acc8095aa40beedee44352de62f232033" kindref="member">real_type</ref></type>
+        <definition>real_type G2lib::ClothoidData::nor_y_SAE</definition>
+        <argsstring>(real_type s) const</argsstring>
+        <name>nor_y_SAE</name>
+        <qualifiedname>G2lib::ClothoidData::nor_y_SAE</qualifiedname>
+        <param>
+          <type><ref refid="namespace_g2lib_1acc8095aa40beedee44352de62f232033" kindref="member">real_type</ref></type>
+          <declname>s</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Clothoids/Fresnel.hxx" line="219" column="15" bodyfile="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Clothoids/Fresnel.hxx" bodystart="219" bodyend="219"/>
+      </memberdef>
+      <memberdef kind="function" id="class_g2lib_1_1_clothoid_data_1a5a09b12044952412194332d7c98ea22e" prot="public" static="no" const="yes" explicit="no" inline="yes" virt="non-virtual">
+        <type><ref refid="namespace_g2lib_1acc8095aa40beedee44352de62f232033" kindref="member">real_type</ref></type>
+        <definition>real_type G2lib::ClothoidData::nor_x_SAE_D</definition>
+        <argsstring>(real_type s) const</argsstring>
+        <name>nor_x_SAE_D</name>
+        <qualifiedname>G2lib::ClothoidData::nor_x_SAE_D</qualifiedname>
+        <param>
+          <type><ref refid="namespace_g2lib_1acc8095aa40beedee44352de62f232033" kindref="member">real_type</ref></type>
+          <declname>s</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Clothoids/Fresnel.hxx" line="221" column="15" bodyfile="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Clothoids/Fresnel.hxx" bodystart="221" bodyend="221"/>
+      </memberdef>
+      <memberdef kind="function" id="class_g2lib_1_1_clothoid_data_1a55db198b175159ee14789d3cdc69e124" prot="public" static="no" const="yes" explicit="no" inline="yes" virt="non-virtual">
+        <type><ref refid="namespace_g2lib_1acc8095aa40beedee44352de62f232033" kindref="member">real_type</ref></type>
+        <definition>real_type G2lib::ClothoidData::nor_y_SAE_D</definition>
+        <argsstring>(real_type s) const</argsstring>
+        <name>nor_y_SAE_D</name>
+        <qualifiedname>G2lib::ClothoidData::nor_y_SAE_D</qualifiedname>
+        <param>
+          <type><ref refid="namespace_g2lib_1acc8095aa40beedee44352de62f232033" kindref="member">real_type</ref></type>
+          <declname>s</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Clothoids/Fresnel.hxx" line="222" column="15" bodyfile="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Clothoids/Fresnel.hxx" bodystart="222" bodyend="222"/>
+      </memberdef>
+      <memberdef kind="function" id="class_g2lib_1_1_clothoid_data_1a6735cfa2c5c4d2510dbd94dee2df11a8" prot="public" static="no" const="yes" explicit="no" inline="yes" virt="non-virtual">
+        <type><ref refid="namespace_g2lib_1acc8095aa40beedee44352de62f232033" kindref="member">real_type</ref></type>
+        <definition>real_type G2lib::ClothoidData::nor_x_SAE_DD</definition>
+        <argsstring>(real_type s) const</argsstring>
+        <name>nor_x_SAE_DD</name>
+        <qualifiedname>G2lib::ClothoidData::nor_x_SAE_DD</qualifiedname>
+        <param>
+          <type><ref refid="namespace_g2lib_1acc8095aa40beedee44352de62f232033" kindref="member">real_type</ref></type>
+          <declname>s</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Clothoids/Fresnel.hxx" line="224" column="15" bodyfile="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Clothoids/Fresnel.hxx" bodystart="224" bodyend="224"/>
+      </memberdef>
+      <memberdef kind="function" id="class_g2lib_1_1_clothoid_data_1ae66631f1a756d279a7b25feb87024695" prot="public" static="no" const="yes" explicit="no" inline="yes" virt="non-virtual">
+        <type><ref refid="namespace_g2lib_1acc8095aa40beedee44352de62f232033" kindref="member">real_type</ref></type>
+        <definition>real_type G2lib::ClothoidData::nor_y_SAE_DD</definition>
+        <argsstring>(real_type s) const</argsstring>
+        <name>nor_y_SAE_DD</name>
+        <qualifiedname>G2lib::ClothoidData::nor_y_SAE_DD</qualifiedname>
+        <param>
+          <type><ref refid="namespace_g2lib_1acc8095aa40beedee44352de62f232033" kindref="member">real_type</ref></type>
+          <declname>s</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Clothoids/Fresnel.hxx" line="225" column="15" bodyfile="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Clothoids/Fresnel.hxx" bodystart="225" bodyend="225"/>
+      </memberdef>
+      <memberdef kind="function" id="class_g2lib_1_1_clothoid_data_1abfa9adbd866ac03a197661f33093b2d5" prot="public" static="no" const="yes" explicit="no" inline="yes" virt="non-virtual">
+        <type><ref refid="namespace_g2lib_1acc8095aa40beedee44352de62f232033" kindref="member">real_type</ref></type>
+        <definition>real_type G2lib::ClothoidData::nor_x_SAE_DDD</definition>
+        <argsstring>(real_type s) const</argsstring>
+        <name>nor_x_SAE_DDD</name>
+        <qualifiedname>G2lib::ClothoidData::nor_x_SAE_DDD</qualifiedname>
+        <param>
+          <type><ref refid="namespace_g2lib_1acc8095aa40beedee44352de62f232033" kindref="member">real_type</ref></type>
+          <declname>s</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Clothoids/Fresnel.hxx" line="227" column="15" bodyfile="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Clothoids/Fresnel.hxx" bodystart="227" bodyend="227"/>
+      </memberdef>
+      <memberdef kind="function" id="class_g2lib_1_1_clothoid_data_1a70697daa0fb416a19b1e89190e76c17a" prot="public" static="no" const="yes" explicit="no" inline="yes" virt="non-virtual">
+        <type><ref refid="namespace_g2lib_1acc8095aa40beedee44352de62f232033" kindref="member">real_type</ref></type>
+        <definition>real_type G2lib::ClothoidData::nor_y_SAE_DDD</definition>
+        <argsstring>(real_type s) const</argsstring>
+        <name>nor_y_SAE_DDD</name>
+        <qualifiedname>G2lib::ClothoidData::nor_y_SAE_DDD</qualifiedname>
+        <param>
+          <type><ref refid="namespace_g2lib_1acc8095aa40beedee44352de62f232033" kindref="member">real_type</ref></type>
+          <declname>s</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Clothoids/Fresnel.hxx" line="228" column="15" bodyfile="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Clothoids/Fresnel.hxx" bodystart="228" bodyend="228"/>
+      </memberdef>
+      <memberdef kind="function" id="class_g2lib_1_1_clothoid_data_1a5c2676840d9eef2882b4873e85689083" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void G2lib::ClothoidData::tg</definition>
+        <argsstring>(real_type s, real_type &amp;tx, real_type &amp;ty) const</argsstring>
+        <name>tg</name>
+        <qualifiedname>G2lib::ClothoidData::tg</qualifiedname>
+        <param>
+          <type><ref refid="namespace_g2lib_1acc8095aa40beedee44352de62f232033" kindref="member">real_type</ref></type>
+          <declname>s</declname>
+        </param>
+        <param>
+          <type><ref refid="namespace_g2lib_1acc8095aa40beedee44352de62f232033" kindref="member">real_type</ref> &amp;</type>
+          <declname>tx</declname>
+        </param>
+        <param>
+          <type><ref refid="namespace_g2lib_1acc8095aa40beedee44352de62f232033" kindref="member">real_type</ref> &amp;</type>
+          <declname>ty</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Clothoids/Fresnel.hxx" line="230" column="10" bodyfile="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Fresnel.cc" bodystart="774" bodyend="782"/>
+      </memberdef>
+      <memberdef kind="function" id="class_g2lib_1_1_clothoid_data_1a3c5ee5f2668195f22e5896836c5842d0" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void G2lib::ClothoidData::tg_D</definition>
+        <argsstring>(real_type s, real_type &amp;tx, real_type &amp;ty) const</argsstring>
+        <name>tg_D</name>
+        <qualifiedname>G2lib::ClothoidData::tg_D</qualifiedname>
+        <param>
+          <type><ref refid="namespace_g2lib_1acc8095aa40beedee44352de62f232033" kindref="member">real_type</ref></type>
+          <declname>s</declname>
+        </param>
+        <param>
+          <type><ref refid="namespace_g2lib_1acc8095aa40beedee44352de62f232033" kindref="member">real_type</ref> &amp;</type>
+          <declname>tx</declname>
+        </param>
+        <param>
+          <type><ref refid="namespace_g2lib_1acc8095aa40beedee44352de62f232033" kindref="member">real_type</ref> &amp;</type>
+          <declname>ty</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Clothoids/Fresnel.hxx" line="231" column="10" bodyfile="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Fresnel.cc" bodystart="787" bodyend="796"/>
+      </memberdef>
+      <memberdef kind="function" id="class_g2lib_1_1_clothoid_data_1a5711f00c39334d3fbe189fcf0e755a88" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void G2lib::ClothoidData::tg_DD</definition>
+        <argsstring>(real_type s, real_type &amp;tx, real_type &amp;ty) const</argsstring>
+        <name>tg_DD</name>
+        <qualifiedname>G2lib::ClothoidData::tg_DD</qualifiedname>
+        <param>
+          <type><ref refid="namespace_g2lib_1acc8095aa40beedee44352de62f232033" kindref="member">real_type</ref></type>
+          <declname>s</declname>
+        </param>
+        <param>
+          <type><ref refid="namespace_g2lib_1acc8095aa40beedee44352de62f232033" kindref="member">real_type</ref> &amp;</type>
+          <declname>tx</declname>
+        </param>
+        <param>
+          <type><ref refid="namespace_g2lib_1acc8095aa40beedee44352de62f232033" kindref="member">real_type</ref> &amp;</type>
+          <declname>ty</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Clothoids/Fresnel.hxx" line="232" column="10" bodyfile="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Fresnel.cc" bodystart="801" bodyend="813"/>
+      </memberdef>
+      <memberdef kind="function" id="class_g2lib_1_1_clothoid_data_1a90bf77a855650f1fd5f513fa20ba1b56" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void G2lib::ClothoidData::tg_DDD</definition>
+        <argsstring>(real_type s, real_type &amp;tx, real_type &amp;ty) const</argsstring>
+        <name>tg_DDD</name>
+        <qualifiedname>G2lib::ClothoidData::tg_DDD</qualifiedname>
+        <param>
+          <type><ref refid="namespace_g2lib_1acc8095aa40beedee44352de62f232033" kindref="member">real_type</ref></type>
+          <declname>s</declname>
+        </param>
+        <param>
+          <type><ref refid="namespace_g2lib_1acc8095aa40beedee44352de62f232033" kindref="member">real_type</ref> &amp;</type>
+          <declname>tx</declname>
+        </param>
+        <param>
+          <type><ref refid="namespace_g2lib_1acc8095aa40beedee44352de62f232033" kindref="member">real_type</ref> &amp;</type>
+          <declname>ty</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Clothoids/Fresnel.hxx" line="233" column="10" bodyfile="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Fresnel.cc" bodystart="818" bodyend="831"/>
+      </memberdef>
+      <memberdef kind="function" id="class_g2lib_1_1_clothoid_data_1a3c25cb576e46b7f81eeac907c4292253" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void G2lib::ClothoidData::nor_ISO</definition>
+        <argsstring>(real_type s, real_type &amp;nx, real_type &amp;ny) const</argsstring>
+        <name>nor_ISO</name>
+        <qualifiedname>G2lib::ClothoidData::nor_ISO</qualifiedname>
+        <param>
+          <type><ref refid="namespace_g2lib_1acc8095aa40beedee44352de62f232033" kindref="member">real_type</ref></type>
+          <declname>s</declname>
+        </param>
+        <param>
+          <type><ref refid="namespace_g2lib_1acc8095aa40beedee44352de62f232033" kindref="member">real_type</ref> &amp;</type>
+          <declname>nx</declname>
+        </param>
+        <param>
+          <type><ref refid="namespace_g2lib_1acc8095aa40beedee44352de62f232033" kindref="member">real_type</ref> &amp;</type>
+          <declname>ny</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Clothoids/Fresnel.hxx" line="235" column="10" bodyfile="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Fresnel.cc" bodystart="630" bodyend="636"/>
+      </memberdef>
+      <memberdef kind="function" id="class_g2lib_1_1_clothoid_data_1a92f6a095f868f08e61bf9b122a10e338" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void G2lib::ClothoidData::nor_ISO_D</definition>
+        <argsstring>(real_type s, real_type &amp;nx_D, real_type &amp;ny_D) const</argsstring>
+        <name>nor_ISO_D</name>
+        <qualifiedname>G2lib::ClothoidData::nor_ISO_D</qualifiedname>
+        <param>
+          <type><ref refid="namespace_g2lib_1acc8095aa40beedee44352de62f232033" kindref="member">real_type</ref></type>
+          <declname>s</declname>
+        </param>
+        <param>
+          <type><ref refid="namespace_g2lib_1acc8095aa40beedee44352de62f232033" kindref="member">real_type</ref> &amp;</type>
+          <declname>nx_D</declname>
+        </param>
+        <param>
+          <type><ref refid="namespace_g2lib_1acc8095aa40beedee44352de62f232033" kindref="member">real_type</ref> &amp;</type>
+          <declname>ny_D</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Clothoids/Fresnel.hxx" line="236" column="10" bodyfile="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Fresnel.cc" bodystart="650" bodyend="656"/>
+      </memberdef>
+      <memberdef kind="function" id="class_g2lib_1_1_clothoid_data_1a80606ec6674829aef2be081d6c96b6c7" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void G2lib::ClothoidData::nor_ISO_DD</definition>
+        <argsstring>(real_type s, real_type &amp;nx_DD, real_type &amp;ny_DD) const</argsstring>
+        <name>nor_ISO_DD</name>
+        <qualifiedname>G2lib::ClothoidData::nor_ISO_DD</qualifiedname>
+        <param>
+          <type><ref refid="namespace_g2lib_1acc8095aa40beedee44352de62f232033" kindref="member">real_type</ref></type>
+          <declname>s</declname>
+        </param>
+        <param>
+          <type><ref refid="namespace_g2lib_1acc8095aa40beedee44352de62f232033" kindref="member">real_type</ref> &amp;</type>
+          <declname>nx_DD</declname>
+        </param>
+        <param>
+          <type><ref refid="namespace_g2lib_1acc8095aa40beedee44352de62f232033" kindref="member">real_type</ref> &amp;</type>
+          <declname>ny_DD</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Clothoids/Fresnel.hxx" line="237" column="10" bodyfile="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Fresnel.cc" bodystart="670" bodyend="676"/>
+      </memberdef>
+      <memberdef kind="function" id="class_g2lib_1_1_clothoid_data_1af11147655e21a56889cd7e7b0833959f" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void G2lib::ClothoidData::nor_ISO_DDD</definition>
+        <argsstring>(real_type s, real_type &amp;nx_DDD, real_type &amp;ny_DDD) const</argsstring>
+        <name>nor_ISO_DDD</name>
+        <qualifiedname>G2lib::ClothoidData::nor_ISO_DDD</qualifiedname>
+        <param>
+          <type><ref refid="namespace_g2lib_1acc8095aa40beedee44352de62f232033" kindref="member">real_type</ref></type>
+          <declname>s</declname>
+        </param>
+        <param>
+          <type><ref refid="namespace_g2lib_1acc8095aa40beedee44352de62f232033" kindref="member">real_type</ref> &amp;</type>
+          <declname>nx_DDD</declname>
+        </param>
+        <param>
+          <type><ref refid="namespace_g2lib_1acc8095aa40beedee44352de62f232033" kindref="member">real_type</ref> &amp;</type>
+          <declname>ny_DDD</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Clothoids/Fresnel.hxx" line="238" column="10" bodyfile="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Fresnel.cc" bodystart="690" bodyend="696"/>
+      </memberdef>
+      <memberdef kind="function" id="class_g2lib_1_1_clothoid_data_1a0e4ac7ff123d8915b5765208becea8ec" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void G2lib::ClothoidData::nor_SAE</definition>
+        <argsstring>(real_type s, real_type &amp;nx, real_type &amp;ny) const</argsstring>
+        <name>nor_SAE</name>
+        <qualifiedname>G2lib::ClothoidData::nor_SAE</qualifiedname>
+        <param>
+          <type><ref refid="namespace_g2lib_1acc8095aa40beedee44352de62f232033" kindref="member">real_type</ref></type>
+          <declname>s</declname>
+        </param>
+        <param>
+          <type><ref refid="namespace_g2lib_1acc8095aa40beedee44352de62f232033" kindref="member">real_type</ref> &amp;</type>
+          <declname>nx</declname>
+        </param>
+        <param>
+          <type><ref refid="namespace_g2lib_1acc8095aa40beedee44352de62f232033" kindref="member">real_type</ref> &amp;</type>
+          <declname>ny</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Clothoids/Fresnel.hxx" line="240" column="10" bodyfile="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Fresnel.cc" bodystart="639" bodyend="645"/>
+      </memberdef>
+      <memberdef kind="function" id="class_g2lib_1_1_clothoid_data_1a138894f6dd7f045c78a3e93aa931e808" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void G2lib::ClothoidData::nor_SAE_D</definition>
+        <argsstring>(real_type s, real_type &amp;nx_D, real_type &amp;ny_D) const</argsstring>
+        <name>nor_SAE_D</name>
+        <qualifiedname>G2lib::ClothoidData::nor_SAE_D</qualifiedname>
+        <param>
+          <type><ref refid="namespace_g2lib_1acc8095aa40beedee44352de62f232033" kindref="member">real_type</ref></type>
+          <declname>s</declname>
+        </param>
+        <param>
+          <type><ref refid="namespace_g2lib_1acc8095aa40beedee44352de62f232033" kindref="member">real_type</ref> &amp;</type>
+          <declname>nx_D</declname>
+        </param>
+        <param>
+          <type><ref refid="namespace_g2lib_1acc8095aa40beedee44352de62f232033" kindref="member">real_type</ref> &amp;</type>
+          <declname>ny_D</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Clothoids/Fresnel.hxx" line="241" column="10" bodyfile="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Fresnel.cc" bodystart="659" bodyend="665"/>
+      </memberdef>
+      <memberdef kind="function" id="class_g2lib_1_1_clothoid_data_1acb348ae71e76fb9dafbce19829c1b003" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void G2lib::ClothoidData::nor_SAE_DD</definition>
+        <argsstring>(real_type s, real_type &amp;nx_DD, real_type &amp;ny_DD) const</argsstring>
+        <name>nor_SAE_DD</name>
+        <qualifiedname>G2lib::ClothoidData::nor_SAE_DD</qualifiedname>
+        <param>
+          <type><ref refid="namespace_g2lib_1acc8095aa40beedee44352de62f232033" kindref="member">real_type</ref></type>
+          <declname>s</declname>
+        </param>
+        <param>
+          <type><ref refid="namespace_g2lib_1acc8095aa40beedee44352de62f232033" kindref="member">real_type</ref> &amp;</type>
+          <declname>nx_DD</declname>
+        </param>
+        <param>
+          <type><ref refid="namespace_g2lib_1acc8095aa40beedee44352de62f232033" kindref="member">real_type</ref> &amp;</type>
+          <declname>ny_DD</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Clothoids/Fresnel.hxx" line="242" column="10" bodyfile="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Fresnel.cc" bodystart="679" bodyend="685"/>
+      </memberdef>
+      <memberdef kind="function" id="class_g2lib_1_1_clothoid_data_1aef900b3e6e7af6396c0817080e8c19da" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void G2lib::ClothoidData::nor_SAE_DDD</definition>
+        <argsstring>(real_type s, real_type &amp;nx_DDD, real_type &amp;ny_DDD) const</argsstring>
+        <name>nor_SAE_DDD</name>
+        <qualifiedname>G2lib::ClothoidData::nor_SAE_DDD</qualifiedname>
+        <param>
+          <type><ref refid="namespace_g2lib_1acc8095aa40beedee44352de62f232033" kindref="member">real_type</ref></type>
+          <declname>s</declname>
+        </param>
+        <param>
+          <type><ref refid="namespace_g2lib_1acc8095aa40beedee44352de62f232033" kindref="member">real_type</ref> &amp;</type>
+          <declname>nx_DDD</declname>
+        </param>
+        <param>
+          <type><ref refid="namespace_g2lib_1acc8095aa40beedee44352de62f232033" kindref="member">real_type</ref> &amp;</type>
+          <declname>ny_DDD</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Clothoids/Fresnel.hxx" line="243" column="10" bodyfile="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Fresnel.cc" bodystart="699" bodyend="705"/>
+      </memberdef>
+      <memberdef kind="function" id="class_g2lib_1_1_clothoid_data_1a5562ead62d08b6dff161b842d7678c9e" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void G2lib::ClothoidData::evaluate</definition>
+        <argsstring>(real_type s, real_type &amp;theta, real_type &amp;kappa, real_type &amp;x, real_type &amp;y) const</argsstring>
+        <name>evaluate</name>
+        <qualifiedname>G2lib::ClothoidData::evaluate</qualifiedname>
+        <param>
+          <type><ref refid="namespace_g2lib_1acc8095aa40beedee44352de62f232033" kindref="member">real_type</ref></type>
+          <declname>s</declname>
+        </param>
+        <param>
+          <type><ref refid="namespace_g2lib_1acc8095aa40beedee44352de62f232033" kindref="member">real_type</ref> &amp;</type>
+          <declname>theta</declname>
+        </param>
+        <param>
+          <type><ref refid="namespace_g2lib_1acc8095aa40beedee44352de62f232033" kindref="member">real_type</ref> &amp;</type>
+          <declname>kappa</declname>
+        </param>
+        <param>
+          <type><ref refid="namespace_g2lib_1acc8095aa40beedee44352de62f232033" kindref="member">real_type</ref> &amp;</type>
+          <declname>x</declname>
+        </param>
+        <param>
+          <type><ref refid="namespace_g2lib_1acc8095aa40beedee44352de62f232033" kindref="member">real_type</ref> &amp;</type>
+          <declname>y</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Clothoids/Fresnel.hxx" line="246" column="5" bodyfile="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Fresnel.cc" bodystart="974" bodyend="988"/>
+      </memberdef>
+      <memberdef kind="function" id="class_g2lib_1_1_clothoid_data_1a74e1be3bcd89028b1d4968bbc5658d3f" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void G2lib::ClothoidData::eval</definition>
+        <argsstring>(real_type s, real_type &amp;x, real_type &amp;y) const</argsstring>
+        <name>eval</name>
+        <qualifiedname>G2lib::ClothoidData::eval</qualifiedname>
+        <param>
+          <type><ref refid="namespace_g2lib_1acc8095aa40beedee44352de62f232033" kindref="member">real_type</ref></type>
+          <declname>s</declname>
+        </param>
+        <param>
+          <type><ref refid="namespace_g2lib_1acc8095aa40beedee44352de62f232033" kindref="member">real_type</ref> &amp;</type>
+          <declname>x</declname>
+        </param>
+        <param>
+          <type><ref refid="namespace_g2lib_1acc8095aa40beedee44352de62f232033" kindref="member">real_type</ref> &amp;</type>
+          <declname>y</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Clothoids/Fresnel.hxx" line="255" column="5" bodyfile="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Fresnel.cc" bodystart="993" bodyend="1003"/>
+      </memberdef>
+      <memberdef kind="function" id="class_g2lib_1_1_clothoid_data_1a93781c978762d755e3dfb356fa56196f" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void G2lib::ClothoidData::eval_D</definition>
+        <argsstring>(real_type s, real_type &amp;x_D, real_type &amp;y_D) const</argsstring>
+        <name>eval_D</name>
+        <qualifiedname>G2lib::ClothoidData::eval_D</qualifiedname>
+        <param>
+          <type><ref refid="namespace_g2lib_1acc8095aa40beedee44352de62f232033" kindref="member">real_type</ref></type>
+          <declname>s</declname>
+        </param>
+        <param>
+          <type><ref refid="namespace_g2lib_1acc8095aa40beedee44352de62f232033" kindref="member">real_type</ref> &amp;</type>
+          <declname>x_D</declname>
+        </param>
+        <param>
+          <type><ref refid="namespace_g2lib_1acc8095aa40beedee44352de62f232033" kindref="member">real_type</ref> &amp;</type>
+          <declname>y_D</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Clothoids/Fresnel.hxx" line="262" column="5" bodyfile="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Fresnel.cc" bodystart="1008" bodyend="1017"/>
+      </memberdef>
+      <memberdef kind="function" id="class_g2lib_1_1_clothoid_data_1a3d12f44ca6b80e49738918c30dd3bde1" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void G2lib::ClothoidData::eval_DD</definition>
+        <argsstring>(real_type s, real_type &amp;x_DD, real_type &amp;y_DD) const</argsstring>
+        <name>eval_DD</name>
+        <qualifiedname>G2lib::ClothoidData::eval_DD</qualifiedname>
+        <param>
+          <type><ref refid="namespace_g2lib_1acc8095aa40beedee44352de62f232033" kindref="member">real_type</ref></type>
+          <declname>s</declname>
+        </param>
+        <param>
+          <type><ref refid="namespace_g2lib_1acc8095aa40beedee44352de62f232033" kindref="member">real_type</ref> &amp;</type>
+          <declname>x_DD</declname>
+        </param>
+        <param>
+          <type><ref refid="namespace_g2lib_1acc8095aa40beedee44352de62f232033" kindref="member">real_type</ref> &amp;</type>
+          <declname>y_DD</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Clothoids/Fresnel.hxx" line="269" column="5" bodyfile="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Fresnel.cc" bodystart="1022" bodyend="1032"/>
+      </memberdef>
+      <memberdef kind="function" id="class_g2lib_1_1_clothoid_data_1a9d3a4cbcbfa81d5dfb8b568ec871f593" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void G2lib::ClothoidData::eval_DDD</definition>
+        <argsstring>(real_type s, real_type &amp;x_DDD, real_type &amp;y_DDD) const</argsstring>
+        <name>eval_DDD</name>
+        <qualifiedname>G2lib::ClothoidData::eval_DDD</qualifiedname>
+        <param>
+          <type><ref refid="namespace_g2lib_1acc8095aa40beedee44352de62f232033" kindref="member">real_type</ref></type>
+          <declname>s</declname>
+        </param>
+        <param>
+          <type><ref refid="namespace_g2lib_1acc8095aa40beedee44352de62f232033" kindref="member">real_type</ref> &amp;</type>
+          <declname>x_DDD</declname>
+        </param>
+        <param>
+          <type><ref refid="namespace_g2lib_1acc8095aa40beedee44352de62f232033" kindref="member">real_type</ref> &amp;</type>
+          <declname>y_DDD</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Clothoids/Fresnel.hxx" line="276" column="5" bodyfile="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Fresnel.cc" bodystart="1037" bodyend="1050"/>
+      </memberdef>
+      <memberdef kind="function" id="class_g2lib_1_1_clothoid_data_1a14d14e3cf46b435dcaa35aca2ef0ea53" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void G2lib::ClothoidData::eval_ISO</definition>
+        <argsstring>(real_type s, real_type offs, real_type &amp;x, real_type &amp;y) const</argsstring>
+        <name>eval_ISO</name>
+        <qualifiedname>G2lib::ClothoidData::eval_ISO</qualifiedname>
+        <param>
+          <type><ref refid="namespace_g2lib_1acc8095aa40beedee44352de62f232033" kindref="member">real_type</ref></type>
+          <declname>s</declname>
+        </param>
+        <param>
+          <type><ref refid="namespace_g2lib_1acc8095aa40beedee44352de62f232033" kindref="member">real_type</ref></type>
+          <declname>offs</declname>
+        </param>
+        <param>
+          <type><ref refid="namespace_g2lib_1acc8095aa40beedee44352de62f232033" kindref="member">real_type</ref> &amp;</type>
+          <declname>x</declname>
+        </param>
+        <param>
+          <type><ref refid="namespace_g2lib_1acc8095aa40beedee44352de62f232033" kindref="member">real_type</ref> &amp;</type>
+          <declname>y</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Clothoids/Fresnel.hxx" line="283" column="5" bodyfile="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Fresnel.cc" bodystart="1055" bodyend="1071"/>
+      </memberdef>
+      <memberdef kind="function" id="class_g2lib_1_1_clothoid_data_1a46e59bedb9576c049697edb09145316c" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void G2lib::ClothoidData::eval_ISO_D</definition>
+        <argsstring>(real_type s, real_type offs, real_type &amp;x_D, real_type &amp;y_D) const</argsstring>
+        <name>eval_ISO_D</name>
+        <qualifiedname>G2lib::ClothoidData::eval_ISO_D</qualifiedname>
+        <param>
+          <type><ref refid="namespace_g2lib_1acc8095aa40beedee44352de62f232033" kindref="member">real_type</ref></type>
+          <declname>s</declname>
+        </param>
+        <param>
+          <type><ref refid="namespace_g2lib_1acc8095aa40beedee44352de62f232033" kindref="member">real_type</ref></type>
+          <declname>offs</declname>
+        </param>
+        <param>
+          <type><ref refid="namespace_g2lib_1acc8095aa40beedee44352de62f232033" kindref="member">real_type</ref> &amp;</type>
+          <declname>x_D</declname>
+        </param>
+        <param>
+          <type><ref refid="namespace_g2lib_1acc8095aa40beedee44352de62f232033" kindref="member">real_type</ref> &amp;</type>
+          <declname>y_D</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Clothoids/Fresnel.hxx" line="291" column="5" bodyfile="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Fresnel.cc" bodystart="1076" bodyend="1088"/>
+      </memberdef>
+      <memberdef kind="function" id="class_g2lib_1_1_clothoid_data_1a635fc5c420d87e160b51ebe550e37b0e" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void G2lib::ClothoidData::eval_ISO_DD</definition>
+        <argsstring>(real_type s, real_type offs, real_type &amp;x_DD, real_type &amp;y_DD) const</argsstring>
+        <name>eval_ISO_DD</name>
+        <qualifiedname>G2lib::ClothoidData::eval_ISO_DD</qualifiedname>
+        <param>
+          <type><ref refid="namespace_g2lib_1acc8095aa40beedee44352de62f232033" kindref="member">real_type</ref></type>
+          <declname>s</declname>
+        </param>
+        <param>
+          <type><ref refid="namespace_g2lib_1acc8095aa40beedee44352de62f232033" kindref="member">real_type</ref></type>
+          <declname>offs</declname>
+        </param>
+        <param>
+          <type><ref refid="namespace_g2lib_1acc8095aa40beedee44352de62f232033" kindref="member">real_type</ref> &amp;</type>
+          <declname>x_DD</declname>
+        </param>
+        <param>
+          <type><ref refid="namespace_g2lib_1acc8095aa40beedee44352de62f232033" kindref="member">real_type</ref> &amp;</type>
+          <declname>y_DD</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Clothoids/Fresnel.hxx" line="299" column="5" bodyfile="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Fresnel.cc" bodystart="1093" bodyend="1108"/>
+      </memberdef>
+      <memberdef kind="function" id="class_g2lib_1_1_clothoid_data_1a065062c681b1771b4d90154e28b745e6" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void G2lib::ClothoidData::eval_ISO_DDD</definition>
+        <argsstring>(real_type s, real_type offs, real_type &amp;x_DDD, real_type &amp;y_DDD) const</argsstring>
+        <name>eval_ISO_DDD</name>
+        <qualifiedname>G2lib::ClothoidData::eval_ISO_DDD</qualifiedname>
+        <param>
+          <type><ref refid="namespace_g2lib_1acc8095aa40beedee44352de62f232033" kindref="member">real_type</ref></type>
+          <declname>s</declname>
+        </param>
+        <param>
+          <type><ref refid="namespace_g2lib_1acc8095aa40beedee44352de62f232033" kindref="member">real_type</ref></type>
+          <declname>offs</declname>
+        </param>
+        <param>
+          <type><ref refid="namespace_g2lib_1acc8095aa40beedee44352de62f232033" kindref="member">real_type</ref> &amp;</type>
+          <declname>x_DDD</declname>
+        </param>
+        <param>
+          <type><ref refid="namespace_g2lib_1acc8095aa40beedee44352de62f232033" kindref="member">real_type</ref> &amp;</type>
+          <declname>y_DDD</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Clothoids/Fresnel.hxx" line="307" column="5" bodyfile="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Fresnel.cc" bodystart="1113" bodyend="1129"/>
+      </memberdef>
+      <memberdef kind="function" id="class_g2lib_1_1_clothoid_data_1ae328a7b818fbaca312a84812d73c20a0" prot="public" static="no" const="yes" explicit="no" inline="yes" virt="non-virtual">
+        <type>void</type>
+        <definition>void G2lib::ClothoidData::eval_SAE</definition>
+        <argsstring>(real_type s, real_type offs, real_type &amp;x, real_type &amp;y) const</argsstring>
+        <name>eval_SAE</name>
+        <qualifiedname>G2lib::ClothoidData::eval_SAE</qualifiedname>
+        <param>
+          <type><ref refid="namespace_g2lib_1acc8095aa40beedee44352de62f232033" kindref="member">real_type</ref></type>
+          <declname>s</declname>
+        </param>
+        <param>
+          <type><ref refid="namespace_g2lib_1acc8095aa40beedee44352de62f232033" kindref="member">real_type</ref></type>
+          <declname>offs</declname>
+        </param>
+        <param>
+          <type><ref refid="namespace_g2lib_1acc8095aa40beedee44352de62f232033" kindref="member">real_type</ref> &amp;</type>
+          <declname>x</declname>
+        </param>
+        <param>
+          <type><ref refid="namespace_g2lib_1acc8095aa40beedee44352de62f232033" kindref="member">real_type</ref> &amp;</type>
+          <declname>y</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Clothoids/Fresnel.hxx" line="315" column="5" bodyfile="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Clothoids/Fresnel.hxx" bodystart="315" bodyend="322"/>
+      </memberdef>
+      <memberdef kind="function" id="class_g2lib_1_1_clothoid_data_1a03a8aaede0ba521149214e49791325a4" prot="public" static="no" const="yes" explicit="no" inline="yes" virt="non-virtual">
+        <type>void</type>
+        <definition>void G2lib::ClothoidData::eval_SAE_D</definition>
+        <argsstring>(real_type s, real_type offs, real_type &amp;x_D, real_type &amp;y_D) const</argsstring>
+        <name>eval_SAE_D</name>
+        <qualifiedname>G2lib::ClothoidData::eval_SAE_D</qualifiedname>
+        <param>
+          <type><ref refid="namespace_g2lib_1acc8095aa40beedee44352de62f232033" kindref="member">real_type</ref></type>
+          <declname>s</declname>
+        </param>
+        <param>
+          <type><ref refid="namespace_g2lib_1acc8095aa40beedee44352de62f232033" kindref="member">real_type</ref></type>
+          <declname>offs</declname>
+        </param>
+        <param>
+          <type><ref refid="namespace_g2lib_1acc8095aa40beedee44352de62f232033" kindref="member">real_type</ref> &amp;</type>
+          <declname>x_D</declname>
+        </param>
+        <param>
+          <type><ref refid="namespace_g2lib_1acc8095aa40beedee44352de62f232033" kindref="member">real_type</ref> &amp;</type>
+          <declname>y_D</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Clothoids/Fresnel.hxx" line="325" column="5" bodyfile="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Clothoids/Fresnel.hxx" bodystart="325" bodyend="332"/>
+      </memberdef>
+      <memberdef kind="function" id="class_g2lib_1_1_clothoid_data_1a37a3eb416725efb318d879c3c0bedd7f" prot="public" static="no" const="yes" explicit="no" inline="yes" virt="non-virtual">
+        <type>void</type>
+        <definition>void G2lib::ClothoidData::eval_DAE_DD</definition>
+        <argsstring>(real_type s, real_type offs, real_type &amp;x_DD, real_type &amp;y_DD) const</argsstring>
+        <name>eval_DAE_DD</name>
+        <qualifiedname>G2lib::ClothoidData::eval_DAE_DD</qualifiedname>
+        <param>
+          <type><ref refid="namespace_g2lib_1acc8095aa40beedee44352de62f232033" kindref="member">real_type</ref></type>
+          <declname>s</declname>
+        </param>
+        <param>
+          <type><ref refid="namespace_g2lib_1acc8095aa40beedee44352de62f232033" kindref="member">real_type</ref></type>
+          <declname>offs</declname>
+        </param>
+        <param>
+          <type><ref refid="namespace_g2lib_1acc8095aa40beedee44352de62f232033" kindref="member">real_type</ref> &amp;</type>
+          <declname>x_DD</declname>
+        </param>
+        <param>
+          <type><ref refid="namespace_g2lib_1acc8095aa40beedee44352de62f232033" kindref="member">real_type</ref> &amp;</type>
+          <declname>y_DD</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Clothoids/Fresnel.hxx" line="335" column="5" bodyfile="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Clothoids/Fresnel.hxx" bodystart="335" bodyend="342"/>
+      </memberdef>
+      <memberdef kind="function" id="class_g2lib_1_1_clothoid_data_1ad8578afc1958db85a61a71b3d5b9185d" prot="public" static="no" const="yes" explicit="no" inline="yes" virt="non-virtual">
+        <type>void</type>
+        <definition>void G2lib::ClothoidData::eval_SAE_DDD</definition>
+        <argsstring>(real_type s, real_type offs, real_type &amp;x_DDD, real_type &amp;y_DDD) const</argsstring>
+        <name>eval_SAE_DDD</name>
+        <qualifiedname>G2lib::ClothoidData::eval_SAE_DDD</qualifiedname>
+        <param>
+          <type><ref refid="namespace_g2lib_1acc8095aa40beedee44352de62f232033" kindref="member">real_type</ref></type>
+          <declname>s</declname>
+        </param>
+        <param>
+          <type><ref refid="namespace_g2lib_1acc8095aa40beedee44352de62f232033" kindref="member">real_type</ref></type>
+          <declname>offs</declname>
+        </param>
+        <param>
+          <type><ref refid="namespace_g2lib_1acc8095aa40beedee44352de62f232033" kindref="member">real_type</ref> &amp;</type>
+          <declname>x_DDD</declname>
+        </param>
+        <param>
+          <type><ref refid="namespace_g2lib_1acc8095aa40beedee44352de62f232033" kindref="member">real_type</ref> &amp;</type>
+          <declname>y_DDD</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Clothoids/Fresnel.hxx" line="345" column="5" bodyfile="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Clothoids/Fresnel.hxx" bodystart="345" bodyend="352"/>
+      </memberdef>
+      <memberdef kind="function" id="class_g2lib_1_1_clothoid_data_1a3c02aafe6fe5805ab2ee52353c304f5a" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void G2lib::ClothoidData::eval</definition>
+        <argsstring>(real_type s, ClothoidData &amp;C) const</argsstring>
+        <name>eval</name>
+        <qualifiedname>G2lib::ClothoidData::eval</qualifiedname>
+        <param>
+          <type><ref refid="namespace_g2lib_1acc8095aa40beedee44352de62f232033" kindref="member">real_type</ref></type>
+          <declname>s</declname>
+        </param>
+        <param>
+          <type><ref refid="class_g2lib_1_1_clothoid_data" kindref="compound">ClothoidData</ref> &amp;</type>
+          <declname>C</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Clothoids/Fresnel.hxx" line="355" column="5" bodyfile="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Fresnel.cc" bodystart="1153" bodyend="1156"/>
+      </memberdef>
+      <memberdef kind="function" id="class_g2lib_1_1_clothoid_data_1a7b7bd2afcb87647c2dad095b5effefe3" prot="public" static="no" const="yes" explicit="no" inline="yes" virt="non-virtual">
+        <type><ref refid="namespace_g2lib_1acc8095aa40beedee44352de62f232033" kindref="member">real_type</ref></type>
+        <definition>real_type G2lib::ClothoidData::c0x</definition>
+        <argsstring>() const</argsstring>
+        <name>c0x</name>
+        <qualifiedname>G2lib::ClothoidData::c0x</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Clothoids/Fresnel.hxx" line="357" column="15" bodyfile="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Clothoids/Fresnel.hxx" bodystart="357" bodyend="357"/>
+      </memberdef>
+      <memberdef kind="function" id="class_g2lib_1_1_clothoid_data_1ac4117393cc23586aaea4dd291254f1d6" prot="public" static="no" const="yes" explicit="no" inline="yes" virt="non-virtual">
+        <type><ref refid="namespace_g2lib_1acc8095aa40beedee44352de62f232033" kindref="member">real_type</ref></type>
+        <definition>real_type G2lib::ClothoidData::c0y</definition>
+        <argsstring>() const</argsstring>
+        <name>c0y</name>
+        <qualifiedname>G2lib::ClothoidData::c0y</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Clothoids/Fresnel.hxx" line="358" column="15" bodyfile="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Clothoids/Fresnel.hxx" bodystart="358" bodyend="358"/>
+      </memberdef>
+      <memberdef kind="function" id="class_g2lib_1_1_clothoid_data_1a41d65c0f7c4c39215bd04f603605d53b" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void G2lib::ClothoidData::Pinfinity</definition>
+        <argsstring>(real_type &amp;x, real_type &amp;y, bool plus) const</argsstring>
+        <name>Pinfinity</name>
+        <qualifiedname>G2lib::ClothoidData::Pinfinity</qualifiedname>
+        <param>
+          <type><ref refid="namespace_g2lib_1acc8095aa40beedee44352de62f232033" kindref="member">real_type</ref> &amp;</type>
+          <declname>x</declname>
+        </param>
+        <param>
+          <type><ref refid="namespace_g2lib_1acc8095aa40beedee44352de62f232033" kindref="member">real_type</ref> &amp;</type>
+          <declname>y</declname>
+        </param>
+        <param>
+          <type>bool</type>
+          <declname>plus</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Clothoids/Fresnel.hxx" line="361" column="5" bodyfile="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Fresnel.cc" bodystart="1134" bodyend="1148"/>
+      </memberdef>
+      <memberdef kind="function" id="class_g2lib_1_1_clothoid_data_1a45f59c87c2a07c2832dc863102688157" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void G2lib::ClothoidData::reverse</definition>
+        <argsstring>(real_type L)</argsstring>
+        <name>reverse</name>
+        <qualifiedname>G2lib::ClothoidData::reverse</qualifiedname>
+        <param>
+          <type><ref refid="namespace_g2lib_1acc8095aa40beedee44352de62f232033" kindref="member">real_type</ref></type>
+          <declname>L</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Clothoids/Fresnel.hxx" line="364" column="5" bodyfile="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Fresnel.cc" bodystart="1161" bodyend="1172"/>
+      </memberdef>
+      <memberdef kind="function" id="class_g2lib_1_1_clothoid_data_1afc740c1639072895383e71cfd41cf070" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void G2lib::ClothoidData::reverse</definition>
+        <argsstring>(real_type L, ClothoidData &amp;out) const</argsstring>
+        <name>reverse</name>
+        <qualifiedname>G2lib::ClothoidData::reverse</qualifiedname>
+        <param>
+          <type><ref refid="namespace_g2lib_1acc8095aa40beedee44352de62f232033" kindref="member">real_type</ref></type>
+          <declname>L</declname>
+        </param>
+        <param>
+          <type><ref refid="class_g2lib_1_1_clothoid_data" kindref="compound">ClothoidData</ref> &amp;</type>
+          <declname>out</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Clothoids/Fresnel.hxx" line="367" column="5" bodyfile="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Fresnel.cc" bodystart="1177" bodyend="1184"/>
+      </memberdef>
+      <memberdef kind="function" id="class_g2lib_1_1_clothoid_data_1aeb9ce155e89949fc2ca1942470e235e5" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void G2lib::ClothoidData::rotate</definition>
+        <argsstring>(real_type angle, real_type cx, real_type cy)</argsstring>
+        <name>rotate</name>
+        <qualifiedname>G2lib::ClothoidData::rotate</qualifiedname>
+        <param>
+          <type><ref refid="namespace_g2lib_1acc8095aa40beedee44352de62f232033" kindref="member">real_type</ref></type>
+          <declname>angle</declname>
+        </param>
+        <param>
+          <type><ref refid="namespace_g2lib_1acc8095aa40beedee44352de62f232033" kindref="member">real_type</ref></type>
+          <declname>cx</declname>
+        </param>
+        <param>
+          <type><ref refid="namespace_g2lib_1acc8095aa40beedee44352de62f232033" kindref="member">real_type</ref></type>
+          <declname>cy</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Clothoids/Fresnel.hxx" line="370" column="5" bodyfile="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Fresnel.cc" bodystart="1189" bodyend="1199"/>
+      </memberdef>
+      <memberdef kind="function" id="class_g2lib_1_1_clothoid_data_1a6475202a2a408af3186a977dc5ab987e" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void G2lib::ClothoidData::origin_at</definition>
+        <argsstring>(real_type s_origin)</argsstring>
+        <name>origin_at</name>
+        <qualifiedname>G2lib::ClothoidData::origin_at</qualifiedname>
+        <param>
+          <type><ref refid="namespace_g2lib_1acc8095aa40beedee44352de62f232033" kindref="member">real_type</ref></type>
+          <declname>s_origin</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Clothoids/Fresnel.hxx" line="373" column="5" bodyfile="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Fresnel.cc" bodystart="1202" bodyend="1215"/>
+      </memberdef>
+      <memberdef kind="function" id="class_g2lib_1_1_clothoid_data_1a7894144d88628ddf4c1417b97f11ccb6" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="namespace_g2lib_1acc8095aa40beedee44352de62f232033" kindref="member">real_type</ref></type>
+        <definition>real_type G2lib::ClothoidData::split_at_flex</definition>
+        <argsstring>(ClothoidData &amp;C0, ClothoidData &amp;C1) const</argsstring>
+        <name>split_at_flex</name>
+        <qualifiedname>G2lib::ClothoidData::split_at_flex</qualifiedname>
+        <param>
+          <type><ref refid="class_g2lib_1_1_clothoid_data" kindref="compound">ClothoidData</ref> &amp;</type>
+          <declname>C0</declname>
+        </param>
+        <param>
+          <type><ref refid="class_g2lib_1_1_clothoid_data" kindref="compound">ClothoidData</ref> &amp;</type>
+          <declname>C1</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Clothoids/Fresnel.hxx" line="376" column="5" bodyfile="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Fresnel.cc" bodystart="1220" bodyend="1231"/>
+      </memberdef>
+      <memberdef kind="function" id="class_g2lib_1_1_clothoid_data_1a5af68ea57d33c996f2c66555ef696337" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="namespace_g2lib_1acc8095aa40beedee44352de62f232033" kindref="member">real_type</ref></type>
+        <definition>real_type G2lib::ClothoidData::aplus</definition>
+        <argsstring>(real_type dtheta) const</argsstring>
+        <name>aplus</name>
+        <qualifiedname>G2lib::ClothoidData::aplus</qualifiedname>
+        <param>
+          <type><ref refid="namespace_g2lib_1acc8095aa40beedee44352de62f232033" kindref="member">real_type</ref></type>
+          <declname>dtheta</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Clothoids/Fresnel.hxx" line="379" column="5" bodyfile="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Fresnel.cc" bodystart="1236" bodyend="1241"/>
+      </memberdef>
+      <memberdef kind="function" id="class_g2lib_1_1_clothoid_data_1a477ec56058694949280a9244ca550436" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type>bool</type>
+        <definition>bool G2lib::ClothoidData::bbTriangle</definition>
+        <argsstring>(real_type L, real_type &amp;xx0, real_type &amp;yy0, real_type &amp;xx1, real_type &amp;yy1, real_type &amp;xx2, real_type &amp;yy2) const</argsstring>
+        <name>bbTriangle</name>
+        <qualifiedname>G2lib::ClothoidData::bbTriangle</qualifiedname>
+        <param>
+          <type><ref refid="namespace_g2lib_1acc8095aa40beedee44352de62f232033" kindref="member">real_type</ref></type>
+          <declname>L</declname>
+        </param>
+        <param>
+          <type><ref refid="namespace_g2lib_1acc8095aa40beedee44352de62f232033" kindref="member">real_type</ref> &amp;</type>
+          <declname>xx0</declname>
+        </param>
+        <param>
+          <type><ref refid="namespace_g2lib_1acc8095aa40beedee44352de62f232033" kindref="member">real_type</ref> &amp;</type>
+          <declname>yy0</declname>
+        </param>
+        <param>
+          <type><ref refid="namespace_g2lib_1acc8095aa40beedee44352de62f232033" kindref="member">real_type</ref> &amp;</type>
+          <declname>xx1</declname>
+        </param>
+        <param>
+          <type><ref refid="namespace_g2lib_1acc8095aa40beedee44352de62f232033" kindref="member">real_type</ref> &amp;</type>
+          <declname>yy1</declname>
+        </param>
+        <param>
+          <type><ref refid="namespace_g2lib_1acc8095aa40beedee44352de62f232033" kindref="member">real_type</ref> &amp;</type>
+          <declname>xx2</declname>
+        </param>
+        <param>
+          <type><ref refid="namespace_g2lib_1acc8095aa40beedee44352de62f232033" kindref="member">real_type</ref> &amp;</type>
+          <declname>yy2</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Clothoids/Fresnel.hxx" line="382" column="5" bodyfile="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Fresnel.cc" bodystart="1248" bodyend="1280"/>
+      </memberdef>
+      <memberdef kind="function" id="class_g2lib_1_1_clothoid_data_1a86749a578a8cac4d8b4c5606c2729564" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type>bool</type>
+        <definition>bool G2lib::ClothoidData::bbTriangle_ISO</definition>
+        <argsstring>(real_type L, real_type offs, real_type &amp;xx0, real_type &amp;yy0, real_type &amp;xx1, real_type &amp;yy1, real_type &amp;xx2, real_type &amp;yy2) const</argsstring>
+        <name>bbTriangle_ISO</name>
+        <qualifiedname>G2lib::ClothoidData::bbTriangle_ISO</qualifiedname>
+        <param>
+          <type><ref refid="namespace_g2lib_1acc8095aa40beedee44352de62f232033" kindref="member">real_type</ref></type>
+          <declname>L</declname>
+        </param>
+        <param>
+          <type><ref refid="namespace_g2lib_1acc8095aa40beedee44352de62f232033" kindref="member">real_type</ref></type>
+          <declname>offs</declname>
+        </param>
+        <param>
+          <type><ref refid="namespace_g2lib_1acc8095aa40beedee44352de62f232033" kindref="member">real_type</ref> &amp;</type>
+          <declname>xx0</declname>
+        </param>
+        <param>
+          <type><ref refid="namespace_g2lib_1acc8095aa40beedee44352de62f232033" kindref="member">real_type</ref> &amp;</type>
+          <declname>yy0</declname>
+        </param>
+        <param>
+          <type><ref refid="namespace_g2lib_1acc8095aa40beedee44352de62f232033" kindref="member">real_type</ref> &amp;</type>
+          <declname>xx1</declname>
+        </param>
+        <param>
+          <type><ref refid="namespace_g2lib_1acc8095aa40beedee44352de62f232033" kindref="member">real_type</ref> &amp;</type>
+          <declname>yy1</declname>
+        </param>
+        <param>
+          <type><ref refid="namespace_g2lib_1acc8095aa40beedee44352de62f232033" kindref="member">real_type</ref> &amp;</type>
+          <declname>xx2</declname>
+        </param>
+        <param>
+          <type><ref refid="namespace_g2lib_1acc8095aa40beedee44352de62f232033" kindref="member">real_type</ref> &amp;</type>
+          <declname>yy2</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Clothoids/Fresnel.hxx" line="390" column="5" bodyfile="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Fresnel.cc" bodystart="1285" bodyend="1318"/>
+      </memberdef>
+      <memberdef kind="function" id="class_g2lib_1_1_clothoid_data_1a04dd31f53eac1f29f4e1cb011602d169" prot="public" static="no" const="yes" explicit="no" inline="yes" virt="non-virtual">
+        <type>bool</type>
+        <definition>bool G2lib::ClothoidData::bbTriangle_SAE</definition>
+        <argsstring>(real_type L, real_type offs, real_type &amp;xx0, real_type &amp;yy0, real_type &amp;xx1, real_type &amp;yy1, real_type &amp;xx2, real_type &amp;yy2) const</argsstring>
+        <name>bbTriangle_SAE</name>
+        <qualifiedname>G2lib::ClothoidData::bbTriangle_SAE</qualifiedname>
+        <param>
+          <type><ref refid="namespace_g2lib_1acc8095aa40beedee44352de62f232033" kindref="member">real_type</ref></type>
+          <declname>L</declname>
+        </param>
+        <param>
+          <type><ref refid="namespace_g2lib_1acc8095aa40beedee44352de62f232033" kindref="member">real_type</ref></type>
+          <declname>offs</declname>
+        </param>
+        <param>
+          <type><ref refid="namespace_g2lib_1acc8095aa40beedee44352de62f232033" kindref="member">real_type</ref> &amp;</type>
+          <declname>xx0</declname>
+        </param>
+        <param>
+          <type><ref refid="namespace_g2lib_1acc8095aa40beedee44352de62f232033" kindref="member">real_type</ref> &amp;</type>
+          <declname>yy0</declname>
+        </param>
+        <param>
+          <type><ref refid="namespace_g2lib_1acc8095aa40beedee44352de62f232033" kindref="member">real_type</ref> &amp;</type>
+          <declname>xx1</declname>
+        </param>
+        <param>
+          <type><ref refid="namespace_g2lib_1acc8095aa40beedee44352de62f232033" kindref="member">real_type</ref> &amp;</type>
+          <declname>yy1</declname>
+        </param>
+        <param>
+          <type><ref refid="namespace_g2lib_1acc8095aa40beedee44352de62f232033" kindref="member">real_type</ref> &amp;</type>
+          <declname>xx2</declname>
+        </param>
+        <param>
+          <type><ref refid="namespace_g2lib_1acc8095aa40beedee44352de62f232033" kindref="member">real_type</ref> &amp;</type>
+          <declname>yy2</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Clothoids/Fresnel.hxx" line="399" column="5" bodyfile="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Clothoids/Fresnel.hxx" bodystart="399" bodyend="407"/>
+      </memberdef>
+      <memberdef kind="function" id="class_g2lib_1_1_clothoid_data_1a43213da9e451f519e28eb120aee00355" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>int</type>
+        <definition>int G2lib::ClothoidData::build_G1</definition>
+        <argsstring>(real_type x0, real_type y0, real_type theta0, real_type x1, real_type y1, real_type theta1, real_type tol, real_type &amp;L, bool compute_deriv=false, real_type L_D[2]=nullptr, real_type k_D[2]=nullptr, real_type dk_D[2]=nullptr)</argsstring>
+        <name>build_G1</name>
+        <qualifiedname>G2lib::ClothoidData::build_G1</qualifiedname>
+        <param>
+          <type><ref refid="namespace_g2lib_1acc8095aa40beedee44352de62f232033" kindref="member">real_type</ref></type>
+          <declname>x0</declname>
+        </param>
+        <param>
+          <type><ref refid="namespace_g2lib_1acc8095aa40beedee44352de62f232033" kindref="member">real_type</ref></type>
+          <declname>y0</declname>
+        </param>
+        <param>
+          <type><ref refid="namespace_g2lib_1acc8095aa40beedee44352de62f232033" kindref="member">real_type</ref></type>
+          <declname>theta0</declname>
+        </param>
+        <param>
+          <type><ref refid="namespace_g2lib_1acc8095aa40beedee44352de62f232033" kindref="member">real_type</ref></type>
+          <declname>x1</declname>
+        </param>
+        <param>
+          <type><ref refid="namespace_g2lib_1acc8095aa40beedee44352de62f232033" kindref="member">real_type</ref></type>
+          <declname>y1</declname>
+        </param>
+        <param>
+          <type><ref refid="namespace_g2lib_1acc8095aa40beedee44352de62f232033" kindref="member">real_type</ref></type>
+          <declname>theta1</declname>
+        </param>
+        <param>
+          <type><ref refid="namespace_g2lib_1acc8095aa40beedee44352de62f232033" kindref="member">real_type</ref></type>
+          <declname>tol</declname>
+        </param>
+        <param>
+          <type><ref refid="namespace_g2lib_1acc8095aa40beedee44352de62f232033" kindref="member">real_type</ref> &amp;</type>
+          <declname>L</declname>
+        </param>
+        <param>
+          <type>bool</type>
+          <declname>compute_deriv</declname>
+          <defval>false</defval>
+        </param>
+        <param>
+          <type><ref refid="namespace_g2lib_1acc8095aa40beedee44352de62f232033" kindref="member">real_type</ref></type>
+          <declname>L_D</declname>
+          <array>[2]</array>
+          <defval>nullptr</defval>
+        </param>
+        <param>
+          <type><ref refid="namespace_g2lib_1acc8095aa40beedee44352de62f232033" kindref="member">real_type</ref></type>
+          <declname>k_D</declname>
+          <array>[2]</array>
+          <defval>nullptr</defval>
+        </param>
+        <param>
+          <type><ref refid="namespace_g2lib_1acc8095aa40beedee44352de62f232033" kindref="member">real_type</ref></type>
+          <declname>dk_D</declname>
+          <array>[2]</array>
+          <defval>nullptr</defval>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Clothoids/Fresnel.hxx" line="410" column="5" bodyfile="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Fresnel.cc" bodystart="1323" bodyend="1419"/>
+      </memberdef>
+      <memberdef kind="function" id="class_g2lib_1_1_clothoid_data_1a5169e4f375d6a6ccf01a561ffc267681" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>bool</type>
+        <definition>bool G2lib::ClothoidData::build_forward</definition>
+        <argsstring>(real_type x0, real_type y0, real_type theta0, real_type kappa0, real_type x1, real_type y1, real_type tol, real_type &amp;L)</argsstring>
+        <name>build_forward</name>
+        <qualifiedname>G2lib::ClothoidData::build_forward</qualifiedname>
+        <param>
+          <type><ref refid="namespace_g2lib_1acc8095aa40beedee44352de62f232033" kindref="member">real_type</ref></type>
+          <declname>x0</declname>
+        </param>
+        <param>
+          <type><ref refid="namespace_g2lib_1acc8095aa40beedee44352de62f232033" kindref="member">real_type</ref></type>
+          <declname>y0</declname>
+        </param>
+        <param>
+          <type><ref refid="namespace_g2lib_1acc8095aa40beedee44352de62f232033" kindref="member">real_type</ref></type>
+          <declname>theta0</declname>
+        </param>
+        <param>
+          <type><ref refid="namespace_g2lib_1acc8095aa40beedee44352de62f232033" kindref="member">real_type</ref></type>
+          <declname>kappa0</declname>
+        </param>
+        <param>
+          <type><ref refid="namespace_g2lib_1acc8095aa40beedee44352de62f232033" kindref="member">real_type</ref></type>
+          <declname>x1</declname>
+        </param>
+        <param>
+          <type><ref refid="namespace_g2lib_1acc8095aa40beedee44352de62f232033" kindref="member">real_type</ref></type>
+          <declname>y1</declname>
+        </param>
+        <param>
+          <type><ref refid="namespace_g2lib_1acc8095aa40beedee44352de62f232033" kindref="member">real_type</ref></type>
+          <declname>tol</declname>
+        </param>
+        <param>
+          <type><ref refid="namespace_g2lib_1acc8095aa40beedee44352de62f232033" kindref="member">real_type</ref> &amp;</type>
+          <declname>L</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Clothoids/Fresnel.hxx" line="426" column="5" bodyfile="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Fresnel.cc" bodystart="1496" bodyend="1546"/>
+      </memberdef>
+      <memberdef kind="function" id="class_g2lib_1_1_clothoid_data_1ad5a0a6b64b81cac89c3e49f87118afa9" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void G2lib::ClothoidData::info</definition>
+        <argsstring>(ostream_type &amp;s) const</argsstring>
+        <name>info</name>
+        <qualifiedname>G2lib::ClothoidData::info</qualifiedname>
+        <param>
+          <type><ref refid="namespace_g2lib_1a8fcbace87db5a5e71391e0040878f2c3" kindref="member">ostream_type</ref> &amp;</type>
+          <declname>s</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Clothoids/Fresnel.hxx" line="438" column="5" bodyfile="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Fresnel.cc" bodystart="1551" bodyend="1560"/>
+      </memberdef>
+    </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+<para>Data storage for clothoid type curve </para>
+    </detaileddescription>
+    <location file="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Clothoids/Fresnel.hxx" line="117" column="3" bodyfile="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Clothoids/Fresnel.hxx" bodystart="117" bodyend="440"/>
+    <listofallmembers>
+      <member refid="class_g2lib_1_1_clothoid_data_1a5af68ea57d33c996f2c66555ef696337" prot="public" virt="non-virtual"><scope>G2lib::ClothoidData</scope><name>aplus</name></member>
+      <member refid="class_g2lib_1_1_clothoid_data_1a477ec56058694949280a9244ca550436" prot="public" virt="non-virtual"><scope>G2lib::ClothoidData</scope><name>bbTriangle</name></member>
+      <member refid="class_g2lib_1_1_clothoid_data_1a86749a578a8cac4d8b4c5606c2729564" prot="public" virt="non-virtual"><scope>G2lib::ClothoidData</scope><name>bbTriangle_ISO</name></member>
+      <member refid="class_g2lib_1_1_clothoid_data_1a04dd31f53eac1f29f4e1cb011602d169" prot="public" virt="non-virtual"><scope>G2lib::ClothoidData</scope><name>bbTriangle_SAE</name></member>
+      <member refid="class_g2lib_1_1_clothoid_data_1a5169e4f375d6a6ccf01a561ffc267681" prot="public" virt="non-virtual"><scope>G2lib::ClothoidData</scope><name>build_forward</name></member>
+      <member refid="class_g2lib_1_1_clothoid_data_1a43213da9e451f519e28eb120aee00355" prot="public" virt="non-virtual"><scope>G2lib::ClothoidData</scope><name>build_G1</name></member>
+      <member refid="class_g2lib_1_1_clothoid_data_1a7b7bd2afcb87647c2dad095b5effefe3" prot="public" virt="non-virtual"><scope>G2lib::ClothoidData</scope><name>c0x</name></member>
+      <member refid="class_g2lib_1_1_clothoid_data_1ac4117393cc23586aaea4dd291254f1d6" prot="public" virt="non-virtual"><scope>G2lib::ClothoidData</scope><name>c0y</name></member>
+      <member refid="class_g2lib_1_1_clothoid_data_1a2986e6a133fc7dd3e87992ba1f0ccb9a" prot="public" virt="non-virtual"><scope>G2lib::ClothoidData</scope><name>ClothoidData</name></member>
+      <member refid="class_g2lib_1_1_clothoid_data_1ad863f56df1690ea2098df9be8a18ce3a" prot="public" virt="non-virtual"><scope>G2lib::ClothoidData</scope><name>delta_theta</name></member>
+      <member refid="class_g2lib_1_1_clothoid_data_1ad7f0443009265270a2a74349b97578b8" prot="public" virt="non-virtual"><scope>G2lib::ClothoidData</scope><name>deltaTheta</name></member>
+      <member refid="class_g2lib_1_1_clothoid_data_1a74e1be3bcd89028b1d4968bbc5658d3f" prot="public" virt="non-virtual"><scope>G2lib::ClothoidData</scope><name>eval</name></member>
+      <member refid="class_g2lib_1_1_clothoid_data_1a3c02aafe6fe5805ab2ee52353c304f5a" prot="public" virt="non-virtual"><scope>G2lib::ClothoidData</scope><name>eval</name></member>
+      <member refid="class_g2lib_1_1_clothoid_data_1a93781c978762d755e3dfb356fa56196f" prot="public" virt="non-virtual"><scope>G2lib::ClothoidData</scope><name>eval_D</name></member>
+      <member refid="class_g2lib_1_1_clothoid_data_1a37a3eb416725efb318d879c3c0bedd7f" prot="public" virt="non-virtual"><scope>G2lib::ClothoidData</scope><name>eval_DAE_DD</name></member>
+      <member refid="class_g2lib_1_1_clothoid_data_1a3d12f44ca6b80e49738918c30dd3bde1" prot="public" virt="non-virtual"><scope>G2lib::ClothoidData</scope><name>eval_DD</name></member>
+      <member refid="class_g2lib_1_1_clothoid_data_1a9d3a4cbcbfa81d5dfb8b568ec871f593" prot="public" virt="non-virtual"><scope>G2lib::ClothoidData</scope><name>eval_DDD</name></member>
+      <member refid="class_g2lib_1_1_clothoid_data_1a14d14e3cf46b435dcaa35aca2ef0ea53" prot="public" virt="non-virtual"><scope>G2lib::ClothoidData</scope><name>eval_ISO</name></member>
+      <member refid="class_g2lib_1_1_clothoid_data_1a46e59bedb9576c049697edb09145316c" prot="public" virt="non-virtual"><scope>G2lib::ClothoidData</scope><name>eval_ISO_D</name></member>
+      <member refid="class_g2lib_1_1_clothoid_data_1a635fc5c420d87e160b51ebe550e37b0e" prot="public" virt="non-virtual"><scope>G2lib::ClothoidData</scope><name>eval_ISO_DD</name></member>
+      <member refid="class_g2lib_1_1_clothoid_data_1a065062c681b1771b4d90154e28b745e6" prot="public" virt="non-virtual"><scope>G2lib::ClothoidData</scope><name>eval_ISO_DDD</name></member>
+      <member refid="class_g2lib_1_1_clothoid_data_1ae328a7b818fbaca312a84812d73c20a0" prot="public" virt="non-virtual"><scope>G2lib::ClothoidData</scope><name>eval_SAE</name></member>
+      <member refid="class_g2lib_1_1_clothoid_data_1a03a8aaede0ba521149214e49791325a4" prot="public" virt="non-virtual"><scope>G2lib::ClothoidData</scope><name>eval_SAE_D</name></member>
+      <member refid="class_g2lib_1_1_clothoid_data_1ad8578afc1958db85a61a71b3d5b9185d" prot="public" virt="non-virtual"><scope>G2lib::ClothoidData</scope><name>eval_SAE_DDD</name></member>
+      <member refid="class_g2lib_1_1_clothoid_data_1a5562ead62d08b6dff161b842d7678c9e" prot="public" virt="non-virtual"><scope>G2lib::ClothoidData</scope><name>evaluate</name></member>
+      <member refid="class_g2lib_1_1_clothoid_data_1ad5a0a6b64b81cac89c3e49f87118afa9" prot="public" virt="non-virtual"><scope>G2lib::ClothoidData</scope><name>info</name></member>
+      <member refid="class_g2lib_1_1_clothoid_data_1a36ba3617c981e50be132e098d3ac5a12" prot="public" virt="non-virtual"><scope>G2lib::ClothoidData</scope><name>kappa</name></member>
+      <member refid="class_g2lib_1_1_clothoid_data_1ad6700a98b70deafee9d131900aac9bec" prot="public" virt="non-virtual"><scope>G2lib::ClothoidData</scope><name>kappa_D</name></member>
+      <member refid="class_g2lib_1_1_clothoid_data_1a6b503c2bb737925360e934f666de3afe" prot="public" virt="non-virtual"><scope>G2lib::ClothoidData</scope><name>kappa_DD</name></member>
+      <member refid="class_g2lib_1_1_clothoid_data_1a86eeddbbf7cd1de004ceede9734d650b" prot="public" virt="non-virtual"><scope>G2lib::ClothoidData</scope><name>kappa_DDD</name></member>
+      <member refid="class_g2lib_1_1_clothoid_data_1abbd10647189e5320e17e4d46414f0618" prot="public" virt="non-virtual"><scope>G2lib::ClothoidData</scope><name>m_dk</name></member>
+      <member refid="class_g2lib_1_1_clothoid_data_1a082460eb18f78b94a2e1af0444ba373b" prot="public" virt="non-virtual"><scope>G2lib::ClothoidData</scope><name>m_kappa0</name></member>
+      <member refid="class_g2lib_1_1_clothoid_data_1a7d3690073d80810208367fb2381336f2" prot="public" virt="non-virtual"><scope>G2lib::ClothoidData</scope><name>m_theta0</name></member>
+      <member refid="class_g2lib_1_1_clothoid_data_1a32aca3681f3516e26bd2af7fa31e81d3" prot="public" virt="non-virtual"><scope>G2lib::ClothoidData</scope><name>m_x0</name></member>
+      <member refid="class_g2lib_1_1_clothoid_data_1a61a1c27ac90cf876a78ac120228daf21" prot="public" virt="non-virtual"><scope>G2lib::ClothoidData</scope><name>m_y0</name></member>
+      <member refid="class_g2lib_1_1_clothoid_data_1a7a92c9cf8f3a37fc342205b33b8ad6e8" prot="public" virt="non-virtual"><scope>G2lib::ClothoidData</scope><name>nor0_x_ISO</name></member>
+      <member refid="class_g2lib_1_1_clothoid_data_1a3073a0c56bafec20b2b430aa5bfcb39c" prot="public" virt="non-virtual"><scope>G2lib::ClothoidData</scope><name>nor0_x_SAE</name></member>
+      <member refid="class_g2lib_1_1_clothoid_data_1a138e6692acfb5b0e8dfdca9b8bdddfd6" prot="public" virt="non-virtual"><scope>G2lib::ClothoidData</scope><name>nor0_y_ISO</name></member>
+      <member refid="class_g2lib_1_1_clothoid_data_1ac55b809ef045967680ab9c51e75f84a9" prot="public" virt="non-virtual"><scope>G2lib::ClothoidData</scope><name>nor0_y_SAE</name></member>
+      <member refid="class_g2lib_1_1_clothoid_data_1a3c25cb576e46b7f81eeac907c4292253" prot="public" virt="non-virtual"><scope>G2lib::ClothoidData</scope><name>nor_ISO</name></member>
+      <member refid="class_g2lib_1_1_clothoid_data_1a92f6a095f868f08e61bf9b122a10e338" prot="public" virt="non-virtual"><scope>G2lib::ClothoidData</scope><name>nor_ISO_D</name></member>
+      <member refid="class_g2lib_1_1_clothoid_data_1a80606ec6674829aef2be081d6c96b6c7" prot="public" virt="non-virtual"><scope>G2lib::ClothoidData</scope><name>nor_ISO_DD</name></member>
+      <member refid="class_g2lib_1_1_clothoid_data_1af11147655e21a56889cd7e7b0833959f" prot="public" virt="non-virtual"><scope>G2lib::ClothoidData</scope><name>nor_ISO_DDD</name></member>
+      <member refid="class_g2lib_1_1_clothoid_data_1a0e4ac7ff123d8915b5765208becea8ec" prot="public" virt="non-virtual"><scope>G2lib::ClothoidData</scope><name>nor_SAE</name></member>
+      <member refid="class_g2lib_1_1_clothoid_data_1a138894f6dd7f045c78a3e93aa931e808" prot="public" virt="non-virtual"><scope>G2lib::ClothoidData</scope><name>nor_SAE_D</name></member>
+      <member refid="class_g2lib_1_1_clothoid_data_1acb348ae71e76fb9dafbce19829c1b003" prot="public" virt="non-virtual"><scope>G2lib::ClothoidData</scope><name>nor_SAE_DD</name></member>
+      <member refid="class_g2lib_1_1_clothoid_data_1aef900b3e6e7af6396c0817080e8c19da" prot="public" virt="non-virtual"><scope>G2lib::ClothoidData</scope><name>nor_SAE_DDD</name></member>
+      <member refid="class_g2lib_1_1_clothoid_data_1a4dc9faac8b594ab68ec72a5512ede0b5" prot="public" virt="non-virtual"><scope>G2lib::ClothoidData</scope><name>nor_x_ISO</name></member>
+      <member refid="class_g2lib_1_1_clothoid_data_1a4ab7f46e194bc6ebc261f8942521766e" prot="public" virt="non-virtual"><scope>G2lib::ClothoidData</scope><name>nor_x_ISO_D</name></member>
+      <member refid="class_g2lib_1_1_clothoid_data_1a22b26c8b7e53c611f3c5994f5e1c4df4" prot="public" virt="non-virtual"><scope>G2lib::ClothoidData</scope><name>nor_x_ISO_DD</name></member>
+      <member refid="class_g2lib_1_1_clothoid_data_1ab376f2a1a79eaa87c8257477ae5580c5" prot="public" virt="non-virtual"><scope>G2lib::ClothoidData</scope><name>nor_x_ISO_DDD</name></member>
+      <member refid="class_g2lib_1_1_clothoid_data_1a8cecf09c6452eb9409d21b8431ac4cce" prot="public" virt="non-virtual"><scope>G2lib::ClothoidData</scope><name>nor_x_SAE</name></member>
+      <member refid="class_g2lib_1_1_clothoid_data_1a5a09b12044952412194332d7c98ea22e" prot="public" virt="non-virtual"><scope>G2lib::ClothoidData</scope><name>nor_x_SAE_D</name></member>
+      <member refid="class_g2lib_1_1_clothoid_data_1a6735cfa2c5c4d2510dbd94dee2df11a8" prot="public" virt="non-virtual"><scope>G2lib::ClothoidData</scope><name>nor_x_SAE_DD</name></member>
+      <member refid="class_g2lib_1_1_clothoid_data_1abfa9adbd866ac03a197661f33093b2d5" prot="public" virt="non-virtual"><scope>G2lib::ClothoidData</scope><name>nor_x_SAE_DDD</name></member>
+      <member refid="class_g2lib_1_1_clothoid_data_1aa1ea6fe37a6a4995fbe723cca0b2f24e" prot="public" virt="non-virtual"><scope>G2lib::ClothoidData</scope><name>nor_y_ISO</name></member>
+      <member refid="class_g2lib_1_1_clothoid_data_1a7871e2688e341c52cea6afdf4e5a6052" prot="public" virt="non-virtual"><scope>G2lib::ClothoidData</scope><name>nor_y_ISO_D</name></member>
+      <member refid="class_g2lib_1_1_clothoid_data_1a1cc51f349e6c003ba912d4982c599002" prot="public" virt="non-virtual"><scope>G2lib::ClothoidData</scope><name>nor_y_ISO_DD</name></member>
+      <member refid="class_g2lib_1_1_clothoid_data_1a5a6e828a08dc654116816e9bb26a92d2" prot="public" virt="non-virtual"><scope>G2lib::ClothoidData</scope><name>nor_y_ISO_DDD</name></member>
+      <member refid="class_g2lib_1_1_clothoid_data_1a286c8dce3ff9cc9ee89279e78402aeb7" prot="public" virt="non-virtual"><scope>G2lib::ClothoidData</scope><name>nor_y_SAE</name></member>
+      <member refid="class_g2lib_1_1_clothoid_data_1a55db198b175159ee14789d3cdc69e124" prot="public" virt="non-virtual"><scope>G2lib::ClothoidData</scope><name>nor_y_SAE_D</name></member>
+      <member refid="class_g2lib_1_1_clothoid_data_1ae66631f1a756d279a7b25feb87024695" prot="public" virt="non-virtual"><scope>G2lib::ClothoidData</scope><name>nor_y_SAE_DD</name></member>
+      <member refid="class_g2lib_1_1_clothoid_data_1a70697daa0fb416a19b1e89190e76c17a" prot="public" virt="non-virtual"><scope>G2lib::ClothoidData</scope><name>nor_y_SAE_DDD</name></member>
+      <member refid="class_g2lib_1_1_clothoid_data_1a6475202a2a408af3186a977dc5ab987e" prot="public" virt="non-virtual"><scope>G2lib::ClothoidData</scope><name>origin_at</name></member>
+      <member refid="class_g2lib_1_1_clothoid_data_1a41d65c0f7c4c39215bd04f603605d53b" prot="public" virt="non-virtual"><scope>G2lib::ClothoidData</scope><name>Pinfinity</name></member>
+      <member refid="class_g2lib_1_1_clothoid_data_1a45f59c87c2a07c2832dc863102688157" prot="public" virt="non-virtual"><scope>G2lib::ClothoidData</scope><name>reverse</name></member>
+      <member refid="class_g2lib_1_1_clothoid_data_1afc740c1639072895383e71cfd41cf070" prot="public" virt="non-virtual"><scope>G2lib::ClothoidData</scope><name>reverse</name></member>
+      <member refid="class_g2lib_1_1_clothoid_data_1aeb9ce155e89949fc2ca1942470e235e5" prot="public" virt="non-virtual"><scope>G2lib::ClothoidData</scope><name>rotate</name></member>
+      <member refid="class_g2lib_1_1_clothoid_data_1a7894144d88628ddf4c1417b97f11ccb6" prot="public" virt="non-virtual"><scope>G2lib::ClothoidData</scope><name>split_at_flex</name></member>
+      <member refid="class_g2lib_1_1_clothoid_data_1a5c2676840d9eef2882b4873e85689083" prot="public" virt="non-virtual"><scope>G2lib::ClothoidData</scope><name>tg</name></member>
+      <member refid="class_g2lib_1_1_clothoid_data_1afd664c96c0e887cb011dc31ee07f49ef" prot="public" virt="non-virtual"><scope>G2lib::ClothoidData</scope><name>tg0_x</name></member>
+      <member refid="class_g2lib_1_1_clothoid_data_1ae7d8e3783aadf6639f9e17b449cea380" prot="public" virt="non-virtual"><scope>G2lib::ClothoidData</scope><name>tg0_y</name></member>
+      <member refid="class_g2lib_1_1_clothoid_data_1a3c5ee5f2668195f22e5896836c5842d0" prot="public" virt="non-virtual"><scope>G2lib::ClothoidData</scope><name>tg_D</name></member>
+      <member refid="class_g2lib_1_1_clothoid_data_1a5711f00c39334d3fbe189fcf0e755a88" prot="public" virt="non-virtual"><scope>G2lib::ClothoidData</scope><name>tg_DD</name></member>
+      <member refid="class_g2lib_1_1_clothoid_data_1a90bf77a855650f1fd5f513fa20ba1b56" prot="public" virt="non-virtual"><scope>G2lib::ClothoidData</scope><name>tg_DDD</name></member>
+      <member refid="class_g2lib_1_1_clothoid_data_1abd3eb4b59b3542ff6012d96285c1a44a" prot="public" virt="non-virtual"><scope>G2lib::ClothoidData</scope><name>tg_x</name></member>
+      <member refid="class_g2lib_1_1_clothoid_data_1a309ee73c0aa09003bef19ebca62b3a4b" prot="public" virt="non-virtual"><scope>G2lib::ClothoidData</scope><name>tg_x_D</name></member>
+      <member refid="class_g2lib_1_1_clothoid_data_1a961c8aa50e8f490d814c733083817476" prot="public" virt="non-virtual"><scope>G2lib::ClothoidData</scope><name>tg_x_DD</name></member>
+      <member refid="class_g2lib_1_1_clothoid_data_1ab0b497deec72be91f3f963baca22e680" prot="public" virt="non-virtual"><scope>G2lib::ClothoidData</scope><name>tg_x_DDD</name></member>
+      <member refid="class_g2lib_1_1_clothoid_data_1a2ec76ecc1c68547ae82f365954c51a39" prot="public" virt="non-virtual"><scope>G2lib::ClothoidData</scope><name>tg_y</name></member>
+      <member refid="class_g2lib_1_1_clothoid_data_1a1941e240e04db2d7b70145f3a278817e" prot="public" virt="non-virtual"><scope>G2lib::ClothoidData</scope><name>tg_y_D</name></member>
+      <member refid="class_g2lib_1_1_clothoid_data_1a3f5b84876889aaf87b6387c7d7f26470" prot="public" virt="non-virtual"><scope>G2lib::ClothoidData</scope><name>tg_y_DD</name></member>
+      <member refid="class_g2lib_1_1_clothoid_data_1a953d4233358fa9a9a0cf7e04235c04b2" prot="public" virt="non-virtual"><scope>G2lib::ClothoidData</scope><name>tg_y_DDD</name></member>
+      <member refid="class_g2lib_1_1_clothoid_data_1a2e3e5acc94506d8e6fd8f0c73dd419a2" prot="public" virt="non-virtual"><scope>G2lib::ClothoidData</scope><name>theta</name></member>
+      <member refid="class_g2lib_1_1_clothoid_data_1a733c9f293a684857077ae0ff44144745" prot="public" virt="non-virtual"><scope>G2lib::ClothoidData</scope><name>theta_D</name></member>
+      <member refid="class_g2lib_1_1_clothoid_data_1a2bacb6433efb986c927580a5a7f76480" prot="public" virt="non-virtual"><scope>G2lib::ClothoidData</scope><name>theta_DD</name></member>
+      <member refid="class_g2lib_1_1_clothoid_data_1a06139bd616b804148bb597cefa42e015" prot="public" virt="non-virtual"><scope>G2lib::ClothoidData</scope><name>theta_DDD</name></member>
+      <member refid="class_g2lib_1_1_clothoid_data_1a44a1d6559de1f4c8b2dcffb71f597757" prot="public" virt="non-virtual"><scope>G2lib::ClothoidData</scope><name>X</name></member>
+      <member refid="class_g2lib_1_1_clothoid_data_1a12eae52ff1b391762396906332181880" prot="public" virt="non-virtual"><scope>G2lib::ClothoidData</scope><name>X_D</name></member>
+      <member refid="class_g2lib_1_1_clothoid_data_1ae2de0dd16e891b64b3be7061d2cf4aba" prot="public" virt="non-virtual"><scope>G2lib::ClothoidData</scope><name>X_DD</name></member>
+      <member refid="class_g2lib_1_1_clothoid_data_1abf6c76cddbccc9bebf24f358e74a92d8" prot="public" virt="non-virtual"><scope>G2lib::ClothoidData</scope><name>X_DDD</name></member>
+      <member refid="class_g2lib_1_1_clothoid_data_1a5c54decf91f262947c3cb68ab9d9acc4" prot="public" virt="non-virtual"><scope>G2lib::ClothoidData</scope><name>X_ISO</name></member>
+      <member refid="class_g2lib_1_1_clothoid_data_1ab7702f37eba8e301bdaf61948714f3ae" prot="public" virt="non-virtual"><scope>G2lib::ClothoidData</scope><name>X_ISO_D</name></member>
+      <member refid="class_g2lib_1_1_clothoid_data_1a254cf7db769bb999291ab174f8cc0faf" prot="public" virt="non-virtual"><scope>G2lib::ClothoidData</scope><name>X_ISO_DD</name></member>
+      <member refid="class_g2lib_1_1_clothoid_data_1acfca1c88549375e3d5bf3cb4d1963f94" prot="public" virt="non-virtual"><scope>G2lib::ClothoidData</scope><name>X_ISO_DDD</name></member>
+      <member refid="class_g2lib_1_1_clothoid_data_1afd56e883e84775f4a609b0f6906ef15b" prot="public" virt="non-virtual"><scope>G2lib::ClothoidData</scope><name>X_SAE</name></member>
+      <member refid="class_g2lib_1_1_clothoid_data_1a225377b009a58fac652c6d57426fd3d9" prot="public" virt="non-virtual"><scope>G2lib::ClothoidData</scope><name>X_SAE_D</name></member>
+      <member refid="class_g2lib_1_1_clothoid_data_1ac58d0da5eeaf6882ea4e4f4338b5ffd3" prot="public" virt="non-virtual"><scope>G2lib::ClothoidData</scope><name>X_SAE_DD</name></member>
+      <member refid="class_g2lib_1_1_clothoid_data_1aca3725ea30679ef3f580e2e338e0e5c9" prot="public" virt="non-virtual"><scope>G2lib::ClothoidData</scope><name>X_SAE_DDD</name></member>
+      <member refid="class_g2lib_1_1_clothoid_data_1a17a6bd51b93b1e9b8b29920dc15f5f64" prot="public" virt="non-virtual"><scope>G2lib::ClothoidData</scope><name>Y</name></member>
+      <member refid="class_g2lib_1_1_clothoid_data_1a42b2f398c97c1eab722f056b4e2842e9" prot="public" virt="non-virtual"><scope>G2lib::ClothoidData</scope><name>Y_D</name></member>
+      <member refid="class_g2lib_1_1_clothoid_data_1a7636ab8934da9c4cf92e825313c866e4" prot="public" virt="non-virtual"><scope>G2lib::ClothoidData</scope><name>Y_DD</name></member>
+      <member refid="class_g2lib_1_1_clothoid_data_1a29930c2fbb56801d536874ef1b6bc4da" prot="public" virt="non-virtual"><scope>G2lib::ClothoidData</scope><name>Y_DDD</name></member>
+      <member refid="class_g2lib_1_1_clothoid_data_1ac015f96754f9a0c176138e17b8a33262" prot="public" virt="non-virtual"><scope>G2lib::ClothoidData</scope><name>Y_ISO</name></member>
+      <member refid="class_g2lib_1_1_clothoid_data_1adbc5ac108bdf382ff6f0683f2d7cb60e" prot="public" virt="non-virtual"><scope>G2lib::ClothoidData</scope><name>Y_ISO_D</name></member>
+      <member refid="class_g2lib_1_1_clothoid_data_1a2dfc628ae951c3eb7f5ab685de272acf" prot="public" virt="non-virtual"><scope>G2lib::ClothoidData</scope><name>Y_ISO_DD</name></member>
+      <member refid="class_g2lib_1_1_clothoid_data_1a2d1e82652beccd761c577a84d5e0dd53" prot="public" virt="non-virtual"><scope>G2lib::ClothoidData</scope><name>Y_ISO_DDD</name></member>
+      <member refid="class_g2lib_1_1_clothoid_data_1a5a9da2e441d8996852c05c45d96c52a5" prot="public" virt="non-virtual"><scope>G2lib::ClothoidData</scope><name>Y_SAE</name></member>
+      <member refid="class_g2lib_1_1_clothoid_data_1ad2672756ec4852061811bceaf0583e4d" prot="public" virt="non-virtual"><scope>G2lib::ClothoidData</scope><name>Y_SAE_D</name></member>
+      <member refid="class_g2lib_1_1_clothoid_data_1a5eb5c39f965506beb5d8af87843bcdf8" prot="public" virt="non-virtual"><scope>G2lib::ClothoidData</scope><name>Y_SAE_DD</name></member>
+      <member refid="class_g2lib_1_1_clothoid_data_1a1634bc4cd74eb7c8012c7cc49d3c0368" prot="public" virt="non-virtual"><scope>G2lib::ClothoidData</scope><name>Y_SAE_DDD</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

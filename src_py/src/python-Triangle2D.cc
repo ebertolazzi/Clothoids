@@ -202,7 +202,7 @@ namespace G2lib {
           :rtype: Tuple[Tuple[float, float], Tuple[float, float]]
         )S")
 
-        .def("baricenterX", &Triangle2D::baricenterX,
+        .def("baricenter_x", &Triangle2D::baricenter_x,
         R"S(
           Returns the x coordinate of the baricenter of the triangle
 
@@ -210,7 +210,7 @@ namespace G2lib {
           :rtype: float
         )S")
 
-        .def("baricenterY", &Triangle2D::baricenterY,
+        .def("baricenter_y", &Triangle2D::baricenter_y,
         R"S(
           Returns the y coordinate of the baricenter of the triangle
 
@@ -261,7 +261,7 @@ namespace G2lib {
           :rtype: bool
         )S")
 
-        .def("isCounterClockwise", &Triangle2D::isCounterClockwise,
+        .def("is_counter_clockwise", &Triangle2D::is_counter_clockwise,
         R"S(
           Returns whether the triangle has points defined in a counterclockwise
           order. Possible return values are:
@@ -274,7 +274,7 @@ namespace G2lib {
           :rtype: int
         )S")
 
-        .def("isInside", py::overload_cast<real_type, real_type>(&Triangle2D::isInside, py::const_),
+        .def("is_inside", py::overload_cast<real_type, real_type>(&Triangle2D::is_inside, py::const_),
           py::arg("x"), py::arg("y"),
         R"S(
           Returns whether the passed point is inside the triangle.
@@ -289,9 +289,9 @@ namespace G2lib {
           :rtype: int
         )S")
 
-        .def("isInside", [](const Triangle2D & self, std::tuple<real_type, real_type> p) {
+        .def("is_inside", [](const Triangle2D & self, std::tuple<real_type, real_type> p) {
           real_type _p[2] = {std::get<0>(p), std::get<1>(p)};
-          return self.isInside(_p);
+          return self.is_inside(_p);
         },
         R"S(
           Returns whether the passed point is inside the triangle.
@@ -305,7 +305,7 @@ namespace G2lib {
           :rtype: int
         )S")
 
-        .def("distMin", &Triangle2D::distMin,
+        .def("dist_min", &Triangle2D::dist_min,
           py::arg("x"), py::arg("y"),
         R"S(
           Returns the minimum distance between the passed point and
@@ -317,7 +317,7 @@ namespace G2lib {
           :rtype: float
         )S")
 
-        .def("distMax", &Triangle2D::distMax,
+        .def("dist_max", &Triangle2D::dist_max,
           py::arg("x"), py::arg("y"),
         R"S(
           Returns the maximum distance between the passed point and

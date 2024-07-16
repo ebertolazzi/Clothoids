@@ -22,6 +22,8 @@
 ///
 
 #include "Utils_AABB_tree.hh"
+#include "Utils_fmt.hh"
+
 #include <algorithm>
 #include <utility>
 

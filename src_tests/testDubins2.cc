@@ -1,5 +1,6 @@
 //#define _USE_MATH_DEFINES
 #include "Clothoids.hh"
+#include "Clothoids_fmt.hh"
 
 using G2lib::real_type;
 using G2lib::integer;
@@ -24,7 +25,7 @@ main() {
       ++irow;
       bool error = false;
 
-      G2lib::Dubins dub(x0,y0, th0, x1, y1, th1, kmax);
+      G2lib::Dubins dub( x0, y0, th0, x1, y1, th1, kmax, "temporary" );
       double totLen = dub.length();
       std::string compMan(to_string(dub.solution_type()));
 

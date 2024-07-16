@@ -18,6 +18,7 @@
 \*--------------------------------------------------------------------------*/
 
 #include "Clothoids.hh"
+#include "Clothoids_fmt.hh"
 
 // Workaround for Visual Studio
 #ifdef min
@@ -43,6 +44,23 @@ namespace G2lib {
   using std::swap;
   using std::vector;
 
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  void
+  CircleArc::setup( GenericContainer const & gc ) {
+    string cwhere{ fmt::format("CircleArc[{}]::setup( gc ):", this->name() ) };
+    char const * where{ cwhere.c_str() };
+    real_type x0     = gc.get_map_number("x0",     where );
+    real_type y0     = gc.get_map_number("y0",     where );
+    real_type theta0 = gc.get_map_number("theta0", where );
+    real_type x1     = gc.get_map_number("x1",     where );
+    real_type y1     = gc.get_map_number("y1",     where );
+    bool ok = this->build_G1( x0, y0, theta0, x1, y1 );
+    UTILS_ASSERT( ok, "CircleArc[{}]::setup( gc ) failed\n", this->name() );
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
   void
   CircleArc::build( LineSegment const & LS ) {
     m_x0     = LS.x_begin();
@@ -54,6 +72,8 @@ namespace G2lib {
     m_L      = LS.length();
   }
 
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
   void CircleArc::build( CircleArc const & C )   { *this = C; }
   void CircleArc::build( Biarc const & )         { UTILS_ERROR("can convert from Biarc to CircleArc\n"); }
   void CircleArc::build( ClothoidCurve const & ) { UTILS_ERROR("can convert from ClothoidCurve to CircleArc\n"); }
@@ -61,6 +81,7 @@ namespace G2lib {
   void CircleArc::build( BiarcList const & )     { UTILS_ERROR("can convert from BiarcList to CircleArc\n"); }
   void CircleArc::build( ClothoidList const & )  { UTILS_ERROR("can convert from ClothoidList to CircleArc\n"); }
   void CircleArc::build( Dubins const & )        { UTILS_ERROR("can convert from Dubins to CircleArc\n"); }
+  void CircleArc::build( Dubins3p const & )      { UTILS_ERROR("can convert from Dubins3p to CircleArc\n"); }
 
   /*\
    |    ____ _          _         _
@@ -70,7 +91,7 @@ namespace G2lib {
    |   \____|_|_|  \___|_|\___/_/   \_\_|  \___|
   \*/
 
-  CircleArc::CircleArc( BaseCurve const * pC ) : CircleArc() {
+  CircleArc::CircleArc( BaseCurve const * pC ) : CircleArc( pC->name() ) {
 
     G2LIB_DEBUG_MESSAGE( "CircleArc convert: {}\n", pC->type_name() );
 
@@ -457,7 +478,7 @@ namespace G2lib {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   void
-  CircleArc::bbTriangles(
+  CircleArc::bb_triangles(
     vector<Triangle2D> & tvec,
     real_type            max_angle,
     real_type            max_size,
@@ -494,7 +515,7 @@ namespace G2lib {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   void
-  CircleArc::bbTriangles_ISO(
+  CircleArc::bb_triangles_ISO(
     real_type            offs,
     vector<Triangle2D> & tvec,
     real_type            max_angle,
@@ -540,7 +561,7 @@ namespace G2lib {
     real_type & ymax
   ) const {
     vector<Triangle2D> tvec;
-    this->bbTriangles( tvec, Utils::m_pi/4 );
+    this->bb_triangles( tvec, Utils::m_pi/4 );
     tvec[0].bbox( xmin, ymin, xmax, ymax );
     for ( integer iter = 1; iter < integer(tvec.size()); ++iter ) {
       real_type xmin1, ymin1, xmax1, ymax1;
@@ -563,7 +584,7 @@ namespace G2lib {
     real_type & ymax
   ) const {
     vector<Triangle2D> tvec;
-    this->bbTriangles_ISO( offs, tvec, Utils::m_pi/4 );
+    this->bb_triangles_ISO( offs, tvec, Utils::m_pi/4 );
     tvec[0].bbox( xmin, ymin, xmax, ymax );
     for ( integer iter = 1; iter < integer(tvec.size()); ++iter ) {
       real_type xmin1, ymin1, xmax1, ymax1;
@@ -955,6 +976,12 @@ namespace G2lib {
       return m_L;
     }
   }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  string
+  CircleArc::info() const
+  { return fmt::format( "CircleArc\n{}\n", *this ); }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 

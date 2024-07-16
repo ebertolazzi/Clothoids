@@ -9,6 +9,7 @@
 \****************************************************************************/
 
 #include "Clothoids.hh"
+#include "Clothoids_fmt.hh"
 #include "Utils_mex.hh"
 
 #ifdef _MSC_VER

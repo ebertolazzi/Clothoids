@@ -1,5 +1,6 @@
 //#define _USE_MATH_DEFINES
 #include "Clothoids.hh"
+#include "Clothoids_fmt.hh"
 
 using G2lib::real_type;
 using namespace std;
@@ -7,10 +8,10 @@ using namespace std;
 int
 main() {
 
-  G2lib::ClothoidCurve C1;
-  G2lib::ClothoidCurve C2;
-  G2lib::PolyLine      P1;
-  G2lib::PolyLine      P2;
+  G2lib::ClothoidCurve C1{"C1"};
+  G2lib::ClothoidCurve C2{"C2"};
+  G2lib::PolyLine      P1{"P1"};
+  G2lib::PolyLine      P2{"P2"};
 
   real_type x0  = 0;
   real_type y0  = 0;

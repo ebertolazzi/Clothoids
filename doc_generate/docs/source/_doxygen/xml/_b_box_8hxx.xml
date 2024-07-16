@@ -1,0 +1,306 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.11.0" xml:lang="en-US">
+  <compounddef id="_b_box_8hxx" kind="file" language="C++">
+    <compoundname>BBox.hxx</compoundname>
+    <includedby refid="_clothoids_8hh" local="yes">/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Clothoids.hh</includedby>
+    <invincdepgraph>
+      <node id="3">
+        <label>/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/BBox.cc</label>
+        <link refid="_b_box_8cc"/>
+      </node>
+      <node id="4">
+        <label>/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Biarc.cc</label>
+        <link refid="_biarc_8cc"/>
+      </node>
+      <node id="5">
+        <label>/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/BiarcList.cc</label>
+        <link refid="_biarc_list_8cc"/>
+      </node>
+      <node id="6">
+        <label>/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Circle.cc</label>
+        <link refid="_circle_8cc"/>
+      </node>
+      <node id="7">
+        <label>/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Clothoid.cc</label>
+        <link refid="_clothoid_8cc"/>
+      </node>
+      <node id="8">
+        <label>/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/ClothoidAsyPlot.cc</label>
+        <link refid="_clothoid_asy_plot_8cc"/>
+      </node>
+      <node id="9">
+        <label>/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/ClothoidDistance.cc</label>
+        <link refid="_clothoid_distance_8cc"/>
+      </node>
+      <node id="10">
+        <label>/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/ClothoidG2.cc</label>
+        <link refid="_clothoid_g2_8cc"/>
+      </node>
+      <node id="11">
+        <label>/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/ClothoidList.cc</label>
+        <link refid="_clothoid_list_8cc"/>
+      </node>
+      <node id="2">
+        <label>/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Clothoids.hh</label>
+        <link refid="_clothoids_8hh"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+        <childnode refid="4" relation="include">
+        </childnode>
+        <childnode refid="5" relation="include">
+        </childnode>
+        <childnode refid="6" relation="include">
+        </childnode>
+        <childnode refid="7" relation="include">
+        </childnode>
+        <childnode refid="8" relation="include">
+        </childnode>
+        <childnode refid="9" relation="include">
+        </childnode>
+        <childnode refid="10" relation="include">
+        </childnode>
+        <childnode refid="11" relation="include">
+        </childnode>
+        <childnode refid="12" relation="include">
+        </childnode>
+        <childnode refid="13" relation="include">
+        </childnode>
+        <childnode refid="14" relation="include">
+        </childnode>
+        <childnode refid="15" relation="include">
+        </childnode>
+        <childnode refid="16" relation="include">
+        </childnode>
+        <childnode refid="17" relation="include">
+        </childnode>
+        <childnode refid="18" relation="include">
+        </childnode>
+        <childnode refid="19" relation="include">
+        </childnode>
+        <childnode refid="20" relation="include">
+        </childnode>
+        <childnode refid="21" relation="include">
+        </childnode>
+      </node>
+      <node id="1">
+        <label>/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Clothoids/BBox.hxx</label>
+        <link refid="_b_box_8hxx"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+      </node>
+      <node id="12">
+        <label>/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Dubins.cc</label>
+        <link refid="_dubins_8cc"/>
+      </node>
+      <node id="13">
+        <label>/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Dubins3p.cc</label>
+        <link refid="_dubins3p_8cc"/>
+      </node>
+      <node id="14">
+        <label>/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Dubins3p_ellipse.cc</label>
+        <link refid="_dubins3p__ellipse_8cc"/>
+      </node>
+      <node id="15">
+        <label>/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Dubins3p_pattern.cc</label>
+        <link refid="_dubins3p__pattern_8cc"/>
+      </node>
+      <node id="16">
+        <label>/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Fresnel.cc</label>
+        <link refid="_fresnel_8cc"/>
+      </node>
+      <node id="17">
+        <label>/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/G2lib.cc</label>
+        <link refid="_g2lib_8cc"/>
+      </node>
+      <node id="18">
+        <label>/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/G2lib_intersect.cc</label>
+        <link refid="_g2lib__intersect_8cc"/>
+      </node>
+      <node id="19">
+        <label>/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Line.cc</label>
+        <link refid="_line_8cc"/>
+      </node>
+      <node id="20">
+        <label>/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/PolyLine.cc</label>
+        <link refid="_poly_line_8cc"/>
+      </node>
+      <node id="21">
+        <label>/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Triangle2D.cc</label>
+        <link refid="_triangle2_d_8cc"/>
+      </node>
+    </invincdepgraph>
+    <innerclass refid="class_g2lib_1_1_b_box" prot="public">G2lib::BBox</innerclass>
+    <innernamespace refid="namespace_g2lib">G2lib</innernamespace>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <programlisting>
+<codeline lineno="1"><highlight class="comment">/*--------------------------------------------------------------------------*\</highlight></codeline>
+<codeline lineno="2"><highlight class="comment"><sp/>|<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>|</highlight></codeline>
+<codeline lineno="3"><highlight class="comment"><sp/>|<sp/><sp/>Copyright<sp/>(C)<sp/>2018<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>|</highlight></codeline>
+<codeline lineno="4"><highlight class="comment"><sp/>|<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>|</highlight></codeline>
+<codeline lineno="5"><highlight class="comment"><sp/>|<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>,<sp/>__<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>,<sp/>__<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>|</highlight></codeline>
+<codeline lineno="6"><highlight class="comment"><sp/>|<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>/|/<sp/><sp/>\<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>/|/<sp/><sp/>\<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>|</highlight></codeline>
+<codeline lineno="7"><highlight class="comment"><sp/>|<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>|<sp/>__/<sp/>_<sp/><sp/><sp/>,_<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>|<sp/>__/<sp/>_<sp/><sp/><sp/>,_<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>|</highlight></codeline>
+<codeline lineno="8"><highlight class="comment"><sp/>|<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>|<sp/><sp/><sp/>\|/<sp/><sp/>/<sp/><sp/>|<sp/><sp/>|<sp/><sp/><sp/>|<sp/>|<sp/><sp/><sp/>\|/<sp/><sp/>/<sp/><sp/>|<sp/><sp/>|<sp/><sp/><sp/>|<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>|</highlight></codeline>
+<codeline lineno="9"><highlight class="comment"><sp/>|<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>|(__/|__/<sp/><sp/><sp/>|_/<sp/>\_/|/|(__/|__/<sp/><sp/><sp/>|_/<sp/>\_/|/<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>|</highlight></codeline>
+<codeline lineno="10"><highlight class="comment"><sp/>|<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>/|<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>/|<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>|</highlight></codeline>
+<codeline lineno="11"><highlight class="comment"><sp/>|<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>\|<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>\|<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>|</highlight></codeline>
+<codeline lineno="12"><highlight class="comment"><sp/>|<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>|</highlight></codeline>
+<codeline lineno="13"><highlight class="comment"><sp/>|<sp/><sp/><sp/><sp/><sp/><sp/>Paolo<sp/>Bevilacqua<sp/>and<sp/>Enrico<sp/>Bertolazzi<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>|</highlight></codeline>
+<codeline lineno="14"><highlight class="comment"><sp/>|<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>|</highlight></codeline>
+<codeline lineno="15"><highlight class="comment"><sp/>|<sp/><sp/><sp/><sp/><sp/><sp/>(1)<sp/>Dipartimento<sp/>di<sp/>Ingegneria<sp/>e<sp/>Scienza<sp/>dell&apos;Informazione<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>|</highlight></codeline>
+<codeline lineno="16"><highlight class="comment"><sp/>|<sp/><sp/><sp/><sp/><sp/><sp/>(2)<sp/>Dipartimento<sp/>di<sp/>Ingegneria<sp/>Industriale<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>|</highlight></codeline>
+<codeline lineno="17"><highlight class="comment"><sp/>|<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>|</highlight></codeline>
+<codeline lineno="18"><highlight class="comment"><sp/>|<sp/><sp/><sp/><sp/><sp/><sp/>Universita`<sp/>degli<sp/>Studi<sp/>di<sp/>Trento<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>|</highlight></codeline>
+<codeline lineno="19"><highlight class="comment"><sp/>|<sp/><sp/><sp/><sp/><sp/><sp/>email:<sp/>paolo.bevilacqua@unitn.it<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>|</highlight></codeline>
+<codeline lineno="20"><highlight class="comment"><sp/>|<sp/><sp/><sp/><sp/><sp/><sp/>email:<sp/>enrico.bertolazzi@unitn.it<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>|</highlight></codeline>
+<codeline lineno="21"><highlight class="comment"><sp/>|<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>|</highlight></codeline>
+<codeline lineno="22"><highlight class="comment">\*--------------------------------------------------------------------------*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="23"><highlight class="normal"></highlight></codeline>
+<codeline lineno="27"><highlight class="normal"></highlight></codeline>
+<codeline lineno="28"><highlight class="normal"></highlight><highlight class="keyword">namespace<sp/></highlight><highlight class="normal"><ref refid="namespace_g2lib" kindref="compound">G2lib</ref><sp/>{</highlight></codeline>
+<codeline lineno="29"><highlight class="normal"></highlight></codeline>
+<codeline lineno="30"><highlight class="normal"><sp/><sp/></highlight><highlight class="keyword">using<sp/></highlight><highlight class="normal">std::setw;</highlight></codeline>
+<codeline lineno="31"><highlight class="normal"><sp/><sp/></highlight><highlight class="keyword">using<sp/></highlight><highlight class="normal">std::vector;</highlight></codeline>
+<codeline lineno="32"><highlight class="normal"><sp/><sp/></highlight><highlight class="keyword">using<sp/></highlight><highlight class="normal">std::pair;</highlight></codeline>
+<codeline lineno="33"><highlight class="normal"></highlight></codeline>
+<codeline lineno="34"><highlight class="normal"><sp/><sp/></highlight><highlight class="keyword">using<sp/></highlight><highlight class="normal">std::make_shared;</highlight></codeline>
+<codeline lineno="35"><highlight class="normal"><sp/><sp/></highlight><highlight class="keyword">using<sp/></highlight><highlight class="normal">std::shared_ptr;<sp/></highlight><highlight class="comment">//<sp/>promemoria<sp/>shared_ptr&lt;Foo&gt;(&amp;foo,<sp/>[](void*){});</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="36"><highlight class="normal"></highlight></codeline>
+<codeline lineno="37"><highlight class="normal"><sp/><sp/></highlight><highlight class="comment">/*\</highlight></codeline>
+<codeline lineno="38"><highlight class="comment"><sp/><sp/><sp/>|<sp/><sp/><sp/>____<sp/><sp/>____</highlight></codeline>
+<codeline lineno="39"><highlight class="comment"><sp/><sp/><sp/>|<sp/><sp/>|<sp/>__<sp/>)|<sp/>__<sp/>)<sp/><sp/>_____<sp/><sp/>__</highlight></codeline>
+<codeline lineno="40"><highlight class="comment"><sp/><sp/><sp/>|<sp/><sp/>|<sp/><sp/>_<sp/>\|<sp/><sp/>_<sp/>\<sp/>/<sp/>_<sp/>\<sp/>\/<sp/>/</highlight></codeline>
+<codeline lineno="41"><highlight class="comment"><sp/><sp/><sp/>|<sp/><sp/>|<sp/>|_)<sp/>|<sp/>|_)<sp/>|<sp/>(_)<sp/>&gt;<sp/><sp/>&lt;</highlight></codeline>
+<codeline lineno="42"><highlight class="comment"><sp/><sp/><sp/>|<sp/><sp/>|____/|____/<sp/>\___/_/\_\</highlight></codeline>
+<codeline lineno="43"><highlight class="comment"><sp/><sp/>\*/</highlight></codeline>
+<codeline lineno="47" refid="class_g2lib_1_1_b_box" refkind="compound"><highlight class="normal"><sp/><sp/></highlight><highlight class="keyword">class<sp/></highlight><highlight class="normal"><ref refid="class_g2lib_1_1_b_box" kindref="compound">BBox</ref><sp/>{</highlight></codeline>
+<codeline lineno="48"><highlight class="normal"><sp/><sp/></highlight><highlight class="keyword">public</highlight><highlight class="normal">:</highlight></codeline>
+<codeline lineno="49" refid="class_g2lib_1_1_b_box_1a336df4f23f9b6ce7cffcbcf4c8a5f79b" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">using<sp/></highlight><highlight class="normal"><ref refid="class_g2lib_1_1_b_box_1a336df4f23f9b6ce7cffcbcf4c8a5f79b" kindref="member">PtrBBox</ref><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>=<sp/>shared_ptr&lt;BBox<sp/>const&gt;;</highlight></codeline>
+<codeline lineno="50" refid="class_g2lib_1_1_b_box_1a884f685315201930568f06393c1173e0" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">using<sp/></highlight><highlight class="normal"><ref refid="class_g2lib_1_1_b_box_1a884f685315201930568f06393c1173e0" kindref="member">PairPtrBBox</ref><sp/><sp/><sp/><sp/>=<sp/>pair&lt;PtrBBox,PtrBBox&gt;;</highlight></codeline>
+<codeline lineno="51" refid="class_g2lib_1_1_b_box_1a4438bf5f768ecb1b453f5385ad98527d" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">using<sp/></highlight><highlight class="normal"><ref refid="class_g2lib_1_1_b_box_1a4438bf5f768ecb1b453f5385ad98527d" kindref="member">VecPtrBBox</ref><sp/><sp/><sp/><sp/><sp/>=<sp/>vector&lt;PtrBBox&gt;;</highlight></codeline>
+<codeline lineno="52" refid="class_g2lib_1_1_b_box_1ad1f3249c9d2a9f2aba4b441bb5dc4a1a" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">using<sp/></highlight><highlight class="normal"><ref refid="class_g2lib_1_1_b_box_1ad1f3249c9d2a9f2aba4b441bb5dc4a1a" kindref="member">VecPairPtrBBox</ref><sp/>=<sp/>vector&lt;PairPtrBBox&gt;;</highlight></codeline>
+<codeline lineno="53"><highlight class="normal"></highlight></codeline>
+<codeline lineno="54"><highlight class="normal"><sp/><sp/></highlight><highlight class="keyword">private</highlight><highlight class="normal">:</highlight></codeline>
+<codeline lineno="55" refid="class_g2lib_1_1_b_box_1a3145e0f468bcde8c2a700e2fffcd40d8" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="namespace_g2lib_1acc8095aa40beedee44352de62f232033" kindref="member">real_type</ref><sp/><ref refid="class_g2lib_1_1_b_box_1a3145e0f468bcde8c2a700e2fffcd40d8" kindref="member">m_bbox</ref>[4]{0,0,0,0};<sp/></highlight></codeline>
+<codeline lineno="56" refid="class_g2lib_1_1_b_box_1a86c059f6c826f74fe04647907b62a827" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="namespace_g2lib_1a17146eb1606475bedc9a2d27f3b29e34" kindref="member">integer</ref><sp/><sp/><sp/><ref refid="class_g2lib_1_1_b_box_1a86c059f6c826f74fe04647907b62a827" kindref="member">m_id</ref>{0};<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="57" refid="class_g2lib_1_1_b_box_1a95edfd97f4f10c2ff98bb9831e023f87" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="namespace_g2lib_1a17146eb1606475bedc9a2d27f3b29e34" kindref="member">integer</ref><sp/><sp/><sp/><ref refid="class_g2lib_1_1_b_box_1a95edfd97f4f10c2ff98bb9831e023f87" kindref="member">m_ipos</ref>{0};<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="58"><highlight class="normal"></highlight></codeline>
+<codeline lineno="59" refid="class_g2lib_1_1_b_box_1a409d53fa634d5a19453fa155b828d16f" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="class_g2lib_1_1_b_box_1a409d53fa634d5a19453fa155b828d16f" kindref="member">BBox</ref>();</highlight></codeline>
+<codeline lineno="60"><highlight class="normal"></highlight></codeline>
+<codeline lineno="61" refid="class_g2lib_1_1_b_box_1abcce7504d62fdaa9ed40bde009b9d1b1" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="class_g2lib_1_1_b_box_1abcce7504d62fdaa9ed40bde009b9d1b1" kindref="member">BBox</ref>(<sp/><ref refid="class_g2lib_1_1_b_box" kindref="compound">BBox</ref><sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/>&amp;<sp/>)<sp/>=<sp/></highlight><highlight class="keywordflow">default</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="62" refid="class_g2lib_1_1_b_box_1afa0a55ff0d01e474580987d98bf15e65" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="class_g2lib_1_1_b_box_1afa0a55ff0d01e474580987d98bf15e65" kindref="member">BBox</ref>(<sp/><ref refid="class_g2lib_1_1_b_box" kindref="compound">BBox</ref><sp/>&amp;&amp;<sp/>)<sp/>=<sp/></highlight><highlight class="keywordflow">default</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="63"><highlight class="normal"></highlight></codeline>
+<codeline lineno="64"><highlight class="normal"><sp/><sp/></highlight><highlight class="keyword">public</highlight><highlight class="normal">:</highlight></codeline>
+<codeline lineno="65"><highlight class="normal"></highlight></codeline>
+<codeline lineno="76" refid="class_g2lib_1_1_b_box_1a5fb8b4dca3efc22fce4558fc736f6e53" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="class_g2lib_1_1_b_box_1a5fb8b4dca3efc22fce4558fc736f6e53" kindref="member">BBox</ref>(</highlight></codeline>
+<codeline lineno="77"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="namespace_g2lib_1acc8095aa40beedee44352de62f232033" kindref="member">real_type</ref><sp/>xmin,</highlight></codeline>
+<codeline lineno="78"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="namespace_g2lib_1acc8095aa40beedee44352de62f232033" kindref="member">real_type</ref><sp/>ymin,</highlight></codeline>
+<codeline lineno="79"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="namespace_g2lib_1acc8095aa40beedee44352de62f232033" kindref="member">real_type</ref><sp/>xmax,</highlight></codeline>
+<codeline lineno="80"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="namespace_g2lib_1acc8095aa40beedee44352de62f232033" kindref="member">real_type</ref><sp/>ymax,</highlight></codeline>
+<codeline lineno="81"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="namespace_g2lib_1a17146eb1606475bedc9a2d27f3b29e34" kindref="member">integer</ref><sp/><sp/><sp/></highlight><highlight class="keywordtype">id</highlight><highlight class="normal">,</highlight></codeline>
+<codeline lineno="82"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="namespace_g2lib_1a17146eb1606475bedc9a2d27f3b29e34" kindref="member">integer</ref><sp/><sp/><sp/>ipos</highlight></codeline>
+<codeline lineno="83"><highlight class="normal"><sp/><sp/><sp/><sp/>)<sp/>{</highlight></codeline>
+<codeline lineno="84"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="class_g2lib_1_1_b_box_1a3145e0f468bcde8c2a700e2fffcd40d8" kindref="member">m_bbox</ref>[0]<sp/>=<sp/>xmin;</highlight></codeline>
+<codeline lineno="85"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="class_g2lib_1_1_b_box_1a3145e0f468bcde8c2a700e2fffcd40d8" kindref="member">m_bbox</ref>[1]<sp/>=<sp/>ymin;</highlight></codeline>
+<codeline lineno="86"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="class_g2lib_1_1_b_box_1a3145e0f468bcde8c2a700e2fffcd40d8" kindref="member">m_bbox</ref>[2]<sp/>=<sp/>xmax;</highlight></codeline>
+<codeline lineno="87"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="class_g2lib_1_1_b_box_1a3145e0f468bcde8c2a700e2fffcd40d8" kindref="member">m_bbox</ref>[3]<sp/>=<sp/>ymax;</highlight></codeline>
+<codeline lineno="88"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="class_g2lib_1_1_b_box_1a86c059f6c826f74fe04647907b62a827" kindref="member">m_id</ref><sp/><sp/><sp/><sp/><sp/><sp/>=<sp/>id;</highlight></codeline>
+<codeline lineno="89"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="class_g2lib_1_1_b_box_1a95edfd97f4f10c2ff98bb9831e023f87" kindref="member">m_ipos</ref><sp/><sp/><sp/><sp/>=<sp/>ipos;</highlight></codeline>
+<codeline lineno="90"><highlight class="normal"><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="91"><highlight class="normal"></highlight></codeline>
+<codeline lineno="99" refid="class_g2lib_1_1_b_box_1a498eca5214dd2148041eee4bca816cdc" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="class_g2lib_1_1_b_box_1a498eca5214dd2148041eee4bca816cdc" kindref="member">BBox</ref>(</highlight></codeline>
+<codeline lineno="100"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="namespace_g2lib_1acc8095aa40beedee44352de62f232033" kindref="member">real_type</ref><sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/><ref refid="class_g2lib_1_1_b_box_1a853994680b7f7e23688dee797a606445" kindref="member">bbox</ref>[4],</highlight></codeline>
+<codeline lineno="101"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="namespace_g2lib_1a17146eb1606475bedc9a2d27f3b29e34" kindref="member">integer</ref><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">id</highlight><highlight class="normal">,</highlight></codeline>
+<codeline lineno="102"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="namespace_g2lib_1a17146eb1606475bedc9a2d27f3b29e34" kindref="member">integer</ref><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>ipos</highlight></codeline>
+<codeline lineno="103"><highlight class="normal"><sp/><sp/><sp/><sp/>)<sp/>{</highlight></codeline>
+<codeline lineno="104"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>std::copy_n(<sp/><ref refid="class_g2lib_1_1_b_box_1a853994680b7f7e23688dee797a606445" kindref="member">bbox</ref>,<sp/>4,<sp/><ref refid="class_g2lib_1_1_b_box_1a3145e0f468bcde8c2a700e2fffcd40d8" kindref="member">m_bbox</ref><sp/>);</highlight></codeline>
+<codeline lineno="105"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="class_g2lib_1_1_b_box_1a86c059f6c826f74fe04647907b62a827" kindref="member">m_id</ref><sp/><sp/><sp/>=<sp/>id;</highlight></codeline>
+<codeline lineno="106"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="class_g2lib_1_1_b_box_1a95edfd97f4f10c2ff98bb9831e023f87" kindref="member">m_ipos</ref><sp/>=<sp/>ipos;</highlight></codeline>
+<codeline lineno="107"><highlight class="normal"><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="108"><highlight class="normal"></highlight></codeline>
+<codeline lineno="117" refid="class_g2lib_1_1_b_box_1a7aa8b4f44c35b86dc680b2166729ed0c" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="class_g2lib_1_1_b_box_1a7aa8b4f44c35b86dc680b2166729ed0c" kindref="member">BBox</ref>(</highlight></codeline>
+<codeline lineno="118"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="namespace_g2lib_1acc8095aa40beedee44352de62f232033" kindref="member">real_type</ref><sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/><ref refid="class_g2lib_1_1_b_box_1a11712b792b09f50b5dc02d47d18f472f" kindref="member">bbox_min</ref>[2],</highlight></codeline>
+<codeline lineno="119"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="namespace_g2lib_1acc8095aa40beedee44352de62f232033" kindref="member">real_type</ref><sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/><ref refid="class_g2lib_1_1_b_box_1a4300bb22eb669508a69a493acb61d356" kindref="member">bbox_max</ref>[2],</highlight></codeline>
+<codeline lineno="120"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="namespace_g2lib_1a17146eb1606475bedc9a2d27f3b29e34" kindref="member">integer</ref><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">id</highlight><highlight class="normal">,</highlight></codeline>
+<codeline lineno="121"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="namespace_g2lib_1a17146eb1606475bedc9a2d27f3b29e34" kindref="member">integer</ref><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>ipos</highlight></codeline>
+<codeline lineno="122"><highlight class="normal"><sp/><sp/><sp/><sp/>)<sp/>{</highlight></codeline>
+<codeline lineno="123"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>std::copy_n(<sp/><ref refid="class_g2lib_1_1_b_box_1a11712b792b09f50b5dc02d47d18f472f" kindref="member">bbox_min</ref>,<sp/>2,<sp/><ref refid="class_g2lib_1_1_b_box_1a3145e0f468bcde8c2a700e2fffcd40d8" kindref="member">m_bbox</ref><sp/><sp/><sp/>);</highlight></codeline>
+<codeline lineno="124"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>std::copy_n(<sp/><ref refid="class_g2lib_1_1_b_box_1a4300bb22eb669508a69a493acb61d356" kindref="member">bbox_max</ref>,<sp/>2,<sp/><ref refid="class_g2lib_1_1_b_box_1a3145e0f468bcde8c2a700e2fffcd40d8" kindref="member">m_bbox</ref>+2<sp/>);</highlight></codeline>
+<codeline lineno="125"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="class_g2lib_1_1_b_box_1a86c059f6c826f74fe04647907b62a827" kindref="member">m_id</ref><sp/><sp/><sp/>=<sp/>id;</highlight></codeline>
+<codeline lineno="126"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="class_g2lib_1_1_b_box_1a95edfd97f4f10c2ff98bb9831e023f87" kindref="member">m_ipos</ref><sp/>=<sp/>ipos;</highlight></codeline>
+<codeline lineno="127"><highlight class="normal"><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="128"><highlight class="normal"></highlight></codeline>
+<codeline lineno="136" refid="class_g2lib_1_1_b_box_1ad680fd1907e19b7493fbbf01a7e16b6c" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="class_g2lib_1_1_b_box_1ad680fd1907e19b7493fbbf01a7e16b6c" kindref="member">BBox</ref>(</highlight></codeline>
+<codeline lineno="137"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>vector&lt;PtrBBox&gt;<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/>&amp;<sp/>bboxes,</highlight></codeline>
+<codeline lineno="138"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="namespace_g2lib_1a17146eb1606475bedc9a2d27f3b29e34" kindref="member">integer</ref><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">id</highlight><highlight class="normal">,</highlight></codeline>
+<codeline lineno="139"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="namespace_g2lib_1a17146eb1606475bedc9a2d27f3b29e34" kindref="member">integer</ref><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>ipos</highlight></codeline>
+<codeline lineno="140"><highlight class="normal"><sp/><sp/><sp/><sp/>)<sp/>{</highlight></codeline>
+<codeline lineno="141"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="class_g2lib_1_1_b_box_1a86c059f6c826f74fe04647907b62a827" kindref="member">m_id</ref><sp/><sp/><sp/>=<sp/>id;</highlight></codeline>
+<codeline lineno="142"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="class_g2lib_1_1_b_box_1a95edfd97f4f10c2ff98bb9831e023f87" kindref="member">m_ipos</ref><sp/>=<sp/>ipos;</highlight></codeline>
+<codeline lineno="143"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">this</highlight><highlight class="normal"><sp/>-&gt;<sp/><ref refid="class_g2lib_1_1_b_box_1ad0aaba5511ff29c7e0fd0049ea0da67b" kindref="member">join</ref>(<sp/>bboxes<sp/>);</highlight></codeline>
+<codeline lineno="144"><highlight class="normal"><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="145"><highlight class="normal"></highlight></codeline>
+<codeline lineno="146"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="comment">//<sp/>-<sp/>-<sp/>-<sp/>-<sp/>-<sp/>-<sp/>-<sp/>-<sp/>-<sp/>-<sp/>-<sp/>-<sp/>-<sp/>-<sp/>-<sp/>-<sp/>-<sp/>-<sp/>-<sp/>-<sp/>-<sp/>-<sp/>-<sp/>-<sp/>-<sp/>-<sp/>-<sp/>-<sp/>-<sp/>-<sp/>-<sp/>-<sp/>-<sp/>-<sp/>-<sp/>-<sp/>-</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="147"><highlight class="normal"></highlight></codeline>
+<codeline lineno="148" refid="class_g2lib_1_1_b_box_1a853994680b7f7e23688dee797a606445" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="namespace_g2lib_1acc8095aa40beedee44352de62f232033" kindref="member">real_type</ref><sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/>*<sp/><ref refid="class_g2lib_1_1_b_box_1a853994680b7f7e23688dee797a606445" kindref="member">bbox</ref>()<sp/><sp/><sp/><sp/><sp/>{<sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/><ref refid="class_g2lib_1_1_b_box_1a3145e0f468bcde8c2a700e2fffcd40d8" kindref="member">m_bbox</ref>;<sp/>}</highlight></codeline>
+<codeline lineno="149" refid="class_g2lib_1_1_b_box_1a11712b792b09f50b5dc02d47d18f472f" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="namespace_g2lib_1acc8095aa40beedee44352de62f232033" kindref="member">real_type</ref><sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/>*<sp/><ref refid="class_g2lib_1_1_b_box_1a11712b792b09f50b5dc02d47d18f472f" kindref="member">bbox_min</ref>()<sp/>{<sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/><ref refid="class_g2lib_1_1_b_box_1a3145e0f468bcde8c2a700e2fffcd40d8" kindref="member">m_bbox</ref>;<sp/>}</highlight></codeline>
+<codeline lineno="150" refid="class_g2lib_1_1_b_box_1a4300bb22eb669508a69a493acb61d356" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="namespace_g2lib_1acc8095aa40beedee44352de62f232033" kindref="member">real_type</ref><sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/>*<sp/><ref refid="class_g2lib_1_1_b_box_1a4300bb22eb669508a69a493acb61d356" kindref="member">bbox_max</ref>()<sp/>{<sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/><ref refid="class_g2lib_1_1_b_box_1a3145e0f468bcde8c2a700e2fffcd40d8" kindref="member">m_bbox</ref>+2;<sp/>}</highlight></codeline>
+<codeline lineno="151"><highlight class="normal"></highlight></codeline>
+<codeline lineno="152" refid="class_g2lib_1_1_b_box_1a6e0ca12f451588adaff49b895a62d556" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="namespace_g2lib_1acc8095aa40beedee44352de62f232033" kindref="member">real_type</ref><sp/>&amp;<sp/><ref refid="class_g2lib_1_1_b_box_1a6e0ca12f451588adaff49b895a62d556" kindref="member">x_min</ref>()<sp/>{<sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/><ref refid="class_g2lib_1_1_b_box_1a3145e0f468bcde8c2a700e2fffcd40d8" kindref="member">m_bbox</ref>[0];<sp/>}<sp/></highlight></codeline>
+<codeline lineno="153" refid="class_g2lib_1_1_b_box_1aa5bff22f191e2eb377edc2689ad06cba" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="namespace_g2lib_1acc8095aa40beedee44352de62f232033" kindref="member">real_type</ref><sp/>&amp;<sp/><ref refid="class_g2lib_1_1_b_box_1aa5bff22f191e2eb377edc2689ad06cba" kindref="member">y_min</ref>()<sp/>{<sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/><ref refid="class_g2lib_1_1_b_box_1a3145e0f468bcde8c2a700e2fffcd40d8" kindref="member">m_bbox</ref>[1];<sp/>}<sp/></highlight></codeline>
+<codeline lineno="154" refid="class_g2lib_1_1_b_box_1aab8f8794e892face6c61284887afc5ce" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="namespace_g2lib_1acc8095aa40beedee44352de62f232033" kindref="member">real_type</ref><sp/>&amp;<sp/><ref refid="class_g2lib_1_1_b_box_1aab8f8794e892face6c61284887afc5ce" kindref="member">x_max</ref>()<sp/>{<sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/><ref refid="class_g2lib_1_1_b_box_1a3145e0f468bcde8c2a700e2fffcd40d8" kindref="member">m_bbox</ref>[2];<sp/>}<sp/></highlight></codeline>
+<codeline lineno="155" refid="class_g2lib_1_1_b_box_1a48b92fb0ded5e8eb9125dd93de94dac7" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="namespace_g2lib_1acc8095aa40beedee44352de62f232033" kindref="member">real_type</ref><sp/>&amp;<sp/><ref refid="class_g2lib_1_1_b_box_1a48b92fb0ded5e8eb9125dd93de94dac7" kindref="member">y_max</ref>()<sp/>{<sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/><ref refid="class_g2lib_1_1_b_box_1a3145e0f468bcde8c2a700e2fffcd40d8" kindref="member">m_bbox</ref>[3];<sp/>}<sp/></highlight></codeline>
+<codeline lineno="156"><highlight class="normal"></highlight></codeline>
+<codeline lineno="157" refid="class_g2lib_1_1_b_box_1a97c801b11ff730785030bd2aa2aa8fe0" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="namespace_g2lib_1acc8095aa40beedee44352de62f232033" kindref="member">real_type</ref><sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/>&amp;<sp/><ref refid="class_g2lib_1_1_b_box_1a97c801b11ff730785030bd2aa2aa8fe0" kindref="member">x_min</ref>()</highlight><highlight class="keyword"><sp/>const<sp/></highlight><highlight class="normal">{<sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/><ref refid="class_g2lib_1_1_b_box_1a3145e0f468bcde8c2a700e2fffcd40d8" kindref="member">m_bbox</ref>[0];<sp/>}<sp/></highlight></codeline>
+<codeline lineno="158" refid="class_g2lib_1_1_b_box_1ab8997bf107a31b17974dc5818981a2a4" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="namespace_g2lib_1acc8095aa40beedee44352de62f232033" kindref="member">real_type</ref><sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/>&amp;<sp/><ref refid="class_g2lib_1_1_b_box_1ab8997bf107a31b17974dc5818981a2a4" kindref="member">y_min</ref>()</highlight><highlight class="keyword"><sp/>const<sp/></highlight><highlight class="normal">{<sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/><ref refid="class_g2lib_1_1_b_box_1a3145e0f468bcde8c2a700e2fffcd40d8" kindref="member">m_bbox</ref>[1];<sp/>}<sp/></highlight></codeline>
+<codeline lineno="159" refid="class_g2lib_1_1_b_box_1a7cbe90d9631ea45610b1b63a3954ecf6" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="namespace_g2lib_1acc8095aa40beedee44352de62f232033" kindref="member">real_type</ref><sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/>&amp;<sp/><ref refid="class_g2lib_1_1_b_box_1a7cbe90d9631ea45610b1b63a3954ecf6" kindref="member">x_max</ref>()</highlight><highlight class="keyword"><sp/>const<sp/></highlight><highlight class="normal">{<sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/><ref refid="class_g2lib_1_1_b_box_1a3145e0f468bcde8c2a700e2fffcd40d8" kindref="member">m_bbox</ref>[2];<sp/>}<sp/></highlight></codeline>
+<codeline lineno="160" refid="class_g2lib_1_1_b_box_1a2890ee97adf75a1d31b1b46dd9bbe524" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="namespace_g2lib_1acc8095aa40beedee44352de62f232033" kindref="member">real_type</ref><sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/>&amp;<sp/><ref refid="class_g2lib_1_1_b_box_1a2890ee97adf75a1d31b1b46dd9bbe524" kindref="member">y_max</ref>()</highlight><highlight class="keyword"><sp/>const<sp/></highlight><highlight class="normal">{<sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/><ref refid="class_g2lib_1_1_b_box_1a3145e0f468bcde8c2a700e2fffcd40d8" kindref="member">m_bbox</ref>[3];<sp/>}<sp/></highlight></codeline>
+<codeline lineno="161"><highlight class="normal"></highlight></codeline>
+<codeline lineno="162" refid="class_g2lib_1_1_b_box_1ae8aa858db0f3f6e57b5c38602d45b266" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="namespace_g2lib_1a17146eb1606475bedc9a2d27f3b29e34" kindref="member">integer</ref><sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/>&amp;<sp/><ref refid="class_g2lib_1_1_b_box_1ae8aa858db0f3f6e57b5c38602d45b266" kindref="member">Id</ref>()</highlight><highlight class="keyword"><sp/><sp/><sp/>const<sp/></highlight><highlight class="normal">{<sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/><ref refid="class_g2lib_1_1_b_box_1a86c059f6c826f74fe04647907b62a827" kindref="member">m_id</ref>;<sp/>}<sp/><sp/><sp/></highlight></codeline>
+<codeline lineno="163" refid="class_g2lib_1_1_b_box_1a2126758a184472cbe58d62edf98c74ee" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="namespace_g2lib_1a17146eb1606475bedc9a2d27f3b29e34" kindref="member">integer</ref><sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/>&amp;<sp/><ref refid="class_g2lib_1_1_b_box_1a2126758a184472cbe58d62edf98c74ee" kindref="member">Ipos</ref>()</highlight><highlight class="keyword"><sp/>const<sp/></highlight><highlight class="normal">{<sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/><ref refid="class_g2lib_1_1_b_box_1a95edfd97f4f10c2ff98bb9831e023f87" kindref="member">m_ipos</ref>;<sp/>}<sp/></highlight></codeline>
+<codeline lineno="164"><highlight class="normal"></highlight></codeline>
+<codeline lineno="168"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="class_g2lib_1_1_b_box" kindref="compound">BBox</ref><sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/>&amp;</highlight></codeline>
+<codeline lineno="169" refid="class_g2lib_1_1_b_box_1a06ca2872d9b80f275a8f755243375656" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="class_g2lib_1_1_b_box_1a06ca2872d9b80f275a8f755243375656" kindref="member">operator = </ref>(<sp/><ref refid="class_g2lib_1_1_b_box" kindref="compound">BBox</ref><sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/>&amp;<sp/>rhs<sp/>)<sp/>{</highlight></codeline>
+<codeline lineno="170"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/>std::copy_n(<sp/>rhs.<ref refid="class_g2lib_1_1_b_box_1a3145e0f468bcde8c2a700e2fffcd40d8" kindref="member">m_bbox</ref>,<sp/>4,<sp/><ref refid="class_g2lib_1_1_b_box_1a3145e0f468bcde8c2a700e2fffcd40d8" kindref="member">m_bbox</ref><sp/>);</highlight></codeline>
+<codeline lineno="171"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="class_g2lib_1_1_b_box_1a86c059f6c826f74fe04647907b62a827" kindref="member">m_id</ref><sp/><sp/><sp/>=<sp/>rhs.<ref refid="class_g2lib_1_1_b_box_1a86c059f6c826f74fe04647907b62a827" kindref="member">m_id</ref>;</highlight></codeline>
+<codeline lineno="172"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="class_g2lib_1_1_b_box_1a95edfd97f4f10c2ff98bb9831e023f87" kindref="member">m_ipos</ref><sp/>=<sp/>rhs.<ref refid="class_g2lib_1_1_b_box_1a95edfd97f4f10c2ff98bb9831e023f87" kindref="member">m_ipos</ref>;</highlight></codeline>
+<codeline lineno="173"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>*</highlight><highlight class="keyword">this</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="174"><highlight class="normal"><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="175"><highlight class="normal"></highlight></codeline>
+<codeline lineno="179"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">bool</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="180" refid="class_g2lib_1_1_b_box_1a3b98db48add6859ab67fb00a0710a21e" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="class_g2lib_1_1_b_box_1a3b98db48add6859ab67fb00a0710a21e" kindref="member">collision</ref>(<sp/><ref refid="class_g2lib_1_1_b_box" kindref="compound">BBox</ref><sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/>&amp;<sp/>box<sp/>)</highlight><highlight class="keyword"><sp/>const<sp/></highlight><highlight class="normal">{</highlight></codeline>
+<codeline lineno="181"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>!(<sp/>(box.<ref refid="class_g2lib_1_1_b_box_1a6e0ca12f451588adaff49b895a62d556" kindref="member">x_min</ref>()<sp/>&gt;<sp/>this-&gt;<ref refid="class_g2lib_1_1_b_box_1aab8f8794e892face6c61284887afc5ce" kindref="member">x_max</ref>()<sp/>)<sp/>||</highlight></codeline>
+<codeline lineno="182"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>(box.<ref refid="class_g2lib_1_1_b_box_1aab8f8794e892face6c61284887afc5ce" kindref="member">x_max</ref>()<sp/>&lt;<sp/>this-&gt;<ref refid="class_g2lib_1_1_b_box_1a6e0ca12f451588adaff49b895a62d556" kindref="member">x_min</ref>()<sp/>)<sp/>||</highlight></codeline>
+<codeline lineno="183"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>(box.<ref refid="class_g2lib_1_1_b_box_1aa5bff22f191e2eb377edc2689ad06cba" kindref="member">y_min</ref>()<sp/>&gt;<sp/>this-&gt;<ref refid="class_g2lib_1_1_b_box_1a48b92fb0ded5e8eb9125dd93de94dac7" kindref="member">y_max</ref>()<sp/>)<sp/>||</highlight></codeline>
+<codeline lineno="184"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>(box.<ref refid="class_g2lib_1_1_b_box_1a48b92fb0ded5e8eb9125dd93de94dac7" kindref="member">y_max</ref>()<sp/>&lt;<sp/>this-&gt;<ref refid="class_g2lib_1_1_b_box_1aa5bff22f191e2eb377edc2689ad06cba" kindref="member">y_min</ref>()<sp/>)<sp/>);</highlight></codeline>
+<codeline lineno="185"><highlight class="normal"><sp/><sp/><sp/><sp/>}</highlight></codeline>
+<codeline lineno="186"><highlight class="normal"></highlight></codeline>
+<codeline lineno="190"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="191"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="class_g2lib_1_1_b_box_1ad0aaba5511ff29c7e0fd0049ea0da67b" kindref="member">join</ref>(<sp/>vector&lt;PtrBBox&gt;<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/>&amp;<sp/>bboxes<sp/>);</highlight></codeline>
+<codeline lineno="192"><highlight class="normal"></highlight></codeline>
+<codeline lineno="196"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="namespace_g2lib_1acc8095aa40beedee44352de62f232033" kindref="member">real_type</ref></highlight></codeline>
+<codeline lineno="197"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="class_g2lib_1_1_b_box_1ac6fc969999b473220bc8ef684108ab74" kindref="member">distance</ref>(<sp/><ref refid="namespace_g2lib_1acc8095aa40beedee44352de62f232033" kindref="member">real_type</ref><sp/>x,<sp/><ref refid="namespace_g2lib_1acc8095aa40beedee44352de62f232033" kindref="member">real_type</ref><sp/>y<sp/>)<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="198"><highlight class="normal"></highlight></codeline>
+<codeline lineno="202"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="namespace_g2lib_1acc8095aa40beedee44352de62f232033" kindref="member">real_type</ref></highlight></codeline>
+<codeline lineno="203"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="class_g2lib_1_1_b_box_1a81d505f4ec1c979177f83be91922c8d0" kindref="member">max_distance</ref>(<sp/><ref refid="namespace_g2lib_1acc8095aa40beedee44352de62f232033" kindref="member">real_type</ref><sp/>x,<sp/><ref refid="namespace_g2lib_1acc8095aa40beedee44352de62f232033" kindref="member">real_type</ref><sp/>y<sp/>)<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="204"><highlight class="normal"></highlight></codeline>
+<codeline lineno="208"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="class_g2lib_1_1_b_box_1a67cd88140fdf70d4de76bacdf7396cd5" kindref="member">print</ref>(<sp/><ref refid="namespace_g2lib_1a8fcbace87db5a5e71391e0040878f2c3" kindref="member">ostream_type</ref><sp/>&amp;<sp/>stream<sp/>)<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="209"><highlight class="normal"></highlight></codeline>
+<codeline lineno="210"><highlight class="normal"><sp/><sp/>};</highlight></codeline>
+<codeline lineno="211"><highlight class="normal"></highlight></codeline>
+<codeline lineno="215"><highlight class="normal"><sp/><sp/></highlight><highlight class="keyword">inline</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="216" refid="namespace_g2lib_1a60c772f9878faa1b8e2f216d5161c4e7" refkind="member"><highlight class="normal"><sp/><sp/><ref refid="namespace_g2lib_1a8fcbace87db5a5e71391e0040878f2c3" kindref="member">ostream_type</ref><sp/>&amp;</highlight></codeline>
+<codeline lineno="217"><highlight class="normal"><sp/><sp/><ref refid="namespace_g2lib_1a96b7fc2853ca6de16269e745bd03f832" kindref="member">operator &lt;&lt; </ref>(<sp/><ref refid="namespace_g2lib_1a8fcbace87db5a5e71391e0040878f2c3" kindref="member">ostream_type</ref><sp/>&amp;<sp/>stream,<sp/><ref refid="class_g2lib_1_1_b_box" kindref="compound">BBox</ref><sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/>&amp;<sp/>bb<sp/>)<sp/>{</highlight></codeline>
+<codeline lineno="218"><highlight class="normal"><sp/><sp/><sp/><sp/>bb.<ref refid="class_g2lib_1_1_b_box_1a67cd88140fdf70d4de76bacdf7396cd5" kindref="member">print</ref>(stream);</highlight></codeline>
+<codeline lineno="219"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>stream;</highlight></codeline>
+<codeline lineno="220"><highlight class="normal"><sp/><sp/>}</highlight></codeline>
+<codeline lineno="221"><highlight class="normal"></highlight></codeline>
+<codeline lineno="222"><highlight class="normal">}</highlight></codeline>
+<codeline lineno="223"><highlight class="normal"></highlight></codeline>
+    </programlisting>
+    <location file="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Clothoids/BBox.hxx"/>
+  </compounddef>
+</doxygen>

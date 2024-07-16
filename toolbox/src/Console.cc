@@ -24,6 +24,7 @@
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
 
 #include "Utils.hh"
+#include "Utils_fmt.hh"
 
 #ifdef __clang__
 #pragma clang diagnostic ignored "-Wpoison-system-directories"

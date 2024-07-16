@@ -18,6 +18,7 @@
 \*--------------------------------------------------------------------------*/
 
 #include "Clothoids.hh"
+#include "Clothoids_fmt.hh"
 
 // Microsoft visual studio Workaround
 #ifdef max
@@ -36,6 +37,75 @@ namespace G2lib {
   using std::min;
   using std::swap;
 
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  void
+  LineSegment::bb_triangles(
+    vector<Triangle2D> & tvec,
+    real_type            max_angle,
+    real_type            max_size,
+    integer              icurve
+  ) const {
+    real_type xmin, ymin, xmax, ymax;
+    this->bbox( xmin, ymin, xmax, ymax );
+    real_type xc = (xmax+xmin)/2;
+    real_type yc = (ymax+ymin)/2;
+    real_type nx = (ymax-ymin)/100;
+    real_type ny = (xmin-xmax)/100;
+    if ( xmax > xmin || ymax > ymin ) {
+      tvec.emplace_back( xmin, ymin, xmax, ymax, xc+nx, yc+ny, 0, 0, icurve );
+    } else {
+      UTILS_ERROR(
+        "LineSegment bb_triangles found a degenerate line\n"
+        "bbox = [ xmin={}, ymin={}, xmax={}, ymax={} ] max_angle={} max_size={}\n",
+        xmin, ymin, xmax, ymax, max_angle, max_size
+      );
+    }
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  void
+  LineSegment::bb_triangles_ISO(
+    real_type            offs,
+    vector<Triangle2D> & tvec,
+    real_type            max_angle,
+    real_type            max_size,
+    integer              icurve
+  ) const {
+    real_type xmin, ymin, xmax, ymax;
+    this->bbox_ISO( offs, xmin, ymin, xmax, ymax );
+    real_type xc = (xmax+xmin)/2;
+    real_type yc = (ymax+ymin)/2;
+    real_type nx = (ymax-ymin)/100;
+    real_type ny = (xmin-xmax)/100;
+    if ( xmax > xmin || ymax > ymin ) {
+      tvec.emplace_back( xmin, ymin, xmax, ymax, xc+nx, yc+ny, 0, 0, icurve );
+    } else {
+      UTILS_ERROR(
+        "LineSegment bb_triangles found a degenerate line\n"
+        "bbox = [ xmin={}, ymin={}, xmax={}, ymax={} ]\n"
+        "offs={} max_angle={} max_size={}\n",
+        xmin, ymin, xmax, ymax, offs, max_angle, max_size
+      );
+    }
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  void
+  LineSegment::setup( GenericContainer const & gc ) {
+    string cwhere{ fmt::format("LineSegment[{}]::setup( gc ):", this->name() ) };
+    char const * where{ cwhere.c_str() };
+    real_type x0 = gc.get_map_number("x0", where );
+    real_type y0 = gc.get_map_number("y0", where );
+    real_type x1 = gc.get_map_number("x1", where );
+    real_type y1 = gc.get_map_number("y1", where );
+    this->build_2P( x0, y0, x1, y1 );
+  }
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
   void LineSegment::build( LineSegment const & LS ) { *this = LS; }
   void LineSegment::build( CircleArc const & )      { UTILS_ERROR("can convert from CircleArc to LineSegment\n"); }
   void LineSegment::build( Biarc const & )          { UTILS_ERROR("can convert from Biarc to LineSegment\n"); }
@@ -44,8 +114,11 @@ namespace G2lib {
   void LineSegment::build( BiarcList const & )      { UTILS_ERROR("can convert from BiarcList to LineSegment\n"); }
   void LineSegment::build( ClothoidList const & )   { UTILS_ERROR("can convert from ClothoidList to LineSegment\n"); }
   void LineSegment::build( Dubins const & )         { UTILS_ERROR("can convert from Dubins to LineSegment\n"); }
+  void LineSegment::build( Dubins3p const & )       { UTILS_ERROR("can convert from Dubins3p to LineSegment\n"); }
 
-  LineSegment::LineSegment( BaseCurve const * pC ) {
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  LineSegment::LineSegment( BaseCurve const * pC ) : BaseCurve( pC->name() ) {
 
     G2LIB_DEBUG_MESSAGE( "LineSegment convert: {}\n", pC->type_name() );
 
@@ -671,6 +744,12 @@ namespace G2lib {
     dst = hypot( dx, dy );
     return -1;
   }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  string
+  LineSegment::info() const
+  { return fmt::format( "LineSegment\n{}\n", *this ); }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 

@@ -1,0 +1,75 @@
+\doxysection{Line\+\_\+compatibility.\+hxx}
+\hypertarget{_line__compatibility_8hxx_source}{}\label{_line__compatibility_8hxx_source}\index{/Users/enrico/Ricerca/develop/PINS/pins-\/mechatronix/LibSources/submodules/Clothoids/src/Clothoids/Line\_compatibility.hxx@{/Users/enrico/Ricerca/develop/PINS/pins-\/mechatronix/LibSources/submodules/Clothoids/src/Clothoids/Line\_compatibility.hxx}}
+\mbox{\hyperlink{_line__compatibility_8hxx}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{comment}{/*-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/*\(\backslash\)}}
+\DoxyCodeLine{00002\ \textcolor{comment}{\ |\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ |}}
+\DoxyCodeLine{00003\ \textcolor{comment}{\ |\ \ Copyright\ (C)\ 2017\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ |}}
+\DoxyCodeLine{00004\ \textcolor{comment}{\ |\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ |}}
+\DoxyCodeLine{00005\ \textcolor{comment}{\ |\ \ \ \ \ \ \ \ \ ,\ \_\_\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ ,\ \_\_\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ |}}
+\DoxyCodeLine{00006\ \textcolor{comment}{\ |\ \ \ \ \ \ \ \ /|/\ \ \(\backslash\)\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ /|/\ \ \(\backslash\)\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ |}}
+\DoxyCodeLine{00007\ \textcolor{comment}{\ |\ \ \ \ \ \ \ \ \ |\ \_\_/\ \_\ \ \ ,\_\ \ \ \ \ \ \ \ \ |\ \_\_/\ \_\ \ \ ,\_\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ |}}
+\DoxyCodeLine{00008\ \textcolor{comment}{\ |\ \ \ \ \ \ \ \ \ |\ \ \ \(\backslash\)|/\ \ /\ \ |\ \ |\ \ \ |\ |\ \ \ \(\backslash\)|/\ \ /\ \ |\ \ |\ \ \ |\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ |}}
+\DoxyCodeLine{00009\ \textcolor{comment}{\ |\ \ \ \ \ \ \ \ \ |(\_\_/|\_\_/\ \ \ |\_/\ \(\backslash\)\_/|/|(\_\_/|\_\_/\ \ \ |\_/\ \(\backslash\)\_/|/\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ |}}
+\DoxyCodeLine{00010\ \textcolor{comment}{\ |\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ /|\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ /|\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ |}}
+\DoxyCodeLine{00011\ \textcolor{comment}{\ |\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)|\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)|\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ |}}
+\DoxyCodeLine{00012\ \textcolor{comment}{\ |\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ |}}
+\DoxyCodeLine{00013\ \textcolor{comment}{\ |\ \ \ \ \ \ Enrico\ Bertolazzi\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ |}}
+\DoxyCodeLine{00014\ \textcolor{comment}{\ |\ \ \ \ \ \ Dipartimento\ di\ Ingegneria\ Industriale\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ |}}
+\DoxyCodeLine{00015\ \textcolor{comment}{\ |\ \ \ \ \ \ Universita`\ degli\ Studi\ di\ Trento\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ |}}
+\DoxyCodeLine{00016\ \textcolor{comment}{\ |\ \ \ \ \ \ email:\ enrico.bertolazzi@unitn.it\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ |}}
+\DoxyCodeLine{00017\ \textcolor{comment}{\ |\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ |}}
+\DoxyCodeLine{00018\ \textcolor{comment}{\(\backslash\)*-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/*/}}
+\DoxyCodeLine{00019\ }
+\DoxyCodeLine{00023\ }
+\DoxyCodeLine{00024\ \textcolor{keywordtype}{void}}
+\DoxyCodeLine{00025\ \mbox{\hyperlink{_line__compatibility_8hxx_a8059ccc4a69a6e3a7cc63750367f326a}{changeOrigin}}(\ real\_type\ newx0,\ real\_type\ newy0\ )}
+\DoxyCodeLine{00026\ \{\ change\_origin(\ newx0,\ newy0\ );\ \}}
+\DoxyCodeLine{00027\ }
+\DoxyCodeLine{00028\ real\_type\ \mbox{\hyperlink{_line__compatibility_8hxx_a87bc730a1f52adff0d4483430269745a}{xBegin}}()\textcolor{keyword}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ const\ }\{\ \textcolor{keywordflow}{return}\ x\_begin();\ \}}
+\DoxyCodeLine{00029\ real\_type\ \mbox{\hyperlink{_line__compatibility_8hxx_ae89e2f4ffa90111b6f7d7ecea153ef54}{yBegin}}()\textcolor{keyword}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ const\ }\{\ \textcolor{keywordflow}{return}\ y\_begin();\ \}}
+\DoxyCodeLine{00030\ real\_type\ \mbox{\hyperlink{_line__compatibility_8hxx_a700d4806d93f230fdf155af17dcd7195}{xEnd}}()\textcolor{keyword}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ const\ }\{\ \textcolor{keywordflow}{return}\ x\_end();\ \}}
+\DoxyCodeLine{00031\ real\_type\ \mbox{\hyperlink{_line__compatibility_8hxx_a5776fc56f1bcd6d5cf07703a38d7b8b9}{yEnd}}()\textcolor{keyword}{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ const\ }\{\ \textcolor{keywordflow}{return}\ y\_end();\ \}}
+\DoxyCodeLine{00032\ real\_type\ \mbox{\hyperlink{_line__compatibility_8hxx_a1d6afc2d5faaaf775590467a0bf065b4}{xBegin\_ISO}}(\ real\_type\ offs\ )\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ x\_begin\_ISO(\ offs\ );\ \}}
+\DoxyCodeLine{00033\ real\_type\ \mbox{\hyperlink{_line__compatibility_8hxx_ac8a5a280ae18ec8eff32db153a75583d}{yBegin\_ISO}}(\ real\_type\ offs\ )\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ y\_begin\_ISO(\ offs\ );\ \}}
+\DoxyCodeLine{00034\ real\_type\ \mbox{\hyperlink{_line__compatibility_8hxx_a46287668744b24e74408fefe01540280}{xEnd\_ISO}}(\ real\_type\ offs\ )\textcolor{keyword}{\ \ \ const\ }\{\ \textcolor{keywordflow}{return}\ x\_end\_ISO(\ offs\ );\ \}}
+\DoxyCodeLine{00035\ real\_type\ \mbox{\hyperlink{_line__compatibility_8hxx_a15c2b7d41bc3b408e4788d026b39a963}{yEnd\_ISO}}(\ real\_type\ offs\ )\textcolor{keyword}{\ \ \ const\ }\{\ \textcolor{keywordflow}{return}\ y\_end\_ISO(\ offs\ );\ \}}
+\DoxyCodeLine{00036\ }
+\DoxyCodeLine{00037\ real\_type\ \mbox{\hyperlink{_line__compatibility_8hxx_a90b53d14422a7f9d836ee054f8b1fba7}{tx\_Begin}}()\textcolor{keyword}{\ \ \ \ \ const\ }\{\ \textcolor{keywordflow}{return}\ m\_c0;\ \}}
+\DoxyCodeLine{00038\ real\_type\ \mbox{\hyperlink{_line__compatibility_8hxx_a45a181135dc9bbefa16caf518b45497b}{ty\_Begin}}()\textcolor{keyword}{\ \ \ \ \ const\ }\{\ \textcolor{keywordflow}{return}\ m\_s0;\ \}}
+\DoxyCodeLine{00039\ real\_type\ \mbox{\hyperlink{_line__compatibility_8hxx_aa2d457f4bdf82c6208c9647f5a9908ff}{tx\_End}}()\textcolor{keyword}{\ \ \ \ \ \ \ const\ }\{\ \textcolor{keywordflow}{return}\ m\_c0;\ \}}
+\DoxyCodeLine{00040\ real\_type\ \mbox{\hyperlink{_line__compatibility_8hxx_afe236501b0e1285e1f99e9c0a2133788}{ty\_End}}()\textcolor{keyword}{\ \ \ \ \ \ \ const\ }\{\ \textcolor{keywordflow}{return}\ m\_s0;\ \}}
+\DoxyCodeLine{00041\ real\_type\ \mbox{\hyperlink{_line__compatibility_8hxx_ac705d040da542979328e27ae0b09663c}{nx\_Begin\_ISO}}()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ -\/m\_s0;\ \}}
+\DoxyCodeLine{00042\ real\_type\ \mbox{\hyperlink{_line__compatibility_8hxx_aeae95f4b68d3a00f3caa8395e61f2ad0}{ny\_Begin\_ISO}}()\textcolor{keyword}{\ const\ }\{\ \textcolor{keywordflow}{return}\ m\_c0;\ \}}
+\DoxyCodeLine{00043\ real\_type\ \mbox{\hyperlink{_line__compatibility_8hxx_a7b95e1ce5dc463dfac07b631c8c49dbd}{nx\_End\_ISO}}()\textcolor{keyword}{\ \ \ const\ }\{\ \textcolor{keywordflow}{return}\ -\/m\_s0;\ \}}
+\DoxyCodeLine{00044\ real\_type\ \mbox{\hyperlink{_line__compatibility_8hxx_a3f1eaa0dfc273ccd8812fa8b4fd1a95b}{ny\_End\_ISO}}()\textcolor{keyword}{\ \ \ const\ }\{\ \textcolor{keywordflow}{return}\ m\_c0;\ \}}
+\DoxyCodeLine{00045\ }
+\DoxyCodeLine{00046\ \mbox{\hyperlink{namespace_g2lib_a17146eb1606475bedc9a2d27f3b29e34}{integer}}}
+\DoxyCodeLine{00047\ \mbox{\hyperlink{_line__compatibility_8hxx_a8badc4b2d8796b9371dfbfcda50e74c9}{closestPoint\_ISO}}(}
+\DoxyCodeLine{00048\ \ \ real\_type\ \ \ qx,}
+\DoxyCodeLine{00049\ \ \ real\_type\ \ \ qy,}
+\DoxyCodeLine{00050\ \ \ real\_type\ \&\ x,}
+\DoxyCodeLine{00051\ \ \ real\_type\ \&\ y,}
+\DoxyCodeLine{00052\ \ \ real\_type\ \&\ s,}
+\DoxyCodeLine{00053\ \ \ real\_type\ \&\ t,}
+\DoxyCodeLine{00054\ \ \ real\_type\ \&\ dst}
+\DoxyCodeLine{00055\ )\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{00056\ \ \ \textcolor{keywordflow}{return}\ closest\_point\_ISO(\ qx,\ qy,\ x,\ y,\ s,\ t,\ dst\ );}
+\DoxyCodeLine{00057\ \}}
+\DoxyCodeLine{00058\ }
+\DoxyCodeLine{00059\ \mbox{\hyperlink{namespace_g2lib_a17146eb1606475bedc9a2d27f3b29e34}{integer}}}
+\DoxyCodeLine{00060\ \mbox{\hyperlink{_line__compatibility_8hxx_a8badc4b2d8796b9371dfbfcda50e74c9}{closestPoint\_ISO}}(}
+\DoxyCodeLine{00061\ \ \ real\_type\ \ \ qx,}
+\DoxyCodeLine{00062\ \ \ real\_type\ \ \ qy,}
+\DoxyCodeLine{00063\ \ \ real\_type\ \ \ offs,}
+\DoxyCodeLine{00064\ \ \ real\_type\ \&\ x,}
+\DoxyCodeLine{00065\ \ \ real\_type\ \&\ y,}
+\DoxyCodeLine{00066\ \ \ real\_type\ \&\ s,}
+\DoxyCodeLine{00067\ \ \ real\_type\ \&\ t,}
+\DoxyCodeLine{00068\ \ \ real\_type\ \&\ dst}
+\DoxyCodeLine{00069\ )\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{00070\ \ \ \textcolor{keywordflow}{return}\ closest\_point\_ISO(\ qx,\ qy,\ offs,\ x,\ y,\ s,\ t,\ dst\ );}
+\DoxyCodeLine{00071\ \}}
+\DoxyCodeLine{00072\ }
+
+\end{DoxyCode}

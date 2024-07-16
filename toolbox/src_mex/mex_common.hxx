@@ -235,12 +235,12 @@ do_bbTriangles( int nlhs, mxArray       * plhs[],
   std::vector<Triangle2D> tvec;
   if ( nrhs >= 5 ) {
     if ( ISO ) {
-      ptr->bbTriangles_ISO( offs, tvec, max_angle, max_size );
+      ptr->bb_triangles_ISO( offs, tvec, max_angle, max_size );
     } else {
-      ptr->bbTriangles_SAE( offs, tvec, max_angle, max_size );
+      ptr->bb_triangles_SAE( offs, tvec, max_angle, max_size );
     }
   } else {
-    ptr->bbTriangles( tvec, max_angle, max_size );
+    ptr->bb_triangles( tvec, max_angle, max_size );
   }
 
   mwSize nt = tvec.size();

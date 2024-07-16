@@ -1,0 +1,58 @@
+\doxysection{Clothoids\+\_\+fmt.\+hh}
+\hypertarget{_clothoids__fmt_8hh_source}{}\label{_clothoids__fmt_8hh_source}\index{/Users/enrico/Ricerca/develop/PINS/pins-\/mechatronix/LibSources/submodules/Clothoids/src/Clothoids\_fmt.hh@{/Users/enrico/Ricerca/develop/PINS/pins-\/mechatronix/LibSources/submodules/Clothoids/src/Clothoids\_fmt.hh}}
+\mbox{\hyperlink{_clothoids__fmt_8hh}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{comment}{/*-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/*\(\backslash\)}}
+\DoxyCodeLine{00002\ \textcolor{comment}{\ |\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ |}}
+\DoxyCodeLine{00003\ \textcolor{comment}{\ |\ \ Copyright\ (C)\ 2018\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ |}}
+\DoxyCodeLine{00004\ \textcolor{comment}{\ |\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ |}}
+\DoxyCodeLine{00005\ \textcolor{comment}{\ |\ \ \ \ \ \ \ \ \ ,\ \_\_\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ ,\ \_\_\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ |}}
+\DoxyCodeLine{00006\ \textcolor{comment}{\ |\ \ \ \ \ \ \ \ /|/\ \ \(\backslash\)\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ /|/\ \ \(\backslash\)\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ |}}
+\DoxyCodeLine{00007\ \textcolor{comment}{\ |\ \ \ \ \ \ \ \ \ |\ \_\_/\ \_\ \ \ ,\_\ \ \ \ \ \ \ \ \ |\ \_\_/\ \_\ \ \ ,\_\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ |}}
+\DoxyCodeLine{00008\ \textcolor{comment}{\ |\ \ \ \ \ \ \ \ \ |\ \ \ \(\backslash\)|/\ \ /\ \ |\ \ |\ \ \ |\ |\ \ \ \(\backslash\)|/\ \ /\ \ |\ \ |\ \ \ |\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ |}}
+\DoxyCodeLine{00009\ \textcolor{comment}{\ |\ \ \ \ \ \ \ \ \ |(\_\_/|\_\_/\ \ \ |\_/\ \(\backslash\)\_/|/|(\_\_/|\_\_/\ \ \ |\_/\ \(\backslash\)\_/|/\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ |}}
+\DoxyCodeLine{00010\ \textcolor{comment}{\ |\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ /|\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ /|\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ |}}
+\DoxyCodeLine{00011\ \textcolor{comment}{\ |\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)|\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)|\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ |}}
+\DoxyCodeLine{00012\ \textcolor{comment}{\ |\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ |}}
+\DoxyCodeLine{00013\ \textcolor{comment}{\ |\ \ \ \ \ \ Paolo\ Bevilacqua\ and\ Enrico\ Bertolazzi\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ |}}
+\DoxyCodeLine{00014\ \textcolor{comment}{\ |\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ |}}
+\DoxyCodeLine{00015\ \textcolor{comment}{\ |\ \ \ \ \ \ (1)\ Dipartimento\ di\ Ingegneria\ e\ Scienza\ dell'Informazione\ \ \ \ \ \ \ \ \ \ |}}
+\DoxyCodeLine{00016\ \textcolor{comment}{\ |\ \ \ \ \ \ (2)\ Dipartimento\ di\ Ingegneria\ Industriale\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ |}}
+\DoxyCodeLine{00017\ \textcolor{comment}{\ |\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ |}}
+\DoxyCodeLine{00018\ \textcolor{comment}{\ |\ \ \ \ \ \ Universita`\ degli\ Studi\ di\ Trento\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ |}}
+\DoxyCodeLine{00019\ \textcolor{comment}{\ |\ \ \ \ \ \ email:\ paolo.bevilacqua@unitn.it\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ |}}
+\DoxyCodeLine{00020\ \textcolor{comment}{\ |\ \ \ \ \ \ email:\ enrico.bertolazzi@unitn.it\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ |}}
+\DoxyCodeLine{00021\ \textcolor{comment}{\ |\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ |}}
+\DoxyCodeLine{00022\ \textcolor{comment}{\(\backslash\)*-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/*/}}
+\DoxyCodeLine{00023\ }
+\DoxyCodeLine{00027\ }
+\DoxyCodeLine{00028\ \textcolor{preprocessor}{\#pragma\ once}}
+\DoxyCodeLine{00029\ }
+\DoxyCodeLine{00030\ \textcolor{preprocessor}{\#ifndef\ CLOTHOIDS\_FMT\_dot\_HH}}
+\DoxyCodeLine{00031\ \textcolor{preprocessor}{\#define\ CLOTHOIDS\_FMT\_dot\_HH}}
+\DoxyCodeLine{00032\ }
+\DoxyCodeLine{00033\ \textcolor{preprocessor}{\#ifdef\ NO\_SYSTEM\_UTILS}}
+\DoxyCodeLine{00034\ \textcolor{preprocessor}{\ \ \#include\ "{}Utils\_fmt.hh"{}}}
+\DoxyCodeLine{00035\ \textcolor{preprocessor}{\#else}}
+\DoxyCodeLine{00036\ \textcolor{preprocessor}{\ \ \#include\ <Utils\_fmt.hh>}}
+\DoxyCodeLine{00037\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00038\ }
+\DoxyCodeLine{00039\ \textcolor{keyword}{namespace\ }\mbox{\hyperlink{namespacefmt}{fmt}}\ \{}
+\DoxyCodeLine{00040\ \ \ \textcolor{keyword}{template}\ <>\ \textcolor{keyword}{struct\ }formatter<\mbox{\hyperlink{namespace_g2lib}{G2lib}}::Biarc>\ \ \ \ \ \ \ \ \ \ \ \ :\ ostream\_formatter\ \{\};}
+\DoxyCodeLine{00041\ \ \ \textcolor{keyword}{template}\ <>\ \textcolor{keyword}{struct\ }formatter<\mbox{\hyperlink{namespace_g2lib}{G2lib}}::BiarcList>\ \ \ \ \ \ \ \ :\ ostream\_formatter\ \{\};}
+\DoxyCodeLine{00042\ \ \ \textcolor{keyword}{template}\ <>\ \textcolor{keyword}{struct\ }formatter<\mbox{\hyperlink{namespace_g2lib}{G2lib}}::BBox>\ \ \ \ \ \ \ \ \ \ \ \ \ :\ ostream\_formatter\ \{\};}
+\DoxyCodeLine{00043\ \ \ \textcolor{keyword}{template}\ <>\ \textcolor{keyword}{struct\ }formatter<\mbox{\hyperlink{namespace_g2lib}{G2lib}}::CircleArc>\ \ \ \ \ \ \ \ :\ ostream\_formatter\ \{\};}
+\DoxyCodeLine{00044\ \ \ \textcolor{keyword}{template}\ <>\ \textcolor{keyword}{struct\ }formatter<\mbox{\hyperlink{namespace_g2lib}{G2lib}}::ClothoidCurve>\ \ \ \ :\ ostream\_formatter\ \{\};}
+\DoxyCodeLine{00045\ \ \ \textcolor{keyword}{template}\ <>\ \textcolor{keyword}{struct\ }formatter<\mbox{\hyperlink{namespace_g2lib}{G2lib}}::ClothoidSplineG2>\ :\ ostream\_formatter\ \{\};}
+\DoxyCodeLine{00046\ \ \ \textcolor{keyword}{template}\ <>\ \textcolor{keyword}{struct\ }formatter<\mbox{\hyperlink{namespace_g2lib}{G2lib}}::ClothoidList>\ \ \ \ \ :\ ostream\_formatter\ \{\};}
+\DoxyCodeLine{00047\ \ \ \textcolor{keyword}{template}\ <>\ \textcolor{keyword}{struct\ }formatter<\mbox{\hyperlink{namespace_g2lib}{G2lib}}::LineSegment>\ \ \ \ \ \ :\ ostream\_formatter\ \{\};}
+\DoxyCodeLine{00048\ \ \ \textcolor{keyword}{template}\ <>\ \textcolor{keyword}{struct\ }formatter<\mbox{\hyperlink{namespace_g2lib}{G2lib}}::PolyLine>\ \ \ \ \ \ \ \ \ :\ ostream\_formatter\ \{\};}
+\DoxyCodeLine{00049\ \ \ \textcolor{keyword}{template}\ <>\ \textcolor{keyword}{struct\ }formatter<\mbox{\hyperlink{namespace_g2lib}{G2lib}}::Triangle2D>\ \ \ \ \ \ \ :\ ostream\_formatter\ \{\};}
+\DoxyCodeLine{00050\ \ \ \textcolor{keyword}{template}\ <>\ \textcolor{keyword}{struct\ }formatter<\mbox{\hyperlink{namespace_g2lib}{G2lib}}::Dubins>\ \ \ \ \ \ \ \ \ \ \ :\ ostream\_formatter\ \{\};}
+\DoxyCodeLine{00051\ \ \ \textcolor{keyword}{template}\ <>\ \textcolor{keyword}{struct\ }formatter<\mbox{\hyperlink{namespace_g2lib}{G2lib}}::Dubins3p>\ \ \ \ \ \ \ \ \ :\ ostream\_formatter\ \{\};}
+\DoxyCodeLine{00052\ \}}
+\DoxyCodeLine{00053\ }
+\DoxyCodeLine{00054\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00055\ }
+
+\end{DoxyCode}

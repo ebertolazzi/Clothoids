@@ -111,14 +111,14 @@ using BaseCurve::closest_point_SAE;
 using BaseCurve::distance_ISO;
 using BaseCurve::distance_SAE;
 
-#ifdef G2LIB_COMPATIBILITY_MODE
-using BaseCurve::nx_begin;
-using BaseCurve::ny_begin;
-using BaseCurve::nx_end;
-using BaseCurve::ny_end;
-using BaseCurve::evaluate;
-using BaseCurve::closest_point;
-using BaseCurve::distance;
+#ifdef CLOTHOIDS_BACK_COMPATIBILITY
+using BaseCurve::nx_Begin;
+using BaseCurve::ny_Begin;
+using BaseCurve::nx_End;
+using BaseCurve::ny_End;
+//using BaseCurve::evaluate;
+//using BaseCurve::closestPoint;
+//using BaseCurve::distance;
 #endif
 
 ///

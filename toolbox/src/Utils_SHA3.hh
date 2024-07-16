@@ -21,9 +21,6 @@ namespace Utils {
   ///
   class SHA3 {
 
-    using string       = std::string;
-    using ostream_type = std::basic_ostream<char>;
-    using istream_type = std::basic_istream<char>;
     using uint8_t      = std::uint8_t;
     using uint64_t     = std::uint64_t;
 

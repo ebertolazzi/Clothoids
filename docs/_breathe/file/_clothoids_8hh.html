@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="../../">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <meta name="lang:clipboard.copy" content="Copy to clipboard">
+  <meta name="lang:clipboard.copied" content="Copied to clipboard">
+  <meta name="lang:search.language" content="en">
+  <meta name="lang:search.pipeline.stopwords" content="True">
+  <meta name="lang:search.pipeline.trimmer" content="True">
+  <meta name="lang:search.result.none" content="No matching documents">
+  <meta name="lang:search.result.one" content="1 matching document">
+  <meta name="lang:search.result.other" content="# matching documents">
+  <meta name="lang:search.tokenizer" content="[\s\-]+">
+
+  
+    <link href="https://fonts.gstatic.com/" rel="preconnect" crossorigin>
+    <link href="https://fonts.googleapis.com/css?family=Roboto+Mono:400,500,700|Roboto:300,400,400i,700&display=fallback" rel="stylesheet">
+
+    <style>
+      body,
+      input {
+        font-family: "Roboto", "Helvetica Neue", Helvetica, Arial, sans-serif
+      }
+
+      code,
+      kbd,
+      pre {
+        font-family: "Roboto Mono", "Courier New", Courier, monospace
+      }
+    </style>
+  
+
+  <link rel="stylesheet" href="../../_static/stylesheets/application.css"/>
+  <link rel="stylesheet" href="../../_static/stylesheets/application-palette.css"/>
+  <link rel="stylesheet" href="../../_static/stylesheets/application-fixes.css"/>
+  
+  <link rel="stylesheet" href="../../_static/fonts/material-icons.css"/>
+  
+  <meta name="theme-color" content="#3f51b5">
+  <script src="../../_static/javascripts/modernizr.js"></script>
+  
+  
+  
+    <title>File Clothoids.hh &#8212; CLOTHOIDS 0.1 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=83e35b93" />
+    <link rel="stylesheet" type="text/css" href="../../_static/material.css?v=79c92029" />
+    <script src="../../_static/documentation_options.js?v=2709fde1"></script>
+    <script src="../../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="File Clothoids_fmt.hh" href="_clothoids__fmt_8hh.html" />
+    <link rel="prev" title="File ClothoidList_compatibility.hxx" href="_clothoid_list__compatibility_8hxx.html" />
+  
+   
+
+  </head>
+  <body dir=ltr
+        data-md-color-primary=blue-grey data-md-color-accent=blue>
+  
+  <svg class="md-svg">
+    <defs data-children-count="0">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" width="416" height="448" viewBox="0 0 416 448" id="__github"><path fill="currentColor" d="M160 304q0 10-3.125 20.5t-10.75 19T128 352t-18.125-8.5-10.75-19T96 304t3.125-20.5 10.75-19T128 256t18.125 8.5 10.75 19T160 304zm160 0q0 10-3.125 20.5t-10.75 19T288 352t-18.125-8.5-10.75-19T256 304t3.125-20.5 10.75-19T288 256t18.125 8.5 10.75 19T320 304zm40 0q0-30-17.25-51T296 232q-10.25 0-48.75 5.25Q229.5 240 208 240t-39.25-2.75Q130.75 232 120 232q-29.5 0-46.75 21T56 304q0 22 8 38.375t20.25 25.75 30.5 15 35 7.375 37.25 1.75h42q20.5 0 37.25-1.75t35-7.375 30.5-15 20.25-25.75T360 304zm56-44q0 51.75-15.25 82.75-9.5 19.25-26.375 33.25t-35.25 21.5-42.5 11.875-42.875 5.5T212 416q-19.5 0-35.5-.75t-36.875-3.125-38.125-7.5-34.25-12.875T37 371.5t-21.5-28.75Q0 312 0 260q0-59.25 34-99-6.75-20.5-6.75-42.5 0-29 12.75-54.5 27 0 47.5 9.875t47.25 30.875Q171.5 96 212 96q37 0 70 8 26.25-20.5 46.75-30.25T376 64q12.75 25.5 12.75 54.5 0 21.75-6.75 42 34 40 34 99.5z"/></svg>
+      
+    </defs>
+  </svg>
+  
+  <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer">
+  <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search">
+  <label class="md-overlay" data-md-component="overlay" for="__drawer"></label>
+  <a href="#_breathe/file/_clothoids_8hh" tabindex="1" class="md-skip"> Skip to content </a>
+  <header class="md-header" data-md-component="header">
+  <nav class="md-header-nav md-grid">
+    <div class="md-flex navheader">
+      <div class="md-flex__cell md-flex__cell--shrink">
+        <a href="../../index.html" title="CLOTHOIDS 0.1 documentation"
+           class="md-header-nav__button md-logo">
+          
+            &nbsp;
+          
+        </a>
+      </div>
+      <div class="md-flex__cell md-flex__cell--shrink">
+        <label class="md-icon md-icon--menu md-header-nav__button" for="__drawer"></label>
+      </div>
+      <div class="md-flex__cell md-flex__cell--stretch">
+        <div class="md-flex__ellipsis md-header-nav__title" data-md-component="title">
+          <span class="md-header-nav__topic">CLOTHOIDS 0.1 documentation</span>
+          <span class="md-header-nav__topic"> File Clothoids.hh </span>
+        </div>
+      </div>
+      <div class="md-flex__cell md-flex__cell--shrink">
+        <label class="md-icon md-icon--search md-header-nav__button" for="__search"></label>
+        
+<div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" action="../../search.html" method="get" name="search">
+      <input type="text" class="md-search__input" name="q" placeholder=""Search""
+             autocapitalize="off" autocomplete="off" spellcheck="false"
+             data-md-component="query" data-md-state="active">
+      <label class="md-icon md-search__icon" for="__search"></label>
+      <button type="reset" class="md-icon md-search__icon" data-md-component="reset" tabindex="-1">
+        &#xE5CD;
+      </button>
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="result">
+          <div class="md-search-result__meta">
+            Type to start searching
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+      </div>
+      
+      
+  
+  <script src="../../_static/javascripts/version_dropdown.js"></script>
+  <script>
+    var json_loc = "../../"versions.json"",
+        target_loc = "../../../",
+        text = "Versions";
+    $( document ).ready( add_version_dropdown(json_loc, target_loc, text));
+  </script>
+  
+
+    </div>
+  </nav>
+</header>
+
+  
+  <div class="md-container">
+    
+    
+    
+  <nav class="md-tabs" data-md-component="tabs">
+    <div class="md-tabs__inner md-grid">
+      <ul class="md-tabs__list">
+          <li class="md-tabs__item"><a href="../../index.html" class="md-tabs__link">CLOTHOIDS 0.1 documentation</a></li>
+          <li class="md-tabs__item"><a href="../filelist.html" class="md-tabs__link">File list</a></li>
+      </ul>
+    </div>
+  </nav>
+    <main class="md-main">
+      <div class="md-main__inner md-grid" data-md-component="container">
+        
+          <div class="md-sidebar md-sidebar--primary" data-md-component="navigation">
+            <div class="md-sidebar__scrollwrap">
+              <div class="md-sidebar__inner">
+                <nav class="md-nav md-nav--primary" data-md-level="0">
+  <label class="md-nav__title md-nav__title--site" for="__drawer">
+    <a href="../../index.html" title="CLOTHOIDS 0.1 documentation" class="md-nav__button md-logo">
+      
+        <img src="../../_static/" alt=" logo" width="48" height="48">
+      
+    </a>
+    <a href="../../index.html"
+       title="CLOTHOIDS 0.1 documentation">CLOTHOIDS 0.1 documentation</a>
+  </label>
+  
+
+</nav>
+              </div>
+            </div>
+          </div>
+          <div class="md-sidebar md-sidebar--secondary" data-md-component="toc">
+            <div class="md-sidebar__scrollwrap">
+              <div class="md-sidebar__inner">
+                
+<nav class="md-nav md-nav--secondary">
+    <label class="md-nav__title" for="__toc">"Contents"</label>
+  <ul class="md-nav__list" data-md-scrollfix="">
+        <li class="md-nav__item"><a href="#breathe-file-clothoids-8hh--page-root" class="md-nav__link">File Clothoids.hh</a><nav class="md-nav">
+              <ul class="md-nav__list">
+        <li class="md-nav__item"><a href="#_CPPv45G2lib" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">G2lib</span></code></a><nav class="md-nav">
+              <ul class="md-nav__list">
+        <li class="md-nav__item"><a href="#_CPPv4N5G2lib12istream_typeE" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">G2lib::istream_type</span></code></a>
+        </li>
+        <li class="md-nav__item"><a href="#_CPPv4N5G2lib12ostream_typeE" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">G2lib::ostream_type</span></code></a>
+        </li>
+        <li class="md-nav__item"><a href="#_CPPv4N5G2lib9real_typeE" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">G2lib::real_type</span></code></a>
+        </li>
+        <li class="md-nav__item"><a href="#_CPPv4N5G2lib7integerE" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">G2lib::integer</span></code></a>
+        </li>
+        <li class="md-nav__item"><a href="#_CPPv4N5G2lib9AABB_TREEE" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">G2lib::AABB_TREE</span></code></a>
+        </li>
+        <li class="md-nav__item"><a href="#_CPPv4N5G2lib8AABB_SETE" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">G2lib::AABB_SET</span></code></a>
+        </li>
+        <li class="md-nav__item"><a href="#_CPPv4N5G2lib8AABB_MAPE" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">G2lib::AABB_MAP</span></code></a>
+        </li>
+        <li class="md-nav__item"><a href="#_CPPv4N5G2lib16GenericContainerE" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">G2lib::GenericContainer</span></code></a>
+        </li>
+        <li class="md-nav__item"><a href="#_CPPv4N5G2lib9to_stringE9CurveType" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">G2lib::to_string()</span></code></a>
+        </li></ul>
+            </nav>
+        </li></ul>
+            </nav>
+        </li>
+    
+<li class="md-nav__item"><a class="md-nav__extra_link" href="../../_sources/_breathe/file/_clothoids_8hh.rst.txt">Show Source</a> </li>
+
+<li id="searchbox" class="md-nav__item"></li>
+
+  </ul>
+</nav>
+              </div>
+            </div>
+          </div>
+        
+        <div class="md-content">
+          <article class="md-content__inner md-typeset" role="main">
+            
+  <section id="file-clothoids-hh">
+<h1 id="breathe-file-clothoids-8hh--page-root">File Clothoids.hh<a class="headerlink" href="#breathe-file-clothoids-8hh--page-root" title="Link to this heading">¶</a></h1>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric" id="breathe-section-title-defines">Defines</p>
+<dl class="cpp macro">
+<dt class="sig sig-object cpp" id="c.CLOTHOIDS_dot_HH">
+<span class="target" id="_clothoids_8hh_1ad3b2b8f6737fe03a8b92631f17344d5b"></span><span class="sig-name descname"><span class="n"><span class="pre">CLOTHOIDS_dot_HH</span></span></span><a class="headerlink" href="#c.CLOTHOIDS_dot_HH" title="Link to this definition">¶</a><br/></dt>
+<dd><p>file: Clothoids.hh</p>
+</dd></dl>
+<dl class="cpp macro">
+<dt class="sig sig-object cpp" id="c.CLOTHOIDS_USE_THREADS">
+<span class="target" id="_clothoids_8hh_1a81f1cf836d0e3c0e6301cf1bbad9fd39"></span><span class="sig-name descname"><span class="n"><span class="pre">CLOTHOIDS_USE_THREADS</span></span></span><a class="headerlink" href="#c.CLOTHOIDS_USE_THREADS" title="Link to this definition">¶</a><br/></dt>
+<dd></dd></dl>
+<dl class="cpp macro">
+<dt class="sig sig-object cpp" id="c.G2LIB_DEBUG_MESSAGE">
+<span class="target" id="_clothoids_8hh_1a50b619e42946f472ff4030e0bbd74f2e"></span><span class="sig-name descname"><span class="n"><span class="pre">G2LIB_DEBUG_MESSAGE</span></span></span><span class="sig-paren">(</span><span class="p"><span class="pre">...</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.G2LIB_DEBUG_MESSAGE" title="Link to this definition">¶</a><br/></dt>
+<dd></dd></dl>
+<dl class="cpp macro">
+<dt class="sig sig-object cpp" id="c.GLIB2_TOL_ANGLE">
+<span class="target" id="_clothoids_8hh_1ab80a1f996b6c8ba6a757bfde8c3689b6"></span><span class="sig-name descname"><span class="n"><span class="pre">GLIB2_TOL_ANGLE</span></span></span><a class="headerlink" href="#c.GLIB2_TOL_ANGLE" title="Link to this definition">¶</a><br/></dt>
+<dd></dd></dl>
+</div>
+<dl class="cpp type">
+<dt class="sig sig-object cpp" id="_CPPv45G2lib">
+<span id="_CPPv35G2lib"></span><span id="_CPPv25G2lib"></span><span id="G2lib"></span><span class="target" id="namespace_g2lib"></span><span class="k"><span class="pre">namespace</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">G2lib</span></span></span><br/></dt>
+<dd><p>file: BBox.cc</p>
+<p>file: Biarc.cc</p>
+<p>file: BaseCurve.hh</p>
+<p>file: BBox.hxx</p>
+<p>file: Biarc.hxx</p>
+<p>file: BiarcList.hh</p>
+<p>file: Circle.hxx</p>
+<p>file: Clothoid.hxx</p>
+<p>file: ClothoidList.hxx</p>
+<p>file: Dubins.hxx</p>
+<p>file: Dubins3p.hxx</p>
+<p>file: Fresnel.hxx</p>
+<p>file: Line.hxx</p>
+<p>file: PolyLine.hxx</p>
+<p>file: Triangle2D.hxx</p>
+<p>file: Dubins.cc</p>
+<p>file: Dubins3p.cc</p>
+<p>file: Dubins3p_ellipse.cc</p>
+<p>file: Dubins3p_pattern.cc</p>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric" id="breathe-section-title-typedefs">Typedefs</p>
+<dl class="cpp type">
+<dt class="sig sig-object cpp" id="_CPPv4N5G2lib12istream_typeE">
+<span id="_CPPv3N5G2lib12istream_typeE"></span><span id="_CPPv2N5G2lib12istream_typeE"></span><span id="G2lib::istream_type"></span><span class="target" id="namespace_g2lib_1a7ed8321a8bada9eae2f914f6fb70a208"></span><span class="k"><span class="pre">typedef</span></span><span class="w"> </span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">basic_istream</span></span><span class="p"><span class="pre">&lt;</span></span><span class="kt"><span class="pre">char</span></span><span class="p"><span class="pre">&gt;</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">istream_type</span></span></span><a class="headerlink" href="#_CPPv4N5G2lib12istream_typeE" title="Link to this definition">¶</a><br/></dt>
+<dd></dd></dl>
+<dl class="cpp type">
+<dt class="sig sig-object cpp" id="_CPPv4N5G2lib12ostream_typeE">
+<span id="_CPPv3N5G2lib12ostream_typeE"></span><span id="_CPPv2N5G2lib12ostream_typeE"></span><span id="G2lib::ostream_type"></span><span class="target" id="namespace_g2lib_1a8fcbace87db5a5e71391e0040878f2c3"></span><span class="k"><span class="pre">typedef</span></span><span class="w"> </span><span class="n"><span class="pre">std</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">basic_ostream</span></span><span class="p"><span class="pre">&lt;</span></span><span class="kt"><span class="pre">char</span></span><span class="p"><span class="pre">&gt;</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">ostream_type</span></span></span><a class="headerlink" href="#_CPPv4N5G2lib12ostream_typeE" title="Link to this definition">¶</a><br/></dt>
+<dd></dd></dl>
+<dl class="cpp type">
+<dt class="sig sig-object cpp" id="_CPPv4N5G2lib9real_typeE">
+<span id="_CPPv3N5G2lib9real_typeE"></span><span id="_CPPv2N5G2lib9real_typeE"></span><span id="G2lib::real_type"></span><span class="target" id="namespace_g2lib_1acc8095aa40beedee44352de62f232033"></span><span class="k"><span class="pre">typedef</span></span><span class="w"> </span><span class="kt"><span class="pre">double</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">real_type</span></span></span><a class="headerlink" href="#_CPPv4N5G2lib9real_typeE" title="Link to this definition">¶</a><br/></dt>
+<dd></dd></dl>
+<dl class="cpp type">
+<dt class="sig sig-object cpp" id="_CPPv4N5G2lib7integerE">
+<span id="_CPPv3N5G2lib7integerE"></span><span id="_CPPv2N5G2lib7integerE"></span><span id="G2lib::integer"></span><span class="target" id="namespace_g2lib_1a17146eb1606475bedc9a2d27f3b29e34"></span><span class="k"><span class="pre">typedef</span></span><span class="w"> </span><span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">integer</span></span></span><a class="headerlink" href="#_CPPv4N5G2lib7integerE" title="Link to this definition">¶</a><br/></dt>
+<dd></dd></dl>
+<dl class="cpp type">
+<dt class="sig sig-object cpp" id="_CPPv4N5G2lib9AABB_TREEE">
+<span id="_CPPv3N5G2lib9AABB_TREEE"></span><span id="_CPPv2N5G2lib9AABB_TREEE"></span><span id="G2lib::AABB_TREE"></span><span class="target" id="namespace_g2lib_1ae1a048466025088b97bf20caddd13693"></span><span class="k"><span class="pre">typedef</span></span><span class="w"> </span><span class="n"><span class="pre">Utils</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">AABBtree</span></span><span class="p"><span class="pre">&lt;</span></span><a class="reference internal" href="#_CPPv4N5G2lib9real_typeE" title="G2lib::real_type"><span class="n"><span class="pre">real_type</span></span></a><span class="p"><span class="pre">&gt;</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">AABB_TREE</span></span></span><a class="headerlink" href="#_CPPv4N5G2lib9AABB_TREEE" title="Link to this definition">¶</a><br/></dt>
+<dd></dd></dl>
+<dl class="cpp type">
+<dt class="sig sig-object cpp" id="_CPPv4N5G2lib8AABB_SETE">
+<span id="_CPPv3N5G2lib8AABB_SETE"></span><span id="_CPPv2N5G2lib8AABB_SETE"></span><span id="G2lib::AABB_SET"></span><span class="target" id="namespace_g2lib_1a5f1ad3dfe878836c222addf6619be7b6"></span><span class="k"><span class="pre">typedef</span></span><span class="w"> </span><span class="n"><span class="pre">Utils</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">AABBtree</span></span><span class="p"><span class="pre">&lt;</span></span><a class="reference internal" href="#_CPPv4N5G2lib9real_typeE" title="G2lib::real_type"><span class="n"><span class="pre">real_type</span></span></a><span class="p"><span class="pre">&gt;</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">AABB_SET</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">AABB_SET</span></span></span><a class="headerlink" href="#_CPPv4N5G2lib8AABB_SETE" title="Link to this definition">¶</a><br/></dt>
+<dd></dd></dl>
+<dl class="cpp type">
+<dt class="sig sig-object cpp" id="_CPPv4N5G2lib8AABB_MAPE">
+<span id="_CPPv3N5G2lib8AABB_MAPE"></span><span id="_CPPv2N5G2lib8AABB_MAPE"></span><span id="G2lib::AABB_MAP"></span><span class="target" id="namespace_g2lib_1a5dd1788676dfa912a9389cd18ed753a5"></span><span class="k"><span class="pre">typedef</span></span><span class="w"> </span><span class="n"><span class="pre">Utils</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">AABBtree</span></span><span class="p"><span class="pre">&lt;</span></span><a class="reference internal" href="#_CPPv4N5G2lib9real_typeE" title="G2lib::real_type"><span class="n"><span class="pre">real_type</span></span></a><span class="p"><span class="pre">&gt;</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">AABB_MAP</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">AABB_MAP</span></span></span><a class="headerlink" href="#_CPPv4N5G2lib8AABB_MAPE" title="Link to this definition">¶</a><br/></dt>
+<dd></dd></dl>
+<dl class="cpp type">
+<dt class="sig sig-object cpp" id="_CPPv4N5G2lib16GenericContainerE">
+<span id="_CPPv3N5G2lib16GenericContainerE"></span><span id="_CPPv2N5G2lib16GenericContainerE"></span><span class="target" id="namespace_g2lib_1a2bee1fb11cb401bacb26ad157b301feb"></span><span class="k"><span class="pre">using</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">GenericContainer</span></span></span><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="n"><span class="pre">GC_namespace</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">GenericContainer</span></span><a class="headerlink" href="#_CPPv4N5G2lib16GenericContainerE" title="Link to this definition">¶</a><br/></dt>
+<dd></dd></dl>
+<dl class="cpp type">
+<dt class="sig sig-object cpp">
+<span class="target" id="namespace_g2lib_1ac18621126b9485db2bc878d6a1c8b0c9"></span><span class="sig-name descname"><span class="pre">CurveType</span> <span class="pre">=</span> <span class="pre">enum</span> <span class="pre">class</span> <span class="pre">CurveType</span> <span class="pre">:integer</span> <span class="pre">{</span> <span class="pre">LINE,</span> <span class="pre">POLYLINE,</span> <span class="pre">CIRCLE,</span> <span class="pre">BIARC,</span> <span class="pre">BIARC_LIST,</span> <span class="pre">CLOTHOID,</span> <span class="pre">CLOTHOID_LIST,</span> <span class="pre">DUBINS,</span> <span class="pre">DUBINS3P</span> <span class="pre">}</span></span></dt>
+<dd></dd></dl>
+</div>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric" id="breathe-section-title-functions">Functions</p>
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N5G2lib9to_stringE9CurveType">
+<span id="_CPPv3N5G2lib9to_stringE9CurveType"></span><span id="_CPPv2N5G2lib9to_stringE9CurveType"></span><span id="G2lib::to_string__CurveType"></span><span class="target" id="namespace_g2lib_1a3b5a717bff4e10ce2a9b52cb628f2227"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="n"><span class="pre">string</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">to_string</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">CurveType</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">n</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N5G2lib9to_stringE9CurveType" title="Link to this definition">¶</a><br/></dt>
+<dd></dd></dl>
+</div>
+</dd></dl>
+</section>
+
+
+          </article>
+        </div>
+      </div>
+    </main>
+  </div>
+  <footer class="md-footer">
+    <div class="md-footer-nav">
+      <nav class="md-footer-nav__inner md-grid">
+          
+            <a href="_clothoid_list__compatibility_8hxx.html" title="File ClothoidList_compatibility.hxx"
+               class="md-flex md-footer-nav__link md-footer-nav__link--prev"
+               rel="prev">
+              <div class="md-flex__cell md-flex__cell--shrink">
+                <i class="md-icon md-icon--arrow-back md-footer-nav__button"></i>
+              </div>
+              <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title">
+                <span class="md-flex__ellipsis">
+                  <span
+                      class="md-footer-nav__direction"> "Previous" </span> File ClothoidList_compatibility.hxx </span>
+              </div>
+            </a>
+          
+          
+            <a href="_clothoids__fmt_8hh.html" title="File Clothoids_fmt.hh"
+               class="md-flex md-footer-nav__link md-footer-nav__link--next"
+               rel="next">
+            <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title"><span
+                class="md-flex__ellipsis"> <span
+                class="md-footer-nav__direction"> "Next" </span> File Clothoids_fmt.hh </span>
+            </div>
+            <div class="md-flex__cell md-flex__cell--shrink"><i
+                class="md-icon md-icon--arrow-forward md-footer-nav__button"></i>
+            </div>
+          
+        </a>
+        
+      </nav>
+    </div>
+    <div class="md-footer-meta md-typeset">
+      <div class="md-footer-meta__inner md-grid">
+        <div class="md-footer-copyright">
+          <div class="md-footer-copyright__highlight">
+              &#169; Copyright 2024, E.Bertolazzi and M.Frego.
+              
+          </div>
+            Created using
+            <a href="http://www.sphinx-doc.org/">Sphinx</a> 7.4.4.
+             and
+            <a href="https://github.com/bashtage/sphinx-material/">Material for
+              Sphinx</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+  <script src="../../_static/javascripts/application.js"></script>
+  <script>app.initialize({version: "1.0.4", url: {base: ".."}})</script>
+  </body>
+</html>

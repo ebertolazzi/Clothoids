@@ -1,5 +1,6 @@
 //#define _USE_MATH_DEFINES
 #include "Clothoids.hh"
+#include "Clothoids_fmt.hh"
 
 using G2lib::real_type;
 using namespace std;
@@ -36,9 +37,9 @@ main() {
   int iter = g2solve3arc.build( x0, y0, th0, k0, x1, y1, th1, k1 );
   fmt::print( "iter = {}\n", iter );
 
-  G2lib::ClothoidCurve const & S0 = g2solve3arc.getS0();
-  G2lib::ClothoidCurve const & S1 = g2solve3arc.getS1();
-  G2lib::ClothoidCurve const & SM = g2solve3arc.getSM();
+  G2lib::ClothoidCurve const & S0 = g2solve3arc.S0();
+  G2lib::ClothoidCurve const & S1 = g2solve3arc.S1();
+  G2lib::ClothoidCurve const & SM = g2solve3arc.SM();
 
   fmt::print( "\n\nS0 (NEW)\n {}\n", S0 );
   fmt::print( "\n\nSM (NEW)\n {}\n", SM );
@@ -60,7 +61,7 @@ main() {
     S1.theta_begin(), SM.theta_end(),   S1.theta_begin()-SM.theta_end()
   );
 
-  G2lib::ClothoidList S;
+  G2lib::ClothoidList S{"S"};
   ifstream file("G2_test.txt");
   S.load(file);
   file.close();

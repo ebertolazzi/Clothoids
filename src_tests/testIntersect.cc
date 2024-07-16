@@ -1,5 +1,6 @@
 //#define _USE_MATH_DEFINES
 #include "Clothoids.hh"
+#include "Clothoids_fmt.hh"
 
 using G2lib::real_type;
 using G2lib::integer;
@@ -8,7 +9,7 @@ using namespace std;
 int
 main() {
 
-  G2lib::ClothoidCurve C0, C1;
+  G2lib::ClothoidCurve C0{"C0"}, C1{"C1"};
   real_type x0     = 0;
   real_type y0     = 0;
   real_type theta0 = Utils::m_pi*0.7;
@@ -25,7 +26,7 @@ main() {
   real_type L1     = 100;
   C1.build( x1, y1, theta1, k1, dk1, L1 );
 
-  G2lib::LineSegment L;
+  G2lib::LineSegment L{"L"};
   L.build( x0, y0, 2, 2 );
 
   G2lib::IntersectList ilist;

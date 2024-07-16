@@ -22,10 +22,47 @@
 ///
 
 #include "Clothoids.hh"
+#include "Clothoids_fmt.hh"
 
 namespace G2lib {
 
   using std::abs;
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  Biarc::Biarc(
+    real_type x0,
+    real_type y0,
+    real_type theta0,
+    real_type x1,
+    real_type y1,
+    real_type theta1,
+    string const & name
+  ) : BaseCurve( name )
+  {
+    bool ok = build( x0, y0, theta0, x1, y1, theta1 );
+    UTILS_ASSERT(
+      ok,
+      "Biarc( x0={}, y0={}, theta0={}, x1={}, y1={}, theta1={}) cannot be computed\n",
+      x0, y0, theta0, x1, y1, theta1
+    );
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  void
+  Biarc::setup( GenericContainer const & gc ) {
+    string cwhere{ fmt::format("Biarc[{}]::setup( gc ):", this->name() ) };
+    char const * where{ cwhere.c_str() };
+    real_type x0     = gc.get_map_number("x0",     where );
+    real_type y0     = gc.get_map_number("y0",     where );
+    real_type theta0 = gc.get_map_number("theta0", where );
+    real_type x1     = gc.get_map_number("x1",     where );
+    real_type y1     = gc.get_map_number("y1",     where );
+    real_type theta1 = gc.get_map_number("theta1", where );
+    bool ok = this->build( x0, y0, theta0, x1, y1, theta1 );
+    UTILS_ASSERT( ok, "Biarc[{}]::setup( gc ) failed\n", this->name() );
+  }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
@@ -63,6 +100,7 @@ namespace G2lib {
   void Biarc::build( BiarcList const & )      { UTILS_ERROR("can convert from BiarcList to Biarc\n"); }
   void Biarc::build( ClothoidList const & )   { UTILS_ERROR("can convert from ClothoidList to Biarc\n"); }
   void Biarc::build( Dubins const & )         { UTILS_ERROR("can convert from Dubins to CircleArc\n"); }
+  void Biarc::build( Dubins3p const & )       { UTILS_ERROR("can convert from Dubins3p to CircleArc\n"); }
 
   /*\
    |   ____  _
@@ -72,7 +110,7 @@ namespace G2lib {
    |  |____/|_|\__,_|_|  \___|
   \*/
 
-  Biarc::Biarc( BaseCurve const * pC ) : Biarc() {
+  Biarc::Biarc( BaseCurve const * pC ) : Biarc( pC->name() ) {
 
     G2LIB_DEBUG_MESSAGE( "Biarc convert: {}\n", pC->type_name() );
 
@@ -928,15 +966,15 @@ namespace G2lib {
 
   bool
   build_guess_theta(
-    integer           n,
-    real_type const * x,
-    real_type const * y,
-    real_type       * theta
+    integer         n,
+    real_type const x[],
+    real_type const y[],
+    real_type       theta[]
   ) {
     UTILS_ASSERT0(
       n > 1, "build_guess_theta, at least 2 points are necessary\n"
     );
-    Biarc b;
+    Biarc b("build_guess_theta temporary b");
     if ( n == 2 ) {
       theta[0] = theta[1] = atan2( y[1] - y[0], x[1] - x[0] );
     } else {
@@ -956,6 +994,12 @@ namespace G2lib {
     }
     return true;
   }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  string
+  Biarc::info() const
+  { return fmt::format( "BiArc\n{}\n", *this ); }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 

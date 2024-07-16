@@ -48,6 +48,7 @@
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
 
 #include "Utils.hh"
+#include "Utils_fmt.hh"
 
 #include <string>
 #include <iostream>

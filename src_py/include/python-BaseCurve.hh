@@ -168,18 +168,18 @@ namespace G2lib {
       }
 
       void
-      bbTriangles(vector<Triangle2D> & tvec, real_type max_angle, real_type max_size, integer icurve) const override {
-        PYBIND11_OVERLOAD_PURE(void, G2lib::BaseCurve, bbTriangles, tvec, max_angle, max_size, icurve);
+      bb_triangles(vector<Triangle2D> & tvec, real_type max_angle, real_type max_size, integer icurve) const override {
+        PYBIND11_OVERLOAD_PURE(void, G2lib::BaseCurve, bb_triangles, tvec, max_angle, max_size, icurve);
       }
 
       void
-      bbTriangles_ISO(real_type offs, vector<Triangle2D> & tvec, real_type max_angle, real_type max_size, integer icurve) const override {
-        PYBIND11_OVERLOAD_PURE(void, G2lib::BaseCurve, bbTriangles_ISO, offs, tvec, max_angle, max_size, icurve);
+      bb_triangles_ISO(real_type offs, vector<Triangle2D> & tvec, real_type max_angle, real_type max_size, integer icurve) const override {
+        PYBIND11_OVERLOAD_PURE(void, G2lib::BaseCurve, bb_triangles_ISO, offs, tvec, max_angle, max_size, icurve);
       }
 
       void
-      bbTriangles_SAE(real_type offs, vector<Triangle2D> & tvec, real_type max_angle, real_type max_size, integer icurve) const override {
-        PYBIND11_OVERLOAD_PURE(void, G2lib::BaseCurve, bbTriangles_SAE, offs, tvec, max_angle, max_size, icurve);
+      bb_triangles_SAE(real_type offs, vector<Triangle2D> & tvec, real_type max_angle, real_type max_size, integer icurve) const override {
+        PYBIND11_OVERLOAD_PURE(void, G2lib::BaseCurve, bb_triangles_SAE, offs, tvec, max_angle, max_size, icurve);
       }
     };
 

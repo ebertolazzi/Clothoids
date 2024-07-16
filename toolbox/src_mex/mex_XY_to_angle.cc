@@ -22,6 +22,7 @@
 #endif
 
 #include "Clothoids.hh"
+#include "Clothoids_fmt.hh"
 #include "Utils_mex.hh"
 
 #define MEX_ERROR_MESSAGE \

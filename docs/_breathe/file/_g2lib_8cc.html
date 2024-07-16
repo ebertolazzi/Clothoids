@@ -1,0 +1,508 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="../../">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <meta name="lang:clipboard.copy" content="Copy to clipboard">
+  <meta name="lang:clipboard.copied" content="Copied to clipboard">
+  <meta name="lang:search.language" content="en">
+  <meta name="lang:search.pipeline.stopwords" content="True">
+  <meta name="lang:search.pipeline.trimmer" content="True">
+  <meta name="lang:search.result.none" content="No matching documents">
+  <meta name="lang:search.result.one" content="1 matching document">
+  <meta name="lang:search.result.other" content="# matching documents">
+  <meta name="lang:search.tokenizer" content="[\s\-]+">
+
+  
+    <link href="https://fonts.gstatic.com/" rel="preconnect" crossorigin>
+    <link href="https://fonts.googleapis.com/css?family=Roboto+Mono:400,500,700|Roboto:300,400,400i,700&display=fallback" rel="stylesheet">
+
+    <style>
+      body,
+      input {
+        font-family: "Roboto", "Helvetica Neue", Helvetica, Arial, sans-serif
+      }
+
+      code,
+      kbd,
+      pre {
+        font-family: "Roboto Mono", "Courier New", Courier, monospace
+      }
+    </style>
+  
+
+  <link rel="stylesheet" href="../../_static/stylesheets/application.css"/>
+  <link rel="stylesheet" href="../../_static/stylesheets/application-palette.css"/>
+  <link rel="stylesheet" href="../../_static/stylesheets/application-fixes.css"/>
+  
+  <link rel="stylesheet" href="../../_static/fonts/material-icons.css"/>
+  
+  <meta name="theme-color" content="#3f51b5">
+  <script src="../../_static/javascripts/modernizr.js"></script>
+  
+  
+  
+    <title>File G2lib.cc &#8212; CLOTHOIDS 0.1 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=83e35b93" />
+    <link rel="stylesheet" type="text/css" href="../../_static/material.css?v=79c92029" />
+    <script src="../../_static/documentation_options.js?v=2709fde1"></script>
+    <script src="../../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="File G2lib.hxx" href="_g2lib_8hxx.html" />
+    <link rel="prev" title="File Fresnel.hxx" href="_fresnel_8hxx.html" />
+  
+   
+
+  </head>
+  <body dir=ltr
+        data-md-color-primary=blue-grey data-md-color-accent=blue>
+  
+  <svg class="md-svg">
+    <defs data-children-count="0">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" width="416" height="448" viewBox="0 0 416 448" id="__github"><path fill="currentColor" d="M160 304q0 10-3.125 20.5t-10.75 19T128 352t-18.125-8.5-10.75-19T96 304t3.125-20.5 10.75-19T128 256t18.125 8.5 10.75 19T160 304zm160 0q0 10-3.125 20.5t-10.75 19T288 352t-18.125-8.5-10.75-19T256 304t3.125-20.5 10.75-19T288 256t18.125 8.5 10.75 19T320 304zm40 0q0-30-17.25-51T296 232q-10.25 0-48.75 5.25Q229.5 240 208 240t-39.25-2.75Q130.75 232 120 232q-29.5 0-46.75 21T56 304q0 22 8 38.375t20.25 25.75 30.5 15 35 7.375 37.25 1.75h42q20.5 0 37.25-1.75t35-7.375 30.5-15 20.25-25.75T360 304zm56-44q0 51.75-15.25 82.75-9.5 19.25-26.375 33.25t-35.25 21.5-42.5 11.875-42.875 5.5T212 416q-19.5 0-35.5-.75t-36.875-3.125-38.125-7.5-34.25-12.875T37 371.5t-21.5-28.75Q0 312 0 260q0-59.25 34-99-6.75-20.5-6.75-42.5 0-29 12.75-54.5 27 0 47.5 9.875t47.25 30.875Q171.5 96 212 96q37 0 70 8 26.25-20.5 46.75-30.25T376 64q12.75 25.5 12.75 54.5 0 21.75-6.75 42 34 40 34 99.5z"/></svg>
+      
+    </defs>
+  </svg>
+  
+  <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer">
+  <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search">
+  <label class="md-overlay" data-md-component="overlay" for="__drawer"></label>
+  <a href="#_breathe/file/_g2lib_8cc" tabindex="1" class="md-skip"> Skip to content </a>
+  <header class="md-header" data-md-component="header">
+  <nav class="md-header-nav md-grid">
+    <div class="md-flex navheader">
+      <div class="md-flex__cell md-flex__cell--shrink">
+        <a href="../../index.html" title="CLOTHOIDS 0.1 documentation"
+           class="md-header-nav__button md-logo">
+          
+            &nbsp;
+          
+        </a>
+      </div>
+      <div class="md-flex__cell md-flex__cell--shrink">
+        <label class="md-icon md-icon--menu md-header-nav__button" for="__drawer"></label>
+      </div>
+      <div class="md-flex__cell md-flex__cell--stretch">
+        <div class="md-flex__ellipsis md-header-nav__title" data-md-component="title">
+          <span class="md-header-nav__topic">CLOTHOIDS 0.1 documentation</span>
+          <span class="md-header-nav__topic"> File G2lib.cc </span>
+        </div>
+      </div>
+      <div class="md-flex__cell md-flex__cell--shrink">
+        <label class="md-icon md-icon--search md-header-nav__button" for="__search"></label>
+        
+<div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" action="../../search.html" method="get" name="search">
+      <input type="text" class="md-search__input" name="q" placeholder=""Search""
+             autocapitalize="off" autocomplete="off" spellcheck="false"
+             data-md-component="query" data-md-state="active">
+      <label class="md-icon md-search__icon" for="__search"></label>
+      <button type="reset" class="md-icon md-search__icon" data-md-component="reset" tabindex="-1">
+        &#xE5CD;
+      </button>
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="result">
+          <div class="md-search-result__meta">
+            Type to start searching
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+      </div>
+      
+      
+  
+  <script src="../../_static/javascripts/version_dropdown.js"></script>
+  <script>
+    var json_loc = "../../"versions.json"",
+        target_loc = "../../../",
+        text = "Versions";
+    $( document ).ready( add_version_dropdown(json_loc, target_loc, text));
+  </script>
+  
+
+    </div>
+  </nav>
+</header>
+
+  
+  <div class="md-container">
+    
+    
+    
+  <nav class="md-tabs" data-md-component="tabs">
+    <div class="md-tabs__inner md-grid">
+      <ul class="md-tabs__list">
+          <li class="md-tabs__item"><a href="../../index.html" class="md-tabs__link">CLOTHOIDS 0.1 documentation</a></li>
+          <li class="md-tabs__item"><a href="../filelist.html" class="md-tabs__link">File list</a></li>
+      </ul>
+    </div>
+  </nav>
+    <main class="md-main">
+      <div class="md-main__inner md-grid" data-md-component="container">
+        
+          <div class="md-sidebar md-sidebar--primary" data-md-component="navigation">
+            <div class="md-sidebar__scrollwrap">
+              <div class="md-sidebar__inner">
+                <nav class="md-nav md-nav--primary" data-md-level="0">
+  <label class="md-nav__title md-nav__title--site" for="__drawer">
+    <a href="../../index.html" title="CLOTHOIDS 0.1 documentation" class="md-nav__button md-logo">
+      
+        <img src="../../_static/" alt=" logo" width="48" height="48">
+      
+    </a>
+    <a href="../../index.html"
+       title="CLOTHOIDS 0.1 documentation">CLOTHOIDS 0.1 documentation</a>
+  </label>
+  
+
+</nav>
+              </div>
+            </div>
+          </div>
+          <div class="md-sidebar md-sidebar--secondary" data-md-component="toc">
+            <div class="md-sidebar__scrollwrap">
+              <div class="md-sidebar__inner">
+                
+<nav class="md-nav md-nav--secondary">
+    <label class="md-nav__title" for="__toc">"Contents"</label>
+  <ul class="md-nav__list" data-md-scrollfix="">
+        <li class="md-nav__item"><a href="#breathe-file-g2lib-8cc--page-root" class="md-nav__link">File G2lib.cc</a><nav class="md-nav">
+              <ul class="md-nav__list">
+        <li class="md-nav__item"><a href="#_CPPv45G2lib" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">G2lib</span></code></a><nav class="md-nav">
+              <ul class="md-nav__list">
+        <li class="md-nav__item"><a href="#_CPPv4N5G2lib9rangeSymmER9real_type" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">G2lib::rangeSymm()</span></code></a>
+        </li>
+        <li class="md-nav__item"><a href="#_CPPv4N5G2lib4SincE9real_type" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">G2lib::Sinc()</span></code></a>
+        </li>
+        <li class="md-nav__item"><a href="#_CPPv4N5G2lib6Sinc_DE9real_type" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">G2lib::Sinc_D()</span></code></a>
+        </li>
+        <li class="md-nav__item"><a href="#_CPPv4N5G2lib7Sinc_DDE9real_type" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">G2lib::Sinc_DD()</span></code></a>
+        </li>
+        <li class="md-nav__item"><a href="#_CPPv4N5G2lib8Sinc_DDDE9real_type" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">G2lib::Sinc_DDD()</span></code></a>
+        </li>
+        <li class="md-nav__item"><a href="#_CPPv4N5G2lib4CoscE9real_type" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">G2lib::Cosc()</span></code></a>
+        </li>
+        <li class="md-nav__item"><a href="#_CPPv4N5G2lib6Cosc_DE9real_type" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">G2lib::Cosc_D()</span></code></a>
+        </li>
+        <li class="md-nav__item"><a href="#_CPPv4N5G2lib7Cosc_DDE9real_type" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">G2lib::Cosc_DD()</span></code></a>
+        </li>
+        <li class="md-nav__item"><a href="#_CPPv4N5G2lib8Cosc_DDDE9real_type" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">G2lib::Cosc_DDD()</span></code></a>
+        </li>
+        <li class="md-nav__item"><a href="#_CPPv4N5G2lib5AtancE9real_type" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">G2lib::Atanc()</span></code></a>
+        </li>
+        <li class="md-nav__item"><a href="#_CPPv4N5G2lib7Atanc_DE9real_type" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">G2lib::Atanc_D()</span></code></a>
+        </li>
+        <li class="md-nav__item"><a href="#_CPPv4N5G2lib8Atanc_DDE9real_type" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">G2lib::Atanc_DD()</span></code></a>
+        </li>
+        <li class="md-nav__item"><a href="#_CPPv4N5G2lib9Atanc_DDDE9real_type" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">G2lib::Atanc_DDD()</span></code></a>
+        </li>
+        <li class="md-nav__item"><a href="#_CPPv4N5G2lib7maxabs3E9real_type9real_type9real_type" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">G2lib::maxabs3()</span></code></a>
+        </li>
+        <li class="md-nav__item"><a href="#_CPPv4N5G2lib20solveLinearQuadraticE9real_type9real_type9real_type9real_type9real_type9real_typeP9real_typeP9real_type" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">G2lib::solveLinearQuadratic()</span></code></a>
+        </li>
+        <li class="md-nav__item"><a href="#_CPPv4N5G2lib21solveLinearQuadratic2E9real_type9real_type9real_typeP9real_typeP9real_type" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">G2lib::solveLinearQuadratic2()</span></code></a>
+        </li>
+        <li class="md-nav__item"><a href="#_CPPv4N5G2lib22solveNLsysCircleCircleE9real_type9real_type9real_type9real_type9real_typeAL2E_9real_typeAL2E_9real_type" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">G2lib::solveNLsysCircleCircle()</span></code></a>
+        </li>
+        <li class="md-nav__item"><a href="#_CPPv4N5G2lib11invCoscSincE9real_type9real_type9real_type" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">G2lib::invCoscSinc()</span></code></a>
+        </li>
+        <li class="md-nav__item"><a href="#_CPPv4N5G2lib21intersectCircleCircleE9real_type9real_type9real_type9real_type9real_type9real_type9real_type9real_typeP9real_typeP9real_type" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">G2lib::intersectCircleCircle()</span></code></a>
+        </li>
+        <li class="md-nav__item"><a href="#_CPPv4N5G2lib17xy_to_guess_angleE7integerA_K9real_typeA_K9real_typeA_9real_typeA_9real_typeA_9real_typeA_9real_typeA_9real_type" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">G2lib::xy_to_guess_angle()</span></code></a>
+        </li>
+        <li class="md-nav__item"><a href="#_CPPv4N5G2lib20is_counter_clockwiseEA_K9real_typeA_K9real_typeA_K9real_type" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">G2lib::is_counter_clockwise()</span></code></a>
+        </li>
+        <li class="md-nav__item"><a href="#_CPPv4N5G2lib23projectPointOnCircleArcE9real_type9real_type9real_type9real_type9real_type9real_type9real_type9real_type" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">G2lib::projectPointOnCircleArc()</span></code></a>
+        </li>
+        <li class="md-nav__item"><a href="#_CPPv4N5G2lib20projectPointOnCircleE9real_type9real_type9real_type9real_type9real_type9real_type" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">G2lib::projectPointOnCircle()</span></code></a>
+        </li>
+        <li class="md-nav__item"><a href="#_CPPv4N5G2lib20is_point_in_triangleEA_K9real_typeA_K9real_typeA_K9real_typeA_K9real_type" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">G2lib::is_point_in_triangle()</span></code></a>
+        </li>
+        <li class="md-nav__item"><a href="#_CPPv4N5G2lib11m_1_sqrt_piE" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">G2lib::m_1_sqrt_pi</span></code></a>
+        </li>
+        <li class="md-nav__item"><a href="#_CPPv4N5G2lib8machepsiE" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">G2lib::machepsi</span></code></a>
+        </li>
+        <li class="md-nav__item"><a href="#_CPPv4N5G2lib10machepsi10E" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">G2lib::machepsi10</span></code></a>
+        </li>
+        <li class="md-nav__item"><a href="#_CPPv4N5G2lib11machepsi100E" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">G2lib::machepsi100</span></code></a>
+        </li>
+        <li class="md-nav__item"><a href="#_CPPv4N5G2lib12machepsi1000E" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">G2lib::machepsi1000</span></code></a>
+        </li>
+        <li class="md-nav__item"><a href="#_CPPv4N5G2lib12sqrtMachepsiE" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">G2lib::sqrtMachepsi</span></code></a>
+        </li>
+        <li class="md-nav__item"><a href="#_CPPv4N5G2lib23intersect_with_AABBtreeE" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">G2lib::intersect_with_AABBtree</span></code></a>
+        </li>
+        <li class="md-nav__item"><a href="#_CPPv4N5G2lib14G2LIB_AABB_CUTE" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">G2lib::G2LIB_AABB_CUT</span></code></a>
+        </li>
+        <li class="md-nav__item"><a href="#_CPPv4N5G2lib20G2LIB_AABB_MIN_NODESE" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">G2lib::G2LIB_AABB_MIN_NODES</span></code></a>
+        </li>
+        <li class="md-nav__item"><a href="#_CPPv4N5G2lib7use_ISOE" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">G2lib::use_ISO</span></code></a>
+        </li></ul>
+            </nav>
+        </li></ul>
+            </nav>
+        </li>
+    
+<li class="md-nav__item"><a class="md-nav__extra_link" href="../../_sources/_breathe/file/_g2lib_8cc.rst.txt">Show Source</a> </li>
+
+<li id="searchbox" class="md-nav__item"></li>
+
+  </ul>
+</nav>
+              </div>
+            </div>
+          </div>
+        
+        <div class="md-content">
+          <article class="md-content__inner md-typeset" role="main">
+            
+  <section id="file-g2lib-cc">
+<h1 id="breathe-file-g2lib-8cc--page-root">File G2lib.cc<a class="headerlink" href="#breathe-file-g2lib-8cc--page-root" title="Link to this heading">¶</a></h1>
+<dl class="cpp type">
+<dt class="sig sig-object cpp" id="_CPPv45G2lib">
+<span id="_CPPv35G2lib"></span><span id="_CPPv25G2lib"></span><span id="G2lib"></span><span class="target" id="namespace_g2lib"></span><span class="k"><span class="pre">namespace</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">G2lib</span></span></span><br/></dt>
+<dd><p>file: BBox.cc</p>
+<p>file: Biarc.cc</p>
+<p>file: BaseCurve.hh</p>
+<p>file: BBox.hxx</p>
+<p>file: Biarc.hxx</p>
+<p>file: BiarcList.hh</p>
+<p>file: Circle.hxx</p>
+<p>file: Clothoid.hxx</p>
+<p>file: ClothoidList.hxx</p>
+<p>file: Dubins.hxx</p>
+<p>file: Dubins3p.hxx</p>
+<p>file: Fresnel.hxx</p>
+<p>file: Line.hxx</p>
+<p>file: PolyLine.hxx</p>
+<p>file: Triangle2D.hxx</p>
+<p>file: Dubins.cc</p>
+<p>file: Dubins3p.cc</p>
+<p>file: Dubins3p_ellipse.cc</p>
+<p>file: Dubins3p_pattern.cc</p>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric" id="breathe-section-title-functions">Functions</p>
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N5G2lib9rangeSymmER9real_type">
+<span id="_CPPv3N5G2lib9rangeSymmER9real_type"></span><span id="_CPPv2N5G2lib9rangeSymmER9real_type"></span><span id="G2lib::rangeSymm__real_typeR"></span><span class="target" id="namespace_g2lib_1aeed539405134d26c4315fd644d5fa2ca"></span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">rangeSymm</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="_clothoids_8hh.html#_CPPv4N5G2lib9real_typeE" title="G2lib::real_type"><span class="n"><span class="pre">real_type</span></span></a><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">ang</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N5G2lib9rangeSymmER9real_type" title="Link to this definition">¶</a><br/></dt>
+<dd></dd></dl>
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N5G2lib4SincE9real_type">
+<span id="_CPPv3N5G2lib4SincE9real_type"></span><span id="_CPPv2N5G2lib4SincE9real_type"></span><span id="G2lib::Sinc__real_type"></span><span class="target" id="namespace_g2lib_1a081bc3efca6442933577b14d6f3c2a06"></span><a class="reference internal" href="_clothoids_8hh.html#_CPPv4N5G2lib9real_typeE" title="G2lib::real_type"><span class="n"><span class="pre">real_type</span></span></a><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">Sinc</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="_clothoids_8hh.html#_CPPv4N5G2lib9real_typeE" title="G2lib::real_type"><span class="n"><span class="pre">real_type</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">x</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N5G2lib4SincE9real_type" title="Link to this definition">¶</a><br/></dt>
+<dd></dd></dl>
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N5G2lib6Sinc_DE9real_type">
+<span id="_CPPv3N5G2lib6Sinc_DE9real_type"></span><span id="_CPPv2N5G2lib6Sinc_DE9real_type"></span><span id="G2lib::Sinc_D__real_type"></span><span class="target" id="namespace_g2lib_1a70d38da7135fe9aa83b9e0d0e6ee7979"></span><a class="reference internal" href="_clothoids_8hh.html#_CPPv4N5G2lib9real_typeE" title="G2lib::real_type"><span class="n"><span class="pre">real_type</span></span></a><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">Sinc_D</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="_clothoids_8hh.html#_CPPv4N5G2lib9real_typeE" title="G2lib::real_type"><span class="n"><span class="pre">real_type</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">x</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N5G2lib6Sinc_DE9real_type" title="Link to this definition">¶</a><br/></dt>
+<dd></dd></dl>
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N5G2lib7Sinc_DDE9real_type">
+<span id="_CPPv3N5G2lib7Sinc_DDE9real_type"></span><span id="_CPPv2N5G2lib7Sinc_DDE9real_type"></span><span id="G2lib::Sinc_DD__real_type"></span><span class="target" id="namespace_g2lib_1a069d980b307edd06a1e9401e1a7bd5b4"></span><a class="reference internal" href="_clothoids_8hh.html#_CPPv4N5G2lib9real_typeE" title="G2lib::real_type"><span class="n"><span class="pre">real_type</span></span></a><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">Sinc_DD</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="_clothoids_8hh.html#_CPPv4N5G2lib9real_typeE" title="G2lib::real_type"><span class="n"><span class="pre">real_type</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">x</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N5G2lib7Sinc_DDE9real_type" title="Link to this definition">¶</a><br/></dt>
+<dd></dd></dl>
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N5G2lib8Sinc_DDDE9real_type">
+<span id="_CPPv3N5G2lib8Sinc_DDDE9real_type"></span><span id="_CPPv2N5G2lib8Sinc_DDDE9real_type"></span><span id="G2lib::Sinc_DDD__real_type"></span><span class="target" id="namespace_g2lib_1a698f23b0a8d2f0dd431c908ba7bce967"></span><a class="reference internal" href="_clothoids_8hh.html#_CPPv4N5G2lib9real_typeE" title="G2lib::real_type"><span class="n"><span class="pre">real_type</span></span></a><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">Sinc_DDD</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="_clothoids_8hh.html#_CPPv4N5G2lib9real_typeE" title="G2lib::real_type"><span class="n"><span class="pre">real_type</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">x</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N5G2lib8Sinc_DDDE9real_type" title="Link to this definition">¶</a><br/></dt>
+<dd></dd></dl>
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N5G2lib4CoscE9real_type">
+<span id="_CPPv3N5G2lib4CoscE9real_type"></span><span id="_CPPv2N5G2lib4CoscE9real_type"></span><span id="G2lib::Cosc__real_type"></span><span class="target" id="namespace_g2lib_1ab3e73bcf98a8efc2749f2ad05a3fdc51"></span><a class="reference internal" href="_clothoids_8hh.html#_CPPv4N5G2lib9real_typeE" title="G2lib::real_type"><span class="n"><span class="pre">real_type</span></span></a><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">Cosc</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="_clothoids_8hh.html#_CPPv4N5G2lib9real_typeE" title="G2lib::real_type"><span class="n"><span class="pre">real_type</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">x</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N5G2lib4CoscE9real_type" title="Link to this definition">¶</a><br/></dt>
+<dd></dd></dl>
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N5G2lib6Cosc_DE9real_type">
+<span id="_CPPv3N5G2lib6Cosc_DE9real_type"></span><span id="_CPPv2N5G2lib6Cosc_DE9real_type"></span><span id="G2lib::Cosc_D__real_type"></span><span class="target" id="namespace_g2lib_1a6a3e8c7ad85655c555cb6dc3825774c6"></span><a class="reference internal" href="_clothoids_8hh.html#_CPPv4N5G2lib9real_typeE" title="G2lib::real_type"><span class="n"><span class="pre">real_type</span></span></a><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">Cosc_D</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="_clothoids_8hh.html#_CPPv4N5G2lib9real_typeE" title="G2lib::real_type"><span class="n"><span class="pre">real_type</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">x</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N5G2lib6Cosc_DE9real_type" title="Link to this definition">¶</a><br/></dt>
+<dd></dd></dl>
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N5G2lib7Cosc_DDE9real_type">
+<span id="_CPPv3N5G2lib7Cosc_DDE9real_type"></span><span id="_CPPv2N5G2lib7Cosc_DDE9real_type"></span><span id="G2lib::Cosc_DD__real_type"></span><span class="target" id="namespace_g2lib_1ac10d1d52ae3cd16ef20171553d117b5b"></span><a class="reference internal" href="_clothoids_8hh.html#_CPPv4N5G2lib9real_typeE" title="G2lib::real_type"><span class="n"><span class="pre">real_type</span></span></a><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">Cosc_DD</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="_clothoids_8hh.html#_CPPv4N5G2lib9real_typeE" title="G2lib::real_type"><span class="n"><span class="pre">real_type</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">x</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N5G2lib7Cosc_DDE9real_type" title="Link to this definition">¶</a><br/></dt>
+<dd></dd></dl>
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N5G2lib8Cosc_DDDE9real_type">
+<span id="_CPPv3N5G2lib8Cosc_DDDE9real_type"></span><span id="_CPPv2N5G2lib8Cosc_DDDE9real_type"></span><span id="G2lib::Cosc_DDD__real_type"></span><span class="target" id="namespace_g2lib_1ae6868bffc32e5a0425f93e65c41bc6de"></span><a class="reference internal" href="_clothoids_8hh.html#_CPPv4N5G2lib9real_typeE" title="G2lib::real_type"><span class="n"><span class="pre">real_type</span></span></a><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">Cosc_DDD</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="_clothoids_8hh.html#_CPPv4N5G2lib9real_typeE" title="G2lib::real_type"><span class="n"><span class="pre">real_type</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">x</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N5G2lib8Cosc_DDDE9real_type" title="Link to this definition">¶</a><br/></dt>
+<dd></dd></dl>
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N5G2lib5AtancE9real_type">
+<span id="_CPPv3N5G2lib5AtancE9real_type"></span><span id="_CPPv2N5G2lib5AtancE9real_type"></span><span id="G2lib::Atanc__real_type"></span><span class="target" id="namespace_g2lib_1ac0bbd1b03ec89b9ed1874b35849a82e7"></span><a class="reference internal" href="_clothoids_8hh.html#_CPPv4N5G2lib9real_typeE" title="G2lib::real_type"><span class="n"><span class="pre">real_type</span></span></a><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">Atanc</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="_clothoids_8hh.html#_CPPv4N5G2lib9real_typeE" title="G2lib::real_type"><span class="n"><span class="pre">real_type</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">x</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N5G2lib5AtancE9real_type" title="Link to this definition">¶</a><br/></dt>
+<dd></dd></dl>
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N5G2lib7Atanc_DE9real_type">
+<span id="_CPPv3N5G2lib7Atanc_DE9real_type"></span><span id="_CPPv2N5G2lib7Atanc_DE9real_type"></span><span id="G2lib::Atanc_D__real_type"></span><span class="target" id="namespace_g2lib_1a634e4fa7089193123ec9146bd8e05d2b"></span><a class="reference internal" href="_clothoids_8hh.html#_CPPv4N5G2lib9real_typeE" title="G2lib::real_type"><span class="n"><span class="pre">real_type</span></span></a><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">Atanc_D</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="_clothoids_8hh.html#_CPPv4N5G2lib9real_typeE" title="G2lib::real_type"><span class="n"><span class="pre">real_type</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">x</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N5G2lib7Atanc_DE9real_type" title="Link to this definition">¶</a><br/></dt>
+<dd></dd></dl>
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N5G2lib8Atanc_DDE9real_type">
+<span id="_CPPv3N5G2lib8Atanc_DDE9real_type"></span><span id="_CPPv2N5G2lib8Atanc_DDE9real_type"></span><span id="G2lib::Atanc_DD__real_type"></span><span class="target" id="namespace_g2lib_1ab4c21b2f3f1a20a134429dfeb129c423"></span><a class="reference internal" href="_clothoids_8hh.html#_CPPv4N5G2lib9real_typeE" title="G2lib::real_type"><span class="n"><span class="pre">real_type</span></span></a><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">Atanc_DD</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="_clothoids_8hh.html#_CPPv4N5G2lib9real_typeE" title="G2lib::real_type"><span class="n"><span class="pre">real_type</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">x</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N5G2lib8Atanc_DDE9real_type" title="Link to this definition">¶</a><br/></dt>
+<dd></dd></dl>
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N5G2lib9Atanc_DDDE9real_type">
+<span id="_CPPv3N5G2lib9Atanc_DDDE9real_type"></span><span id="_CPPv2N5G2lib9Atanc_DDDE9real_type"></span><span id="G2lib::Atanc_DDD__real_type"></span><span class="target" id="namespace_g2lib_1a448a0b9a486f6b9b16d74d80d133b10d"></span><a class="reference internal" href="_clothoids_8hh.html#_CPPv4N5G2lib9real_typeE" title="G2lib::real_type"><span class="n"><span class="pre">real_type</span></span></a><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">Atanc_DDD</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="_clothoids_8hh.html#_CPPv4N5G2lib9real_typeE" title="G2lib::real_type"><span class="n"><span class="pre">real_type</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">x</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N5G2lib9Atanc_DDDE9real_type" title="Link to this definition">¶</a><br/></dt>
+<dd></dd></dl>
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N5G2lib7maxabs3E9real_type9real_type9real_type">
+<span id="_CPPv3N5G2lib7maxabs3E9real_type9real_type9real_type"></span><span id="_CPPv2N5G2lib7maxabs3E9real_type9real_type9real_type"></span><span id="G2lib::maxabs3__real_type.real_type.real_type"></span><span class="target" id="namespace_g2lib_1a51ffa4f56f1d8a5a44e44bc9d1bf0409"></span><span class="k"><span class="pre">static</span></span><span class="w"> </span><a class="reference internal" href="_clothoids_8hh.html#_CPPv4N5G2lib9real_typeE" title="G2lib::real_type"><span class="n"><span class="pre">real_type</span></span></a><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">maxabs3</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="_clothoids_8hh.html#_CPPv4N5G2lib9real_typeE" title="G2lib::real_type"><span class="n"><span class="pre">real_type</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">A</span></span>, <a class="reference internal" href="_clothoids_8hh.html#_CPPv4N5G2lib9real_typeE" title="G2lib::real_type"><span class="n"><span class="pre">real_type</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">B</span></span>, <a class="reference internal" href="_clothoids_8hh.html#_CPPv4N5G2lib9real_typeE" title="G2lib::real_type"><span class="n"><span class="pre">real_type</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">C</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N5G2lib7maxabs3E9real_type9real_type9real_type" title="Link to this definition">¶</a><br/></dt>
+<dd></dd></dl>
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N5G2lib20solveLinearQuadraticE9real_type9real_type9real_type9real_type9real_type9real_typeP9real_typeP9real_type">
+<span id="_CPPv3N5G2lib20solveLinearQuadraticE9real_type9real_type9real_type9real_type9real_type9real_typeP9real_typeP9real_type"></span><span id="_CPPv2N5G2lib20solveLinearQuadraticE9real_type9real_type9real_type9real_type9real_type9real_typeP9real_typeP9real_type"></span><span id="G2lib::solveLinearQuadratic__real_type.real_type.real_type.real_type.real_type.real_type.real_typeP.real_typeP"></span><span class="target" id="namespace_g2lib_1aaca907282cbe8673020ac2254faa6d20"></span><a class="reference internal" href="_clothoids_8hh.html#_CPPv4N5G2lib7integerE" title="G2lib::integer"><span class="n"><span class="pre">integer</span></span></a><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">solveLinearQuadratic</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="_clothoids_8hh.html#_CPPv4N5G2lib9real_typeE" title="G2lib::real_type"><span class="n"><span class="pre">real_type</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">A</span></span>, <a class="reference internal" href="_clothoids_8hh.html#_CPPv4N5G2lib9real_typeE" title="G2lib::real_type"><span class="n"><span class="pre">real_type</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">B</span></span>, <a class="reference internal" href="_clothoids_8hh.html#_CPPv4N5G2lib9real_typeE" title="G2lib::real_type"><span class="n"><span class="pre">real_type</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">C</span></span>, <a class="reference internal" href="_clothoids_8hh.html#_CPPv4N5G2lib9real_typeE" title="G2lib::real_type"><span class="n"><span class="pre">real_type</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">a</span></span>, <a class="reference internal" href="_clothoids_8hh.html#_CPPv4N5G2lib9real_typeE" title="G2lib::real_type"><span class="n"><span class="pre">real_type</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">b</span></span>, <a class="reference internal" href="_clothoids_8hh.html#_CPPv4N5G2lib9real_typeE" title="G2lib::real_type"><span class="n"><span class="pre">real_type</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">c</span></span>, <a class="reference internal" href="_clothoids_8hh.html#_CPPv4N5G2lib9real_typeE" title="G2lib::real_type"><span class="n"><span class="pre">real_type</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n sig-param"><span class="pre">x</span></span>, <a class="reference internal" href="_clothoids_8hh.html#_CPPv4N5G2lib9real_typeE" title="G2lib::real_type"><span class="n"><span class="pre">real_type</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n sig-param"><span class="pre">y</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N5G2lib20solveLinearQuadraticE9real_type9real_type9real_type9real_type9real_type9real_typeP9real_typeP9real_type" title="Link to this definition">¶</a><br/></dt>
+<dd></dd></dl>
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N5G2lib21solveLinearQuadratic2E9real_type9real_type9real_typeP9real_typeP9real_type">
+<span id="_CPPv3N5G2lib21solveLinearQuadratic2E9real_type9real_type9real_typeP9real_typeP9real_type"></span><span id="_CPPv2N5G2lib21solveLinearQuadratic2E9real_type9real_type9real_typeP9real_typeP9real_type"></span><span id="G2lib::solveLinearQuadratic2__real_type.real_type.real_type.real_typeP.real_typeP"></span><span class="target" id="namespace_g2lib_1aa6a1dc92e4d543fb9d508032232d3e63"></span><a class="reference internal" href="_clothoids_8hh.html#_CPPv4N5G2lib7integerE" title="G2lib::integer"><span class="n"><span class="pre">integer</span></span></a><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">solveLinearQuadratic2</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="_clothoids_8hh.html#_CPPv4N5G2lib9real_typeE" title="G2lib::real_type"><span class="n"><span class="pre">real_type</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">A</span></span>, <a class="reference internal" href="_clothoids_8hh.html#_CPPv4N5G2lib9real_typeE" title="G2lib::real_type"><span class="n"><span class="pre">real_type</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">B</span></span>, <a class="reference internal" href="_clothoids_8hh.html#_CPPv4N5G2lib9real_typeE" title="G2lib::real_type"><span class="n"><span class="pre">real_type</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">C</span></span>, <a class="reference internal" href="_clothoids_8hh.html#_CPPv4N5G2lib9real_typeE" title="G2lib::real_type"><span class="n"><span class="pre">real_type</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n sig-param"><span class="pre">x</span></span>, <a class="reference internal" href="_clothoids_8hh.html#_CPPv4N5G2lib9real_typeE" title="G2lib::real_type"><span class="n"><span class="pre">real_type</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n sig-param"><span class="pre">y</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N5G2lib21solveLinearQuadratic2E9real_type9real_type9real_typeP9real_typeP9real_type" title="Link to this definition">¶</a><br/></dt>
+<dd></dd></dl>
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N5G2lib22solveNLsysCircleCircleE9real_type9real_type9real_type9real_type9real_typeAL2E_9real_typeAL2E_9real_type">
+<span id="_CPPv3N5G2lib22solveNLsysCircleCircleE9real_type9real_type9real_type9real_type9real_typeAL2E_9real_typeAL2E_9real_type"></span><span id="_CPPv2N5G2lib22solveNLsysCircleCircleE9real_type9real_type9real_type9real_type9real_typeA2_9real_typeA2_9real_type"></span><span id="G2lib::solveNLsysCircleCircle__real_type.real_type.real_type.real_type.real_type.real_typeA.real_typeA"></span><span class="target" id="namespace_g2lib_1ad5b27d507d07f4ebb7371ab5a9a88b8f"></span><span class="k"><span class="pre">static</span></span><span class="w"> </span><a class="reference internal" href="_clothoids_8hh.html#_CPPv4N5G2lib7integerE" title="G2lib::integer"><span class="n"><span class="pre">integer</span></span></a><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">solveNLsysCircleCircle</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="_clothoids_8hh.html#_CPPv4N5G2lib9real_typeE" title="G2lib::real_type"><span class="n"><span class="pre">real_type</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">kA</span></span>, <a class="reference internal" href="_clothoids_8hh.html#_CPPv4N5G2lib9real_typeE" title="G2lib::real_type"><span class="n"><span class="pre">real_type</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">T</span></span>, <a class="reference internal" href="_clothoids_8hh.html#_CPPv4N5G2lib9real_typeE" title="G2lib::real_type"><span class="n"><span class="pre">real_type</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">Tx</span></span>, <a class="reference internal" href="_clothoids_8hh.html#_CPPv4N5G2lib9real_typeE" title="G2lib::real_type"><span class="n"><span class="pre">real_type</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">Ty</span></span>, <a class="reference internal" href="_clothoids_8hh.html#_CPPv4N5G2lib9real_typeE" title="G2lib::real_type"><span class="n"><span class="pre">real_type</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">kB</span></span>, <a class="reference internal" href="_clothoids_8hh.html#_CPPv4N5G2lib9real_typeE" title="G2lib::real_type"><span class="n"><span class="pre">real_type</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">x</span></span><span class="p"><span class="pre">[</span></span><span class="m"><span class="pre">2</span></span><span class="p"><span class="pre">]</span></span>, <a class="reference internal" href="_clothoids_8hh.html#_CPPv4N5G2lib9real_typeE" title="G2lib::real_type"><span class="n"><span class="pre">real_type</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">y</span></span><span class="p"><span class="pre">[</span></span><span class="m"><span class="pre">2</span></span><span class="p"><span class="pre">]</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N5G2lib22solveNLsysCircleCircleE9real_type9real_type9real_type9real_type9real_typeAL2E_9real_typeAL2E_9real_type" title="Link to this definition">¶</a><br/></dt>
+<dd></dd></dl>
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N5G2lib11invCoscSincE9real_type9real_type9real_type">
+<span id="_CPPv3N5G2lib11invCoscSincE9real_type9real_type9real_type"></span><span id="_CPPv2N5G2lib11invCoscSincE9real_type9real_type9real_type"></span><span id="G2lib::invCoscSinc__real_type.real_type.real_type"></span><span class="target" id="namespace_g2lib_1aa916fcc9a5e3c74d9a0530cd68e7cca4"></span><span class="k"><span class="pre">static</span></span><span class="w"> </span><a class="reference internal" href="_clothoids_8hh.html#_CPPv4N5G2lib9real_typeE" title="G2lib::real_type"><span class="n"><span class="pre">real_type</span></span></a><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">invCoscSinc</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="_clothoids_8hh.html#_CPPv4N5G2lib9real_typeE" title="G2lib::real_type"><span class="n"><span class="pre">real_type</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">k</span></span>, <a class="reference internal" href="_clothoids_8hh.html#_CPPv4N5G2lib9real_typeE" title="G2lib::real_type"><span class="n"><span class="pre">real_type</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">x</span></span>, <a class="reference internal" href="_clothoids_8hh.html#_CPPv4N5G2lib9real_typeE" title="G2lib::real_type"><span class="n"><span class="pre">real_type</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">y</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N5G2lib11invCoscSincE9real_type9real_type9real_type" title="Link to this definition">¶</a><br/></dt>
+<dd><p>Solve the problem</p>
+<p><div class="math notranslate nohighlight">
+\[ \frac{\sin(kx)}{k} = y, \qquad \frac{1-\cos(kx)}{k} = x \]</div>
+</p>
+<p>smoothly for any k (zero too) </p>
+</dd></dl>
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N5G2lib21intersectCircleCircleE9real_type9real_type9real_type9real_type9real_type9real_type9real_type9real_typeP9real_typeP9real_type">
+<span id="_CPPv3N5G2lib21intersectCircleCircleE9real_type9real_type9real_type9real_type9real_type9real_type9real_type9real_typeP9real_typeP9real_type"></span><span id="_CPPv2N5G2lib21intersectCircleCircleE9real_type9real_type9real_type9real_type9real_type9real_type9real_type9real_typeP9real_typeP9real_type"></span><span id="G2lib::intersectCircleCircle__real_type.real_type.real_type.real_type.real_type.real_type.real_type.real_type.real_typeP.real_typeP"></span><span class="target" id="namespace_g2lib_1aa10cf87be2bdfca8cda34b3ff0a8772e"></span><a class="reference internal" href="_clothoids_8hh.html#_CPPv4N5G2lib7integerE" title="G2lib::integer"><span class="n"><span class="pre">integer</span></span></a><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">intersectCircleCircle</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="_clothoids_8hh.html#_CPPv4N5G2lib9real_typeE" title="G2lib::real_type"><span class="n"><span class="pre">real_type</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">x1</span></span>, <a class="reference internal" href="_clothoids_8hh.html#_CPPv4N5G2lib9real_typeE" title="G2lib::real_type"><span class="n"><span class="pre">real_type</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">y1</span></span>, <a class="reference internal" href="_clothoids_8hh.html#_CPPv4N5G2lib9real_typeE" title="G2lib::real_type"><span class="n"><span class="pre">real_type</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">theta1</span></span>, <a class="reference internal" href="_clothoids_8hh.html#_CPPv4N5G2lib9real_typeE" title="G2lib::real_type"><span class="n"><span class="pre">real_type</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">kappa1</span></span>, <a class="reference internal" href="_clothoids_8hh.html#_CPPv4N5G2lib9real_typeE" title="G2lib::real_type"><span class="n"><span class="pre">real_type</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">x2</span></span>, <a class="reference internal" href="_clothoids_8hh.html#_CPPv4N5G2lib9real_typeE" title="G2lib::real_type"><span class="n"><span class="pre">real_type</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">y2</span></span>, <a class="reference internal" href="_clothoids_8hh.html#_CPPv4N5G2lib9real_typeE" title="G2lib::real_type"><span class="n"><span class="pre">real_type</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">theta2</span></span>, <a class="reference internal" href="_clothoids_8hh.html#_CPPv4N5G2lib9real_typeE" title="G2lib::real_type"><span class="n"><span class="pre">real_type</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">kappa2</span></span>, <a class="reference internal" href="_clothoids_8hh.html#_CPPv4N5G2lib9real_typeE" title="G2lib::real_type"><span class="n"><span class="pre">real_type</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n sig-param"><span class="pre">s1</span></span>, <a class="reference internal" href="_clothoids_8hh.html#_CPPv4N5G2lib9real_typeE" title="G2lib::real_type"><span class="n"><span class="pre">real_type</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n sig-param"><span class="pre">s2</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N5G2lib21intersectCircleCircleE9real_type9real_type9real_type9real_type9real_type9real_type9real_type9real_typeP9real_typeP9real_type" title="Link to this definition">¶</a><br/></dt>
+<dd></dd></dl>
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N5G2lib17xy_to_guess_angleE7integerA_K9real_typeA_K9real_typeA_9real_typeA_9real_typeA_9real_typeA_9real_typeA_9real_type">
+<span id="_CPPv3N5G2lib17xy_to_guess_angleE7integerA_K9real_typeA_K9real_typeA_9real_typeA_9real_typeA_9real_typeA_9real_typeA_9real_type"></span><span id="_CPPv2N5G2lib17xy_to_guess_angleE7integerA_K9real_typeA_K9real_typeA_9real_typeA_9real_typeA_9real_typeA_9real_typeA_9real_type"></span><span id="G2lib::xy_to_guess_angle__integer.real_typeCA.real_typeCA.real_typeA.real_typeA.real_typeA.real_typeA.real_typeA"></span><span class="target" id="namespace_g2lib_1a0b57f7d3aaa6fabd7365d0243916093c"></span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">xy_to_guess_angle</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="_clothoids_8hh.html#_CPPv4N5G2lib7integerE" title="G2lib::integer"><span class="n"><span class="pre">integer</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">npts</span></span>, <a class="reference internal" href="_clothoids_8hh.html#_CPPv4N5G2lib9real_typeE" title="G2lib::real_type"><span class="n"><span class="pre">real_type</span></span></a><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">x</span></span><span class="p"><span class="pre">[</span></span><span class="p"><span class="pre">]</span></span>, <a class="reference internal" href="_clothoids_8hh.html#_CPPv4N5G2lib9real_typeE" title="G2lib::real_type"><span class="n"><span class="pre">real_type</span></span></a><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">y</span></span><span class="p"><span class="pre">[</span></span><span class="p"><span class="pre">]</span></span>, <a class="reference internal" href="_clothoids_8hh.html#_CPPv4N5G2lib9real_typeE" title="G2lib::real_type"><span class="n"><span class="pre">real_type</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">theta</span></span><span class="p"><span class="pre">[</span></span><span class="p"><span class="pre">]</span></span>, <a class="reference internal" href="_clothoids_8hh.html#_CPPv4N5G2lib9real_typeE" title="G2lib::real_type"><span class="n"><span class="pre">real_type</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">theta_min</span></span><span class="p"><span class="pre">[</span></span><span class="p"><span class="pre">]</span></span>, <a class="reference internal" href="_clothoids_8hh.html#_CPPv4N5G2lib9real_typeE" title="G2lib::real_type"><span class="n"><span class="pre">real_type</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">theta_max</span></span><span class="p"><span class="pre">[</span></span><span class="p"><span class="pre">]</span></span>, <a class="reference internal" href="_clothoids_8hh.html#_CPPv4N5G2lib9real_typeE" title="G2lib::real_type"><span class="n"><span class="pre">real_type</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">omega</span></span><span class="p"><span class="pre">[</span></span><span class="p"><span class="pre">]</span></span>, <a class="reference internal" href="_clothoids_8hh.html#_CPPv4N5G2lib9real_typeE" title="G2lib::real_type"><span class="n"><span class="pre">real_type</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">len</span></span><span class="p"><span class="pre">[</span></span><span class="p"><span class="pre">]</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N5G2lib17xy_to_guess_angleE7integerA_K9real_typeA_K9real_typeA_9real_typeA_9real_typeA_9real_typeA_9real_typeA_9real_type" title="Link to this definition">¶</a><br/></dt>
+<dd></dd></dl>
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N5G2lib20is_counter_clockwiseEA_K9real_typeA_K9real_typeA_K9real_type">
+<span id="_CPPv3N5G2lib20is_counter_clockwiseEA_K9real_typeA_K9real_typeA_K9real_type"></span><span id="_CPPv2N5G2lib20is_counter_clockwiseEA_K9real_typeA_K9real_typeA_K9real_type"></span><span id="G2lib::is_counter_clockwise__real_typeCA.real_typeCA.real_typeCA"></span><span class="target" id="namespace_g2lib_1ad3c5023a04f337642bc61cb95c51915f"></span><a class="reference internal" href="_clothoids_8hh.html#_CPPv4N5G2lib7integerE" title="G2lib::integer"><span class="n"><span class="pre">integer</span></span></a><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">is_counter_clockwise</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="_clothoids_8hh.html#_CPPv4N5G2lib9real_typeE" title="G2lib::real_type"><span class="n"><span class="pre">real_type</span></span></a><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">P1</span></span><span class="p"><span class="pre">[</span></span><span class="p"><span class="pre">]</span></span>, <a class="reference internal" href="_clothoids_8hh.html#_CPPv4N5G2lib9real_typeE" title="G2lib::real_type"><span class="n"><span class="pre">real_type</span></span></a><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">P2</span></span><span class="p"><span class="pre">[</span></span><span class="p"><span class="pre">]</span></span>, <a class="reference internal" href="_clothoids_8hh.html#_CPPv4N5G2lib9real_typeE" title="G2lib::real_type"><span class="n"><span class="pre">real_type</span></span></a><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">P3</span></span><span class="p"><span class="pre">[</span></span><span class="p"><span class="pre">]</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N5G2lib20is_counter_clockwiseEA_K9real_typeA_K9real_typeA_K9real_type" title="Link to this definition">¶</a><br/></dt>
+<dd></dd></dl>
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N5G2lib23projectPointOnCircleArcE9real_type9real_type9real_type9real_type9real_type9real_type9real_type9real_type">
+<span id="_CPPv3N5G2lib23projectPointOnCircleArcE9real_type9real_type9real_type9real_type9real_type9real_type9real_type9real_type"></span><span id="_CPPv2N5G2lib23projectPointOnCircleArcE9real_type9real_type9real_type9real_type9real_type9real_type9real_type9real_type"></span><span id="G2lib::projectPointOnCircleArc__real_type.real_type.real_type.real_type.real_type.real_type.real_type.real_type"></span><span class="target" id="namespace_g2lib_1acf4b8b1e2907ced4f4097f9dc5e301c3"></span><a class="reference internal" href="_clothoids_8hh.html#_CPPv4N5G2lib9real_typeE" title="G2lib::real_type"><span class="n"><span class="pre">real_type</span></span></a><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">projectPointOnCircleArc</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="_clothoids_8hh.html#_CPPv4N5G2lib9real_typeE" title="G2lib::real_type"><span class="n"><span class="pre">real_type</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">x0</span></span>, <a class="reference internal" href="_clothoids_8hh.html#_CPPv4N5G2lib9real_typeE" title="G2lib::real_type"><span class="n"><span class="pre">real_type</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">y0</span></span>, <a class="reference internal" href="_clothoids_8hh.html#_CPPv4N5G2lib9real_typeE" title="G2lib::real_type"><span class="n"><span class="pre">real_type</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">c0</span></span>, <a class="reference internal" href="_clothoids_8hh.html#_CPPv4N5G2lib9real_typeE" title="G2lib::real_type"><span class="n"><span class="pre">real_type</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">s0</span></span>, <a class="reference internal" href="_clothoids_8hh.html#_CPPv4N5G2lib9real_typeE" title="G2lib::real_type"><span class="n"><span class="pre">real_type</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">k</span></span>, <a class="reference internal" href="_clothoids_8hh.html#_CPPv4N5G2lib9real_typeE" title="G2lib::real_type"><span class="n"><span class="pre">real_type</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">L</span></span>, <a class="reference internal" href="_clothoids_8hh.html#_CPPv4N5G2lib9real_typeE" title="G2lib::real_type"><span class="n"><span class="pre">real_type</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">qx</span></span>, <a class="reference internal" href="_clothoids_8hh.html#_CPPv4N5G2lib9real_typeE" title="G2lib::real_type"><span class="n"><span class="pre">real_type</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">qy</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N5G2lib23projectPointOnCircleArcE9real_type9real_type9real_type9real_type9real_type9real_type9real_type9real_type" title="Link to this definition">¶</a><br/></dt>
+<dd></dd></dl>
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N5G2lib20projectPointOnCircleE9real_type9real_type9real_type9real_type9real_type9real_type">
+<span id="_CPPv3N5G2lib20projectPointOnCircleE9real_type9real_type9real_type9real_type9real_type9real_type"></span><span id="_CPPv2N5G2lib20projectPointOnCircleE9real_type9real_type9real_type9real_type9real_type9real_type"></span><span id="G2lib::projectPointOnCircle__real_type.real_type.real_type.real_type.real_type.real_type"></span><span class="target" id="namespace_g2lib_1a8829b54b63a6e1880f15ccdfe57c2ecb"></span><a class="reference internal" href="_clothoids_8hh.html#_CPPv4N5G2lib9real_typeE" title="G2lib::real_type"><span class="n"><span class="pre">real_type</span></span></a><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">projectPointOnCircle</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="_clothoids_8hh.html#_CPPv4N5G2lib9real_typeE" title="G2lib::real_type"><span class="n"><span class="pre">real_type</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">x0</span></span>, <a class="reference internal" href="_clothoids_8hh.html#_CPPv4N5G2lib9real_typeE" title="G2lib::real_type"><span class="n"><span class="pre">real_type</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">y0</span></span>, <a class="reference internal" href="_clothoids_8hh.html#_CPPv4N5G2lib9real_typeE" title="G2lib::real_type"><span class="n"><span class="pre">real_type</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">theta0</span></span>, <a class="reference internal" href="_clothoids_8hh.html#_CPPv4N5G2lib9real_typeE" title="G2lib::real_type"><span class="n"><span class="pre">real_type</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">k</span></span>, <a class="reference internal" href="_clothoids_8hh.html#_CPPv4N5G2lib9real_typeE" title="G2lib::real_type"><span class="n"><span class="pre">real_type</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">qx</span></span>, <a class="reference internal" href="_clothoids_8hh.html#_CPPv4N5G2lib9real_typeE" title="G2lib::real_type"><span class="n"><span class="pre">real_type</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">qy</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N5G2lib20projectPointOnCircleE9real_type9real_type9real_type9real_type9real_type9real_type" title="Link to this definition">¶</a><br/></dt>
+<dd></dd></dl>
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N5G2lib20is_point_in_triangleEA_K9real_typeA_K9real_typeA_K9real_typeA_K9real_type">
+<span id="_CPPv3N5G2lib20is_point_in_triangleEA_K9real_typeA_K9real_typeA_K9real_typeA_K9real_type"></span><span id="_CPPv2N5G2lib20is_point_in_triangleEA_K9real_typeA_K9real_typeA_K9real_typeA_K9real_type"></span><span id="G2lib::is_point_in_triangle__real_typeCA.real_typeCA.real_typeCA.real_typeCA"></span><span class="target" id="namespace_g2lib_1a8518216961742db06d6e0111c849f9df"></span><a class="reference internal" href="_clothoids_8hh.html#_CPPv4N5G2lib7integerE" title="G2lib::integer"><span class="n"><span class="pre">integer</span></span></a><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">is_point_in_triangle</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="_clothoids_8hh.html#_CPPv4N5G2lib9real_typeE" title="G2lib::real_type"><span class="n"><span class="pre">real_type</span></span></a><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">point</span></span><span class="p"><span class="pre">[</span></span><span class="p"><span class="pre">]</span></span>, <a class="reference internal" href="_clothoids_8hh.html#_CPPv4N5G2lib9real_typeE" title="G2lib::real_type"><span class="n"><span class="pre">real_type</span></span></a><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">p1</span></span><span class="p"><span class="pre">[</span></span><span class="p"><span class="pre">]</span></span>, <a class="reference internal" href="_clothoids_8hh.html#_CPPv4N5G2lib9real_typeE" title="G2lib::real_type"><span class="n"><span class="pre">real_type</span></span></a><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">p2</span></span><span class="p"><span class="pre">[</span></span><span class="p"><span class="pre">]</span></span>, <a class="reference internal" href="_clothoids_8hh.html#_CPPv4N5G2lib9real_typeE" title="G2lib::real_type"><span class="n"><span class="pre">real_type</span></span></a><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">p3</span></span><span class="p"><span class="pre">[</span></span><span class="p"><span class="pre">]</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N5G2lib20is_point_in_triangleEA_K9real_typeA_K9real_typeA_K9real_typeA_K9real_type" title="Link to this definition">¶</a><br/></dt>
+<dd></dd></dl>
+</div>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric" id="breathe-section-title-variables">Variables</p>
+<dl class="cpp var">
+<dt class="sig sig-object cpp" id="_CPPv4N5G2lib11m_1_sqrt_piE">
+<span id="_CPPv3N5G2lib11m_1_sqrt_piE"></span><span id="_CPPv2N5G2lib11m_1_sqrt_piE"></span><span id="G2lib::m_1_sqrt_pi__real_typeC"></span><span class="target" id="namespace_g2lib_1ab7ae60f08d4dcaa2b289bdd7bb3dc4ee"></span><a class="reference internal" href="_clothoids_8hh.html#_CPPv4N5G2lib9real_typeE" title="G2lib::real_type"><span class="n"><span class="pre">real_type</span></span></a><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">m_1_sqrt_pi</span></span></span><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="p"><span class="pre">{</span></span><span class="m"><span class="pre">0.564189583547756286948079451561</span></span><span class="p"><span class="pre">}</span></span><a class="headerlink" href="#_CPPv4N5G2lib11m_1_sqrt_piE" title="Link to this definition">¶</a><br/></dt>
+<dd></dd></dl>
+<dl class="cpp var">
+<dt class="sig sig-object cpp" id="_CPPv4N5G2lib8machepsiE">
+<span id="_CPPv3N5G2lib8machepsiE"></span><span id="_CPPv2N5G2lib8machepsiE"></span><span id="G2lib::machepsi__real_typeC"></span><span class="target" id="namespace_g2lib_1a87e08bc343d60eadd2938d68ebc1f61b"></span><a class="reference internal" href="_clothoids_8hh.html#_CPPv4N5G2lib9real_typeE" title="G2lib::real_type"><span class="n"><span class="pre">real_type</span></span></a><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">machepsi</span></span></span><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="p"><span class="pre">{</span></span><span class="n"><span class="pre">Utils</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">machine_eps</span></span><span class="p"><span class="pre">&lt;</span></span><a class="reference internal" href="_clothoids_8hh.html#_CPPv4N5G2lib9real_typeE" title="G2lib::real_type"><span class="n"><span class="pre">real_type</span></span></a><span class="p"><span class="pre">&gt;</span></span><span class="p"><span class="pre">(</span></span><span class="p"><span class="pre">)</span></span><span class="p"><span class="pre">}</span></span><a class="headerlink" href="#_CPPv4N5G2lib8machepsiE" title="Link to this definition">¶</a><br/></dt>
+<dd></dd></dl>
+<dl class="cpp var">
+<dt class="sig sig-object cpp" id="_CPPv4N5G2lib10machepsi10E">
+<span id="_CPPv3N5G2lib10machepsi10E"></span><span id="_CPPv2N5G2lib10machepsi10E"></span><span id="G2lib::machepsi10__real_typeC"></span><span class="target" id="namespace_g2lib_1a22dc08fd48bd175798c0120ad68126f6"></span><a class="reference internal" href="_clothoids_8hh.html#_CPPv4N5G2lib9real_typeE" title="G2lib::real_type"><span class="n"><span class="pre">real_type</span></span></a><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">machepsi10</span></span></span><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="p"><span class="pre">{</span></span><span class="m"><span class="pre">10</span></span><span class="w"> </span><span class="o"><span class="pre">*</span></span><span class="w"> </span><a class="reference internal" href="#_CPPv4N5G2lib8machepsiE" title="G2lib::machepsi"><span class="n"><span class="pre">machepsi</span></span></a><span class="p"><span class="pre">}</span></span><a class="headerlink" href="#_CPPv4N5G2lib10machepsi10E" title="Link to this definition">¶</a><br/></dt>
+<dd></dd></dl>
+<dl class="cpp var">
+<dt class="sig sig-object cpp" id="_CPPv4N5G2lib11machepsi100E">
+<span id="_CPPv3N5G2lib11machepsi100E"></span><span id="_CPPv2N5G2lib11machepsi100E"></span><span id="G2lib::machepsi100__real_typeC"></span><span class="target" id="namespace_g2lib_1a83d7ce40a3e4a860b91dd8df81408892"></span><a class="reference internal" href="_clothoids_8hh.html#_CPPv4N5G2lib9real_typeE" title="G2lib::real_type"><span class="n"><span class="pre">real_type</span></span></a><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">machepsi100</span></span></span><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="p"><span class="pre">{</span></span><span class="m"><span class="pre">100</span></span><span class="w"> </span><span class="o"><span class="pre">*</span></span><span class="w"> </span><a class="reference internal" href="#_CPPv4N5G2lib8machepsiE" title="G2lib::machepsi"><span class="n"><span class="pre">machepsi</span></span></a><span class="p"><span class="pre">}</span></span><a class="headerlink" href="#_CPPv4N5G2lib11machepsi100E" title="Link to this definition">¶</a><br/></dt>
+<dd></dd></dl>
+<dl class="cpp var">
+<dt class="sig sig-object cpp" id="_CPPv4N5G2lib12machepsi1000E">
+<span id="_CPPv3N5G2lib12machepsi1000E"></span><span id="_CPPv2N5G2lib12machepsi1000E"></span><span id="G2lib::machepsi1000__real_typeC"></span><span class="target" id="namespace_g2lib_1a4e46ee577d28382a45d279842036eb86"></span><a class="reference internal" href="_clothoids_8hh.html#_CPPv4N5G2lib9real_typeE" title="G2lib::real_type"><span class="n"><span class="pre">real_type</span></span></a><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">machepsi1000</span></span></span><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="p"><span class="pre">{</span></span><span class="m"><span class="pre">1000</span></span><span class="w"> </span><span class="o"><span class="pre">*</span></span><span class="w"> </span><a class="reference internal" href="#_CPPv4N5G2lib8machepsiE" title="G2lib::machepsi"><span class="n"><span class="pre">machepsi</span></span></a><span class="p"><span class="pre">}</span></span><a class="headerlink" href="#_CPPv4N5G2lib12machepsi1000E" title="Link to this definition">¶</a><br/></dt>
+<dd></dd></dl>
+<dl class="cpp var">
+<dt class="sig sig-object cpp" id="_CPPv4N5G2lib12sqrtMachepsiE">
+<span id="_CPPv3N5G2lib12sqrtMachepsiE"></span><span id="_CPPv2N5G2lib12sqrtMachepsiE"></span><span id="G2lib::sqrtMachepsi__real_typeC"></span><span class="target" id="namespace_g2lib_1ae2356d66f8dc864eddfdd3ad1db95266"></span><a class="reference internal" href="_clothoids_8hh.html#_CPPv4N5G2lib9real_typeE" title="G2lib::real_type"><span class="n"><span class="pre">real_type</span></span></a><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">sqrtMachepsi</span></span></span><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="p"><span class="pre">{</span></span><span class="n"><span class="pre">sqrt</span></span><span class="p"><span class="pre">(</span></span><a class="reference internal" href="#_CPPv4N5G2lib8machepsiE" title="G2lib::machepsi"><span class="n"><span class="pre">machepsi</span></span></a><span class="p"><span class="pre">)</span></span><span class="p"><span class="pre">}</span></span><a class="headerlink" href="#_CPPv4N5G2lib12sqrtMachepsiE" title="Link to this definition">¶</a><br/></dt>
+<dd></dd></dl>
+<dl class="cpp var">
+<dt class="sig sig-object cpp" id="_CPPv4N5G2lib23intersect_with_AABBtreeE">
+<span id="_CPPv3N5G2lib23intersect_with_AABBtreeE"></span><span id="_CPPv2N5G2lib23intersect_with_AABBtreeE"></span><span id="G2lib::intersect_with_AABBtree__b"></span><span class="target" id="namespace_g2lib_1a05bb4344e0f2418b6dad387247986617"></span><span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">intersect_with_AABBtree</span></span></span><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="p"><span class="pre">{</span></span><span class="k"><span class="pre">true</span></span><span class="p"><span class="pre">}</span></span><a class="headerlink" href="#_CPPv4N5G2lib23intersect_with_AABBtreeE" title="Link to this definition">¶</a><br/></dt>
+<dd></dd></dl>
+<dl class="cpp var">
+<dt class="sig sig-object cpp" id="_CPPv4N5G2lib14G2LIB_AABB_CUTE">
+<span id="_CPPv3N5G2lib14G2LIB_AABB_CUTE"></span><span id="_CPPv2N5G2lib14G2LIB_AABB_CUTE"></span><span id="G2lib::G2LIB_AABB_CUT__integerC"></span><span class="target" id="namespace_g2lib_1ac8ca414adfc12c8bc2862291b1d5f96c"></span><a class="reference internal" href="_clothoids_8hh.html#_CPPv4N5G2lib7integerE" title="G2lib::integer"><span class="n"><span class="pre">integer</span></span></a><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">G2LIB_AABB_CUT</span></span></span><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="p"><span class="pre">{</span></span><span class="m"><span class="pre">8</span></span><span class="p"><span class="pre">}</span></span><a class="headerlink" href="#_CPPv4N5G2lib14G2LIB_AABB_CUTE" title="Link to this definition">¶</a><br/></dt>
+<dd></dd></dl>
+<dl class="cpp var">
+<dt class="sig sig-object cpp" id="_CPPv4N5G2lib20G2LIB_AABB_MIN_NODESE">
+<span id="_CPPv3N5G2lib20G2LIB_AABB_MIN_NODESE"></span><span id="_CPPv2N5G2lib20G2LIB_AABB_MIN_NODESE"></span><span id="G2lib::G2LIB_AABB_MIN_NODES__integerC"></span><span class="target" id="namespace_g2lib_1a7330551688fa765ac07a5b28b5bb15de"></span><a class="reference internal" href="_clothoids_8hh.html#_CPPv4N5G2lib7integerE" title="G2lib::integer"><span class="n"><span class="pre">integer</span></span></a><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">G2LIB_AABB_MIN_NODES</span></span></span><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="p"><span class="pre">{</span></span><span class="m"><span class="pre">3</span></span><span class="p"><span class="pre">}</span></span><a class="headerlink" href="#_CPPv4N5G2lib20G2LIB_AABB_MIN_NODESE" title="Link to this definition">¶</a><br/></dt>
+<dd></dd></dl>
+<dl class="cpp var">
+<dt class="sig sig-object cpp" id="_CPPv4N5G2lib7use_ISOE">
+<span id="_CPPv3N5G2lib7use_ISOE"></span><span id="_CPPv2N5G2lib7use_ISOE"></span><span id="G2lib::use_ISO__b"></span><span class="target" id="namespace_g2lib_1ab75aba7c9994da621815e9d829bd2c84"></span><span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">use_ISO</span></span></span><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="p"><span class="pre">{</span></span><span class="k"><span class="pre">true</span></span><span class="p"><span class="pre">}</span></span><a class="headerlink" href="#_CPPv4N5G2lib7use_ISOE" title="Link to this definition">¶</a><br/></dt>
+<dd></dd></dl>
+</div>
+</dd></dl>
+</section>
+
+
+          </article>
+        </div>
+      </div>
+    </main>
+  </div>
+  <footer class="md-footer">
+    <div class="md-footer-nav">
+      <nav class="md-footer-nav__inner md-grid">
+          
+            <a href="_fresnel_8hxx.html" title="File Fresnel.hxx"
+               class="md-flex md-footer-nav__link md-footer-nav__link--prev"
+               rel="prev">
+              <div class="md-flex__cell md-flex__cell--shrink">
+                <i class="md-icon md-icon--arrow-back md-footer-nav__button"></i>
+              </div>
+              <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title">
+                <span class="md-flex__ellipsis">
+                  <span
+                      class="md-footer-nav__direction"> "Previous" </span> File Fresnel.hxx </span>
+              </div>
+            </a>
+          
+          
+            <a href="_g2lib_8hxx.html" title="File G2lib.hxx"
+               class="md-flex md-footer-nav__link md-footer-nav__link--next"
+               rel="next">
+            <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title"><span
+                class="md-flex__ellipsis"> <span
+                class="md-footer-nav__direction"> "Next" </span> File G2lib.hxx </span>
+            </div>
+            <div class="md-flex__cell md-flex__cell--shrink"><i
+                class="md-icon md-icon--arrow-forward md-footer-nav__button"></i>
+            </div>
+          
+        </a>
+        
+      </nav>
+    </div>
+    <div class="md-footer-meta md-typeset">
+      <div class="md-footer-meta__inner md-grid">
+        <div class="md-footer-copyright">
+          <div class="md-footer-copyright__highlight">
+              &#169; Copyright 2024, E.Bertolazzi and M.Frego.
+              
+          </div>
+            Created using
+            <a href="http://www.sphinx-doc.org/">Sphinx</a> 7.4.4.
+             and
+            <a href="https://github.com/bashtage/sphinx-material/">Material for
+              Sphinx</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+  <script src="../../_static/javascripts/application.js"></script>
+  <script>app.initialize({version: "1.0.4", url: {base: ".."}})</script>
+  </body>
+</html>

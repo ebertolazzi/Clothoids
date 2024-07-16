@@ -128,9 +128,9 @@ namespace G2lib {
         :rtype: Tuple[Tuple[float, float], Tuple[float, float]]
       )S")
 
-      .def("bbTriangles", [](const BaseCurve & self, real_type max_angle, real_type max_size, integer icurve) {
+      .def("bb_triangles", [](const BaseCurve & self, real_type max_angle, real_type max_size, integer icurve) {
         std::vector<Triangle2D> tvec;
-        self.bbTriangles(tvec, max_angle, max_size, icurve);
+        self.bb_triangles(tvec, max_angle, max_size, icurve);
         return tvec;
       }, py::arg("max_angle") = Utils::m_pi/18, py::arg("max_size") = 1e100, py::arg("icurve") = 0,
       R"S(
@@ -143,9 +143,9 @@ namespace G2lib {
         :rtype: List[Triangle2D]
       )S")
 
-      .def("bbTriangles_ISO", [](const BaseCurve & self, real_type offs, real_type max_angle, real_type max_size, integer icurve) {
+      .def("bb_triangles_ISO", [](const BaseCurve & self, real_type offs, real_type max_angle, real_type max_size, integer icurve) {
         std::vector<Triangle2D> tvec;
-        self.bbTriangles_ISO(offs, tvec, max_angle, max_size, icurve);
+        self.bb_triangles_ISO(offs, tvec, max_angle, max_size, icurve);
         return tvec;
       }, py::arg("offs"), py::arg("max_angle") = Utils::m_pi/18, py::arg("max_size") = 1e100, py::arg("icurve") = 0,
       R"S(
@@ -160,9 +160,9 @@ namespace G2lib {
         :rtype: List[Triangle2D]
       )S")
 
-      .def("bbTriangles_SAE", [](const BaseCurve & self, real_type offs, real_type max_angle, real_type max_size, integer icurve) {
+      .def("bb_triangles_SAE", [](const BaseCurve & self, real_type offs, real_type max_angle, real_type max_size, integer icurve) {
         std::vector<Triangle2D> tvec;
-        self.bbTriangles_SAE(offs, tvec, max_angle, max_size, icurve);
+        self.bb_triangles_SAE(offs, tvec, max_angle, max_size, icurve);
         return tvec;
       }, py::arg("offs"), py::arg("max_angle") = Utils::m_pi/18, py::arg("max_size") = 1e100, py::arg("icurve") = 0,
       R"S(

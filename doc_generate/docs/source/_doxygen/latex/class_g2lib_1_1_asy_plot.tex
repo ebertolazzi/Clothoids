@@ -1,0 +1,166 @@
+\doxysection{G2lib\+::Asy\+Plot Class Reference}
+\hypertarget{class_g2lib_1_1_asy_plot}{}\label{class_g2lib_1_1_asy_plot}\index{G2lib::AsyPlot@{G2lib::AsyPlot}}
+
+
+{\ttfamily \#include $<$Clothoid\+Asy\+Plot.\+hxx$>$}
+
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_g2lib_1_1_asy_plot_a4815742da17f12c15fd05a6f40363040}{Asy\+Plot}} (string \mbox{\hyperlink{class_g2lib_1_1_asy_plot_ae12d991dc86267f4d863fe44b167a614}{filename}}, bool \mbox{\hyperlink{class_g2lib_1_1_asy_plot_acc7c7a37b6a3812ec9c9c2eb84fbadc9}{show\+Axes}})
+\item 
+\mbox{\hyperlink{class_g2lib_1_1_asy_plot_abea893862e407fb96cab020430e98987}{\texorpdfstring{$\sim$}{\string~}\+Asy\+Plot}} ()
+\item 
+void \mbox{\hyperlink{class_g2lib_1_1_asy_plot_ae7fe8fa822976d795cec8a93d3187e99}{draw\+Clothoid}} (\mbox{\hyperlink{class_g2lib_1_1_clothoid_curve}{Clothoid\+Curve}} const \&c, string const \&penna="{}black"{}, \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} offset=0) const
+\item 
+void \mbox{\hyperlink{class_g2lib_1_1_asy_plot_a7d8f6b6ab33b0e73e7fe48c0404e832e}{dot}} (\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} x, \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} y, string const \&penna="{}black"{}) const
+\item 
+void \mbox{\hyperlink{class_g2lib_1_1_asy_plot_a41835e9ad8df4944a1691e331983356d}{triangle}} (\mbox{\hyperlink{class_g2lib_1_1_triangle2_d}{Triangle2D}} const \&t, string const \&penna="{}black"{}) const
+\item 
+void \mbox{\hyperlink{class_g2lib_1_1_asy_plot_aa1342b47bf30bec897a9d32cc483812d}{draw\+Rect}} (\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} x0, \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} y0, \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} x1, \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} y1, \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} x2, \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} y2, \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} x3, \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} y3, string const \&penna="{}black"{}) const
+\item 
+void \mbox{\hyperlink{class_g2lib_1_1_asy_plot_aab3a1d4836a3eb2aab03b283f05f8938}{draw\+Line}} (\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} x0, \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} y0, \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} x1, \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} y1, string const \&penna="{}black"{}) const
+\item 
+void \mbox{\hyperlink{class_g2lib_1_1_asy_plot_af1cffddfa974e1048d4e3855b184150c}{label}} (string const \&text, \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} x, \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} y, string const \&placement="{}"{}, string const \&penna="{}black"{}) const
+\item 
+void \mbox{\hyperlink{class_g2lib_1_1_asy_plot_a87f96edf00391a0d45b9b3543e2234d4}{display\+Axes}} (string const \&labX, string const \&labY, \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} xmin, \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} xmax, \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} ymin, \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} ymax) const
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Private Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+bool \mbox{\hyperlink{class_g2lib_1_1_asy_plot_a9ff37d912fb73d652509a43ea48fbd64}{open\+File}} ()
+\item 
+bool \mbox{\hyperlink{class_g2lib_1_1_asy_plot_ae29910ba71dae502287f1156d5cf00dc}{close\+File}} ()
+\item 
+void \mbox{\hyperlink{class_g2lib_1_1_asy_plot_a68f434d2227c964aaea9e903e8984266}{init\+File}} ()
+\item 
+void \mbox{\hyperlink{class_g2lib_1_1_asy_plot_a06e972481bbd2c1b3c247b6766cecece}{display\+Axes}} () const
+\item 
+void \mbox{\hyperlink{class_g2lib_1_1_asy_plot_ab6505c07543b57cd37272fc15193b97f}{compile\+File}} ()
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+ofstream \mbox{\hyperlink{class_g2lib_1_1_asy_plot_a24267e4736cc6e0ccd389bd4a9d96393}{file}}
+\item 
+string \mbox{\hyperlink{class_g2lib_1_1_asy_plot_ae12d991dc86267f4d863fe44b167a614}{filename}}
+\item 
+bool \mbox{\hyperlink{class_g2lib_1_1_asy_plot_acc7c7a37b6a3812ec9c9c2eb84fbadc9}{show\+Axes}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{class_g2lib_1_1_asy_plot_a4815742da17f12c15fd05a6f40363040}\index{G2lib::AsyPlot@{G2lib::AsyPlot}!AsyPlot@{AsyPlot}}
+\index{AsyPlot@{AsyPlot}!G2lib::AsyPlot@{G2lib::AsyPlot}}
+\doxysubsubsection{\texorpdfstring{AsyPlot()}{AsyPlot()}}
+{\footnotesize\ttfamily \label{class_g2lib_1_1_asy_plot_a4815742da17f12c15fd05a6f40363040} 
+G2lib\+::\+Asy\+Plot\+::\+Asy\+Plot (\begin{DoxyParamCaption}\item[{string}]{filename}{, }\item[{bool}]{show\+Axes}{}\end{DoxyParamCaption})}
+
+\Hypertarget{class_g2lib_1_1_asy_plot_abea893862e407fb96cab020430e98987}\index{G2lib::AsyPlot@{G2lib::AsyPlot}!````~AsyPlot@{\texorpdfstring{$\sim$}{\string~}AsyPlot}}
+\index{````~AsyPlot@{\texorpdfstring{$\sim$}{\string~}AsyPlot}!G2lib::AsyPlot@{G2lib::AsyPlot}}
+\doxysubsubsection{\texorpdfstring{\texorpdfstring{$\sim$}{\string~}AsyPlot()}{\string~AsyPlot()}}
+{\footnotesize\ttfamily \label{class_g2lib_1_1_asy_plot_abea893862e407fb96cab020430e98987} 
+G2lib\+::\+Asy\+Plot\+::\texorpdfstring{$\sim$}{\string~}\+Asy\+Plot (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{class_g2lib_1_1_asy_plot_ae29910ba71dae502287f1156d5cf00dc}\index{G2lib::AsyPlot@{G2lib::AsyPlot}!closeFile@{closeFile}}
+\index{closeFile@{closeFile}!G2lib::AsyPlot@{G2lib::AsyPlot}}
+\doxysubsubsection{\texorpdfstring{closeFile()}{closeFile()}}
+{\footnotesize\ttfamily \label{class_g2lib_1_1_asy_plot_ae29910ba71dae502287f1156d5cf00dc} 
+bool G2lib\+::\+Asy\+Plot\+::close\+File (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+\Hypertarget{class_g2lib_1_1_asy_plot_ab6505c07543b57cd37272fc15193b97f}\index{G2lib::AsyPlot@{G2lib::AsyPlot}!compileFile@{compileFile}}
+\index{compileFile@{compileFile}!G2lib::AsyPlot@{G2lib::AsyPlot}}
+\doxysubsubsection{\texorpdfstring{compileFile()}{compileFile()}}
+{\footnotesize\ttfamily \label{class_g2lib_1_1_asy_plot_ab6505c07543b57cd37272fc15193b97f} 
+void G2lib\+::\+Asy\+Plot\+::compile\+File (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+\Hypertarget{class_g2lib_1_1_asy_plot_a06e972481bbd2c1b3c247b6766cecece}\index{G2lib::AsyPlot@{G2lib::AsyPlot}!displayAxes@{displayAxes}}
+\index{displayAxes@{displayAxes}!G2lib::AsyPlot@{G2lib::AsyPlot}}
+\doxysubsubsection{\texorpdfstring{displayAxes()}{displayAxes()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{class_g2lib_1_1_asy_plot_a06e972481bbd2c1b3c247b6766cecece} 
+void G2lib\+::\+Asy\+Plot\+::display\+Axes (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [private]}}
+
+\Hypertarget{class_g2lib_1_1_asy_plot_a87f96edf00391a0d45b9b3543e2234d4}\index{G2lib::AsyPlot@{G2lib::AsyPlot}!displayAxes@{displayAxes}}
+\index{displayAxes@{displayAxes}!G2lib::AsyPlot@{G2lib::AsyPlot}}
+\doxysubsubsection{\texorpdfstring{displayAxes()}{displayAxes()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{class_g2lib_1_1_asy_plot_a87f96edf00391a0d45b9b3543e2234d4} 
+void G2lib\+::\+Asy\+Plot\+::display\+Axes (\begin{DoxyParamCaption}\item[{string const \&}]{labX}{, }\item[{string const \&}]{labY}{, }\item[{\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}}}]{xmin}{, }\item[{\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}}}]{xmax}{, }\item[{\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}}}]{ymin}{, }\item[{\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}}}]{ymax}{}\end{DoxyParamCaption}) const}
+
+\Hypertarget{class_g2lib_1_1_asy_plot_a7d8f6b6ab33b0e73e7fe48c0404e832e}\index{G2lib::AsyPlot@{G2lib::AsyPlot}!dot@{dot}}
+\index{dot@{dot}!G2lib::AsyPlot@{G2lib::AsyPlot}}
+\doxysubsubsection{\texorpdfstring{dot()}{dot()}}
+{\footnotesize\ttfamily \label{class_g2lib_1_1_asy_plot_a7d8f6b6ab33b0e73e7fe48c0404e832e} 
+void G2lib\+::\+Asy\+Plot\+::dot (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}}}]{x}{, }\item[{\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}}}]{y}{, }\item[{string const \&}]{penna}{ = {\ttfamily "{}black"{}}}\end{DoxyParamCaption}) const}
+
+\Hypertarget{class_g2lib_1_1_asy_plot_ae7fe8fa822976d795cec8a93d3187e99}\index{G2lib::AsyPlot@{G2lib::AsyPlot}!drawClothoid@{drawClothoid}}
+\index{drawClothoid@{drawClothoid}!G2lib::AsyPlot@{G2lib::AsyPlot}}
+\doxysubsubsection{\texorpdfstring{drawClothoid()}{drawClothoid()}}
+{\footnotesize\ttfamily \label{class_g2lib_1_1_asy_plot_ae7fe8fa822976d795cec8a93d3187e99} 
+void G2lib\+::\+Asy\+Plot\+::draw\+Clothoid (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_g2lib_1_1_clothoid_curve}{Clothoid\+Curve}} const \&}]{c}{, }\item[{string const \&}]{penna}{ = {\ttfamily "{}black"{}}, }\item[{\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}}}]{offset}{ = {\ttfamily 0}}\end{DoxyParamCaption}) const}
+
+\Hypertarget{class_g2lib_1_1_asy_plot_aab3a1d4836a3eb2aab03b283f05f8938}\index{G2lib::AsyPlot@{G2lib::AsyPlot}!drawLine@{drawLine}}
+\index{drawLine@{drawLine}!G2lib::AsyPlot@{G2lib::AsyPlot}}
+\doxysubsubsection{\texorpdfstring{drawLine()}{drawLine()}}
+{\footnotesize\ttfamily \label{class_g2lib_1_1_asy_plot_aab3a1d4836a3eb2aab03b283f05f8938} 
+void G2lib\+::\+Asy\+Plot\+::draw\+Line (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}}}]{x0}{, }\item[{\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}}}]{y0}{, }\item[{\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}}}]{x1}{, }\item[{\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}}}]{y1}{, }\item[{string const \&}]{penna}{ = {\ttfamily "{}black"{}}}\end{DoxyParamCaption}) const}
+
+\Hypertarget{class_g2lib_1_1_asy_plot_aa1342b47bf30bec897a9d32cc483812d}\index{G2lib::AsyPlot@{G2lib::AsyPlot}!drawRect@{drawRect}}
+\index{drawRect@{drawRect}!G2lib::AsyPlot@{G2lib::AsyPlot}}
+\doxysubsubsection{\texorpdfstring{drawRect()}{drawRect()}}
+{\footnotesize\ttfamily \label{class_g2lib_1_1_asy_plot_aa1342b47bf30bec897a9d32cc483812d} 
+void G2lib\+::\+Asy\+Plot\+::draw\+Rect (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}}}]{x0}{, }\item[{\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}}}]{y0}{, }\item[{\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}}}]{x1}{, }\item[{\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}}}]{y1}{, }\item[{\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}}}]{x2}{, }\item[{\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}}}]{y2}{, }\item[{\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}}}]{x3}{, }\item[{\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}}}]{y3}{, }\item[{string const \&}]{penna}{ = {\ttfamily "{}black"{}}}\end{DoxyParamCaption}) const}
+
+\Hypertarget{class_g2lib_1_1_asy_plot_a68f434d2227c964aaea9e903e8984266}\index{G2lib::AsyPlot@{G2lib::AsyPlot}!initFile@{initFile}}
+\index{initFile@{initFile}!G2lib::AsyPlot@{G2lib::AsyPlot}}
+\doxysubsubsection{\texorpdfstring{initFile()}{initFile()}}
+{\footnotesize\ttfamily \label{class_g2lib_1_1_asy_plot_a68f434d2227c964aaea9e903e8984266} 
+void G2lib\+::\+Asy\+Plot\+::init\+File (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+\Hypertarget{class_g2lib_1_1_asy_plot_af1cffddfa974e1048d4e3855b184150c}\index{G2lib::AsyPlot@{G2lib::AsyPlot}!label@{label}}
+\index{label@{label}!G2lib::AsyPlot@{G2lib::AsyPlot}}
+\doxysubsubsection{\texorpdfstring{label()}{label()}}
+{\footnotesize\ttfamily \label{class_g2lib_1_1_asy_plot_af1cffddfa974e1048d4e3855b184150c} 
+void G2lib\+::\+Asy\+Plot\+::label (\begin{DoxyParamCaption}\item[{string const \&}]{text}{, }\item[{\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}}}]{x}{, }\item[{\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}}}]{y}{, }\item[{string const \&}]{placement}{ = {\ttfamily "{}"{}}, }\item[{string const \&}]{penna}{ = {\ttfamily "{}black"{}}}\end{DoxyParamCaption}) const}
+
+\Hypertarget{class_g2lib_1_1_asy_plot_a9ff37d912fb73d652509a43ea48fbd64}\index{G2lib::AsyPlot@{G2lib::AsyPlot}!openFile@{openFile}}
+\index{openFile@{openFile}!G2lib::AsyPlot@{G2lib::AsyPlot}}
+\doxysubsubsection{\texorpdfstring{openFile()}{openFile()}}
+{\footnotesize\ttfamily \label{class_g2lib_1_1_asy_plot_a9ff37d912fb73d652509a43ea48fbd64} 
+bool G2lib\+::\+Asy\+Plot\+::open\+File (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+\Hypertarget{class_g2lib_1_1_asy_plot_a41835e9ad8df4944a1691e331983356d}\index{G2lib::AsyPlot@{G2lib::AsyPlot}!triangle@{triangle}}
+\index{triangle@{triangle}!G2lib::AsyPlot@{G2lib::AsyPlot}}
+\doxysubsubsection{\texorpdfstring{triangle()}{triangle()}}
+{\footnotesize\ttfamily \label{class_g2lib_1_1_asy_plot_a41835e9ad8df4944a1691e331983356d} 
+void G2lib\+::\+Asy\+Plot\+::triangle (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_g2lib_1_1_triangle2_d}{Triangle2D}} const \&}]{t}{, }\item[{string const \&}]{penna}{ = {\ttfamily "{}black"{}}}\end{DoxyParamCaption}) const}
+
+
+
+\doxysubsection{Member Data Documentation}
+\Hypertarget{class_g2lib_1_1_asy_plot_a24267e4736cc6e0ccd389bd4a9d96393}\index{G2lib::AsyPlot@{G2lib::AsyPlot}!file@{file}}
+\index{file@{file}!G2lib::AsyPlot@{G2lib::AsyPlot}}
+\doxysubsubsection{\texorpdfstring{file}{file}}
+{\footnotesize\ttfamily \label{class_g2lib_1_1_asy_plot_a24267e4736cc6e0ccd389bd4a9d96393} 
+ofstream G2lib\+::\+Asy\+Plot\+::file\hspace{0.3cm}{\ttfamily [mutable]}, {\ttfamily [private]}}
+
+\Hypertarget{class_g2lib_1_1_asy_plot_ae12d991dc86267f4d863fe44b167a614}\index{G2lib::AsyPlot@{G2lib::AsyPlot}!filename@{filename}}
+\index{filename@{filename}!G2lib::AsyPlot@{G2lib::AsyPlot}}
+\doxysubsubsection{\texorpdfstring{filename}{filename}}
+{\footnotesize\ttfamily \label{class_g2lib_1_1_asy_plot_ae12d991dc86267f4d863fe44b167a614} 
+string G2lib\+::\+Asy\+Plot\+::filename\hspace{0.3cm}{\ttfamily [private]}}
+
+\Hypertarget{class_g2lib_1_1_asy_plot_acc7c7a37b6a3812ec9c9c2eb84fbadc9}\index{G2lib::AsyPlot@{G2lib::AsyPlot}!showAxes@{showAxes}}
+\index{showAxes@{showAxes}!G2lib::AsyPlot@{G2lib::AsyPlot}}
+\doxysubsubsection{\texorpdfstring{showAxes}{showAxes}}
+{\footnotesize\ttfamily \label{class_g2lib_1_1_asy_plot_acc7c7a37b6a3812ec9c9c2eb84fbadc9} 
+bool G2lib\+::\+Asy\+Plot\+::show\+Axes\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+/\+Users/enrico/\+Ricerca/develop/\+PINS/pins-\/mechatronix/\+Lib\+Sources/submodules/\+Clothoids/src/\+Clothoids/\mbox{\hyperlink{_clothoid_asy_plot_8hxx}{Clothoid\+Asy\+Plot.\+hxx}}\item 
+/\+Users/enrico/\+Ricerca/develop/\+PINS/pins-\/mechatronix/\+Lib\+Sources/submodules/\+Clothoids/src/\mbox{\hyperlink{_clothoid_asy_plot_8cc}{Clothoid\+Asy\+Plot.\+cc}}\end{DoxyCompactItemize}

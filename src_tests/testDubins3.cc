@@ -1,5 +1,6 @@
 //#define _USE_MATH_DEFINES
 #include "Clothoids.hh"
+#include "Clothoids_fmt.hh"
 
 using G2lib::real_type;
 using G2lib::integer;
@@ -12,7 +13,8 @@ main() {
   using std::abs;
   using Utils::m_pi;
 
-  G2lib::Dubins DB1, DB2;
+  G2lib::Dubins DB1{"DB1"};
+  G2lib::Dubins DB2{"DB2"};
 
   {
     real_type k_max  = 1;

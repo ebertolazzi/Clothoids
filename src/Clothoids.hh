@@ -33,8 +33,15 @@
 // comment to disable threads support
 #define CLOTHOIDS_USE_THREADS 1
 
-#include "Utils.hh"
-#include "Utils_AABB_tree.hh"
+#ifdef NO_SYSTEM_UTILS
+  #include "Utils.hh"
+  #include "Utils_AABB_tree.hh"
+#else
+  #include <Utils.hh>
+  #include <Utils_AABB_tree.hh>
+#endif
+
+#include "GenericContainer/GenericContainer.hh"
 
 #include <string>
 #include <fstream>
@@ -67,13 +74,14 @@ namespace G2lib {
   using std::map;
   using std::set;
 
-  using istream_type = std::basic_istream<char>;
-  using ostream_type = std::basic_ostream<char>;
-  using real_type    = double;
-  using integer      = int;
-  using AABB_TREE    = Utils::AABBtree<real_type>;
-  using AABB_SET     = Utils::AABBtree<real_type>::AABB_SET;
-  using AABB_MAP     = Utils::AABBtree<real_type>::AABB_MAP;
+  using istream_type     = std::basic_istream<char>;
+  using ostream_type     = std::basic_ostream<char>;
+  using real_type        = double;
+  using integer          = int;
+  using AABB_TREE        = Utils::AABBtree<real_type>;
+  using AABB_SET         = Utils::AABBtree<real_type>::AABB_SET;
+  using AABB_MAP         = Utils::AABBtree<real_type>::AABB_MAP;
+  using GenericContainer = GC_namespace::GenericContainer;
 
   using CurveType = enum class CurveType : integer {
     LINE,
@@ -83,13 +91,14 @@ namespace G2lib {
     BIARC_LIST,
     CLOTHOID,
     CLOTHOID_LIST,
-    DUBINS
+    DUBINS,
+    DUBINS3P
   };
 
   inline
   string
   to_string( CurveType n ) {
-    string res = "";
+    string res{""};
     switch ( n ) {
     case CurveType::LINE:          res = "LINE";          break;
     case CurveType::POLYLINE:      res = "POLYLINE";      break;
@@ -99,6 +108,7 @@ namespace G2lib {
     case CurveType::CLOTHOID:      res = "CLOTHOID";      break;
     case CurveType::CLOTHOID_LIST: res = "CLOTHOID_LIST"; break;
     case CurveType::DUBINS:        res = "DUBINS";        break;
+    case CurveType::DUBINS3P:      res = "DUBINS3P";      break;
     }
     return res;
   };
@@ -113,6 +123,7 @@ namespace G2lib {
   class BiarcList;
   class ClothoidList;
   class Dubins;
+  class Dubins3p;
 }
 
 #include "Clothoids/G2lib.hxx"
@@ -129,20 +140,7 @@ namespace G2lib {
 #include "Clothoids/ClothoidList.hxx"
 #include "Clothoids/ClothoidAsyPlot.hxx"
 #include "Clothoids/Dubins.hxx"
-
-namespace fmt {
-  template <> struct formatter<G2lib::Biarc>            : ostream_formatter {};
-  template <> struct formatter<G2lib::BiarcList>        : ostream_formatter {};
-  template <> struct formatter<G2lib::BBox>             : ostream_formatter {};
-  template <> struct formatter<G2lib::CircleArc>        : ostream_formatter {};
-  template <> struct formatter<G2lib::ClothoidCurve>    : ostream_formatter {};
-  template <> struct formatter<G2lib::ClothoidSplineG2> : ostream_formatter {};
-  template <> struct formatter<G2lib::ClothoidList>     : ostream_formatter {};
-  template <> struct formatter<G2lib::LineSegment>      : ostream_formatter {};
-  template <> struct formatter<G2lib::PolyLine>         : ostream_formatter {};
-  template <> struct formatter<G2lib::Triangle2D>       : ostream_formatter {};
-  template <> struct formatter<G2lib::Dubins>           : ostream_formatter {};
-}
+#include "Clothoids/Dubins3p.hxx"
 
 namespace G2lib {
 
