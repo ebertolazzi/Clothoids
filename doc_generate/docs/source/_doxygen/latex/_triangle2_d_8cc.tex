@@ -1,0 +1,28 @@
+\doxysection{/\+Users/enrico/\+Ricerca/develop/\+PINS/pins-\/mechatronix/\+Lib\+Sources/submodules/\+Clothoids/src/\+Triangle2D.cc File Reference}
+\hypertarget{_triangle2_d_8cc}{}\label{_triangle2_d_8cc}\index{/Users/enrico/Ricerca/develop/PINS/pins-\/mechatronix/LibSources/submodules/Clothoids/src/Triangle2D.cc@{/Users/enrico/Ricerca/develop/PINS/pins-\/mechatronix/LibSources/submodules/Clothoids/src/Triangle2D.cc}}
+{\ttfamily \#include "{}Clothoids.\+hh"{}}\newline
+{\ttfamily \#include "{}Clothoids\+\_\+fmt.\+hh"{}}\newline
+{\ttfamily \#include $<$functional$>$}\newline
+{\ttfamily \#include $<$algorithm$>$}\newline
+\doxysubsubsection*{Namespaces}
+\begin{DoxyCompactItemize}
+\item 
+namespace \mbox{\hyperlink{namespace_g2lib}{G2lib}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+static \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \mbox{\hyperlink{namespace_g2lib_a50255292803bae70bc617feeb8a4b2f4}{G2lib\+::orient\+\_\+2d}} (\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} const a\mbox{[}2\mbox{]}, \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} const b\mbox{[}2\mbox{]}, \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} const c\mbox{[}2\mbox{]})
+\item 
+static bool \mbox{\hyperlink{namespace_g2lib_ac389d59744cdee548b6ac181e094b545}{G2lib\+::intersection\+\_\+test\+\_\+vertex}} (\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} const P1\mbox{[}2\mbox{]}, \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} const Q1\mbox{[}2\mbox{]}, \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} const R1\mbox{[}2\mbox{]}, \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} const P2\mbox{[}2\mbox{]}, \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} const Q2\mbox{[}2\mbox{]}, \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} const R2\mbox{[}2\mbox{]})
+\item 
+static bool \mbox{\hyperlink{namespace_g2lib_a1d55faa262050bdb533c6e3c834ad4e5}{G2lib\+::intersection\+\_\+test\+\_\+edge}} (\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} const P1\mbox{[}2\mbox{]}, \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} const Q1\mbox{[}2\mbox{]}, \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} const R1\mbox{[}2\mbox{]}, \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} const P2\mbox{[}2\mbox{]}, \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} const R2\mbox{[}2\mbox{]})
+\item 
+static bool \mbox{\hyperlink{namespace_g2lib_a1137f20520e6e81db677cea42582927d}{G2lib\+::tri\+\_\+tri\+\_\+intersection\+\_\+2d}} (\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} const p1\mbox{[}2\mbox{]}, \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} const q1\mbox{[}2\mbox{]}, \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} const r1\mbox{[}2\mbox{]}, \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} const p2\mbox{[}2\mbox{]}, \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} const q2\mbox{[}2\mbox{]}, \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} const r2\mbox{[}2\mbox{]})
+\item 
+static bool \mbox{\hyperlink{namespace_g2lib_a58f82818d25f746107ba97e6595e72af}{G2lib\+::tri\+\_\+tri\+\_\+overlap\+\_\+test\+\_\+2d}} (\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} const p1\mbox{[}2\mbox{]}, \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} const q1\mbox{[}2\mbox{]}, \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} const r1\mbox{[}2\mbox{]}, \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} const p2\mbox{[}2\mbox{]}, \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} const q2\mbox{[}2\mbox{]}, \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} const r2\mbox{[}2\mbox{]})
+\item 
+static \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \mbox{\hyperlink{namespace_g2lib_a71522e915c9606070b8ddf5297d7e1b2}{G2lib\+::dist\+Seg}} (\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} x, \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} y, \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} const A\mbox{[}$\,$\mbox{]}, \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} const B\mbox{[}$\,$\mbox{]})
+\item 
+\mbox{\hyperlink{namespace_g2lib_a8fcbace87db5a5e71391e0040878f2c3}{ostream\+\_\+type}} \& \mbox{\hyperlink{namespace_g2lib_aaa4d726581860098805a3ac6204a5472}{G2lib\+::operator$<$$<$}} (\mbox{\hyperlink{namespace_g2lib_a8fcbace87db5a5e71391e0040878f2c3}{ostream\+\_\+type}} \&stream, \mbox{\hyperlink{class_g2lib_1_1_triangle2_d}{Triangle2D}} const \&t)
+\end{DoxyCompactItemize}

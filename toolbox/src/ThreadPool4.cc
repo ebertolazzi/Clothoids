@@ -23,6 +23,7 @@
 ///
 
 #include "Utils.hh"
+#include "Utils_fmt.hh"
 
 namespace Utils {
 

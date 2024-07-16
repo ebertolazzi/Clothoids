@@ -12,7 +12,18 @@
 cmake_minimum_required(VERSION 3.14)
 
 project( Clothoids )
-include(./cmake_utils/CMakeLists-common.txt)
+
+if (IS_DIRECTORY "${PROJECT_SOURCE_DIR}/cmake_utils")
+  set( HOME "${PROJECT_SOURCE_DIR}/cmake_utils/" )
+else()
+  if (IS_DIRECTORY "${PROJECT_SOURCE_DIR}/../cmake_utils")
+    set( HOME "${PROJECT_SOURCE_DIR}/../cmake_utils/" )
+  else()
+    set( HOME "${PROJECT_SOURCE_DIR}/../../cmake_utils/" )
+  endif()
+endif()
+
+include( "${HOME}/CMakeLists-common.txt" )
 
 project(
   ${PROJECT_NAME}
@@ -26,8 +37,8 @@ if (APPLE)
   set( CMAKE_OSX_ARCHITECTURES ${ARCHITECTURE} )
 endif()
 
-include(./cmake_utils/CMakeLists-cflags.txt)
-include(./cmake_utils/CMakeLists-utilities.txt)
+include( "${HOME}/CMakeLists-cflags.txt" )
+include( "${HOME}/CMakeLists-utilities.txt" )
 
 # Evaluating the suffix to append to target built by this CMake file
 utils_artifacts_suffix(ARTIFACTS_STATIC_SUFFIX TRUE)
@@ -88,7 +99,7 @@ set(UTILS_DEPEND_TARGETS)
 
 # DEPENDENCIES (TRY TO USE ALREADY COMPILED SUBMODULE IN LARGE PROJECT)
 utils_add_library_or_submodule( "quarticRootsFlocke" ROOTS )
-utils_add_library_or_submodule( "Utils" UTILS )
+utils_add_library_or_submodule( "UtilsLite" UTILS )
 utils_add_library_or_submodule( "GenericContainer" GC "GC" )
 
 message( STATUS "----------------------------------------------------------------" )
@@ -137,24 +148,7 @@ if ( UTILS_ENABLE_TESTS )
 
   enable_testing()
 
-  if(APPLE OR UNIX OR MINGW )
-    find_package( ZLIB REQUIRED )
-  else()
-    if ( CMAKE_BUILD_TYPE STREQUAL "Debug" )
-      find_library(
-        ZLIB_LIBRARIES zlibstaticd
-        HINTS ./lib3rd/lib ../Utils/lib3rd/lib
-      )
-    else()
-      find_library(
-        ZLIB_LIBRARIES zlibstatic
-        HINTS ./lib3rd/lib ../Utils/lib3rd/lib
-      )
-    endif()
-    set( ZLIB_INCLUDE_DIRS "${CMAKE_CURRENT_SOURCE_DIR}/lib3rd/zlib/include ")
-  endif()
-
-  set( LIBS ${UTILS_NAMESPACE}_${PROJECT_NAME}_Static ${ROOTS} ${UTILS} ${ZLIB_LIBRARIES} ${CMAKE_DL_LIBS} )
+  set( LIBS ${UTILS_NAMESPACE}_${PROJECT_NAME}_Static ${ROOTS} ${GC} ${UTILS} ${CMAKE_DL_LIBS} )
 
   if( UNIX )
     if ( NOT APPLE )
@@ -172,7 +166,7 @@ if ( UTILS_ENABLE_TESTS )
     #set( LIBS ${LIBS} ${WS2} ${IPH} ${KER} )
     set( LIBS ${LIBS} ws2_32 iphlpapi kernel32 )
     if (UTILS_BUILD_SHARED)
-      target_link_libraries( ${UTILS_NAMESPACE}_${PROJECT_NAME} ${LIBS} ${ZLIB_LIBRARIES} ${CMAKE_DL_LIBS} )
+      target_link_libraries( ${UTILS_NAMESPACE}_${PROJECT_NAME} ${LIBS} ${CMAKE_DL_LIBS} )
     endif()
   endif()
 
@@ -219,6 +213,6 @@ install(
 #                       |___/
 #
 
-include( ./cmake_utils/CMakeLists-cpack.txt )
+include( "${HOME}/CMakeLists-cpack.txt" )
 
 utils_final_messages()

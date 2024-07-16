@@ -34,12 +34,14 @@ namespace G2lib {
   extern real_type const machepsi1000; //!< \f$ 1000\varepsilon \f$
   extern real_type const sqrtMachepsi; //!< \f$ \sqrt{\varepsilon} \f$
   extern bool            intersect_with_AABBtree;
+
   extern integer const  G2LIB_AABB_CUT;
   extern integer const  G2LIB_AABB_MIN_NODES;
 
-  #ifdef G2LIB_COMPATIBILITY_MODE
-
+  // for CLOTHOIDS_BACK_COMPATIBILITY
   extern bool use_ISO;
+
+  #ifdef CLOTHOIDS_BACK_COMPATIBILITY
 
   static
   inline
@@ -356,10 +358,10 @@ namespace G2lib {
   //!  Algorithm from FileExchage geom2d adapated from Sedgewick's book.
   //!
   integer
-  isCounterClockwise(
-    real_type const * P1,
-    real_type const * P2,
-    real_type const * P3
+  is_counter_clockwise(
+    real_type const P1[],
+    real_type const P2[],
+    real_type const P3[]
   );
 
   //!
@@ -375,11 +377,11 @@ namespace G2lib {
   //!         return  0 = on border
   //!
   integer
-  isPointInTriangle(
-    real_type const * pt,
-    real_type const * P1,
-    real_type const * P2,
-    real_type const * P3
+  is_point_in_triangle(
+    real_type const pt[],
+    real_type const P1[],
+    real_type const P2[],
+    real_type const P3[]
   );
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -404,13 +406,7 @@ namespace G2lib {
   //! \param[out] omega     angles of two consecutive points, with accumulated \f$ 2\pi \f$ angle rotation
   //! \param[out] len       distance between two consecutive poijts
   //!
-  //! \rst
-  //!
-  //!   .. image:: ../../images/node_angles.jpg
-  //!      :width: 80%
-  //!      :align: center
-  //!
-  //! \endrst
+  //! \image html node_angles.jpg width=8cm
   //!
   void
   xy_to_guess_angle(

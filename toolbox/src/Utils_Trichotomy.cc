@@ -18,6 +18,7 @@
 \*--------------------------------------------------------------------------*/
 
 #include "Utils_Trichotomy.hh"
+#include "Utils_fmt.hh"
 
 #include <vector>
 

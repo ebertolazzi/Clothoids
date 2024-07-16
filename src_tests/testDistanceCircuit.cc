@@ -1,5 +1,7 @@
 //#define _USE_MATH_DEFINES
 #include "Clothoids.hh"
+#include "Clothoids_fmt.hh"
+
 #include <sstream>
 
 using G2lib::real_type;
@@ -60,7 +62,7 @@ main() {
       Y.emplace_back(y_mid_line);
     }
 
-    G2lib::ClothoidList C;
+    G2lib::ClothoidList C{"temporary"};
 
     fmt::print( "x = {}\n", X[2230]-X[2231] );
     fmt::print( "y = {}\n", Y[2230]-Y[2231] );

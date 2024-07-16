@@ -51,6 +51,7 @@
 #endif
 
 #include "Utils.hh"
+#include "Utils_fmt.hh"
 #include "Utils/mex_utils.hxx"
 
 #ifdef __clang__

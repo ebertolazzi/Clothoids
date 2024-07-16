@@ -18,6 +18,8 @@
 \*--------------------------------------------------------------------------*/
 
 #include "Clothoids.hh"
+#include "Clothoids_fmt.hh"
+
 #include "PolynomialRoots.hh"
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS

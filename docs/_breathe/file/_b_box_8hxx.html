@@ -1,0 +1,586 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="../../">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <meta name="lang:clipboard.copy" content="Copy to clipboard">
+  <meta name="lang:clipboard.copied" content="Copied to clipboard">
+  <meta name="lang:search.language" content="en">
+  <meta name="lang:search.pipeline.stopwords" content="True">
+  <meta name="lang:search.pipeline.trimmer" content="True">
+  <meta name="lang:search.result.none" content="No matching documents">
+  <meta name="lang:search.result.one" content="1 matching document">
+  <meta name="lang:search.result.other" content="# matching documents">
+  <meta name="lang:search.tokenizer" content="[\s\-]+">
+
+  
+    <link href="https://fonts.gstatic.com/" rel="preconnect" crossorigin>
+    <link href="https://fonts.googleapis.com/css?family=Roboto+Mono:400,500,700|Roboto:300,400,400i,700&display=fallback" rel="stylesheet">
+
+    <style>
+      body,
+      input {
+        font-family: "Roboto", "Helvetica Neue", Helvetica, Arial, sans-serif
+      }
+
+      code,
+      kbd,
+      pre {
+        font-family: "Roboto Mono", "Courier New", Courier, monospace
+      }
+    </style>
+  
+
+  <link rel="stylesheet" href="../../_static/stylesheets/application.css"/>
+  <link rel="stylesheet" href="../../_static/stylesheets/application-palette.css"/>
+  <link rel="stylesheet" href="../../_static/stylesheets/application-fixes.css"/>
+  
+  <link rel="stylesheet" href="../../_static/fonts/material-icons.css"/>
+  
+  <meta name="theme-color" content="#3f51b5">
+  <script src="../../_static/javascripts/modernizr.js"></script>
+  
+  
+  
+    <title>File BBox.hxx &#8212; CLOTHOIDS 0.1 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=83e35b93" />
+    <link rel="stylesheet" type="text/css" href="../../_static/material.css?v=79c92029" />
+    <script src="../../_static/documentation_options.js?v=2709fde1"></script>
+    <script src="../../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="File BaseCurve.hxx" href="_base_curve_8hxx.html" />
+    <link rel="prev" title="File BBox.cc" href="_b_box_8cc.html" />
+  
+   
+
+  </head>
+  <body dir=ltr
+        data-md-color-primary=blue-grey data-md-color-accent=blue>
+  
+  <svg class="md-svg">
+    <defs data-children-count="0">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" width="416" height="448" viewBox="0 0 416 448" id="__github"><path fill="currentColor" d="M160 304q0 10-3.125 20.5t-10.75 19T128 352t-18.125-8.5-10.75-19T96 304t3.125-20.5 10.75-19T128 256t18.125 8.5 10.75 19T160 304zm160 0q0 10-3.125 20.5t-10.75 19T288 352t-18.125-8.5-10.75-19T256 304t3.125-20.5 10.75-19T288 256t18.125 8.5 10.75 19T320 304zm40 0q0-30-17.25-51T296 232q-10.25 0-48.75 5.25Q229.5 240 208 240t-39.25-2.75Q130.75 232 120 232q-29.5 0-46.75 21T56 304q0 22 8 38.375t20.25 25.75 30.5 15 35 7.375 37.25 1.75h42q20.5 0 37.25-1.75t35-7.375 30.5-15 20.25-25.75T360 304zm56-44q0 51.75-15.25 82.75-9.5 19.25-26.375 33.25t-35.25 21.5-42.5 11.875-42.875 5.5T212 416q-19.5 0-35.5-.75t-36.875-3.125-38.125-7.5-34.25-12.875T37 371.5t-21.5-28.75Q0 312 0 260q0-59.25 34-99-6.75-20.5-6.75-42.5 0-29 12.75-54.5 27 0 47.5 9.875t47.25 30.875Q171.5 96 212 96q37 0 70 8 26.25-20.5 46.75-30.25T376 64q12.75 25.5 12.75 54.5 0 21.75-6.75 42 34 40 34 99.5z"/></svg>
+      
+    </defs>
+  </svg>
+  
+  <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer">
+  <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search">
+  <label class="md-overlay" data-md-component="overlay" for="__drawer"></label>
+  <a href="#_breathe/file/_b_box_8hxx" tabindex="1" class="md-skip"> Skip to content </a>
+  <header class="md-header" data-md-component="header">
+  <nav class="md-header-nav md-grid">
+    <div class="md-flex navheader">
+      <div class="md-flex__cell md-flex__cell--shrink">
+        <a href="../../index.html" title="CLOTHOIDS 0.1 documentation"
+           class="md-header-nav__button md-logo">
+          
+            &nbsp;
+          
+        </a>
+      </div>
+      <div class="md-flex__cell md-flex__cell--shrink">
+        <label class="md-icon md-icon--menu md-header-nav__button" for="__drawer"></label>
+      </div>
+      <div class="md-flex__cell md-flex__cell--stretch">
+        <div class="md-flex__ellipsis md-header-nav__title" data-md-component="title">
+          <span class="md-header-nav__topic">CLOTHOIDS 0.1 documentation</span>
+          <span class="md-header-nav__topic"> File BBox.hxx </span>
+        </div>
+      </div>
+      <div class="md-flex__cell md-flex__cell--shrink">
+        <label class="md-icon md-icon--search md-header-nav__button" for="__search"></label>
+        
+<div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" action="../../search.html" method="get" name="search">
+      <input type="text" class="md-search__input" name="q" placeholder=""Search""
+             autocapitalize="off" autocomplete="off" spellcheck="false"
+             data-md-component="query" data-md-state="active">
+      <label class="md-icon md-search__icon" for="__search"></label>
+      <button type="reset" class="md-icon md-search__icon" data-md-component="reset" tabindex="-1">
+        &#xE5CD;
+      </button>
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="result">
+          <div class="md-search-result__meta">
+            Type to start searching
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+      </div>
+      
+      
+  
+  <script src="../../_static/javascripts/version_dropdown.js"></script>
+  <script>
+    var json_loc = "../../"versions.json"",
+        target_loc = "../../../",
+        text = "Versions";
+    $( document ).ready( add_version_dropdown(json_loc, target_loc, text));
+  </script>
+  
+
+    </div>
+  </nav>
+</header>
+
+  
+  <div class="md-container">
+    
+    
+    
+  <nav class="md-tabs" data-md-component="tabs">
+    <div class="md-tabs__inner md-grid">
+      <ul class="md-tabs__list">
+          <li class="md-tabs__item"><a href="../../index.html" class="md-tabs__link">CLOTHOIDS 0.1 documentation</a></li>
+          <li class="md-tabs__item"><a href="../filelist.html" class="md-tabs__link">File list</a></li>
+      </ul>
+    </div>
+  </nav>
+    <main class="md-main">
+      <div class="md-main__inner md-grid" data-md-component="container">
+        
+          <div class="md-sidebar md-sidebar--primary" data-md-component="navigation">
+            <div class="md-sidebar__scrollwrap">
+              <div class="md-sidebar__inner">
+                <nav class="md-nav md-nav--primary" data-md-level="0">
+  <label class="md-nav__title md-nav__title--site" for="__drawer">
+    <a href="../../index.html" title="CLOTHOIDS 0.1 documentation" class="md-nav__button md-logo">
+      
+        <img src="../../_static/" alt=" logo" width="48" height="48">
+      
+    </a>
+    <a href="../../index.html"
+       title="CLOTHOIDS 0.1 documentation">CLOTHOIDS 0.1 documentation</a>
+  </label>
+  
+
+</nav>
+              </div>
+            </div>
+          </div>
+          <div class="md-sidebar md-sidebar--secondary" data-md-component="toc">
+            <div class="md-sidebar__scrollwrap">
+              <div class="md-sidebar__inner">
+                
+<nav class="md-nav md-nav--secondary">
+    <label class="md-nav__title" for="__toc">"Contents"</label>
+  <ul class="md-nav__list" data-md-scrollfix="">
+        <li class="md-nav__item"><a href="#breathe-file-b-box-8hxx--page-root" class="md-nav__link">File BBox.hxx</a><nav class="md-nav">
+              <ul class="md-nav__list">
+        <li class="md-nav__item"><a href="#_CPPv45G2lib" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">G2lib</span></code></a><nav class="md-nav">
+              <ul class="md-nav__list">
+        <li class="md-nav__item"><a href="#_CPPv4N5G2liblsER12ostream_typeRK4BBox" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">G2lib::operator&lt;&lt;()</span></code></a>
+        </li>
+        <li class="md-nav__item"><a href="#_CPPv4N5G2lib4BBoxE" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">G2lib::BBox</span></code></a><nav class="md-nav">
+              <ul class="md-nav__list">
+        <li class="md-nav__item"><a href="#_CPPv4N5G2lib4BBox7PtrBBoxE" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">G2lib::BBox::PtrBBox</span></code></a>
+        </li>
+        <li class="md-nav__item"><a href="#_CPPv4N5G2lib4BBox11PairPtrBBoxE" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">G2lib::BBox::PairPtrBBox</span></code></a>
+        </li>
+        <li class="md-nav__item"><a href="#_CPPv4N5G2lib4BBox10VecPtrBBoxE" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">G2lib::BBox::VecPtrBBox</span></code></a>
+        </li>
+        <li class="md-nav__item"><a href="#_CPPv4N5G2lib4BBox14VecPairPtrBBoxE" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">G2lib::BBox::VecPairPtrBBox</span></code></a>
+        </li>
+        <li class="md-nav__item"><a href="#_CPPv4N5G2lib4BBox4BBoxE9real_type9real_type9real_type9real_type7integer7integer" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">G2lib::BBox::BBox()</span></code></a>
+        </li>
+        <li class="md-nav__item"><a href="#_CPPv4N5G2lib4BBox4BBoxEAL4E_K9real_type7integer7integer" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">G2lib::BBox::BBox()</span></code></a>
+        </li>
+        <li class="md-nav__item"><a href="#_CPPv4N5G2lib4BBox4BBoxEAL2E_K9real_typeAL2E_K9real_type7integer7integer" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">G2lib::BBox::BBox()</span></code></a>
+        </li>
+        <li class="md-nav__item"><a href="#_CPPv4N5G2lib4BBox4BBoxERK6vectorI7PtrBBoxE7integer7integer" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">G2lib::BBox::BBox()</span></code></a>
+        </li>
+        <li class="md-nav__item"><a href="#_CPPv4N5G2lib4BBox4bboxEv" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">G2lib::BBox::bbox()</span></code></a>
+        </li>
+        <li class="md-nav__item"><a href="#_CPPv4N5G2lib4BBox8bbox_minEv" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">G2lib::BBox::bbox_min()</span></code></a>
+        </li>
+        <li class="md-nav__item"><a href="#_CPPv4N5G2lib4BBox8bbox_maxEv" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">G2lib::BBox::bbox_max()</span></code></a>
+        </li>
+        <li class="md-nav__item"><a href="#_CPPv4N5G2lib4BBox5x_minEv" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">G2lib::BBox::x_min()</span></code></a>
+        </li>
+        <li class="md-nav__item"><a href="#_CPPv4N5G2lib4BBox5y_minEv" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">G2lib::BBox::y_min()</span></code></a>
+        </li>
+        <li class="md-nav__item"><a href="#_CPPv4N5G2lib4BBox5x_maxEv" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">G2lib::BBox::x_max()</span></code></a>
+        </li>
+        <li class="md-nav__item"><a href="#_CPPv4N5G2lib4BBox5y_maxEv" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">G2lib::BBox::y_max()</span></code></a>
+        </li>
+        <li class="md-nav__item"><a href="#_CPPv4NK5G2lib4BBox5x_minEv" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">G2lib::BBox::x_min()</span></code></a>
+        </li>
+        <li class="md-nav__item"><a href="#_CPPv4NK5G2lib4BBox5y_minEv" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">G2lib::BBox::y_min()</span></code></a>
+        </li>
+        <li class="md-nav__item"><a href="#_CPPv4NK5G2lib4BBox5x_maxEv" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">G2lib::BBox::x_max()</span></code></a>
+        </li>
+        <li class="md-nav__item"><a href="#_CPPv4NK5G2lib4BBox5y_maxEv" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">G2lib::BBox::y_max()</span></code></a>
+        </li>
+        <li class="md-nav__item"><a href="#_CPPv4NK5G2lib4BBox2IdEv" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">G2lib::BBox::Id()</span></code></a>
+        </li>
+        <li class="md-nav__item"><a href="#_CPPv4NK5G2lib4BBox4IposEv" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">G2lib::BBox::Ipos()</span></code></a>
+        </li>
+        <li class="md-nav__item"><a href="#_CPPv4N5G2lib4BBoxaSERK4BBox" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">G2lib::BBox::operator=()</span></code></a>
+        </li>
+        <li class="md-nav__item"><a href="#_CPPv4NK5G2lib4BBox9collisionERK4BBox" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">G2lib::BBox::collision()</span></code></a>
+        </li>
+        <li class="md-nav__item"><a href="#_CPPv4N5G2lib4BBox4joinERK6vectorI7PtrBBoxE" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">G2lib::BBox::join()</span></code></a>
+        </li>
+        <li class="md-nav__item"><a href="#_CPPv4NK5G2lib4BBox8distanceE9real_type9real_type" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">G2lib::BBox::distance()</span></code></a>
+        </li>
+        <li class="md-nav__item"><a href="#_CPPv4NK5G2lib4BBox12max_distanceE9real_type9real_type" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">G2lib::BBox::max_distance()</span></code></a>
+        </li>
+        <li class="md-nav__item"><a href="#_CPPv4NK5G2lib4BBox5printER12ostream_type" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">G2lib::BBox::print()</span></code></a>
+        </li>
+        <li class="md-nav__item"><a href="#_CPPv4N5G2lib4BBox4BBoxEv" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">G2lib::BBox::BBox()</span></code></a>
+        </li>
+        <li class="md-nav__item"><a href="#_CPPv4N5G2lib4BBox4BBoxERK4BBox" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">G2lib::BBox::BBox()</span></code></a>
+        </li>
+        <li class="md-nav__item"><a href="#_CPPv4N5G2lib4BBox4BBoxERR4BBox" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">G2lib::BBox::BBox()</span></code></a>
+        </li>
+        <li class="md-nav__item"><a href="#_CPPv4N5G2lib4BBox6m_bboxE" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">G2lib::BBox::m_bbox</span></code></a>
+        </li>
+        <li class="md-nav__item"><a href="#_CPPv4N5G2lib4BBox4m_idE" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">G2lib::BBox::m_id</span></code></a>
+        </li>
+        <li class="md-nav__item"><a href="#_CPPv4N5G2lib4BBox6m_iposE" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">G2lib::BBox::m_ipos</span></code></a>
+        </li></ul>
+            </nav>
+        </li></ul>
+            </nav>
+        </li></ul>
+            </nav>
+        </li>
+    
+<li class="md-nav__item"><a class="md-nav__extra_link" href="../../_sources/_breathe/file/_b_box_8hxx.rst.txt">Show Source</a> </li>
+
+<li id="searchbox" class="md-nav__item"></li>
+
+  </ul>
+</nav>
+              </div>
+            </div>
+          </div>
+        
+        <div class="md-content">
+          <article class="md-content__inner md-typeset" role="main">
+            
+  <section id="file-bbox-hxx">
+<h1 id="breathe-file-b-box-8hxx--page-root">File BBox.hxx<a class="headerlink" href="#breathe-file-b-box-8hxx--page-root" title="Link to this heading">¶</a></h1>
+<dl class="cpp type">
+<dt class="sig sig-object cpp" id="_CPPv45G2lib">
+<span id="_CPPv35G2lib"></span><span id="_CPPv25G2lib"></span><span id="G2lib"></span><span class="target" id="namespace_g2lib"></span><span class="k"><span class="pre">namespace</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">G2lib</span></span></span><br/></dt>
+<dd><p>file: BBox.cc</p>
+<p>file: Biarc.cc</p>
+<p>file: BaseCurve.hh</p>
+<p>file: BBox.hxx</p>
+<p>file: Biarc.hxx</p>
+<p>file: BiarcList.hh</p>
+<p>file: Circle.hxx</p>
+<p>file: Clothoid.hxx</p>
+<p>file: ClothoidList.hxx</p>
+<p>file: Dubins.hxx</p>
+<p>file: Dubins3p.hxx</p>
+<p>file: Fresnel.hxx</p>
+<p>file: Line.hxx</p>
+<p>file: PolyLine.hxx</p>
+<p>file: Triangle2D.hxx</p>
+<p>file: Dubins.cc</p>
+<p>file: Dubins3p.cc</p>
+<p>file: Dubins3p_ellipse.cc</p>
+<p>file: Dubins3p_pattern.cc</p>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric" id="breathe-section-title-functions">Functions</p>
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N5G2liblsER12ostream_typeRK4BBox">
+<span id="_CPPv3N5G2liblsER12ostream_typeRK4BBox"></span><span id="_CPPv2N5G2liblsER12ostream_typeRK4BBox"></span><span id="G2lib::lshift-operator__ostream_typeR.BBoxCR"></span><span class="target" id="namespace_g2lib_1a60c772f9878faa1b8e2f216d5161c4e7"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><a class="reference internal" href="_clothoids_8hh.html#_CPPv4N5G2lib12ostream_typeE" title="G2lib::ostream_type"><span class="n"><span class="pre">ostream_type</span></span></a><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="sig-name descname"><span class="k"><span class="pre">operator</span></span><span class="o"><span class="pre">&lt;&lt;</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="_clothoids_8hh.html#_CPPv4N5G2lib12ostream_typeE" title="G2lib::ostream_type"><span class="n"><span class="pre">ostream_type</span></span></a><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">stream</span></span>, <a class="reference internal" href="../class/class_g2lib_1_1_b_box.html#_CPPv4N5G2lib4BBoxE" title="G2lib::BBox"><span class="n"><span class="pre">BBox</span></span></a><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">bb</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N5G2liblsER12ostream_typeRK4BBox" title="Link to this definition">¶</a><br/></dt>
+<dd><p>Pretty print a bbox </p>
+</dd></dl>
+</div>
+<dl class="cpp class">
+<dt class="sig sig-object cpp" id="_CPPv4N5G2lib4BBoxE">
+<span id="_CPPv3N5G2lib4BBoxE"></span><span id="_CPPv2N5G2lib4BBoxE"></span><span id="G2lib::BBox"></span><span class="target" id="class_g2lib_1_1_b_box"></span><span class="k"><span class="pre">class</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">BBox</span></span></span><br/></dt>
+<dd><div class="docutils container">
+<em>#include &lt;BBox.hxx&gt;</em></div>
+<p>Class to manipulate bounding box </p>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric" id="breathe-section-title-public-types">Public Types</p>
+<dl class="cpp type">
+<dt class="sig sig-object cpp" id="_CPPv4N5G2lib4BBox7PtrBBoxE">
+<span id="_CPPv3N5G2lib4BBox7PtrBBoxE"></span><span id="_CPPv2N5G2lib4BBox7PtrBBoxE"></span><span class="target" id="class_g2lib_1_1_b_box_1a336df4f23f9b6ce7cffcbcf4c8a5f79b"></span><span class="k"><span class="pre">using</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">PtrBBox</span></span></span><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="n"><span class="pre">shared_ptr</span></span><span class="p"><span class="pre">&lt;</span></span><a class="reference internal" href="../class/class_g2lib_1_1_b_box.html#_CPPv4N5G2lib4BBoxE" title="G2lib::BBox"><span class="n"><span class="pre">BBox</span></span></a><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="p"><span class="pre">&gt;</span></span><a class="headerlink" href="#_CPPv4N5G2lib4BBox7PtrBBoxE" title="Link to this definition">¶</a><br/></dt>
+<dd></dd></dl>
+<dl class="cpp type">
+<dt class="sig sig-object cpp" id="_CPPv4N5G2lib4BBox11PairPtrBBoxE">
+<span id="_CPPv3N5G2lib4BBox11PairPtrBBoxE"></span><span id="_CPPv2N5G2lib4BBox11PairPtrBBoxE"></span><span class="target" id="class_g2lib_1_1_b_box_1a884f685315201930568f06393c1173e0"></span><span class="k"><span class="pre">using</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">PairPtrBBox</span></span></span><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="n"><span class="pre">pair</span></span><span class="p"><span class="pre">&lt;</span></span><a class="reference internal" href="#_CPPv4N5G2lib4BBox7PtrBBoxE" title="G2lib::BBox::PtrBBox"><span class="n"><span class="pre">PtrBBox</span></span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference internal" href="#_CPPv4N5G2lib4BBox7PtrBBoxE" title="G2lib::BBox::PtrBBox"><span class="n"><span class="pre">PtrBBox</span></span></a><span class="p"><span class="pre">&gt;</span></span><a class="headerlink" href="#_CPPv4N5G2lib4BBox11PairPtrBBoxE" title="Link to this definition">¶</a><br/></dt>
+<dd></dd></dl>
+<dl class="cpp type">
+<dt class="sig sig-object cpp" id="_CPPv4N5G2lib4BBox10VecPtrBBoxE">
+<span id="_CPPv3N5G2lib4BBox10VecPtrBBoxE"></span><span id="_CPPv2N5G2lib4BBox10VecPtrBBoxE"></span><span class="target" id="class_g2lib_1_1_b_box_1a4438bf5f768ecb1b453f5385ad98527d"></span><span class="k"><span class="pre">using</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">VecPtrBBox</span></span></span><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="n"><span class="pre">vector</span></span><span class="p"><span class="pre">&lt;</span></span><a class="reference internal" href="#_CPPv4N5G2lib4BBox7PtrBBoxE" title="G2lib::BBox::PtrBBox"><span class="n"><span class="pre">PtrBBox</span></span></a><span class="p"><span class="pre">&gt;</span></span><a class="headerlink" href="#_CPPv4N5G2lib4BBox10VecPtrBBoxE" title="Link to this definition">¶</a><br/></dt>
+<dd></dd></dl>
+<dl class="cpp type">
+<dt class="sig sig-object cpp" id="_CPPv4N5G2lib4BBox14VecPairPtrBBoxE">
+<span id="_CPPv3N5G2lib4BBox14VecPairPtrBBoxE"></span><span id="_CPPv2N5G2lib4BBox14VecPairPtrBBoxE"></span><span class="target" id="class_g2lib_1_1_b_box_1ad1f3249c9d2a9f2aba4b441bb5dc4a1a"></span><span class="k"><span class="pre">using</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">VecPairPtrBBox</span></span></span><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="n"><span class="pre">vector</span></span><span class="p"><span class="pre">&lt;</span></span><a class="reference internal" href="#_CPPv4N5G2lib4BBox11PairPtrBBoxE" title="G2lib::BBox::PairPtrBBox"><span class="n"><span class="pre">PairPtrBBox</span></span></a><span class="p"><span class="pre">&gt;</span></span><a class="headerlink" href="#_CPPv4N5G2lib4BBox14VecPairPtrBBoxE" title="Link to this definition">¶</a><br/></dt>
+<dd></dd></dl>
+</div>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric" id="breathe-section-title-public-functions">Public Functions</p>
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N5G2lib4BBox4BBoxE9real_type9real_type9real_type9real_type7integer7integer">
+<span id="_CPPv3N5G2lib4BBox4BBoxE9real_type9real_type9real_type9real_type7integer7integer"></span><span id="_CPPv2N5G2lib4BBox4BBoxE9real_type9real_type9real_type9real_type7integer7integer"></span><span id="G2lib::BBox::BBox__real_type.real_type.real_type.real_type.integer.integer"></span><span class="target" id="class_g2lib_1_1_b_box_1a5fb8b4dca3efc22fce4558fc736f6e53"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">BBox</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="_clothoids_8hh.html#_CPPv4N5G2lib9real_typeE" title="G2lib::real_type"><span class="n"><span class="pre">real_type</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">xmin</span></span>, <a class="reference internal" href="_clothoids_8hh.html#_CPPv4N5G2lib9real_typeE" title="G2lib::real_type"><span class="n"><span class="pre">real_type</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">ymin</span></span>, <a class="reference internal" href="_clothoids_8hh.html#_CPPv4N5G2lib9real_typeE" title="G2lib::real_type"><span class="n"><span class="pre">real_type</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">xmax</span></span>, <a class="reference internal" href="_clothoids_8hh.html#_CPPv4N5G2lib9real_typeE" title="G2lib::real_type"><span class="n"><span class="pre">real_type</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">ymax</span></span>, <a class="reference internal" href="_clothoids_8hh.html#_CPPv4N5G2lib7integerE" title="G2lib::integer"><span class="n"><span class="pre">integer</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">id</span></span>, <a class="reference internal" href="_clothoids_8hh.html#_CPPv4N5G2lib7integerE" title="G2lib::integer"><span class="n"><span class="pre">integer</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">ipos</span></span><span class="sig-paren">)</span><br/></dt>
+<dd><p>Construct a bounding box with additional information</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>xmin</strong> – <strong>[in]</strong> x-minimimum box coordinate </p></li>
+<li><p><strong>ymin</strong> – <strong>[in]</strong> y-minimimum box coordinate </p></li>
+<li><p><strong>xmax</strong> – <strong>[in]</strong> x-maximum box coordinate </p></li>
+<li><p><strong>ymax</strong> – <strong>[in]</strong> y-maximum box coordinate </p></li>
+<li><p><strong>id</strong> – <strong>[in]</strong> identifier of the box </p></li>
+<li><p><strong>ipos</strong> – <strong>[in]</strong> ranking position of the box </p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N5G2lib4BBox4BBoxEAL4E_K9real_type7integer7integer">
+<span id="_CPPv3N5G2lib4BBox4BBoxEAL4E_K9real_type7integer7integer"></span><span id="_CPPv2N5G2lib4BBox4BBoxEA4_K9real_type7integer7integer"></span><span id="G2lib::BBox::BBox__real_typeCA.integer.integer"></span><span class="target" id="class_g2lib_1_1_b_box_1a498eca5214dd2148041eee4bca816cdc"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">BBox</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="_clothoids_8hh.html#_CPPv4N5G2lib9real_typeE" title="G2lib::real_type"><span class="n"><span class="pre">real_type</span></span></a><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">bbox</span></span><span class="p"><span class="pre">[</span></span><span class="m"><span class="pre">4</span></span><span class="p"><span class="pre">]</span></span>, <a class="reference internal" href="_clothoids_8hh.html#_CPPv4N5G2lib7integerE" title="G2lib::integer"><span class="n"><span class="pre">integer</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">id</span></span>, <a class="reference internal" href="_clothoids_8hh.html#_CPPv4N5G2lib7integerE" title="G2lib::integer"><span class="n"><span class="pre">integer</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">ipos</span></span><span class="sig-paren">)</span><br/></dt>
+<dd><p>Construct a bounding box with additional information</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>bbox</strong> – <strong>[in]</strong> bbox [pmin, pmax] </p></li>
+<li><p><strong>id</strong> – <strong>[in]</strong> identifier of the box </p></li>
+<li><p><strong>ipos</strong> – <strong>[in]</strong> ranking position of the box </p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N5G2lib4BBox4BBoxEAL2E_K9real_typeAL2E_K9real_type7integer7integer">
+<span id="_CPPv3N5G2lib4BBox4BBoxEAL2E_K9real_typeAL2E_K9real_type7integer7integer"></span><span id="_CPPv2N5G2lib4BBox4BBoxEA2_K9real_typeA2_K9real_type7integer7integer"></span><span id="G2lib::BBox::BBox__real_typeCA.real_typeCA.integer.integer"></span><span class="target" id="class_g2lib_1_1_b_box_1a7aa8b4f44c35b86dc680b2166729ed0c"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">BBox</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="_clothoids_8hh.html#_CPPv4N5G2lib9real_typeE" title="G2lib::real_type"><span class="n"><span class="pre">real_type</span></span></a><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">bbox_min</span></span><span class="p"><span class="pre">[</span></span><span class="m"><span class="pre">2</span></span><span class="p"><span class="pre">]</span></span>, <a class="reference internal" href="_clothoids_8hh.html#_CPPv4N5G2lib9real_typeE" title="G2lib::real_type"><span class="n"><span class="pre">real_type</span></span></a><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">bbox_max</span></span><span class="p"><span class="pre">[</span></span><span class="m"><span class="pre">2</span></span><span class="p"><span class="pre">]</span></span>, <a class="reference internal" href="_clothoids_8hh.html#_CPPv4N5G2lib7integerE" title="G2lib::integer"><span class="n"><span class="pre">integer</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">id</span></span>, <a class="reference internal" href="_clothoids_8hh.html#_CPPv4N5G2lib7integerE" title="G2lib::integer"><span class="n"><span class="pre">integer</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">ipos</span></span><span class="sig-paren">)</span><br/></dt>
+<dd><p>Construct a bounding box with additional information</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>bbox_min</strong> – <strong>[in]</strong> bounding box lower corner </p></li>
+<li><p><strong>bbox_max</strong> – <strong>[in]</strong> bounding box upper corner </p></li>
+<li><p><strong>id</strong> – <strong>[in]</strong> identifier of the box </p></li>
+<li><p><strong>ipos</strong> – <strong>[in]</strong> ranking position of the box </p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N5G2lib4BBox4BBoxERK6vectorI7PtrBBoxE7integer7integer">
+<span id="_CPPv3N5G2lib4BBox4BBoxERK6vectorI7PtrBBoxE7integer7integer"></span><span id="_CPPv2N5G2lib4BBox4BBoxERK6vectorI7PtrBBoxE7integer7integer"></span><span id="G2lib::BBox::BBox__vector:PtrBBox:CR.integer.integer"></span><span class="target" id="class_g2lib_1_1_b_box_1ad680fd1907e19b7493fbbf01a7e16b6c"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">BBox</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">vector</span></span><span class="p"><span class="pre">&lt;</span></span><a class="reference internal" href="#_CPPv4N5G2lib4BBox7PtrBBoxE" title="G2lib::BBox::PtrBBox"><span class="n"><span class="pre">PtrBBox</span></span></a><span class="p"><span class="pre">&gt;</span></span><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">bboxes</span></span>, <a class="reference internal" href="_clothoids_8hh.html#_CPPv4N5G2lib7integerE" title="G2lib::integer"><span class="n"><span class="pre">integer</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">id</span></span>, <a class="reference internal" href="_clothoids_8hh.html#_CPPv4N5G2lib7integerE" title="G2lib::integer"><span class="n"><span class="pre">integer</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">ipos</span></span><span class="sig-paren">)</span><br/></dt>
+<dd><p>Build a buonding box that cover a list of bounding box</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>bboxes</strong> – <strong>[in]</strong> list of bounding box </p></li>
+<li><p><strong>id</strong> – <strong>[in]</strong> identifier of the box </p></li>
+<li><p><strong>ipos</strong> – <strong>[in]</strong> ranking position of the box </p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N5G2lib4BBox4bboxEv">
+<span id="_CPPv3N5G2lib4BBox4bboxEv"></span><span id="_CPPv2N5G2lib4BBox4bboxEv"></span><span id="G2lib::BBox::bbox"></span><span class="target" id="class_g2lib_1_1_b_box_1a853994680b7f7e23688dee797a606445"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><a class="reference internal" href="_clothoids_8hh.html#_CPPv4N5G2lib9real_typeE" title="G2lib::real_type"><span class="n"><span class="pre">real_type</span></span></a><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="sig-name descname"><span class="n"><span class="pre">bbox</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N5G2lib4BBox4bboxEv" title="Link to this definition">¶</a><br/></dt>
+<dd></dd></dl>
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N5G2lib4BBox8bbox_minEv">
+<span id="_CPPv3N5G2lib4BBox8bbox_minEv"></span><span id="_CPPv2N5G2lib4BBox8bbox_minEv"></span><span id="G2lib::BBox::bbox_min"></span><span class="target" id="class_g2lib_1_1_b_box_1a11712b792b09f50b5dc02d47d18f472f"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><a class="reference internal" href="_clothoids_8hh.html#_CPPv4N5G2lib9real_typeE" title="G2lib::real_type"><span class="n"><span class="pre">real_type</span></span></a><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="sig-name descname"><span class="n"><span class="pre">bbox_min</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N5G2lib4BBox8bbox_minEv" title="Link to this definition">¶</a><br/></dt>
+<dd></dd></dl>
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N5G2lib4BBox8bbox_maxEv">
+<span id="_CPPv3N5G2lib4BBox8bbox_maxEv"></span><span id="_CPPv2N5G2lib4BBox8bbox_maxEv"></span><span id="G2lib::BBox::bbox_max"></span><span class="target" id="class_g2lib_1_1_b_box_1a4300bb22eb669508a69a493acb61d356"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><a class="reference internal" href="_clothoids_8hh.html#_CPPv4N5G2lib9real_typeE" title="G2lib::real_type"><span class="n"><span class="pre">real_type</span></span></a><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="sig-name descname"><span class="n"><span class="pre">bbox_max</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N5G2lib4BBox8bbox_maxEv" title="Link to this definition">¶</a><br/></dt>
+<dd></dd></dl>
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N5G2lib4BBox5x_minEv">
+<span id="_CPPv3N5G2lib4BBox5x_minEv"></span><span id="_CPPv2N5G2lib4BBox5x_minEv"></span><span id="G2lib::BBox::x_min"></span><span class="target" id="class_g2lib_1_1_b_box_1a6e0ca12f451588adaff49b895a62d556"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><a class="reference internal" href="_clothoids_8hh.html#_CPPv4N5G2lib9real_typeE" title="G2lib::real_type"><span class="n"><span class="pre">real_type</span></span></a><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="sig-name descname"><span class="n"><span class="pre">x_min</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><br/></dt>
+<dd><p>x-minimum coordinate of the bbox </p>
+</dd></dl>
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N5G2lib4BBox5y_minEv">
+<span id="_CPPv3N5G2lib4BBox5y_minEv"></span><span id="_CPPv2N5G2lib4BBox5y_minEv"></span><span id="G2lib::BBox::y_min"></span><span class="target" id="class_g2lib_1_1_b_box_1aa5bff22f191e2eb377edc2689ad06cba"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><a class="reference internal" href="_clothoids_8hh.html#_CPPv4N5G2lib9real_typeE" title="G2lib::real_type"><span class="n"><span class="pre">real_type</span></span></a><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="sig-name descname"><span class="n"><span class="pre">y_min</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><br/></dt>
+<dd><p>y-minimum coordinate of the bbox </p>
+</dd></dl>
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N5G2lib4BBox5x_maxEv">
+<span id="_CPPv3N5G2lib4BBox5x_maxEv"></span><span id="_CPPv2N5G2lib4BBox5x_maxEv"></span><span id="G2lib::BBox::x_max"></span><span class="target" id="class_g2lib_1_1_b_box_1aab8f8794e892face6c61284887afc5ce"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><a class="reference internal" href="_clothoids_8hh.html#_CPPv4N5G2lib9real_typeE" title="G2lib::real_type"><span class="n"><span class="pre">real_type</span></span></a><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="sig-name descname"><span class="n"><span class="pre">x_max</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><br/></dt>
+<dd><p>x-maximum coordinate of the bbox </p>
+</dd></dl>
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N5G2lib4BBox5y_maxEv">
+<span id="_CPPv3N5G2lib4BBox5y_maxEv"></span><span id="_CPPv2N5G2lib4BBox5y_maxEv"></span><span id="G2lib::BBox::y_max"></span><span class="target" id="class_g2lib_1_1_b_box_1a48b92fb0ded5e8eb9125dd93de94dac7"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><a class="reference internal" href="_clothoids_8hh.html#_CPPv4N5G2lib9real_typeE" title="G2lib::real_type"><span class="n"><span class="pre">real_type</span></span></a><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="sig-name descname"><span class="n"><span class="pre">y_max</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><br/></dt>
+<dd><p>y-maximum coordinate of the bbox </p>
+</dd></dl>
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4NK5G2lib4BBox5x_minEv">
+<span id="_CPPv3NK5G2lib4BBox5x_minEv"></span><span id="_CPPv2NK5G2lib4BBox5x_minEv"></span><span id="G2lib::BBox::x_minC"></span><span class="target" id="class_g2lib_1_1_b_box_1a97c801b11ff730785030bd2aa2aa8fe0"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><a class="reference internal" href="_clothoids_8hh.html#_CPPv4N5G2lib9real_typeE" title="G2lib::real_type"><span class="n"><span class="pre">real_type</span></span></a><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="sig-name descname"><span class="n"><span class="pre">x_min</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><br/></dt>
+<dd><p>x-minimum coordinate of the bbox </p>
+</dd></dl>
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4NK5G2lib4BBox5y_minEv">
+<span id="_CPPv3NK5G2lib4BBox5y_minEv"></span><span id="_CPPv2NK5G2lib4BBox5y_minEv"></span><span id="G2lib::BBox::y_minC"></span><span class="target" id="class_g2lib_1_1_b_box_1ab8997bf107a31b17974dc5818981a2a4"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><a class="reference internal" href="_clothoids_8hh.html#_CPPv4N5G2lib9real_typeE" title="G2lib::real_type"><span class="n"><span class="pre">real_type</span></span></a><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="sig-name descname"><span class="n"><span class="pre">y_min</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><br/></dt>
+<dd><p>y-minimum coordinate of the bbox </p>
+</dd></dl>
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4NK5G2lib4BBox5x_maxEv">
+<span id="_CPPv3NK5G2lib4BBox5x_maxEv"></span><span id="_CPPv2NK5G2lib4BBox5x_maxEv"></span><span id="G2lib::BBox::x_maxC"></span><span class="target" id="class_g2lib_1_1_b_box_1a7cbe90d9631ea45610b1b63a3954ecf6"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><a class="reference internal" href="_clothoids_8hh.html#_CPPv4N5G2lib9real_typeE" title="G2lib::real_type"><span class="n"><span class="pre">real_type</span></span></a><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="sig-name descname"><span class="n"><span class="pre">x_max</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><br/></dt>
+<dd><p>x-maximum coordinate of the bbox </p>
+</dd></dl>
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4NK5G2lib4BBox5y_maxEv">
+<span id="_CPPv3NK5G2lib4BBox5y_maxEv"></span><span id="_CPPv2NK5G2lib4BBox5y_maxEv"></span><span id="G2lib::BBox::y_maxC"></span><span class="target" id="class_g2lib_1_1_b_box_1a2890ee97adf75a1d31b1b46dd9bbe524"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><a class="reference internal" href="_clothoids_8hh.html#_CPPv4N5G2lib9real_typeE" title="G2lib::real_type"><span class="n"><span class="pre">real_type</span></span></a><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="sig-name descname"><span class="n"><span class="pre">y_max</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><br/></dt>
+<dd><p>y-maximum coordinate of the bbox </p>
+</dd></dl>
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4NK5G2lib4BBox2IdEv">
+<span id="_CPPv3NK5G2lib4BBox2IdEv"></span><span id="_CPPv2NK5G2lib4BBox2IdEv"></span><span id="G2lib::BBox::IdC"></span><span class="target" id="class_g2lib_1_1_b_box_1ae8aa858db0f3f6e57b5c38602d45b266"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><a class="reference internal" href="_clothoids_8hh.html#_CPPv4N5G2lib7integerE" title="G2lib::integer"><span class="n"><span class="pre">integer</span></span></a><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="sig-name descname"><span class="n"><span class="pre">Id</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><br/></dt>
+<dd><p>return BBOX id </p>
+</dd></dl>
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4NK5G2lib4BBox4IposEv">
+<span id="_CPPv3NK5G2lib4BBox4IposEv"></span><span id="_CPPv2NK5G2lib4BBox4IposEv"></span><span id="G2lib::BBox::IposC"></span><span class="target" id="class_g2lib_1_1_b_box_1a2126758a184472cbe58d62edf98c74ee"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><a class="reference internal" href="_clothoids_8hh.html#_CPPv4N5G2lib7integerE" title="G2lib::integer"><span class="n"><span class="pre">integer</span></span></a><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="sig-name descname"><span class="n"><span class="pre">Ipos</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><br/></dt>
+<dd><p>return BBOX position </p>
+</dd></dl>
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N5G2lib4BBoxaSERK4BBox">
+<span id="_CPPv3N5G2lib4BBoxaSERK4BBox"></span><span id="_CPPv2N5G2lib4BBoxaSERK4BBox"></span><span id="G2lib::BBox::assign-operator__BBoxCR"></span><span class="target" id="class_g2lib_1_1_b_box_1a06ca2872d9b80f275a8f755243375656"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><a class="reference internal" href="../class/class_g2lib_1_1_b_box.html#_CPPv4N5G2lib4BBoxE" title="G2lib::BBox"><span class="n"><span class="pre">BBox</span></span></a><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="sig-name descname"><span class="k"><span class="pre">operator</span></span><span class="o"><span class="pre">=</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="../class/class_g2lib_1_1_b_box.html#_CPPv4N5G2lib4BBoxE" title="G2lib::BBox"><span class="n"><span class="pre">BBox</span></span></a><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">rhs</span></span><span class="sig-paren">)</span><br/></dt>
+<dd><p>copy a bbox </p>
+</dd></dl>
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4NK5G2lib4BBox9collisionERK4BBox">
+<span id="_CPPv3NK5G2lib4BBox9collisionERK4BBox"></span><span id="_CPPv2NK5G2lib4BBox9collisionERK4BBox"></span><span id="G2lib::BBox::collision__BBoxCRC"></span><span class="target" id="class_g2lib_1_1_b_box_1a3b98db48add6859ab67fb00a0710a21e"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">collision</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="../class/class_g2lib_1_1_b_box.html#_CPPv4N5G2lib4BBoxE" title="G2lib::BBox"><span class="n"><span class="pre">BBox</span></span></a><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">box</span></span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><br/></dt>
+<dd><p>detect if two bbox collide </p>
+</dd></dl>
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N5G2lib4BBox4joinERK6vectorI7PtrBBoxE">
+<span id="_CPPv3N5G2lib4BBox4joinERK6vectorI7PtrBBoxE"></span><span id="_CPPv2N5G2lib4BBox4joinERK6vectorI7PtrBBoxE"></span><span id="G2lib::BBox::join__vector:PtrBBox:CR"></span><span class="target" id="class_g2lib_1_1_b_box_1ad0aaba5511ff29c7e0fd0049ea0da67b"></span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">join</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">vector</span></span><span class="p"><span class="pre">&lt;</span></span><a class="reference internal" href="#_CPPv4N5G2lib4BBox7PtrBBoxE" title="G2lib::BBox::PtrBBox"><span class="n"><span class="pre">PtrBBox</span></span></a><span class="p"><span class="pre">&gt;</span></span><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">bboxes</span></span><span class="sig-paren">)</span><br/></dt>
+<dd><p>Build bbox for a list of bbox </p>
+</dd></dl>
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4NK5G2lib4BBox8distanceE9real_type9real_type">
+<span id="_CPPv3NK5G2lib4BBox8distanceE9real_type9real_type"></span><span id="_CPPv2NK5G2lib4BBox8distanceE9real_type9real_type"></span><span id="G2lib::BBox::distance__real_type.real_typeC"></span><span class="target" id="class_g2lib_1_1_b_box_1ac6fc969999b473220bc8ef684108ab74"></span><a class="reference internal" href="_clothoids_8hh.html#_CPPv4N5G2lib9real_typeE" title="G2lib::real_type"><span class="n"><span class="pre">real_type</span></span></a><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">distance</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="_clothoids_8hh.html#_CPPv4N5G2lib9real_typeE" title="G2lib::real_type"><span class="n"><span class="pre">real_type</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">x</span></span>, <a class="reference internal" href="_clothoids_8hh.html#_CPPv4N5G2lib9real_typeE" title="G2lib::real_type"><span class="n"><span class="pre">real_type</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">y</span></span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><br/></dt>
+<dd><p>distance of the point <code class="docutils literal notranslate"><span class="pre">(x,y)</span></code> to the bbox </p>
+</dd></dl>
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4NK5G2lib4BBox12max_distanceE9real_type9real_type">
+<span id="_CPPv3NK5G2lib4BBox12max_distanceE9real_type9real_type"></span><span id="_CPPv2NK5G2lib4BBox12max_distanceE9real_type9real_type"></span><span id="G2lib::BBox::max_distance__real_type.real_typeC"></span><span class="target" id="class_g2lib_1_1_b_box_1a81d505f4ec1c979177f83be91922c8d0"></span><a class="reference internal" href="_clothoids_8hh.html#_CPPv4N5G2lib9real_typeE" title="G2lib::real_type"><span class="n"><span class="pre">real_type</span></span></a><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">max_distance</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="_clothoids_8hh.html#_CPPv4N5G2lib9real_typeE" title="G2lib::real_type"><span class="n"><span class="pre">real_type</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">x</span></span>, <a class="reference internal" href="_clothoids_8hh.html#_CPPv4N5G2lib9real_typeE" title="G2lib::real_type"><span class="n"><span class="pre">real_type</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">y</span></span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><br/></dt>
+<dd><p>Maximum distance of the point <code class="docutils literal notranslate"><span class="pre">(x,y)</span></code> to the point of bbox </p>
+</dd></dl>
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4NK5G2lib4BBox5printER12ostream_type">
+<span id="_CPPv3NK5G2lib4BBox5printER12ostream_type"></span><span id="_CPPv2NK5G2lib4BBox5printER12ostream_type"></span><span id="G2lib::BBox::print__ostream_typeRC"></span><span class="target" id="class_g2lib_1_1_b_box_1a67cd88140fdf70d4de76bacdf7396cd5"></span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">print</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="_clothoids_8hh.html#_CPPv4N5G2lib12ostream_typeE" title="G2lib::ostream_type"><span class="n"><span class="pre">ostream_type</span></span></a><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">stream</span></span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><br/></dt>
+<dd><p>Pretty print a bbox </p>
+</dd></dl>
+</div>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric" id="breathe-section-title-private-functions">Private Functions</p>
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N5G2lib4BBox4BBoxEv">
+<span id="_CPPv3N5G2lib4BBox4BBoxEv"></span><span id="_CPPv2N5G2lib4BBox4BBoxEv"></span><span id="G2lib::BBox::BBox"></span><span class="target" id="class_g2lib_1_1_b_box_1a409d53fa634d5a19453fa155b828d16f"></span><span class="sig-name descname"><span class="n"><span class="pre">BBox</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N5G2lib4BBox4BBoxEv" title="Link to this definition">¶</a><br/></dt>
+<dd></dd></dl>
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N5G2lib4BBox4BBoxERK4BBox">
+<span id="_CPPv3N5G2lib4BBox4BBoxERK4BBox"></span><span id="_CPPv2N5G2lib4BBox4BBoxERK4BBox"></span><span id="G2lib::BBox::BBox__BBoxCR"></span><span class="target" id="class_g2lib_1_1_b_box_1abcce7504d62fdaa9ed40bde009b9d1b1"></span><span class="sig-name descname"><span class="n"><span class="pre">BBox</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="#_CPPv4N5G2lib4BBox4BBoxERK4BBox" title="G2lib::BBox::BBox"><span class="n"><span class="pre">BBox</span></span></a><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="p"><span class="pre">&amp;</span></span><span class="sig-paren">)</span><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="k"><span class="pre">default</span></span><a class="headerlink" href="#_CPPv4N5G2lib4BBox4BBoxERK4BBox" title="Link to this definition">¶</a><br/></dt>
+<dd></dd></dl>
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N5G2lib4BBox4BBoxERR4BBox">
+<span id="_CPPv3N5G2lib4BBox4BBoxERR4BBox"></span><span id="_CPPv2N5G2lib4BBox4BBoxERR4BBox"></span><span id="G2lib::BBox::BBox__BBoxRR"></span><span class="target" id="class_g2lib_1_1_b_box_1afa0a55ff0d01e474580987d98bf15e65"></span><span class="sig-name descname"><span class="n"><span class="pre">BBox</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="#_CPPv4N5G2lib4BBox4BBoxERR4BBox" title="G2lib::BBox::BBox"><span class="n"><span class="pre">BBox</span></span></a><span class="p"><span class="pre">&amp;</span></span><span class="p"><span class="pre">&amp;</span></span><span class="sig-paren">)</span><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="k"><span class="pre">default</span></span><a class="headerlink" href="#_CPPv4N5G2lib4BBox4BBoxERR4BBox" title="Link to this definition">¶</a><br/></dt>
+<dd></dd></dl>
+</div>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric" id="breathe-section-title-private-members">Private Members</p>
+<dl class="cpp var">
+<dt class="sig sig-object cpp" id="_CPPv4N5G2lib4BBox6m_bboxE">
+<span id="_CPPv3N5G2lib4BBox6m_bboxE"></span><span id="_CPPv2N5G2lib4BBox6m_bboxE"></span><span id="G2lib::BBox::m_bbox__real_typeA"></span><span class="target" id="class_g2lib_1_1_b_box_1a3145e0f468bcde8c2a700e2fffcd40d8"></span><a class="reference internal" href="_clothoids_8hh.html#_CPPv4N5G2lib9real_typeE" title="G2lib::real_type"><span class="n"><span class="pre">real_type</span></span></a><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">m_bbox</span></span></span><span class="p"><span class="pre">[</span></span><span class="m"><span class="pre">4</span></span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="p"><span class="pre">{</span></span><span class="m"><span class="pre">0</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="m"><span class="pre">0</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="m"><span class="pre">0</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="m"><span class="pre">0</span></span><span class="p"><span class="pre">}</span></span><a class="headerlink" href="#_CPPv4N5G2lib4BBox6m_bboxE" title="Link to this definition">¶</a><br/></dt>
+<dd><p>[ xmin ymin xmax ymax ] </p>
+</dd></dl>
+<dl class="cpp var">
+<dt class="sig sig-object cpp" id="_CPPv4N5G2lib4BBox4m_idE">
+<span id="_CPPv3N5G2lib4BBox4m_idE"></span><span id="_CPPv2N5G2lib4BBox4m_idE"></span><span id="G2lib::BBox::m_id__integer"></span><span class="target" id="class_g2lib_1_1_b_box_1a86c059f6c826f74fe04647907b62a827"></span><a class="reference internal" href="_clothoids_8hh.html#_CPPv4N5G2lib7integerE" title="G2lib::integer"><span class="n"><span class="pre">integer</span></span></a><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">m_id</span></span></span><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="p"><span class="pre">{</span></span><span class="m"><span class="pre">0</span></span><span class="p"><span class="pre">}</span></span><a class="headerlink" href="#_CPPv4N5G2lib4BBox4m_idE" title="Link to this definition">¶</a><br/></dt>
+<dd><p>id of the bbox </p>
+</dd></dl>
+<dl class="cpp var">
+<dt class="sig sig-object cpp" id="_CPPv4N5G2lib4BBox6m_iposE">
+<span id="_CPPv3N5G2lib4BBox6m_iposE"></span><span id="_CPPv2N5G2lib4BBox6m_iposE"></span><span id="G2lib::BBox::m_ipos__integer"></span><span class="target" id="class_g2lib_1_1_b_box_1a95edfd97f4f10c2ff98bb9831e023f87"></span><a class="reference internal" href="_clothoids_8hh.html#_CPPv4N5G2lib7integerE" title="G2lib::integer"><span class="n"><span class="pre">integer</span></span></a><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">m_ipos</span></span></span><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="p"><span class="pre">{</span></span><span class="m"><span class="pre">0</span></span><span class="p"><span class="pre">}</span></span><a class="headerlink" href="#_CPPv4N5G2lib4BBox6m_iposE" title="Link to this definition">¶</a><br/></dt>
+<dd><p>rank of the bounding box used in external algorithms </p>
+</dd></dl>
+</div>
+</dd></dl>
+</dd></dl>
+</section>
+
+
+          </article>
+        </div>
+      </div>
+    </main>
+  </div>
+  <footer class="md-footer">
+    <div class="md-footer-nav">
+      <nav class="md-footer-nav__inner md-grid">
+          
+            <a href="_b_box_8cc.html" title="File BBox.cc"
+               class="md-flex md-footer-nav__link md-footer-nav__link--prev"
+               rel="prev">
+              <div class="md-flex__cell md-flex__cell--shrink">
+                <i class="md-icon md-icon--arrow-back md-footer-nav__button"></i>
+              </div>
+              <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title">
+                <span class="md-flex__ellipsis">
+                  <span
+                      class="md-footer-nav__direction"> "Previous" </span> File BBox.cc </span>
+              </div>
+            </a>
+          
+          
+            <a href="_base_curve_8hxx.html" title="File BaseCurve.hxx"
+               class="md-flex md-footer-nav__link md-footer-nav__link--next"
+               rel="next">
+            <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title"><span
+                class="md-flex__ellipsis"> <span
+                class="md-footer-nav__direction"> "Next" </span> File BaseCurve.hxx </span>
+            </div>
+            <div class="md-flex__cell md-flex__cell--shrink"><i
+                class="md-icon md-icon--arrow-forward md-footer-nav__button"></i>
+            </div>
+          
+        </a>
+        
+      </nav>
+    </div>
+    <div class="md-footer-meta md-typeset">
+      <div class="md-footer-meta__inner md-grid">
+        <div class="md-footer-copyright">
+          <div class="md-footer-copyright__highlight">
+              &#169; Copyright 2024, E.Bertolazzi and M.Frego.
+              
+          </div>
+            Created using
+            <a href="http://www.sphinx-doc.org/">Sphinx</a> 7.4.4.
+             and
+            <a href="https://github.com/bashtage/sphinx-material/">Material for
+              Sphinx</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+  <script src="../../_static/javascripts/application.js"></script>
+  <script>app.initialize({version: "1.0.4", url: {base: ".."}})</script>
+  </body>
+</html>

@@ -1,0 +1,441 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.11.0" xml:lang="en-US">
+  <compounddef id="class_g2lib_1_1_asy_plot" kind="class" language="C++" prot="public">
+    <compoundname>G2lib::AsyPlot</compoundname>
+    <includes refid="_clothoid_asy_plot_8hxx" local="no">ClothoidAsyPlot.hxx</includes>
+    <sectiondef kind="private-attrib">
+      <memberdef kind="variable" id="class_g2lib_1_1_asy_plot_1a24267e4736cc6e0ccd389bd4a9d96393" prot="private" static="no" mutable="yes">
+        <type>ofstream</type>
+        <definition>ofstream G2lib::AsyPlot::file</definition>
+        <argsstring></argsstring>
+        <name>file</name>
+        <qualifiedname>G2lib::AsyPlot::file</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Clothoids/ClothoidAsyPlot.hxx" line="77" column="22" bodyfile="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Clothoids/ClothoidAsyPlot.hxx" bodystart="77" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="class_g2lib_1_1_asy_plot_1ae12d991dc86267f4d863fe44b167a614" prot="private" static="no" mutable="no">
+        <type>string</type>
+        <definition>string G2lib::AsyPlot::filename</definition>
+        <argsstring></argsstring>
+        <name>filename</name>
+        <qualifiedname>G2lib::AsyPlot::filename</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Clothoids/ClothoidAsyPlot.hxx" line="78" column="13" bodyfile="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Clothoids/ClothoidAsyPlot.hxx" bodystart="78" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="variable" id="class_g2lib_1_1_asy_plot_1acc7c7a37b6a3812ec9c9c2eb84fbadc9" prot="private" static="no" mutable="no">
+        <type>bool</type>
+        <definition>bool G2lib::AsyPlot::showAxes</definition>
+        <argsstring></argsstring>
+        <name>showAxes</name>
+        <qualifiedname>G2lib::AsyPlot::showAxes</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Clothoids/ClothoidAsyPlot.hxx" line="79" column="10" bodyfile="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Clothoids/ClothoidAsyPlot.hxx" bodystart="79" bodyend="-1"/>
+      </memberdef>
+    </sectiondef>
+    <sectiondef kind="public-func">
+      <memberdef kind="function" id="class_g2lib_1_1_asy_plot_1a4815742da17f12c15fd05a6f40363040" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type></type>
+        <definition>G2lib::AsyPlot::AsyPlot</definition>
+        <argsstring>(string filename, bool showAxes)</argsstring>
+        <name>AsyPlot</name>
+        <qualifiedname>G2lib::AsyPlot::AsyPlot</qualifiedname>
+        <param>
+          <type>string</type>
+          <declname>filename</declname>
+        </param>
+        <param>
+          <type>bool</type>
+          <declname>showAxes</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Clothoids/ClothoidAsyPlot.hxx" line="28" column="5" bodyfile="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/ClothoidAsyPlot.cc" bodystart="6" bodyend="12"/>
+      </memberdef>
+      <memberdef kind="function" id="class_g2lib_1_1_asy_plot_1abea893862e407fb96cab020430e98987" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type></type>
+        <definition>G2lib::AsyPlot::~AsyPlot</definition>
+        <argsstring>()</argsstring>
+        <name>~AsyPlot</name>
+        <qualifiedname>G2lib::AsyPlot::~AsyPlot</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Clothoids/ClothoidAsyPlot.hxx" line="29" column="5" bodyfile="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/ClothoidAsyPlot.cc" bodystart="14" bodyend="17"/>
+      </memberdef>
+      <memberdef kind="function" id="class_g2lib_1_1_asy_plot_1ae7fe8fa822976d795cec8a93d3187e99" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void G2lib::AsyPlot::drawClothoid</definition>
+        <argsstring>(ClothoidCurve const &amp;c, string const &amp;penna=&quot;black&quot;, real_type offset=0) const</argsstring>
+        <name>drawClothoid</name>
+        <qualifiedname>G2lib::AsyPlot::drawClothoid</qualifiedname>
+        <param>
+          <type><ref refid="class_g2lib_1_1_clothoid_curve" kindref="compound">ClothoidCurve</ref> const &amp;</type>
+          <declname>c</declname>
+        </param>
+        <param>
+          <type>string const &amp;</type>
+          <declname>penna</declname>
+          <defval>&quot;black&quot;</defval>
+        </param>
+        <param>
+          <type><ref refid="namespace_g2lib_1acc8095aa40beedee44352de62f232033" kindref="member">real_type</ref></type>
+          <declname>offset</declname>
+          <defval>0</defval>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Clothoids/ClothoidAsyPlot.hxx" line="32" column="5" bodyfile="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/ClothoidAsyPlot.cc" bodystart="40" bodyend="61"/>
+      </memberdef>
+      <memberdef kind="function" id="class_g2lib_1_1_asy_plot_1a7d8f6b6ab33b0e73e7fe48c0404e832e" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void G2lib::AsyPlot::dot</definition>
+        <argsstring>(real_type x, real_type y, string const &amp;penna=&quot;black&quot;) const</argsstring>
+        <name>dot</name>
+        <qualifiedname>G2lib::AsyPlot::dot</qualifiedname>
+        <param>
+          <type><ref refid="namespace_g2lib_1acc8095aa40beedee44352de62f232033" kindref="member">real_type</ref></type>
+          <declname>x</declname>
+        </param>
+        <param>
+          <type><ref refid="namespace_g2lib_1acc8095aa40beedee44352de62f232033" kindref="member">real_type</ref></type>
+          <declname>y</declname>
+        </param>
+        <param>
+          <type>string const &amp;</type>
+          <declname>penna</declname>
+          <defval>&quot;black&quot;</defval>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Clothoids/ClothoidAsyPlot.hxx" line="38" column="10" bodyfile="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/ClothoidAsyPlot.cc" bodystart="64" bodyend="66"/>
+      </memberdef>
+      <memberdef kind="function" id="class_g2lib_1_1_asy_plot_1a41835e9ad8df4944a1691e331983356d" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void G2lib::AsyPlot::triangle</definition>
+        <argsstring>(Triangle2D const &amp;t, string const &amp;penna=&quot;black&quot;) const</argsstring>
+        <name>triangle</name>
+        <qualifiedname>G2lib::AsyPlot::triangle</qualifiedname>
+        <param>
+          <type><ref refid="class_g2lib_1_1_triangle2_d" kindref="compound">Triangle2D</ref> const &amp;</type>
+          <declname>t</declname>
+        </param>
+        <param>
+          <type>string const &amp;</type>
+          <declname>penna</declname>
+          <defval>&quot;black&quot;</defval>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Clothoids/ClothoidAsyPlot.hxx" line="39" column="10" bodyfile="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/ClothoidAsyPlot.cc" bodystart="69" bodyend="75"/>
+      </memberdef>
+      <memberdef kind="function" id="class_g2lib_1_1_asy_plot_1aa1342b47bf30bec897a9d32cc483812d" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void G2lib::AsyPlot::drawRect</definition>
+        <argsstring>(real_type x0, real_type y0, real_type x1, real_type y1, real_type x2, real_type y2, real_type x3, real_type y3, string const &amp;penna=&quot;black&quot;) const</argsstring>
+        <name>drawRect</name>
+        <qualifiedname>G2lib::AsyPlot::drawRect</qualifiedname>
+        <param>
+          <type><ref refid="namespace_g2lib_1acc8095aa40beedee44352de62f232033" kindref="member">real_type</ref></type>
+          <declname>x0</declname>
+        </param>
+        <param>
+          <type><ref refid="namespace_g2lib_1acc8095aa40beedee44352de62f232033" kindref="member">real_type</ref></type>
+          <declname>y0</declname>
+        </param>
+        <param>
+          <type><ref refid="namespace_g2lib_1acc8095aa40beedee44352de62f232033" kindref="member">real_type</ref></type>
+          <declname>x1</declname>
+        </param>
+        <param>
+          <type><ref refid="namespace_g2lib_1acc8095aa40beedee44352de62f232033" kindref="member">real_type</ref></type>
+          <declname>y1</declname>
+        </param>
+        <param>
+          <type><ref refid="namespace_g2lib_1acc8095aa40beedee44352de62f232033" kindref="member">real_type</ref></type>
+          <declname>x2</declname>
+        </param>
+        <param>
+          <type><ref refid="namespace_g2lib_1acc8095aa40beedee44352de62f232033" kindref="member">real_type</ref></type>
+          <declname>y2</declname>
+        </param>
+        <param>
+          <type><ref refid="namespace_g2lib_1acc8095aa40beedee44352de62f232033" kindref="member">real_type</ref></type>
+          <declname>x3</declname>
+        </param>
+        <param>
+          <type><ref refid="namespace_g2lib_1acc8095aa40beedee44352de62f232033" kindref="member">real_type</ref></type>
+          <declname>y3</declname>
+        </param>
+        <param>
+          <type>string const &amp;</type>
+          <declname>penna</declname>
+          <defval>&quot;black&quot;</defval>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Clothoids/ClothoidAsyPlot.hxx" line="42" column="5" bodyfile="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/ClothoidAsyPlot.cc" bodystart="78" bodyend="89"/>
+      </memberdef>
+      <memberdef kind="function" id="class_g2lib_1_1_asy_plot_1aab3a1d4836a3eb2aab03b283f05f8938" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void G2lib::AsyPlot::drawLine</definition>
+        <argsstring>(real_type x0, real_type y0, real_type x1, real_type y1, string const &amp;penna=&quot;black&quot;) const</argsstring>
+        <name>drawLine</name>
+        <qualifiedname>G2lib::AsyPlot::drawLine</qualifiedname>
+        <param>
+          <type><ref refid="namespace_g2lib_1acc8095aa40beedee44352de62f232033" kindref="member">real_type</ref></type>
+          <declname>x0</declname>
+        </param>
+        <param>
+          <type><ref refid="namespace_g2lib_1acc8095aa40beedee44352de62f232033" kindref="member">real_type</ref></type>
+          <declname>y0</declname>
+        </param>
+        <param>
+          <type><ref refid="namespace_g2lib_1acc8095aa40beedee44352de62f232033" kindref="member">real_type</ref></type>
+          <declname>x1</declname>
+        </param>
+        <param>
+          <type><ref refid="namespace_g2lib_1acc8095aa40beedee44352de62f232033" kindref="member">real_type</ref></type>
+          <declname>y1</declname>
+        </param>
+        <param>
+          <type>string const &amp;</type>
+          <declname>penna</declname>
+          <defval>&quot;black&quot;</defval>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Clothoids/ClothoidAsyPlot.hxx" line="51" column="5" bodyfile="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/ClothoidAsyPlot.cc" bodystart="115" bodyend="121"/>
+      </memberdef>
+      <memberdef kind="function" id="class_g2lib_1_1_asy_plot_1af1cffddfa974e1048d4e3855b184150c" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void G2lib::AsyPlot::label</definition>
+        <argsstring>(string const &amp;text, real_type x, real_type y, string const &amp;placement=&quot;&quot;, string const &amp;penna=&quot;black&quot;) const</argsstring>
+        <name>label</name>
+        <qualifiedname>G2lib::AsyPlot::label</qualifiedname>
+        <param>
+          <type>string const &amp;</type>
+          <declname>text</declname>
+        </param>
+        <param>
+          <type><ref refid="namespace_g2lib_1acc8095aa40beedee44352de62f232033" kindref="member">real_type</ref></type>
+          <declname>x</declname>
+        </param>
+        <param>
+          <type><ref refid="namespace_g2lib_1acc8095aa40beedee44352de62f232033" kindref="member">real_type</ref></type>
+          <declname>y</declname>
+        </param>
+        <param>
+          <type>string const &amp;</type>
+          <declname>placement</declname>
+          <defval>&quot;&quot;</defval>
+        </param>
+        <param>
+          <type>string const &amp;</type>
+          <declname>penna</declname>
+          <defval>&quot;black&quot;</defval>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Clothoids/ClothoidAsyPlot.hxx" line="58" column="5" bodyfile="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/ClothoidAsyPlot.cc" bodystart="124" bodyend="133"/>
+      </memberdef>
+      <memberdef kind="function" id="class_g2lib_1_1_asy_plot_1a87f96edf00391a0d45b9b3543e2234d4" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void G2lib::AsyPlot::displayAxes</definition>
+        <argsstring>(string const &amp;labX, string const &amp;labY, real_type xmin, real_type xmax, real_type ymin, real_type ymax) const</argsstring>
+        <name>displayAxes</name>
+        <qualifiedname>G2lib::AsyPlot::displayAxes</qualifiedname>
+        <param>
+          <type>string const &amp;</type>
+          <declname>labX</declname>
+        </param>
+        <param>
+          <type>string const &amp;</type>
+          <declname>labY</declname>
+        </param>
+        <param>
+          <type><ref refid="namespace_g2lib_1acc8095aa40beedee44352de62f232033" kindref="member">real_type</ref></type>
+          <declname>xmin</declname>
+        </param>
+        <param>
+          <type><ref refid="namespace_g2lib_1acc8095aa40beedee44352de62f232033" kindref="member">real_type</ref></type>
+          <declname>xmax</declname>
+        </param>
+        <param>
+          <type><ref refid="namespace_g2lib_1acc8095aa40beedee44352de62f232033" kindref="member">real_type</ref></type>
+          <declname>ymin</declname>
+        </param>
+        <param>
+          <type><ref refid="namespace_g2lib_1acc8095aa40beedee44352de62f232033" kindref="member">real_type</ref></type>
+          <declname>ymax</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Clothoids/ClothoidAsyPlot.hxx" line="67" column="5" bodyfile="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/ClothoidAsyPlot.cc" bodystart="99" bodyend="112"/>
+      </memberdef>
+    </sectiondef>
+    <sectiondef kind="private-func">
+      <memberdef kind="function" id="class_g2lib_1_1_asy_plot_1a9ff37d912fb73d652509a43ea48fbd64" prot="private" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>bool</type>
+        <definition>bool G2lib::AsyPlot::openFile</definition>
+        <argsstring>()</argsstring>
+        <name>openFile</name>
+        <qualifiedname>G2lib::AsyPlot::openFile</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Clothoids/ClothoidAsyPlot.hxx" line="80" column="10" bodyfile="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/ClothoidAsyPlot.cc" bodystart="136" bodyend="139"/>
+      </memberdef>
+      <memberdef kind="function" id="class_g2lib_1_1_asy_plot_1ae29910ba71dae502287f1156d5cf00dc" prot="private" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>bool</type>
+        <definition>bool G2lib::AsyPlot::closeFile</definition>
+        <argsstring>()</argsstring>
+        <name>closeFile</name>
+        <qualifiedname>G2lib::AsyPlot::closeFile</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Clothoids/ClothoidAsyPlot.hxx" line="81" column="10" bodyfile="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/ClothoidAsyPlot.cc" bodystart="142" bodyend="145"/>
+      </memberdef>
+      <memberdef kind="function" id="class_g2lib_1_1_asy_plot_1a68f434d2227c964aaea9e903e8984266" prot="private" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void G2lib::AsyPlot::initFile</definition>
+        <argsstring>()</argsstring>
+        <name>initFile</name>
+        <qualifiedname>G2lib::AsyPlot::initFile</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Clothoids/ClothoidAsyPlot.hxx" line="82" column="10" bodyfile="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/ClothoidAsyPlot.cc" bodystart="30" bodyend="37"/>
+      </memberdef>
+      <memberdef kind="function" id="class_g2lib_1_1_asy_plot_1a06e972481bbd2c1b3c247b6766cecece" prot="private" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void G2lib::AsyPlot::displayAxes</definition>
+        <argsstring>() const</argsstring>
+        <name>displayAxes</name>
+        <qualifiedname>G2lib::AsyPlot::displayAxes</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Clothoids/ClothoidAsyPlot.hxx" line="83" column="10" bodyfile="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/ClothoidAsyPlot.cc" bodystart="92" bodyend="96"/>
+      </memberdef>
+      <memberdef kind="function" id="class_g2lib_1_1_asy_plot_1ab6505c07543b57cd37272fc15193b97f" prot="private" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void G2lib::AsyPlot::compileFile</definition>
+        <argsstring>()</argsstring>
+        <name>compileFile</name>
+        <qualifiedname>G2lib::AsyPlot::compileFile</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Clothoids/ClothoidAsyPlot.hxx" line="84" column="10" bodyfile="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/ClothoidAsyPlot.cc" bodystart="20" bodyend="27"/>
+      </memberdef>
+    </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <collaborationgraph>
+      <node id="1">
+        <label>G2lib::AsyPlot</label>
+        <link refid="class_g2lib_1_1_asy_plot"/>
+        <childnode refid="2" relation="usage">
+          <edgelabel>file</edgelabel>
+        </childnode>
+        <childnode refid="3" relation="usage">
+          <edgelabel>filename</edgelabel>
+        </childnode>
+      </node>
+      <node id="2">
+        <label>ofstream</label>
+      </node>
+      <node id="3">
+        <label>string</label>
+      </node>
+    </collaborationgraph>
+    <location file="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Clothoids/ClothoidAsyPlot.hxx" line="26" column="3" bodyfile="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Clothoids/ClothoidAsyPlot.hxx" bodystart="26" bodyend="85"/>
+    <listofallmembers>
+      <member refid="class_g2lib_1_1_asy_plot_1a4815742da17f12c15fd05a6f40363040" prot="public" virt="non-virtual"><scope>G2lib::AsyPlot</scope><name>AsyPlot</name></member>
+      <member refid="class_g2lib_1_1_asy_plot_1ae29910ba71dae502287f1156d5cf00dc" prot="private" virt="non-virtual"><scope>G2lib::AsyPlot</scope><name>closeFile</name></member>
+      <member refid="class_g2lib_1_1_asy_plot_1ab6505c07543b57cd37272fc15193b97f" prot="private" virt="non-virtual"><scope>G2lib::AsyPlot</scope><name>compileFile</name></member>
+      <member refid="class_g2lib_1_1_asy_plot_1a87f96edf00391a0d45b9b3543e2234d4" prot="public" virt="non-virtual"><scope>G2lib::AsyPlot</scope><name>displayAxes</name></member>
+      <member refid="class_g2lib_1_1_asy_plot_1a06e972481bbd2c1b3c247b6766cecece" prot="private" virt="non-virtual"><scope>G2lib::AsyPlot</scope><name>displayAxes</name></member>
+      <member refid="class_g2lib_1_1_asy_plot_1a7d8f6b6ab33b0e73e7fe48c0404e832e" prot="public" virt="non-virtual"><scope>G2lib::AsyPlot</scope><name>dot</name></member>
+      <member refid="class_g2lib_1_1_asy_plot_1ae7fe8fa822976d795cec8a93d3187e99" prot="public" virt="non-virtual"><scope>G2lib::AsyPlot</scope><name>drawClothoid</name></member>
+      <member refid="class_g2lib_1_1_asy_plot_1aab3a1d4836a3eb2aab03b283f05f8938" prot="public" virt="non-virtual"><scope>G2lib::AsyPlot</scope><name>drawLine</name></member>
+      <member refid="class_g2lib_1_1_asy_plot_1aa1342b47bf30bec897a9d32cc483812d" prot="public" virt="non-virtual"><scope>G2lib::AsyPlot</scope><name>drawRect</name></member>
+      <member refid="class_g2lib_1_1_asy_plot_1a24267e4736cc6e0ccd389bd4a9d96393" prot="private" virt="non-virtual"><scope>G2lib::AsyPlot</scope><name>file</name></member>
+      <member refid="class_g2lib_1_1_asy_plot_1ae12d991dc86267f4d863fe44b167a614" prot="private" virt="non-virtual"><scope>G2lib::AsyPlot</scope><name>filename</name></member>
+      <member refid="class_g2lib_1_1_asy_plot_1a68f434d2227c964aaea9e903e8984266" prot="private" virt="non-virtual"><scope>G2lib::AsyPlot</scope><name>initFile</name></member>
+      <member refid="class_g2lib_1_1_asy_plot_1af1cffddfa974e1048d4e3855b184150c" prot="public" virt="non-virtual"><scope>G2lib::AsyPlot</scope><name>label</name></member>
+      <member refid="class_g2lib_1_1_asy_plot_1a9ff37d912fb73d652509a43ea48fbd64" prot="private" virt="non-virtual"><scope>G2lib::AsyPlot</scope><name>openFile</name></member>
+      <member refid="class_g2lib_1_1_asy_plot_1acc7c7a37b6a3812ec9c9c2eb84fbadc9" prot="private" virt="non-virtual"><scope>G2lib::AsyPlot</scope><name>showAxes</name></member>
+      <member refid="class_g2lib_1_1_asy_plot_1a41835e9ad8df4944a1691e331983356d" prot="public" virt="non-virtual"><scope>G2lib::AsyPlot</scope><name>triangle</name></member>
+      <member refid="class_g2lib_1_1_asy_plot_1abea893862e407fb96cab020430e98987" prot="public" virt="non-virtual"><scope>G2lib::AsyPlot</scope><name>~AsyPlot</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

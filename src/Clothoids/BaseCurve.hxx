@@ -187,25 +187,33 @@ namespace G2lib {
   //!
   class BaseCurve {
 
-    // block default constructor
-    BaseCurve( BaseCurve const & ) = delete;
-    BaseCurve const & operator = ( BaseCurve const & ) = delete;
+    string const m_name;
 
   public:
+
+    // block default constructor
+    BaseCurve( ) = delete;
+    BaseCurve( BaseCurve const & ) = delete;
+    BaseCurve const & operator = ( BaseCurve const & ) = delete;
 
     //!
     //! Initialize the class storing the curve type.
     //!
-    BaseCurve() = default;
+    BaseCurve( string const & name ) : m_name(name) {}
 
     virtual
     ~BaseCurve() = default;
+
+    virtual void setup( GenericContainer const & gc ) = 0;
+
+    void build( GenericContainer const & gc ) { this->setup( gc ); }
 
     //!
     //! The name of the curve type
     //!
     virtual CurveType type() const = 0;
 
+    string name()      const { return m_name; }
     string type_name() const { return to_string(type()); }
 
     // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
@@ -307,17 +315,11 @@ namespace G2lib {
     //! \param[out] max_size  maximum admissible size of the covering tirnagles
     //! \param[out] icurve    index of the covering triangles
     //!
-    //! \rst
-    //!
-    //!   .. image:: ../../images/biarc_cover.jpg
-    //!      :width: 80%
-    //!      :align: center
-    //!
-    //! \endrst
+    //! \image html biarc_cover.jpg "Biarc" width=8cm
     //!
     virtual
     void
-    bbTriangles(
+    bb_triangles(
       vector<Triangle2D> & tvec,
       real_type            max_angle = Utils::m_pi/18,
       real_type            max_size  = 1e100,
@@ -335,7 +337,7 @@ namespace G2lib {
     //!
     virtual
     void
-    bbTriangles_ISO(
+    bb_triangles_ISO(
       real_type            offs,
       vector<Triangle2D> & tvec,
       real_type            max_angle = Utils::m_pi/18,
@@ -354,7 +356,7 @@ namespace G2lib {
     //!
     virtual
     void
-    bbTriangles_SAE(
+    bb_triangles_SAE(
       real_type            offs,
       vector<Triangle2D> & tvec,
       real_type            max_angle = Utils::m_pi/18,

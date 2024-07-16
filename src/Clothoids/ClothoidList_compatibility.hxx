@@ -21,15 +21,20 @@
 /// file: ClothoidList_compatibility.hxx
 ///
 
-real_type tx_Begin() const { return tx_begin(); }
-real_type ty_Begin() const { return ty_begin(); }
-real_type tx_End()   const { return tx_end(); }
-real_type ty_End()   const { return ty_end(); }
+//real_type curvatureTotalVariation() const { return this->curvature_total_variation(); }
+//real_type integralCurvature2() const { return this->integral_curvature2(); }
+//real_type integralJerk2() const { return this->integral_jerk2(); }
+//real_type integralSnap2() const { return this->integral_snap2(); }
 
-real_type nx_Begin_ISO() const { return nx_begin_ISO(); }
-real_type ny_Begin_ISO() const { return ny_begin_ISO(); }
-real_type nx_End_ISO()   const { return nx_end_ISO(); }
-real_type ny_End_ISO()   const { return ny_end_ISO(); }
+real_type tx_Begin() const { return this->tx_begin(); }
+real_type ty_Begin() const { return this->ty_begin(); }
+real_type tx_End()   const { return this->tx_end(); }
+real_type ty_End()   const { return this->ty_end(); }
+
+real_type nx_Begin_ISO() const { return this->nx_begin_ISO(); }
+real_type ny_Begin_ISO() const { return this->ny_begin_ISO(); }
+real_type nx_End_ISO()   const { return this->nx_end_ISO(); }
+real_type ny_End_ISO()   const { return this->ny_end_ISO(); }
 
 //!
 //! Return the clothoid list as a list of nodes and curvatures
@@ -39,7 +44,7 @@ real_type ny_End_ISO()   const { return ny_end_ISO(); }
 //!
 void
 getSK( real_type * s, real_type * kappa ) const
-{ get_SK( s, kappa ); }
+{ this->get_SK( s, kappa ); }
 
 //!
 //! Return the clothoid list as a list of nodes and curvatures
@@ -52,7 +57,7 @@ getSK(
   vector<real_type> & s,
   vector<real_type> & kappa
 ) const
-{ get_SK( s, kappa ); }
+{ this->get_SK( s, kappa ); }
 
 //!
 //! Return the clothoid list as a list of nodes angles and curvatures
@@ -67,7 +72,7 @@ getSTK(
   real_type * theta,
   real_type * kappa
 ) const
-{ get_STK( s, theta, kappa ); }
+{ this->get_STK( s, theta, kappa ); }
 
 //!
 //! Return the clothoid list as a list of nodes angles and curvatures
@@ -82,7 +87,7 @@ getSTK(
   vector<real_type> & theta,
   vector<real_type> & kappa
 ) const
-{ get_STK( s, theta, kappa ); }
+{ this->get_STK( s, theta, kappa ); }
 
 //!
 //! Return the points of the clothoid list at breakpoints
@@ -92,36 +97,36 @@ getSTK(
 //!
 void
 getXY( real_type * x, real_type * y ) const
-{ get_XY( x, y ); }
+{ this->get_XY( x, y ); }
 
 void
 getDeltaTheta( real_type * delta_theta ) const
-{ get_delta_theta( delta_theta ); }
+{ this->get_delta_theta( delta_theta ); }
 
 void
 getDeltaKappa( real_type * deltaKappa ) const
-{ get_delta_kappa( deltaKappa ); }
+{ this->get_delta_kappa( deltaKappa ); }
 
 void
 changeOrigin( real_type newx0, real_type newy0 )
-{ change_origin( newx0, newy0 ); }
+{ this->change_origin( newx0, newy0 ); }
 
-real_type thetaBegin()                 const { return theta_begin(); }
-real_type thetaEnd()                   const { return theta_end(); }
-real_type xBegin()                     const { return x_begin(); }
-real_type yBegin()                     const { return y_begin(); }
-real_type xEnd()                       const { return x_end(); }
-real_type yEnd()                       const { return y_end(); }
-real_type xBegin_ISO( real_type offs ) const { return x_begin_ISO( offs ); }
-real_type yBegin_ISO( real_type offs ) const { return y_begin_ISO( offs ); }
-real_type xEnd_ISO( real_type offs )   const { return x_end_ISO( offs ); }
-real_type yEnd_ISO( real_type offs )   const { return y_end_ISO( offs ); }
+real_type thetaBegin()                 const { return this->theta_begin(); }
+real_type thetaEnd()                   const { return this->theta_end(); }
+real_type xBegin()                     const { return this->x_begin(); }
+real_type yBegin()                     const { return this->y_begin(); }
+real_type xEnd()                       const { return this->x_end(); }
+real_type yEnd()                       const { return this->y_end(); }
+real_type xBegin_ISO( real_type offs ) const { return this->x_begin_ISO( offs ); }
+real_type yBegin_ISO( real_type offs ) const { return this->y_begin_ISO( offs ); }
+real_type xEnd_ISO( real_type offs )   const { return this->x_end_ISO( offs ); }
+real_type yEnd_ISO( real_type offs )   const { return this->y_end_ISO( offs ); }
 
 integer numSegments() const { return num_segments(); }
 
 integer
 closestSegment( real_type qx, real_type qy ) const {
-  return closest_segment( qx, qy );
+  return this->closest_segment( qx, qy );
 }
 
 integer
@@ -134,7 +139,7 @@ closestPoint_ISO(
   real_type & t,
   real_type & dst
 ) const {
-  return closest_point_ISO( qx, qy, x, y, s, t, dst );
+  return this->closest_point_ISO( qx, qy, x, y, s, t, dst );
 }
 
 integer
@@ -148,7 +153,7 @@ closestPoint_ISO(
   real_type & t,
   real_type & dst
 ) const {
-  return closest_point_ISO( qx, qy, offs, x, y, s, t, dst );
+  return this->closest_point_ISO( qx, qy, offs, x, y, s, t, dst );
 }
 
 integer
@@ -164,7 +169,7 @@ closestPointInRange_ISO(
   real_type & dst,
   integer   & icurve
 ) const {
-  return closest_point_in_range_ISO(
+  return this->closest_point_in_range_ISO(
     qx, qy, icurve_begin, icurve_end, x, y, s, t, dst, icurve
   );
 }
@@ -181,7 +186,7 @@ closestPointInRange_SAE(
   real_type & dst,
   integer   & icurve
 ) const {
-  return closest_point_in_range_SAE(
+  return this->closest_point_in_range_SAE(
     qx, qy, icurve_begin, icurve_end, x, y, s, t, dst, icurve
   );
 }
@@ -199,7 +204,7 @@ closestPointInSRange_ISO(
   real_type & dst,
   integer   & icurve
 ) const {
-  return closest_point_in_s_range_ISO(
+  return this->closest_point_in_s_range_ISO(
     qx, qy, s_begin, s_end, x, y, s, t, dst, icurve
   );
 }
@@ -217,7 +222,7 @@ closestPointInSRange_SAE(
   real_type & dst,
   integer   & icurve
 ) const {
-  return closest_point_in_s_range_SAE(
+  return this->closest_point_in_s_range_SAE(
     qx, qy, s_begin, s_end, x, y, s, t, dst, icurve
   );
 }

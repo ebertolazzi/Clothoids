@@ -1,0 +1,244 @@
+\doxysection{/\+Users/enrico/\+Ricerca/develop/\+PINS/pins-\/mechatronix/\+Lib\+Sources/submodules/\+Clothoids/src/\+Clothoids/\+Clothoid\+\_\+compatibility.hxx File Reference}
+\hypertarget{_clothoid__compatibility_8hxx}{}\label{_clothoid__compatibility_8hxx}\index{/Users/enrico/Ricerca/develop/PINS/pins-\/mechatronix/LibSources/submodules/Clothoids/src/Clothoids/Clothoid\_compatibility.hxx@{/Users/enrico/Ricerca/develop/PINS/pins-\/mechatronix/LibSources/submodules/Clothoids/src/Clothoids/Clothoid\_compatibility.hxx}}
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+real\+\_\+type \mbox{\hyperlink{_clothoid__compatibility_8hxx_ab587c6cef03118d9b84ea4bdb345641e}{theta\+Total\+Variation}} () const
+\item 
+real\+\_\+type \mbox{\hyperlink{_clothoid__compatibility_8hxx_a592582ad1e7ea65fa99e6cd7f4c4c895}{theta\+Min\+Max}} (real\+\_\+type \&th\+Min, real\+\_\+type \&th\+Max) const
+\item 
+real\+\_\+type \mbox{\hyperlink{_clothoid__compatibility_8hxx_a024bd94e435a7a6a7d7a988764af6091}{delta\+Theta}} () const
+\item 
+real\+\_\+type \mbox{\hyperlink{_clothoid__compatibility_8hxx_ae7e3e211161f7f5c5dd898c2381d7d8d}{curvature\+Min\+Max}} (real\+\_\+type \&k\+Min, real\+\_\+type \&k\+Max) const
+\item 
+real\+\_\+type \mbox{\hyperlink{_clothoid__compatibility_8hxx_a64de6276039984cd35661b9f953d3439}{curvature\+Total\+Variation}} () const
+\item 
+real\+\_\+type \mbox{\hyperlink{_clothoid__compatibility_8hxx_af558898c4e8e348516d783fa7554779b}{integral\+Curvature2}} () const
+\item 
+real\+\_\+type \mbox{\hyperlink{_clothoid__compatibility_8hxx_a7ab16b1a20628d690294372aaf8f2b0b}{integral\+Jerk2}} () const
+\item 
+real\+\_\+type \mbox{\hyperlink{_clothoid__compatibility_8hxx_af9d88fc75cb330e75b1c5df772596299}{integral\+Snap2}} () const
+\item 
+void \mbox{\hyperlink{_clothoid__compatibility_8hxx_a822aac57d1af5b94c6b570bc4117495e}{evaluate}} (real\+\_\+type s, real\+\_\+type \&th, real\+\_\+type \&k, real\+\_\+type \&x, real\+\_\+type \&y) const override
+\item 
+void \mbox{\hyperlink{_clothoid__compatibility_8hxx_a8059ccc4a69a6e3a7cc63750367f326a}{change\+Origin}} (real\+\_\+type newx0, real\+\_\+type newy0)
+\item 
+void \mbox{\hyperlink{_clothoid__compatibility_8hxx_a7bff810bbf159a4d7a862f66eadd35d1}{change\+Curvilinear\+Origin}} (real\+\_\+type s0, real\+\_\+type newL)
+\item 
+real\+\_\+type \mbox{\hyperlink{_clothoid__compatibility_8hxx_ad3731d3e379e40faa1ad5f3ff02ecb2c}{theta\+Begin}} () const
+\item 
+real\+\_\+type \mbox{\hyperlink{_clothoid__compatibility_8hxx_a1bf0393292b1c0e74901083736d03ac7}{theta\+End}} () const
+\item 
+real\+\_\+type \mbox{\hyperlink{_clothoid__compatibility_8hxx_ac552d1f9b23cca537177bcbec55aae5a}{kappa\+Begin}} () const
+\item 
+real\+\_\+type \mbox{\hyperlink{_clothoid__compatibility_8hxx_a1a1b2da3c070c5c511630b02ffc35176}{kappa\+End}} () const
+\item 
+real\+\_\+type \mbox{\hyperlink{_clothoid__compatibility_8hxx_a87bc730a1f52adff0d4483430269745a}{x\+Begin}} () const
+\item 
+real\+\_\+type \mbox{\hyperlink{_clothoid__compatibility_8hxx_ae89e2f4ffa90111b6f7d7ecea153ef54}{y\+Begin}} () const
+\item 
+real\+\_\+type \mbox{\hyperlink{_clothoid__compatibility_8hxx_a700d4806d93f230fdf155af17dcd7195}{x\+End}} () const
+\item 
+real\+\_\+type \mbox{\hyperlink{_clothoid__compatibility_8hxx_a5776fc56f1bcd6d5cf07703a38d7b8b9}{y\+End}} () const
+\item 
+real\+\_\+type \mbox{\hyperlink{_clothoid__compatibility_8hxx_a1d6afc2d5faaaf775590467a0bf065b4}{x\+Begin\+\_\+\+ISO}} (real\+\_\+type offs) const
+\item 
+real\+\_\+type \mbox{\hyperlink{_clothoid__compatibility_8hxx_ac8a5a280ae18ec8eff32db153a75583d}{y\+Begin\+\_\+\+ISO}} (real\+\_\+type offs) const
+\item 
+real\+\_\+type \mbox{\hyperlink{_clothoid__compatibility_8hxx_a46287668744b24e74408fefe01540280}{x\+End\+\_\+\+ISO}} (real\+\_\+type offs) const
+\item 
+real\+\_\+type \mbox{\hyperlink{_clothoid__compatibility_8hxx_a15c2b7d41bc3b408e4788d026b39a963}{y\+End\+\_\+\+ISO}} (real\+\_\+type offs) const
+\item 
+real\+\_\+type \mbox{\hyperlink{_clothoid__compatibility_8hxx_a6fbac7b4efa745dd23ff04dfa03e80d1}{closest\+Point\+By\+Sample}} (real\+\_\+type ds, real\+\_\+type qx, real\+\_\+type qy, real\+\_\+type \&X, real\+\_\+type \&Y, real\+\_\+type \&S) const
+\item 
+integer \mbox{\hyperlink{_clothoid__compatibility_8hxx_a8badc4b2d8796b9371dfbfcda50e74c9}{closest\+Point\+\_\+\+ISO}} (real\+\_\+type qx, real\+\_\+type qy, real\+\_\+type \&x, real\+\_\+type \&y, real\+\_\+type \&s, real\+\_\+type \&t, real\+\_\+type \&dst) const
+\item 
+integer \mbox{\hyperlink{_clothoid__compatibility_8hxx_a4264361f7d19b6e0b653404ebe012213}{closest\+Point\+\_\+\+ISO}} (real\+\_\+type qx, real\+\_\+type qy, real\+\_\+type offs, real\+\_\+type \&x, real\+\_\+type \&y, real\+\_\+type \&s, real\+\_\+type \&t, real\+\_\+type \&dst) const
+\item 
+real\+\_\+type \mbox{\hyperlink{_clothoid__compatibility_8hxx_a5495efd264fbd7eb78c79dade6923bcf}{distance\+By\+Sample}} (real\+\_\+type ds, real\+\_\+type qx, real\+\_\+type qy, real\+\_\+type \&S) const
+\item 
+real\+\_\+type \mbox{\hyperlink{_clothoid__compatibility_8hxx_acd758232829ccf651f662b826ebdb853}{distance\+By\+Sample}} (real\+\_\+type ds, real\+\_\+type qx, real\+\_\+type qy) const
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Function Documentation}
+\Hypertarget{_clothoid__compatibility_8hxx_a7bff810bbf159a4d7a862f66eadd35d1}\index{Clothoid\_compatibility.hxx@{Clothoid\_compatibility.hxx}!changeCurvilinearOrigin@{changeCurvilinearOrigin}}
+\index{changeCurvilinearOrigin@{changeCurvilinearOrigin}!Clothoid\_compatibility.hxx@{Clothoid\_compatibility.hxx}}
+\doxysubsubsection{\texorpdfstring{changeCurvilinearOrigin()}{changeCurvilinearOrigin()}}
+{\footnotesize\ttfamily \label{_clothoid__compatibility_8hxx_a7bff810bbf159a4d7a862f66eadd35d1} 
+void change\+Curvilinear\+Origin (\begin{DoxyParamCaption}\item[{real\+\_\+type}]{s0}{, }\item[{real\+\_\+type}]{newL}{}\end{DoxyParamCaption})}
+
+\Hypertarget{_clothoid__compatibility_8hxx_a8059ccc4a69a6e3a7cc63750367f326a}\index{Clothoid\_compatibility.hxx@{Clothoid\_compatibility.hxx}!changeOrigin@{changeOrigin}}
+\index{changeOrigin@{changeOrigin}!Clothoid\_compatibility.hxx@{Clothoid\_compatibility.hxx}}
+\doxysubsubsection{\texorpdfstring{changeOrigin()}{changeOrigin()}}
+{\footnotesize\ttfamily \label{_clothoid__compatibility_8hxx_a8059ccc4a69a6e3a7cc63750367f326a} 
+void change\+Origin (\begin{DoxyParamCaption}\item[{real\+\_\+type}]{newx0}{, }\item[{real\+\_\+type}]{newy0}{}\end{DoxyParamCaption})}
+
+\Hypertarget{_clothoid__compatibility_8hxx_a8badc4b2d8796b9371dfbfcda50e74c9}\index{Clothoid\_compatibility.hxx@{Clothoid\_compatibility.hxx}!closestPoint\_ISO@{closestPoint\_ISO}}
+\index{closestPoint\_ISO@{closestPoint\_ISO}!Clothoid\_compatibility.hxx@{Clothoid\_compatibility.hxx}}
+\doxysubsubsection{\texorpdfstring{closestPoint\_ISO()}{closestPoint\_ISO()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{_clothoid__compatibility_8hxx_a8badc4b2d8796b9371dfbfcda50e74c9} 
+integer closest\+Point\+\_\+\+ISO (\begin{DoxyParamCaption}\item[{real\+\_\+type}]{qx}{, }\item[{real\+\_\+type}]{qy}{, }\item[{real\+\_\+type \&}]{x}{, }\item[{real\+\_\+type \&}]{y}{, }\item[{real\+\_\+type \&}]{s}{, }\item[{real\+\_\+type \&}]{t}{, }\item[{real\+\_\+type \&}]{dst}{}\end{DoxyParamCaption}) const}
+
+\Hypertarget{_clothoid__compatibility_8hxx_a4264361f7d19b6e0b653404ebe012213}\index{Clothoid\_compatibility.hxx@{Clothoid\_compatibility.hxx}!closestPoint\_ISO@{closestPoint\_ISO}}
+\index{closestPoint\_ISO@{closestPoint\_ISO}!Clothoid\_compatibility.hxx@{Clothoid\_compatibility.hxx}}
+\doxysubsubsection{\texorpdfstring{closestPoint\_ISO()}{closestPoint\_ISO()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{_clothoid__compatibility_8hxx_a4264361f7d19b6e0b653404ebe012213} 
+integer closest\+Point\+\_\+\+ISO (\begin{DoxyParamCaption}\item[{real\+\_\+type}]{qx}{, }\item[{real\+\_\+type}]{qy}{, }\item[{real\+\_\+type}]{offs}{, }\item[{real\+\_\+type \&}]{x}{, }\item[{real\+\_\+type \&}]{y}{, }\item[{real\+\_\+type \&}]{s}{, }\item[{real\+\_\+type \&}]{t}{, }\item[{real\+\_\+type \&}]{dst}{}\end{DoxyParamCaption}) const}
+
+\Hypertarget{_clothoid__compatibility_8hxx_a6fbac7b4efa745dd23ff04dfa03e80d1}\index{Clothoid\_compatibility.hxx@{Clothoid\_compatibility.hxx}!closestPointBySample@{closestPointBySample}}
+\index{closestPointBySample@{closestPointBySample}!Clothoid\_compatibility.hxx@{Clothoid\_compatibility.hxx}}
+\doxysubsubsection{\texorpdfstring{closestPointBySample()}{closestPointBySample()}}
+{\footnotesize\ttfamily \label{_clothoid__compatibility_8hxx_a6fbac7b4efa745dd23ff04dfa03e80d1} 
+real\+\_\+type closest\+Point\+By\+Sample (\begin{DoxyParamCaption}\item[{real\+\_\+type}]{ds}{, }\item[{real\+\_\+type}]{qx}{, }\item[{real\+\_\+type}]{qy}{, }\item[{real\+\_\+type \&}]{X}{, }\item[{real\+\_\+type \&}]{Y}{, }\item[{real\+\_\+type \&}]{S}{}\end{DoxyParamCaption}) const}
+
+\Hypertarget{_clothoid__compatibility_8hxx_ae7e3e211161f7f5c5dd898c2381d7d8d}\index{Clothoid\_compatibility.hxx@{Clothoid\_compatibility.hxx}!curvatureMinMax@{curvatureMinMax}}
+\index{curvatureMinMax@{curvatureMinMax}!Clothoid\_compatibility.hxx@{Clothoid\_compatibility.hxx}}
+\doxysubsubsection{\texorpdfstring{curvatureMinMax()}{curvatureMinMax()}}
+{\footnotesize\ttfamily \label{_clothoid__compatibility_8hxx_ae7e3e211161f7f5c5dd898c2381d7d8d} 
+real\+\_\+type curvature\+Min\+Max (\begin{DoxyParamCaption}\item[{real\+\_\+type \&}]{k\+Min}{, }\item[{real\+\_\+type \&}]{k\+Max}{}\end{DoxyParamCaption}) const}
+
+Max and min of the curvatire of the clothoid curve. \Hypertarget{_clothoid__compatibility_8hxx_a64de6276039984cd35661b9f953d3439}\index{Clothoid\_compatibility.hxx@{Clothoid\_compatibility.hxx}!curvatureTotalVariation@{curvatureTotalVariation}}
+\index{curvatureTotalVariation@{curvatureTotalVariation}!Clothoid\_compatibility.hxx@{Clothoid\_compatibility.hxx}}
+\doxysubsubsection{\texorpdfstring{curvatureTotalVariation()}{curvatureTotalVariation()}}
+{\footnotesize\ttfamily \label{_clothoid__compatibility_8hxx_a64de6276039984cd35661b9f953d3439} 
+real\+\_\+type curvature\+Total\+Variation (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const}
+
+Clothoid total curvature variation. \Hypertarget{_clothoid__compatibility_8hxx_a024bd94e435a7a6a7d7a988764af6091}\index{Clothoid\_compatibility.hxx@{Clothoid\_compatibility.hxx}!deltaTheta@{deltaTheta}}
+\index{deltaTheta@{deltaTheta}!Clothoid\_compatibility.hxx@{Clothoid\_compatibility.hxx}}
+\doxysubsubsection{\texorpdfstring{deltaTheta()}{deltaTheta()}}
+{\footnotesize\ttfamily \label{_clothoid__compatibility_8hxx_a024bd94e435a7a6a7d7a988764af6091} 
+real\+\_\+type delta\+Theta (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const}
+
+Clothoid angle range. \Hypertarget{_clothoid__compatibility_8hxx_acd758232829ccf651f662b826ebdb853}\index{Clothoid\_compatibility.hxx@{Clothoid\_compatibility.hxx}!distanceBySample@{distanceBySample}}
+\index{distanceBySample@{distanceBySample}!Clothoid\_compatibility.hxx@{Clothoid\_compatibility.hxx}}
+\doxysubsubsection{\texorpdfstring{distanceBySample()}{distanceBySample()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{_clothoid__compatibility_8hxx_acd758232829ccf651f662b826ebdb853} 
+real\+\_\+type distance\+By\+Sample (\begin{DoxyParamCaption}\item[{real\+\_\+type}]{ds}{, }\item[{real\+\_\+type}]{qx}{, }\item[{real\+\_\+type}]{qy}{}\end{DoxyParamCaption}) const}
+
+\Hypertarget{_clothoid__compatibility_8hxx_a5495efd264fbd7eb78c79dade6923bcf}\index{Clothoid\_compatibility.hxx@{Clothoid\_compatibility.hxx}!distanceBySample@{distanceBySample}}
+\index{distanceBySample@{distanceBySample}!Clothoid\_compatibility.hxx@{Clothoid\_compatibility.hxx}}
+\doxysubsubsection{\texorpdfstring{distanceBySample()}{distanceBySample()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{_clothoid__compatibility_8hxx_a5495efd264fbd7eb78c79dade6923bcf} 
+real\+\_\+type distance\+By\+Sample (\begin{DoxyParamCaption}\item[{real\+\_\+type}]{ds}{, }\item[{real\+\_\+type}]{qx}{, }\item[{real\+\_\+type}]{qy}{, }\item[{real\+\_\+type \&}]{S}{}\end{DoxyParamCaption}) const}
+
+\Hypertarget{_clothoid__compatibility_8hxx_a822aac57d1af5b94c6b570bc4117495e}\index{Clothoid\_compatibility.hxx@{Clothoid\_compatibility.hxx}!evaluate@{evaluate}}
+\index{evaluate@{evaluate}!Clothoid\_compatibility.hxx@{Clothoid\_compatibility.hxx}}
+\doxysubsubsection{\texorpdfstring{evaluate()}{evaluate()}}
+{\footnotesize\ttfamily \label{_clothoid__compatibility_8hxx_a822aac57d1af5b94c6b570bc4117495e} 
+void evaluate (\begin{DoxyParamCaption}\item[{real\+\_\+type}]{s}{, }\item[{real\+\_\+type \&}]{th}{, }\item[{real\+\_\+type \&}]{k}{, }\item[{real\+\_\+type \&}]{x}{, }\item[{real\+\_\+type \&}]{y}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [override]}}
+
+\Hypertarget{_clothoid__compatibility_8hxx_af558898c4e8e348516d783fa7554779b}\index{Clothoid\_compatibility.hxx@{Clothoid\_compatibility.hxx}!integralCurvature2@{integralCurvature2}}
+\index{integralCurvature2@{integralCurvature2}!Clothoid\_compatibility.hxx@{Clothoid\_compatibility.hxx}}
+\doxysubsubsection{\texorpdfstring{integralCurvature2()}{integralCurvature2()}}
+{\footnotesize\ttfamily \label{_clothoid__compatibility_8hxx_af558898c4e8e348516d783fa7554779b} 
+real\+\_\+type integral\+Curvature2 (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const}
+
+Given the clothoid curve $ P(s) $ compute.
+
+\[
+   \int_0^L |P\textnormal{\textquotesingle}\textnormal{\textquotesingle}(s)|^2 \mathrm{d}s
+\] \Hypertarget{_clothoid__compatibility_8hxx_a7ab16b1a20628d690294372aaf8f2b0b}\index{Clothoid\_compatibility.hxx@{Clothoid\_compatibility.hxx}!integralJerk2@{integralJerk2}}
+\index{integralJerk2@{integralJerk2}!Clothoid\_compatibility.hxx@{Clothoid\_compatibility.hxx}}
+\doxysubsubsection{\texorpdfstring{integralJerk2()}{integralJerk2()}}
+{\footnotesize\ttfamily \label{_clothoid__compatibility_8hxx_a7ab16b1a20628d690294372aaf8f2b0b} 
+real\+\_\+type integral\+Jerk2 (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const}
+
+Given the clothoid curve $ P(s) $ compute.
+
+\[
+   \int_0^L |P\textnormal{\textquotesingle}\textnormal{\textquotesingle}\textnormal{\textquotesingle}(s)|^2 \mathrm{d}s
+\] \Hypertarget{_clothoid__compatibility_8hxx_af9d88fc75cb330e75b1c5df772596299}\index{Clothoid\_compatibility.hxx@{Clothoid\_compatibility.hxx}!integralSnap2@{integralSnap2}}
+\index{integralSnap2@{integralSnap2}!Clothoid\_compatibility.hxx@{Clothoid\_compatibility.hxx}}
+\doxysubsubsection{\texorpdfstring{integralSnap2()}{integralSnap2()}}
+{\footnotesize\ttfamily \label{_clothoid__compatibility_8hxx_af9d88fc75cb330e75b1c5df772596299} 
+real\+\_\+type integral\+Snap2 (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const}
+
+Given the clothoid curve $ P(s) $ compute.
+
+\[
+   \int_0^L |P\textnormal{\textquotesingle}\textnormal{\textquotesingle}\textnormal{\textquotesingle}\textnormal{\textquotesingle}(s)|^2 \mathrm{d}s
+\] \Hypertarget{_clothoid__compatibility_8hxx_ac552d1f9b23cca537177bcbec55aae5a}\index{Clothoid\_compatibility.hxx@{Clothoid\_compatibility.hxx}!kappaBegin@{kappaBegin}}
+\index{kappaBegin@{kappaBegin}!Clothoid\_compatibility.hxx@{Clothoid\_compatibility.hxx}}
+\doxysubsubsection{\texorpdfstring{kappaBegin()}{kappaBegin()}}
+{\footnotesize\ttfamily \label{_clothoid__compatibility_8hxx_ac552d1f9b23cca537177bcbec55aae5a} 
+real\+\_\+type kappa\+Begin (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const}
+
+\Hypertarget{_clothoid__compatibility_8hxx_a1a1b2da3c070c5c511630b02ffc35176}\index{Clothoid\_compatibility.hxx@{Clothoid\_compatibility.hxx}!kappaEnd@{kappaEnd}}
+\index{kappaEnd@{kappaEnd}!Clothoid\_compatibility.hxx@{Clothoid\_compatibility.hxx}}
+\doxysubsubsection{\texorpdfstring{kappaEnd()}{kappaEnd()}}
+{\footnotesize\ttfamily \label{_clothoid__compatibility_8hxx_a1a1b2da3c070c5c511630b02ffc35176} 
+real\+\_\+type kappa\+End (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const}
+
+\Hypertarget{_clothoid__compatibility_8hxx_ad3731d3e379e40faa1ad5f3ff02ecb2c}\index{Clothoid\_compatibility.hxx@{Clothoid\_compatibility.hxx}!thetaBegin@{thetaBegin}}
+\index{thetaBegin@{thetaBegin}!Clothoid\_compatibility.hxx@{Clothoid\_compatibility.hxx}}
+\doxysubsubsection{\texorpdfstring{thetaBegin()}{thetaBegin()}}
+{\footnotesize\ttfamily \label{_clothoid__compatibility_8hxx_ad3731d3e379e40faa1ad5f3ff02ecb2c} 
+real\+\_\+type theta\+Begin (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const}
+
+\Hypertarget{_clothoid__compatibility_8hxx_a1bf0393292b1c0e74901083736d03ac7}\index{Clothoid\_compatibility.hxx@{Clothoid\_compatibility.hxx}!thetaEnd@{thetaEnd}}
+\index{thetaEnd@{thetaEnd}!Clothoid\_compatibility.hxx@{Clothoid\_compatibility.hxx}}
+\doxysubsubsection{\texorpdfstring{thetaEnd()}{thetaEnd()}}
+{\footnotesize\ttfamily \label{_clothoid__compatibility_8hxx_a1bf0393292b1c0e74901083736d03ac7} 
+real\+\_\+type theta\+End (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const}
+
+\Hypertarget{_clothoid__compatibility_8hxx_a592582ad1e7ea65fa99e6cd7f4c4c895}\index{Clothoid\_compatibility.hxx@{Clothoid\_compatibility.hxx}!thetaMinMax@{thetaMinMax}}
+\index{thetaMinMax@{thetaMinMax}!Clothoid\_compatibility.hxx@{Clothoid\_compatibility.hxx}}
+\doxysubsubsection{\texorpdfstring{thetaMinMax()}{thetaMinMax()}}
+{\footnotesize\ttfamily \label{_clothoid__compatibility_8hxx_a592582ad1e7ea65fa99e6cd7f4c4c895} 
+real\+\_\+type theta\+Min\+Max (\begin{DoxyParamCaption}\item[{real\+\_\+type \&}]{th\+Min}{, }\item[{real\+\_\+type \&}]{th\+Max}{}\end{DoxyParamCaption}) const}
+
+Max and min angle of the curve. \Hypertarget{_clothoid__compatibility_8hxx_ab587c6cef03118d9b84ea4bdb345641e}\index{Clothoid\_compatibility.hxx@{Clothoid\_compatibility.hxx}!thetaTotalVariation@{thetaTotalVariation}}
+\index{thetaTotalVariation@{thetaTotalVariation}!Clothoid\_compatibility.hxx@{Clothoid\_compatibility.hxx}}
+\doxysubsubsection{\texorpdfstring{thetaTotalVariation()}{thetaTotalVariation()}}
+{\footnotesize\ttfamily \label{_clothoid__compatibility_8hxx_ab587c6cef03118d9b84ea4bdb345641e} 
+real\+\_\+type theta\+Total\+Variation (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const}
+
+file\+: \doxylink{_clothoid__compatibility_8hxx}{Clothoid\+\_\+compatibility.\+hxx} Clothoid curve total variation of the angle. \Hypertarget{_clothoid__compatibility_8hxx_a87bc730a1f52adff0d4483430269745a}\index{Clothoid\_compatibility.hxx@{Clothoid\_compatibility.hxx}!xBegin@{xBegin}}
+\index{xBegin@{xBegin}!Clothoid\_compatibility.hxx@{Clothoid\_compatibility.hxx}}
+\doxysubsubsection{\texorpdfstring{xBegin()}{xBegin()}}
+{\footnotesize\ttfamily \label{_clothoid__compatibility_8hxx_a87bc730a1f52adff0d4483430269745a} 
+real\+\_\+type x\+Begin (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const}
+
+\Hypertarget{_clothoid__compatibility_8hxx_a1d6afc2d5faaaf775590467a0bf065b4}\index{Clothoid\_compatibility.hxx@{Clothoid\_compatibility.hxx}!xBegin\_ISO@{xBegin\_ISO}}
+\index{xBegin\_ISO@{xBegin\_ISO}!Clothoid\_compatibility.hxx@{Clothoid\_compatibility.hxx}}
+\doxysubsubsection{\texorpdfstring{xBegin\_ISO()}{xBegin\_ISO()}}
+{\footnotesize\ttfamily \label{_clothoid__compatibility_8hxx_a1d6afc2d5faaaf775590467a0bf065b4} 
+real\+\_\+type x\+Begin\+\_\+\+ISO (\begin{DoxyParamCaption}\item[{real\+\_\+type}]{offs}{}\end{DoxyParamCaption}) const}
+
+\Hypertarget{_clothoid__compatibility_8hxx_a700d4806d93f230fdf155af17dcd7195}\index{Clothoid\_compatibility.hxx@{Clothoid\_compatibility.hxx}!xEnd@{xEnd}}
+\index{xEnd@{xEnd}!Clothoid\_compatibility.hxx@{Clothoid\_compatibility.hxx}}
+\doxysubsubsection{\texorpdfstring{xEnd()}{xEnd()}}
+{\footnotesize\ttfamily \label{_clothoid__compatibility_8hxx_a700d4806d93f230fdf155af17dcd7195} 
+real\+\_\+type x\+End (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const}
+
+\Hypertarget{_clothoid__compatibility_8hxx_a46287668744b24e74408fefe01540280}\index{Clothoid\_compatibility.hxx@{Clothoid\_compatibility.hxx}!xEnd\_ISO@{xEnd\_ISO}}
+\index{xEnd\_ISO@{xEnd\_ISO}!Clothoid\_compatibility.hxx@{Clothoid\_compatibility.hxx}}
+\doxysubsubsection{\texorpdfstring{xEnd\_ISO()}{xEnd\_ISO()}}
+{\footnotesize\ttfamily \label{_clothoid__compatibility_8hxx_a46287668744b24e74408fefe01540280} 
+real\+\_\+type x\+End\+\_\+\+ISO (\begin{DoxyParamCaption}\item[{real\+\_\+type}]{offs}{}\end{DoxyParamCaption}) const}
+
+\Hypertarget{_clothoid__compatibility_8hxx_ae89e2f4ffa90111b6f7d7ecea153ef54}\index{Clothoid\_compatibility.hxx@{Clothoid\_compatibility.hxx}!yBegin@{yBegin}}
+\index{yBegin@{yBegin}!Clothoid\_compatibility.hxx@{Clothoid\_compatibility.hxx}}
+\doxysubsubsection{\texorpdfstring{yBegin()}{yBegin()}}
+{\footnotesize\ttfamily \label{_clothoid__compatibility_8hxx_ae89e2f4ffa90111b6f7d7ecea153ef54} 
+real\+\_\+type y\+Begin (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const}
+
+\Hypertarget{_clothoid__compatibility_8hxx_ac8a5a280ae18ec8eff32db153a75583d}\index{Clothoid\_compatibility.hxx@{Clothoid\_compatibility.hxx}!yBegin\_ISO@{yBegin\_ISO}}
+\index{yBegin\_ISO@{yBegin\_ISO}!Clothoid\_compatibility.hxx@{Clothoid\_compatibility.hxx}}
+\doxysubsubsection{\texorpdfstring{yBegin\_ISO()}{yBegin\_ISO()}}
+{\footnotesize\ttfamily \label{_clothoid__compatibility_8hxx_ac8a5a280ae18ec8eff32db153a75583d} 
+real\+\_\+type y\+Begin\+\_\+\+ISO (\begin{DoxyParamCaption}\item[{real\+\_\+type}]{offs}{}\end{DoxyParamCaption}) const}
+
+\Hypertarget{_clothoid__compatibility_8hxx_a5776fc56f1bcd6d5cf07703a38d7b8b9}\index{Clothoid\_compatibility.hxx@{Clothoid\_compatibility.hxx}!yEnd@{yEnd}}
+\index{yEnd@{yEnd}!Clothoid\_compatibility.hxx@{Clothoid\_compatibility.hxx}}
+\doxysubsubsection{\texorpdfstring{yEnd()}{yEnd()}}
+{\footnotesize\ttfamily \label{_clothoid__compatibility_8hxx_a5776fc56f1bcd6d5cf07703a38d7b8b9} 
+real\+\_\+type y\+End (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const}
+
+\Hypertarget{_clothoid__compatibility_8hxx_a15c2b7d41bc3b408e4788d026b39a963}\index{Clothoid\_compatibility.hxx@{Clothoid\_compatibility.hxx}!yEnd\_ISO@{yEnd\_ISO}}
+\index{yEnd\_ISO@{yEnd\_ISO}!Clothoid\_compatibility.hxx@{Clothoid\_compatibility.hxx}}
+\doxysubsubsection{\texorpdfstring{yEnd\_ISO()}{yEnd\_ISO()}}
+{\footnotesize\ttfamily \label{_clothoid__compatibility_8hxx_a15c2b7d41bc3b408e4788d026b39a963} 
+real\+\_\+type y\+End\+\_\+\+ISO (\begin{DoxyParamCaption}\item[{real\+\_\+type}]{offs}{}\end{DoxyParamCaption}) const}
+

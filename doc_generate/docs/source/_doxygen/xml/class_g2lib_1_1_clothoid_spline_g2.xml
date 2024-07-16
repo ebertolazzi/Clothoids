@@ -1,0 +1,840 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.11.0" xml:lang="en-US">
+  <compounddef id="class_g2lib_1_1_clothoid_spline_g2" kind="class" language="C++" prot="public">
+    <compoundname>G2lib::ClothoidSplineG2</compoundname>
+    <includes refid="_clothoid_list_8hxx" local="no">ClothoidList.hxx</includes>
+    <sectiondef kind="public-type">
+      <memberdef kind="typedef" id="class_g2lib_1_1_clothoid_spline_g2_1a1faebe4c47761250e62fc059e22b3c80" prot="public" static="no">
+        <type>enum class <ref refid="class_g2lib_1_1_clothoid_spline_g2_1a1faebe4c47761250e62fc059e22b3c80" kindref="member">TargetType</ref> :<ref refid="namespace_g2lib_1a17146eb1606475bedc9a2d27f3b29e34" kindref="member">integer</ref> { P1, P2, P3, P4, P5, P6, P7, P8, P9 }</type>
+        <definition>using G2lib::ClothoidSplineG2::TargetType =  enum class TargetType : integer
+    { P1, P2, P3, P4, P5, P6, P7, P8, P9 }</definition>
+        <argsstring></argsstring>
+        <name>TargetType</name>
+        <qualifiedname>G2lib::ClothoidSplineG2::TargetType</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Clothoids/ClothoidList.hxx" line="2205" column="5" bodyfile="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Clothoids/ClothoidList.hxx" bodystart="2205" bodyend="2206"/>
+      </memberdef>
+    </sectiondef>
+    <sectiondef kind="private-attrib">
+      <memberdef kind="variable" id="class_g2lib_1_1_clothoid_spline_g2_1ae384fb7ec1363de413f7a04002c55081" prot="private" static="no" mutable="no">
+        <type>Utils::Malloc&lt; <ref refid="namespace_g2lib_1acc8095aa40beedee44352de62f232033" kindref="member">real_type</ref> &gt;</type>
+        <definition>Utils::Malloc&lt;real_type&gt; G2lib::ClothoidSplineG2::real_values</definition>
+        <argsstring></argsstring>
+        <name>real_values</name>
+        <qualifiedname>G2lib::ClothoidSplineG2::real_values</qualifiedname>
+        <initializer>{&quot;ClothoidSplineG2&quot;}</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Clothoids/ClothoidList.hxx" line="2229" column="19" bodyfile="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Clothoids/ClothoidList.hxx" bodystart="2229" bodyend="2229"/>
+      </memberdef>
+      <memberdef kind="variable" id="class_g2lib_1_1_clothoid_spline_g2_1a366245a1f3bffd5897616ec7d0fc05bd" prot="private" static="no" mutable="no">
+        <type><ref refid="namespace_g2lib_1acc8095aa40beedee44352de62f232033" kindref="member">real_type</ref> *</type>
+        <definition>real_type* G2lib::ClothoidSplineG2::m_x</definition>
+        <argsstring></argsstring>
+        <name>m_x</name>
+        <qualifiedname>G2lib::ClothoidSplineG2::m_x</qualifiedname>
+        <initializer>{nullptr}</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Clothoids/ClothoidList.hxx" line="2231" column="16" bodyfile="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Clothoids/ClothoidList.hxx" bodystart="2231" bodyend="2231"/>
+      </memberdef>
+      <memberdef kind="variable" id="class_g2lib_1_1_clothoid_spline_g2_1a8f9614e1dc4d0ae29f626caaa07e5efd" prot="private" static="no" mutable="no">
+        <type><ref refid="namespace_g2lib_1acc8095aa40beedee44352de62f232033" kindref="member">real_type</ref> *</type>
+        <definition>real_type* G2lib::ClothoidSplineG2::m_y</definition>
+        <argsstring></argsstring>
+        <name>m_y</name>
+        <qualifiedname>G2lib::ClothoidSplineG2::m_y</qualifiedname>
+        <initializer>{nullptr}</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Clothoids/ClothoidList.hxx" line="2232" column="16" bodyfile="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Clothoids/ClothoidList.hxx" bodystart="2232" bodyend="2232"/>
+      </memberdef>
+      <memberdef kind="variable" id="class_g2lib_1_1_clothoid_spline_g2_1a329852300d94e105a84865c339250617" prot="private" static="no" mutable="no">
+        <type><ref refid="class_g2lib_1_1_clothoid_spline_g2_1a1faebe4c47761250e62fc059e22b3c80" kindref="member">TargetType</ref></type>
+        <definition>TargetType G2lib::ClothoidSplineG2::m_tt</definition>
+        <argsstring></argsstring>
+        <name>m_tt</name>
+        <qualifiedname>G2lib::ClothoidSplineG2::m_tt</qualifiedname>
+        <initializer>{TargetType::P1}</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Clothoids/ClothoidList.hxx" line="2233" column="17" bodyfile="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Clothoids/ClothoidList.hxx" bodystart="2233" bodyend="2233"/>
+      </memberdef>
+      <memberdef kind="variable" id="class_g2lib_1_1_clothoid_spline_g2_1a5f190c27445c3f2e2c95c85a91c26c44" prot="private" static="no" mutable="no">
+        <type><ref refid="namespace_g2lib_1acc8095aa40beedee44352de62f232033" kindref="member">real_type</ref></type>
+        <definition>real_type G2lib::ClothoidSplineG2::m_theta_I</definition>
+        <argsstring></argsstring>
+        <name>m_theta_I</name>
+        <qualifiedname>G2lib::ClothoidSplineG2::m_theta_I</qualifiedname>
+        <initializer>{<ref refid="namespace_g2lib_1acc8095aa40beedee44352de62f232033" kindref="member">real_type</ref>(0)}</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Clothoids/ClothoidList.hxx" line="2234" column="17" bodyfile="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Clothoids/ClothoidList.hxx" bodystart="2234" bodyend="2234"/>
+      </memberdef>
+      <memberdef kind="variable" id="class_g2lib_1_1_clothoid_spline_g2_1a3422635839d92168030a1b875c499ae2" prot="private" static="no" mutable="no">
+        <type><ref refid="namespace_g2lib_1acc8095aa40beedee44352de62f232033" kindref="member">real_type</ref></type>
+        <definition>real_type G2lib::ClothoidSplineG2::m_theta_F</definition>
+        <argsstring></argsstring>
+        <name>m_theta_F</name>
+        <qualifiedname>G2lib::ClothoidSplineG2::m_theta_F</qualifiedname>
+        <initializer>{<ref refid="namespace_g2lib_1acc8095aa40beedee44352de62f232033" kindref="member">real_type</ref>(0)}</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Clothoids/ClothoidList.hxx" line="2235" column="17" bodyfile="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Clothoids/ClothoidList.hxx" bodystart="2235" bodyend="2235"/>
+      </memberdef>
+      <memberdef kind="variable" id="class_g2lib_1_1_clothoid_spline_g2_1acb1162920e68837e961470f4e75007ba" prot="private" static="no" mutable="no">
+        <type><ref refid="namespace_g2lib_1a17146eb1606475bedc9a2d27f3b29e34" kindref="member">integer</ref></type>
+        <definition>integer G2lib::ClothoidSplineG2::m_npts</definition>
+        <argsstring></argsstring>
+        <name>m_npts</name>
+        <qualifiedname>G2lib::ClothoidSplineG2::m_npts</qualifiedname>
+        <initializer>{0}</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Clothoids/ClothoidList.hxx" line="2236" column="17" bodyfile="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Clothoids/ClothoidList.hxx" bodystart="2236" bodyend="2236"/>
+      </memberdef>
+      <memberdef kind="variable" id="class_g2lib_1_1_clothoid_spline_g2_1ab05ee12a1251100c36fc33c566ce6eba" prot="private" static="no" mutable="yes">
+        <type><ref refid="namespace_g2lib_1acc8095aa40beedee44352de62f232033" kindref="member">real_type</ref> *</type>
+        <definition>real_type* G2lib::ClothoidSplineG2::m_k</definition>
+        <argsstring></argsstring>
+        <name>m_k</name>
+        <qualifiedname>G2lib::ClothoidSplineG2::m_k</qualifiedname>
+        <initializer>{nullptr}</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Clothoids/ClothoidList.hxx" line="2239" column="24" bodyfile="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Clothoids/ClothoidList.hxx" bodystart="2239" bodyend="2239"/>
+      </memberdef>
+      <memberdef kind="variable" id="class_g2lib_1_1_clothoid_spline_g2_1a2db895318867f05bb2ad2ce2b37e1503" prot="private" static="no" mutable="yes">
+        <type><ref refid="namespace_g2lib_1acc8095aa40beedee44352de62f232033" kindref="member">real_type</ref> *</type>
+        <definition>real_type* G2lib::ClothoidSplineG2::m_dk</definition>
+        <argsstring></argsstring>
+        <name>m_dk</name>
+        <qualifiedname>G2lib::ClothoidSplineG2::m_dk</qualifiedname>
+        <initializer>{nullptr}</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Clothoids/ClothoidList.hxx" line="2240" column="24" bodyfile="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Clothoids/ClothoidList.hxx" bodystart="2240" bodyend="2240"/>
+      </memberdef>
+      <memberdef kind="variable" id="class_g2lib_1_1_clothoid_spline_g2_1ab37c96441081cdf2a4207d62a5c41451" prot="private" static="no" mutable="yes">
+        <type><ref refid="namespace_g2lib_1acc8095aa40beedee44352de62f232033" kindref="member">real_type</ref> *</type>
+        <definition>real_type* G2lib::ClothoidSplineG2::m_L</definition>
+        <argsstring></argsstring>
+        <name>m_L</name>
+        <qualifiedname>G2lib::ClothoidSplineG2::m_L</qualifiedname>
+        <initializer>{nullptr}</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Clothoids/ClothoidList.hxx" line="2241" column="24" bodyfile="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Clothoids/ClothoidList.hxx" bodystart="2241" bodyend="2241"/>
+      </memberdef>
+      <memberdef kind="variable" id="class_g2lib_1_1_clothoid_spline_g2_1ad27abe5e29be0e6ae24cde617f54dccc" prot="private" static="no" mutable="yes">
+        <type><ref refid="namespace_g2lib_1acc8095aa40beedee44352de62f232033" kindref="member">real_type</ref> *</type>
+        <definition>real_type* G2lib::ClothoidSplineG2::m_kL</definition>
+        <argsstring></argsstring>
+        <name>m_kL</name>
+        <qualifiedname>G2lib::ClothoidSplineG2::m_kL</qualifiedname>
+        <initializer>{nullptr}</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Clothoids/ClothoidList.hxx" line="2242" column="24" bodyfile="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Clothoids/ClothoidList.hxx" bodystart="2242" bodyend="2242"/>
+      </memberdef>
+      <memberdef kind="variable" id="class_g2lib_1_1_clothoid_spline_g2_1a2a92a4ba73806ed31500a04e4016ceea" prot="private" static="no" mutable="yes">
+        <type><ref refid="namespace_g2lib_1acc8095aa40beedee44352de62f232033" kindref="member">real_type</ref> *</type>
+        <definition>real_type* G2lib::ClothoidSplineG2::m_L_1</definition>
+        <argsstring></argsstring>
+        <name>m_L_1</name>
+        <qualifiedname>G2lib::ClothoidSplineG2::m_L_1</qualifiedname>
+        <initializer>{nullptr}</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Clothoids/ClothoidList.hxx" line="2243" column="24" bodyfile="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Clothoids/ClothoidList.hxx" bodystart="2243" bodyend="2243"/>
+      </memberdef>
+      <memberdef kind="variable" id="class_g2lib_1_1_clothoid_spline_g2_1a1430fa95d769b755d0af87ef2a6e8656" prot="private" static="no" mutable="yes">
+        <type><ref refid="namespace_g2lib_1acc8095aa40beedee44352de62f232033" kindref="member">real_type</ref> *</type>
+        <definition>real_type* G2lib::ClothoidSplineG2::m_L_2</definition>
+        <argsstring></argsstring>
+        <name>m_L_2</name>
+        <qualifiedname>G2lib::ClothoidSplineG2::m_L_2</qualifiedname>
+        <initializer>{nullptr}</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Clothoids/ClothoidList.hxx" line="2244" column="24" bodyfile="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Clothoids/ClothoidList.hxx" bodystart="2244" bodyend="2244"/>
+      </memberdef>
+      <memberdef kind="variable" id="class_g2lib_1_1_clothoid_spline_g2_1a43cbce94b06953c1018d39b0c91d2567" prot="private" static="no" mutable="yes">
+        <type><ref refid="namespace_g2lib_1acc8095aa40beedee44352de62f232033" kindref="member">real_type</ref> *</type>
+        <definition>real_type* G2lib::ClothoidSplineG2::m_k_1</definition>
+        <argsstring></argsstring>
+        <name>m_k_1</name>
+        <qualifiedname>G2lib::ClothoidSplineG2::m_k_1</qualifiedname>
+        <initializer>{nullptr}</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Clothoids/ClothoidList.hxx" line="2245" column="24" bodyfile="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Clothoids/ClothoidList.hxx" bodystart="2245" bodyend="2245"/>
+      </memberdef>
+      <memberdef kind="variable" id="class_g2lib_1_1_clothoid_spline_g2_1a64a41e11d8d819c0f751f6c3bf6a244c" prot="private" static="no" mutable="yes">
+        <type><ref refid="namespace_g2lib_1acc8095aa40beedee44352de62f232033" kindref="member">real_type</ref> *</type>
+        <definition>real_type* G2lib::ClothoidSplineG2::m_k_2</definition>
+        <argsstring></argsstring>
+        <name>m_k_2</name>
+        <qualifiedname>G2lib::ClothoidSplineG2::m_k_2</qualifiedname>
+        <initializer>{nullptr}</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Clothoids/ClothoidList.hxx" line="2246" column="24" bodyfile="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Clothoids/ClothoidList.hxx" bodystart="2246" bodyend="2246"/>
+      </memberdef>
+      <memberdef kind="variable" id="class_g2lib_1_1_clothoid_spline_g2_1aed9a0645da0d47c964c6c5126197562e" prot="private" static="no" mutable="yes">
+        <type><ref refid="namespace_g2lib_1acc8095aa40beedee44352de62f232033" kindref="member">real_type</ref> *</type>
+        <definition>real_type* G2lib::ClothoidSplineG2::m_dk_1</definition>
+        <argsstring></argsstring>
+        <name>m_dk_1</name>
+        <qualifiedname>G2lib::ClothoidSplineG2::m_dk_1</qualifiedname>
+        <initializer>{nullptr}</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Clothoids/ClothoidList.hxx" line="2247" column="24" bodyfile="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Clothoids/ClothoidList.hxx" bodystart="2247" bodyend="2247"/>
+      </memberdef>
+      <memberdef kind="variable" id="class_g2lib_1_1_clothoid_spline_g2_1a1c0e33260cd6b892a7573046dded0baf" prot="private" static="no" mutable="yes">
+        <type><ref refid="namespace_g2lib_1acc8095aa40beedee44352de62f232033" kindref="member">real_type</ref> *</type>
+        <definition>real_type* G2lib::ClothoidSplineG2::m_dk_2</definition>
+        <argsstring></argsstring>
+        <name>m_dk_2</name>
+        <qualifiedname>G2lib::ClothoidSplineG2::m_dk_2</qualifiedname>
+        <initializer>{nullptr}</initializer>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Clothoids/ClothoidList.hxx" line="2248" column="24" bodyfile="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Clothoids/ClothoidList.hxx" bodystart="2248" bodyend="2248"/>
+      </memberdef>
+    </sectiondef>
+    <sectiondef kind="public-static-func">
+      <memberdef kind="function" id="class_g2lib_1_1_clothoid_spline_g2_1a275930dd9479302488c6652940121695" prot="public" static="yes" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>string</type>
+        <definition>static string G2lib::ClothoidSplineG2::to_string</definition>
+        <argsstring>(TargetType n)</argsstring>
+        <name>to_string</name>
+        <qualifiedname>G2lib::ClothoidSplineG2::to_string</qualifiedname>
+        <param>
+          <type><ref refid="class_g2lib_1_1_clothoid_spline_g2_1a1faebe4c47761250e62fc059e22b3c80" kindref="member">TargetType</ref></type>
+          <declname>n</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Clothoids/ClothoidList.hxx" line="2211" column="5" bodyfile="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Clothoids/ClothoidList.hxx" bodystart="2211" bodyend="2225"/>
+      </memberdef>
+    </sectiondef>
+    <sectiondef kind="private-func">
+      <memberdef kind="function" id="class_g2lib_1_1_clothoid_spline_g2_1adc91e78796aeda7226b17a91f69ea851" prot="private" static="no" const="yes" explicit="no" inline="yes" virt="non-virtual">
+        <type><ref refid="namespace_g2lib_1acc8095aa40beedee44352de62f232033" kindref="member">real_type</ref></type>
+        <definition>real_type G2lib::ClothoidSplineG2::diff2pi</definition>
+        <argsstring>(real_type in) const</argsstring>
+        <name>diff2pi</name>
+        <qualifiedname>G2lib::ClothoidSplineG2::diff2pi</qualifiedname>
+        <param>
+          <type><ref refid="namespace_g2lib_1acc8095aa40beedee44352de62f232033" kindref="member">real_type</ref></type>
+          <declname>in</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Clothoids/ClothoidList.hxx" line="2251" column="5" bodyfile="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Clothoids/ClothoidList.hxx" bodystart="2251" bodyend="2253"/>
+      </memberdef>
+    </sectiondef>
+    <sectiondef kind="public-func">
+      <memberdef kind="function" id="class_g2lib_1_1_clothoid_spline_g2_1acee8dc9d5fc5ac1c1859388c102b1102" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type></type>
+        <definition>G2lib::ClothoidSplineG2::ClothoidSplineG2</definition>
+        <argsstring>()=default</argsstring>
+        <name>ClothoidSplineG2</name>
+        <qualifiedname>G2lib::ClothoidSplineG2::ClothoidSplineG2</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Clothoids/ClothoidList.hxx" line="2257" column="5"/>
+      </memberdef>
+      <memberdef kind="function" id="class_g2lib_1_1_clothoid_spline_g2_1ab110848a6a6995eacf1c165e5289ec27" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type></type>
+        <definition>G2lib::ClothoidSplineG2::~ClothoidSplineG2</definition>
+        <argsstring>()=default</argsstring>
+        <name>~ClothoidSplineG2</name>
+        <qualifiedname>G2lib::ClothoidSplineG2::~ClothoidSplineG2</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Clothoids/ClothoidList.hxx" line="2258" column="5"/>
+      </memberdef>
+      <memberdef kind="function" id="class_g2lib_1_1_clothoid_spline_g2_1aa394296e02348f3d0c5832137336dea6" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>void</type>
+        <definition>void G2lib::ClothoidSplineG2::setP1</definition>
+        <argsstring>(real_type theta0, real_type thetaN)</argsstring>
+        <name>setP1</name>
+        <qualifiedname>G2lib::ClothoidSplineG2::setP1</qualifiedname>
+        <param>
+          <type><ref refid="namespace_g2lib_1acc8095aa40beedee44352de62f232033" kindref="member">real_type</ref></type>
+          <declname>theta0</declname>
+        </param>
+        <param>
+          <type><ref refid="namespace_g2lib_1acc8095aa40beedee44352de62f232033" kindref="member">real_type</ref></type>
+          <declname>thetaN</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Clothoids/ClothoidList.hxx" line="2261" column="5" bodyfile="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Clothoids/ClothoidList.hxx" bodystart="2261" bodyend="2265"/>
+      </memberdef>
+      <memberdef kind="function" id="class_g2lib_1_1_clothoid_spline_g2_1ada7bb1a21e1e10020a70ef0a28093689" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>void</type>
+        <definition>void G2lib::ClothoidSplineG2::setP2</definition>
+        <argsstring>()</argsstring>
+        <name>setP2</name>
+        <qualifiedname>G2lib::ClothoidSplineG2::setP2</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Clothoids/ClothoidList.hxx" line="2267" column="10" bodyfile="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Clothoids/ClothoidList.hxx" bodystart="2267" bodyend="2267"/>
+      </memberdef>
+      <memberdef kind="function" id="class_g2lib_1_1_clothoid_spline_g2_1a90a14f610581691a6bb61b42f47d6aeb" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>void</type>
+        <definition>void G2lib::ClothoidSplineG2::setP3</definition>
+        <argsstring>()</argsstring>
+        <name>setP3</name>
+        <qualifiedname>G2lib::ClothoidSplineG2::setP3</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Clothoids/ClothoidList.hxx" line="2268" column="10" bodyfile="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Clothoids/ClothoidList.hxx" bodystart="2268" bodyend="2268"/>
+      </memberdef>
+      <memberdef kind="function" id="class_g2lib_1_1_clothoid_spline_g2_1a990c69a26c3976e2eb0126a022e9ffc3" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>void</type>
+        <definition>void G2lib::ClothoidSplineG2::setP4</definition>
+        <argsstring>()</argsstring>
+        <name>setP4</name>
+        <qualifiedname>G2lib::ClothoidSplineG2::setP4</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Clothoids/ClothoidList.hxx" line="2269" column="10" bodyfile="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Clothoids/ClothoidList.hxx" bodystart="2269" bodyend="2269"/>
+      </memberdef>
+      <memberdef kind="function" id="class_g2lib_1_1_clothoid_spline_g2_1a6acc5f9bae89dc7d89701247698210bc" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>void</type>
+        <definition>void G2lib::ClothoidSplineG2::setP5</definition>
+        <argsstring>()</argsstring>
+        <name>setP5</name>
+        <qualifiedname>G2lib::ClothoidSplineG2::setP5</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Clothoids/ClothoidList.hxx" line="2270" column="10" bodyfile="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Clothoids/ClothoidList.hxx" bodystart="2270" bodyend="2270"/>
+      </memberdef>
+      <memberdef kind="function" id="class_g2lib_1_1_clothoid_spline_g2_1a9466df9804270455bbb25c222f43c0dc" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>void</type>
+        <definition>void G2lib::ClothoidSplineG2::setP6</definition>
+        <argsstring>()</argsstring>
+        <name>setP6</name>
+        <qualifiedname>G2lib::ClothoidSplineG2::setP6</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Clothoids/ClothoidList.hxx" line="2271" column="10" bodyfile="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Clothoids/ClothoidList.hxx" bodystart="2271" bodyend="2271"/>
+      </memberdef>
+      <memberdef kind="function" id="class_g2lib_1_1_clothoid_spline_g2_1aefa91d946d697665c74e171da05b1d6b" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>void</type>
+        <definition>void G2lib::ClothoidSplineG2::setP7</definition>
+        <argsstring>()</argsstring>
+        <name>setP7</name>
+        <qualifiedname>G2lib::ClothoidSplineG2::setP7</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Clothoids/ClothoidList.hxx" line="2272" column="10" bodyfile="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Clothoids/ClothoidList.hxx" bodystart="2272" bodyend="2272"/>
+      </memberdef>
+      <memberdef kind="function" id="class_g2lib_1_1_clothoid_spline_g2_1aaccf933b3fde6c0703334dd744e1f986" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>void</type>
+        <definition>void G2lib::ClothoidSplineG2::setP8</definition>
+        <argsstring>()</argsstring>
+        <name>setP8</name>
+        <qualifiedname>G2lib::ClothoidSplineG2::setP8</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Clothoids/ClothoidList.hxx" line="2273" column="10" bodyfile="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Clothoids/ClothoidList.hxx" bodystart="2273" bodyend="2273"/>
+      </memberdef>
+      <memberdef kind="function" id="class_g2lib_1_1_clothoid_spline_g2_1a6a6a6bcd9cf0d0605ddb28399b091f60" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type>void</type>
+        <definition>void G2lib::ClothoidSplineG2::setP9</definition>
+        <argsstring>()</argsstring>
+        <name>setP9</name>
+        <qualifiedname>G2lib::ClothoidSplineG2::setP9</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Clothoids/ClothoidList.hxx" line="2274" column="10" bodyfile="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Clothoids/ClothoidList.hxx" bodystart="2274" bodyend="2274"/>
+      </memberdef>
+      <memberdef kind="function" id="class_g2lib_1_1_clothoid_spline_g2_1a43fa40cb55aaaef65f2eecc5f603f985" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void G2lib::ClothoidSplineG2::build</definition>
+        <argsstring>(real_type const *xvec, real_type const *yvec, integer npts)</argsstring>
+        <name>build</name>
+        <qualifiedname>G2lib::ClothoidSplineG2::build</qualifiedname>
+        <param>
+          <type><ref refid="namespace_g2lib_1acc8095aa40beedee44352de62f232033" kindref="member">real_type</ref> const *</type>
+          <declname>xvec</declname>
+        </param>
+        <param>
+          <type><ref refid="namespace_g2lib_1acc8095aa40beedee44352de62f232033" kindref="member">real_type</ref> const *</type>
+          <declname>yvec</declname>
+        </param>
+        <param>
+          <type><ref refid="namespace_g2lib_1a17146eb1606475bedc9a2d27f3b29e34" kindref="member">integer</ref></type>
+          <declname>npts</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Clothoids/ClothoidList.hxx" line="2277" column="5" bodyfile="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/ClothoidG2.cc" bodystart="1230" bodyend="1254"/>
+      </memberdef>
+      <memberdef kind="function" id="class_g2lib_1_1_clothoid_spline_g2_1a0ac08de6ae3d482e4cb6f964206e7e8c" prot="public" static="no" const="yes" explicit="no" inline="yes" virt="non-virtual">
+        <type><ref refid="namespace_g2lib_1a17146eb1606475bedc9a2d27f3b29e34" kindref="member">integer</ref></type>
+        <definition>integer G2lib::ClothoidSplineG2::numPnts</definition>
+        <argsstring>() const</argsstring>
+        <name>numPnts</name>
+        <qualifiedname>G2lib::ClothoidSplineG2::numPnts</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Clothoids/ClothoidList.hxx" line="2283" column="13" bodyfile="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Clothoids/ClothoidList.hxx" bodystart="2283" bodyend="2283"/>
+      </memberdef>
+      <memberdef kind="function" id="class_g2lib_1_1_clothoid_spline_g2_1a70b733f145c32079a8991a7f2e380ddb" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="namespace_g2lib_1a17146eb1606475bedc9a2d27f3b29e34" kindref="member">integer</ref></type>
+        <definition>integer G2lib::ClothoidSplineG2::numTheta</definition>
+        <argsstring>() const</argsstring>
+        <name>numTheta</name>
+        <qualifiedname>G2lib::ClothoidSplineG2::numTheta</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Clothoids/ClothoidList.hxx" line="2284" column="13" bodyfile="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/ClothoidG2.cc" bodystart="1259" bodyend="1259"/>
+      </memberdef>
+      <memberdef kind="function" id="class_g2lib_1_1_clothoid_spline_g2_1a13601559d623d59a486ce88c0cd9aaca" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="namespace_g2lib_1a17146eb1606475bedc9a2d27f3b29e34" kindref="member">integer</ref></type>
+        <definition>integer G2lib::ClothoidSplineG2::numConstraints</definition>
+        <argsstring>() const</argsstring>
+        <name>numConstraints</name>
+        <qualifiedname>G2lib::ClothoidSplineG2::numConstraints</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Clothoids/ClothoidList.hxx" line="2285" column="13" bodyfile="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/ClothoidG2.cc" bodystart="1264" bodyend="1271"/>
+      </memberdef>
+      <memberdef kind="function" id="class_g2lib_1_1_clothoid_spline_g2_1a5cd0b8baccba41e544d8687ef34bce41" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void G2lib::ClothoidSplineG2::guess</definition>
+        <argsstring>(real_type *theta_guess, real_type *theta_min, real_type *theta_max) const</argsstring>
+        <name>guess</name>
+        <qualifiedname>G2lib::ClothoidSplineG2::guess</qualifiedname>
+        <param>
+          <type><ref refid="namespace_g2lib_1acc8095aa40beedee44352de62f232033" kindref="member">real_type</ref> *</type>
+          <declname>theta_guess</declname>
+        </param>
+        <param>
+          <type><ref refid="namespace_g2lib_1acc8095aa40beedee44352de62f232033" kindref="member">real_type</ref> *</type>
+          <declname>theta_min</declname>
+        </param>
+        <param>
+          <type><ref refid="namespace_g2lib_1acc8095aa40beedee44352de62f232033" kindref="member">real_type</ref> *</type>
+          <declname>theta_max</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Clothoids/ClothoidList.hxx" line="2288" column="5" bodyfile="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/ClothoidG2.cc" bodystart="1214" bodyend="1227"/>
+      </memberdef>
+      <memberdef kind="function" id="class_g2lib_1_1_clothoid_spline_g2_1ac6a206f906122db8cef68d025d4bbe6d" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type>bool</type>
+        <definition>bool G2lib::ClothoidSplineG2::objective</definition>
+        <argsstring>(real_type const theta[], real_type &amp;f) const</argsstring>
+        <name>objective</name>
+        <qualifiedname>G2lib::ClothoidSplineG2::objective</qualifiedname>
+        <param>
+          <type><ref refid="namespace_g2lib_1acc8095aa40beedee44352de62f232033" kindref="member">real_type</ref> const</type>
+          <declname>theta</declname>
+          <array>[]</array>
+        </param>
+        <param>
+          <type><ref refid="namespace_g2lib_1acc8095aa40beedee44352de62f232033" kindref="member">real_type</ref> &amp;</type>
+          <declname>f</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Clothoids/ClothoidList.hxx" line="2295" column="5" bodyfile="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/ClothoidG2.cc" bodystart="1276" bodyend="1349"/>
+      </memberdef>
+      <memberdef kind="function" id="class_g2lib_1_1_clothoid_spline_g2_1a7e987ea3b72596c7ddfa4ef9786a6286" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type>bool</type>
+        <definition>bool G2lib::ClothoidSplineG2::gradient</definition>
+        <argsstring>(real_type const theta[], real_type g[]) const</argsstring>
+        <name>gradient</name>
+        <qualifiedname>G2lib::ClothoidSplineG2::gradient</qualifiedname>
+        <param>
+          <type><ref refid="namespace_g2lib_1acc8095aa40beedee44352de62f232033" kindref="member">real_type</ref> const</type>
+          <declname>theta</declname>
+          <array>[]</array>
+        </param>
+        <param>
+          <type><ref refid="namespace_g2lib_1acc8095aa40beedee44352de62f232033" kindref="member">real_type</ref></type>
+          <declname>g</declname>
+          <array>[]</array>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Clothoids/ClothoidList.hxx" line="2298" column="5" bodyfile="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/ClothoidG2.cc" bodystart="1354" bodyend="1489"/>
+      </memberdef>
+      <memberdef kind="function" id="class_g2lib_1_1_clothoid_spline_g2_1a03f40d7d82dafc1548211da615948d08" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type>bool</type>
+        <definition>bool G2lib::ClothoidSplineG2::constraints</definition>
+        <argsstring>(real_type const theta[], real_type c[]) const</argsstring>
+        <name>constraints</name>
+        <qualifiedname>G2lib::ClothoidSplineG2::constraints</qualifiedname>
+        <param>
+          <type><ref refid="namespace_g2lib_1acc8095aa40beedee44352de62f232033" kindref="member">real_type</ref> const</type>
+          <declname>theta</declname>
+          <array>[]</array>
+        </param>
+        <param>
+          <type><ref refid="namespace_g2lib_1acc8095aa40beedee44352de62f232033" kindref="member">real_type</ref></type>
+          <declname>c</declname>
+          <array>[]</array>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Clothoids/ClothoidList.hxx" line="2301" column="5" bodyfile="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/ClothoidG2.cc" bodystart="1494" bodyend="1525"/>
+      </memberdef>
+      <memberdef kind="function" id="class_g2lib_1_1_clothoid_spline_g2_1a670fcaf10286ad4ab7c312bdd2e8d7ab" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="namespace_g2lib_1a17146eb1606475bedc9a2d27f3b29e34" kindref="member">integer</ref></type>
+        <definition>integer G2lib::ClothoidSplineG2::jacobian_nnz</definition>
+        <argsstring>() const</argsstring>
+        <name>jacobian_nnz</name>
+        <qualifiedname>G2lib::ClothoidSplineG2::jacobian_nnz</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Clothoids/ClothoidList.hxx" line="2304" column="5" bodyfile="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/ClothoidG2.cc" bodystart="1530" bodyend="1538"/>
+      </memberdef>
+      <memberdef kind="function" id="class_g2lib_1_1_clothoid_spline_g2_1a10eec045c97ee21de50b9ea28ed2e5cf" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type>bool</type>
+        <definition>bool G2lib::ClothoidSplineG2::jacobian_pattern</definition>
+        <argsstring>(integer *i, integer *j) const</argsstring>
+        <name>jacobian_pattern</name>
+        <qualifiedname>G2lib::ClothoidSplineG2::jacobian_pattern</qualifiedname>
+        <param>
+          <type><ref refid="namespace_g2lib_1a17146eb1606475bedc9a2d27f3b29e34" kindref="member">integer</ref> *</type>
+          <declname>i</declname>
+        </param>
+        <param>
+          <type><ref refid="namespace_g2lib_1a17146eb1606475bedc9a2d27f3b29e34" kindref="member">integer</ref> *</type>
+          <declname>j</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Clothoids/ClothoidList.hxx" line="2307" column="5" bodyfile="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/ClothoidG2.cc" bodystart="1543" bodyend="1576"/>
+      </memberdef>
+      <memberdef kind="function" id="class_g2lib_1_1_clothoid_spline_g2_1a1fe549e70fd7fd95d103b0b9269ec06a" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type>bool</type>
+        <definition>bool G2lib::ClothoidSplineG2::jacobian_pattern_matlab</definition>
+        <argsstring>(real_type *i, real_type *j) const</argsstring>
+        <name>jacobian_pattern_matlab</name>
+        <qualifiedname>G2lib::ClothoidSplineG2::jacobian_pattern_matlab</qualifiedname>
+        <param>
+          <type><ref refid="namespace_g2lib_1acc8095aa40beedee44352de62f232033" kindref="member">real_type</ref> *</type>
+          <declname>i</declname>
+        </param>
+        <param>
+          <type><ref refid="namespace_g2lib_1acc8095aa40beedee44352de62f232033" kindref="member">real_type</ref> *</type>
+          <declname>j</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Clothoids/ClothoidList.hxx" line="2310" column="5" bodyfile="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/ClothoidG2.cc" bodystart="1581" bodyend="1614"/>
+      </memberdef>
+      <memberdef kind="function" id="class_g2lib_1_1_clothoid_spline_g2_1a90a6be1c4ce4650b20bbd5536dae39c9" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type>bool</type>
+        <definition>bool G2lib::ClothoidSplineG2::jacobian</definition>
+        <argsstring>(real_type const *theta, real_type *vals) const</argsstring>
+        <name>jacobian</name>
+        <qualifiedname>G2lib::ClothoidSplineG2::jacobian</qualifiedname>
+        <param>
+          <type><ref refid="namespace_g2lib_1acc8095aa40beedee44352de62f232033" kindref="member">real_type</ref> const *</type>
+          <declname>theta</declname>
+        </param>
+        <param>
+          <type><ref refid="namespace_g2lib_1acc8095aa40beedee44352de62f232033" kindref="member">real_type</ref> *</type>
+          <declname>vals</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Clothoids/ClothoidList.hxx" line="2313" column="5" bodyfile="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/ClothoidG2.cc" bodystart="1619" bodyend="1667"/>
+      </memberdef>
+      <memberdef kind="function" id="class_g2lib_1_1_clothoid_spline_g2_1ad6fe9c6f2c4f4e559ed2f44a42cc60c6" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type>string</type>
+        <definition>string G2lib::ClothoidSplineG2::info</definition>
+        <argsstring>() const</argsstring>
+        <name>info</name>
+        <qualifiedname>G2lib::ClothoidSplineG2::info</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Clothoids/ClothoidList.hxx" line="2315" column="12" bodyfile="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/ClothoidList.cc" bodystart="2548" bodyend="2549"/>
+      </memberdef>
+      <memberdef kind="function" id="class_g2lib_1_1_clothoid_spline_g2_1a396c89c48d7611f4c4b5ee250022489c" prot="public" static="no" const="yes" explicit="no" inline="yes" virt="non-virtual">
+        <type>void</type>
+        <definition>void G2lib::ClothoidSplineG2::info</definition>
+        <argsstring>(ostream_type &amp;stream) const</argsstring>
+        <name>info</name>
+        <qualifiedname>G2lib::ClothoidSplineG2::info</qualifiedname>
+        <param>
+          <type><ref refid="namespace_g2lib_1a8fcbace87db5a5e71391e0040878f2c3" kindref="member">ostream_type</ref> &amp;</type>
+          <declname>stream</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Clothoids/ClothoidList.hxx" line="2318" column="5" bodyfile="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Clothoids/ClothoidList.hxx" bodystart="2318" bodyend="2319"/>
+      </memberdef>
+    </sectiondef>
+    <sectiondef kind="friend">
+      <memberdef kind="friend" id="class_g2lib_1_1_clothoid_spline_g2_1a406f0cfa3728ce21b7345fb7af2a3738" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="namespace_g2lib_1a8fcbace87db5a5e71391e0040878f2c3" kindref="member">ostream_type</ref> &amp;</type>
+        <definition>ostream_type &amp; operator&lt;&lt;</definition>
+        <argsstring>(ostream_type &amp;stream, ClothoidSplineG2 const &amp;c)</argsstring>
+        <name>operator&lt;&lt;</name>
+        <qualifiedname>G2lib::ClothoidSplineG2::operator&lt;&lt;</qualifiedname>
+        <param>
+          <type><ref refid="namespace_g2lib_1a8fcbace87db5a5e71391e0040878f2c3" kindref="member">ostream_type</ref> &amp;</type>
+          <declname>stream</declname>
+        </param>
+        <param>
+          <type><ref refid="class_g2lib_1_1_clothoid_spline_g2" kindref="compound">ClothoidSplineG2</ref> const &amp;</type>
+          <declname>c</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Clothoids/ClothoidList.hxx" line="2322" column="5" bodyfile="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/ClothoidG2.cc" bodystart="1672" bodyend="1679"/>
+      </memberdef>
+    </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+<para>Class for the computation of G2 spljne of clothoids </para>
+    </detaileddescription>
+    <location file="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Clothoids/ClothoidList.hxx" line="2203" column="3" bodyfile="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Clothoids/ClothoidList.hxx" bodystart="2203" bodyend="2325"/>
+    <listofallmembers>
+      <member refid="class_g2lib_1_1_clothoid_spline_g2_1a43fa40cb55aaaef65f2eecc5f603f985" prot="public" virt="non-virtual"><scope>G2lib::ClothoidSplineG2</scope><name>build</name></member>
+      <member refid="class_g2lib_1_1_clothoid_spline_g2_1acee8dc9d5fc5ac1c1859388c102b1102" prot="public" virt="non-virtual"><scope>G2lib::ClothoidSplineG2</scope><name>ClothoidSplineG2</name></member>
+      <member refid="class_g2lib_1_1_clothoid_spline_g2_1a03f40d7d82dafc1548211da615948d08" prot="public" virt="non-virtual"><scope>G2lib::ClothoidSplineG2</scope><name>constraints</name></member>
+      <member refid="class_g2lib_1_1_clothoid_spline_g2_1adc91e78796aeda7226b17a91f69ea851" prot="private" virt="non-virtual"><scope>G2lib::ClothoidSplineG2</scope><name>diff2pi</name></member>
+      <member refid="class_g2lib_1_1_clothoid_spline_g2_1a7e987ea3b72596c7ddfa4ef9786a6286" prot="public" virt="non-virtual"><scope>G2lib::ClothoidSplineG2</scope><name>gradient</name></member>
+      <member refid="class_g2lib_1_1_clothoid_spline_g2_1a5cd0b8baccba41e544d8687ef34bce41" prot="public" virt="non-virtual"><scope>G2lib::ClothoidSplineG2</scope><name>guess</name></member>
+      <member refid="class_g2lib_1_1_clothoid_spline_g2_1ad6fe9c6f2c4f4e559ed2f44a42cc60c6" prot="public" virt="non-virtual"><scope>G2lib::ClothoidSplineG2</scope><name>info</name></member>
+      <member refid="class_g2lib_1_1_clothoid_spline_g2_1a396c89c48d7611f4c4b5ee250022489c" prot="public" virt="non-virtual"><scope>G2lib::ClothoidSplineG2</scope><name>info</name></member>
+      <member refid="class_g2lib_1_1_clothoid_spline_g2_1a90a6be1c4ce4650b20bbd5536dae39c9" prot="public" virt="non-virtual"><scope>G2lib::ClothoidSplineG2</scope><name>jacobian</name></member>
+      <member refid="class_g2lib_1_1_clothoid_spline_g2_1a670fcaf10286ad4ab7c312bdd2e8d7ab" prot="public" virt="non-virtual"><scope>G2lib::ClothoidSplineG2</scope><name>jacobian_nnz</name></member>
+      <member refid="class_g2lib_1_1_clothoid_spline_g2_1a10eec045c97ee21de50b9ea28ed2e5cf" prot="public" virt="non-virtual"><scope>G2lib::ClothoidSplineG2</scope><name>jacobian_pattern</name></member>
+      <member refid="class_g2lib_1_1_clothoid_spline_g2_1a1fe549e70fd7fd95d103b0b9269ec06a" prot="public" virt="non-virtual"><scope>G2lib::ClothoidSplineG2</scope><name>jacobian_pattern_matlab</name></member>
+      <member refid="class_g2lib_1_1_clothoid_spline_g2_1a2db895318867f05bb2ad2ce2b37e1503" prot="private" virt="non-virtual"><scope>G2lib::ClothoidSplineG2</scope><name>m_dk</name></member>
+      <member refid="class_g2lib_1_1_clothoid_spline_g2_1aed9a0645da0d47c964c6c5126197562e" prot="private" virt="non-virtual"><scope>G2lib::ClothoidSplineG2</scope><name>m_dk_1</name></member>
+      <member refid="class_g2lib_1_1_clothoid_spline_g2_1a1c0e33260cd6b892a7573046dded0baf" prot="private" virt="non-virtual"><scope>G2lib::ClothoidSplineG2</scope><name>m_dk_2</name></member>
+      <member refid="class_g2lib_1_1_clothoid_spline_g2_1ab05ee12a1251100c36fc33c566ce6eba" prot="private" virt="non-virtual"><scope>G2lib::ClothoidSplineG2</scope><name>m_k</name></member>
+      <member refid="class_g2lib_1_1_clothoid_spline_g2_1a43cbce94b06953c1018d39b0c91d2567" prot="private" virt="non-virtual"><scope>G2lib::ClothoidSplineG2</scope><name>m_k_1</name></member>
+      <member refid="class_g2lib_1_1_clothoid_spline_g2_1a64a41e11d8d819c0f751f6c3bf6a244c" prot="private" virt="non-virtual"><scope>G2lib::ClothoidSplineG2</scope><name>m_k_2</name></member>
+      <member refid="class_g2lib_1_1_clothoid_spline_g2_1ad27abe5e29be0e6ae24cde617f54dccc" prot="private" virt="non-virtual"><scope>G2lib::ClothoidSplineG2</scope><name>m_kL</name></member>
+      <member refid="class_g2lib_1_1_clothoid_spline_g2_1ab37c96441081cdf2a4207d62a5c41451" prot="private" virt="non-virtual"><scope>G2lib::ClothoidSplineG2</scope><name>m_L</name></member>
+      <member refid="class_g2lib_1_1_clothoid_spline_g2_1a2a92a4ba73806ed31500a04e4016ceea" prot="private" virt="non-virtual"><scope>G2lib::ClothoidSplineG2</scope><name>m_L_1</name></member>
+      <member refid="class_g2lib_1_1_clothoid_spline_g2_1a1430fa95d769b755d0af87ef2a6e8656" prot="private" virt="non-virtual"><scope>G2lib::ClothoidSplineG2</scope><name>m_L_2</name></member>
+      <member refid="class_g2lib_1_1_clothoid_spline_g2_1acb1162920e68837e961470f4e75007ba" prot="private" virt="non-virtual"><scope>G2lib::ClothoidSplineG2</scope><name>m_npts</name></member>
+      <member refid="class_g2lib_1_1_clothoid_spline_g2_1a3422635839d92168030a1b875c499ae2" prot="private" virt="non-virtual"><scope>G2lib::ClothoidSplineG2</scope><name>m_theta_F</name></member>
+      <member refid="class_g2lib_1_1_clothoid_spline_g2_1a5f190c27445c3f2e2c95c85a91c26c44" prot="private" virt="non-virtual"><scope>G2lib::ClothoidSplineG2</scope><name>m_theta_I</name></member>
+      <member refid="class_g2lib_1_1_clothoid_spline_g2_1a329852300d94e105a84865c339250617" prot="private" virt="non-virtual"><scope>G2lib::ClothoidSplineG2</scope><name>m_tt</name></member>
+      <member refid="class_g2lib_1_1_clothoid_spline_g2_1a366245a1f3bffd5897616ec7d0fc05bd" prot="private" virt="non-virtual"><scope>G2lib::ClothoidSplineG2</scope><name>m_x</name></member>
+      <member refid="class_g2lib_1_1_clothoid_spline_g2_1a8f9614e1dc4d0ae29f626caaa07e5efd" prot="private" virt="non-virtual"><scope>G2lib::ClothoidSplineG2</scope><name>m_y</name></member>
+      <member refid="class_g2lib_1_1_clothoid_spline_g2_1a13601559d623d59a486ce88c0cd9aaca" prot="public" virt="non-virtual"><scope>G2lib::ClothoidSplineG2</scope><name>numConstraints</name></member>
+      <member refid="class_g2lib_1_1_clothoid_spline_g2_1a0ac08de6ae3d482e4cb6f964206e7e8c" prot="public" virt="non-virtual"><scope>G2lib::ClothoidSplineG2</scope><name>numPnts</name></member>
+      <member refid="class_g2lib_1_1_clothoid_spline_g2_1a70b733f145c32079a8991a7f2e380ddb" prot="public" virt="non-virtual"><scope>G2lib::ClothoidSplineG2</scope><name>numTheta</name></member>
+      <member refid="class_g2lib_1_1_clothoid_spline_g2_1ac6a206f906122db8cef68d025d4bbe6d" prot="public" virt="non-virtual"><scope>G2lib::ClothoidSplineG2</scope><name>objective</name></member>
+      <member refid="class_g2lib_1_1_clothoid_spline_g2_1a406f0cfa3728ce21b7345fb7af2a3738" prot="public" virt="non-virtual"><scope>G2lib::ClothoidSplineG2</scope><name>operator&lt;&lt;</name></member>
+      <member refid="class_g2lib_1_1_clothoid_spline_g2_1ae384fb7ec1363de413f7a04002c55081" prot="private" virt="non-virtual"><scope>G2lib::ClothoidSplineG2</scope><name>real_values</name></member>
+      <member refid="class_g2lib_1_1_clothoid_spline_g2_1aa394296e02348f3d0c5832137336dea6" prot="public" virt="non-virtual"><scope>G2lib::ClothoidSplineG2</scope><name>setP1</name></member>
+      <member refid="class_g2lib_1_1_clothoid_spline_g2_1ada7bb1a21e1e10020a70ef0a28093689" prot="public" virt="non-virtual"><scope>G2lib::ClothoidSplineG2</scope><name>setP2</name></member>
+      <member refid="class_g2lib_1_1_clothoid_spline_g2_1a90a14f610581691a6bb61b42f47d6aeb" prot="public" virt="non-virtual"><scope>G2lib::ClothoidSplineG2</scope><name>setP3</name></member>
+      <member refid="class_g2lib_1_1_clothoid_spline_g2_1a990c69a26c3976e2eb0126a022e9ffc3" prot="public" virt="non-virtual"><scope>G2lib::ClothoidSplineG2</scope><name>setP4</name></member>
+      <member refid="class_g2lib_1_1_clothoid_spline_g2_1a6acc5f9bae89dc7d89701247698210bc" prot="public" virt="non-virtual"><scope>G2lib::ClothoidSplineG2</scope><name>setP5</name></member>
+      <member refid="class_g2lib_1_1_clothoid_spline_g2_1a9466df9804270455bbb25c222f43c0dc" prot="public" virt="non-virtual"><scope>G2lib::ClothoidSplineG2</scope><name>setP6</name></member>
+      <member refid="class_g2lib_1_1_clothoid_spline_g2_1aefa91d946d697665c74e171da05b1d6b" prot="public" virt="non-virtual"><scope>G2lib::ClothoidSplineG2</scope><name>setP7</name></member>
+      <member refid="class_g2lib_1_1_clothoid_spline_g2_1aaccf933b3fde6c0703334dd744e1f986" prot="public" virt="non-virtual"><scope>G2lib::ClothoidSplineG2</scope><name>setP8</name></member>
+      <member refid="class_g2lib_1_1_clothoid_spline_g2_1a6a6a6bcd9cf0d0605ddb28399b091f60" prot="public" virt="non-virtual"><scope>G2lib::ClothoidSplineG2</scope><name>setP9</name></member>
+      <member refid="class_g2lib_1_1_clothoid_spline_g2_1a1faebe4c47761250e62fc059e22b3c80" prot="public" virt="non-virtual"><scope>G2lib::ClothoidSplineG2</scope><name>TargetType</name></member>
+      <member refid="class_g2lib_1_1_clothoid_spline_g2_1a275930dd9479302488c6652940121695" prot="public" virt="non-virtual"><scope>G2lib::ClothoidSplineG2</scope><name>to_string</name></member>
+      <member refid="class_g2lib_1_1_clothoid_spline_g2_1ab110848a6a6995eacf1c165e5289ec27" prot="public" virt="non-virtual"><scope>G2lib::ClothoidSplineG2</scope><name>~ClothoidSplineG2</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

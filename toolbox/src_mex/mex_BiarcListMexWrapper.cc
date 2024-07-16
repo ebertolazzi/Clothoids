@@ -22,6 +22,7 @@
 #endif
 
 #include "Clothoids.hh"
+#include "Clothoids_fmt.hh"
 #include "Utils_mex.hh"
 #include "mex_info.hxx"
 
@@ -100,7 +101,7 @@ namespace G2lib {
     UTILS_MEX_ASSERT( nlhs == 1, CMD "expected 1 output, nlhs = {}\n", nlhs );
     UTILS_MEX_ASSERT( nrhs == 1, CMD "expected 1 input, nrhs = {}\n", nrhs );
 
-    arg_out_0 = Utils::mex_convert_ptr_to_mx<BiarcList>(new BiarcList());
+    arg_out_0 = Utils::mex_convert_ptr_to_mx<BiarcList>(new BiarcList("biarc list"));
 
     #undef CMD
   }

@@ -24,11 +24,13 @@
 #endif
 
 #include "Utils.hh"
+#include "Utils_fmt.hh"
+#include "Utils_trace.hh"
+
 #include <iostream>
 
 namespace Utils {
 
-  using std::string;
   using std::mutex;
   using std::lock_guard;
   using std::exception;

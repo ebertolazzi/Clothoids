@@ -41,6 +41,7 @@
  */
 
 #include "Clothoids.hh"
+#include "Clothoids_fmt.hh"
 
 // workaround for windows that defines max and min as macros!
 #ifdef max
@@ -232,7 +233,7 @@ namespace G2lib {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   real_type
-  Triangle2D::distMax( real_type x, real_type y ) const {
+  Triangle2D::dist_max( real_type x, real_type y ) const {
     real_type d1 = hypot( x-m_p1[0], y-m_p1[1] );
     real_type d2 = hypot( x-m_p2[0], y-m_p2[1] );
     real_type d3 = hypot( x-m_p3[0], y-m_p3[1] );
@@ -246,10 +247,10 @@ namespace G2lib {
   static
   real_type
   distSeg(
-    real_type         x,
-    real_type         y,
-    real_type const * A,
-    real_type const * B
+    real_type       x,
+    real_type       y,
+    real_type const A[],
+    real_type const B[]
   ) {
     real_type dx  = x    - A[0];
     real_type dy  = y    - A[1];
@@ -277,9 +278,9 @@ namespace G2lib {
   #endif
 
   real_type
-  Triangle2D::distMin( real_type x, real_type y ) const {
+  Triangle2D::dist_min( real_type x, real_type y ) const {
 
-    integer in = isInside( x, y );
+    integer in = is_inside( x, y );
     if ( in >= 0 ) return 0;
 
 #if 0
@@ -318,6 +319,12 @@ namespace G2lib {
     );
     return stream;
   }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  string
+  Triangle2D::info() const
+  { return fmt::format( "Triangle2D\n{}\n", *this ); }
 
 }
 

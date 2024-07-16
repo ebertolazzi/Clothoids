@@ -1,5 +1,6 @@
 //#define _USE_MATH_DEFINES
 #include "Clothoids.hh"
+#include "Clothoids_fmt.hh"
 
 using G2lib::real_type;
 using namespace std;
@@ -7,8 +8,8 @@ using namespace std;
 int
 main() {
 
-  G2lib::Biarc         ba;
-  G2lib::ClothoidCurve c;
+  G2lib::Biarc         ba{"temporary"};
+  G2lib::ClothoidCurve c{"temporary"};
 
 #if 0
   real_type x0  = 0;

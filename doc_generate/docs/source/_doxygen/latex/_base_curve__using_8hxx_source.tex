@@ -1,0 +1,126 @@
+\doxysection{Base\+Curve\+\_\+using.\+hxx}
+\hypertarget{_base_curve__using_8hxx_source}{}\label{_base_curve__using_8hxx_source}\index{/Users/enrico/Ricerca/develop/PINS/pins-\/mechatronix/LibSources/submodules/Clothoids/src/Clothoids/BaseCurve\_using.hxx@{/Users/enrico/Ricerca/develop/PINS/pins-\/mechatronix/LibSources/submodules/Clothoids/src/Clothoids/BaseCurve\_using.hxx}}
+\mbox{\hyperlink{_base_curve__using_8hxx}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{comment}{/*-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/*\(\backslash\)}}
+\DoxyCodeLine{00002\ \textcolor{comment}{\ |\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ |}}
+\DoxyCodeLine{00003\ \textcolor{comment}{\ |\ \ Copyright\ (C)\ 2018\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ |}}
+\DoxyCodeLine{00004\ \textcolor{comment}{\ |\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ |}}
+\DoxyCodeLine{00005\ \textcolor{comment}{\ |\ \ \ \ \ \ \ \ \ ,\ \_\_\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ ,\ \_\_\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ |}}
+\DoxyCodeLine{00006\ \textcolor{comment}{\ |\ \ \ \ \ \ \ \ /|/\ \ \(\backslash\)\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ /|/\ \ \(\backslash\)\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ |}}
+\DoxyCodeLine{00007\ \textcolor{comment}{\ |\ \ \ \ \ \ \ \ \ |\ \_\_/\ \_\ \ \ ,\_\ \ \ \ \ \ \ \ \ |\ \_\_/\ \_\ \ \ ,\_\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ |}}
+\DoxyCodeLine{00008\ \textcolor{comment}{\ |\ \ \ \ \ \ \ \ \ |\ \ \ \(\backslash\)|/\ \ /\ \ |\ \ |\ \ \ |\ |\ \ \ \(\backslash\)|/\ \ /\ \ |\ \ |\ \ \ |\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ |}}
+\DoxyCodeLine{00009\ \textcolor{comment}{\ |\ \ \ \ \ \ \ \ \ |(\_\_/|\_\_/\ \ \ |\_/\ \(\backslash\)\_/|/|(\_\_/|\_\_/\ \ \ |\_/\ \(\backslash\)\_/|/\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ |}}
+\DoxyCodeLine{00010\ \textcolor{comment}{\ |\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ /|\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ /|\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ |}}
+\DoxyCodeLine{00011\ \textcolor{comment}{\ |\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)|\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)|\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ |}}
+\DoxyCodeLine{00012\ \textcolor{comment}{\ |\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ |}}
+\DoxyCodeLine{00013\ \textcolor{comment}{\ |\ \ \ \ \ \ Paolo\ Bevilacqua\ and\ Enrico\ Bertolazzi\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ |}}
+\DoxyCodeLine{00014\ \textcolor{comment}{\ |\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ |}}
+\DoxyCodeLine{00015\ \textcolor{comment}{\ |\ \ \ \ \ \ (1)\ Dipartimento\ di\ Ingegneria\ e\ Scienza\ dell'Informazione\ \ \ \ \ \ \ \ \ \ |}}
+\DoxyCodeLine{00016\ \textcolor{comment}{\ |\ \ \ \ \ \ (2)\ Dipartimento\ di\ Ingegneria\ Industriale\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ |}}
+\DoxyCodeLine{00017\ \textcolor{comment}{\ |\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ |}}
+\DoxyCodeLine{00018\ \textcolor{comment}{\ |\ \ \ \ \ \ Universita`\ degli\ Studi\ di\ Trento\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ |}}
+\DoxyCodeLine{00019\ \textcolor{comment}{\ |\ \ \ \ \ \ email:\ paolo.bevilacqua@unitn.it\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ |}}
+\DoxyCodeLine{00020\ \textcolor{comment}{\ |\ \ \ \ \ \ email:\ enrico.bertolazzi@unitn.it\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ |}}
+\DoxyCodeLine{00021\ \textcolor{comment}{\ |\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ |}}
+\DoxyCodeLine{00022\ \textcolor{comment}{\(\backslash\)*-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/*/}}
+\DoxyCodeLine{00023\ }
+\DoxyCodeLine{00027\ }
+\DoxyCodeLine{00028\ \textcolor{keyword}{using\ }BaseCurve::theta\_begin;}
+\DoxyCodeLine{00029\ \textcolor{keyword}{using\ }BaseCurve::theta\_end;}
+\DoxyCodeLine{00030\ }
+\DoxyCodeLine{00031\ \textcolor{keyword}{using\ }BaseCurve::x\_begin;}
+\DoxyCodeLine{00032\ \textcolor{keyword}{using\ }BaseCurve::y\_begin;}
+\DoxyCodeLine{00033\ \textcolor{keyword}{using\ }BaseCurve::x\_end;}
+\DoxyCodeLine{00034\ \textcolor{keyword}{using\ }BaseCurve::y\_end;}
+\DoxyCodeLine{00035\ }
+\DoxyCodeLine{00036\ \textcolor{keyword}{using\ }BaseCurve::x\_begin\_ISO;}
+\DoxyCodeLine{00037\ \textcolor{keyword}{using\ }BaseCurve::y\_begin\_ISO;}
+\DoxyCodeLine{00038\ \textcolor{keyword}{using\ }BaseCurve::x\_end\_ISO;}
+\DoxyCodeLine{00039\ \textcolor{keyword}{using\ }BaseCurve::y\_end\_ISO;}
+\DoxyCodeLine{00040\ }
+\DoxyCodeLine{00041\ \textcolor{keyword}{using\ }BaseCurve::x\_begin\_SAE;}
+\DoxyCodeLine{00042\ \textcolor{keyword}{using\ }BaseCurve::y\_begin\_SAE;}
+\DoxyCodeLine{00043\ \textcolor{keyword}{using\ }BaseCurve::x\_end\_SAE;}
+\DoxyCodeLine{00044\ \textcolor{keyword}{using\ }BaseCurve::y\_end\_SAE;}
+\DoxyCodeLine{00045\ }
+\DoxyCodeLine{00046\ \textcolor{keyword}{using\ }BaseCurve::tx\_begin;}
+\DoxyCodeLine{00047\ \textcolor{keyword}{using\ }BaseCurve::ty\_begin;}
+\DoxyCodeLine{00048\ \textcolor{keyword}{using\ }BaseCurve::tx\_end;}
+\DoxyCodeLine{00049\ \textcolor{keyword}{using\ }BaseCurve::ty\_end;}
+\DoxyCodeLine{00050\ }
+\DoxyCodeLine{00051\ \textcolor{keyword}{using\ }BaseCurve::nx\_begin\_ISO;}
+\DoxyCodeLine{00052\ \textcolor{keyword}{using\ }BaseCurve::ny\_begin\_ISO;}
+\DoxyCodeLine{00053\ \textcolor{keyword}{using\ }BaseCurve::nx\_end\_ISO;}
+\DoxyCodeLine{00054\ \textcolor{keyword}{using\ }BaseCurve::ny\_end\_ISO;}
+\DoxyCodeLine{00055\ }
+\DoxyCodeLine{00056\ \textcolor{keyword}{using\ }BaseCurve::nx\_begin\_SAE;}
+\DoxyCodeLine{00057\ \textcolor{keyword}{using\ }BaseCurve::ny\_begin\_SAE;}
+\DoxyCodeLine{00058\ \textcolor{keyword}{using\ }BaseCurve::nx\_end\_SAE;}
+\DoxyCodeLine{00059\ \textcolor{keyword}{using\ }BaseCurve::ny\_end\_SAE;}
+\DoxyCodeLine{00060\ }
+\DoxyCodeLine{00061\ \textcolor{keyword}{using\ }BaseCurve::X;}
+\DoxyCodeLine{00062\ \textcolor{keyword}{using\ }BaseCurve::X\_D;}
+\DoxyCodeLine{00063\ \textcolor{keyword}{using\ }BaseCurve::X\_DD;}
+\DoxyCodeLine{00064\ \textcolor{keyword}{using\ }BaseCurve::X\_DDD;}
+\DoxyCodeLine{00065\ }
+\DoxyCodeLine{00066\ \textcolor{keyword}{using\ }BaseCurve::Y;}
+\DoxyCodeLine{00067\ \textcolor{keyword}{using\ }BaseCurve::Y\_D;}
+\DoxyCodeLine{00068\ \textcolor{keyword}{using\ }BaseCurve::Y\_DD;}
+\DoxyCodeLine{00069\ \textcolor{keyword}{using\ }BaseCurve::Y\_DDD;}
+\DoxyCodeLine{00070\ }
+\DoxyCodeLine{00071\ \textcolor{keyword}{using\ }BaseCurve::X\_SAE;}
+\DoxyCodeLine{00072\ \textcolor{keyword}{using\ }BaseCurve::X\_SAE\_D;}
+\DoxyCodeLine{00073\ \textcolor{keyword}{using\ }BaseCurve::X\_SAE\_DD;}
+\DoxyCodeLine{00074\ \textcolor{keyword}{using\ }BaseCurve::X\_SAE\_DDD;}
+\DoxyCodeLine{00075\ }
+\DoxyCodeLine{00076\ \textcolor{keyword}{using\ }BaseCurve::Y\_SAE;}
+\DoxyCodeLine{00077\ \textcolor{keyword}{using\ }BaseCurve::Y\_SAE\_D;}
+\DoxyCodeLine{00078\ \textcolor{keyword}{using\ }BaseCurve::Y\_SAE\_DD;}
+\DoxyCodeLine{00079\ \textcolor{keyword}{using\ }BaseCurve::Y\_SAE\_DDD;}
+\DoxyCodeLine{00080\ }
+\DoxyCodeLine{00081\ \textcolor{keyword}{using\ }BaseCurve::X\_ISO;}
+\DoxyCodeLine{00082\ \textcolor{keyword}{using\ }BaseCurve::X\_ISO\_D;}
+\DoxyCodeLine{00083\ \textcolor{keyword}{using\ }BaseCurve::X\_ISO\_DD;}
+\DoxyCodeLine{00084\ \textcolor{keyword}{using\ }BaseCurve::X\_ISO\_DDD;}
+\DoxyCodeLine{00085\ }
+\DoxyCodeLine{00086\ \textcolor{keyword}{using\ }BaseCurve::Y\_ISO;}
+\DoxyCodeLine{00087\ \textcolor{keyword}{using\ }BaseCurve::Y\_ISO\_D;}
+\DoxyCodeLine{00088\ \textcolor{keyword}{using\ }BaseCurve::Y\_ISO\_DD;}
+\DoxyCodeLine{00089\ \textcolor{keyword}{using\ }BaseCurve::Y\_ISO\_DDD;}
+\DoxyCodeLine{00090\ }
+\DoxyCodeLine{00091\ \textcolor{keyword}{using\ }BaseCurve::evaluate\_ISO;}
+\DoxyCodeLine{00092\ \textcolor{keyword}{using\ }BaseCurve::evaluate\_SAE;}
+\DoxyCodeLine{00093\ }
+\DoxyCodeLine{00094\ \textcolor{keyword}{using\ }BaseCurve::eval;}
+\DoxyCodeLine{00095\ \textcolor{keyword}{using\ }BaseCurve::eval\_D;}
+\DoxyCodeLine{00096\ \textcolor{keyword}{using\ }BaseCurve::eval\_DD;}
+\DoxyCodeLine{00097\ \textcolor{keyword}{using\ }BaseCurve::eval\_DDD;}
+\DoxyCodeLine{00098\ }
+\DoxyCodeLine{00099\ \textcolor{keyword}{using\ }BaseCurve::eval\_ISO;}
+\DoxyCodeLine{00100\ \textcolor{keyword}{using\ }BaseCurve::eval\_ISO\_D;}
+\DoxyCodeLine{00101\ \textcolor{keyword}{using\ }BaseCurve::eval\_ISO\_DD;}
+\DoxyCodeLine{00102\ \textcolor{keyword}{using\ }BaseCurve::eval\_ISO\_DDD;}
+\DoxyCodeLine{00103\ }
+\DoxyCodeLine{00104\ \textcolor{keyword}{using\ }BaseCurve::eval\_SAE;}
+\DoxyCodeLine{00105\ \textcolor{keyword}{using\ }BaseCurve::eval\_SAE\_D;}
+\DoxyCodeLine{00106\ \textcolor{keyword}{using\ }BaseCurve::eval\_SAE\_DD;}
+\DoxyCodeLine{00107\ \textcolor{keyword}{using\ }BaseCurve::eval\_SAE\_DDD;}
+\DoxyCodeLine{00108\ }
+\DoxyCodeLine{00109\ \textcolor{keyword}{using\ }BaseCurve::closest\_point\_ISO;}
+\DoxyCodeLine{00110\ \textcolor{keyword}{using\ }BaseCurve::closest\_point\_SAE;}
+\DoxyCodeLine{00111\ \textcolor{keyword}{using\ }BaseCurve::distance\_ISO;}
+\DoxyCodeLine{00112\ \textcolor{keyword}{using\ }BaseCurve::distance\_SAE;}
+\DoxyCodeLine{00113\ }
+\DoxyCodeLine{00114\ \textcolor{preprocessor}{\#ifdef\ CLOTHOIDS\_BACK\_COMPATIBILITY}}
+\DoxyCodeLine{00115\ \textcolor{keyword}{using\ }BaseCurve::nx\_Begin;}
+\DoxyCodeLine{00116\ \textcolor{keyword}{using\ }BaseCurve::ny\_Begin;}
+\DoxyCodeLine{00117\ \textcolor{keyword}{using\ }BaseCurve::nx\_End;}
+\DoxyCodeLine{00118\ \textcolor{keyword}{using\ }BaseCurve::ny\_End;}
+\DoxyCodeLine{00119\ \textcolor{comment}{//using\ BaseCurve::evaluate;}}
+\DoxyCodeLine{00120\ \textcolor{comment}{//using\ BaseCurve::closestPoint;}}
+\DoxyCodeLine{00121\ \textcolor{comment}{//using\ BaseCurve::distance;}}
+\DoxyCodeLine{00122\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00123\ }
+
+\end{DoxyCode}

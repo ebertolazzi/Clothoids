@@ -54,12 +54,15 @@ namespace G2lib {
     //!
     //! Build an empty circle
     //!
-    CircleArc() = default;
+    CircleArc() = delete;
+    CircleArc( string const & name ) : BaseCurve( name ) {};
+
+    void setup( GenericContainer const & gc ) override;
 
     //!
     //! Build a copy of an existing circle arc.
     //!
-    CircleArc( CircleArc const & s )
+    CircleArc( CircleArc const & s ) : BaseCurve( s.name() )
     { this->copy(s); }
 
     //!
@@ -70,16 +73,19 @@ namespace G2lib {
     //! \param[in] theta0 initial angle
     //! \param[in] k      curvature
     //! \param[in] L      length
+    //! \param[in] name   name of the circle arc
     //!
     explicit
     CircleArc(
-      real_type x0,
-      real_type y0,
-      real_type theta0,
-      real_type k,
-      real_type L
+      real_type      x0,
+      real_type      y0,
+      real_type      theta0,
+      real_type      k,
+      real_type      L,
+      string const & name
     )
-    : m_x0(x0)
+    : BaseCurve( name )
+    , m_x0(x0)
     , m_y0(y0)
     , m_theta0(theta0)
     , m_c0(cos(theta0))
@@ -94,7 +100,8 @@ namespace G2lib {
     //!
     explicit
     CircleArc( LineSegment const & LS )
-    : m_x0(LS.x_begin())
+    : BaseCurve( LS.name() )
+    , m_x0(LS.x_begin())
     , m_y0(LS.y_begin())
     , m_theta0(LS.m_theta0)
     , m_c0(LS.m_c0)
@@ -208,6 +215,7 @@ namespace G2lib {
     void build( BiarcList const & );
     void build( ClothoidList const & );
     void build( Dubins const & );
+    void build( Dubins3p const & );
 
     // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 
@@ -409,7 +417,7 @@ namespace G2lib {
     //! \param[in]  icurve    `id` stored in the triangles
     //!
     void
-    bbTriangles(
+    bb_triangles(
       vector<Triangle2D> & tvec,
       real_type max_angle = Utils::m_pi/18,
       real_type max_size  = 1e100,
@@ -426,7 +434,7 @@ namespace G2lib {
     //! \param[in]  icurve    `id` stored in the triangles
     //!
     void
-    bbTriangles_ISO(
+    bb_triangles_ISO(
       real_type offs,
       vector<Triangle2D> & tvec,
       real_type max_angle = Utils::m_pi/18,
@@ -444,14 +452,14 @@ namespace G2lib {
     //! \param[in]  icurve    `id` stored in the triangles
     //!
     void
-    bbTriangles_SAE(
+    bb_triangles_SAE(
       real_type offs,
       vector<Triangle2D> & tvec,
       real_type max_angle = Utils::m_pi/18,
       real_type max_size  = 1e100,
       integer   icurve    = 0
     ) const override {
-      this->bbTriangles_ISO( -offs, tvec, max_angle, max_size, icurve );
+      this->bb_triangles_ISO( -offs, tvec, max_angle, max_size, icurve );
     }
 
     // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
@@ -640,9 +648,7 @@ namespace G2lib {
       real_type & dst
     ) const override;
 
-    string
-    info() const
-    { return fmt::format( "CircleArc\n{}\n", *this ); }
+    string info() const;
 
     void
     info( ostream_type & stream ) const override
@@ -843,7 +849,7 @@ namespace G2lib {
 
     friend class ClothoidCurve;
 
-#ifdef G2LIB_COMPATIBILITY_MODE
+#ifdef CLOTHOIDS_BACK_COMPATIBILITY
 #include "Circle_compatibility.hxx"
 #endif
 

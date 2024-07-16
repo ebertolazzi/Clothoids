@@ -1,0 +1,401 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.11.0" xml:lang="en-US">
+  <compounddef id="_biarc_list__compatibility_8hxx" kind="file" language="C++">
+    <compoundname>BiarcList_compatibility.hxx</compoundname>
+    <sectiondef kind="func">
+      <memberdef kind="function" id="_biarc_list__compatibility_8hxx_1a1ce2da05e68f0b3cccc2be8d692986f9" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void getSTK</definition>
+        <argsstring>(real_type *s, real_type *theta, real_type *kappa) const</argsstring>
+        <name>getSTK</name>
+        <param>
+          <type>real_type *</type>
+          <declname>s</declname>
+        </param>
+        <param>
+          <type>real_type *</type>
+          <declname>theta</declname>
+        </param>
+        <param>
+          <type>real_type *</type>
+          <declname>kappa</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>file: <ref refid="_biarc_list__compatibility_8hxx" kindref="compound">BiarcList_compatibility.hxx</ref> </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Clothoids/BiarcList_compatibility.hxx" line="25" column="1" bodyfile="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Clothoids/BiarcList_compatibility.hxx" bodystart="25" bodyend="30"/>
+      </memberdef>
+      <memberdef kind="function" id="_biarc_list__compatibility_8hxx_1abe5303d62bad569ce5e91b8a93bd2bdf" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void getXY</definition>
+        <argsstring>(real_type x[], real_type y[]) const</argsstring>
+        <name>getXY</name>
+        <param>
+          <type>real_type</type>
+          <declname>x</declname>
+          <array>[]</array>
+        </param>
+        <param>
+          <type>real_type</type>
+          <declname>y</declname>
+          <array>[]</array>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Return the biarc XY nodes</para>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername direction="out">x</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>x-nodes </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername direction="out">y</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>y-nodes </para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Clothoids/BiarcList_compatibility.hxx" line="39" column="1" bodyfile="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Clothoids/BiarcList_compatibility.hxx" bodystart="39" bodyend="40"/>
+      </memberdef>
+      <memberdef kind="function" id="_biarc_list__compatibility_8hxx_1ad3731d3e379e40faa1ad5f3ff02ecb2c" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type>real_type</type>
+        <definition>real_type thetaBegin</definition>
+        <argsstring>() const</argsstring>
+        <name>thetaBegin</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Clothoids/BiarcList_compatibility.hxx" line="42" column="11" bodyfile="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Clothoids/BiarcList_compatibility.hxx" bodystart="42" bodyend="42"/>
+      </memberdef>
+      <memberdef kind="function" id="_biarc_list__compatibility_8hxx_1a1bf0393292b1c0e74901083736d03ac7" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type>real_type</type>
+        <definition>real_type thetaEnd</definition>
+        <argsstring>() const</argsstring>
+        <name>thetaEnd</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Clothoids/BiarcList_compatibility.hxx" line="43" column="11" bodyfile="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Clothoids/BiarcList_compatibility.hxx" bodystart="43" bodyend="43"/>
+      </memberdef>
+      <memberdef kind="function" id="_biarc_list__compatibility_8hxx_1a87bc730a1f52adff0d4483430269745a" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type>real_type</type>
+        <definition>real_type xBegin</definition>
+        <argsstring>() const</argsstring>
+        <name>xBegin</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Clothoids/BiarcList_compatibility.hxx" line="44" column="11" bodyfile="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Clothoids/BiarcList_compatibility.hxx" bodystart="44" bodyend="44"/>
+      </memberdef>
+      <memberdef kind="function" id="_biarc_list__compatibility_8hxx_1ae89e2f4ffa90111b6f7d7ecea153ef54" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type>real_type</type>
+        <definition>real_type yBegin</definition>
+        <argsstring>() const</argsstring>
+        <name>yBegin</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Clothoids/BiarcList_compatibility.hxx" line="45" column="11" bodyfile="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Clothoids/BiarcList_compatibility.hxx" bodystart="45" bodyend="45"/>
+      </memberdef>
+      <memberdef kind="function" id="_biarc_list__compatibility_8hxx_1a700d4806d93f230fdf155af17dcd7195" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type>real_type</type>
+        <definition>real_type xEnd</definition>
+        <argsstring>() const</argsstring>
+        <name>xEnd</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Clothoids/BiarcList_compatibility.hxx" line="46" column="11" bodyfile="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Clothoids/BiarcList_compatibility.hxx" bodystart="46" bodyend="46"/>
+      </memberdef>
+      <memberdef kind="function" id="_biarc_list__compatibility_8hxx_1a5776fc56f1bcd6d5cf07703a38d7b8b9" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type>real_type</type>
+        <definition>real_type yEnd</definition>
+        <argsstring>() const</argsstring>
+        <name>yEnd</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Clothoids/BiarcList_compatibility.hxx" line="47" column="11" bodyfile="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Clothoids/BiarcList_compatibility.hxx" bodystart="47" bodyend="47"/>
+      </memberdef>
+      <memberdef kind="function" id="_biarc_list__compatibility_8hxx_1a1d6afc2d5faaaf775590467a0bf065b4" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type>real_type</type>
+        <definition>real_type xBegin_ISO</definition>
+        <argsstring>(real_type offs) const</argsstring>
+        <name>xBegin_ISO</name>
+        <param>
+          <type>real_type</type>
+          <declname>offs</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Clothoids/BiarcList_compatibility.hxx" line="48" column="11" bodyfile="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Clothoids/BiarcList_compatibility.hxx" bodystart="48" bodyend="48"/>
+      </memberdef>
+      <memberdef kind="function" id="_biarc_list__compatibility_8hxx_1ac8a5a280ae18ec8eff32db153a75583d" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type>real_type</type>
+        <definition>real_type yBegin_ISO</definition>
+        <argsstring>(real_type offs) const</argsstring>
+        <name>yBegin_ISO</name>
+        <param>
+          <type>real_type</type>
+          <declname>offs</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Clothoids/BiarcList_compatibility.hxx" line="49" column="11" bodyfile="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Clothoids/BiarcList_compatibility.hxx" bodystart="49" bodyend="49"/>
+      </memberdef>
+      <memberdef kind="function" id="_biarc_list__compatibility_8hxx_1a46287668744b24e74408fefe01540280" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type>real_type</type>
+        <definition>real_type xEnd_ISO</definition>
+        <argsstring>(real_type offs) const</argsstring>
+        <name>xEnd_ISO</name>
+        <param>
+          <type>real_type</type>
+          <declname>offs</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Clothoids/BiarcList_compatibility.hxx" line="50" column="11" bodyfile="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Clothoids/BiarcList_compatibility.hxx" bodystart="50" bodyend="50"/>
+      </memberdef>
+      <memberdef kind="function" id="_biarc_list__compatibility_8hxx_1a15c2b7d41bc3b408e4788d026b39a963" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type>real_type</type>
+        <definition>real_type yEnd_ISO</definition>
+        <argsstring>(real_type offs) const</argsstring>
+        <name>yEnd_ISO</name>
+        <param>
+          <type>real_type</type>
+          <declname>offs</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Clothoids/BiarcList_compatibility.hxx" line="51" column="11" bodyfile="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Clothoids/BiarcList_compatibility.hxx" bodystart="51" bodyend="51"/>
+      </memberdef>
+      <memberdef kind="function" id="_biarc_list__compatibility_8hxx_1ae8d02827dc05d9218dc8f49797c99ff9" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type>integer</type>
+        <definition>integer numSegments</definition>
+        <argsstring>() const</argsstring>
+        <name>numSegments</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Clothoids/BiarcList_compatibility.hxx" line="53" column="9" bodyfile="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Clothoids/BiarcList_compatibility.hxx" bodystart="53" bodyend="53"/>
+      </memberdef>
+      <memberdef kind="function" id="_biarc_list__compatibility_8hxx_1a8badc4b2d8796b9371dfbfcda50e74c9" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type>integer</type>
+        <definition>integer closestPoint_ISO</definition>
+        <argsstring>(real_type qx, real_type qy, real_type &amp;x, real_type &amp;y, real_type &amp;s, real_type &amp;t, real_type &amp;dst) const</argsstring>
+        <name>closestPoint_ISO</name>
+        <param>
+          <type>real_type</type>
+          <declname>qx</declname>
+        </param>
+        <param>
+          <type>real_type</type>
+          <declname>qy</declname>
+        </param>
+        <param>
+          <type>real_type &amp;</type>
+          <declname>x</declname>
+        </param>
+        <param>
+          <type>real_type &amp;</type>
+          <declname>y</declname>
+        </param>
+        <param>
+          <type>real_type &amp;</type>
+          <declname>s</declname>
+        </param>
+        <param>
+          <type>real_type &amp;</type>
+          <declname>t</declname>
+        </param>
+        <param>
+          <type>real_type &amp;</type>
+          <declname>dst</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Clothoids/BiarcList_compatibility.hxx" line="56" column="1" bodyfile="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Clothoids/BiarcList_compatibility.hxx" bodystart="56" bodyend="66"/>
+      </memberdef>
+      <memberdef kind="function" id="_biarc_list__compatibility_8hxx_1a4264361f7d19b6e0b653404ebe012213" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type>integer</type>
+        <definition>integer closestPoint_ISO</definition>
+        <argsstring>(real_type qx, real_type qy, real_type offs, real_type &amp;x, real_type &amp;y, real_type &amp;s, real_type &amp;t, real_type &amp;dst) const</argsstring>
+        <name>closestPoint_ISO</name>
+        <param>
+          <type>real_type</type>
+          <declname>qx</declname>
+        </param>
+        <param>
+          <type>real_type</type>
+          <declname>qy</declname>
+        </param>
+        <param>
+          <type>real_type</type>
+          <declname>offs</declname>
+        </param>
+        <param>
+          <type>real_type &amp;</type>
+          <declname>x</declname>
+        </param>
+        <param>
+          <type>real_type &amp;</type>
+          <declname>y</declname>
+        </param>
+        <param>
+          <type>real_type &amp;</type>
+          <declname>s</declname>
+        </param>
+        <param>
+          <type>real_type &amp;</type>
+          <declname>t</declname>
+        </param>
+        <param>
+          <type>real_type &amp;</type>
+          <declname>dst</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Clothoids/BiarcList_compatibility.hxx" line="69" column="1" bodyfile="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Clothoids/BiarcList_compatibility.hxx" bodystart="69" bodyend="80"/>
+      </memberdef>
+    </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <programlisting>
+<codeline lineno="1"><highlight class="comment">/*--------------------------------------------------------------------------*\</highlight></codeline>
+<codeline lineno="2"><highlight class="comment"><sp/>|<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>|</highlight></codeline>
+<codeline lineno="3"><highlight class="comment"><sp/>|<sp/><sp/>Copyright<sp/>(C)<sp/>2017<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>|</highlight></codeline>
+<codeline lineno="4"><highlight class="comment"><sp/>|<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>|</highlight></codeline>
+<codeline lineno="5"><highlight class="comment"><sp/>|<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>,<sp/>__<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>,<sp/>__<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>|</highlight></codeline>
+<codeline lineno="6"><highlight class="comment"><sp/>|<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>/|/<sp/><sp/>\<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>/|/<sp/><sp/>\<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>|</highlight></codeline>
+<codeline lineno="7"><highlight class="comment"><sp/>|<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>|<sp/>__/<sp/>_<sp/><sp/><sp/>,_<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>|<sp/>__/<sp/>_<sp/><sp/><sp/>,_<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>|</highlight></codeline>
+<codeline lineno="8"><highlight class="comment"><sp/>|<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>|<sp/><sp/><sp/>\|/<sp/><sp/>/<sp/><sp/>|<sp/><sp/>|<sp/><sp/><sp/>|<sp/>|<sp/><sp/><sp/>\|/<sp/><sp/>/<sp/><sp/>|<sp/><sp/>|<sp/><sp/><sp/>|<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>|</highlight></codeline>
+<codeline lineno="9"><highlight class="comment"><sp/>|<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>|(__/|__/<sp/><sp/><sp/>|_/<sp/>\_/|/|(__/|__/<sp/><sp/><sp/>|_/<sp/>\_/|/<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>|</highlight></codeline>
+<codeline lineno="10"><highlight class="comment"><sp/>|<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>/|<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>/|<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>|</highlight></codeline>
+<codeline lineno="11"><highlight class="comment"><sp/>|<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>\|<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>\|<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>|</highlight></codeline>
+<codeline lineno="12"><highlight class="comment"><sp/>|<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>|</highlight></codeline>
+<codeline lineno="13"><highlight class="comment"><sp/>|<sp/><sp/><sp/><sp/><sp/><sp/>Enrico<sp/>Bertolazzi<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>|</highlight></codeline>
+<codeline lineno="14"><highlight class="comment"><sp/>|<sp/><sp/><sp/><sp/><sp/><sp/>Dipartimento<sp/>di<sp/>Ingegneria<sp/>Industriale<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>|</highlight></codeline>
+<codeline lineno="15"><highlight class="comment"><sp/>|<sp/><sp/><sp/><sp/><sp/><sp/>Universita`<sp/>degli<sp/>Studi<sp/>di<sp/>Trento<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>|</highlight></codeline>
+<codeline lineno="16"><highlight class="comment"><sp/>|<sp/><sp/><sp/><sp/><sp/><sp/>email:<sp/>enrico.bertolazzi@unitn.it<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>|</highlight></codeline>
+<codeline lineno="17"><highlight class="comment"><sp/>|<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>|</highlight></codeline>
+<codeline lineno="18"><highlight class="comment">\*--------------------------------------------------------------------------*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="19"><highlight class="normal"></highlight></codeline>
+<codeline lineno="23"><highlight class="normal"></highlight></codeline>
+<codeline lineno="24"><highlight class="normal"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="25" refid="_biarc_list__compatibility_8hxx_1a1ce2da05e68f0b3cccc2be8d692986f9" refkind="member"><highlight class="normal"><ref refid="_biarc_list__compatibility_8hxx_1a1ce2da05e68f0b3cccc2be8d692986f9" kindref="member">getSTK</ref>(</highlight></codeline>
+<codeline lineno="26"><highlight class="normal"><sp/><sp/>real_type<sp/>*<sp/>s,</highlight></codeline>
+<codeline lineno="27"><highlight class="normal"><sp/><sp/>real_type<sp/>*<sp/>theta,</highlight></codeline>
+<codeline lineno="28"><highlight class="normal"><sp/><sp/>real_type<sp/>*<sp/>kappa</highlight></codeline>
+<codeline lineno="29"><highlight class="normal">)</highlight><highlight class="keyword"><sp/>const</highlight></codeline>
+<codeline lineno="30"><highlight class="keyword"></highlight><highlight class="normal">{<sp/>this-&gt;get_STK(<sp/>s,<sp/>theta,<sp/>kappa<sp/>);<sp/>}</highlight></codeline>
+<codeline lineno="31"><highlight class="normal"></highlight></codeline>
+<codeline lineno="37"><highlight class="comment">//</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="38"><highlight class="normal"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="39" refid="_biarc_list__compatibility_8hxx_1abe5303d62bad569ce5e91b8a93bd2bdf" refkind="member"><highlight class="normal"><ref refid="_biarc_list__compatibility_8hxx_1abe5303d62bad569ce5e91b8a93bd2bdf" kindref="member">getXY</ref>(<sp/>real_type<sp/>x[],<sp/>real_type<sp/>y[]<sp/>)</highlight><highlight class="keyword"><sp/>const</highlight></codeline>
+<codeline lineno="40"><highlight class="keyword"></highlight><highlight class="normal">{<sp/>this-&gt;get_XY(<sp/>x,<sp/>y<sp/>);<sp/>}</highlight></codeline>
+<codeline lineno="41"><highlight class="normal"></highlight></codeline>
+<codeline lineno="42" refid="_biarc_list__compatibility_8hxx_1ad3731d3e379e40faa1ad5f3ff02ecb2c" refkind="member"><highlight class="normal">real_type<sp/><ref refid="_biarc_list__compatibility_8hxx_1ad3731d3e379e40faa1ad5f3ff02ecb2c" kindref="member">thetaBegin</ref>()</highlight><highlight class="keyword"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>const<sp/></highlight><highlight class="normal">{<sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>this-&gt;theta_begin();<sp/>}</highlight></codeline>
+<codeline lineno="43" refid="_biarc_list__compatibility_8hxx_1a1bf0393292b1c0e74901083736d03ac7" refkind="member"><highlight class="normal">real_type<sp/><ref refid="_biarc_list__compatibility_8hxx_1a1bf0393292b1c0e74901083736d03ac7" kindref="member">thetaEnd</ref>()</highlight><highlight class="keyword"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>const<sp/></highlight><highlight class="normal">{<sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>this-&gt;theta_end();<sp/>}</highlight></codeline>
+<codeline lineno="44" refid="_biarc_list__compatibility_8hxx_1a87bc730a1f52adff0d4483430269745a" refkind="member"><highlight class="normal">real_type<sp/><ref refid="_biarc_list__compatibility_8hxx_1a87bc730a1f52adff0d4483430269745a" kindref="member">xBegin</ref>()</highlight><highlight class="keyword"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>const<sp/></highlight><highlight class="normal">{<sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>this-&gt;x_begin();<sp/>}</highlight></codeline>
+<codeline lineno="45" refid="_biarc_list__compatibility_8hxx_1ae89e2f4ffa90111b6f7d7ecea153ef54" refkind="member"><highlight class="normal">real_type<sp/><ref refid="_biarc_list__compatibility_8hxx_1ae89e2f4ffa90111b6f7d7ecea153ef54" kindref="member">yBegin</ref>()</highlight><highlight class="keyword"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>const<sp/></highlight><highlight class="normal">{<sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>this-&gt;y_begin();<sp/>}</highlight></codeline>
+<codeline lineno="46" refid="_biarc_list__compatibility_8hxx_1a700d4806d93f230fdf155af17dcd7195" refkind="member"><highlight class="normal">real_type<sp/><ref refid="_biarc_list__compatibility_8hxx_1a700d4806d93f230fdf155af17dcd7195" kindref="member">xEnd</ref>()</highlight><highlight class="keyword"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>const<sp/></highlight><highlight class="normal">{<sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>this-&gt;x_end();<sp/>}</highlight></codeline>
+<codeline lineno="47" refid="_biarc_list__compatibility_8hxx_1a5776fc56f1bcd6d5cf07703a38d7b8b9" refkind="member"><highlight class="normal">real_type<sp/><ref refid="_biarc_list__compatibility_8hxx_1a5776fc56f1bcd6d5cf07703a38d7b8b9" kindref="member">yEnd</ref>()</highlight><highlight class="keyword"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>const<sp/></highlight><highlight class="normal">{<sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>this-&gt;y_end();<sp/>}</highlight></codeline>
+<codeline lineno="48" refid="_biarc_list__compatibility_8hxx_1a1d6afc2d5faaaf775590467a0bf065b4" refkind="member"><highlight class="normal">real_type<sp/><ref refid="_biarc_list__compatibility_8hxx_1a1d6afc2d5faaaf775590467a0bf065b4" kindref="member">xBegin_ISO</ref>(<sp/>real_type<sp/>offs<sp/>)</highlight><highlight class="keyword"><sp/>const<sp/></highlight><highlight class="normal">{<sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>this-&gt;x_begin_ISO(<sp/>offs<sp/>);<sp/>}</highlight></codeline>
+<codeline lineno="49" refid="_biarc_list__compatibility_8hxx_1ac8a5a280ae18ec8eff32db153a75583d" refkind="member"><highlight class="normal">real_type<sp/><ref refid="_biarc_list__compatibility_8hxx_1ac8a5a280ae18ec8eff32db153a75583d" kindref="member">yBegin_ISO</ref>(<sp/>real_type<sp/>offs<sp/>)</highlight><highlight class="keyword"><sp/>const<sp/></highlight><highlight class="normal">{<sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>this-&gt;y_begin_ISO(<sp/>offs<sp/>);<sp/>}</highlight></codeline>
+<codeline lineno="50" refid="_biarc_list__compatibility_8hxx_1a46287668744b24e74408fefe01540280" refkind="member"><highlight class="normal">real_type<sp/><ref refid="_biarc_list__compatibility_8hxx_1a46287668744b24e74408fefe01540280" kindref="member">xEnd_ISO</ref>(<sp/>real_type<sp/>offs<sp/>)</highlight><highlight class="keyword"><sp/><sp/><sp/>const<sp/></highlight><highlight class="normal">{<sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>this-&gt;x_end_ISO(<sp/>offs<sp/>);<sp/>}</highlight></codeline>
+<codeline lineno="51" refid="_biarc_list__compatibility_8hxx_1a15c2b7d41bc3b408e4788d026b39a963" refkind="member"><highlight class="normal">real_type<sp/><ref refid="_biarc_list__compatibility_8hxx_1a15c2b7d41bc3b408e4788d026b39a963" kindref="member">yEnd_ISO</ref>(<sp/>real_type<sp/>offs<sp/>)</highlight><highlight class="keyword"><sp/><sp/><sp/>const<sp/></highlight><highlight class="normal">{<sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>this-&gt;y_end_ISO(<sp/>offs<sp/>);<sp/>}</highlight></codeline>
+<codeline lineno="52"><highlight class="normal"></highlight></codeline>
+<codeline lineno="53" refid="_biarc_list__compatibility_8hxx_1ae8d02827dc05d9218dc8f49797c99ff9" refkind="member"><highlight class="normal">integer<sp/><ref refid="_biarc_list__compatibility_8hxx_1ae8d02827dc05d9218dc8f49797c99ff9" kindref="member">numSegments</ref>()</highlight><highlight class="keyword"><sp/>const<sp/></highlight><highlight class="normal">{<sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>this-&gt;num_segments();<sp/>}</highlight></codeline>
+<codeline lineno="54"><highlight class="normal"></highlight></codeline>
+<codeline lineno="55"><highlight class="normal"><ref refid="namespace_g2lib_1a17146eb1606475bedc9a2d27f3b29e34" kindref="member">integer</ref></highlight></codeline>
+<codeline lineno="56" refid="_biarc_list__compatibility_8hxx_1a8badc4b2d8796b9371dfbfcda50e74c9" refkind="member"><highlight class="normal"><ref refid="_biarc_list__compatibility_8hxx_1a8badc4b2d8796b9371dfbfcda50e74c9" kindref="member">closestPoint_ISO</ref>(</highlight></codeline>
+<codeline lineno="57"><highlight class="normal"><sp/><sp/>real_type<sp/><sp/><sp/>qx,</highlight></codeline>
+<codeline lineno="58"><highlight class="normal"><sp/><sp/>real_type<sp/><sp/><sp/>qy,</highlight></codeline>
+<codeline lineno="59"><highlight class="normal"><sp/><sp/>real_type<sp/>&amp;<sp/>x,</highlight></codeline>
+<codeline lineno="60"><highlight class="normal"><sp/><sp/>real_type<sp/>&amp;<sp/>y,</highlight></codeline>
+<codeline lineno="61"><highlight class="normal"><sp/><sp/>real_type<sp/>&amp;<sp/>s,</highlight></codeline>
+<codeline lineno="62"><highlight class="normal"><sp/><sp/>real_type<sp/>&amp;<sp/>t,</highlight></codeline>
+<codeline lineno="63"><highlight class="normal"><sp/><sp/>real_type<sp/>&amp;<sp/>dst</highlight></codeline>
+<codeline lineno="64"><highlight class="normal">)</highlight><highlight class="keyword"><sp/>const<sp/></highlight><highlight class="normal">{</highlight></codeline>
+<codeline lineno="65"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>this-&gt;closest_point_ISO(<sp/>qx,<sp/>qy,<sp/>x,<sp/>y,<sp/>s,<sp/>t,<sp/>dst<sp/>);</highlight></codeline>
+<codeline lineno="66"><highlight class="normal">}</highlight></codeline>
+<codeline lineno="67"><highlight class="normal"></highlight></codeline>
+<codeline lineno="68"><highlight class="normal"><ref refid="namespace_g2lib_1a17146eb1606475bedc9a2d27f3b29e34" kindref="member">integer</ref></highlight></codeline>
+<codeline lineno="69" refid="_biarc_list__compatibility_8hxx_1a4264361f7d19b6e0b653404ebe012213" refkind="member"><highlight class="normal"><ref refid="_biarc_list__compatibility_8hxx_1a8badc4b2d8796b9371dfbfcda50e74c9" kindref="member">closestPoint_ISO</ref>(</highlight></codeline>
+<codeline lineno="70"><highlight class="normal"><sp/><sp/>real_type<sp/><sp/><sp/>qx,</highlight></codeline>
+<codeline lineno="71"><highlight class="normal"><sp/><sp/>real_type<sp/><sp/><sp/>qy,</highlight></codeline>
+<codeline lineno="72"><highlight class="normal"><sp/><sp/>real_type<sp/><sp/><sp/>offs,</highlight></codeline>
+<codeline lineno="73"><highlight class="normal"><sp/><sp/>real_type<sp/>&amp;<sp/>x,</highlight></codeline>
+<codeline lineno="74"><highlight class="normal"><sp/><sp/>real_type<sp/>&amp;<sp/>y,</highlight></codeline>
+<codeline lineno="75"><highlight class="normal"><sp/><sp/>real_type<sp/>&amp;<sp/>s,</highlight></codeline>
+<codeline lineno="76"><highlight class="normal"><sp/><sp/>real_type<sp/>&amp;<sp/>t,</highlight></codeline>
+<codeline lineno="77"><highlight class="normal"><sp/><sp/>real_type<sp/>&amp;<sp/>dst</highlight></codeline>
+<codeline lineno="78"><highlight class="normal">)</highlight><highlight class="keyword"><sp/>const<sp/></highlight><highlight class="normal">{</highlight></codeline>
+<codeline lineno="79"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>this-&gt;closest_point_ISO(<sp/>qx,<sp/>qy,<sp/>offs,<sp/>x,<sp/>y,<sp/>s,<sp/>t,<sp/>dst<sp/>);</highlight></codeline>
+<codeline lineno="80"><highlight class="normal">}</highlight></codeline>
+<codeline lineno="81"><highlight class="normal"></highlight></codeline>
+    </programlisting>
+    <location file="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Clothoids/BiarcList_compatibility.hxx"/>
+  </compounddef>
+</doxygen>

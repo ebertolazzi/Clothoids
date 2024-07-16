@@ -18,6 +18,7 @@
 \*--------------------------------------------------------------------------*/
 
 #include "Clothoids.hh"
+#include "Clothoids_fmt.hh"
 
 // Workaround for Visual Studio
 #ifdef min

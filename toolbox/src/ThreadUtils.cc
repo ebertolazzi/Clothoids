@@ -22,6 +22,7 @@
 ///
 
 #include "Utils.hh"
+#include "Utils_fmt.hh"
 
 namespace Utils {
 
@@ -81,6 +82,32 @@ namespace Utils {
     m_cv.wait(lk, [this]{ return !this->m_do_job;} );
     m_cv.notify_one();
   }
+
+  #ifdef UTILS_OS_WINDOWS
+  WinMutex::WinMutex() : m_mutex(NULL) {
+    m_mutex = CreateMutex(
+      NULL,  // no security descriptor
+      FALSE, // mutex not owned
+      NULL   // object name
+    );
+    UTILS_ASSERT(
+      m_mutex != NULL,
+      "WinMutex(): error: {}.\n", GetLastError()
+    );
+  }
+
+  void
+  WinMutex::lock() {
+  	DWORD res = WaitForSingleObject(m_mutex, INFINITE);
+    UTILS_ASSERT0( res == WAIT_OBJECT_0, "WinMutex::lock, WAIT_TIMEOUT" );
+  }
+
+  void
+  WinMutex::unlock() {
+  	DWORD res = ReleaseMutex(m_mutex);
+    UTILS_ASSERT0( res == WAIT_OBJECT_0, "WinMutex::lock, WAIT_TIMEOUT" );
+  }
+  #endif
 
 }
 

@@ -1,0 +1,719 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.11.0" xml:lang="en-US">
+  <compounddef id="_clothoid__compatibility_8hxx" kind="file" language="C++">
+    <compoundname>Clothoid_compatibility.hxx</compoundname>
+    <sectiondef kind="func">
+      <memberdef kind="function" id="_clothoid__compatibility_8hxx_1ab587c6cef03118d9b84ea4bdb345641e" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type>real_type</type>
+        <definition>real_type thetaTotalVariation</definition>
+        <argsstring>() const</argsstring>
+        <name>thetaTotalVariation</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>file: <ref refid="_clothoid__compatibility_8hxx" kindref="compound">Clothoid_compatibility.hxx</ref> Clothoid curve total variation of the angle. </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Clothoids/Clothoid_compatibility.hxx" line="28" column="1" bodyfile="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Clothoids/Clothoid_compatibility.hxx" bodystart="28" bodyend="29"/>
+      </memberdef>
+      <memberdef kind="function" id="_clothoid__compatibility_8hxx_1a592582ad1e7ea65fa99e6cd7f4c4c895" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type>real_type</type>
+        <definition>real_type thetaMinMax</definition>
+        <argsstring>(real_type &amp;thMin, real_type &amp;thMax) const</argsstring>
+        <name>thetaMinMax</name>
+        <param>
+          <type>real_type &amp;</type>
+          <declname>thMin</declname>
+        </param>
+        <param>
+          <type>real_type &amp;</type>
+          <declname>thMax</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Max and min angle of the curve. </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Clothoids/Clothoid_compatibility.hxx" line="35" column="1" bodyfile="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Clothoids/Clothoid_compatibility.hxx" bodystart="35" bodyend="36"/>
+      </memberdef>
+      <memberdef kind="function" id="_clothoid__compatibility_8hxx_1a024bd94e435a7a6a7d7a988764af6091" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type>real_type</type>
+        <definition>real_type deltaTheta</definition>
+        <argsstring>() const</argsstring>
+        <name>deltaTheta</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Clothoid angle range. </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Clothoids/Clothoid_compatibility.hxx" line="42" column="1" bodyfile="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Clothoids/Clothoid_compatibility.hxx" bodystart="42" bodyend="43"/>
+      </memberdef>
+      <memberdef kind="function" id="_clothoid__compatibility_8hxx_1ae7e3e211161f7f5c5dd898c2381d7d8d" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type>real_type</type>
+        <definition>real_type curvatureMinMax</definition>
+        <argsstring>(real_type &amp;kMin, real_type &amp;kMax) const</argsstring>
+        <name>curvatureMinMax</name>
+        <param>
+          <type>real_type &amp;</type>
+          <declname>kMin</declname>
+        </param>
+        <param>
+          <type>real_type &amp;</type>
+          <declname>kMax</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Max and min of the curvatire of the clothoid curve. </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Clothoids/Clothoid_compatibility.hxx" line="49" column="1" bodyfile="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Clothoids/Clothoid_compatibility.hxx" bodystart="49" bodyend="50"/>
+      </memberdef>
+      <memberdef kind="function" id="_clothoid__compatibility_8hxx_1a64de6276039984cd35661b9f953d3439" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type>real_type</type>
+        <definition>real_type curvatureTotalVariation</definition>
+        <argsstring>() const</argsstring>
+        <name>curvatureTotalVariation</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Clothoid total curvature variation. </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Clothoids/Clothoid_compatibility.hxx" line="56" column="1" bodyfile="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Clothoids/Clothoid_compatibility.hxx" bodystart="56" bodyend="57"/>
+      </memberdef>
+      <memberdef kind="function" id="_clothoid__compatibility_8hxx_1af558898c4e8e348516d783fa7554779b" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type>real_type</type>
+        <definition>real_type integralCurvature2</definition>
+        <argsstring>() const</argsstring>
+        <name>integralCurvature2</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Given the clothoid curve <formula id="48">$ P(s) $</formula> compute.</para>
+<para><formula id="51">\[
+   \int_0^L |P&apos;&apos;(s)|^2 \mathrm{d}s
+\]</formula> </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Clothoids/Clothoid_compatibility.hxx" line="67" column="1" bodyfile="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Clothoids/Clothoid_compatibility.hxx" bodystart="67" bodyend="68"/>
+      </memberdef>
+      <memberdef kind="function" id="_clothoid__compatibility_8hxx_1a7ab16b1a20628d690294372aaf8f2b0b" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type>real_type</type>
+        <definition>real_type integralJerk2</definition>
+        <argsstring>() const</argsstring>
+        <name>integralJerk2</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Given the clothoid curve <formula id="48">$ P(s) $</formula> compute.</para>
+<para><formula id="52">\[
+   \int_0^L |P&apos;&apos;&apos;(s)|^2 \mathrm{d}s
+\]</formula> </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Clothoids/Clothoid_compatibility.hxx" line="78" column="1" bodyfile="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Clothoids/Clothoid_compatibility.hxx" bodystart="78" bodyend="79"/>
+      </memberdef>
+      <memberdef kind="function" id="_clothoid__compatibility_8hxx_1af9d88fc75cb330e75b1c5df772596299" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type>real_type</type>
+        <definition>real_type integralSnap2</definition>
+        <argsstring>() const</argsstring>
+        <name>integralSnap2</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Given the clothoid curve <formula id="48">$ P(s) $</formula> compute.</para>
+<para><formula id="53">\[
+   \int_0^L |P&apos;&apos;&apos;&apos;(s)|^2 \mathrm{d}s
+\]</formula> </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Clothoids/Clothoid_compatibility.hxx" line="89" column="1" bodyfile="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Clothoids/Clothoid_compatibility.hxx" bodystart="89" bodyend="90"/>
+      </memberdef>
+      <memberdef kind="function" id="_clothoid__compatibility_8hxx_1a822aac57d1af5b94c6b570bc4117495e" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void evaluate</definition>
+        <argsstring>(real_type s, real_type &amp;th, real_type &amp;k, real_type &amp;x, real_type &amp;y) const override</argsstring>
+        <name>evaluate</name>
+        <param>
+          <type>real_type</type>
+          <declname>s</declname>
+        </param>
+        <param>
+          <type>real_type &amp;</type>
+          <declname>th</declname>
+        </param>
+        <param>
+          <type>real_type &amp;</type>
+          <declname>k</declname>
+        </param>
+        <param>
+          <type>real_type &amp;</type>
+          <declname>x</declname>
+        </param>
+        <param>
+          <type>real_type &amp;</type>
+          <declname>y</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Clothoids/Clothoid_compatibility.hxx" line="93" column="1" bodyfile="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Clothoids/Clothoid_compatibility.hxx" bodystart="93" bodyend="100"/>
+      </memberdef>
+      <memberdef kind="function" id="_clothoid__compatibility_8hxx_1a8059ccc4a69a6e3a7cc63750367f326a" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void changeOrigin</definition>
+        <argsstring>(real_type newx0, real_type newy0)</argsstring>
+        <name>changeOrigin</name>
+        <param>
+          <type>real_type</type>
+          <declname>newx0</declname>
+        </param>
+        <param>
+          <type>real_type</type>
+          <declname>newy0</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Clothoids/Clothoid_compatibility.hxx" line="103" column="1" bodyfile="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Clothoids/Clothoid_compatibility.hxx" bodystart="103" bodyend="104"/>
+      </memberdef>
+      <memberdef kind="function" id="_clothoid__compatibility_8hxx_1a7bff810bbf159a4d7a862f66eadd35d1" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void changeCurvilinearOrigin</definition>
+        <argsstring>(real_type s0, real_type newL)</argsstring>
+        <name>changeCurvilinearOrigin</name>
+        <param>
+          <type>real_type</type>
+          <declname>s0</declname>
+        </param>
+        <param>
+          <type>real_type</type>
+          <declname>newL</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Clothoids/Clothoid_compatibility.hxx" line="107" column="1" bodyfile="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Clothoids/Clothoid_compatibility.hxx" bodystart="107" bodyend="108"/>
+      </memberdef>
+      <memberdef kind="function" id="_clothoid__compatibility_8hxx_1ad3731d3e379e40faa1ad5f3ff02ecb2c" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type>real_type</type>
+        <definition>real_type thetaBegin</definition>
+        <argsstring>() const</argsstring>
+        <name>thetaBegin</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Clothoids/Clothoid_compatibility.hxx" line="110" column="11" bodyfile="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Clothoids/Clothoid_compatibility.hxx" bodystart="110" bodyend="110"/>
+      </memberdef>
+      <memberdef kind="function" id="_clothoid__compatibility_8hxx_1a1bf0393292b1c0e74901083736d03ac7" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type>real_type</type>
+        <definition>real_type thetaEnd</definition>
+        <argsstring>() const</argsstring>
+        <name>thetaEnd</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Clothoids/Clothoid_compatibility.hxx" line="111" column="11" bodyfile="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Clothoids/Clothoid_compatibility.hxx" bodystart="111" bodyend="111"/>
+      </memberdef>
+      <memberdef kind="function" id="_clothoid__compatibility_8hxx_1ac552d1f9b23cca537177bcbec55aae5a" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type>real_type</type>
+        <definition>real_type kappaBegin</definition>
+        <argsstring>() const</argsstring>
+        <name>kappaBegin</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Clothoids/Clothoid_compatibility.hxx" line="112" column="11" bodyfile="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Clothoids/Clothoid_compatibility.hxx" bodystart="112" bodyend="112"/>
+      </memberdef>
+      <memberdef kind="function" id="_clothoid__compatibility_8hxx_1a1a1b2da3c070c5c511630b02ffc35176" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type>real_type</type>
+        <definition>real_type kappaEnd</definition>
+        <argsstring>() const</argsstring>
+        <name>kappaEnd</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Clothoids/Clothoid_compatibility.hxx" line="113" column="11" bodyfile="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Clothoids/Clothoid_compatibility.hxx" bodystart="113" bodyend="113"/>
+      </memberdef>
+      <memberdef kind="function" id="_clothoid__compatibility_8hxx_1a87bc730a1f52adff0d4483430269745a" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type>real_type</type>
+        <definition>real_type xBegin</definition>
+        <argsstring>() const</argsstring>
+        <name>xBegin</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Clothoids/Clothoid_compatibility.hxx" line="114" column="11" bodyfile="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Clothoids/Clothoid_compatibility.hxx" bodystart="114" bodyend="114"/>
+      </memberdef>
+      <memberdef kind="function" id="_clothoid__compatibility_8hxx_1ae89e2f4ffa90111b6f7d7ecea153ef54" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type>real_type</type>
+        <definition>real_type yBegin</definition>
+        <argsstring>() const</argsstring>
+        <name>yBegin</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Clothoids/Clothoid_compatibility.hxx" line="115" column="11" bodyfile="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Clothoids/Clothoid_compatibility.hxx" bodystart="115" bodyend="115"/>
+      </memberdef>
+      <memberdef kind="function" id="_clothoid__compatibility_8hxx_1a700d4806d93f230fdf155af17dcd7195" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type>real_type</type>
+        <definition>real_type xEnd</definition>
+        <argsstring>() const</argsstring>
+        <name>xEnd</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Clothoids/Clothoid_compatibility.hxx" line="116" column="11" bodyfile="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Clothoids/Clothoid_compatibility.hxx" bodystart="116" bodyend="116"/>
+      </memberdef>
+      <memberdef kind="function" id="_clothoid__compatibility_8hxx_1a5776fc56f1bcd6d5cf07703a38d7b8b9" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type>real_type</type>
+        <definition>real_type yEnd</definition>
+        <argsstring>() const</argsstring>
+        <name>yEnd</name>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Clothoids/Clothoid_compatibility.hxx" line="117" column="11" bodyfile="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Clothoids/Clothoid_compatibility.hxx" bodystart="117" bodyend="117"/>
+      </memberdef>
+      <memberdef kind="function" id="_clothoid__compatibility_8hxx_1a1d6afc2d5faaaf775590467a0bf065b4" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type>real_type</type>
+        <definition>real_type xBegin_ISO</definition>
+        <argsstring>(real_type offs) const</argsstring>
+        <name>xBegin_ISO</name>
+        <param>
+          <type>real_type</type>
+          <declname>offs</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Clothoids/Clothoid_compatibility.hxx" line="118" column="11" bodyfile="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Clothoids/Clothoid_compatibility.hxx" bodystart="118" bodyend="118"/>
+      </memberdef>
+      <memberdef kind="function" id="_clothoid__compatibility_8hxx_1ac8a5a280ae18ec8eff32db153a75583d" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type>real_type</type>
+        <definition>real_type yBegin_ISO</definition>
+        <argsstring>(real_type offs) const</argsstring>
+        <name>yBegin_ISO</name>
+        <param>
+          <type>real_type</type>
+          <declname>offs</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Clothoids/Clothoid_compatibility.hxx" line="119" column="11" bodyfile="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Clothoids/Clothoid_compatibility.hxx" bodystart="119" bodyend="119"/>
+      </memberdef>
+      <memberdef kind="function" id="_clothoid__compatibility_8hxx_1a46287668744b24e74408fefe01540280" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type>real_type</type>
+        <definition>real_type xEnd_ISO</definition>
+        <argsstring>(real_type offs) const</argsstring>
+        <name>xEnd_ISO</name>
+        <param>
+          <type>real_type</type>
+          <declname>offs</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Clothoids/Clothoid_compatibility.hxx" line="120" column="11" bodyfile="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Clothoids/Clothoid_compatibility.hxx" bodystart="120" bodyend="120"/>
+      </memberdef>
+      <memberdef kind="function" id="_clothoid__compatibility_8hxx_1a15c2b7d41bc3b408e4788d026b39a963" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type>real_type</type>
+        <definition>real_type yEnd_ISO</definition>
+        <argsstring>(real_type offs) const</argsstring>
+        <name>yEnd_ISO</name>
+        <param>
+          <type>real_type</type>
+          <declname>offs</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Clothoids/Clothoid_compatibility.hxx" line="121" column="11" bodyfile="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Clothoids/Clothoid_compatibility.hxx" bodystart="121" bodyend="121"/>
+      </memberdef>
+      <memberdef kind="function" id="_clothoid__compatibility_8hxx_1a6fbac7b4efa745dd23ff04dfa03e80d1" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type>real_type</type>
+        <definition>real_type closestPointBySample</definition>
+        <argsstring>(real_type ds, real_type qx, real_type qy, real_type &amp;X, real_type &amp;Y, real_type &amp;S) const</argsstring>
+        <name>closestPointBySample</name>
+        <param>
+          <type>real_type</type>
+          <declname>ds</declname>
+        </param>
+        <param>
+          <type>real_type</type>
+          <declname>qx</declname>
+        </param>
+        <param>
+          <type>real_type</type>
+          <declname>qy</declname>
+        </param>
+        <param>
+          <type>real_type &amp;</type>
+          <declname>X</declname>
+        </param>
+        <param>
+          <type>real_type &amp;</type>
+          <declname>Y</declname>
+        </param>
+        <param>
+          <type>real_type &amp;</type>
+          <declname>S</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Clothoids/Clothoid_compatibility.hxx" line="124" column="1" bodyfile="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Clothoids/Clothoid_compatibility.hxx" bodystart="124" bodyend="133"/>
+      </memberdef>
+      <memberdef kind="function" id="_clothoid__compatibility_8hxx_1a8badc4b2d8796b9371dfbfcda50e74c9" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type>integer</type>
+        <definition>integer closestPoint_ISO</definition>
+        <argsstring>(real_type qx, real_type qy, real_type &amp;x, real_type &amp;y, real_type &amp;s, real_type &amp;t, real_type &amp;dst) const</argsstring>
+        <name>closestPoint_ISO</name>
+        <param>
+          <type>real_type</type>
+          <declname>qx</declname>
+        </param>
+        <param>
+          <type>real_type</type>
+          <declname>qy</declname>
+        </param>
+        <param>
+          <type>real_type &amp;</type>
+          <declname>x</declname>
+        </param>
+        <param>
+          <type>real_type &amp;</type>
+          <declname>y</declname>
+        </param>
+        <param>
+          <type>real_type &amp;</type>
+          <declname>s</declname>
+        </param>
+        <param>
+          <type>real_type &amp;</type>
+          <declname>t</declname>
+        </param>
+        <param>
+          <type>real_type &amp;</type>
+          <declname>dst</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Clothoids/Clothoid_compatibility.hxx" line="136" column="1" bodyfile="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Clothoids/Clothoid_compatibility.hxx" bodystart="136" bodyend="146"/>
+      </memberdef>
+      <memberdef kind="function" id="_clothoid__compatibility_8hxx_1a4264361f7d19b6e0b653404ebe012213" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type>integer</type>
+        <definition>integer closestPoint_ISO</definition>
+        <argsstring>(real_type qx, real_type qy, real_type offs, real_type &amp;x, real_type &amp;y, real_type &amp;s, real_type &amp;t, real_type &amp;dst) const</argsstring>
+        <name>closestPoint_ISO</name>
+        <param>
+          <type>real_type</type>
+          <declname>qx</declname>
+        </param>
+        <param>
+          <type>real_type</type>
+          <declname>qy</declname>
+        </param>
+        <param>
+          <type>real_type</type>
+          <declname>offs</declname>
+        </param>
+        <param>
+          <type>real_type &amp;</type>
+          <declname>x</declname>
+        </param>
+        <param>
+          <type>real_type &amp;</type>
+          <declname>y</declname>
+        </param>
+        <param>
+          <type>real_type &amp;</type>
+          <declname>s</declname>
+        </param>
+        <param>
+          <type>real_type &amp;</type>
+          <declname>t</declname>
+        </param>
+        <param>
+          <type>real_type &amp;</type>
+          <declname>dst</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Clothoids/Clothoid_compatibility.hxx" line="149" column="1" bodyfile="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Clothoids/Clothoid_compatibility.hxx" bodystart="149" bodyend="160"/>
+      </memberdef>
+      <memberdef kind="function" id="_clothoid__compatibility_8hxx_1a5495efd264fbd7eb78c79dade6923bcf" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type>real_type</type>
+        <definition>real_type distanceBySample</definition>
+        <argsstring>(real_type ds, real_type qx, real_type qy, real_type &amp;S) const</argsstring>
+        <name>distanceBySample</name>
+        <param>
+          <type>real_type</type>
+          <declname>ds</declname>
+        </param>
+        <param>
+          <type>real_type</type>
+          <declname>qx</declname>
+        </param>
+        <param>
+          <type>real_type</type>
+          <declname>qy</declname>
+        </param>
+        <param>
+          <type>real_type &amp;</type>
+          <declname>S</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Clothoids/Clothoid_compatibility.hxx" line="163" column="1" bodyfile="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Clothoids/Clothoid_compatibility.hxx" bodystart="163" bodyend="171"/>
+      </memberdef>
+      <memberdef kind="function" id="_clothoid__compatibility_8hxx_1acd758232829ccf651f662b826ebdb853" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type>real_type</type>
+        <definition>real_type distanceBySample</definition>
+        <argsstring>(real_type ds, real_type qx, real_type qy) const</argsstring>
+        <name>distanceBySample</name>
+        <param>
+          <type>real_type</type>
+          <declname>ds</declname>
+        </param>
+        <param>
+          <type>real_type</type>
+          <declname>qx</declname>
+        </param>
+        <param>
+          <type>real_type</type>
+          <declname>qy</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Clothoids/Clothoid_compatibility.hxx" line="174" column="1" bodyfile="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Clothoids/Clothoid_compatibility.hxx" bodystart="174" bodyend="181"/>
+      </memberdef>
+    </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <programlisting>
+<codeline lineno="1"><highlight class="comment">/*--------------------------------------------------------------------------*\</highlight></codeline>
+<codeline lineno="2"><highlight class="comment"><sp/>|<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>|</highlight></codeline>
+<codeline lineno="3"><highlight class="comment"><sp/>|<sp/><sp/>Copyright<sp/>(C)<sp/>2017<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>|</highlight></codeline>
+<codeline lineno="4"><highlight class="comment"><sp/>|<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>|</highlight></codeline>
+<codeline lineno="5"><highlight class="comment"><sp/>|<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>,<sp/>__<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>,<sp/>__<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>|</highlight></codeline>
+<codeline lineno="6"><highlight class="comment"><sp/>|<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>/|/<sp/><sp/>\<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>/|/<sp/><sp/>\<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>|</highlight></codeline>
+<codeline lineno="7"><highlight class="comment"><sp/>|<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>|<sp/>__/<sp/>_<sp/><sp/><sp/>,_<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>|<sp/>__/<sp/>_<sp/><sp/><sp/>,_<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>|</highlight></codeline>
+<codeline lineno="8"><highlight class="comment"><sp/>|<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>|<sp/><sp/><sp/>\|/<sp/><sp/>/<sp/><sp/>|<sp/><sp/>|<sp/><sp/><sp/>|<sp/>|<sp/><sp/><sp/>\|/<sp/><sp/>/<sp/><sp/>|<sp/><sp/>|<sp/><sp/><sp/>|<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>|</highlight></codeline>
+<codeline lineno="9"><highlight class="comment"><sp/>|<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>|(__/|__/<sp/><sp/><sp/>|_/<sp/>\_/|/|(__/|__/<sp/><sp/><sp/>|_/<sp/>\_/|/<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>|</highlight></codeline>
+<codeline lineno="10"><highlight class="comment"><sp/>|<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>/|<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>/|<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>|</highlight></codeline>
+<codeline lineno="11"><highlight class="comment"><sp/>|<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>\|<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>\|<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>|</highlight></codeline>
+<codeline lineno="12"><highlight class="comment"><sp/>|<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>|</highlight></codeline>
+<codeline lineno="13"><highlight class="comment"><sp/>|<sp/><sp/><sp/><sp/><sp/><sp/>Enrico<sp/>Bertolazzi<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>|</highlight></codeline>
+<codeline lineno="14"><highlight class="comment"><sp/>|<sp/><sp/><sp/><sp/><sp/><sp/>Dipartimento<sp/>di<sp/>Ingegneria<sp/>Industriale<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>|</highlight></codeline>
+<codeline lineno="15"><highlight class="comment"><sp/>|<sp/><sp/><sp/><sp/><sp/><sp/>Universita`<sp/>degli<sp/>Studi<sp/>di<sp/>Trento<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>|</highlight></codeline>
+<codeline lineno="16"><highlight class="comment"><sp/>|<sp/><sp/><sp/><sp/><sp/><sp/>email:<sp/>enrico.bertolazzi@unitn.it<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>|</highlight></codeline>
+<codeline lineno="17"><highlight class="comment"><sp/>|<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>|</highlight></codeline>
+<codeline lineno="18"><highlight class="comment">\*--------------------------------------------------------------------------*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="19"><highlight class="normal"></highlight></codeline>
+<codeline lineno="23"></codeline>
+<codeline lineno="27"><highlight class="normal"><ref refid="namespace_g2lib_1acc8095aa40beedee44352de62f232033" kindref="member">real_type</ref></highlight></codeline>
+<codeline lineno="28" refid="_clothoid__compatibility_8hxx_1ab587c6cef03118d9b84ea4bdb345641e" refkind="member"><highlight class="normal"><ref refid="_clothoid__compatibility_8hxx_1ab587c6cef03118d9b84ea4bdb345641e" kindref="member">thetaTotalVariation</ref>()</highlight><highlight class="keyword"><sp/>const</highlight></codeline>
+<codeline lineno="29"><highlight class="keyword"></highlight><highlight class="normal">{<sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>this-&gt;theta_total_variation();<sp/>}</highlight></codeline>
+<codeline lineno="30"><highlight class="normal"></highlight></codeline>
+<codeline lineno="34"><highlight class="normal"><ref refid="namespace_g2lib_1acc8095aa40beedee44352de62f232033" kindref="member">real_type</ref></highlight></codeline>
+<codeline lineno="35" refid="_clothoid__compatibility_8hxx_1a592582ad1e7ea65fa99e6cd7f4c4c895" refkind="member"><highlight class="normal"><ref refid="_clothoid__compatibility_8hxx_1a592582ad1e7ea65fa99e6cd7f4c4c895" kindref="member">thetaMinMax</ref>(<sp/>real_type<sp/>&amp;<sp/>thMin,<sp/>real_type<sp/>&amp;<sp/>thMax<sp/>)</highlight><highlight class="keyword"><sp/>const</highlight></codeline>
+<codeline lineno="36"><highlight class="keyword"></highlight><highlight class="normal">{<sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>this-&gt;theta_min_max(<sp/>thMin,<sp/>thMax<sp/>);<sp/>}</highlight></codeline>
+<codeline lineno="37"><highlight class="normal"></highlight></codeline>
+<codeline lineno="41"><highlight class="normal"><ref refid="namespace_g2lib_1acc8095aa40beedee44352de62f232033" kindref="member">real_type</ref></highlight></codeline>
+<codeline lineno="42" refid="_clothoid__compatibility_8hxx_1a024bd94e435a7a6a7d7a988764af6091" refkind="member"><highlight class="normal"><ref refid="_clothoid__compatibility_8hxx_1a024bd94e435a7a6a7d7a988764af6091" kindref="member">deltaTheta</ref>()</highlight><highlight class="keyword"><sp/>const</highlight></codeline>
+<codeline lineno="43"><highlight class="keyword"></highlight><highlight class="normal">{<sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>this-&gt;delta_theta();<sp/>}</highlight></codeline>
+<codeline lineno="44"><highlight class="normal"></highlight></codeline>
+<codeline lineno="48"><highlight class="normal"><ref refid="namespace_g2lib_1acc8095aa40beedee44352de62f232033" kindref="member">real_type</ref></highlight></codeline>
+<codeline lineno="49" refid="_clothoid__compatibility_8hxx_1ae7e3e211161f7f5c5dd898c2381d7d8d" refkind="member"><highlight class="normal"><ref refid="_clothoid__compatibility_8hxx_1ae7e3e211161f7f5c5dd898c2381d7d8d" kindref="member">curvatureMinMax</ref>(<sp/>real_type<sp/>&amp;<sp/>kMin,<sp/>real_type<sp/>&amp;<sp/>kMax<sp/>)</highlight><highlight class="keyword"><sp/>const</highlight></codeline>
+<codeline lineno="50"><highlight class="keyword"></highlight><highlight class="normal">{<sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>this-&gt;curvature_min_max(<sp/>kMin,<sp/>kMax<sp/>);<sp/>}</highlight></codeline>
+<codeline lineno="51"><highlight class="normal"></highlight></codeline>
+<codeline lineno="55"><highlight class="normal"><ref refid="namespace_g2lib_1acc8095aa40beedee44352de62f232033" kindref="member">real_type</ref></highlight></codeline>
+<codeline lineno="56" refid="_clothoid__compatibility_8hxx_1a64de6276039984cd35661b9f953d3439" refkind="member"><highlight class="normal"><ref refid="_clothoid__compatibility_8hxx_1a64de6276039984cd35661b9f953d3439" kindref="member">curvatureTotalVariation</ref>()</highlight><highlight class="keyword"><sp/>const</highlight></codeline>
+<codeline lineno="57"><highlight class="keyword"></highlight><highlight class="normal">{<sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>this-&gt;curvature_total_variation();<sp/>}</highlight></codeline>
+<codeline lineno="58"><highlight class="normal"></highlight></codeline>
+<codeline lineno="66"><highlight class="normal"><ref refid="namespace_g2lib_1acc8095aa40beedee44352de62f232033" kindref="member">real_type</ref></highlight></codeline>
+<codeline lineno="67" refid="_clothoid__compatibility_8hxx_1af558898c4e8e348516d783fa7554779b" refkind="member"><highlight class="normal"><ref refid="_clothoid__compatibility_8hxx_1af558898c4e8e348516d783fa7554779b" kindref="member">integralCurvature2</ref>()</highlight><highlight class="keyword"><sp/>const</highlight></codeline>
+<codeline lineno="68"><highlight class="keyword"></highlight><highlight class="normal">{<sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>this-&gt;integral_curvature2();<sp/>}</highlight></codeline>
+<codeline lineno="69"><highlight class="normal"></highlight></codeline>
+<codeline lineno="77"><highlight class="normal"><ref refid="namespace_g2lib_1acc8095aa40beedee44352de62f232033" kindref="member">real_type</ref></highlight></codeline>
+<codeline lineno="78" refid="_clothoid__compatibility_8hxx_1a7ab16b1a20628d690294372aaf8f2b0b" refkind="member"><highlight class="normal"><ref refid="_clothoid__compatibility_8hxx_1a7ab16b1a20628d690294372aaf8f2b0b" kindref="member">integralJerk2</ref>()</highlight><highlight class="keyword"><sp/>const</highlight></codeline>
+<codeline lineno="79"><highlight class="keyword"></highlight><highlight class="normal">{<sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>this-&gt;integral_jerk2();<sp/>}</highlight></codeline>
+<codeline lineno="80"><highlight class="normal"></highlight></codeline>
+<codeline lineno="88"><highlight class="normal"><ref refid="namespace_g2lib_1acc8095aa40beedee44352de62f232033" kindref="member">real_type</ref></highlight></codeline>
+<codeline lineno="89" refid="_clothoid__compatibility_8hxx_1af9d88fc75cb330e75b1c5df772596299" refkind="member"><highlight class="normal"><ref refid="_clothoid__compatibility_8hxx_1af9d88fc75cb330e75b1c5df772596299" kindref="member">integralSnap2</ref>()</highlight><highlight class="keyword"><sp/>const</highlight></codeline>
+<codeline lineno="90"><highlight class="keyword"></highlight><highlight class="normal">{<sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>this-&gt;integral_snap2();<sp/>}</highlight></codeline>
+<codeline lineno="91"><highlight class="normal"></highlight></codeline>
+<codeline lineno="92"><highlight class="normal"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="93" refid="_clothoid__compatibility_8hxx_1a822aac57d1af5b94c6b570bc4117495e" refkind="member"><highlight class="normal"><ref refid="_clothoid__compatibility_8hxx_1a822aac57d1af5b94c6b570bc4117495e" kindref="member">evaluate</ref>(</highlight></codeline>
+<codeline lineno="94"><highlight class="normal"><sp/><sp/>real_type<sp/><sp/><sp/>s,</highlight></codeline>
+<codeline lineno="95"><highlight class="normal"><sp/><sp/>real_type<sp/>&amp;<sp/>th,</highlight></codeline>
+<codeline lineno="96"><highlight class="normal"><sp/><sp/>real_type<sp/>&amp;<sp/>k,</highlight></codeline>
+<codeline lineno="97"><highlight class="normal"><sp/><sp/>real_type<sp/>&amp;<sp/>x,</highlight></codeline>
+<codeline lineno="98"><highlight class="normal"><sp/><sp/>real_type<sp/>&amp;<sp/>y</highlight></codeline>
+<codeline lineno="99"><highlight class="normal">)</highlight><highlight class="keyword"><sp/>const<sp/>override</highlight></codeline>
+<codeline lineno="100"><highlight class="keyword"></highlight><highlight class="normal">{<sp/>m_CD.evaluate(<sp/>s,<sp/>th,<sp/>k,<sp/>x,<sp/>y<sp/>);<sp/>}</highlight></codeline>
+<codeline lineno="101"><highlight class="normal"></highlight></codeline>
+<codeline lineno="102"><highlight class="normal"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="103" refid="_clothoid__compatibility_8hxx_1a8059ccc4a69a6e3a7cc63750367f326a" refkind="member"><highlight class="normal"><ref refid="_clothoid__compatibility_8hxx_1a8059ccc4a69a6e3a7cc63750367f326a" kindref="member">changeOrigin</ref>(<sp/>real_type<sp/>newx0,<sp/>real_type<sp/>newy0<sp/>)</highlight></codeline>
+<codeline lineno="104"><highlight class="normal">{<sp/>change_origin(<sp/>newx0,<sp/>newy0<sp/>);<sp/>}</highlight></codeline>
+<codeline lineno="105"><highlight class="normal"></highlight></codeline>
+<codeline lineno="106"><highlight class="normal"></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="107" refid="_clothoid__compatibility_8hxx_1a7bff810bbf159a4d7a862f66eadd35d1" refkind="member"><highlight class="normal"><ref refid="_clothoid__compatibility_8hxx_1a7bff810bbf159a4d7a862f66eadd35d1" kindref="member">changeCurvilinearOrigin</ref>(<sp/>real_type<sp/>s0,<sp/>real_type<sp/>newL<sp/>)</highlight></codeline>
+<codeline lineno="108"><highlight class="normal">{<sp/>change_curvilinear_origin(<sp/>s0,<sp/>newL<sp/>);<sp/>}</highlight></codeline>
+<codeline lineno="109"><highlight class="normal"></highlight></codeline>
+<codeline lineno="110" refid="_clothoid__compatibility_8hxx_1ad3731d3e379e40faa1ad5f3ff02ecb2c" refkind="member"><highlight class="normal">real_type<sp/><ref refid="_clothoid__compatibility_8hxx_1ad3731d3e379e40faa1ad5f3ff02ecb2c" kindref="member">thetaBegin</ref>()</highlight><highlight class="keyword"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>const<sp/></highlight><highlight class="normal">{<sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>this-&gt;theta_begin();<sp/>}</highlight></codeline>
+<codeline lineno="111" refid="_clothoid__compatibility_8hxx_1a1bf0393292b1c0e74901083736d03ac7" refkind="member"><highlight class="normal">real_type<sp/><ref refid="_clothoid__compatibility_8hxx_1a1bf0393292b1c0e74901083736d03ac7" kindref="member">thetaEnd</ref>()</highlight><highlight class="keyword"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>const<sp/></highlight><highlight class="normal">{<sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>this-&gt;theta_end();<sp/>}</highlight></codeline>
+<codeline lineno="112" refid="_clothoid__compatibility_8hxx_1ac552d1f9b23cca537177bcbec55aae5a" refkind="member"><highlight class="normal">real_type<sp/><ref refid="_clothoid__compatibility_8hxx_1ac552d1f9b23cca537177bcbec55aae5a" kindref="member">kappaBegin</ref>()</highlight><highlight class="keyword"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>const<sp/></highlight><highlight class="normal">{<sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>this-&gt;kappa_begin();<sp/>}</highlight></codeline>
+<codeline lineno="113" refid="_clothoid__compatibility_8hxx_1a1a1b2da3c070c5c511630b02ffc35176" refkind="member"><highlight class="normal">real_type<sp/><ref refid="_clothoid__compatibility_8hxx_1a1a1b2da3c070c5c511630b02ffc35176" kindref="member">kappaEnd</ref>()</highlight><highlight class="keyword"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>const<sp/></highlight><highlight class="normal">{<sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>this-&gt;kappa_end();<sp/>}</highlight></codeline>
+<codeline lineno="114" refid="_clothoid__compatibility_8hxx_1a87bc730a1f52adff0d4483430269745a" refkind="member"><highlight class="normal">real_type<sp/><ref refid="_clothoid__compatibility_8hxx_1a87bc730a1f52adff0d4483430269745a" kindref="member">xBegin</ref>()</highlight><highlight class="keyword"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>const<sp/></highlight><highlight class="normal">{<sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>this-&gt;x_begin();<sp/>}</highlight></codeline>
+<codeline lineno="115" refid="_clothoid__compatibility_8hxx_1ae89e2f4ffa90111b6f7d7ecea153ef54" refkind="member"><highlight class="normal">real_type<sp/><ref refid="_clothoid__compatibility_8hxx_1ae89e2f4ffa90111b6f7d7ecea153ef54" kindref="member">yBegin</ref>()</highlight><highlight class="keyword"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>const<sp/></highlight><highlight class="normal">{<sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>this-&gt;y_begin();<sp/>}</highlight></codeline>
+<codeline lineno="116" refid="_clothoid__compatibility_8hxx_1a700d4806d93f230fdf155af17dcd7195" refkind="member"><highlight class="normal">real_type<sp/><ref refid="_clothoid__compatibility_8hxx_1a700d4806d93f230fdf155af17dcd7195" kindref="member">xEnd</ref>()</highlight><highlight class="keyword"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>const<sp/></highlight><highlight class="normal">{<sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>this-&gt;x_end();<sp/>}</highlight></codeline>
+<codeline lineno="117" refid="_clothoid__compatibility_8hxx_1a5776fc56f1bcd6d5cf07703a38d7b8b9" refkind="member"><highlight class="normal">real_type<sp/><ref refid="_clothoid__compatibility_8hxx_1a5776fc56f1bcd6d5cf07703a38d7b8b9" kindref="member">yEnd</ref>()</highlight><highlight class="keyword"><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>const<sp/></highlight><highlight class="normal">{<sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>this-&gt;y_end();<sp/>}</highlight></codeline>
+<codeline lineno="118" refid="_clothoid__compatibility_8hxx_1a1d6afc2d5faaaf775590467a0bf065b4" refkind="member"><highlight class="normal">real_type<sp/><ref refid="_clothoid__compatibility_8hxx_1a1d6afc2d5faaaf775590467a0bf065b4" kindref="member">xBegin_ISO</ref>(<sp/>real_type<sp/>offs<sp/>)</highlight><highlight class="keyword"><sp/>const<sp/></highlight><highlight class="normal">{<sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>this-&gt;x_begin_ISO(<sp/>offs<sp/>);<sp/>}</highlight></codeline>
+<codeline lineno="119" refid="_clothoid__compatibility_8hxx_1ac8a5a280ae18ec8eff32db153a75583d" refkind="member"><highlight class="normal">real_type<sp/><ref refid="_clothoid__compatibility_8hxx_1ac8a5a280ae18ec8eff32db153a75583d" kindref="member">yBegin_ISO</ref>(<sp/>real_type<sp/>offs<sp/>)</highlight><highlight class="keyword"><sp/>const<sp/></highlight><highlight class="normal">{<sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>this-&gt;y_begin_ISO(<sp/>offs<sp/>);<sp/>}</highlight></codeline>
+<codeline lineno="120" refid="_clothoid__compatibility_8hxx_1a46287668744b24e74408fefe01540280" refkind="member"><highlight class="normal">real_type<sp/><ref refid="_clothoid__compatibility_8hxx_1a46287668744b24e74408fefe01540280" kindref="member">xEnd_ISO</ref>(<sp/>real_type<sp/>offs<sp/>)</highlight><highlight class="keyword"><sp/><sp/><sp/>const<sp/></highlight><highlight class="normal">{<sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>this-&gt;x_end_ISO(<sp/>offs<sp/>);<sp/>}</highlight></codeline>
+<codeline lineno="121" refid="_clothoid__compatibility_8hxx_1a15c2b7d41bc3b408e4788d026b39a963" refkind="member"><highlight class="normal">real_type<sp/><ref refid="_clothoid__compatibility_8hxx_1a15c2b7d41bc3b408e4788d026b39a963" kindref="member">yEnd_ISO</ref>(<sp/>real_type<sp/>offs<sp/>)</highlight><highlight class="keyword"><sp/><sp/><sp/>const<sp/></highlight><highlight class="normal">{<sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>this-&gt;y_end_ISO(<sp/>offs<sp/>);<sp/>}</highlight></codeline>
+<codeline lineno="122"><highlight class="normal"></highlight></codeline>
+<codeline lineno="123"><highlight class="normal"><ref refid="namespace_g2lib_1acc8095aa40beedee44352de62f232033" kindref="member">real_type</ref></highlight></codeline>
+<codeline lineno="124" refid="_clothoid__compatibility_8hxx_1a6fbac7b4efa745dd23ff04dfa03e80d1" refkind="member"><highlight class="normal"><ref refid="_clothoid__compatibility_8hxx_1a6fbac7b4efa745dd23ff04dfa03e80d1" kindref="member">closestPointBySample</ref>(</highlight></codeline>
+<codeline lineno="125"><highlight class="normal"><sp/><sp/>real_type<sp/><sp/><sp/>ds,</highlight></codeline>
+<codeline lineno="126"><highlight class="normal"><sp/><sp/>real_type<sp/><sp/><sp/>qx,</highlight></codeline>
+<codeline lineno="127"><highlight class="normal"><sp/><sp/>real_type<sp/><sp/><sp/>qy,</highlight></codeline>
+<codeline lineno="128"><highlight class="normal"><sp/><sp/>real_type<sp/>&amp;<sp/>X,</highlight></codeline>
+<codeline lineno="129"><highlight class="normal"><sp/><sp/>real_type<sp/>&amp;<sp/>Y,</highlight></codeline>
+<codeline lineno="130"><highlight class="normal"><sp/><sp/>real_type<sp/>&amp;<sp/>S</highlight></codeline>
+<codeline lineno="131"><highlight class="normal">)</highlight><highlight class="keyword"><sp/>const<sp/></highlight><highlight class="normal">{</highlight></codeline>
+<codeline lineno="132"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>this-&gt;closest_point_by_sample(<sp/>ds,<sp/>qx,<sp/>qy,<sp/>X,<sp/>Y,<sp/>S<sp/>);</highlight></codeline>
+<codeline lineno="133"><highlight class="normal">}</highlight></codeline>
+<codeline lineno="134"><highlight class="normal"></highlight></codeline>
+<codeline lineno="135"><highlight class="normal"><ref refid="namespace_g2lib_1a17146eb1606475bedc9a2d27f3b29e34" kindref="member">integer</ref></highlight></codeline>
+<codeline lineno="136" refid="_clothoid__compatibility_8hxx_1a8badc4b2d8796b9371dfbfcda50e74c9" refkind="member"><highlight class="normal"><ref refid="_clothoid__compatibility_8hxx_1a8badc4b2d8796b9371dfbfcda50e74c9" kindref="member">closestPoint_ISO</ref>(</highlight></codeline>
+<codeline lineno="137"><highlight class="normal"><sp/><sp/>real_type<sp/><sp/><sp/>qx,</highlight></codeline>
+<codeline lineno="138"><highlight class="normal"><sp/><sp/>real_type<sp/><sp/><sp/>qy,</highlight></codeline>
+<codeline lineno="139"><highlight class="normal"><sp/><sp/>real_type<sp/>&amp;<sp/>x,</highlight></codeline>
+<codeline lineno="140"><highlight class="normal"><sp/><sp/>real_type<sp/>&amp;<sp/>y,</highlight></codeline>
+<codeline lineno="141"><highlight class="normal"><sp/><sp/>real_type<sp/>&amp;<sp/>s,</highlight></codeline>
+<codeline lineno="142"><highlight class="normal"><sp/><sp/>real_type<sp/>&amp;<sp/>t,</highlight></codeline>
+<codeline lineno="143"><highlight class="normal"><sp/><sp/>real_type<sp/>&amp;<sp/>dst</highlight></codeline>
+<codeline lineno="144"><highlight class="normal">)</highlight><highlight class="keyword"><sp/>const<sp/></highlight><highlight class="normal">{</highlight></codeline>
+<codeline lineno="145"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>this-&gt;closest_point_ISO(<sp/>qx,<sp/>qy,<sp/>x,<sp/>y,<sp/>s,<sp/>t,<sp/>dst<sp/>);</highlight></codeline>
+<codeline lineno="146"><highlight class="normal">}</highlight></codeline>
+<codeline lineno="147"><highlight class="normal"></highlight></codeline>
+<codeline lineno="148"><highlight class="normal"><ref refid="namespace_g2lib_1a17146eb1606475bedc9a2d27f3b29e34" kindref="member">integer</ref></highlight></codeline>
+<codeline lineno="149" refid="_clothoid__compatibility_8hxx_1a4264361f7d19b6e0b653404ebe012213" refkind="member"><highlight class="normal"><ref refid="_clothoid__compatibility_8hxx_1a8badc4b2d8796b9371dfbfcda50e74c9" kindref="member">closestPoint_ISO</ref>(</highlight></codeline>
+<codeline lineno="150"><highlight class="normal"><sp/><sp/>real_type<sp/><sp/><sp/>qx,</highlight></codeline>
+<codeline lineno="151"><highlight class="normal"><sp/><sp/>real_type<sp/><sp/><sp/>qy,</highlight></codeline>
+<codeline lineno="152"><highlight class="normal"><sp/><sp/>real_type<sp/><sp/><sp/>offs,</highlight></codeline>
+<codeline lineno="153"><highlight class="normal"><sp/><sp/>real_type<sp/>&amp;<sp/>x,</highlight></codeline>
+<codeline lineno="154"><highlight class="normal"><sp/><sp/>real_type<sp/>&amp;<sp/>y,</highlight></codeline>
+<codeline lineno="155"><highlight class="normal"><sp/><sp/>real_type<sp/>&amp;<sp/>s,</highlight></codeline>
+<codeline lineno="156"><highlight class="normal"><sp/><sp/>real_type<sp/>&amp;<sp/>t,</highlight></codeline>
+<codeline lineno="157"><highlight class="normal"><sp/><sp/>real_type<sp/>&amp;<sp/>dst</highlight></codeline>
+<codeline lineno="158"><highlight class="normal">)</highlight><highlight class="keyword"><sp/>const<sp/></highlight><highlight class="normal">{</highlight></codeline>
+<codeline lineno="159"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>this-&gt;closest_point_ISO(<sp/>qx,<sp/>qy,<sp/>offs,<sp/>x,<sp/>y,<sp/>s,<sp/>t,<sp/>dst<sp/>);</highlight></codeline>
+<codeline lineno="160"><highlight class="normal">}</highlight></codeline>
+<codeline lineno="161"><highlight class="normal"></highlight></codeline>
+<codeline lineno="162"><highlight class="normal"><ref refid="namespace_g2lib_1acc8095aa40beedee44352de62f232033" kindref="member">real_type</ref></highlight></codeline>
+<codeline lineno="163" refid="_clothoid__compatibility_8hxx_1a5495efd264fbd7eb78c79dade6923bcf" refkind="member"><highlight class="normal"><ref refid="_clothoid__compatibility_8hxx_1a5495efd264fbd7eb78c79dade6923bcf" kindref="member">distanceBySample</ref>(</highlight></codeline>
+<codeline lineno="164"><highlight class="normal"><sp/><sp/>real_type<sp/><sp/><sp/>ds,</highlight></codeline>
+<codeline lineno="165"><highlight class="normal"><sp/><sp/>real_type<sp/><sp/><sp/>qx,</highlight></codeline>
+<codeline lineno="166"><highlight class="normal"><sp/><sp/>real_type<sp/><sp/><sp/>qy,</highlight></codeline>
+<codeline lineno="167"><highlight class="normal"><sp/><sp/>real_type<sp/>&amp;<sp/>S</highlight></codeline>
+<codeline lineno="168"><highlight class="normal">)</highlight><highlight class="keyword"><sp/>const<sp/></highlight><highlight class="normal">{</highlight></codeline>
+<codeline lineno="169"><highlight class="normal"><sp/><sp/>real_type<sp/><ref refid="_base_curve__compatibility_8hxx_1afdbeadb4143e4df032f7157207f0ebe3" kindref="member">X</ref>,<sp/><ref refid="_base_curve__compatibility_8hxx_1a9eb95b093a1207d307d6e54673c72630" kindref="member">Y</ref>;</highlight></codeline>
+<codeline lineno="170"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>this-&gt;closest_point_by_sample(<sp/>ds,<sp/>qx,<sp/>qy,<sp/>X,<sp/>Y,<sp/>S<sp/>);</highlight></codeline>
+<codeline lineno="171"><highlight class="normal">}</highlight></codeline>
+<codeline lineno="172"><highlight class="normal"></highlight></codeline>
+<codeline lineno="173"><highlight class="normal"><ref refid="namespace_g2lib_1acc8095aa40beedee44352de62f232033" kindref="member">real_type</ref></highlight></codeline>
+<codeline lineno="174" refid="_clothoid__compatibility_8hxx_1acd758232829ccf651f662b826ebdb853" refkind="member"><highlight class="normal"><ref refid="_clothoid__compatibility_8hxx_1a5495efd264fbd7eb78c79dade6923bcf" kindref="member">distanceBySample</ref>(</highlight></codeline>
+<codeline lineno="175"><highlight class="normal"><sp/><sp/>real_type<sp/>ds,</highlight></codeline>
+<codeline lineno="176"><highlight class="normal"><sp/><sp/>real_type<sp/>qx,</highlight></codeline>
+<codeline lineno="177"><highlight class="normal"><sp/><sp/>real_type<sp/>qy</highlight></codeline>
+<codeline lineno="178"><highlight class="normal">)</highlight><highlight class="keyword"><sp/>const<sp/></highlight><highlight class="normal">{</highlight></codeline>
+<codeline lineno="179"><highlight class="normal"><sp/><sp/>real_type<sp/><ref refid="_base_curve__compatibility_8hxx_1afdbeadb4143e4df032f7157207f0ebe3" kindref="member">X</ref>,<sp/><ref refid="_base_curve__compatibility_8hxx_1a9eb95b093a1207d307d6e54673c72630" kindref="member">Y</ref>,<sp/>S;</highlight></codeline>
+<codeline lineno="180"><highlight class="normal"><sp/><sp/></highlight><highlight class="keywordflow">return</highlight><highlight class="normal"><sp/>this-&gt;closest_point_by_sample(<sp/>ds,<sp/>qx,<sp/>qy,<sp/>X,<sp/>Y,<sp/>S<sp/>);</highlight></codeline>
+<codeline lineno="181"><highlight class="normal">}</highlight></codeline>
+<codeline lineno="182"><highlight class="normal"></highlight></codeline>
+    </programlisting>
+    <location file="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Clothoids/Clothoid_compatibility.hxx"/>
+  </compounddef>
+</doxygen>

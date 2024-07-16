@@ -18,6 +18,7 @@
 \*--------------------------------------------------------------------------*/
 
 #include "Clothoids.hh"
+#include "Clothoids_fmt.hh"
 
 #ifdef __clang__
 #pragma clang diagnostic ignored "-Wglobal-constructors"
@@ -191,9 +192,18 @@ namespace G2lib {
         }
         break;
       case CurveType::DUBINS:
-        Dubins const & DB1{*static_cast<Dubins const *>(pC1)};
-        Dubins const & DB2{*static_cast<Dubins const *>(pC2)};
-        ok = DB1.collision( DB2 );
+        {
+          Dubins const & DB1{*static_cast<Dubins const *>(pC1)};
+          Dubins const & DB2{*static_cast<Dubins const *>(pC2)};
+          ok = DB1.collision( DB2 );
+        }
+        break;
+      case CurveType::DUBINS3P:
+        {
+          Dubins3p const & DB1{*static_cast<Dubins3p const *>(pC1)};
+          Dubins3p const & DB2{*static_cast<Dubins3p const *>(pC2)};
+          ok = DB1.collision( DB2 );
+        }
         break;
       //default:
       //  UTILS_ERROR0( "G2lib::collision, missing curve type" );
@@ -294,9 +304,18 @@ namespace G2lib {
         }
         break;
       case CurveType::DUBINS:
-        Dubins const & DB1{*static_cast<Dubins const *>(pC1)};
-        Dubins const & DB2{*static_cast<Dubins const *>(pC2)};
-        ok = DB1.collision_ISO( offs1, DB2, offs2 );
+        {
+          Dubins const & DB1{*static_cast<Dubins const *>(pC1)};
+          Dubins const & DB2{*static_cast<Dubins const *>(pC2)};
+          ok = DB1.collision_ISO( offs1, DB2, offs2 );
+        }
+        break;
+      case CurveType::DUBINS3P:
+        {
+          Dubins3p const & DB1{*static_cast<Dubins3p const *>(pC1)};
+          Dubins3p const & DB2{*static_cast<Dubins3p const *>(pC2)};
+          ok = DB1.collision_ISO( offs1, DB2, offs2 );
+        }
         break;
       //default:
       //  UTILS_ERROR0( "G2lib::collision_ISO, missing curve type" );
@@ -394,9 +413,18 @@ namespace G2lib {
         }
         break;
       case CurveType::DUBINS:
-        Dubins const & DB1{*static_cast<Dubins const *>(pC1)};
-        Dubins const & DB2{*static_cast<Dubins const *>(pC2)};
-        DB1.intersect( DB2, ilist );
+        {
+          Dubins const & DB1{*static_cast<Dubins const *>(pC1)};
+          Dubins const & DB2{*static_cast<Dubins const *>(pC2)};
+          DB1.intersect( DB2, ilist );
+        }
+        break;
+      case CurveType::DUBINS3P:
+        {
+          Dubins3p const & DB1{*static_cast<Dubins3p const *>(pC1)};
+          Dubins3p const & DB2{*static_cast<Dubins3p const *>(pC2)};
+          DB1.intersect( DB2, ilist );
+        }
         break;
       //default:
       //  UTILS_ERROR0( "G2lib::intersect, missing curve type" );
@@ -493,9 +521,18 @@ namespace G2lib {
         }
         break;
       case CurveType::DUBINS:
-        Dubins const & DB1{*static_cast<Dubins const *>(pC1)};
-        Dubins const & DB2{*static_cast<Dubins const *>(pC2)};
-        DB1.intersect_ISO( offs1, DB2, offs2, ilist );
+        {
+          Dubins const & DB1{*static_cast<Dubins const *>(pC1)};
+          Dubins const & DB2{*static_cast<Dubins const *>(pC2)};
+          DB1.intersect_ISO( offs1, DB2, offs2, ilist );
+        }
+        break;
+      case CurveType::DUBINS3P:
+        {
+          Dubins3p const & DB1{*static_cast<Dubins3p const *>(pC1)};
+          Dubins3p const & DB2{*static_cast<Dubins3p const *>(pC2)};
+          DB1.intersect_ISO( offs1, DB2, offs2, ilist );
+        }
         break;
       //default:
       //  UTILS_ERROR0( "G2lib::intersect_ISO, missing curve type" );

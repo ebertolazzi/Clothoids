@@ -54,10 +54,10 @@ namespace G2lib {
   //!
   void
   FresnelCS(
-    integer     nk,
-    real_type   x,
-    real_type * C,
-    real_type * S
+    integer   nk,
+    real_type x,
+    real_type C[],
+    real_type S[]
   );
 
   //!
@@ -77,12 +77,12 @@ namespace G2lib {
   //!
   void
   GeneralizedFresnelCS(
-    integer     nk,
-    real_type   a,
-    real_type   b,
-    real_type   c,
-    real_type * intC,
-    real_type * intS
+    integer   nk,
+    real_type a,
+    real_type b,
+    real_type c,
+    real_type intC[],
+    real_type intS[]
   );
 
   //!
@@ -150,12 +150,12 @@ namespace G2lib {
     real_type kappa_DD ( real_type   ) const { return 0; }
     real_type kappa_DDD( real_type   ) const { return 0; }
 
-    real_type X( real_type s ) const;
-    real_type Y( real_type s ) const;
-    real_type X_D( real_type s ) const;
-    real_type Y_D( real_type s ) const;
-    real_type X_DD( real_type s ) const;
-    real_type Y_DD( real_type s ) const;
+    real_type X    ( real_type s ) const;
+    real_type Y    ( real_type s ) const;
+    real_type X_D  ( real_type s ) const;
+    real_type Y_D  ( real_type s ) const;
+    real_type X_DD ( real_type s ) const;
+    real_type Y_DD ( real_type s ) const;
     real_type X_DDD( real_type s ) const;
     real_type Y_DDD( real_type s ) const;
 

@@ -1,0 +1,785 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.11.0" xml:lang="en-US">
+  <compounddef id="class_g2lib_1_1_b_box" kind="class" language="C++" prot="public">
+    <compoundname>G2lib::BBox</compoundname>
+    <includes refid="_b_box_8hxx" local="no">BBox.hxx</includes>
+    <sectiondef kind="public-type">
+      <memberdef kind="typedef" id="class_g2lib_1_1_b_box_1a336df4f23f9b6ce7cffcbcf4c8a5f79b" prot="public" static="no">
+        <type>shared_ptr&lt; <ref refid="class_g2lib_1_1_b_box" kindref="compound">BBox</ref> const  &gt;</type>
+        <definition>using G2lib::BBox::PtrBBox =  shared_ptr&lt;BBox const&gt;</definition>
+        <argsstring></argsstring>
+        <name>PtrBBox</name>
+        <qualifiedname>G2lib::BBox::PtrBBox</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Clothoids/BBox.hxx" line="49" column="5" bodyfile="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Clothoids/BBox.hxx" bodystart="49" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="typedef" id="class_g2lib_1_1_b_box_1a884f685315201930568f06393c1173e0" prot="public" static="no">
+        <type>pair&lt; <ref refid="class_g2lib_1_1_b_box_1a336df4f23f9b6ce7cffcbcf4c8a5f79b" kindref="member">PtrBBox</ref>, <ref refid="class_g2lib_1_1_b_box_1a336df4f23f9b6ce7cffcbcf4c8a5f79b" kindref="member">PtrBBox</ref> &gt;</type>
+        <definition>using G2lib::BBox::PairPtrBBox =  pair&lt;PtrBBox,PtrBBox&gt;</definition>
+        <argsstring></argsstring>
+        <name>PairPtrBBox</name>
+        <qualifiedname>G2lib::BBox::PairPtrBBox</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Clothoids/BBox.hxx" line="50" column="5" bodyfile="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Clothoids/BBox.hxx" bodystart="50" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="typedef" id="class_g2lib_1_1_b_box_1a4438bf5f768ecb1b453f5385ad98527d" prot="public" static="no">
+        <type>vector&lt; <ref refid="class_g2lib_1_1_b_box_1a336df4f23f9b6ce7cffcbcf4c8a5f79b" kindref="member">PtrBBox</ref> &gt;</type>
+        <definition>using G2lib::BBox::VecPtrBBox =  vector&lt;PtrBBox&gt;</definition>
+        <argsstring></argsstring>
+        <name>VecPtrBBox</name>
+        <qualifiedname>G2lib::BBox::VecPtrBBox</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Clothoids/BBox.hxx" line="51" column="5" bodyfile="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Clothoids/BBox.hxx" bodystart="51" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="typedef" id="class_g2lib_1_1_b_box_1ad1f3249c9d2a9f2aba4b441bb5dc4a1a" prot="public" static="no">
+        <type>vector&lt; <ref refid="class_g2lib_1_1_b_box_1a884f685315201930568f06393c1173e0" kindref="member">PairPtrBBox</ref> &gt;</type>
+        <definition>using G2lib::BBox::VecPairPtrBBox =  vector&lt;PairPtrBBox&gt;</definition>
+        <argsstring></argsstring>
+        <name>VecPairPtrBBox</name>
+        <qualifiedname>G2lib::BBox::VecPairPtrBBox</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Clothoids/BBox.hxx" line="52" column="5" bodyfile="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Clothoids/BBox.hxx" bodystart="52" bodyend="-1"/>
+      </memberdef>
+    </sectiondef>
+    <sectiondef kind="private-attrib">
+      <memberdef kind="variable" id="class_g2lib_1_1_b_box_1a3145e0f468bcde8c2a700e2fffcd40d8" prot="private" static="no" mutable="no">
+        <type><ref refid="namespace_g2lib_1acc8095aa40beedee44352de62f232033" kindref="member">real_type</ref></type>
+        <definition>real_type G2lib::BBox::m_bbox[4]</definition>
+        <argsstring>[4]</argsstring>
+        <name>m_bbox</name>
+        <qualifiedname>G2lib::BBox::m_bbox</qualifiedname>
+        <initializer>{0,0,0,0}</initializer>
+        <briefdescription>
+<para>[ xmin ymin xmax ymax ] </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Clothoids/BBox.hxx" line="55" column="15" bodyfile="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Clothoids/BBox.hxx" bodystart="55" bodyend="55"/>
+      </memberdef>
+      <memberdef kind="variable" id="class_g2lib_1_1_b_box_1a86c059f6c826f74fe04647907b62a827" prot="private" static="no" mutable="no">
+        <type><ref refid="namespace_g2lib_1a17146eb1606475bedc9a2d27f3b29e34" kindref="member">integer</ref></type>
+        <definition>integer G2lib::BBox::m_id</definition>
+        <argsstring></argsstring>
+        <name>m_id</name>
+        <qualifiedname>G2lib::BBox::m_id</qualifiedname>
+        <initializer>{0}</initializer>
+        <briefdescription>
+<para>id of the bbox </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Clothoids/BBox.hxx" line="56" column="15" bodyfile="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Clothoids/BBox.hxx" bodystart="56" bodyend="56"/>
+      </memberdef>
+      <memberdef kind="variable" id="class_g2lib_1_1_b_box_1a95edfd97f4f10c2ff98bb9831e023f87" prot="private" static="no" mutable="no">
+        <type><ref refid="namespace_g2lib_1a17146eb1606475bedc9a2d27f3b29e34" kindref="member">integer</ref></type>
+        <definition>integer G2lib::BBox::m_ipos</definition>
+        <argsstring></argsstring>
+        <name>m_ipos</name>
+        <qualifiedname>G2lib::BBox::m_ipos</qualifiedname>
+        <initializer>{0}</initializer>
+        <briefdescription>
+<para>rank of the bounding box used in external algorithms </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Clothoids/BBox.hxx" line="57" column="15" bodyfile="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Clothoids/BBox.hxx" bodystart="57" bodyend="57"/>
+      </memberdef>
+    </sectiondef>
+    <sectiondef kind="private-func">
+      <memberdef kind="function" id="class_g2lib_1_1_b_box_1a409d53fa634d5a19453fa155b828d16f" prot="private" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type></type>
+        <definition>G2lib::BBox::BBox</definition>
+        <argsstring>()</argsstring>
+        <name>BBox</name>
+        <qualifiedname>G2lib::BBox::BBox</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Clothoids/BBox.hxx" line="59" column="5"/>
+      </memberdef>
+      <memberdef kind="function" id="class_g2lib_1_1_b_box_1abcce7504d62fdaa9ed40bde009b9d1b1" prot="private" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type></type>
+        <definition>G2lib::BBox::BBox</definition>
+        <argsstring>(BBox const &amp;)=default</argsstring>
+        <name>BBox</name>
+        <qualifiedname>G2lib::BBox::BBox</qualifiedname>
+        <param>
+          <type><ref refid="class_g2lib_1_1_b_box" kindref="compound">BBox</ref> const &amp;</type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Clothoids/BBox.hxx" line="61" column="5"/>
+      </memberdef>
+      <memberdef kind="function" id="class_g2lib_1_1_b_box_1afa0a55ff0d01e474580987d98bf15e65" prot="private" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type></type>
+        <definition>G2lib::BBox::BBox</definition>
+        <argsstring>(BBox &amp;&amp;)=default</argsstring>
+        <name>BBox</name>
+        <qualifiedname>G2lib::BBox::BBox</qualifiedname>
+        <param>
+          <type><ref refid="class_g2lib_1_1_b_box" kindref="compound">BBox</ref> &amp;&amp;</type>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Clothoids/BBox.hxx" line="62" column="5"/>
+      </memberdef>
+    </sectiondef>
+    <sectiondef kind="public-func">
+      <memberdef kind="function" id="class_g2lib_1_1_b_box_1a5fb8b4dca3efc22fce4558fc736f6e53" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type></type>
+        <definition>G2lib::BBox::BBox</definition>
+        <argsstring>(real_type xmin, real_type ymin, real_type xmax, real_type ymax, integer id, integer ipos)</argsstring>
+        <name>BBox</name>
+        <qualifiedname>G2lib::BBox::BBox</qualifiedname>
+        <param>
+          <type><ref refid="namespace_g2lib_1acc8095aa40beedee44352de62f232033" kindref="member">real_type</ref></type>
+          <declname>xmin</declname>
+        </param>
+        <param>
+          <type><ref refid="namespace_g2lib_1acc8095aa40beedee44352de62f232033" kindref="member">real_type</ref></type>
+          <declname>ymin</declname>
+        </param>
+        <param>
+          <type><ref refid="namespace_g2lib_1acc8095aa40beedee44352de62f232033" kindref="member">real_type</ref></type>
+          <declname>xmax</declname>
+        </param>
+        <param>
+          <type><ref refid="namespace_g2lib_1acc8095aa40beedee44352de62f232033" kindref="member">real_type</ref></type>
+          <declname>ymax</declname>
+        </param>
+        <param>
+          <type><ref refid="namespace_g2lib_1a17146eb1606475bedc9a2d27f3b29e34" kindref="member">integer</ref></type>
+          <declname>id</declname>
+        </param>
+        <param>
+          <type><ref refid="namespace_g2lib_1a17146eb1606475bedc9a2d27f3b29e34" kindref="member">integer</ref></type>
+          <declname>ipos</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Construct a bounding box with additional information</para>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername direction="in">xmin</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>x-minimimum box coordinate </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername direction="in">ymin</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>y-minimimum box coordinate </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername direction="in">xmax</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>x-maximum box coordinate </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername direction="in">ymax</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>y-maximum box coordinate </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername direction="in">id</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>identifier of the box </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername direction="in">ipos</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>ranking position of the box </para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Clothoids/BBox.hxx" line="76" column="5" bodyfile="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Clothoids/BBox.hxx" bodystart="76" bodyend="90"/>
+      </memberdef>
+      <memberdef kind="function" id="class_g2lib_1_1_b_box_1a498eca5214dd2148041eee4bca816cdc" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type></type>
+        <definition>G2lib::BBox::BBox</definition>
+        <argsstring>(real_type const bbox[4], integer id, integer ipos)</argsstring>
+        <name>BBox</name>
+        <qualifiedname>G2lib::BBox::BBox</qualifiedname>
+        <param>
+          <type><ref refid="namespace_g2lib_1acc8095aa40beedee44352de62f232033" kindref="member">real_type</ref> const</type>
+          <declname>bbox</declname>
+          <array>[4]</array>
+        </param>
+        <param>
+          <type><ref refid="namespace_g2lib_1a17146eb1606475bedc9a2d27f3b29e34" kindref="member">integer</ref></type>
+          <declname>id</declname>
+        </param>
+        <param>
+          <type><ref refid="namespace_g2lib_1a17146eb1606475bedc9a2d27f3b29e34" kindref="member">integer</ref></type>
+          <declname>ipos</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Construct a bounding box with additional information</para>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername direction="in">bbox</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>bbox [pmin, pmax] </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername direction="in">id</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>identifier of the box </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername direction="in">ipos</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>ranking position of the box </para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Clothoids/BBox.hxx" line="99" column="5" bodyfile="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Clothoids/BBox.hxx" bodystart="99" bodyend="107"/>
+      </memberdef>
+      <memberdef kind="function" id="class_g2lib_1_1_b_box_1a7aa8b4f44c35b86dc680b2166729ed0c" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type></type>
+        <definition>G2lib::BBox::BBox</definition>
+        <argsstring>(real_type const bbox_min[2], real_type const bbox_max[2], integer id, integer ipos)</argsstring>
+        <name>BBox</name>
+        <qualifiedname>G2lib::BBox::BBox</qualifiedname>
+        <param>
+          <type><ref refid="namespace_g2lib_1acc8095aa40beedee44352de62f232033" kindref="member">real_type</ref> const</type>
+          <declname>bbox_min</declname>
+          <array>[2]</array>
+        </param>
+        <param>
+          <type><ref refid="namespace_g2lib_1acc8095aa40beedee44352de62f232033" kindref="member">real_type</ref> const</type>
+          <declname>bbox_max</declname>
+          <array>[2]</array>
+        </param>
+        <param>
+          <type><ref refid="namespace_g2lib_1a17146eb1606475bedc9a2d27f3b29e34" kindref="member">integer</ref></type>
+          <declname>id</declname>
+        </param>
+        <param>
+          <type><ref refid="namespace_g2lib_1a17146eb1606475bedc9a2d27f3b29e34" kindref="member">integer</ref></type>
+          <declname>ipos</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Construct a bounding box with additional information</para>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername direction="in">bbox_min</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>bounding box lower corner </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername direction="in">bbox_max</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>bounding box upper corner </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername direction="in">id</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>identifier of the box </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername direction="in">ipos</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>ranking position of the box </para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Clothoids/BBox.hxx" line="117" column="5" bodyfile="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Clothoids/BBox.hxx" bodystart="117" bodyend="127"/>
+      </memberdef>
+      <memberdef kind="function" id="class_g2lib_1_1_b_box_1ad680fd1907e19b7493fbbf01a7e16b6c" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type></type>
+        <definition>G2lib::BBox::BBox</definition>
+        <argsstring>(vector&lt; PtrBBox &gt; const &amp;bboxes, integer id, integer ipos)</argsstring>
+        <name>BBox</name>
+        <qualifiedname>G2lib::BBox::BBox</qualifiedname>
+        <param>
+          <type>vector&lt; <ref refid="class_g2lib_1_1_b_box_1a336df4f23f9b6ce7cffcbcf4c8a5f79b" kindref="member">PtrBBox</ref> &gt; const &amp;</type>
+          <declname>bboxes</declname>
+        </param>
+        <param>
+          <type><ref refid="namespace_g2lib_1a17146eb1606475bedc9a2d27f3b29e34" kindref="member">integer</ref></type>
+          <declname>id</declname>
+        </param>
+        <param>
+          <type><ref refid="namespace_g2lib_1a17146eb1606475bedc9a2d27f3b29e34" kindref="member">integer</ref></type>
+          <declname>ipos</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Build a buonding box that cover a list of bounding box</para>
+<para><parameterlist kind="param"><parameteritem>
+<parameternamelist>
+<parametername direction="in">bboxes</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>list of bounding box </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername direction="in">id</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>identifier of the box </para>
+</parameterdescription>
+</parameteritem>
+<parameteritem>
+<parameternamelist>
+<parametername direction="in">ipos</parametername>
+</parameternamelist>
+<parameterdescription>
+<para>ranking position of the box </para>
+</parameterdescription>
+</parameteritem>
+</parameterlist>
+</para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Clothoids/BBox.hxx" line="136" column="5" bodyfile="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Clothoids/BBox.hxx" bodystart="136" bodyend="144"/>
+      </memberdef>
+      <memberdef kind="function" id="class_g2lib_1_1_b_box_1a853994680b7f7e23688dee797a606445" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type><ref refid="namespace_g2lib_1acc8095aa40beedee44352de62f232033" kindref="member">real_type</ref> const *</type>
+        <definition>real_type const  * G2lib::BBox::bbox</definition>
+        <argsstring>()</argsstring>
+        <name>bbox</name>
+        <qualifiedname>G2lib::BBox::bbox</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Clothoids/BBox.hxx" line="148" column="22" bodyfile="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Clothoids/BBox.hxx" bodystart="148" bodyend="148"/>
+      </memberdef>
+      <memberdef kind="function" id="class_g2lib_1_1_b_box_1a11712b792b09f50b5dc02d47d18f472f" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type><ref refid="namespace_g2lib_1acc8095aa40beedee44352de62f232033" kindref="member">real_type</ref> const *</type>
+        <definition>real_type const  * G2lib::BBox::bbox_min</definition>
+        <argsstring>()</argsstring>
+        <name>bbox_min</name>
+        <qualifiedname>G2lib::BBox::bbox_min</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Clothoids/BBox.hxx" line="149" column="22" bodyfile="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Clothoids/BBox.hxx" bodystart="149" bodyend="149"/>
+      </memberdef>
+      <memberdef kind="function" id="class_g2lib_1_1_b_box_1a4300bb22eb669508a69a493acb61d356" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type><ref refid="namespace_g2lib_1acc8095aa40beedee44352de62f232033" kindref="member">real_type</ref> const *</type>
+        <definition>real_type const  * G2lib::BBox::bbox_max</definition>
+        <argsstring>()</argsstring>
+        <name>bbox_max</name>
+        <qualifiedname>G2lib::BBox::bbox_max</qualifiedname>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Clothoids/BBox.hxx" line="150" column="22" bodyfile="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Clothoids/BBox.hxx" bodystart="150" bodyend="150"/>
+      </memberdef>
+      <memberdef kind="function" id="class_g2lib_1_1_b_box_1a6e0ca12f451588adaff49b895a62d556" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type><ref refid="namespace_g2lib_1acc8095aa40beedee44352de62f232033" kindref="member">real_type</ref> &amp;</type>
+        <definition>real_type &amp; G2lib::BBox::x_min</definition>
+        <argsstring>()</argsstring>
+        <name>x_min</name>
+        <qualifiedname>G2lib::BBox::x_min</qualifiedname>
+        <briefdescription>
+<para>x-minimum coordinate of the bbox </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Clothoids/BBox.hxx" line="152" column="16" bodyfile="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Clothoids/BBox.hxx" bodystart="152" bodyend="-1"/>
+      </memberdef>
+      <memberdef kind="function" id="class_g2lib_1_1_b_box_1aa5bff22f191e2eb377edc2689ad06cba" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type><ref refid="namespace_g2lib_1acc8095aa40beedee44352de62f232033" kindref="member">real_type</ref> &amp;</type>
+        <definition>real_type &amp; G2lib::BBox::y_min</definition>
+        <argsstring>()</argsstring>
+        <name>y_min</name>
+        <qualifiedname>G2lib::BBox::y_min</qualifiedname>
+        <briefdescription>
+<para>y-minimum coordinate of the bbox </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Clothoids/BBox.hxx" line="153" column="16" bodyfile="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Clothoids/BBox.hxx" bodystart="153" bodyend="152"/>
+      </memberdef>
+      <memberdef kind="function" id="class_g2lib_1_1_b_box_1aab8f8794e892face6c61284887afc5ce" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type><ref refid="namespace_g2lib_1acc8095aa40beedee44352de62f232033" kindref="member">real_type</ref> &amp;</type>
+        <definition>real_type &amp; G2lib::BBox::x_max</definition>
+        <argsstring>()</argsstring>
+        <name>x_max</name>
+        <qualifiedname>G2lib::BBox::x_max</qualifiedname>
+        <briefdescription>
+<para>x-maximum coordinate of the bbox </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Clothoids/BBox.hxx" line="154" column="16" bodyfile="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Clothoids/BBox.hxx" bodystart="154" bodyend="153"/>
+      </memberdef>
+      <memberdef kind="function" id="class_g2lib_1_1_b_box_1a48b92fb0ded5e8eb9125dd93de94dac7" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type><ref refid="namespace_g2lib_1acc8095aa40beedee44352de62f232033" kindref="member">real_type</ref> &amp;</type>
+        <definition>real_type &amp; G2lib::BBox::y_max</definition>
+        <argsstring>()</argsstring>
+        <name>y_max</name>
+        <qualifiedname>G2lib::BBox::y_max</qualifiedname>
+        <briefdescription>
+<para>y-maximum coordinate of the bbox </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Clothoids/BBox.hxx" line="155" column="16" bodyfile="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Clothoids/BBox.hxx" bodystart="155" bodyend="154"/>
+      </memberdef>
+      <memberdef kind="function" id="class_g2lib_1_1_b_box_1a97c801b11ff730785030bd2aa2aa8fe0" prot="public" static="no" const="yes" explicit="no" inline="yes" virt="non-virtual">
+        <type><ref refid="namespace_g2lib_1acc8095aa40beedee44352de62f232033" kindref="member">real_type</ref> const &amp;</type>
+        <definition>real_type const  &amp; G2lib::BBox::x_min</definition>
+        <argsstring>() const</argsstring>
+        <name>x_min</name>
+        <qualifiedname>G2lib::BBox::x_min</qualifiedname>
+        <briefdescription>
+<para>x-minimum coordinate of the bbox </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Clothoids/BBox.hxx" line="157" column="22" bodyfile="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Clothoids/BBox.hxx" bodystart="157" bodyend="155"/>
+      </memberdef>
+      <memberdef kind="function" id="class_g2lib_1_1_b_box_1ab8997bf107a31b17974dc5818981a2a4" prot="public" static="no" const="yes" explicit="no" inline="yes" virt="non-virtual">
+        <type><ref refid="namespace_g2lib_1acc8095aa40beedee44352de62f232033" kindref="member">real_type</ref> const &amp;</type>
+        <definition>real_type const  &amp; G2lib::BBox::y_min</definition>
+        <argsstring>() const</argsstring>
+        <name>y_min</name>
+        <qualifiedname>G2lib::BBox::y_min</qualifiedname>
+        <briefdescription>
+<para>y-minimum coordinate of the bbox </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Clothoids/BBox.hxx" line="158" column="22" bodyfile="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Clothoids/BBox.hxx" bodystart="158" bodyend="157"/>
+      </memberdef>
+      <memberdef kind="function" id="class_g2lib_1_1_b_box_1a7cbe90d9631ea45610b1b63a3954ecf6" prot="public" static="no" const="yes" explicit="no" inline="yes" virt="non-virtual">
+        <type><ref refid="namespace_g2lib_1acc8095aa40beedee44352de62f232033" kindref="member">real_type</ref> const &amp;</type>
+        <definition>real_type const  &amp; G2lib::BBox::x_max</definition>
+        <argsstring>() const</argsstring>
+        <name>x_max</name>
+        <qualifiedname>G2lib::BBox::x_max</qualifiedname>
+        <briefdescription>
+<para>x-maximum coordinate of the bbox </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Clothoids/BBox.hxx" line="159" column="22" bodyfile="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Clothoids/BBox.hxx" bodystart="159" bodyend="158"/>
+      </memberdef>
+      <memberdef kind="function" id="class_g2lib_1_1_b_box_1a2890ee97adf75a1d31b1b46dd9bbe524" prot="public" static="no" const="yes" explicit="no" inline="yes" virt="non-virtual">
+        <type><ref refid="namespace_g2lib_1acc8095aa40beedee44352de62f232033" kindref="member">real_type</ref> const &amp;</type>
+        <definition>real_type const  &amp; G2lib::BBox::y_max</definition>
+        <argsstring>() const</argsstring>
+        <name>y_max</name>
+        <qualifiedname>G2lib::BBox::y_max</qualifiedname>
+        <briefdescription>
+<para>y-maximum coordinate of the bbox </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Clothoids/BBox.hxx" line="160" column="22" bodyfile="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Clothoids/BBox.hxx" bodystart="160" bodyend="159"/>
+      </memberdef>
+      <memberdef kind="function" id="class_g2lib_1_1_b_box_1ae8aa858db0f3f6e57b5c38602d45b266" prot="public" static="no" const="yes" explicit="no" inline="yes" virt="non-virtual">
+        <type><ref refid="namespace_g2lib_1a17146eb1606475bedc9a2d27f3b29e34" kindref="member">integer</ref> const &amp;</type>
+        <definition>integer const  &amp; G2lib::BBox::Id</definition>
+        <argsstring>() const</argsstring>
+        <name>Id</name>
+        <qualifiedname>G2lib::BBox::Id</qualifiedname>
+        <briefdescription>
+<para>return BBOX id </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Clothoids/BBox.hxx" line="162" column="20" bodyfile="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Clothoids/BBox.hxx" bodystart="162" bodyend="160"/>
+      </memberdef>
+      <memberdef kind="function" id="class_g2lib_1_1_b_box_1a2126758a184472cbe58d62edf98c74ee" prot="public" static="no" const="yes" explicit="no" inline="yes" virt="non-virtual">
+        <type><ref refid="namespace_g2lib_1a17146eb1606475bedc9a2d27f3b29e34" kindref="member">integer</ref> const &amp;</type>
+        <definition>integer const  &amp; G2lib::BBox::Ipos</definition>
+        <argsstring>() const</argsstring>
+        <name>Ipos</name>
+        <qualifiedname>G2lib::BBox::Ipos</qualifiedname>
+        <briefdescription>
+<para>return BBOX position </para>
+        </briefdescription>
+        <detaileddescription>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Clothoids/BBox.hxx" line="163" column="20" bodyfile="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Clothoids/BBox.hxx" bodystart="163" bodyend="162"/>
+      </memberdef>
+      <memberdef kind="function" id="class_g2lib_1_1_b_box_1a06ca2872d9b80f275a8f755243375656" prot="public" static="no" const="no" explicit="no" inline="yes" virt="non-virtual">
+        <type><ref refid="class_g2lib_1_1_b_box" kindref="compound">BBox</ref> const &amp;</type>
+        <definition>BBox const  &amp; G2lib::BBox::operator=</definition>
+        <argsstring>(BBox const &amp;rhs)</argsstring>
+        <name>operator=</name>
+        <qualifiedname>G2lib::BBox::operator=</qualifiedname>
+        <param>
+          <type><ref refid="class_g2lib_1_1_b_box" kindref="compound">BBox</ref> const &amp;</type>
+          <declname>rhs</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>copy a bbox </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Clothoids/BBox.hxx" line="169" column="5" bodyfile="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Clothoids/BBox.hxx" bodystart="169" bodyend="174"/>
+      </memberdef>
+      <memberdef kind="function" id="class_g2lib_1_1_b_box_1a3b98db48add6859ab67fb00a0710a21e" prot="public" static="no" const="yes" explicit="no" inline="yes" virt="non-virtual">
+        <type>bool</type>
+        <definition>bool G2lib::BBox::collision</definition>
+        <argsstring>(BBox const &amp;box) const</argsstring>
+        <name>collision</name>
+        <qualifiedname>G2lib::BBox::collision</qualifiedname>
+        <param>
+          <type><ref refid="class_g2lib_1_1_b_box" kindref="compound">BBox</ref> const &amp;</type>
+          <declname>box</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>detect if two bbox collide </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Clothoids/BBox.hxx" line="180" column="5" bodyfile="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Clothoids/BBox.hxx" bodystart="180" bodyend="185"/>
+      </memberdef>
+      <memberdef kind="function" id="class_g2lib_1_1_b_box_1ad0aaba5511ff29c7e0fd0049ea0da67b" prot="public" static="no" const="no" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void G2lib::BBox::join</definition>
+        <argsstring>(vector&lt; PtrBBox &gt; const &amp;bboxes)</argsstring>
+        <name>join</name>
+        <qualifiedname>G2lib::BBox::join</qualifiedname>
+        <param>
+          <type>vector&lt; <ref refid="class_g2lib_1_1_b_box_1a336df4f23f9b6ce7cffcbcf4c8a5f79b" kindref="member">PtrBBox</ref> &gt; const &amp;</type>
+          <declname>bboxes</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Build bbox for a list of bbox </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Clothoids/BBox.hxx" line="191" column="5" bodyfile="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/BBox.cc" bodystart="57" bodyend="73"/>
+      </memberdef>
+      <memberdef kind="function" id="class_g2lib_1_1_b_box_1ac6fc969999b473220bc8ef684108ab74" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="namespace_g2lib_1acc8095aa40beedee44352de62f232033" kindref="member">real_type</ref></type>
+        <definition>real_type G2lib::BBox::distance</definition>
+        <argsstring>(real_type x, real_type y) const</argsstring>
+        <name>distance</name>
+        <qualifiedname>G2lib::BBox::distance</qualifiedname>
+        <param>
+          <type><ref refid="namespace_g2lib_1acc8095aa40beedee44352de62f232033" kindref="member">real_type</ref></type>
+          <declname>x</declname>
+        </param>
+        <param>
+          <type><ref refid="namespace_g2lib_1acc8095aa40beedee44352de62f232033" kindref="member">real_type</ref></type>
+          <declname>y</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>distance of the point <computeroutput>(x,y)</computeroutput> to the bbox </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Clothoids/BBox.hxx" line="197" column="5" bodyfile="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/BBox.cc" bodystart="78" bodyend="108"/>
+      </memberdef>
+      <memberdef kind="function" id="class_g2lib_1_1_b_box_1a81d505f4ec1c979177f83be91922c8d0" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type><ref refid="namespace_g2lib_1acc8095aa40beedee44352de62f232033" kindref="member">real_type</ref></type>
+        <definition>real_type G2lib::BBox::max_distance</definition>
+        <argsstring>(real_type x, real_type y) const</argsstring>
+        <name>max_distance</name>
+        <qualifiedname>G2lib::BBox::max_distance</qualifiedname>
+        <param>
+          <type><ref refid="namespace_g2lib_1acc8095aa40beedee44352de62f232033" kindref="member">real_type</ref></type>
+          <declname>x</declname>
+        </param>
+        <param>
+          <type><ref refid="namespace_g2lib_1acc8095aa40beedee44352de62f232033" kindref="member">real_type</ref></type>
+          <declname>y</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Maximum distance of the point <computeroutput>(x,y)</computeroutput> to the point of bbox </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Clothoids/BBox.hxx" line="203" column="5" bodyfile="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/BBox.cc" bodystart="113" bodyend="117"/>
+      </memberdef>
+      <memberdef kind="function" id="class_g2lib_1_1_b_box_1a67cd88140fdf70d4de76bacdf7396cd5" prot="public" static="no" const="yes" explicit="no" inline="no" virt="non-virtual">
+        <type>void</type>
+        <definition>void G2lib::BBox::print</definition>
+        <argsstring>(ostream_type &amp;stream) const</argsstring>
+        <name>print</name>
+        <qualifiedname>G2lib::BBox::print</qualifiedname>
+        <param>
+          <type><ref refid="namespace_g2lib_1a8fcbace87db5a5e71391e0040878f2c3" kindref="member">ostream_type</ref> &amp;</type>
+          <declname>stream</declname>
+        </param>
+        <briefdescription>
+        </briefdescription>
+        <detaileddescription>
+<para>Pretty print a bbox </para>
+        </detaileddescription>
+        <inbodydescription>
+        </inbodydescription>
+        <location file="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Clothoids/BBox.hxx" line="208" column="10" bodyfile="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/BBox.cc" bodystart="122" bodyend="127"/>
+      </memberdef>
+    </sectiondef>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+<para>Class to manipulate bounding box </para>
+    </detaileddescription>
+    <location file="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Clothoids/BBox.hxx" line="47" column="3" bodyfile="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Clothoids/BBox.hxx" bodystart="47" bodyend="210"/>
+    <listofallmembers>
+      <member refid="class_g2lib_1_1_b_box_1a409d53fa634d5a19453fa155b828d16f" prot="private" virt="non-virtual"><scope>G2lib::BBox</scope><name>BBox</name></member>
+      <member refid="class_g2lib_1_1_b_box_1abcce7504d62fdaa9ed40bde009b9d1b1" prot="private" virt="non-virtual"><scope>G2lib::BBox</scope><name>BBox</name></member>
+      <member refid="class_g2lib_1_1_b_box_1afa0a55ff0d01e474580987d98bf15e65" prot="private" virt="non-virtual"><scope>G2lib::BBox</scope><name>BBox</name></member>
+      <member refid="class_g2lib_1_1_b_box_1a5fb8b4dca3efc22fce4558fc736f6e53" prot="public" virt="non-virtual"><scope>G2lib::BBox</scope><name>BBox</name></member>
+      <member refid="class_g2lib_1_1_b_box_1a498eca5214dd2148041eee4bca816cdc" prot="public" virt="non-virtual"><scope>G2lib::BBox</scope><name>BBox</name></member>
+      <member refid="class_g2lib_1_1_b_box_1a7aa8b4f44c35b86dc680b2166729ed0c" prot="public" virt="non-virtual"><scope>G2lib::BBox</scope><name>BBox</name></member>
+      <member refid="class_g2lib_1_1_b_box_1ad680fd1907e19b7493fbbf01a7e16b6c" prot="public" virt="non-virtual"><scope>G2lib::BBox</scope><name>BBox</name></member>
+      <member refid="class_g2lib_1_1_b_box_1a853994680b7f7e23688dee797a606445" prot="public" virt="non-virtual"><scope>G2lib::BBox</scope><name>bbox</name></member>
+      <member refid="class_g2lib_1_1_b_box_1a4300bb22eb669508a69a493acb61d356" prot="public" virt="non-virtual"><scope>G2lib::BBox</scope><name>bbox_max</name></member>
+      <member refid="class_g2lib_1_1_b_box_1a11712b792b09f50b5dc02d47d18f472f" prot="public" virt="non-virtual"><scope>G2lib::BBox</scope><name>bbox_min</name></member>
+      <member refid="class_g2lib_1_1_b_box_1a3b98db48add6859ab67fb00a0710a21e" prot="public" virt="non-virtual"><scope>G2lib::BBox</scope><name>collision</name></member>
+      <member refid="class_g2lib_1_1_b_box_1ac6fc969999b473220bc8ef684108ab74" prot="public" virt="non-virtual"><scope>G2lib::BBox</scope><name>distance</name></member>
+      <member refid="class_g2lib_1_1_b_box_1ae8aa858db0f3f6e57b5c38602d45b266" prot="public" virt="non-virtual"><scope>G2lib::BBox</scope><name>Id</name></member>
+      <member refid="class_g2lib_1_1_b_box_1a2126758a184472cbe58d62edf98c74ee" prot="public" virt="non-virtual"><scope>G2lib::BBox</scope><name>Ipos</name></member>
+      <member refid="class_g2lib_1_1_b_box_1ad0aaba5511ff29c7e0fd0049ea0da67b" prot="public" virt="non-virtual"><scope>G2lib::BBox</scope><name>join</name></member>
+      <member refid="class_g2lib_1_1_b_box_1a3145e0f468bcde8c2a700e2fffcd40d8" prot="private" virt="non-virtual"><scope>G2lib::BBox</scope><name>m_bbox</name></member>
+      <member refid="class_g2lib_1_1_b_box_1a86c059f6c826f74fe04647907b62a827" prot="private" virt="non-virtual"><scope>G2lib::BBox</scope><name>m_id</name></member>
+      <member refid="class_g2lib_1_1_b_box_1a95edfd97f4f10c2ff98bb9831e023f87" prot="private" virt="non-virtual"><scope>G2lib::BBox</scope><name>m_ipos</name></member>
+      <member refid="class_g2lib_1_1_b_box_1a81d505f4ec1c979177f83be91922c8d0" prot="public" virt="non-virtual"><scope>G2lib::BBox</scope><name>max_distance</name></member>
+      <member refid="class_g2lib_1_1_b_box_1a06ca2872d9b80f275a8f755243375656" prot="public" virt="non-virtual"><scope>G2lib::BBox</scope><name>operator=</name></member>
+      <member refid="class_g2lib_1_1_b_box_1a884f685315201930568f06393c1173e0" prot="public" virt="non-virtual"><scope>G2lib::BBox</scope><name>PairPtrBBox</name></member>
+      <member refid="class_g2lib_1_1_b_box_1a67cd88140fdf70d4de76bacdf7396cd5" prot="public" virt="non-virtual"><scope>G2lib::BBox</scope><name>print</name></member>
+      <member refid="class_g2lib_1_1_b_box_1a336df4f23f9b6ce7cffcbcf4c8a5f79b" prot="public" virt="non-virtual"><scope>G2lib::BBox</scope><name>PtrBBox</name></member>
+      <member refid="class_g2lib_1_1_b_box_1ad1f3249c9d2a9f2aba4b441bb5dc4a1a" prot="public" virt="non-virtual"><scope>G2lib::BBox</scope><name>VecPairPtrBBox</name></member>
+      <member refid="class_g2lib_1_1_b_box_1a4438bf5f768ecb1b453f5385ad98527d" prot="public" virt="non-virtual"><scope>G2lib::BBox</scope><name>VecPtrBBox</name></member>
+      <member refid="class_g2lib_1_1_b_box_1aab8f8794e892face6c61284887afc5ce" prot="public" virt="non-virtual"><scope>G2lib::BBox</scope><name>x_max</name></member>
+      <member refid="class_g2lib_1_1_b_box_1a7cbe90d9631ea45610b1b63a3954ecf6" prot="public" virt="non-virtual"><scope>G2lib::BBox</scope><name>x_max</name></member>
+      <member refid="class_g2lib_1_1_b_box_1a6e0ca12f451588adaff49b895a62d556" prot="public" virt="non-virtual"><scope>G2lib::BBox</scope><name>x_min</name></member>
+      <member refid="class_g2lib_1_1_b_box_1a97c801b11ff730785030bd2aa2aa8fe0" prot="public" virt="non-virtual"><scope>G2lib::BBox</scope><name>x_min</name></member>
+      <member refid="class_g2lib_1_1_b_box_1a48b92fb0ded5e8eb9125dd93de94dac7" prot="public" virt="non-virtual"><scope>G2lib::BBox</scope><name>y_max</name></member>
+      <member refid="class_g2lib_1_1_b_box_1a2890ee97adf75a1d31b1b46dd9bbe524" prot="public" virt="non-virtual"><scope>G2lib::BBox</scope><name>y_max</name></member>
+      <member refid="class_g2lib_1_1_b_box_1aa5bff22f191e2eb377edc2689ad06cba" prot="public" virt="non-virtual"><scope>G2lib::BBox</scope><name>y_min</name></member>
+      <member refid="class_g2lib_1_1_b_box_1ab8997bf107a31b17974dc5818981a2a4" prot="public" virt="non-virtual"><scope>G2lib::BBox</scope><name>y_min</name></member>
+    </listofallmembers>
+  </compounddef>
+</doxygen>

@@ -1,0 +1,1524 @@
+\doxysection{G2lib\+::Poly\+Line Class Reference}
+\hypertarget{class_g2lib_1_1_poly_line}{}\label{class_g2lib_1_1_poly_line}\index{G2lib::PolyLine@{G2lib::PolyLine}}
+
+
+Class to manage a collection of straight segment.  
+
+
+
+
+{\ttfamily \#include $<$Poly\+Line.\+hxx$>$}
+
+Inheritance diagram for G2lib\+::Poly\+Line\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_g2lib_1_1_poly_line}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_g2lib_1_1_poly_line_a43e786fb996dd92bd78830b34d2665f1}{Poly\+Line}} ()=delete
+\item 
+\mbox{\hyperlink{class_g2lib_1_1_poly_line_a2a056d0ca0e332c57e40d787b6f53ce5}{Poly\+Line}} (string const \&\mbox{\hyperlink{class_g2lib_1_1_base_curve_a15a9cd79a8c95b3c9b1b95721e076de7}{name}})
+\item 
+void \mbox{\hyperlink{class_g2lib_1_1_poly_line_a03f07ee15a24764a8109768e34e56302}{setup}} (\mbox{\hyperlink{namespace_g2lib_a2bee1fb11cb401bacb26ad157b301feb}{Generic\+Container}} const \&gc) override
+\item 
+void \mbox{\hyperlink{class_g2lib_1_1_poly_line_aa34f8932e5cf9b2ef019de6363fa9ebb}{init}} ()
+\item 
+void \mbox{\hyperlink{class_g2lib_1_1_poly_line_ac9f6d4659a49d3bbff38d4e1e87681bc}{copy}} (\mbox{\hyperlink{class_g2lib_1_1_poly_line}{Poly\+Line}} const \&l)
+\item 
+\mbox{\hyperlink{class_g2lib_1_1_poly_line_a6072026ad99f0e82e280702303864f48}{Poly\+Line}} (\mbox{\hyperlink{class_g2lib_1_1_poly_line}{Poly\+Line}} const \&PL)
+\item 
+\mbox{\hyperlink{namespace_g2lib_a17146eb1606475bedc9a2d27f3b29e34}{integer}} \mbox{\hyperlink{class_g2lib_1_1_poly_line_a1e3bea4819cd83d333d96693234d0dc5}{find\+\_\+at\+\_\+s}} (\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \&s) const
+\item 
+\mbox{\hyperlink{class_g2lib_1_1_poly_line_a6a4489666c9a3611588841ee574716f0}{Poly\+Line}} (\mbox{\hyperlink{class_g2lib_1_1_line_segment}{Line\+Segment}} const \&LS)
+\item 
+\mbox{\hyperlink{class_g2lib_1_1_poly_line_a866449605ec08f7806c8b4dcdf6b8776}{Poly\+Line}} (\mbox{\hyperlink{class_g2lib_1_1_circle_arc}{Circle\+Arc}} const \&C, \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} tol)
+\item 
+\mbox{\hyperlink{class_g2lib_1_1_poly_line_af3fbfe46679c9ea1cd2710860a6ec711}{Poly\+Line}} (\mbox{\hyperlink{class_g2lib_1_1_biarc}{Biarc}} const \&B, \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} tol)
+\item 
+\mbox{\hyperlink{class_g2lib_1_1_poly_line_a9d7813345933b39b030a4485a9af8f99}{Poly\+Line}} (\mbox{\hyperlink{class_g2lib_1_1_clothoid_curve}{Clothoid\+Curve}} const \&B, \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} tol)
+\item 
+\mbox{\hyperlink{class_g2lib_1_1_poly_line_a30e98d81b98e8e887a83a7f4505bc5af}{Poly\+Line}} (\mbox{\hyperlink{class_g2lib_1_1_clothoid_list}{Clothoid\+List}} const \&B, \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} tol)
+\item 
+\mbox{\hyperlink{class_g2lib_1_1_poly_line_aae6b7b99745068dd6ea44f40a46980e7}{Poly\+Line}} (\mbox{\hyperlink{class_g2lib_1_1_base_curve}{Base\+Curve}} const \texorpdfstring{$\ast$}{*}pC)
+\item 
+\mbox{\hyperlink{namespace_g2lib_ac18621126b9485db2bc878d6a1c8b0c9}{Curve\+Type}} \mbox{\hyperlink{class_g2lib_1_1_poly_line_a25dcafc31a3bb1b8f704f767ef6d288b}{type}} () const override
+\item 
+\mbox{\hyperlink{class_g2lib_1_1_poly_line}{Poly\+Line}} const \& \mbox{\hyperlink{class_g2lib_1_1_poly_line_a2a90fc2b39ead0ccc9932540f18f9abd}{operator=}} (\mbox{\hyperlink{class_g2lib_1_1_poly_line}{Poly\+Line}} const \&s)
+\item 
+\mbox{\hyperlink{class_g2lib_1_1_line_segment}{Line\+Segment}} const \& \mbox{\hyperlink{class_g2lib_1_1_poly_line_aeb947d1025918424bd93dcf9d4c449fa}{get\+Segment}} (\mbox{\hyperlink{namespace_g2lib_a17146eb1606475bedc9a2d27f3b29e34}{integer}} n) const
+\item 
+\mbox{\hyperlink{namespace_g2lib_a17146eb1606475bedc9a2d27f3b29e34}{integer}} \mbox{\hyperlink{class_g2lib_1_1_poly_line_a85343e029bb272c6f549e063216aa48c}{num\+\_\+segments}} () const
+\item 
+\mbox{\hyperlink{namespace_g2lib_a17146eb1606475bedc9a2d27f3b29e34}{integer}} \mbox{\hyperlink{class_g2lib_1_1_poly_line_a51ff8b720d8a1771bdf2d14e13c157a1}{num\+Points}} () const
+\item 
+void \mbox{\hyperlink{class_g2lib_1_1_poly_line_a112c4693c29f1c3815d2f9f1f0015987}{polygon}} (\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} x\mbox{[}$\,$\mbox{]}, \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} y\mbox{[}$\,$\mbox{]}) const
+\item 
+void \mbox{\hyperlink{class_g2lib_1_1_poly_line_a5f90244d6a5e853794ee9cf7334fc6fe}{init}} (\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} x0, \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} y0)
+\item 
+void \mbox{\hyperlink{class_g2lib_1_1_poly_line_a6078d39a097c928be5a8887207dbde78}{push\+\_\+back}} (\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} x, \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} y)
+\item 
+void \mbox{\hyperlink{class_g2lib_1_1_poly_line_a4a0933412647a9d8235160df919c2b17}{push\+\_\+back}} (\mbox{\hyperlink{class_g2lib_1_1_line_segment}{Line\+Segment}} const \&C)
+\item 
+void \mbox{\hyperlink{class_g2lib_1_1_poly_line_a000dcba4e944d5eb574e9f07358554f3}{push\+\_\+back}} (\mbox{\hyperlink{class_g2lib_1_1_circle_arc}{Circle\+Arc}} const \&C, \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} tol)
+\item 
+void \mbox{\hyperlink{class_g2lib_1_1_poly_line_ae866f7478c36ade2c66a31af2cda7be3}{push\+\_\+back}} (\mbox{\hyperlink{class_g2lib_1_1_biarc}{Biarc}} const \&C, \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} tol)
+\item 
+void \mbox{\hyperlink{class_g2lib_1_1_poly_line_a433b441957b47b2a9493ab956c21b0c3}{push\+\_\+back}} (\mbox{\hyperlink{class_g2lib_1_1_clothoid_curve}{Clothoid\+Curve}} const \&C, \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} tol)
+\item 
+void \mbox{\hyperlink{class_g2lib_1_1_poly_line_a02f0915e702b8ef45b714c9b0b84a91a}{push\+\_\+back}} (\mbox{\hyperlink{class_g2lib_1_1_clothoid_list}{Clothoid\+List}} const \&L, \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} tol)
+\item 
+void \mbox{\hyperlink{class_g2lib_1_1_poly_line_a3cfc8eea906e80d8d5b2773880bc3280}{build}} (\mbox{\hyperlink{namespace_g2lib_a17146eb1606475bedc9a2d27f3b29e34}{integer}} npts, \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} const x\mbox{[}$\,$\mbox{]}, \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} const y\mbox{[}$\,$\mbox{]})
+\item 
+void \mbox{\hyperlink{class_g2lib_1_1_poly_line_afd37f51f0b7aa19d17d39fd6ba773e5b}{build}} (\mbox{\hyperlink{class_g2lib_1_1_line_segment}{Line\+Segment}} const \&L)
+\item 
+void \mbox{\hyperlink{class_g2lib_1_1_poly_line_aab76a84ce9b610ce4b987587797e7151}{build}} (\mbox{\hyperlink{class_g2lib_1_1_circle_arc}{Circle\+Arc}} const \&C, \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} tol)
+\item 
+void \mbox{\hyperlink{class_g2lib_1_1_poly_line_a2f7e9cc58f40814f1568331dd662b84b}{build}} (\mbox{\hyperlink{class_g2lib_1_1_biarc}{Biarc}} const \&B, \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} tol)
+\item 
+void \mbox{\hyperlink{class_g2lib_1_1_poly_line_ae0b9e9c6f162cf3e84483ccd65a9282d}{build}} (\mbox{\hyperlink{class_g2lib_1_1_clothoid_curve}{Clothoid\+Curve}} const \&C, \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} tol)
+\item 
+void \mbox{\hyperlink{class_g2lib_1_1_poly_line_a84a1ed54246352b39f087d76aa92bddc}{build}} (\mbox{\hyperlink{class_g2lib_1_1_clothoid_list}{Clothoid\+List}} const \&CL, \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} tol)
+\item 
+void \mbox{\hyperlink{class_g2lib_1_1_poly_line_a8c66b5c31a76e21347e11200ecc4d194}{build}} (\mbox{\hyperlink{class_g2lib_1_1_circle_arc}{Circle\+Arc}} const \&C)
+\item 
+void \mbox{\hyperlink{class_g2lib_1_1_poly_line_afdb3c9053916dfe0bf222899a4162c93}{build}} (\mbox{\hyperlink{class_g2lib_1_1_clothoid_curve}{Clothoid\+Curve}} const \&)
+\item 
+void \mbox{\hyperlink{class_g2lib_1_1_poly_line_a60f6e585dbf34265cfcfcc0ba662688b}{build}} (\mbox{\hyperlink{class_g2lib_1_1_biarc}{Biarc}} const \&)
+\item 
+void \mbox{\hyperlink{class_g2lib_1_1_poly_line_a91d54eeeca591166e3816be951019ca9}{build}} (\mbox{\hyperlink{class_g2lib_1_1_biarc_list}{Biarc\+List}} const \&)
+\item 
+void \mbox{\hyperlink{class_g2lib_1_1_poly_line_a066fe9f6622ab90592a7ea51efeafed4}{build}} (\mbox{\hyperlink{class_g2lib_1_1_poly_line}{Poly\+Line}} const \&)
+\item 
+void \mbox{\hyperlink{class_g2lib_1_1_poly_line_a5e3e9b6ac9516772bf5a76579c692b24}{build}} (\mbox{\hyperlink{class_g2lib_1_1_clothoid_list}{Clothoid\+List}} const \&)
+\item 
+void \mbox{\hyperlink{class_g2lib_1_1_poly_line_a4673240b3beea47bbf88e180eac54c31}{build}} (\mbox{\hyperlink{class_g2lib_1_1_dubins}{Dubins}} const \&)
+\item 
+void \mbox{\hyperlink{class_g2lib_1_1_poly_line_ac28f923c7fca184ddec7b8c41350f529}{build}} (\mbox{\hyperlink{class_g2lib_1_1_dubins3p}{Dubins3p}} const \&)
+\item 
+void \mbox{\hyperlink{class_g2lib_1_1_poly_line_a5df60a151e57501f760baf68400bc460}{bbox}} (\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \&xmin, \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \&ymin, \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \&xmax, \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \&ymax) const override
+\item 
+void \mbox{\hyperlink{class_g2lib_1_1_poly_line_a90d11dc419c9f9e0e0ffe5369095d010}{bbox\+\_\+\+ISO}} (\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}}, \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \&, \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \&, \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \&, \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \&) const override
+\item 
+void \mbox{\hyperlink{class_g2lib_1_1_poly_line_a1769b7f590a5dff956a53267fac8b075}{bb\+\_\+triangles}} (vector$<$ \mbox{\hyperlink{class_g2lib_1_1_triangle2_d}{Triangle2D}} $>$ \&tvec, \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} max\+\_\+angle=Utils\+::m\+\_\+pi/6, \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} max\+\_\+size=1e100, \mbox{\hyperlink{namespace_g2lib_a17146eb1606475bedc9a2d27f3b29e34}{integer}} icurve=0) const override
+\item 
+void \mbox{\hyperlink{class_g2lib_1_1_poly_line_af44ac86700f95b1cfbec1676fc218bc1}{bb\+\_\+triangles\+\_\+\+ISO}} (\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} offs, vector$<$ \mbox{\hyperlink{class_g2lib_1_1_triangle2_d}{Triangle2D}} $>$ \&tvec, \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} max\+\_\+angle=Utils\+::m\+\_\+pi/6, \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} max\+\_\+size=1e100, \mbox{\hyperlink{namespace_g2lib_a17146eb1606475bedc9a2d27f3b29e34}{integer}} icurve=0) const override
+\item 
+void \mbox{\hyperlink{class_g2lib_1_1_poly_line_ad5f729b8922371ce83cc69eb1d3b9f26}{bb\+\_\+triangles\+\_\+\+SAE}} (\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} offs, vector$<$ \mbox{\hyperlink{class_g2lib_1_1_triangle2_d}{Triangle2D}} $>$ \&tvec, \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} max\+\_\+angle=Utils\+::m\+\_\+pi/6, \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} max\+\_\+size=1e100, \mbox{\hyperlink{namespace_g2lib_a17146eb1606475bedc9a2d27f3b29e34}{integer}} icurve=0) const override
+\item 
+\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \mbox{\hyperlink{class_g2lib_1_1_poly_line_a05418c3a1a347483fe7dbceb0c8a0650}{length}} () const override
+\item 
+\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \mbox{\hyperlink{class_g2lib_1_1_poly_line_ac2c399224a0fa16df6de9a7f778d29f3}{length\+\_\+\+ISO}} (\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}}) const override
+\item 
+\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \mbox{\hyperlink{class_g2lib_1_1_poly_line_a189d345e01490041558ace09a62a5ca9}{x\+\_\+begin}} () const override
+\item 
+\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \mbox{\hyperlink{class_g2lib_1_1_poly_line_abd93922813a93f55007d772382cb2063}{y\+\_\+begin}} () const override
+\item 
+\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \mbox{\hyperlink{class_g2lib_1_1_poly_line_a2412e0210dfcb89b95f68cbfa990079f}{x\+\_\+end}} () const override
+\item 
+\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \mbox{\hyperlink{class_g2lib_1_1_poly_line_abfbcf0989c303eead03c5e5edb7ee783}{y\+\_\+end}} () const override
+\item 
+\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \mbox{\hyperlink{class_g2lib_1_1_poly_line_ab579d4b4d5631e7483302040ae5bdf32}{X}} (\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} s) const override
+\item 
+\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \mbox{\hyperlink{class_g2lib_1_1_poly_line_a07cff8dff4c18bf6b07dd46ed1c707f6}{X\+\_\+D}} (\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} s) const override
+\item 
+\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \mbox{\hyperlink{class_g2lib_1_1_poly_line_a17296f0c00b633c55be13abf0d5bb1fe}{X\+\_\+\+DD}} (\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}}) const override
+\item 
+\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \mbox{\hyperlink{class_g2lib_1_1_poly_line_a44500a5aad4af265493125bb1fecd5f0}{X\+\_\+\+DDD}} (\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}}) const override
+\item 
+\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \mbox{\hyperlink{class_g2lib_1_1_poly_line_a8379710333fd650e0ffc5458622089b7}{Y}} (\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} s) const override
+\item 
+\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \mbox{\hyperlink{class_g2lib_1_1_poly_line_a6e3b694458639e3548640d0c91e99804}{Y\+\_\+D}} (\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} s) const override
+\item 
+\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \mbox{\hyperlink{class_g2lib_1_1_poly_line_aae04ad0bde94e22880a2acf5c21d3f35}{Y\+\_\+\+DD}} (\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}}) const override
+\item 
+\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \mbox{\hyperlink{class_g2lib_1_1_poly_line_a73590670fc3467d7c33695174ca429f3}{Y\+\_\+\+DDD}} (\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}}) const override
+\item 
+\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \mbox{\hyperlink{class_g2lib_1_1_poly_line_ae0ce2ccfa38dcee31a43bd2ee13a7715}{theta}} (\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} s) const override
+\item 
+\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \mbox{\hyperlink{class_g2lib_1_1_poly_line_a750ba71adb66f9bc67b7c3ee17bfab2f}{theta\+\_\+D}} (\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} s) const override
+\item 
+\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \mbox{\hyperlink{class_g2lib_1_1_poly_line_a873a84053eeb902b379c6e96ce04f252}{theta\+\_\+\+DD}} (\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} s) const override
+\item 
+\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \mbox{\hyperlink{class_g2lib_1_1_poly_line_ac9afca201c5b039e35f6fa41e0d0c9b4}{theta\+\_\+\+DDD}} (\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} s) const override
+\item 
+void \mbox{\hyperlink{class_g2lib_1_1_poly_line_a8459cab7506aecf871b9b3935f14cb10}{eval}} (\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} s, \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \&x, \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \&y) const override
+\item 
+void \mbox{\hyperlink{class_g2lib_1_1_poly_line_ad1ccbfb297edbf3003e08c43013a778e}{eval\+\_\+D}} (\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} s, \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \&x\+\_\+D, \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \&y\+\_\+D) const override
+\item 
+void \mbox{\hyperlink{class_g2lib_1_1_poly_line_a70f0b546c1540433a6c999cdca34708b}{eval\+\_\+\+DD}} (\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}}, \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \&x\+\_\+\+DD, \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \&y\+\_\+\+DD) const override
+\item 
+void \mbox{\hyperlink{class_g2lib_1_1_poly_line_a2cfe973409c1ec6e09db8834c1c0701c}{eval\+\_\+\+DDD}} (\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}}, \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \&x\+\_\+\+DDD, \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \&y\+\_\+\+DDD) const override
+\item 
+void \mbox{\hyperlink{class_g2lib_1_1_poly_line_a2882a06098edeb29d71085a69bb99c42}{eval\+\_\+\+ISO}} (\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} s, \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} offs, \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \&x, \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \&y) const override
+\item 
+void \mbox{\hyperlink{class_g2lib_1_1_poly_line_afbe726a9e12d37925a45a1deb1422abe}{eval\+\_\+\+ISO\+\_\+D}} (\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} s, \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} offs, \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \&x\+\_\+D, \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \&y\+\_\+D) const override
+\item 
+void \mbox{\hyperlink{class_g2lib_1_1_poly_line_a33e7f2ca67c75b764c08a711be10fd55}{eval\+\_\+\+ISO\+\_\+\+DD}} (\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}}, \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}}, \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \&x\+\_\+\+DD, \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \&y\+\_\+\+DD) const override
+\item 
+void \mbox{\hyperlink{class_g2lib_1_1_poly_line_a33e31befcb476320d7cc7ca3d167347f}{eval\+\_\+\+ISO\+\_\+\+DDD}} (\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}}, \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}}, \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \&x\+\_\+\+DDD, \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \&y\+\_\+\+DDD) const override
+\item 
+void \mbox{\hyperlink{class_g2lib_1_1_poly_line_a7723d59fe0967b2e3bd04986c468b4d7}{translate}} (\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \mbox{\hyperlink{class_g2lib_1_1_base_curve_a632f1f7d0026bb833da3955fc05b8add}{tx}}, \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \mbox{\hyperlink{class_g2lib_1_1_base_curve_adeab817ad54d681f5446d0ddc878d622}{ty}}) override
+\begin{DoxyCompactList}\small\item\em translate curve by $ (t_x,t_y) $ \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_g2lib_1_1_poly_line_a9547f1b69c66305d6310e4717d35f825}{rotate}} (\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} angle, \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} cx, \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} cy) override
+\item 
+void \mbox{\hyperlink{class_g2lib_1_1_poly_line_a96fa34a3664a0994a433758d0e035a02}{reverse}} () override
+\item 
+void \mbox{\hyperlink{class_g2lib_1_1_poly_line_a6760742649d93a56a5fe0c6961f00aa1}{scale}} (\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} sc) override
+\item 
+void \mbox{\hyperlink{class_g2lib_1_1_poly_line_aaad58356d0ea7bbc1a90425b71e9893f}{change\+\_\+origin}} (\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} newx0, \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} newy0) override
+\item 
+void \mbox{\hyperlink{class_g2lib_1_1_poly_line_a959e1c409a74c29eaf2095407c71eb31}{trim}} (\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} s\+\_\+begin, \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} s\+\_\+end) override
+\item 
+void \mbox{\hyperlink{class_g2lib_1_1_poly_line_a5c69531c36c5f88e5c674d8de8007f8d}{trim}} (\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} s\+\_\+begin, \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} s\+\_\+end, \mbox{\hyperlink{class_g2lib_1_1_poly_line}{Poly\+Line}} \&new\+PL) const
+\item 
+\mbox{\hyperlink{namespace_g2lib_a17146eb1606475bedc9a2d27f3b29e34}{integer}} \mbox{\hyperlink{class_g2lib_1_1_poly_line_abae1f26e8ce62b0365b0cd4d2d5c2943}{closest\+\_\+point\+\_\+\+ISO}} (\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} x, \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} y, \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \&\mbox{\hyperlink{class_g2lib_1_1_poly_line_ab579d4b4d5631e7483302040ae5bdf32}{X}}, \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \&\mbox{\hyperlink{class_g2lib_1_1_poly_line_a8379710333fd650e0ffc5458622089b7}{Y}}, \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \&S, \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \&T, \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \&DST) const override
+\item 
+\mbox{\hyperlink{namespace_g2lib_a17146eb1606475bedc9a2d27f3b29e34}{integer}} \mbox{\hyperlink{class_g2lib_1_1_poly_line_a6dc56f48620eb1e94cde89dd7cda6a25}{closest\+\_\+point\+\_\+\+ISO}} (\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}}, \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}}, \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}}, \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \&, \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \&, \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \&, \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \&, \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \&) const override
+\item 
+bool \mbox{\hyperlink{class_g2lib_1_1_poly_line_ab5bfe9b6a96ac25e2d614e812c735b45}{collision}} (\mbox{\hyperlink{class_g2lib_1_1_poly_line}{Poly\+Line}} const \&C) const
+\item 
+bool \mbox{\hyperlink{class_g2lib_1_1_poly_line_a3030d5d6d975b81680334db595cbbf54}{collision\+\_\+\+ISO}} (\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} offs, \mbox{\hyperlink{class_g2lib_1_1_poly_line}{Poly\+Line}} const \&CL, \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} offs\+\_\+\+CL) const
+\item 
+bool \mbox{\hyperlink{class_g2lib_1_1_poly_line_a8d89fc55e9b533398645d024f864bf57}{collision}} (\mbox{\hyperlink{class_g2lib_1_1_base_curve}{Base\+Curve}} const \texorpdfstring{$\ast$}{*}pC) const override
+\item 
+bool \mbox{\hyperlink{class_g2lib_1_1_poly_line_a4ce5865f3f494fffa97baae7ff59ea3e}{collision\+\_\+\+ISO}} (\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} offs, \mbox{\hyperlink{class_g2lib_1_1_base_curve}{Base\+Curve}} const \texorpdfstring{$\ast$}{*}pC, \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} offs\+\_\+C) const override
+\item 
+void \mbox{\hyperlink{class_g2lib_1_1_poly_line_a6d8d4d3b10820a095a93f69063f1d6c3}{intersect}} (\mbox{\hyperlink{class_g2lib_1_1_poly_line}{Poly\+Line}} const \&pl, vector$<$ \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} $>$ \&ss0, vector$<$ \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} $>$ \&ss1) const
+\item 
+void \mbox{\hyperlink{class_g2lib_1_1_poly_line_ad439799abda4c9dd4f8959ab13a774ac}{intersect}} (\mbox{\hyperlink{class_g2lib_1_1_poly_line}{Poly\+Line}} const \&pl, \mbox{\hyperlink{namespace_g2lib_a511fce3368282f6ef2984bf1b7480375}{Intersect\+List}} \&ilist) const
+\item 
+void \mbox{\hyperlink{class_g2lib_1_1_poly_line_a31b7b6df5e9390daf4ad3ea4777d0316}{intersect\+\_\+\+ISO}} (\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} offs, \mbox{\hyperlink{class_g2lib_1_1_poly_line}{Poly\+Line}} const \&pl, \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} offs\+\_\+pl, \mbox{\hyperlink{namespace_g2lib_a511fce3368282f6ef2984bf1b7480375}{Intersect\+List}} \&ilist) const
+\item 
+void \mbox{\hyperlink{class_g2lib_1_1_poly_line_a7837e7626f58d6618335217e0ff760af}{intersect}} (\mbox{\hyperlink{class_g2lib_1_1_base_curve}{Base\+Curve}} const \texorpdfstring{$\ast$}{*}pC, \mbox{\hyperlink{namespace_g2lib_a511fce3368282f6ef2984bf1b7480375}{Intersect\+List}} \&ilist) const override
+\item 
+void \mbox{\hyperlink{class_g2lib_1_1_poly_line_a86129e38a2dcbc7c6de3842ab6faa875}{intersect\+\_\+\+ISO}} (\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} offs, \mbox{\hyperlink{class_g2lib_1_1_base_curve}{Base\+Curve}} const \texorpdfstring{$\ast$}{*}pC, \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} offs\+\_\+\+LS, \mbox{\hyperlink{namespace_g2lib_a511fce3368282f6ef2984bf1b7480375}{Intersect\+List}} \&ilist) const override
+\item 
+string \mbox{\hyperlink{class_g2lib_1_1_poly_line_a894e8fe08f8bb422b50c0baaa0e8f8a7}{info}} () const
+\item 
+void \mbox{\hyperlink{class_g2lib_1_1_poly_line_aad053a34df3eabfc48873bd72e76166a}{info}} (\mbox{\hyperlink{namespace_g2lib_a8fcbace87db5a5e71391e0040878f2c3}{ostream\+\_\+type}} \&stream) const override
+\item 
+void \mbox{\hyperlink{class_g2lib_1_1_poly_line_ad6b152f0bcc709b91f824403fc84d44d}{build\+\_\+\+AABBtree}} () const
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions inherited from \mbox{\hyperlink{class_g2lib_1_1_base_curve}{G2lib\+::\+Base\+Curve}}}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_g2lib_1_1_base_curve_af595a08609144b9d5eac1c9a44896c9d}{Base\+Curve}} ()=delete
+\item 
+\mbox{\hyperlink{class_g2lib_1_1_base_curve_a70eaf67549fcb4ff99abb34dd0aeb0de}{Base\+Curve}} (\mbox{\hyperlink{class_g2lib_1_1_base_curve}{Base\+Curve}} const \&)=delete
+\item 
+\mbox{\hyperlink{class_g2lib_1_1_base_curve}{Base\+Curve}} const \& \mbox{\hyperlink{class_g2lib_1_1_base_curve_a84ce8f95e2cdd7a82f3846f94b59fb52}{operator=}} (\mbox{\hyperlink{class_g2lib_1_1_base_curve}{Base\+Curve}} const \&)=delete
+\item 
+\mbox{\hyperlink{class_g2lib_1_1_base_curve_afd4b00d42570e14fa585fbb43c04ea06}{Base\+Curve}} (string const \&\mbox{\hyperlink{class_g2lib_1_1_base_curve_a15a9cd79a8c95b3c9b1b95721e076de7}{name}})
+\item 
+virtual \mbox{\hyperlink{class_g2lib_1_1_base_curve_a16dcdb10827d26196201d467ac6f9f79}{\texorpdfstring{$\sim$}{\string~}\+Base\+Curve}} ()=default
+\item 
+void \mbox{\hyperlink{class_g2lib_1_1_base_curve_aaeb11d904c0bc8219f0bfea1bfc3144d}{build}} (\mbox{\hyperlink{namespace_g2lib_a2bee1fb11cb401bacb26ad157b301feb}{Generic\+Container}} const \&gc)
+\item 
+string \mbox{\hyperlink{class_g2lib_1_1_base_curve_a15a9cd79a8c95b3c9b1b95721e076de7}{name}} () const
+\item 
+string \mbox{\hyperlink{class_g2lib_1_1_base_curve_a0a409d606f8ce9d3df8f3849fa5877a0}{type\+\_\+name}} () const
+\item 
+\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \mbox{\hyperlink{class_g2lib_1_1_base_curve_af4e7c308bc05c9e51ffa393bd592c3b7}{length\+\_\+\+SAE}} (\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} offs) const
+\item 
+void \mbox{\hyperlink{class_g2lib_1_1_base_curve_ab822f14dc9b0093bae1ff1f8efbf1acc}{bbox\+\_\+\+SAE}} (\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} offs, \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \&xmin, \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \&ymin, \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \&xmax, \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \&ymax) const
+\item 
+virtual \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \mbox{\hyperlink{class_g2lib_1_1_base_curve_abf3e1283ab3634d0290f634c2a236fbe}{theta\+\_\+begin}} () const
+\item 
+virtual \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \mbox{\hyperlink{class_g2lib_1_1_base_curve_a0bbb3715af400d84669cb54fefb97225}{theta\+\_\+end}} () const
+\item 
+virtual \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \mbox{\hyperlink{class_g2lib_1_1_base_curve_abf36d50dce16aec6b9607057eb31f78e}{kappa\+\_\+begin}} () const
+\item 
+virtual \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \mbox{\hyperlink{class_g2lib_1_1_base_curve_aad176b31983e486b9643007bcfc2979d}{kappa\+\_\+end}} () const
+\item 
+virtual \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \mbox{\hyperlink{class_g2lib_1_1_base_curve_ab5340de5bb11b7d565da06d2b1a8ea51}{x\+\_\+begin\+\_\+\+ISO}} (\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} offs) const
+\item 
+virtual \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \mbox{\hyperlink{class_g2lib_1_1_base_curve_afc9b4bd73d5d8acf54f8ec0710c6ece6}{y\+\_\+begin\+\_\+\+ISO}} (\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} offs) const
+\item 
+virtual \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \mbox{\hyperlink{class_g2lib_1_1_base_curve_a5093b13c81a630b3c26d28381edd59ca}{x\+\_\+end\+\_\+\+ISO}} (\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} offs) const
+\item 
+virtual \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \mbox{\hyperlink{class_g2lib_1_1_base_curve_a0cf7cfef07ef4d65971bfee7b75eb54f}{y\+\_\+end\+\_\+\+ISO}} (\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} offs) const
+\item 
+\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \mbox{\hyperlink{class_g2lib_1_1_base_curve_a94e8659498c13d3eb3179b17257dc3ab}{x\+\_\+begin\+\_\+\+SAE}} (\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} offs) const
+\item 
+\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \mbox{\hyperlink{class_g2lib_1_1_base_curve_ab819cddea8bf31505d76ae5812bbca8b}{y\+\_\+begin\+\_\+\+SAE}} (\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} offs) const
+\item 
+\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \mbox{\hyperlink{class_g2lib_1_1_base_curve_ac5089be2dcba7c99f5e6564a362e53b4}{x\+\_\+end\+\_\+\+SAE}} (\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} offs) const
+\item 
+\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \mbox{\hyperlink{class_g2lib_1_1_base_curve_a5ceac5192e08ba68a3eeec832434dcca}{y\+\_\+end\+\_\+\+SAE}} (\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} offs) const
+\item 
+virtual \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \mbox{\hyperlink{class_g2lib_1_1_base_curve_aa8267048f5d7e9be64343bb57fd046ec}{tx\+\_\+begin}} () const
+\item 
+virtual \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \mbox{\hyperlink{class_g2lib_1_1_base_curve_adefa9286291b53b9d713d972d5f1be22}{ty\+\_\+begin}} () const
+\item 
+virtual \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \mbox{\hyperlink{class_g2lib_1_1_base_curve_a5198fda593040dd0027152407d6f97ff}{tx\+\_\+end}} () const
+\item 
+virtual \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \mbox{\hyperlink{class_g2lib_1_1_base_curve_a0d7aa31d6f64be3e95a3e27756872100}{ty\+\_\+end}} () const
+\item 
+virtual \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \mbox{\hyperlink{class_g2lib_1_1_base_curve_a56a87e1a32c603a35302dcf3b9d44e48}{nx\+\_\+begin\+\_\+\+ISO}} () const
+\item 
+virtual \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \mbox{\hyperlink{class_g2lib_1_1_base_curve_a75a85eac0865476d1a4bed8bd137d502}{ny\+\_\+begin\+\_\+\+ISO}} () const
+\item 
+virtual \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \mbox{\hyperlink{class_g2lib_1_1_base_curve_a917bf627318c9a73310c7146703810a9}{nx\+\_\+end\+\_\+\+ISO}} () const
+\item 
+virtual \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \mbox{\hyperlink{class_g2lib_1_1_base_curve_ab0dfe4bb2162b9f11eb801eb98782331}{ny\+\_\+end\+\_\+\+ISO}} () const
+\item 
+\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \mbox{\hyperlink{class_g2lib_1_1_base_curve_a6397098569ca145802e1d7c703fc6eb1}{nx\+\_\+begin\+\_\+\+SAE}} () const
+\item 
+\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \mbox{\hyperlink{class_g2lib_1_1_base_curve_a345fcb6084b454a4d67e54ce4730f10f}{ny\+\_\+begin\+\_\+\+SAE}} () const
+\item 
+\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \mbox{\hyperlink{class_g2lib_1_1_base_curve_a34d3cdf9bf4de2e0502499a3efd0cc1a}{nx\+\_\+end\+\_\+\+SAE}} () const
+\item 
+\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \mbox{\hyperlink{class_g2lib_1_1_base_curve_ae738b5e6fa69c317c60318949acf18d7}{ny\+\_\+end\+\_\+\+SAE}} () const
+\item 
+\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \mbox{\hyperlink{class_g2lib_1_1_base_curve_a41f205653319adf3cac7a1aa103ee410}{kappa}} (\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} s) const
+\item 
+\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \mbox{\hyperlink{class_g2lib_1_1_base_curve_aef669e2c0c32cbf1769261aa75d3fbea}{kappa\+\_\+D}} (\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} s) const
+\item 
+\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \mbox{\hyperlink{class_g2lib_1_1_base_curve_a6a530f129afccdd57e5d36abaf069680}{kappa\+\_\+\+DD}} (\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} s) const
+\item 
+virtual \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \mbox{\hyperlink{class_g2lib_1_1_base_curve_a632f1f7d0026bb833da3955fc05b8add}{tx}} (\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} s) const
+\item 
+virtual \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \mbox{\hyperlink{class_g2lib_1_1_base_curve_adeab817ad54d681f5446d0ddc878d622}{ty}} (\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} s) const
+\item 
+virtual \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \mbox{\hyperlink{class_g2lib_1_1_base_curve_a02d9ba0057553f38f37e64d9de3471f3}{tx\+\_\+D}} (\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} s) const
+\item 
+virtual \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \mbox{\hyperlink{class_g2lib_1_1_base_curve_a2bee4a4e229cc7b529ea15af7bf825c5}{ty\+\_\+D}} (\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} s) const
+\item 
+virtual \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \mbox{\hyperlink{class_g2lib_1_1_base_curve_a606aa6120893a54543f91e300fc33bd5}{tx\+\_\+\+DD}} (\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} s) const
+\item 
+virtual \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \mbox{\hyperlink{class_g2lib_1_1_base_curve_ad63a63192c8346cf744e07312b7be28a}{ty\+\_\+\+DD}} (\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} s) const
+\item 
+virtual \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \mbox{\hyperlink{class_g2lib_1_1_base_curve_a3cff0048c88505721919493f4182fca1}{tx\+\_\+\+DDD}} (\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} s) const
+\item 
+virtual \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \mbox{\hyperlink{class_g2lib_1_1_base_curve_a0d8caababa8475ba7d54704341699941}{ty\+\_\+\+DDD}} (\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} s) const
+\item 
+\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \mbox{\hyperlink{class_g2lib_1_1_base_curve_a03f9e541723a019784aabeb0383541c3}{nx\+\_\+\+ISO}} (\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} s) const
+\item 
+\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \mbox{\hyperlink{class_g2lib_1_1_base_curve_a169c2b35bf9198f9a7e6cb56adb03efd}{nx\+\_\+\+ISO\+\_\+D}} (\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} s) const
+\item 
+\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \mbox{\hyperlink{class_g2lib_1_1_base_curve_a55c5d74dbaa012a140472982c4e9c6be}{nx\+\_\+\+ISO\+\_\+\+DD}} (\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} s) const
+\item 
+\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \mbox{\hyperlink{class_g2lib_1_1_base_curve_afb5dc4e2dbf01740a265887050aafe45}{nx\+\_\+\+ISO\+\_\+\+DDD}} (\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} s) const
+\item 
+\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \mbox{\hyperlink{class_g2lib_1_1_base_curve_a57be41a7d752393dad8f893804cb32a9}{ny\+\_\+\+ISO}} (\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} s) const
+\item 
+\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \mbox{\hyperlink{class_g2lib_1_1_base_curve_ad1705049c0c15b1654aefae5b48c963b}{ny\+\_\+\+ISO\+\_\+D}} (\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} s) const
+\item 
+\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \mbox{\hyperlink{class_g2lib_1_1_base_curve_a689a2826bf4207a25bd219ae8da8747d}{ny\+\_\+\+ISO\+\_\+\+DD}} (\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} s) const
+\item 
+\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \mbox{\hyperlink{class_g2lib_1_1_base_curve_ae54c85e07f09d917517a591a6770d9df}{ny\+\_\+\+ISO\+\_\+\+DDD}} (\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} s) const
+\item 
+\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \mbox{\hyperlink{class_g2lib_1_1_base_curve_a6790665125fdfa21a71ff0afa67a511e}{nx\+\_\+\+SAE}} (\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} s) const
+\item 
+\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \mbox{\hyperlink{class_g2lib_1_1_base_curve_a4d6acf36dbc751b7ebb22e913551ecc9}{nx\+\_\+\+SAE\+\_\+D}} (\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} s) const
+\item 
+\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \mbox{\hyperlink{class_g2lib_1_1_base_curve_ab223bb937233dd3519b8a00b558e6cbb}{nx\+\_\+\+SAE\+\_\+\+DD}} (\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} s) const
+\item 
+\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \mbox{\hyperlink{class_g2lib_1_1_base_curve_ae3a593c3851ae3ef939621ab4d8a538b}{nx\+\_\+\+SAE\+\_\+\+DDD}} (\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} s) const
+\item 
+\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \mbox{\hyperlink{class_g2lib_1_1_base_curve_ae9e27c34557b6f484fc2e2d54e444c82}{ny\+\_\+\+SAE}} (\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} s) const
+\item 
+\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \mbox{\hyperlink{class_g2lib_1_1_base_curve_a0840b203a2215ccc16fe487a643be881}{ny\+\_\+\+SAE\+\_\+D}} (\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} s) const
+\item 
+\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \mbox{\hyperlink{class_g2lib_1_1_base_curve_a8507f40dfd9191b17bec7d1e272aa571}{ny\+\_\+\+SAE\+\_\+\+DD}} (\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} s) const
+\item 
+\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \mbox{\hyperlink{class_g2lib_1_1_base_curve_ad7a18e92294f5c212ff180cd635ed705}{ny\+\_\+\+SAE\+\_\+\+DDD}} (\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} s) const
+\item 
+virtual void \mbox{\hyperlink{class_g2lib_1_1_base_curve_a2a6ee63395e82dfc977f26bfc46e87e6}{tg}} (\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} s, \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \&tg\+\_\+x, \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \&tg\+\_\+y) const
+\item 
+virtual void \mbox{\hyperlink{class_g2lib_1_1_base_curve_a341d92e523e2844ea43242fc581e6410}{tg\+\_\+D}} (\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} s, \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \&tg\+\_\+x\+\_\+D, \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \&tg\+\_\+y\+\_\+D) const
+\item 
+virtual void \mbox{\hyperlink{class_g2lib_1_1_base_curve_a20836a21d2fdb947c60ce7208b650312}{tg\+\_\+\+DD}} (\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} s, \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \&tg\+\_\+x\+\_\+\+DD, \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \&tg\+\_\+y\+\_\+\+DD) const
+\item 
+virtual void \mbox{\hyperlink{class_g2lib_1_1_base_curve_a67b52e2bfdf921d5d34de008fe7688e0}{tg\+\_\+\+DDD}} (\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} s, \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \&tg\+\_\+x\+\_\+\+DDD, \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \&tg\+\_\+y\+\_\+\+DDD) const
+\item 
+void \mbox{\hyperlink{class_g2lib_1_1_base_curve_a011f9fac8b36feea75eee742e70b3b7a}{nor\+\_\+\+ISO}} (\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} s, \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \&\mbox{\hyperlink{_base_curve__compatibility_8hxx_a0823ad2cb05b7e1c773361d49f95bad8}{nx}}, \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \&\mbox{\hyperlink{_base_curve__compatibility_8hxx_abec84214d67c2a8b2f1d4bb7a3ebc31f}{ny}}) const
+\item 
+void \mbox{\hyperlink{class_g2lib_1_1_base_curve_a654f4b5962ffadac25a51138f8f1e82d}{nor\+\_\+\+ISO\+\_\+D}} (\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} s, \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \&\mbox{\hyperlink{_base_curve__compatibility_8hxx_aac92aa76e00b585a7c7b4782bb3bd48d}{nx\+\_\+D}}, \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \&\mbox{\hyperlink{_base_curve__compatibility_8hxx_a537c0e6b6ec66959113c0c9891a838b0}{ny\+\_\+D}}) const
+\item 
+void \mbox{\hyperlink{class_g2lib_1_1_base_curve_a944106e0aa406e79a75ceb462d2c4dfa}{nor\+\_\+\+ISO\+\_\+\+DD}} (\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} s, \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \&\mbox{\hyperlink{_base_curve__compatibility_8hxx_a26eba6a4baeca50d661fc491f5322ee3}{nx\+\_\+\+DD}}, \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \&\mbox{\hyperlink{_base_curve__compatibility_8hxx_a7205322f98eabff71152802de25d501b}{ny\+\_\+\+DD}}) const
+\item 
+void \mbox{\hyperlink{class_g2lib_1_1_base_curve_a3ed0991682dafdf83489b4fe55547c3e}{nor\+\_\+\+ISO\+\_\+\+DDD}} (\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} s, \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \&\mbox{\hyperlink{_base_curve__compatibility_8hxx_ad2a9863ed9911671fa923d185454d34b}{nx\+\_\+\+DDD}}, \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \&\mbox{\hyperlink{_base_curve__compatibility_8hxx_a940b6738d0b4254cb500f2d5d47e9e0a}{ny\+\_\+\+DDD}}) const
+\item 
+void \mbox{\hyperlink{class_g2lib_1_1_base_curve_a1ed4ee167b77d2e9c42c7d52b6b74f72}{nor\+\_\+\+SAE}} (\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} s, \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \&\mbox{\hyperlink{_base_curve__compatibility_8hxx_a0823ad2cb05b7e1c773361d49f95bad8}{nx}}, \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \&\mbox{\hyperlink{_base_curve__compatibility_8hxx_abec84214d67c2a8b2f1d4bb7a3ebc31f}{ny}}) const
+\item 
+void \mbox{\hyperlink{class_g2lib_1_1_base_curve_a62c28cc86c3cb95753f61cbf5b241e93}{nor\+\_\+\+SAE\+\_\+D}} (\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} s, \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \&\mbox{\hyperlink{_base_curve__compatibility_8hxx_aac92aa76e00b585a7c7b4782bb3bd48d}{nx\+\_\+D}}, \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \&\mbox{\hyperlink{_base_curve__compatibility_8hxx_a537c0e6b6ec66959113c0c9891a838b0}{ny\+\_\+D}}) const
+\item 
+void \mbox{\hyperlink{class_g2lib_1_1_base_curve_ac5a0b3499e7e8193d1068c1aea233bce}{nor\+\_\+\+SAE\+\_\+\+DD}} (\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} s, \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \&\mbox{\hyperlink{_base_curve__compatibility_8hxx_a26eba6a4baeca50d661fc491f5322ee3}{nx\+\_\+\+DD}}, \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \&\mbox{\hyperlink{_base_curve__compatibility_8hxx_a7205322f98eabff71152802de25d501b}{ny\+\_\+\+DD}}) const
+\item 
+void \mbox{\hyperlink{class_g2lib_1_1_base_curve_a5f5e0183f651ca0cc900f16dee99dbf4}{nor\+\_\+\+SAE\+\_\+\+DDD}} (\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} s, \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \&\mbox{\hyperlink{_base_curve__compatibility_8hxx_ad2a9863ed9911671fa923d185454d34b}{nx\+\_\+\+DDD}}, \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \&\mbox{\hyperlink{_base_curve__compatibility_8hxx_a940b6738d0b4254cb500f2d5d47e9e0a}{ny\+\_\+\+DDD}}) const
+\item 
+virtual void \mbox{\hyperlink{class_g2lib_1_1_base_curve_af8226ce833300299e27348f025201ac5}{evaluate}} (\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} s, \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \&th, \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \&k, \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \&x, \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \&y) const
+\item 
+virtual void \mbox{\hyperlink{class_g2lib_1_1_base_curve_a9e3e9c206e60b454bd0dc879e1e82b1c}{evaluate\+\_\+\+ISO}} (\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} s, \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} offs, \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \&th, \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \&k, \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \&x, \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \&y) const
+\item 
+virtual void \mbox{\hyperlink{class_g2lib_1_1_base_curve_a3f725d32569450d65c15cd66239fb190}{evaluate\+\_\+\+SAE}} (\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} s, \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} offs, \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \&th, \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \&k, \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \&x, \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \&y) const
+\item 
+virtual \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \mbox{\hyperlink{class_g2lib_1_1_base_curve_a97e48915bc26523dbf6bcf3ab45af8f3}{X\+\_\+\+ISO}} (\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} s, \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} offs) const
+\item 
+virtual \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \mbox{\hyperlink{class_g2lib_1_1_base_curve_a4631e967b6d25014264d2cf3e07ba144}{Y\+\_\+\+ISO}} (\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} s, \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} offs) const
+\item 
+virtual \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \mbox{\hyperlink{class_g2lib_1_1_base_curve_a95336be5ef5d74ddc73557816579d68d}{X\+\_\+\+ISO\+\_\+D}} (\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} s, \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} offs) const
+\item 
+virtual \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \mbox{\hyperlink{class_g2lib_1_1_base_curve_ad31078bfa71d088e049cff36f2fb8353}{Y\+\_\+\+ISO\+\_\+D}} (\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} s, \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} offs) const
+\item 
+virtual \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \mbox{\hyperlink{class_g2lib_1_1_base_curve_a4bf612e0067ed96aa00266b358bcb064}{X\+\_\+\+ISO\+\_\+\+DD}} (\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} s, \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} offs) const
+\item 
+virtual \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \mbox{\hyperlink{class_g2lib_1_1_base_curve_a38b8dae1eee05bbd491541a3e3fd11eb}{Y\+\_\+\+ISO\+\_\+\+DD}} (\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} s, \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} offs) const
+\item 
+virtual \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \mbox{\hyperlink{class_g2lib_1_1_base_curve_a6c3f83df16fa6c579c04b25ef6f96fe4}{X\+\_\+\+ISO\+\_\+\+DDD}} (\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} s, \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} offs) const
+\item 
+virtual \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \mbox{\hyperlink{class_g2lib_1_1_base_curve_a394f6d2095d4dea7c3f211ae7678517e}{Y\+\_\+\+ISO\+\_\+\+DDD}} (\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} s, \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} offs) const
+\item 
+\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \mbox{\hyperlink{class_g2lib_1_1_base_curve_afdd8ded9108c686e430e0b593900841d}{X\+\_\+\+SAE}} (\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} s, \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} offs) const
+\item 
+\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \mbox{\hyperlink{class_g2lib_1_1_base_curve_a5bbfa1fc7a18107f60b6df0c4a035ff1}{Y\+\_\+\+SAE}} (\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} s, \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} offs) const
+\item 
+\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \mbox{\hyperlink{class_g2lib_1_1_base_curve_a70b3610ffeb6f2840e8c6abae56686e6}{X\+\_\+\+SAE\+\_\+D}} (\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} s, \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} offs) const
+\item 
+\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \mbox{\hyperlink{class_g2lib_1_1_base_curve_ad4379bb952fd2df3e1a696f53291064d}{Y\+\_\+\+SAE\+\_\+D}} (\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} s, \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} offs) const
+\item 
+\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \mbox{\hyperlink{class_g2lib_1_1_base_curve_afcc404c200853c95063c8af66b4307dd}{X\+\_\+\+SAE\+\_\+\+DD}} (\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} s, \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} offs) const
+\item 
+\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \mbox{\hyperlink{class_g2lib_1_1_base_curve_a6b684a4e37dcc2714b6d3933279c6be2}{Y\+\_\+\+SAE\+\_\+\+DD}} (\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} s, \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} offs) const
+\item 
+\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \mbox{\hyperlink{class_g2lib_1_1_base_curve_ac1f539ad3cd88233c08fe57336687e05}{X\+\_\+\+SAE\+\_\+\+DDD}} (\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} s, \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} offs) const
+\item 
+\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \mbox{\hyperlink{class_g2lib_1_1_base_curve_abf80381f3fb040f7e4daded7cf263ab4}{Y\+\_\+\+SAE\+\_\+\+DDD}} (\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} s, \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} offs) const
+\item 
+void \mbox{\hyperlink{class_g2lib_1_1_base_curve_ae1b73c2a8be8d0b12179fb05d96c3828}{eval\+\_\+\+SAE}} (\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} s, \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} offs, \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \&x, \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \&y) const
+\item 
+void \mbox{\hyperlink{class_g2lib_1_1_base_curve_a8071ba383b1f84381bc84c5d170ae664}{eval\+\_\+\+SAE\+\_\+D}} (\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} s, \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} offs, \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \&x\+\_\+D, \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \&y\+\_\+D) const
+\item 
+void \mbox{\hyperlink{class_g2lib_1_1_base_curve_a7e88be8a60c2520e5b0ab4aff1253b36}{eval\+\_\+\+SAE\+\_\+\+DD}} (\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} s, \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} offs, \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \&x\+\_\+\+DD, \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \&y\+\_\+\+DD) const
+\item 
+void \mbox{\hyperlink{class_g2lib_1_1_base_curve_abec3d37c0e957015e6458f46d7bacde1}{eval\+\_\+\+SAE\+\_\+\+DDD}} (\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} s, \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} offs, \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \&x\+\_\+\+DDD, \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \&y\+\_\+\+DDD) const
+\item 
+bool \mbox{\hyperlink{class_g2lib_1_1_base_curve_a15dd6f4c647f4444a0713a555c70b6a8}{collision\+\_\+\+SAE}} (\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} offs, \mbox{\hyperlink{class_g2lib_1_1_base_curve}{Base\+Curve}} const \texorpdfstring{$\ast$}{*}pC, \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} offs\+\_\+C) const
+\item 
+void \mbox{\hyperlink{class_g2lib_1_1_base_curve_a04ba10242ad1355b070978ab4251146f}{intersect\+\_\+\+SAE}} (\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} offs, \mbox{\hyperlink{class_g2lib_1_1_base_curve}{Base\+Curve}} const \texorpdfstring{$\ast$}{*}pC, \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} offs\+\_\+C, \mbox{\hyperlink{namespace_g2lib_a511fce3368282f6ef2984bf1b7480375}{Intersect\+List}} \&ilist) const
+\item 
+\mbox{\hyperlink{namespace_g2lib_a17146eb1606475bedc9a2d27f3b29e34}{integer}} \mbox{\hyperlink{class_g2lib_1_1_base_curve_a4c289422bb6cac3c90ecdbfd3f123f41}{closest\+\_\+point\+\_\+\+SAE}} (\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} qx, \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} qy, \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \&x, \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \&y, \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \&s, \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \&t, \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \&dst) const
+\item 
+\mbox{\hyperlink{namespace_g2lib_a17146eb1606475bedc9a2d27f3b29e34}{integer}} \mbox{\hyperlink{class_g2lib_1_1_base_curve_a4664361bfe4b4ac0378f68a476c21f69}{closest\+\_\+point\+\_\+\+SAE}} (\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} qx, \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} qy, \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} offs, \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \&x, \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \&y, \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \&s, \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \&t, \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \&dst) const
+\item 
+virtual \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \mbox{\hyperlink{class_g2lib_1_1_base_curve_ab2107c4a1aa7e35effb9b121a709f2ca}{distance}} (\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} qx, \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} qy) const
+\item 
+\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \mbox{\hyperlink{class_g2lib_1_1_base_curve_a242689bd9095962b8b402994fea39360}{distance\+\_\+\+ISO}} (\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} qx, \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} qy, \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} offs) const
+\item 
+\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \mbox{\hyperlink{class_g2lib_1_1_base_curve_abe288951f9673d840e86c65c771f1b1e}{distance\+\_\+\+SAE}} (\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} qx, \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} qy, \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} offs) const
+\item 
+bool \mbox{\hyperlink{class_g2lib_1_1_base_curve_a9e6db7bbf4fa54ae81a9afbe2450d2e0}{find\+ST\+\_\+\+ISO}} (\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} x, \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} y, \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \&s, \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \&t) const
+\item 
+bool \mbox{\hyperlink{class_g2lib_1_1_base_curve_a1741fc9d97c2ddbcebc341ecf769eed2}{find\+ST\+\_\+\+SAE}} (\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} x, \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} y, \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \&s, \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \&t) const
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Private Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{class_g2lib_1_1_poly_line_a77e4599399a8bdbfe22d9fa5f58e187a}{reset\+\_\+last\+\_\+interval}} ()
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+vector$<$ \mbox{\hyperlink{class_g2lib_1_1_line_segment}{Line\+Segment}} $>$ \mbox{\hyperlink{class_g2lib_1_1_poly_line_a03d43bec8f1f55dff05ed37996724fca}{m\+\_\+polyline\+\_\+list}}
+\item 
+vector$<$ \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} $>$ \mbox{\hyperlink{class_g2lib_1_1_poly_line_a910b7f2c33ed67928561b85523d0cae7}{m\+\_\+s0}}
+\item 
+\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \mbox{\hyperlink{class_g2lib_1_1_poly_line_a02b0578a8431905062ef69a2fb376b1d}{m\+\_\+xe}}
+\item 
+\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \mbox{\hyperlink{class_g2lib_1_1_poly_line_a6c5d1aa6bb63077ac4b72a15828aee41}{m\+\_\+ye}}
+\item 
+\mbox{\hyperlink{namespace_g2lib_a17146eb1606475bedc9a2d27f3b29e34}{integer}} \mbox{\hyperlink{class_g2lib_1_1_poly_line_ab298569eac1c1a0e6eefdf7beed106fd}{m\+\_\+last\+\_\+interval}} \{0\}
+\item 
+bool \mbox{\hyperlink{class_g2lib_1_1_poly_line_aac8ea92c0d087254f3c9abe72db8a0bd}{m\+\_\+aabb\+\_\+done}} \{false\}
+\item 
+\mbox{\hyperlink{namespace_g2lib_ae1a048466025088b97bf20caddd13693}{AABB\+\_\+\+TREE}} \mbox{\hyperlink{class_g2lib_1_1_poly_line_a80fb20cd289707e0da09a612ef1fc458}{m\+\_\+aabb\+\_\+tree}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Friends}
+\begin{DoxyCompactItemize}
+\item 
+class \mbox{\hyperlink{class_g2lib_1_1_poly_line_a8ca81bb09744d2390edf7d4b027d529a}{Clothoid\+List}}
+\item 
+class \mbox{\hyperlink{class_g2lib_1_1_poly_line_a647311f3bb18e852e7fe026edcc65a79}{Biarc\+List}}
+\item 
+\mbox{\hyperlink{namespace_g2lib_a8fcbace87db5a5e71391e0040878f2c3}{ostream\+\_\+type}} \& \mbox{\hyperlink{class_g2lib_1_1_poly_line_a601382abed3fffaa0ff83e965586bca2}{operator$<$$<$}} (\mbox{\hyperlink{namespace_g2lib_a8fcbace87db5a5e71391e0040878f2c3}{ostream\+\_\+type}} \&stream, \mbox{\hyperlink{class_g2lib_1_1_poly_line}{Poly\+Line}} const \&P)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Class to manage a collection of straight segment. 
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{class_g2lib_1_1_poly_line_a43e786fb996dd92bd78830b34d2665f1}\index{G2lib::PolyLine@{G2lib::PolyLine}!PolyLine@{PolyLine}}
+\index{PolyLine@{PolyLine}!G2lib::PolyLine@{G2lib::PolyLine}}
+\doxysubsubsection{\texorpdfstring{PolyLine()}{PolyLine()}\hspace{0.1cm}{\footnotesize\ttfamily [1/9]}}
+{\footnotesize\ttfamily \label{class_g2lib_1_1_poly_line_a43e786fb996dd92bd78830b34d2665f1} 
+G2lib\+::\+Poly\+Line\+::\+Poly\+Line (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [delete]}}
+
+\Hypertarget{class_g2lib_1_1_poly_line_a2a056d0ca0e332c57e40d787b6f53ce5}\index{G2lib::PolyLine@{G2lib::PolyLine}!PolyLine@{PolyLine}}
+\index{PolyLine@{PolyLine}!G2lib::PolyLine@{G2lib::PolyLine}}
+\doxysubsubsection{\texorpdfstring{PolyLine()}{PolyLine()}\hspace{0.1cm}{\footnotesize\ttfamily [2/9]}}
+{\footnotesize\ttfamily \label{class_g2lib_1_1_poly_line_a2a056d0ca0e332c57e40d787b6f53ce5} 
+G2lib\+::\+Poly\+Line\+::\+Poly\+Line (\begin{DoxyParamCaption}\item[{string const \&}]{name}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{class_g2lib_1_1_poly_line_a6072026ad99f0e82e280702303864f48}\index{G2lib::PolyLine@{G2lib::PolyLine}!PolyLine@{PolyLine}}
+\index{PolyLine@{PolyLine}!G2lib::PolyLine@{G2lib::PolyLine}}
+\doxysubsubsection{\texorpdfstring{PolyLine()}{PolyLine()}\hspace{0.1cm}{\footnotesize\ttfamily [3/9]}}
+{\footnotesize\ttfamily \label{class_g2lib_1_1_poly_line_a6072026ad99f0e82e280702303864f48} 
+G2lib\+::\+Poly\+Line\+::\+Poly\+Line (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_g2lib_1_1_poly_line}{Poly\+Line}} const \&}]{PL}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{class_g2lib_1_1_poly_line_a6a4489666c9a3611588841ee574716f0}\index{G2lib::PolyLine@{G2lib::PolyLine}!PolyLine@{PolyLine}}
+\index{PolyLine@{PolyLine}!G2lib::PolyLine@{G2lib::PolyLine}}
+\doxysubsubsection{\texorpdfstring{PolyLine()}{PolyLine()}\hspace{0.1cm}{\footnotesize\ttfamily [4/9]}}
+{\footnotesize\ttfamily \label{class_g2lib_1_1_poly_line_a6a4489666c9a3611588841ee574716f0} 
+G2lib\+::\+Poly\+Line\+::\+Poly\+Line (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_g2lib_1_1_line_segment}{Line\+Segment}} const \&}]{LS}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [explicit]}}
+
+\Hypertarget{class_g2lib_1_1_poly_line_a866449605ec08f7806c8b4dcdf6b8776}\index{G2lib::PolyLine@{G2lib::PolyLine}!PolyLine@{PolyLine}}
+\index{PolyLine@{PolyLine}!G2lib::PolyLine@{G2lib::PolyLine}}
+\doxysubsubsection{\texorpdfstring{PolyLine()}{PolyLine()}\hspace{0.1cm}{\footnotesize\ttfamily [5/9]}}
+{\footnotesize\ttfamily \label{class_g2lib_1_1_poly_line_a866449605ec08f7806c8b4dcdf6b8776} 
+G2lib\+::\+Poly\+Line\+::\+Poly\+Line (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_g2lib_1_1_circle_arc}{Circle\+Arc}} const \&}]{C}{, }\item[{\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}}}]{tol}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [explicit]}}
+
+\Hypertarget{class_g2lib_1_1_poly_line_af3fbfe46679c9ea1cd2710860a6ec711}\index{G2lib::PolyLine@{G2lib::PolyLine}!PolyLine@{PolyLine}}
+\index{PolyLine@{PolyLine}!G2lib::PolyLine@{G2lib::PolyLine}}
+\doxysubsubsection{\texorpdfstring{PolyLine()}{PolyLine()}\hspace{0.1cm}{\footnotesize\ttfamily [6/9]}}
+{\footnotesize\ttfamily \label{class_g2lib_1_1_poly_line_af3fbfe46679c9ea1cd2710860a6ec711} 
+G2lib\+::\+Poly\+Line\+::\+Poly\+Line (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_g2lib_1_1_biarc}{Biarc}} const \&}]{B}{, }\item[{\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}}}]{tol}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [explicit]}}
+
+\Hypertarget{class_g2lib_1_1_poly_line_a9d7813345933b39b030a4485a9af8f99}\index{G2lib::PolyLine@{G2lib::PolyLine}!PolyLine@{PolyLine}}
+\index{PolyLine@{PolyLine}!G2lib::PolyLine@{G2lib::PolyLine}}
+\doxysubsubsection{\texorpdfstring{PolyLine()}{PolyLine()}\hspace{0.1cm}{\footnotesize\ttfamily [7/9]}}
+{\footnotesize\ttfamily \label{class_g2lib_1_1_poly_line_a9d7813345933b39b030a4485a9af8f99} 
+G2lib\+::\+Poly\+Line\+::\+Poly\+Line (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_g2lib_1_1_clothoid_curve}{Clothoid\+Curve}} const \&}]{B}{, }\item[{\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}}}]{tol}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [explicit]}}
+
+\Hypertarget{class_g2lib_1_1_poly_line_a30e98d81b98e8e887a83a7f4505bc5af}\index{G2lib::PolyLine@{G2lib::PolyLine}!PolyLine@{PolyLine}}
+\index{PolyLine@{PolyLine}!G2lib::PolyLine@{G2lib::PolyLine}}
+\doxysubsubsection{\texorpdfstring{PolyLine()}{PolyLine()}\hspace{0.1cm}{\footnotesize\ttfamily [8/9]}}
+{\footnotesize\ttfamily \label{class_g2lib_1_1_poly_line_a30e98d81b98e8e887a83a7f4505bc5af} 
+G2lib\+::\+Poly\+Line\+::\+Poly\+Line (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_g2lib_1_1_clothoid_list}{Clothoid\+List}} const \&}]{B}{, }\item[{\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}}}]{tol}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [explicit]}}
+
+\Hypertarget{class_g2lib_1_1_poly_line_aae6b7b99745068dd6ea44f40a46980e7}\index{G2lib::PolyLine@{G2lib::PolyLine}!PolyLine@{PolyLine}}
+\index{PolyLine@{PolyLine}!G2lib::PolyLine@{G2lib::PolyLine}}
+\doxysubsubsection{\texorpdfstring{PolyLine()}{PolyLine()}\hspace{0.1cm}{\footnotesize\ttfamily [9/9]}}
+{\footnotesize\ttfamily \label{class_g2lib_1_1_poly_line_aae6b7b99745068dd6ea44f40a46980e7} 
+G2lib\+::\+Poly\+Line\+::\+Poly\+Line (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_g2lib_1_1_base_curve}{Base\+Curve}} const \texorpdfstring{$\ast$}{*}}]{pC}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [explicit]}}
+
+
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{class_g2lib_1_1_poly_line_a1769b7f590a5dff956a53267fac8b075}\index{G2lib::PolyLine@{G2lib::PolyLine}!bb\_triangles@{bb\_triangles}}
+\index{bb\_triangles@{bb\_triangles}!G2lib::PolyLine@{G2lib::PolyLine}}
+\doxysubsubsection{\texorpdfstring{bb\_triangles()}{bb\_triangles()}}
+{\footnotesize\ttfamily \label{class_g2lib_1_1_poly_line_a1769b7f590a5dff956a53267fac8b075} 
+void G2lib\+::\+Poly\+Line\+::bb\+\_\+triangles (\begin{DoxyParamCaption}\item[{vector$<$ \mbox{\hyperlink{class_g2lib_1_1_triangle2_d}{Triangle2D}} $>$ \&}]{tvec}{, }\item[{\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}}}]{max\+\_\+angle}{ = {\ttfamily Utils\+:\+:m\+\_\+pi/6}, }\item[{\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}}}]{max\+\_\+size}{ = {\ttfamily 1e100}, }\item[{\mbox{\hyperlink{namespace_g2lib_a17146eb1606475bedc9a2d27f3b29e34}{integer}}}]{icurve}{ = {\ttfamily 0}}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+Build a cover with triangles of the curve.
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ out}}  & {\em tvec} & list of covering triangles \\
+\hline
+\mbox{\texttt{ out}}  & {\em max\+\_\+angle} & maximum angle variation of the curve covered by a triangle \\
+\hline
+\mbox{\texttt{ out}}  & {\em max\+\_\+size} & maximum admissible size of the covering tirnagles \\
+\hline
+\mbox{\texttt{ out}}  & {\em icurve} & index of the covering triangles\\
+\hline
+\end{DoxyParams}
+ 
+
+Implements \mbox{\hyperlink{class_g2lib_1_1_base_curve_a7557f20dd418085ead40ace4e4a3a234}{G2lib\+::\+Base\+Curve}}.
+
+\Hypertarget{class_g2lib_1_1_poly_line_af44ac86700f95b1cfbec1676fc218bc1}\index{G2lib::PolyLine@{G2lib::PolyLine}!bb\_triangles\_ISO@{bb\_triangles\_ISO}}
+\index{bb\_triangles\_ISO@{bb\_triangles\_ISO}!G2lib::PolyLine@{G2lib::PolyLine}}
+\doxysubsubsection{\texorpdfstring{bb\_triangles\_ISO()}{bb\_triangles\_ISO()}}
+{\footnotesize\ttfamily \label{class_g2lib_1_1_poly_line_af44ac86700f95b1cfbec1676fc218bc1} 
+void G2lib\+::\+Poly\+Line\+::bb\+\_\+triangles\+\_\+\+ISO (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}}}]{offs}{, }\item[{vector$<$ \mbox{\hyperlink{class_g2lib_1_1_triangle2_d}{Triangle2D}} $>$ \&}]{tvec}{, }\item[{\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}}}]{max\+\_\+angle}{ = {\ttfamily Utils\+:\+:m\+\_\+pi/6}, }\item[{\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}}}]{max\+\_\+size}{ = {\ttfamily 1e100}, }\item[{\mbox{\hyperlink{namespace_g2lib_a17146eb1606475bedc9a2d27f3b29e34}{integer}}}]{icurve}{ = {\ttfamily 0}}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+Build a cover with triangles of the curve with offset (ISO).
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ out}}  & {\em offs} & curve offset \\
+\hline
+\mbox{\texttt{ out}}  & {\em tvec} & list of covering triangles \\
+\hline
+\mbox{\texttt{ out}}  & {\em max\+\_\+angle} & maximum angle variation of the curve covered by a triangle \\
+\hline
+\mbox{\texttt{ out}}  & {\em max\+\_\+size} & maximum admissible size of the covering tirnagles \\
+\hline
+\mbox{\texttt{ out}}  & {\em icurve} & index of the covering triangles \\
+\hline
+\end{DoxyParams}
+
+
+Implements \mbox{\hyperlink{class_g2lib_1_1_base_curve_a1c8b7f429197a75c343365f8e20c2180}{G2lib\+::\+Base\+Curve}}.
+
+\Hypertarget{class_g2lib_1_1_poly_line_ad5f729b8922371ce83cc69eb1d3b9f26}\index{G2lib::PolyLine@{G2lib::PolyLine}!bb\_triangles\_SAE@{bb\_triangles\_SAE}}
+\index{bb\_triangles\_SAE@{bb\_triangles\_SAE}!G2lib::PolyLine@{G2lib::PolyLine}}
+\doxysubsubsection{\texorpdfstring{bb\_triangles\_SAE()}{bb\_triangles\_SAE()}}
+{\footnotesize\ttfamily \label{class_g2lib_1_1_poly_line_ad5f729b8922371ce83cc69eb1d3b9f26} 
+void G2lib\+::\+Poly\+Line\+::bb\+\_\+triangles\+\_\+\+SAE (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}}}]{offs}{, }\item[{vector$<$ \mbox{\hyperlink{class_g2lib_1_1_triangle2_d}{Triangle2D}} $>$ \&}]{tvec}{, }\item[{\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}}}]{max\+\_\+angle}{ = {\ttfamily Utils\+:\+:m\+\_\+pi/6}, }\item[{\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}}}]{max\+\_\+size}{ = {\ttfamily 1e100}, }\item[{\mbox{\hyperlink{namespace_g2lib_a17146eb1606475bedc9a2d27f3b29e34}{integer}}}]{icurve}{ = {\ttfamily 0}}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+Build a cover with triangles of the curve with offset (SAE).
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ out}}  & {\em offs} & curve offset \\
+\hline
+\mbox{\texttt{ out}}  & {\em tvec} & list of covering triangles \\
+\hline
+\mbox{\texttt{ out}}  & {\em max\+\_\+angle} & maximum angle variation of the arc covered by a triangle \\
+\hline
+\mbox{\texttt{ out}}  & {\em max\+\_\+size} & maximum admissible size of the covering tirnagles \\
+\hline
+\mbox{\texttt{ out}}  & {\em icurve} & index of the covering triangles \\
+\hline
+\end{DoxyParams}
+
+
+Implements \mbox{\hyperlink{class_g2lib_1_1_base_curve_ab78e15370aabfba6719c974c8b4fceeb}{G2lib\+::\+Base\+Curve}}.
+
+\Hypertarget{class_g2lib_1_1_poly_line_a5df60a151e57501f760baf68400bc460}\index{G2lib::PolyLine@{G2lib::PolyLine}!bbox@{bbox}}
+\index{bbox@{bbox}!G2lib::PolyLine@{G2lib::PolyLine}}
+\doxysubsubsection{\texorpdfstring{bbox()}{bbox()}}
+{\footnotesize\ttfamily \label{class_g2lib_1_1_poly_line_a5df60a151e57501f760baf68400bc460} 
+void G2lib\+::\+Poly\+Line\+::bbox (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \&}]{xmin}{, }\item[{\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \&}]{ymin}{, }\item[{\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \&}]{xmax}{, }\item[{\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \&}]{ymax}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+Compute the bounding box of the curve.
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ out}}  & {\em xmin} & left bottom \\
+\hline
+\mbox{\texttt{ out}}  & {\em ymin} & left bottom \\
+\hline
+\mbox{\texttt{ out}}  & {\em xmax} & right top \\
+\hline
+\mbox{\texttt{ out}}  & {\em ymax} & right top \\
+\hline
+\end{DoxyParams}
+
+
+Implements \mbox{\hyperlink{class_g2lib_1_1_base_curve_a7fae2861a0111645fd30fbe63a130db0}{G2lib\+::\+Base\+Curve}}.
+
+\Hypertarget{class_g2lib_1_1_poly_line_a90d11dc419c9f9e0e0ffe5369095d010}\index{G2lib::PolyLine@{G2lib::PolyLine}!bbox\_ISO@{bbox\_ISO}}
+\index{bbox\_ISO@{bbox\_ISO}!G2lib::PolyLine@{G2lib::PolyLine}}
+\doxysubsubsection{\texorpdfstring{bbox\_ISO()}{bbox\_ISO()}}
+{\footnotesize\ttfamily \label{class_g2lib_1_1_poly_line_a90d11dc419c9f9e0e0ffe5369095d010} 
+void G2lib\+::\+Poly\+Line\+::bbox\+\_\+\+ISO (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}}}]{offs}{, }\item[{\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \&}]{xmin}{, }\item[{\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \&}]{ymin}{, }\item[{\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \&}]{xmax}{, }\item[{\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \&}]{ymax}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+Compute the bounding box of the curve with offset (ISO).
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em offs} & curve offset \\
+\hline
+\mbox{\texttt{ out}}  & {\em xmin} & left bottom \\
+\hline
+\mbox{\texttt{ out}}  & {\em ymin} & left bottom \\
+\hline
+\mbox{\texttt{ out}}  & {\em xmax} & right top \\
+\hline
+\mbox{\texttt{ out}}  & {\em ymax} & right top \\
+\hline
+\end{DoxyParams}
+
+
+Implements \mbox{\hyperlink{class_g2lib_1_1_base_curve_aacdf92880dce851cb1b562797ba73018}{G2lib\+::\+Base\+Curve}}.
+
+\Hypertarget{class_g2lib_1_1_poly_line_a60f6e585dbf34265cfcfcc0ba662688b}\index{G2lib::PolyLine@{G2lib::PolyLine}!build@{build}}
+\index{build@{build}!G2lib::PolyLine@{G2lib::PolyLine}}
+\doxysubsubsection{\texorpdfstring{build()}{build()}\hspace{0.1cm}{\footnotesize\ttfamily [1/14]}}
+{\footnotesize\ttfamily \label{class_g2lib_1_1_poly_line_a60f6e585dbf34265cfcfcc0ba662688b} 
+void G2lib\+::\+Poly\+Line\+::build (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_g2lib_1_1_biarc}{Biarc}} const \&}]{}{}\end{DoxyParamCaption})}
+
+\Hypertarget{class_g2lib_1_1_poly_line_a2f7e9cc58f40814f1568331dd662b84b}\index{G2lib::PolyLine@{G2lib::PolyLine}!build@{build}}
+\index{build@{build}!G2lib::PolyLine@{G2lib::PolyLine}}
+\doxysubsubsection{\texorpdfstring{build()}{build()}\hspace{0.1cm}{\footnotesize\ttfamily [2/14]}}
+{\footnotesize\ttfamily \label{class_g2lib_1_1_poly_line_a2f7e9cc58f40814f1568331dd662b84b} 
+void G2lib\+::\+Poly\+Line\+::build (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_g2lib_1_1_biarc}{Biarc}} const \&}]{B}{, }\item[{\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}}}]{tol}{}\end{DoxyParamCaption})}
+
+\Hypertarget{class_g2lib_1_1_poly_line_a91d54eeeca591166e3816be951019ca9}\index{G2lib::PolyLine@{G2lib::PolyLine}!build@{build}}
+\index{build@{build}!G2lib::PolyLine@{G2lib::PolyLine}}
+\doxysubsubsection{\texorpdfstring{build()}{build()}\hspace{0.1cm}{\footnotesize\ttfamily [3/14]}}
+{\footnotesize\ttfamily \label{class_g2lib_1_1_poly_line_a91d54eeeca591166e3816be951019ca9} 
+void G2lib\+::\+Poly\+Line\+::build (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_g2lib_1_1_biarc_list}{Biarc\+List}} const \&}]{}{}\end{DoxyParamCaption})}
+
+\Hypertarget{class_g2lib_1_1_poly_line_a8c66b5c31a76e21347e11200ecc4d194}\index{G2lib::PolyLine@{G2lib::PolyLine}!build@{build}}
+\index{build@{build}!G2lib::PolyLine@{G2lib::PolyLine}}
+\doxysubsubsection{\texorpdfstring{build()}{build()}\hspace{0.1cm}{\footnotesize\ttfamily [4/14]}}
+{\footnotesize\ttfamily \label{class_g2lib_1_1_poly_line_a8c66b5c31a76e21347e11200ecc4d194} 
+void G2lib\+::\+Poly\+Line\+::build (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_g2lib_1_1_circle_arc}{Circle\+Arc}} const \&}]{C}{}\end{DoxyParamCaption})}
+
+\Hypertarget{class_g2lib_1_1_poly_line_aab76a84ce9b610ce4b987587797e7151}\index{G2lib::PolyLine@{G2lib::PolyLine}!build@{build}}
+\index{build@{build}!G2lib::PolyLine@{G2lib::PolyLine}}
+\doxysubsubsection{\texorpdfstring{build()}{build()}\hspace{0.1cm}{\footnotesize\ttfamily [5/14]}}
+{\footnotesize\ttfamily \label{class_g2lib_1_1_poly_line_aab76a84ce9b610ce4b987587797e7151} 
+void G2lib\+::\+Poly\+Line\+::build (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_g2lib_1_1_circle_arc}{Circle\+Arc}} const \&}]{C}{, }\item[{\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}}}]{tol}{}\end{DoxyParamCaption})}
+
+\Hypertarget{class_g2lib_1_1_poly_line_afdb3c9053916dfe0bf222899a4162c93}\index{G2lib::PolyLine@{G2lib::PolyLine}!build@{build}}
+\index{build@{build}!G2lib::PolyLine@{G2lib::PolyLine}}
+\doxysubsubsection{\texorpdfstring{build()}{build()}\hspace{0.1cm}{\footnotesize\ttfamily [6/14]}}
+{\footnotesize\ttfamily \label{class_g2lib_1_1_poly_line_afdb3c9053916dfe0bf222899a4162c93} 
+void G2lib\+::\+Poly\+Line\+::build (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_g2lib_1_1_clothoid_curve}{Clothoid\+Curve}} const \&}]{}{}\end{DoxyParamCaption})}
+
+\Hypertarget{class_g2lib_1_1_poly_line_ae0b9e9c6f162cf3e84483ccd65a9282d}\index{G2lib::PolyLine@{G2lib::PolyLine}!build@{build}}
+\index{build@{build}!G2lib::PolyLine@{G2lib::PolyLine}}
+\doxysubsubsection{\texorpdfstring{build()}{build()}\hspace{0.1cm}{\footnotesize\ttfamily [7/14]}}
+{\footnotesize\ttfamily \label{class_g2lib_1_1_poly_line_ae0b9e9c6f162cf3e84483ccd65a9282d} 
+void G2lib\+::\+Poly\+Line\+::build (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_g2lib_1_1_clothoid_curve}{Clothoid\+Curve}} const \&}]{C}{, }\item[{\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}}}]{tol}{}\end{DoxyParamCaption})}
+
+\Hypertarget{class_g2lib_1_1_poly_line_a5e3e9b6ac9516772bf5a76579c692b24}\index{G2lib::PolyLine@{G2lib::PolyLine}!build@{build}}
+\index{build@{build}!G2lib::PolyLine@{G2lib::PolyLine}}
+\doxysubsubsection{\texorpdfstring{build()}{build()}\hspace{0.1cm}{\footnotesize\ttfamily [8/14]}}
+{\footnotesize\ttfamily \label{class_g2lib_1_1_poly_line_a5e3e9b6ac9516772bf5a76579c692b24} 
+void G2lib\+::\+Poly\+Line\+::build (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_g2lib_1_1_clothoid_list}{Clothoid\+List}} const \&}]{}{}\end{DoxyParamCaption})}
+
+\Hypertarget{class_g2lib_1_1_poly_line_a84a1ed54246352b39f087d76aa92bddc}\index{G2lib::PolyLine@{G2lib::PolyLine}!build@{build}}
+\index{build@{build}!G2lib::PolyLine@{G2lib::PolyLine}}
+\doxysubsubsection{\texorpdfstring{build()}{build()}\hspace{0.1cm}{\footnotesize\ttfamily [9/14]}}
+{\footnotesize\ttfamily \label{class_g2lib_1_1_poly_line_a84a1ed54246352b39f087d76aa92bddc} 
+void G2lib\+::\+Poly\+Line\+::build (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_g2lib_1_1_clothoid_list}{Clothoid\+List}} const \&}]{CL}{, }\item[{\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}}}]{tol}{}\end{DoxyParamCaption})}
+
+\Hypertarget{class_g2lib_1_1_poly_line_a4673240b3beea47bbf88e180eac54c31}\index{G2lib::PolyLine@{G2lib::PolyLine}!build@{build}}
+\index{build@{build}!G2lib::PolyLine@{G2lib::PolyLine}}
+\doxysubsubsection{\texorpdfstring{build()}{build()}\hspace{0.1cm}{\footnotesize\ttfamily [10/14]}}
+{\footnotesize\ttfamily \label{class_g2lib_1_1_poly_line_a4673240b3beea47bbf88e180eac54c31} 
+void G2lib\+::\+Poly\+Line\+::build (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_g2lib_1_1_dubins}{Dubins}} const \&}]{}{}\end{DoxyParamCaption})}
+
+\Hypertarget{class_g2lib_1_1_poly_line_ac28f923c7fca184ddec7b8c41350f529}\index{G2lib::PolyLine@{G2lib::PolyLine}!build@{build}}
+\index{build@{build}!G2lib::PolyLine@{G2lib::PolyLine}}
+\doxysubsubsection{\texorpdfstring{build()}{build()}\hspace{0.1cm}{\footnotesize\ttfamily [11/14]}}
+{\footnotesize\ttfamily \label{class_g2lib_1_1_poly_line_ac28f923c7fca184ddec7b8c41350f529} 
+void G2lib\+::\+Poly\+Line\+::build (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_g2lib_1_1_dubins3p}{Dubins3p}} const \&}]{}{}\end{DoxyParamCaption})}
+
+\Hypertarget{class_g2lib_1_1_poly_line_a3cfc8eea906e80d8d5b2773880bc3280}\index{G2lib::PolyLine@{G2lib::PolyLine}!build@{build}}
+\index{build@{build}!G2lib::PolyLine@{G2lib::PolyLine}}
+\doxysubsubsection{\texorpdfstring{build()}{build()}\hspace{0.1cm}{\footnotesize\ttfamily [12/14]}}
+{\footnotesize\ttfamily \label{class_g2lib_1_1_poly_line_a3cfc8eea906e80d8d5b2773880bc3280} 
+void G2lib\+::\+Poly\+Line\+::build (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{namespace_g2lib_a17146eb1606475bedc9a2d27f3b29e34}{integer}}}]{npts}{, }\item[{\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} const}]{x}{\mbox{[}$\,$\mbox{]}, }\item[{\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} const}]{y}{\mbox{[}$\,$\mbox{]}}\end{DoxyParamCaption})}
+
+\Hypertarget{class_g2lib_1_1_poly_line_afd37f51f0b7aa19d17d39fd6ba773e5b}\index{G2lib::PolyLine@{G2lib::PolyLine}!build@{build}}
+\index{build@{build}!G2lib::PolyLine@{G2lib::PolyLine}}
+\doxysubsubsection{\texorpdfstring{build()}{build()}\hspace{0.1cm}{\footnotesize\ttfamily [13/14]}}
+{\footnotesize\ttfamily \label{class_g2lib_1_1_poly_line_afd37f51f0b7aa19d17d39fd6ba773e5b} 
+void G2lib\+::\+Poly\+Line\+::build (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_g2lib_1_1_line_segment}{Line\+Segment}} const \&}]{L}{}\end{DoxyParamCaption})}
+
+\Hypertarget{class_g2lib_1_1_poly_line_a066fe9f6622ab90592a7ea51efeafed4}\index{G2lib::PolyLine@{G2lib::PolyLine}!build@{build}}
+\index{build@{build}!G2lib::PolyLine@{G2lib::PolyLine}}
+\doxysubsubsection{\texorpdfstring{build()}{build()}\hspace{0.1cm}{\footnotesize\ttfamily [14/14]}}
+{\footnotesize\ttfamily \label{class_g2lib_1_1_poly_line_a066fe9f6622ab90592a7ea51efeafed4} 
+void G2lib\+::\+Poly\+Line\+::build (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_g2lib_1_1_poly_line}{Poly\+Line}} const \&}]{PL}{}\end{DoxyParamCaption})}
+
+\Hypertarget{class_g2lib_1_1_poly_line_ad6b152f0bcc709b91f824403fc84d44d}\index{G2lib::PolyLine@{G2lib::PolyLine}!build\_AABBtree@{build\_AABBtree}}
+\index{build\_AABBtree@{build\_AABBtree}!G2lib::PolyLine@{G2lib::PolyLine}}
+\doxysubsubsection{\texorpdfstring{build\_AABBtree()}{build\_AABBtree()}}
+{\footnotesize\ttfamily \label{class_g2lib_1_1_poly_line_ad6b152f0bcc709b91f824403fc84d44d} 
+void G2lib\+::\+Poly\+Line\+::build\+\_\+\+AABBtree (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const}
+
+\Hypertarget{class_g2lib_1_1_poly_line_aaad58356d0ea7bbc1a90425b71e9893f}\index{G2lib::PolyLine@{G2lib::PolyLine}!change\_origin@{change\_origin}}
+\index{change\_origin@{change\_origin}!G2lib::PolyLine@{G2lib::PolyLine}}
+\doxysubsubsection{\texorpdfstring{change\_origin()}{change\_origin()}}
+{\footnotesize\ttfamily \label{class_g2lib_1_1_poly_line_aaad58356d0ea7bbc1a90425b71e9893f} 
+void G2lib\+::\+Poly\+Line\+::change\+\_\+origin (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}}}]{newx0}{, }\item[{\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}}}]{newy0}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+Translate curve so that origin will be ({\ttfamily newx0}, {\ttfamily newy0}). 
+
+Implements \mbox{\hyperlink{class_g2lib_1_1_base_curve_a301aee32196afe335a04cbffc3dbe3ce}{G2lib\+::\+Base\+Curve}}.
+
+\Hypertarget{class_g2lib_1_1_poly_line_abae1f26e8ce62b0365b0cd4d2d5c2943}\index{G2lib::PolyLine@{G2lib::PolyLine}!closest\_point\_ISO@{closest\_point\_ISO}}
+\index{closest\_point\_ISO@{closest\_point\_ISO}!G2lib::PolyLine@{G2lib::PolyLine}}
+\doxysubsubsection{\texorpdfstring{closest\_point\_ISO()}{closest\_point\_ISO()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{class_g2lib_1_1_poly_line_abae1f26e8ce62b0365b0cd4d2d5c2943} 
+\mbox{\hyperlink{namespace_g2lib_a17146eb1606475bedc9a2d27f3b29e34}{integer}} G2lib\+::\+Poly\+Line\+::closest\+\_\+point\+\_\+\+ISO (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}}}]{x}{, }\item[{\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}}}]{y}{, }\item[{\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \&}]{X}{, }\item[{\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \&}]{Y}{, }\item[{\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \&}]{S}{, }\item[{\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \&}]{T}{, }\item[{\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \&}]{DST}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+Compute the point at minimum distance from a point {\ttfamily \mbox{[}x,y\mbox{]}} and the line segment
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em x} & x-\/coordinate \\
+\hline
+\mbox{\texttt{ in}}  & {\em y} & y-\/coordinate \\
+\hline
+\mbox{\texttt{ out}}  & {\em X} & x-\/coordinate of the closest point \\
+\hline
+\mbox{\texttt{ out}}  & {\em Y} & y-\/coordinate of the closest point \\
+\hline
+\mbox{\texttt{ out}}  & {\em S} & s-\/param of the closest point \\
+\hline
+\mbox{\texttt{ out}}  & {\em T} & t-\/param of the closest point \\
+\hline
+\mbox{\texttt{ out}}  & {\em DST} & the distance point-\/segment \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+the distance point-\/segment 
+\end{DoxyReturn}
+
+
+Implements \mbox{\hyperlink{class_g2lib_1_1_base_curve_abfa1b5a7ebf24a6068512df027025a4f}{G2lib\+::\+Base\+Curve}}.
+
+\Hypertarget{class_g2lib_1_1_poly_line_a6dc56f48620eb1e94cde89dd7cda6a25}\index{G2lib::PolyLine@{G2lib::PolyLine}!closest\_point\_ISO@{closest\_point\_ISO}}
+\index{closest\_point\_ISO@{closest\_point\_ISO}!G2lib::PolyLine@{G2lib::PolyLine}}
+\doxysubsubsection{\texorpdfstring{closest\_point\_ISO()}{closest\_point\_ISO()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{class_g2lib_1_1_poly_line_a6dc56f48620eb1e94cde89dd7cda6a25} 
+\mbox{\hyperlink{namespace_g2lib_a17146eb1606475bedc9a2d27f3b29e34}{integer}} G2lib\+::\+Poly\+Line\+::closest\+\_\+point\+\_\+\+ISO (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}}}]{qx}{, }\item[{\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}}}]{qy}{, }\item[{\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}}}]{offs}{, }\item[{\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \&}]{x}{, }\item[{\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \&}]{y}{, }\item[{\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \&}]{s}{, }\item[{\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \&}]{t}{, }\item[{\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \&}]{dst}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+Given a point find closest point on the curve.
+
+
+\begin{DoxyParams}{Parameters}
+{\em qx} & x-\/coordinate of the point \\
+\hline
+{\em qy} & y-\/coordinate of the point \\
+\hline
+{\em offs} & offset of the curve \\
+\hline
+{\em x} & x-\/coordinate of the projected point on the curve \\
+\hline
+{\em y} & y-\/coordinate of the projected point on the curve \\
+\hline
+{\em s} & parameter on the curve of the projection \\
+\hline
+{\em t} & curvilinear coordinate of the point x,y (if orthogonal projection) \\
+\hline
+{\em dst} & distance point projected point \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+1 = point is projected orthogonal 0 = more than one projection (first returned) -\/1 = minimum point is not othogonal projection to curve 
+\end{DoxyReturn}
+
+
+Implements \mbox{\hyperlink{class_g2lib_1_1_base_curve_a883c6d1d89c92bf619c618348962ff89}{G2lib\+::\+Base\+Curve}}.
+
+\Hypertarget{class_g2lib_1_1_poly_line_a8d89fc55e9b533398645d024f864bf57}\index{G2lib::PolyLine@{G2lib::PolyLine}!collision@{collision}}
+\index{collision@{collision}!G2lib::PolyLine@{G2lib::PolyLine}}
+\doxysubsubsection{\texorpdfstring{collision()}{collision()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{class_g2lib_1_1_poly_line_a8d89fc55e9b533398645d024f864bf57} 
+bool G2lib\+::\+Poly\+Line\+::collision (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_g2lib_1_1_base_curve}{Base\+Curve}} const \texorpdfstring{$\ast$}{*}}]{pC}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+Check collision with another curve. 
+
+Implements \mbox{\hyperlink{class_g2lib_1_1_base_curve_a0d8ebec8c2a968685307daa29278a3d0}{G2lib\+::\+Base\+Curve}}.
+
+\Hypertarget{class_g2lib_1_1_poly_line_ab5bfe9b6a96ac25e2d614e812c735b45}\index{G2lib::PolyLine@{G2lib::PolyLine}!collision@{collision}}
+\index{collision@{collision}!G2lib::PolyLine@{G2lib::PolyLine}}
+\doxysubsubsection{\texorpdfstring{collision()}{collision()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{class_g2lib_1_1_poly_line_ab5bfe9b6a96ac25e2d614e812c735b45} 
+bool G2lib\+::\+Poly\+Line\+::collision (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_g2lib_1_1_poly_line}{Poly\+Line}} const \&}]{C}{}\end{DoxyParamCaption}) const}
+
+\Hypertarget{class_g2lib_1_1_poly_line_a4ce5865f3f494fffa97baae7ff59ea3e}\index{G2lib::PolyLine@{G2lib::PolyLine}!collision\_ISO@{collision\_ISO}}
+\index{collision\_ISO@{collision\_ISO}!G2lib::PolyLine@{G2lib::PolyLine}}
+\doxysubsubsection{\texorpdfstring{collision\_ISO()}{collision\_ISO()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{class_g2lib_1_1_poly_line_a4ce5865f3f494fffa97baae7ff59ea3e} 
+bool G2lib\+::\+Poly\+Line\+::collision\+\_\+\+ISO (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}}}]{offs}{, }\item[{\mbox{\hyperlink{class_g2lib_1_1_base_curve}{Base\+Curve}} const \texorpdfstring{$\ast$}{*}}]{pC}{, }\item[{\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}}}]{offs\+\_\+C}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+Check collision with another curve with offset (ISO).
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em offs} & curve offset \\
+\hline
+\mbox{\texttt{ in}}  & {\em pC} & second curve to check collision \\
+\hline
+\mbox{\texttt{ in}}  & {\em offs\+\_\+C} & curve offset of the second curve \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true if collision is detected 
+\end{DoxyReturn}
+
+
+Implements \mbox{\hyperlink{class_g2lib_1_1_base_curve_aa5b664cf05285def70bb3c4fe8e5bb42}{G2lib\+::\+Base\+Curve}}.
+
+\Hypertarget{class_g2lib_1_1_poly_line_a3030d5d6d975b81680334db595cbbf54}\index{G2lib::PolyLine@{G2lib::PolyLine}!collision\_ISO@{collision\_ISO}}
+\index{collision\_ISO@{collision\_ISO}!G2lib::PolyLine@{G2lib::PolyLine}}
+\doxysubsubsection{\texorpdfstring{collision\_ISO()}{collision\_ISO()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{class_g2lib_1_1_poly_line_a3030d5d6d975b81680334db595cbbf54} 
+bool G2lib\+::\+Poly\+Line\+::collision\+\_\+\+ISO (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}}}]{offs}{, }\item[{\mbox{\hyperlink{class_g2lib_1_1_poly_line}{Poly\+Line}} const \&}]{CL}{, }\item[{\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}}}]{offs\+\_\+\+CL}{}\end{DoxyParamCaption}) const}
+
+\Hypertarget{class_g2lib_1_1_poly_line_ac9f6d4659a49d3bbff38d4e1e87681bc}\index{G2lib::PolyLine@{G2lib::PolyLine}!copy@{copy}}
+\index{copy@{copy}!G2lib::PolyLine@{G2lib::PolyLine}}
+\doxysubsubsection{\texorpdfstring{copy()}{copy()}}
+{\footnotesize\ttfamily \label{class_g2lib_1_1_poly_line_ac9f6d4659a49d3bbff38d4e1e87681bc} 
+void G2lib\+::\+Poly\+Line\+::copy (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_g2lib_1_1_poly_line}{Poly\+Line}} const \&}]{l}{}\end{DoxyParamCaption})}
+
+\Hypertarget{class_g2lib_1_1_poly_line_a8459cab7506aecf871b9b3935f14cb10}\index{G2lib::PolyLine@{G2lib::PolyLine}!eval@{eval}}
+\index{eval@{eval}!G2lib::PolyLine@{G2lib::PolyLine}}
+\doxysubsubsection{\texorpdfstring{eval()}{eval()}}
+{\footnotesize\ttfamily \label{class_g2lib_1_1_poly_line_a8459cab7506aecf871b9b3935f14cb10} 
+void G2lib\+::\+Poly\+Line\+::eval (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}}}]{s}{, }\item[{\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \&}]{x}{, }\item[{\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \&}]{y}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+x and y-\/coordinate at curvilinear coordinate {\ttfamily s}. 
+
+Implements \mbox{\hyperlink{class_g2lib_1_1_base_curve_a69b6b964fffd70cb3416010105c72d6a}{G2lib\+::\+Base\+Curve}}.
+
+\Hypertarget{class_g2lib_1_1_poly_line_ad1ccbfb297edbf3003e08c43013a778e}\index{G2lib::PolyLine@{G2lib::PolyLine}!eval\_D@{eval\_D}}
+\index{eval\_D@{eval\_D}!G2lib::PolyLine@{G2lib::PolyLine}}
+\doxysubsubsection{\texorpdfstring{eval\_D()}{eval\_D()}}
+{\footnotesize\ttfamily \label{class_g2lib_1_1_poly_line_ad1ccbfb297edbf3003e08c43013a778e} 
+void G2lib\+::\+Poly\+Line\+::eval\+\_\+D (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}}}]{s}{, }\item[{\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \&}]{x\+\_\+D}{, }\item[{\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \&}]{y\+\_\+D}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+x and y-\/coordinate derivative at curvilinear coordinate {\ttfamily s}. 
+
+Implements \mbox{\hyperlink{class_g2lib_1_1_base_curve_a0346229c8a71a2014b363552fbea1f96}{G2lib\+::\+Base\+Curve}}.
+
+\Hypertarget{class_g2lib_1_1_poly_line_a70f0b546c1540433a6c999cdca34708b}\index{G2lib::PolyLine@{G2lib::PolyLine}!eval\_DD@{eval\_DD}}
+\index{eval\_DD@{eval\_DD}!G2lib::PolyLine@{G2lib::PolyLine}}
+\doxysubsubsection{\texorpdfstring{eval\_DD()}{eval\_DD()}}
+{\footnotesize\ttfamily \label{class_g2lib_1_1_poly_line_a70f0b546c1540433a6c999cdca34708b} 
+void G2lib\+::\+Poly\+Line\+::eval\+\_\+\+DD (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}}}]{s}{, }\item[{\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \&}]{x\+\_\+\+DD}{, }\item[{\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \&}]{y\+\_\+\+DD}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+x and y-\/coordinate second derivative at curvilinear coordinate {\ttfamily s}. 
+
+Implements \mbox{\hyperlink{class_g2lib_1_1_base_curve_a80fdf6defef350fca123ecf59bf4220e}{G2lib\+::\+Base\+Curve}}.
+
+\Hypertarget{class_g2lib_1_1_poly_line_a2cfe973409c1ec6e09db8834c1c0701c}\index{G2lib::PolyLine@{G2lib::PolyLine}!eval\_DDD@{eval\_DDD}}
+\index{eval\_DDD@{eval\_DDD}!G2lib::PolyLine@{G2lib::PolyLine}}
+\doxysubsubsection{\texorpdfstring{eval\_DDD()}{eval\_DDD()}}
+{\footnotesize\ttfamily \label{class_g2lib_1_1_poly_line_a2cfe973409c1ec6e09db8834c1c0701c} 
+void G2lib\+::\+Poly\+Line\+::eval\+\_\+\+DDD (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}}}]{s}{, }\item[{\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \&}]{x\+\_\+\+DDD}{, }\item[{\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \&}]{y\+\_\+\+DDD}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+x and y-\/coordinate third derivative at curvilinear coordinate {\ttfamily s}. 
+
+Implements \mbox{\hyperlink{class_g2lib_1_1_base_curve_a0296b231d4e3d3635c54d088488754e6}{G2lib\+::\+Base\+Curve}}.
+
+\Hypertarget{class_g2lib_1_1_poly_line_a2882a06098edeb29d71085a69bb99c42}\index{G2lib::PolyLine@{G2lib::PolyLine}!eval\_ISO@{eval\_ISO}}
+\index{eval\_ISO@{eval\_ISO}!G2lib::PolyLine@{G2lib::PolyLine}}
+\doxysubsubsection{\texorpdfstring{eval\_ISO()}{eval\_ISO()}}
+{\footnotesize\ttfamily \label{class_g2lib_1_1_poly_line_a2882a06098edeb29d71085a69bb99c42} 
+void G2lib\+::\+Poly\+Line\+::eval\+\_\+\+ISO (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}}}]{s}{, }\item[{\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}}}]{offs}{, }\item[{\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \&}]{x}{, }\item[{\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \&}]{y}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+Compute curve at position {\ttfamily s} with offset {\ttfamily offs} (ISO).
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em s} & parameter on the curve \\
+\hline
+\mbox{\texttt{ in}}  & {\em offs} & offset of the curve \\
+\hline
+\mbox{\texttt{ out}}  & {\em x} & coordinate \\
+\hline
+\mbox{\texttt{ out}}  & {\em y} & coordinate \\
+\hline
+\end{DoxyParams}
+
+
+Reimplemented from \mbox{\hyperlink{class_g2lib_1_1_base_curve_a3698172a3440654cd0ba9985237f25ac}{G2lib\+::\+Base\+Curve}}.
+
+\Hypertarget{class_g2lib_1_1_poly_line_afbe726a9e12d37925a45a1deb1422abe}\index{G2lib::PolyLine@{G2lib::PolyLine}!eval\_ISO\_D@{eval\_ISO\_D}}
+\index{eval\_ISO\_D@{eval\_ISO\_D}!G2lib::PolyLine@{G2lib::PolyLine}}
+\doxysubsubsection{\texorpdfstring{eval\_ISO\_D()}{eval\_ISO\_D()}}
+{\footnotesize\ttfamily \label{class_g2lib_1_1_poly_line_afbe726a9e12d37925a45a1deb1422abe} 
+void G2lib\+::\+Poly\+Line\+::eval\+\_\+\+ISO\+\_\+D (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}}}]{s}{, }\item[{\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}}}]{offs}{, }\item[{\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \&}]{x\+\_\+D}{, }\item[{\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \&}]{y\+\_\+D}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+Compute derivative curve at position {\ttfamily s} with offset {\ttfamily offs} (ISO).
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em s} & parameter on the curve \\
+\hline
+\mbox{\texttt{ in}}  & {\em offs} & offset of the curve \\
+\hline
+\mbox{\texttt{ out}}  & {\em x\+\_\+D} & x-\/coordinate \\
+\hline
+\mbox{\texttt{ out}}  & {\em y\+\_\+D} & y-\/coordinate \\
+\hline
+\end{DoxyParams}
+
+
+Reimplemented from \mbox{\hyperlink{class_g2lib_1_1_base_curve_a22132936dc89926dfa5e2d3bb2f5a4db}{G2lib\+::\+Base\+Curve}}.
+
+\Hypertarget{class_g2lib_1_1_poly_line_a33e7f2ca67c75b764c08a711be10fd55}\index{G2lib::PolyLine@{G2lib::PolyLine}!eval\_ISO\_DD@{eval\_ISO\_DD}}
+\index{eval\_ISO\_DD@{eval\_ISO\_DD}!G2lib::PolyLine@{G2lib::PolyLine}}
+\doxysubsubsection{\texorpdfstring{eval\_ISO\_DD()}{eval\_ISO\_DD()}}
+{\footnotesize\ttfamily \label{class_g2lib_1_1_poly_line_a33e7f2ca67c75b764c08a711be10fd55} 
+void G2lib\+::\+Poly\+Line\+::eval\+\_\+\+ISO\+\_\+\+DD (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}}}]{s}{, }\item[{\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}}}]{offs}{, }\item[{\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \&}]{x\+\_\+\+DD}{, }\item[{\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \&}]{y\+\_\+\+DD}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+Compute second derivative curve at position {\ttfamily s} with offset {\ttfamily offs} (ISO).
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em s} & parameter on the curve \\
+\hline
+\mbox{\texttt{ in}}  & {\em offs} & offset of the curve \\
+\hline
+\mbox{\texttt{ out}}  & {\em x\+\_\+\+DD} & x-\/coordinate second derivative \\
+\hline
+\mbox{\texttt{ out}}  & {\em y\+\_\+\+DD} & y-\/coordinate second derivative \\
+\hline
+\end{DoxyParams}
+
+
+Reimplemented from \mbox{\hyperlink{class_g2lib_1_1_base_curve_a0407dd52c3aedff3e19b752e6df1f6f0}{G2lib\+::\+Base\+Curve}}.
+
+\Hypertarget{class_g2lib_1_1_poly_line_a33e31befcb476320d7cc7ca3d167347f}\index{G2lib::PolyLine@{G2lib::PolyLine}!eval\_ISO\_DDD@{eval\_ISO\_DDD}}
+\index{eval\_ISO\_DDD@{eval\_ISO\_DDD}!G2lib::PolyLine@{G2lib::PolyLine}}
+\doxysubsubsection{\texorpdfstring{eval\_ISO\_DDD()}{eval\_ISO\_DDD()}}
+{\footnotesize\ttfamily \label{class_g2lib_1_1_poly_line_a33e31befcb476320d7cc7ca3d167347f} 
+void G2lib\+::\+Poly\+Line\+::eval\+\_\+\+ISO\+\_\+\+DDD (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}}}]{s}{, }\item[{\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}}}]{offs}{, }\item[{\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \&}]{x\+\_\+\+DDD}{, }\item[{\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \&}]{y\+\_\+\+DDD}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+Compute third derivative curve at position {\ttfamily s} with offset {\ttfamily offs} (ISO).
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em s} & parameter on the curve \\
+\hline
+\mbox{\texttt{ in}}  & {\em offs} & offset of the curve \\
+\hline
+\mbox{\texttt{ out}}  & {\em x\+\_\+\+DDD} & x-\/coordinate third derivative \\
+\hline
+\mbox{\texttt{ out}}  & {\em y\+\_\+\+DDD} & y-\/coordinate third derivative \\
+\hline
+\end{DoxyParams}
+
+
+Reimplemented from \mbox{\hyperlink{class_g2lib_1_1_base_curve_a91490373a921ef1a85f3dd091b2f6fc0}{G2lib\+::\+Base\+Curve}}.
+
+\Hypertarget{class_g2lib_1_1_poly_line_a1e3bea4819cd83d333d96693234d0dc5}\index{G2lib::PolyLine@{G2lib::PolyLine}!find\_at\_s@{find\_at\_s}}
+\index{find\_at\_s@{find\_at\_s}!G2lib::PolyLine@{G2lib::PolyLine}}
+\doxysubsubsection{\texorpdfstring{find\_at\_s()}{find\_at\_s()}}
+{\footnotesize\ttfamily \label{class_g2lib_1_1_poly_line_a1e3bea4819cd83d333d96693234d0dc5} 
+\mbox{\hyperlink{namespace_g2lib_a17146eb1606475bedc9a2d27f3b29e34}{integer}} G2lib\+::\+Poly\+Line\+::find\+\_\+at\+\_\+s (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \&}]{s}{}\end{DoxyParamCaption}) const}
+
+\Hypertarget{class_g2lib_1_1_poly_line_aeb947d1025918424bd93dcf9d4c449fa}\index{G2lib::PolyLine@{G2lib::PolyLine}!getSegment@{getSegment}}
+\index{getSegment@{getSegment}!G2lib::PolyLine@{G2lib::PolyLine}}
+\doxysubsubsection{\texorpdfstring{getSegment()}{getSegment()}}
+{\footnotesize\ttfamily \label{class_g2lib_1_1_poly_line_aeb947d1025918424bd93dcf9d4c449fa} 
+\mbox{\hyperlink{class_g2lib_1_1_line_segment}{Line\+Segment}} const  \& G2lib\+::\+Poly\+Line\+::get\+Segment (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{namespace_g2lib_a17146eb1606475bedc9a2d27f3b29e34}{integer}}}]{n}{}\end{DoxyParamCaption}) const}
+
+\Hypertarget{class_g2lib_1_1_poly_line_a894e8fe08f8bb422b50c0baaa0e8f8a7}\index{G2lib::PolyLine@{G2lib::PolyLine}!info@{info}}
+\index{info@{info}!G2lib::PolyLine@{G2lib::PolyLine}}
+\doxysubsubsection{\texorpdfstring{info()}{info()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{class_g2lib_1_1_poly_line_a894e8fe08f8bb422b50c0baaa0e8f8a7} 
+string G2lib\+::\+Poly\+Line\+::info (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const}
+
+\Hypertarget{class_g2lib_1_1_poly_line_aad053a34df3eabfc48873bd72e76166a}\index{G2lib::PolyLine@{G2lib::PolyLine}!info@{info}}
+\index{info@{info}!G2lib::PolyLine@{G2lib::PolyLine}}
+\doxysubsubsection{\texorpdfstring{info()}{info()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{class_g2lib_1_1_poly_line_aad053a34df3eabfc48873bd72e76166a} 
+void G2lib\+::\+Poly\+Line\+::info (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{namespace_g2lib_a8fcbace87db5a5e71391e0040878f2c3}{ostream\+\_\+type}} \&}]{stream}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+Pretty print of the curve data. 
+
+Implements \mbox{\hyperlink{class_g2lib_1_1_base_curve_aabe0f5a09fac538545f829b6905433ba}{G2lib\+::\+Base\+Curve}}.
+
+\Hypertarget{class_g2lib_1_1_poly_line_aa34f8932e5cf9b2ef019de6363fa9ebb}\index{G2lib::PolyLine@{G2lib::PolyLine}!init@{init}}
+\index{init@{init}!G2lib::PolyLine@{G2lib::PolyLine}}
+\doxysubsubsection{\texorpdfstring{init()}{init()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{class_g2lib_1_1_poly_line_aa34f8932e5cf9b2ef019de6363fa9ebb} 
+void G2lib\+::\+Poly\+Line\+::init (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+\Hypertarget{class_g2lib_1_1_poly_line_a5f90244d6a5e853794ee9cf7334fc6fe}\index{G2lib::PolyLine@{G2lib::PolyLine}!init@{init}}
+\index{init@{init}!G2lib::PolyLine@{G2lib::PolyLine}}
+\doxysubsubsection{\texorpdfstring{init()}{init()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{class_g2lib_1_1_poly_line_a5f90244d6a5e853794ee9cf7334fc6fe} 
+void G2lib\+::\+Poly\+Line\+::init (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}}}]{x0}{, }\item[{\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}}}]{y0}{}\end{DoxyParamCaption})}
+
+\Hypertarget{class_g2lib_1_1_poly_line_a7837e7626f58d6618335217e0ff760af}\index{G2lib::PolyLine@{G2lib::PolyLine}!intersect@{intersect}}
+\index{intersect@{intersect}!G2lib::PolyLine@{G2lib::PolyLine}}
+\doxysubsubsection{\texorpdfstring{intersect()}{intersect()}\hspace{0.1cm}{\footnotesize\ttfamily [1/3]}}
+{\footnotesize\ttfamily \label{class_g2lib_1_1_poly_line_a7837e7626f58d6618335217e0ff760af} 
+void G2lib\+::\+Poly\+Line\+::intersect (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_g2lib_1_1_base_curve}{Base\+Curve}} const \texorpdfstring{$\ast$}{*}}]{pC}{, }\item[{\mbox{\hyperlink{namespace_g2lib_a511fce3368282f6ef2984bf1b7480375}{Intersect\+List}} \&}]{ilist}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+Intersect the curve with another curve.
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em pC} & second curve intersect \\
+\hline
+\mbox{\texttt{ out}}  & {\em ilist} & list of the intersection (as parameter on the curves) \\
+\hline
+\end{DoxyParams}
+
+
+Implements \mbox{\hyperlink{class_g2lib_1_1_base_curve_ab05e6075a268c8763dd1f08f39c4ac48}{G2lib\+::\+Base\+Curve}}.
+
+\Hypertarget{class_g2lib_1_1_poly_line_ad439799abda4c9dd4f8959ab13a774ac}\index{G2lib::PolyLine@{G2lib::PolyLine}!intersect@{intersect}}
+\index{intersect@{intersect}!G2lib::PolyLine@{G2lib::PolyLine}}
+\doxysubsubsection{\texorpdfstring{intersect()}{intersect()}\hspace{0.1cm}{\footnotesize\ttfamily [2/3]}}
+{\footnotesize\ttfamily \label{class_g2lib_1_1_poly_line_ad439799abda4c9dd4f8959ab13a774ac} 
+void G2lib\+::\+Poly\+Line\+::intersect (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_g2lib_1_1_poly_line}{Poly\+Line}} const \&}]{pl}{, }\item[{\mbox{\hyperlink{namespace_g2lib_a511fce3368282f6ef2984bf1b7480375}{Intersect\+List}} \&}]{ilist}{}\end{DoxyParamCaption}) const}
+
+Intersect \doxylink{class_g2lib_1_1_poly_line}{Poly\+Line} with another \doxylink{class_g2lib_1_1_poly_line}{Poly\+Line}
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em pl} & other \doxylink{class_g2lib_1_1_poly_line}{Poly\+Line} \\
+\hline
+\mbox{\texttt{ out}}  & {\em ilist} & list of the intersection (as parameter on the curves) \\
+\hline
+\end{DoxyParams}
+\Hypertarget{class_g2lib_1_1_poly_line_a6d8d4d3b10820a095a93f69063f1d6c3}\index{G2lib::PolyLine@{G2lib::PolyLine}!intersect@{intersect}}
+\index{intersect@{intersect}!G2lib::PolyLine@{G2lib::PolyLine}}
+\doxysubsubsection{\texorpdfstring{intersect()}{intersect()}\hspace{0.1cm}{\footnotesize\ttfamily [3/3]}}
+{\footnotesize\ttfamily \label{class_g2lib_1_1_poly_line_a6d8d4d3b10820a095a93f69063f1d6c3} 
+void G2lib\+::\+Poly\+Line\+::intersect (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_g2lib_1_1_poly_line}{Poly\+Line}} const \&}]{pl}{, }\item[{vector$<$ \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} $>$ \&}]{ss0}{, }\item[{vector$<$ \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} $>$ \&}]{ss1}{}\end{DoxyParamCaption}) const}
+
+Intersect \doxylink{class_g2lib_1_1_poly_line}{Poly\+Line} with another \doxylink{class_g2lib_1_1_poly_line}{Poly\+Line}
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em pl} & other \doxylink{class_g2lib_1_1_poly_line}{Poly\+Line} \\
+\hline
+\mbox{\texttt{ out}}  & {\em ss0} & list of the paramter of intersection \\
+\hline
+\mbox{\texttt{ out}}  & {\em ss1} & list of the paramter of intersection of the other \doxylink{class_g2lib_1_1_poly_line}{Poly\+Line} \\
+\hline
+\end{DoxyParams}
+\Hypertarget{class_g2lib_1_1_poly_line_a86129e38a2dcbc7c6de3842ab6faa875}\index{G2lib::PolyLine@{G2lib::PolyLine}!intersect\_ISO@{intersect\_ISO}}
+\index{intersect\_ISO@{intersect\_ISO}!G2lib::PolyLine@{G2lib::PolyLine}}
+\doxysubsubsection{\texorpdfstring{intersect\_ISO()}{intersect\_ISO()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{class_g2lib_1_1_poly_line_a86129e38a2dcbc7c6de3842ab6faa875} 
+void G2lib\+::\+Poly\+Line\+::intersect\+\_\+\+ISO (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}}}]{offs}{, }\item[{\mbox{\hyperlink{class_g2lib_1_1_base_curve}{Base\+Curve}} const \texorpdfstring{$\ast$}{*}}]{pC}{, }\item[{\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}}}]{offs\+\_\+C}{, }\item[{\mbox{\hyperlink{namespace_g2lib_a511fce3368282f6ef2984bf1b7480375}{Intersect\+List}} \&}]{ilist}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+Intersect the curve with another curve with offset (ISO)
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em offs} & offset first curve \\
+\hline
+\mbox{\texttt{ in}}  & {\em pC} & second curve intersect \\
+\hline
+\mbox{\texttt{ in}}  & {\em offs\+\_\+C} & offset second curve \\
+\hline
+\mbox{\texttt{ out}}  & {\em ilist} & list of the intersection (as parameter on the curves) \\
+\hline
+\end{DoxyParams}
+
+
+Implements \mbox{\hyperlink{class_g2lib_1_1_base_curve_a59447653f27a2ce05678f3c314acf9b3}{G2lib\+::\+Base\+Curve}}.
+
+\Hypertarget{class_g2lib_1_1_poly_line_a31b7b6df5e9390daf4ad3ea4777d0316}\index{G2lib::PolyLine@{G2lib::PolyLine}!intersect\_ISO@{intersect\_ISO}}
+\index{intersect\_ISO@{intersect\_ISO}!G2lib::PolyLine@{G2lib::PolyLine}}
+\doxysubsubsection{\texorpdfstring{intersect\_ISO()}{intersect\_ISO()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{class_g2lib_1_1_poly_line_a31b7b6df5e9390daf4ad3ea4777d0316} 
+void G2lib\+::\+Poly\+Line\+::intersect\+\_\+\+ISO (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}}}]{offs}{, }\item[{\mbox{\hyperlink{class_g2lib_1_1_poly_line}{Poly\+Line}} const \&}]{pl}{, }\item[{\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}}}]{offs\+\_\+pl}{, }\item[{\mbox{\hyperlink{namespace_g2lib_a511fce3368282f6ef2984bf1b7480375}{Intersect\+List}} \&}]{ilist}{}\end{DoxyParamCaption}) const}
+
+Intersect \doxylink{class_g2lib_1_1_poly_line}{Poly\+Line} with another \doxylink{class_g2lib_1_1_poly_line}{Poly\+Line} (not yet available)
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em offs} & \doxylink{class_g2lib_1_1_poly_line}{Poly\+Line} offset \\
+\hline
+\mbox{\texttt{ in}}  & {\em pl} & other \doxylink{class_g2lib_1_1_poly_line}{Poly\+Line} \\
+\hline
+\mbox{\texttt{ in}}  & {\em offs\+\_\+pl} & Other Poliline offset \\
+\hline
+\mbox{\texttt{ out}}  & {\em ilist} & list of the intersection (as parameter on the curves) \\
+\hline
+\end{DoxyParams}
+\Hypertarget{class_g2lib_1_1_poly_line_a05418c3a1a347483fe7dbceb0c8a0650}\index{G2lib::PolyLine@{G2lib::PolyLine}!length@{length}}
+\index{length@{length}!G2lib::PolyLine@{G2lib::PolyLine}}
+\doxysubsubsection{\texorpdfstring{length()}{length()}}
+{\footnotesize\ttfamily \label{class_g2lib_1_1_poly_line_a05418c3a1a347483fe7dbceb0c8a0650} 
+\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} G2lib\+::\+Poly\+Line\+::length (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+The length of the curve 
+
+Implements \mbox{\hyperlink{class_g2lib_1_1_base_curve_aa0271571d539147148e94d0a28054f47}{G2lib\+::\+Base\+Curve}}.
+
+\Hypertarget{class_g2lib_1_1_poly_line_ac2c399224a0fa16df6de9a7f778d29f3}\index{G2lib::PolyLine@{G2lib::PolyLine}!length\_ISO@{length\_ISO}}
+\index{length\_ISO@{length\_ISO}!G2lib::PolyLine@{G2lib::PolyLine}}
+\doxysubsubsection{\texorpdfstring{length\_ISO()}{length\_ISO()}}
+{\footnotesize\ttfamily \label{class_g2lib_1_1_poly_line_ac2c399224a0fa16df6de9a7f778d29f3} 
+\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} G2lib\+::\+Poly\+Line\+::length\+\_\+\+ISO (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}}}]{offs}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+The length of the curve with offset (ISO) 
+
+Implements \mbox{\hyperlink{class_g2lib_1_1_base_curve_adf6ca6cb32570c070ea25a8be9a3ff4f}{G2lib\+::\+Base\+Curve}}.
+
+\Hypertarget{class_g2lib_1_1_poly_line_a85343e029bb272c6f549e063216aa48c}\index{G2lib::PolyLine@{G2lib::PolyLine}!num\_segments@{num\_segments}}
+\index{num\_segments@{num\_segments}!G2lib::PolyLine@{G2lib::PolyLine}}
+\doxysubsubsection{\texorpdfstring{num\_segments()}{num\_segments()}}
+{\footnotesize\ttfamily \label{class_g2lib_1_1_poly_line_a85343e029bb272c6f549e063216aa48c} 
+\mbox{\hyperlink{namespace_g2lib_a17146eb1606475bedc9a2d27f3b29e34}{integer}} G2lib\+::\+Poly\+Line\+::num\+\_\+segments (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{class_g2lib_1_1_poly_line_a51ff8b720d8a1771bdf2d14e13c157a1}\index{G2lib::PolyLine@{G2lib::PolyLine}!numPoints@{numPoints}}
+\index{numPoints@{numPoints}!G2lib::PolyLine@{G2lib::PolyLine}}
+\doxysubsubsection{\texorpdfstring{numPoints()}{numPoints()}}
+{\footnotesize\ttfamily \label{class_g2lib_1_1_poly_line_a51ff8b720d8a1771bdf2d14e13c157a1} 
+\mbox{\hyperlink{namespace_g2lib_a17146eb1606475bedc9a2d27f3b29e34}{integer}} G2lib\+::\+Poly\+Line\+::num\+Points (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{class_g2lib_1_1_poly_line_a2a90fc2b39ead0ccc9932540f18f9abd}\index{G2lib::PolyLine@{G2lib::PolyLine}!operator=@{operator=}}
+\index{operator=@{operator=}!G2lib::PolyLine@{G2lib::PolyLine}}
+\doxysubsubsection{\texorpdfstring{operator=()}{operator=()}}
+{\footnotesize\ttfamily \label{class_g2lib_1_1_poly_line_a2a90fc2b39ead0ccc9932540f18f9abd} 
+\mbox{\hyperlink{class_g2lib_1_1_poly_line}{Poly\+Line}} const  \& G2lib\+::\+Poly\+Line\+::operator= (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_g2lib_1_1_poly_line}{Poly\+Line}} const \&}]{s}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{class_g2lib_1_1_poly_line_a112c4693c29f1c3815d2f9f1f0015987}\index{G2lib::PolyLine@{G2lib::PolyLine}!polygon@{polygon}}
+\index{polygon@{polygon}!G2lib::PolyLine@{G2lib::PolyLine}}
+\doxysubsubsection{\texorpdfstring{polygon()}{polygon()}}
+{\footnotesize\ttfamily \label{class_g2lib_1_1_poly_line_a112c4693c29f1c3815d2f9f1f0015987} 
+void G2lib\+::\+Poly\+Line\+::polygon (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}}}]{x}{\mbox{[}$\,$\mbox{]}, }\item[{\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}}}]{y}{\mbox{[}$\,$\mbox{]}}\end{DoxyParamCaption}) const}
+
+\Hypertarget{class_g2lib_1_1_poly_line_ae866f7478c36ade2c66a31af2cda7be3}\index{G2lib::PolyLine@{G2lib::PolyLine}!push\_back@{push\_back}}
+\index{push\_back@{push\_back}!G2lib::PolyLine@{G2lib::PolyLine}}
+\doxysubsubsection{\texorpdfstring{push\_back()}{push\_back()}\hspace{0.1cm}{\footnotesize\ttfamily [1/6]}}
+{\footnotesize\ttfamily \label{class_g2lib_1_1_poly_line_ae866f7478c36ade2c66a31af2cda7be3} 
+void G2lib\+::\+Poly\+Line\+::push\+\_\+back (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_g2lib_1_1_biarc}{Biarc}} const \&}]{C}{, }\item[{\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}}}]{tol}{}\end{DoxyParamCaption})}
+
+\Hypertarget{class_g2lib_1_1_poly_line_a000dcba4e944d5eb574e9f07358554f3}\index{G2lib::PolyLine@{G2lib::PolyLine}!push\_back@{push\_back}}
+\index{push\_back@{push\_back}!G2lib::PolyLine@{G2lib::PolyLine}}
+\doxysubsubsection{\texorpdfstring{push\_back()}{push\_back()}\hspace{0.1cm}{\footnotesize\ttfamily [2/6]}}
+{\footnotesize\ttfamily \label{class_g2lib_1_1_poly_line_a000dcba4e944d5eb574e9f07358554f3} 
+void G2lib\+::\+Poly\+Line\+::push\+\_\+back (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_g2lib_1_1_circle_arc}{Circle\+Arc}} const \&}]{C}{, }\item[{\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}}}]{tol}{}\end{DoxyParamCaption})}
+
+\Hypertarget{class_g2lib_1_1_poly_line_a433b441957b47b2a9493ab956c21b0c3}\index{G2lib::PolyLine@{G2lib::PolyLine}!push\_back@{push\_back}}
+\index{push\_back@{push\_back}!G2lib::PolyLine@{G2lib::PolyLine}}
+\doxysubsubsection{\texorpdfstring{push\_back()}{push\_back()}\hspace{0.1cm}{\footnotesize\ttfamily [3/6]}}
+{\footnotesize\ttfamily \label{class_g2lib_1_1_poly_line_a433b441957b47b2a9493ab956c21b0c3} 
+void G2lib\+::\+Poly\+Line\+::push\+\_\+back (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_g2lib_1_1_clothoid_curve}{Clothoid\+Curve}} const \&}]{C}{, }\item[{\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}}}]{tol}{}\end{DoxyParamCaption})}
+
+\Hypertarget{class_g2lib_1_1_poly_line_a02f0915e702b8ef45b714c9b0b84a91a}\index{G2lib::PolyLine@{G2lib::PolyLine}!push\_back@{push\_back}}
+\index{push\_back@{push\_back}!G2lib::PolyLine@{G2lib::PolyLine}}
+\doxysubsubsection{\texorpdfstring{push\_back()}{push\_back()}\hspace{0.1cm}{\footnotesize\ttfamily [4/6]}}
+{\footnotesize\ttfamily \label{class_g2lib_1_1_poly_line_a02f0915e702b8ef45b714c9b0b84a91a} 
+void G2lib\+::\+Poly\+Line\+::push\+\_\+back (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_g2lib_1_1_clothoid_list}{Clothoid\+List}} const \&}]{L}{, }\item[{\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}}}]{tol}{}\end{DoxyParamCaption})}
+
+\Hypertarget{class_g2lib_1_1_poly_line_a4a0933412647a9d8235160df919c2b17}\index{G2lib::PolyLine@{G2lib::PolyLine}!push\_back@{push\_back}}
+\index{push\_back@{push\_back}!G2lib::PolyLine@{G2lib::PolyLine}}
+\doxysubsubsection{\texorpdfstring{push\_back()}{push\_back()}\hspace{0.1cm}{\footnotesize\ttfamily [5/6]}}
+{\footnotesize\ttfamily \label{class_g2lib_1_1_poly_line_a4a0933412647a9d8235160df919c2b17} 
+void G2lib\+::\+Poly\+Line\+::push\+\_\+back (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_g2lib_1_1_line_segment}{Line\+Segment}} const \&}]{C}{}\end{DoxyParamCaption})}
+
+\Hypertarget{class_g2lib_1_1_poly_line_a6078d39a097c928be5a8887207dbde78}\index{G2lib::PolyLine@{G2lib::PolyLine}!push\_back@{push\_back}}
+\index{push\_back@{push\_back}!G2lib::PolyLine@{G2lib::PolyLine}}
+\doxysubsubsection{\texorpdfstring{push\_back()}{push\_back()}\hspace{0.1cm}{\footnotesize\ttfamily [6/6]}}
+{\footnotesize\ttfamily \label{class_g2lib_1_1_poly_line_a6078d39a097c928be5a8887207dbde78} 
+void G2lib\+::\+Poly\+Line\+::push\+\_\+back (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}}}]{x}{, }\item[{\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}}}]{y}{}\end{DoxyParamCaption})}
+
+\Hypertarget{class_g2lib_1_1_poly_line_a77e4599399a8bdbfe22d9fa5f58e187a}\index{G2lib::PolyLine@{G2lib::PolyLine}!reset\_last\_interval@{reset\_last\_interval}}
+\index{reset\_last\_interval@{reset\_last\_interval}!G2lib::PolyLine@{G2lib::PolyLine}}
+\doxysubsubsection{\texorpdfstring{reset\_last\_interval()}{reset\_last\_interval()}}
+{\footnotesize\ttfamily \label{class_g2lib_1_1_poly_line_a77e4599399a8bdbfe22d9fa5f58e187a} 
+void G2lib\+::\+Poly\+Line\+::reset\+\_\+last\+\_\+interval (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [private]}}
+
+\Hypertarget{class_g2lib_1_1_poly_line_a96fa34a3664a0994a433758d0e035a02}\index{G2lib::PolyLine@{G2lib::PolyLine}!reverse@{reverse}}
+\index{reverse@{reverse}!G2lib::PolyLine@{G2lib::PolyLine}}
+\doxysubsubsection{\texorpdfstring{reverse()}{reverse()}}
+{\footnotesize\ttfamily \label{class_g2lib_1_1_poly_line_a96fa34a3664a0994a433758d0e035a02} 
+void G2lib\+::\+Poly\+Line\+::reverse (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+Reverse curve parameterization. 
+
+Implements \mbox{\hyperlink{class_g2lib_1_1_base_curve_a802296c0172c888acfc3bb3eb2e125c7}{G2lib\+::\+Base\+Curve}}.
+
+\Hypertarget{class_g2lib_1_1_poly_line_a9547f1b69c66305d6310e4717d35f825}\index{G2lib::PolyLine@{G2lib::PolyLine}!rotate@{rotate}}
+\index{rotate@{rotate}!G2lib::PolyLine@{G2lib::PolyLine}}
+\doxysubsubsection{\texorpdfstring{rotate()}{rotate()}}
+{\footnotesize\ttfamily \label{class_g2lib_1_1_poly_line_a9547f1b69c66305d6310e4717d35f825} 
+void G2lib\+::\+Poly\+Line\+::rotate (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}}}]{angle}{, }\item[{\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}}}]{cx}{, }\item[{\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}}}]{cy}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+Rotate curve by angle $ theta $ centered at point $ (c_x,c_y)$.
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em angle} & angle $ theta $ \\
+\hline
+\mbox{\texttt{ in}}  & {\em cx} & $ c_x$ \\
+\hline
+\mbox{\texttt{ in}}  & {\em cy} & $ c_y$ \\
+\hline
+\end{DoxyParams}
+
+
+Implements \mbox{\hyperlink{class_g2lib_1_1_base_curve_ae561f940bc65ef73a8cbea2b3458c04f}{G2lib\+::\+Base\+Curve}}.
+
+\Hypertarget{class_g2lib_1_1_poly_line_a6760742649d93a56a5fe0c6961f00aa1}\index{G2lib::PolyLine@{G2lib::PolyLine}!scale@{scale}}
+\index{scale@{scale}!G2lib::PolyLine@{G2lib::PolyLine}}
+\doxysubsubsection{\texorpdfstring{scale()}{scale()}}
+{\footnotesize\ttfamily \label{class_g2lib_1_1_poly_line_a6760742649d93a56a5fe0c6961f00aa1} 
+void G2lib\+::\+Poly\+Line\+::scale (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}}}]{sc}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+Scale curve by factor {\ttfamily sc}. 
+
+Implements \mbox{\hyperlink{class_g2lib_1_1_base_curve_a717ce9c6e08774b86a4b0f4a44d8281d}{G2lib\+::\+Base\+Curve}}.
+
+\Hypertarget{class_g2lib_1_1_poly_line_a03f07ee15a24764a8109768e34e56302}\index{G2lib::PolyLine@{G2lib::PolyLine}!setup@{setup}}
+\index{setup@{setup}!G2lib::PolyLine@{G2lib::PolyLine}}
+\doxysubsubsection{\texorpdfstring{setup()}{setup()}}
+{\footnotesize\ttfamily \label{class_g2lib_1_1_poly_line_a03f07ee15a24764a8109768e34e56302} 
+void G2lib\+::\+Poly\+Line\+::setup (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{namespace_g2lib_a2bee1fb11cb401bacb26ad157b301feb}{Generic\+Container}} const \&}]{gc}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{class_g2lib_1_1_base_curve_adadaf2046770441b539272693fb40ed2}{G2lib\+::\+Base\+Curve}}.
+
+\Hypertarget{class_g2lib_1_1_poly_line_ae0ce2ccfa38dcee31a43bd2ee13a7715}\index{G2lib::PolyLine@{G2lib::PolyLine}!theta@{theta}}
+\index{theta@{theta}!G2lib::PolyLine@{G2lib::PolyLine}}
+\doxysubsubsection{\texorpdfstring{theta()}{theta()}}
+{\footnotesize\ttfamily \label{class_g2lib_1_1_poly_line_ae0ce2ccfa38dcee31a43bd2ee13a7715} 
+\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} G2lib\+::\+Poly\+Line\+::theta (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}}}]{s}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+Angle at curvilinear coodinate {\ttfamily s}. 
+
+Implements \mbox{\hyperlink{class_g2lib_1_1_base_curve_abd4dcae926b50de3e348440bd92bf923}{G2lib\+::\+Base\+Curve}}.
+
+\Hypertarget{class_g2lib_1_1_poly_line_a750ba71adb66f9bc67b7c3ee17bfab2f}\index{G2lib::PolyLine@{G2lib::PolyLine}!theta\_D@{theta\_D}}
+\index{theta\_D@{theta\_D}!G2lib::PolyLine@{G2lib::PolyLine}}
+\doxysubsubsection{\texorpdfstring{theta\_D()}{theta\_D()}}
+{\footnotesize\ttfamily \label{class_g2lib_1_1_poly_line_a750ba71adb66f9bc67b7c3ee17bfab2f} 
+\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} G2lib\+::\+Poly\+Line\+::theta\+\_\+D (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}}}]{s}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+Angle derivative (curvature) at curvilinear coodinate {\ttfamily s}. 
+
+Implements \mbox{\hyperlink{class_g2lib_1_1_base_curve_a01767567a3efcb2728bac21e30b47893}{G2lib\+::\+Base\+Curve}}.
+
+\Hypertarget{class_g2lib_1_1_poly_line_a873a84053eeb902b379c6e96ce04f252}\index{G2lib::PolyLine@{G2lib::PolyLine}!theta\_DD@{theta\_DD}}
+\index{theta\_DD@{theta\_DD}!G2lib::PolyLine@{G2lib::PolyLine}}
+\doxysubsubsection{\texorpdfstring{theta\_DD()}{theta\_DD()}}
+{\footnotesize\ttfamily \label{class_g2lib_1_1_poly_line_a873a84053eeb902b379c6e96ce04f252} 
+\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} G2lib\+::\+Poly\+Line\+::theta\+\_\+\+DD (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}}}]{s}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+Angle second derivative (devitive of curvature) at curvilinear coodinate {\ttfamily s}. 
+
+Implements \mbox{\hyperlink{class_g2lib_1_1_base_curve_a64abf5828c7887040b2d5ca9155b54fe}{G2lib\+::\+Base\+Curve}}.
+
+\Hypertarget{class_g2lib_1_1_poly_line_ac9afca201c5b039e35f6fa41e0d0c9b4}\index{G2lib::PolyLine@{G2lib::PolyLine}!theta\_DDD@{theta\_DDD}}
+\index{theta\_DDD@{theta\_DDD}!G2lib::PolyLine@{G2lib::PolyLine}}
+\doxysubsubsection{\texorpdfstring{theta\_DDD()}{theta\_DDD()}}
+{\footnotesize\ttfamily \label{class_g2lib_1_1_poly_line_ac9afca201c5b039e35f6fa41e0d0c9b4} 
+\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} G2lib\+::\+Poly\+Line\+::theta\+\_\+\+DDD (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}}}]{s}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+Angle third derivative at curvilinear coodinate {\ttfamily s}. 
+
+Implements \mbox{\hyperlink{class_g2lib_1_1_base_curve_a2fcc4d5b32555b47d76faf7dee1bce6a}{G2lib\+::\+Base\+Curve}}.
+
+\Hypertarget{class_g2lib_1_1_poly_line_a7723d59fe0967b2e3bd04986c468b4d7}\index{G2lib::PolyLine@{G2lib::PolyLine}!translate@{translate}}
+\index{translate@{translate}!G2lib::PolyLine@{G2lib::PolyLine}}
+\doxysubsubsection{\texorpdfstring{translate()}{translate()}}
+{\footnotesize\ttfamily \label{class_g2lib_1_1_poly_line_a7723d59fe0967b2e3bd04986c468b4d7} 
+void G2lib\+::\+Poly\+Line\+::translate (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}}}]{tx}{, }\item[{\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}}}]{ty}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+translate curve by $ (t_x,t_y) $ 
+
+
+
+Implements \mbox{\hyperlink{class_g2lib_1_1_base_curve_a71ee5d31fb60206f42227bf0ea59f350}{G2lib\+::\+Base\+Curve}}.
+
+\Hypertarget{class_g2lib_1_1_poly_line_a959e1c409a74c29eaf2095407c71eb31}\index{G2lib::PolyLine@{G2lib::PolyLine}!trim@{trim}}
+\index{trim@{trim}!G2lib::PolyLine@{G2lib::PolyLine}}
+\doxysubsubsection{\texorpdfstring{trim()}{trim()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{class_g2lib_1_1_poly_line_a959e1c409a74c29eaf2095407c71eb31} 
+void G2lib\+::\+Poly\+Line\+::trim (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}}}]{s\+\_\+begin}{, }\item[{\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}}}]{s\+\_\+end}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+Cut curve at parametrix coordinate {\ttfamily s\+\_\+begin} and {\ttfamily s\+\_\+end}. 
+
+Implements \mbox{\hyperlink{class_g2lib_1_1_base_curve_a54a41847f42ba4e412f30388b5b9bd00}{G2lib\+::\+Base\+Curve}}.
+
+\Hypertarget{class_g2lib_1_1_poly_line_a5c69531c36c5f88e5c674d8de8007f8d}\index{G2lib::PolyLine@{G2lib::PolyLine}!trim@{trim}}
+\index{trim@{trim}!G2lib::PolyLine@{G2lib::PolyLine}}
+\doxysubsubsection{\texorpdfstring{trim()}{trim()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{class_g2lib_1_1_poly_line_a5c69531c36c5f88e5c674d8de8007f8d} 
+void G2lib\+::\+Poly\+Line\+::trim (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}}}]{s\+\_\+begin}{, }\item[{\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}}}]{s\+\_\+end}{, }\item[{\mbox{\hyperlink{class_g2lib_1_1_poly_line}{Poly\+Line}} \&}]{new\+PL}{}\end{DoxyParamCaption}) const}
+
+\Hypertarget{class_g2lib_1_1_poly_line_a25dcafc31a3bb1b8f704f767ef6d288b}\index{G2lib::PolyLine@{G2lib::PolyLine}!type@{type}}
+\index{type@{type}!G2lib::PolyLine@{G2lib::PolyLine}}
+\doxysubsubsection{\texorpdfstring{type()}{type()}}
+{\footnotesize\ttfamily \label{class_g2lib_1_1_poly_line_a25dcafc31a3bb1b8f704f767ef6d288b} 
+\mbox{\hyperlink{namespace_g2lib_ac18621126b9485db2bc878d6a1c8b0c9}{Curve\+Type}} G2lib\+::\+Poly\+Line\+::type (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+The name of the curve type 
+
+Implements \mbox{\hyperlink{class_g2lib_1_1_base_curve_a6e33757b359413dedeaa67e38616c93e}{G2lib\+::\+Base\+Curve}}.
+
+\Hypertarget{class_g2lib_1_1_poly_line_ab579d4b4d5631e7483302040ae5bdf32}\index{G2lib::PolyLine@{G2lib::PolyLine}!X@{X}}
+\index{X@{X}!G2lib::PolyLine@{G2lib::PolyLine}}
+\doxysubsubsection{\texorpdfstring{X()}{X()}}
+{\footnotesize\ttfamily \label{class_g2lib_1_1_poly_line_ab579d4b4d5631e7483302040ae5bdf32} 
+\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} G2lib\+::\+Poly\+Line\+::X (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}}}]{s}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+x-\/coordinate at curvilinear coordinate {\ttfamily s}. 
+
+Implements \mbox{\hyperlink{class_g2lib_1_1_base_curve_a939db34844cfd0991d4e29729192be76}{G2lib\+::\+Base\+Curve}}.
+
+\Hypertarget{class_g2lib_1_1_poly_line_a189d345e01490041558ace09a62a5ca9}\index{G2lib::PolyLine@{G2lib::PolyLine}!x\_begin@{x\_begin}}
+\index{x\_begin@{x\_begin}!G2lib::PolyLine@{G2lib::PolyLine}}
+\doxysubsubsection{\texorpdfstring{x\_begin()}{x\_begin()}}
+{\footnotesize\ttfamily \label{class_g2lib_1_1_poly_line_a189d345e01490041558ace09a62a5ca9} 
+\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} G2lib\+::\+Poly\+Line\+::x\+\_\+begin (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+Initial x-\/coordinate. 
+
+Reimplemented from \mbox{\hyperlink{class_g2lib_1_1_base_curve_a82c6e2f117ec93a9a9fa8fdfce721304}{G2lib\+::\+Base\+Curve}}.
+
+\Hypertarget{class_g2lib_1_1_poly_line_a07cff8dff4c18bf6b07dd46ed1c707f6}\index{G2lib::PolyLine@{G2lib::PolyLine}!X\_D@{X\_D}}
+\index{X\_D@{X\_D}!G2lib::PolyLine@{G2lib::PolyLine}}
+\doxysubsubsection{\texorpdfstring{X\_D()}{X\_D()}}
+{\footnotesize\ttfamily \label{class_g2lib_1_1_poly_line_a07cff8dff4c18bf6b07dd46ed1c707f6} 
+\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} G2lib\+::\+Poly\+Line\+::\+X\+\_\+D (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}}}]{s}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+x-\/coordinate derivative at curvilinear coordinate {\ttfamily s}. 
+
+Implements \mbox{\hyperlink{class_g2lib_1_1_base_curve_acc2069ee2eb041b7db5c2bb01cf56484}{G2lib\+::\+Base\+Curve}}.
+
+\Hypertarget{class_g2lib_1_1_poly_line_a17296f0c00b633c55be13abf0d5bb1fe}\index{G2lib::PolyLine@{G2lib::PolyLine}!X\_DD@{X\_DD}}
+\index{X\_DD@{X\_DD}!G2lib::PolyLine@{G2lib::PolyLine}}
+\doxysubsubsection{\texorpdfstring{X\_DD()}{X\_DD()}}
+{\footnotesize\ttfamily \label{class_g2lib_1_1_poly_line_a17296f0c00b633c55be13abf0d5bb1fe} 
+\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} G2lib\+::\+Poly\+Line\+::\+X\+\_\+\+DD (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}}}]{s}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+x-\/coordinate second derivative at curvilinear coordinate {\ttfamily s}. 
+
+Implements \mbox{\hyperlink{class_g2lib_1_1_base_curve_a1873395f4b82c7c65a01fe357ae0d13e}{G2lib\+::\+Base\+Curve}}.
+
+\Hypertarget{class_g2lib_1_1_poly_line_a44500a5aad4af265493125bb1fecd5f0}\index{G2lib::PolyLine@{G2lib::PolyLine}!X\_DDD@{X\_DDD}}
+\index{X\_DDD@{X\_DDD}!G2lib::PolyLine@{G2lib::PolyLine}}
+\doxysubsubsection{\texorpdfstring{X\_DDD()}{X\_DDD()}}
+{\footnotesize\ttfamily \label{class_g2lib_1_1_poly_line_a44500a5aad4af265493125bb1fecd5f0} 
+\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} G2lib\+::\+Poly\+Line\+::\+X\+\_\+\+DDD (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}}}]{s}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+x-\/coordinate third derivative at curvilinear coordinate {\ttfamily s}. 
+
+Implements \mbox{\hyperlink{class_g2lib_1_1_base_curve_aca5563af7447a1ee975063a6e18b48e0}{G2lib\+::\+Base\+Curve}}.
+
+\Hypertarget{class_g2lib_1_1_poly_line_a2412e0210dfcb89b95f68cbfa990079f}\index{G2lib::PolyLine@{G2lib::PolyLine}!x\_end@{x\_end}}
+\index{x\_end@{x\_end}!G2lib::PolyLine@{G2lib::PolyLine}}
+\doxysubsubsection{\texorpdfstring{x\_end()}{x\_end()}}
+{\footnotesize\ttfamily \label{class_g2lib_1_1_poly_line_a2412e0210dfcb89b95f68cbfa990079f} 
+\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} G2lib\+::\+Poly\+Line\+::x\+\_\+end (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+Final x-\/coordinate. 
+
+Reimplemented from \mbox{\hyperlink{class_g2lib_1_1_base_curve_a6d515143a2fd58081a8b040ee067ba5a}{G2lib\+::\+Base\+Curve}}.
+
+\Hypertarget{class_g2lib_1_1_poly_line_a8379710333fd650e0ffc5458622089b7}\index{G2lib::PolyLine@{G2lib::PolyLine}!Y@{Y}}
+\index{Y@{Y}!G2lib::PolyLine@{G2lib::PolyLine}}
+\doxysubsubsection{\texorpdfstring{Y()}{Y()}}
+{\footnotesize\ttfamily \label{class_g2lib_1_1_poly_line_a8379710333fd650e0ffc5458622089b7} 
+\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} G2lib\+::\+Poly\+Line\+::Y (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}}}]{s}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+y-\/coordinate at curvilinear coordinate {\ttfamily s}. 
+
+Implements \mbox{\hyperlink{class_g2lib_1_1_base_curve_a3e9984f0898bf9c8fcb7df7203636f04}{G2lib\+::\+Base\+Curve}}.
+
+\Hypertarget{class_g2lib_1_1_poly_line_abd93922813a93f55007d772382cb2063}\index{G2lib::PolyLine@{G2lib::PolyLine}!y\_begin@{y\_begin}}
+\index{y\_begin@{y\_begin}!G2lib::PolyLine@{G2lib::PolyLine}}
+\doxysubsubsection{\texorpdfstring{y\_begin()}{y\_begin()}}
+{\footnotesize\ttfamily \label{class_g2lib_1_1_poly_line_abd93922813a93f55007d772382cb2063} 
+\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} G2lib\+::\+Poly\+Line\+::y\+\_\+begin (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+Initial y-\/coordinate. 
+
+Reimplemented from \mbox{\hyperlink{class_g2lib_1_1_base_curve_a6dbdfada69d109ff89f2eeeb3a942779}{G2lib\+::\+Base\+Curve}}.
+
+\Hypertarget{class_g2lib_1_1_poly_line_a6e3b694458639e3548640d0c91e99804}\index{G2lib::PolyLine@{G2lib::PolyLine}!Y\_D@{Y\_D}}
+\index{Y\_D@{Y\_D}!G2lib::PolyLine@{G2lib::PolyLine}}
+\doxysubsubsection{\texorpdfstring{Y\_D()}{Y\_D()}}
+{\footnotesize\ttfamily \label{class_g2lib_1_1_poly_line_a6e3b694458639e3548640d0c91e99804} 
+\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} G2lib\+::\+Poly\+Line\+::\+Y\+\_\+D (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}}}]{s}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+y-\/coordinate derivative at curvilinear coordinate {\ttfamily s}. 
+
+Implements \mbox{\hyperlink{class_g2lib_1_1_base_curve_a1832d5b03a439887ea918e9b8c8074c3}{G2lib\+::\+Base\+Curve}}.
+
+\Hypertarget{class_g2lib_1_1_poly_line_aae04ad0bde94e22880a2acf5c21d3f35}\index{G2lib::PolyLine@{G2lib::PolyLine}!Y\_DD@{Y\_DD}}
+\index{Y\_DD@{Y\_DD}!G2lib::PolyLine@{G2lib::PolyLine}}
+\doxysubsubsection{\texorpdfstring{Y\_DD()}{Y\_DD()}}
+{\footnotesize\ttfamily \label{class_g2lib_1_1_poly_line_aae04ad0bde94e22880a2acf5c21d3f35} 
+\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} G2lib\+::\+Poly\+Line\+::\+Y\+\_\+\+DD (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}}}]{s}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+y-\/coordinate second derivative at curvilinear coordinate {\ttfamily s}. 
+
+Implements \mbox{\hyperlink{class_g2lib_1_1_base_curve_a5f3575f5e5581b400e904516e7cd32d0}{G2lib\+::\+Base\+Curve}}.
+
+\Hypertarget{class_g2lib_1_1_poly_line_a73590670fc3467d7c33695174ca429f3}\index{G2lib::PolyLine@{G2lib::PolyLine}!Y\_DDD@{Y\_DDD}}
+\index{Y\_DDD@{Y\_DDD}!G2lib::PolyLine@{G2lib::PolyLine}}
+\doxysubsubsection{\texorpdfstring{Y\_DDD()}{Y\_DDD()}}
+{\footnotesize\ttfamily \label{class_g2lib_1_1_poly_line_a73590670fc3467d7c33695174ca429f3} 
+\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} G2lib\+::\+Poly\+Line\+::\+Y\+\_\+\+DDD (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}}}]{s}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+y-\/coordinate third derivative at curvilinear coordinate {\ttfamily s}. 
+
+Implements \mbox{\hyperlink{class_g2lib_1_1_base_curve_a91a1737a9461be4eef4961b97f085d4c}{G2lib\+::\+Base\+Curve}}.
+
+\Hypertarget{class_g2lib_1_1_poly_line_abfbcf0989c303eead03c5e5edb7ee783}\index{G2lib::PolyLine@{G2lib::PolyLine}!y\_end@{y\_end}}
+\index{y\_end@{y\_end}!G2lib::PolyLine@{G2lib::PolyLine}}
+\doxysubsubsection{\texorpdfstring{y\_end()}{y\_end()}}
+{\footnotesize\ttfamily \label{class_g2lib_1_1_poly_line_abfbcf0989c303eead03c5e5edb7ee783} 
+\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} G2lib\+::\+Poly\+Line\+::y\+\_\+end (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+Final y-\/coordinate. 
+
+Reimplemented from \mbox{\hyperlink{class_g2lib_1_1_base_curve_a9a6286210898b802333d5f73ed7dd755}{G2lib\+::\+Base\+Curve}}.
+
+
+
+\doxysubsection{Friends And Related Symbol Documentation}
+\Hypertarget{class_g2lib_1_1_poly_line_a647311f3bb18e852e7fe026edcc65a79}\index{G2lib::PolyLine@{G2lib::PolyLine}!BiarcList@{BiarcList}}
+\index{BiarcList@{BiarcList}!G2lib::PolyLine@{G2lib::PolyLine}}
+\doxysubsubsection{\texorpdfstring{BiarcList}{BiarcList}}
+{\footnotesize\ttfamily \label{class_g2lib_1_1_poly_line_a647311f3bb18e852e7fe026edcc65a79} 
+friend class \mbox{\hyperlink{class_g2lib_1_1_biarc_list}{Biarc\+List}}\hspace{0.3cm}{\ttfamily [friend]}}
+
+\Hypertarget{class_g2lib_1_1_poly_line_a8ca81bb09744d2390edf7d4b027d529a}\index{G2lib::PolyLine@{G2lib::PolyLine}!ClothoidList@{ClothoidList}}
+\index{ClothoidList@{ClothoidList}!G2lib::PolyLine@{G2lib::PolyLine}}
+\doxysubsubsection{\texorpdfstring{ClothoidList}{ClothoidList}}
+{\footnotesize\ttfamily \label{class_g2lib_1_1_poly_line_a8ca81bb09744d2390edf7d4b027d529a} 
+friend class \mbox{\hyperlink{class_g2lib_1_1_clothoid_list}{Clothoid\+List}}\hspace{0.3cm}{\ttfamily [friend]}}
+
+\Hypertarget{class_g2lib_1_1_poly_line_a601382abed3fffaa0ff83e965586bca2}\index{G2lib::PolyLine@{G2lib::PolyLine}!operator$<$$<$@{operator$<$$<$}}
+\index{operator$<$$<$@{operator$<$$<$}!G2lib::PolyLine@{G2lib::PolyLine}}
+\doxysubsubsection{\texorpdfstring{operator$<$$<$}{operator<<}}
+{\footnotesize\ttfamily \label{class_g2lib_1_1_poly_line_a601382abed3fffaa0ff83e965586bca2} 
+\mbox{\hyperlink{namespace_g2lib_a8fcbace87db5a5e71391e0040878f2c3}{ostream\+\_\+type}} \& operator$<$$<$ (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{namespace_g2lib_a8fcbace87db5a5e71391e0040878f2c3}{ostream\+\_\+type}} \&}]{stream}{, }\item[{\mbox{\hyperlink{class_g2lib_1_1_poly_line}{Poly\+Line}} const \&}]{P}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [friend]}}
+
+
+
+\doxysubsection{Member Data Documentation}
+\Hypertarget{class_g2lib_1_1_poly_line_aac8ea92c0d087254f3c9abe72db8a0bd}\index{G2lib::PolyLine@{G2lib::PolyLine}!m\_aabb\_done@{m\_aabb\_done}}
+\index{m\_aabb\_done@{m\_aabb\_done}!G2lib::PolyLine@{G2lib::PolyLine}}
+\doxysubsubsection{\texorpdfstring{m\_aabb\_done}{m\_aabb\_done}}
+{\footnotesize\ttfamily \label{class_g2lib_1_1_poly_line_aac8ea92c0d087254f3c9abe72db8a0bd} 
+bool G2lib\+::\+Poly\+Line\+::m\+\_\+aabb\+\_\+done \{false\}\hspace{0.3cm}{\ttfamily [mutable]}, {\ttfamily [private]}}
+
+\Hypertarget{class_g2lib_1_1_poly_line_a80fb20cd289707e0da09a612ef1fc458}\index{G2lib::PolyLine@{G2lib::PolyLine}!m\_aabb\_tree@{m\_aabb\_tree}}
+\index{m\_aabb\_tree@{m\_aabb\_tree}!G2lib::PolyLine@{G2lib::PolyLine}}
+\doxysubsubsection{\texorpdfstring{m\_aabb\_tree}{m\_aabb\_tree}}
+{\footnotesize\ttfamily \label{class_g2lib_1_1_poly_line_a80fb20cd289707e0da09a612ef1fc458} 
+\mbox{\hyperlink{namespace_g2lib_ae1a048466025088b97bf20caddd13693}{AABB\+\_\+\+TREE}} G2lib\+::\+Poly\+Line\+::m\+\_\+aabb\+\_\+tree\hspace{0.3cm}{\ttfamily [mutable]}, {\ttfamily [private]}}
+
+\Hypertarget{class_g2lib_1_1_poly_line_ab298569eac1c1a0e6eefdf7beed106fd}\index{G2lib::PolyLine@{G2lib::PolyLine}!m\_last\_interval@{m\_last\_interval}}
+\index{m\_last\_interval@{m\_last\_interval}!G2lib::PolyLine@{G2lib::PolyLine}}
+\doxysubsubsection{\texorpdfstring{m\_last\_interval}{m\_last\_interval}}
+{\footnotesize\ttfamily \label{class_g2lib_1_1_poly_line_ab298569eac1c1a0e6eefdf7beed106fd} 
+\mbox{\hyperlink{namespace_g2lib_a17146eb1606475bedc9a2d27f3b29e34}{integer}} G2lib\+::\+Poly\+Line\+::m\+\_\+last\+\_\+interval \{0\}\hspace{0.3cm}{\ttfamily [mutable]}, {\ttfamily [private]}}
+
+\Hypertarget{class_g2lib_1_1_poly_line_a03d43bec8f1f55dff05ed37996724fca}\index{G2lib::PolyLine@{G2lib::PolyLine}!m\_polyline\_list@{m\_polyline\_list}}
+\index{m\_polyline\_list@{m\_polyline\_list}!G2lib::PolyLine@{G2lib::PolyLine}}
+\doxysubsubsection{\texorpdfstring{m\_polyline\_list}{m\_polyline\_list}}
+{\footnotesize\ttfamily \label{class_g2lib_1_1_poly_line_a03d43bec8f1f55dff05ed37996724fca} 
+vector$<$\mbox{\hyperlink{class_g2lib_1_1_line_segment}{Line\+Segment}}$>$ G2lib\+::\+Poly\+Line\+::m\+\_\+polyline\+\_\+list\hspace{0.3cm}{\ttfamily [private]}}
+
+\Hypertarget{class_g2lib_1_1_poly_line_a910b7f2c33ed67928561b85523d0cae7}\index{G2lib::PolyLine@{G2lib::PolyLine}!m\_s0@{m\_s0}}
+\index{m\_s0@{m\_s0}!G2lib::PolyLine@{G2lib::PolyLine}}
+\doxysubsubsection{\texorpdfstring{m\_s0}{m\_s0}}
+{\footnotesize\ttfamily \label{class_g2lib_1_1_poly_line_a910b7f2c33ed67928561b85523d0cae7} 
+vector$<$\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}}$>$ G2lib\+::\+Poly\+Line\+::m\+\_\+s0\hspace{0.3cm}{\ttfamily [private]}}
+
+\Hypertarget{class_g2lib_1_1_poly_line_a02b0578a8431905062ef69a2fb376b1d}\index{G2lib::PolyLine@{G2lib::PolyLine}!m\_xe@{m\_xe}}
+\index{m\_xe@{m\_xe}!G2lib::PolyLine@{G2lib::PolyLine}}
+\doxysubsubsection{\texorpdfstring{m\_xe}{m\_xe}}
+{\footnotesize\ttfamily \label{class_g2lib_1_1_poly_line_a02b0578a8431905062ef69a2fb376b1d} 
+\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} G2lib\+::\+Poly\+Line\+::m\+\_\+xe\hspace{0.3cm}{\ttfamily [private]}}
+
+\Hypertarget{class_g2lib_1_1_poly_line_a6c5d1aa6bb63077ac4b72a15828aee41}\index{G2lib::PolyLine@{G2lib::PolyLine}!m\_ye@{m\_ye}}
+\index{m\_ye@{m\_ye}!G2lib::PolyLine@{G2lib::PolyLine}}
+\doxysubsubsection{\texorpdfstring{m\_ye}{m\_ye}}
+{\footnotesize\ttfamily \label{class_g2lib_1_1_poly_line_a6c5d1aa6bb63077ac4b72a15828aee41} 
+\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} G2lib\+::\+Poly\+Line\+::m\+\_\+ye\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+/\+Users/enrico/\+Ricerca/develop/\+PINS/pins-\/mechatronix/\+Lib\+Sources/submodules/\+Clothoids/src/\+Clothoids/\mbox{\hyperlink{_poly_line_8hxx}{Poly\+Line.\+hxx}}\item 
+/\+Users/enrico/\+Ricerca/develop/\+PINS/pins-\/mechatronix/\+Lib\+Sources/submodules/\+Clothoids/src/\mbox{\hyperlink{_poly_line_8cc}{Poly\+Line.\+cc}}\end{DoxyCompactItemize}

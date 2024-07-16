@@ -90,15 +90,6 @@
   #define UTILS_CONSTEXPR
 #endif
 
-#ifndef DOXYGEN_SHOULD_SKIP_THIS
-
-#include "fmt/printf.h"
-#include "fmt/chrono.h"
-#include "fmt/ostream.h"
-#include "fmt/color.h"
-#include "fmt/std.h"
-#endif
-
 // STL
 #include <cassert>
 #include <iterator>
@@ -166,8 +157,15 @@
   #endif
 #endif
 
+namespace Utils {
+  #ifndef DOXYGEN_SHOULD_SKIP_THIS
+  using string       = std::string;
+  using ostream_type = std::basic_ostream<char>;
+  using istream_type = std::basic_istream<char>;
+  #endif
+}
+
 #include "rang.hxx"
-#include "Trace.hxx"
 #include "Console.hxx"
 #include "Malloc.hxx"
 #include "Numbers.hxx"

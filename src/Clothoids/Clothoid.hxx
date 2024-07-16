@@ -43,13 +43,7 @@ namespace G2lib {
   //!   \end{cases}
   //! \f]
   //!
-  //! \rst
-  //!
-  //!   .. image:: ../../images/G1problem.jpg
-  //!      :width: 80%
-  //!      :align: center
-  //!
-  //! \endrst
+  //! \image html G1problem.jpg width=8cm
   //!
   class ClothoidCurve : public BaseCurve {
     friend class ClothoidList;
@@ -69,7 +63,7 @@ namespace G2lib {
     ) const;
 
     void
-    bbTriangles_internal_ISO(
+    bb_triangles_internal_ISO(
       real_type            offs,
       vector<Triangle2D> & tvec,
       real_type            s0,
@@ -135,20 +129,14 @@ namespace G2lib {
     //!
     //! Build an empty clothoid curve
     //!
-    ClothoidCurve() {
-      m_CD.m_x0     = 0;
-      m_CD.m_y0     = 0;
-      m_CD.m_theta0 = 0;
-      m_CD.m_kappa0 = 0;
-      m_CD.m_dk     = 0;
-      m_L           = 0;
-    }
+    ClothoidCurve( string const & name );
 
     //!
     //! Build a copy of an existing clothoid curve
     //!
-    ClothoidCurve( ClothoidCurve const & s )
-    { this->copy(s); }
+    ClothoidCurve( ClothoidCurve const & s );
+
+    void setup( GenericContainer const & gc ) override;
 
     //!
     //! Construct a clothoid with the standard parameters.
@@ -159,24 +147,18 @@ namespace G2lib {
     //! \param[in] k      curvature
     //! \param[in] dk     curvature derivative
     //! \param[in] L      length
+    //! \param[in] name   name of the clothoid curve
     //!
     explicit
     ClothoidCurve(
-      real_type x0,
-      real_type y0,
-      real_type theta0,
-      real_type k,
-      real_type dk,
-      real_type L
-    )
-    {
-      m_CD.m_x0     = x0;
-      m_CD.m_y0     = y0;
-      m_CD.m_theta0 = theta0;
-      m_CD.m_kappa0 = k;
-      m_CD.m_dk     = dk;
-      m_L           = L;
-    }
+      real_type      x0,
+      real_type      y0,
+      real_type      theta0,
+      real_type      k,
+      real_type      dk,
+      real_type      L,
+      string const & name
+    );
 
     //!
     //! Construct a clothoid \f$ \G(s) \f$ solving the G1 problem.
@@ -194,53 +176,33 @@ namespace G2lib {
     //! \param[in] theta0 initial angle \f$ \theta_0 \f$
     //! \param[in] P1     final point \f$ \mathbf{p}_1 \f$
     //! \param[in] theta1 final angle \f$ \theta_1 \f$
+    //! \param[in] name   name of the clothoid curve
     //!
     explicit
     ClothoidCurve(
-      real_type const * P0,
+      real_type const   P0[],
       real_type         theta0,
-      real_type const * P1,
-      real_type         theta1
-    ) {
-      build_G1( P0[0], P0[1], theta0, P1[0], P1[1], theta1 );
-    }
+      real_type const   P1[],
+      real_type         theta1,
+      string    const & name
+    );
 
     //!
     //! Build a clothoid copying an existing one.
     //!
-    void
-    copy( ClothoidCurve const & c ) {
-      m_CD        = c.m_CD;
-      m_L         = c.m_L;
-      m_aabb_done = false;
-      m_aabb_triangles.clear();
-    }
+    void copy( ClothoidCurve const & c );
 
     //!
     //! Build a clothoid copying an existing line segment.
     //!
     explicit
-    ClothoidCurve( LineSegment const & LS ) {
-      m_CD.m_x0     = LS.m_x0;
-      m_CD.m_y0     = LS.m_y0;
-      m_CD.m_theta0 = LS.m_theta0;
-      m_CD.m_kappa0 = 0;
-      m_CD.m_dk     = 0;
-      m_L           = LS.m_L;
-    }
+    ClothoidCurve( LineSegment const & LS );
 
     //!
     //! Build a clothoid copying an existing circle arc.
     //!
     explicit
-    ClothoidCurve( CircleArc const & C ) {
-      m_CD.m_x0     = C.m_x0;
-      m_CD.m_y0     = C.m_y0;
-      m_CD.m_theta0 = C.m_theta0;
-      m_CD.m_kappa0 = C.m_k;
-      m_CD.m_dk     = 0;
-      m_L           = C.m_L;
-    }
+    ClothoidCurve( CircleArc const & C );
 
     //!
     //! Build a clothoid copying an existing curve.
@@ -303,11 +265,7 @@ namespace G2lib {
       real_type y1,
       real_type theta1,
       real_type tol = 1e-12
-    ) {
-      m_aabb_done = false;
-      m_aabb_triangles.clear();
-      return m_CD.build_G1( x0, y0, theta0, x1, y1, theta1, tol, m_L );
-    }
+    );
 
     //!
     //! Build a clothoid by solving the hermite G1 problem.
@@ -336,11 +294,7 @@ namespace G2lib {
       real_type k_D[2],
       real_type dk_D[2],
       real_type tol = 1e-12
-    ) {
-      m_aabb_done = false;
-      m_aabb_triangles.clear();
-      return m_CD.build_G1( x0, y0, theta0, x1, y1, theta1, tol, m_L, true, L_D, k_D, dk_D );
-    }
+    );
 
     //!
     //! Build a clothoid by solving the forward problem.
@@ -362,11 +316,7 @@ namespace G2lib {
       real_type x1,
       real_type y1,
       real_type tol = 1e-12
-    ) {
-      m_aabb_done = false;
-      m_aabb_triangles.clear();
-      return m_CD.build_forward( x0, y0, theta0, kappa0, x1, y1, tol, m_L );
-    }
+    );
 
     //!
     //! Build a clothoid from a line segment.
@@ -383,6 +333,7 @@ namespace G2lib {
     void build( BiarcList const & );
     void build( ClothoidList const & );
     void build( Dubins const & );
+    void build( Dubins3p const & );
 
     //!
     //! Return the point at infinity of the clothoids \f$ P(s) \f$.
@@ -392,13 +343,7 @@ namespace G2lib {
     //! \param[out] plus it true return \f$ \lim_{s\to+\infty} P(s) \f$
     //!                  otherwise return \f$ \lim_{s\to-\infty} P(s) \f$
     //!
-    //! \rst
-    //!
-    //!   .. image:: ../../images/Pinfinity.jpg
-    //!      :width: 80%
-    //!      :align: center
-    //!
-    //! \endrst
+    //! \image html Pinfinity.jpg width=8cm
     //!
     void
     Pinfinity( real_type & x, real_type & y, bool plus = true ) const
@@ -412,14 +357,12 @@ namespace G2lib {
     //!
     //! Clothoid curve total variation of the angle.
     //!
-    real_type
-    theta_total_variation() const;
+    real_type theta_total_variation() const;
 
     //!
     //! Max and min angle of the curve.
     //!
-    real_type
-    theta_min_max( real_type & thMin, real_type & thMax ) const;
+    real_type theta_min_max( real_type & thMin, real_type & thMax ) const;
 
     //!
     //! Clothoid angle range.
@@ -431,14 +374,12 @@ namespace G2lib {
     //!
     //! Max and min of the curvatire of the clothoid curve.
     //!
-    real_type
-    curvature_min_max( real_type & kMin, real_type & kMax ) const;
+    real_type curvature_min_max( real_type & kMin, real_type & kMax ) const;
 
     //!
     //! Clothoid total curvature variation.
     //!
     real_type curvature_total_variation() const;
-    real_type curvatureTotalVariation() const { return curvature_total_variation(); }
 
     //!
     //! Given the clothoid curve \f$ P(s) \f$ compute.
@@ -448,7 +389,6 @@ namespace G2lib {
     //! \f]
     //!
     real_type integral_curvature2() const;
-    real_type integralCurvature2() const { return integral_curvature2(); }
 
     //!
     //! Given the clothoid curve \f$ P(s) \f$ compute.
@@ -458,7 +398,6 @@ namespace G2lib {
     //! \f]
     //!
     real_type integral_jerk2() const;
-    real_type integralJerk2() const { return integral_jerk2(); }
 
     //!
     //! Given the clothoid curve \f$ P(s) \f$ compute.
@@ -468,7 +407,6 @@ namespace G2lib {
     //! \f]
     //!
     real_type integral_snap2() const;
-    real_type integralSnap2() const { return integral_snap2(); }
 
     //!
     //! Return a vector of optimized sample parameters for plotting.
@@ -598,7 +536,7 @@ namespace G2lib {
     //!
     bool
     bbTriangle_ISO(
-      real_type offs,
+      real_type   offs,
       real_type & xx0, real_type & yy0,
       real_type & xx1, real_type & yy1,
       real_type & xx2, real_type & yy2
@@ -612,7 +550,7 @@ namespace G2lib {
     //!
     bool
     bbTriangle_SAE(
-      real_type offs,
+      real_type   offs,
       real_type & xx0, real_type & yy0,
       real_type & xx1, real_type & yy1,
       real_type & xx2, real_type & yy2
@@ -645,7 +583,7 @@ namespace G2lib {
     }
 
     void
-    bbTriangles_ISO(
+    bb_triangles_ISO(
       real_type            offs,
       vector<Triangle2D> & tvec,
       real_type            max_angle = Utils::m_pi/6, // 30 degree
@@ -654,24 +592,24 @@ namespace G2lib {
     ) const override;
 
     void
-    bbTriangles_SAE(
+    bb_triangles_SAE(
       real_type            offs,
       vector<Triangle2D> & tvec,
       real_type            max_angle = Utils::m_pi/6, // 30 degree
       real_type            max_size  = 1e100,
       integer              icurve    = 0
     ) const override {
-      this->bbTriangles_ISO( -offs, tvec, max_angle, max_size, icurve );
+      this->bb_triangles_ISO( -offs, tvec, max_angle, max_size, icurve );
     }
 
     void
-    bbTriangles(
+    bb_triangles(
       vector<Triangle2D> & tvec,
       real_type            max_angle = Utils::m_pi/6, // 30 degree
       real_type            max_size  = 1e100,
       integer              icurve    = 0
     ) const override {
-      this->bbTriangles_ISO( 0, tvec, max_angle, max_size, icurve );
+      this->bb_triangles_ISO( 0, tvec, max_angle, max_size, icurve );
     }
 
     // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
@@ -697,12 +635,9 @@ namespace G2lib {
 
     // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 
-    real_type
-    length() const override
-    { return m_L; }
+    real_type length() const override { return m_L; }
 
-    real_type
-    length_ISO( real_type ) const override;
+    real_type length_ISO( real_type ) const override;
 
     real_type theta_begin()  const override { return m_CD.m_theta0; }
     real_type kappa_begin()  const override { return m_CD.m_kappa0; }
@@ -819,21 +754,10 @@ namespace G2lib {
     //! \param s curvilinear coordinate
     //! \return clothoid X coordinate
     //!
-    real_type
-    X( real_type s ) const override
-    { return m_CD.X(s); }
-
-    real_type
-    X_D( real_type s ) const override
-    { return m_CD.X_D(s); }
-
-    real_type
-    X_DD( real_type s ) const override
-    { return m_CD.X_DD(s); }
-
-    real_type
-    X_DDD( real_type s ) const override
-    { return m_CD.X_DDD(s); }
+    real_type X    ( real_type s ) const override { return m_CD.X(s); }
+    real_type X_D  ( real_type s ) const override { return m_CD.X_D(s); }
+    real_type X_DD ( real_type s ) const override { return m_CD.X_DD(s); }
+    real_type X_DDD( real_type s ) const override { return m_CD.X_DDD(s); }
 
     //!
     //! Clothoid Y coordinate at curvilinear coordinate `s`.
@@ -841,21 +765,10 @@ namespace G2lib {
     //! \param s curvilinear coordinate
     //! \return clothoid Y coordinate
     //!
-    real_type
-    Y( real_type s ) const override
-    { return m_CD.Y(s); }
-
-    real_type
-    Y_D( real_type s ) const override
-    { return m_CD.Y_D(s); }
-
-    real_type
-    Y_DD ( real_type s ) const override
-    { return m_CD.Y_DD(s); }
-
-    real_type
-    Y_DDD( real_type s ) const override
-    { return m_CD.Y_DDD(s); }
+    real_type Y    ( real_type s ) const override { return m_CD.Y(s); }
+    real_type Y_D  ( real_type s ) const override { return m_CD.Y_D(s); }
+    real_type Y_DD ( real_type s ) const override { return m_CD.Y_DD(s); }
+    real_type Y_DDD( real_type s ) const override { return m_CD.Y_DDD(s); }
 
     //!
     //! Clothoid X coordinate at curvilinear coordinate `s`.
@@ -1161,9 +1074,7 @@ namespace G2lib {
       IntersectList   & ilist
     ) const override;
 
-    string
-    info() const
-    { return fmt::format( "Clothoid\n{}\n", *this ); }
+    string info() const;
 
     void
     info( ostream_type & stream ) const override
@@ -1173,7 +1084,7 @@ namespace G2lib {
     ostream_type &
     operator << ( ostream_type & stream, ClothoidCurve const & c );
 
-#ifdef G2LIB_COMPATIBILITY_MODE
+#ifdef CLOTHOIDS_BACK_COMPATIBILITY
 #include "Clothoid_compatibility.hxx"
 #endif
 

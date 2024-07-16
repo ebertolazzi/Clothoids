@@ -4,4 +4,5 @@
 #pragma clang diagnostic ignored "-Wmissing-variable-declarations"
 #endif
 
+#include "Utils_fmt.hh"
 #include "Utils/format.cxx"

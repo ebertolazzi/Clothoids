@@ -51,11 +51,12 @@ namespace G2lib {
 
     #include "BaseCurve_using.hxx"
 
-    //explicit
-    LineSegment() = default;
+    LineSegment() = delete;
+    LineSegment( string const & name ) : BaseCurve( name ) {};
 
-    //explicit
-    LineSegment( LineSegment const & s )
+    void setup( GenericContainer const & gc ) override;
+
+    LineSegment( LineSegment const & s ) : BaseCurve( s.name() )
     { this->copy(s); }
 
     explicit
@@ -66,17 +67,19 @@ namespace G2lib {
     //!
     explicit
     LineSegment(
-      real_type _x0,
-      real_type _y0,
-      real_type _theta0,
-      real_type _L
+      real_type x0,
+      real_type y0,
+      real_type theta0,
+      real_type L,
+      string const & name
     )
-    : m_x0(_x0)
-    , m_y0(_y0)
-    , m_theta0(_theta0)
-    , m_c0(cos(_theta0))
-    , m_s0(sin(_theta0))
-    , m_L(_L)
+    : BaseCurve( name )
+    , m_x0(x0)
+    , m_y0(y0)
+    , m_theta0(theta0)
+    , m_c0(cos(theta0))
+    , m_s0(sin(theta0))
+    , m_L(L)
     {}
 
     void
@@ -136,64 +139,31 @@ namespace G2lib {
     \*/
 
     void
-    bbTriangles(
+    bb_triangles(
       vector<Triangle2D> & tvec,
       real_type            max_angle = Utils::m_pi/6, // 30 degree
       real_type            max_size  = 1e100, // unused
       integer              icurve    = 0
-    ) const override {
-      real_type xmin, ymin, xmax, ymax;
-      this->bbox( xmin, ymin, xmax, ymax );
-      real_type xc = (xmax+xmin)/2;
-      real_type yc = (ymax+ymin)/2;
-      real_type nx = (ymax-ymin)/100;
-      real_type ny = (xmin-xmax)/100;
-      if ( xmax > xmin || ymax > ymin ) {
-        tvec.emplace_back( xmin, ymin, xmax, ymax, xc+nx, yc+ny, 0, 0, icurve );
-      } else {
-        UTILS_ERROR(
-          "LineSegment bbTriangles found a degenerate line\n"
-          "bbox = [ xmin={}, ymin={}, xmax={}, ymax={} ] max_angle={} max_size={}\n",
-          xmin, ymin, xmax, ymax, max_angle, max_size
-        );
-      }
-    }
+    ) const override;
 
     void
-    bbTriangles_ISO(
+    bb_triangles_ISO(
       real_type            offs,
       vector<Triangle2D> & tvec,
       real_type            max_angle = Utils::m_pi/6, // 30 degree
       real_type            max_size  = 1e100, // unused
       integer              icurve    = 0
-    ) const override {
-      real_type xmin, ymin, xmax, ymax;
-      this->bbox_ISO( offs, xmin, ymin, xmax, ymax );
-      real_type xc = (xmax+xmin)/2;
-      real_type yc = (ymax+ymin)/2;
-      real_type nx = (ymax-ymin)/100;
-      real_type ny = (xmin-xmax)/100;
-      if ( xmax > xmin || ymax > ymin ) {
-        tvec.emplace_back( xmin, ymin, xmax, ymax, xc+nx, yc+ny, 0, 0, icurve );
-      } else {
-        UTILS_ERROR(
-          "LineSegment bbTriangles found a degenerate line\n"
-          "bbox = [ xmin={}, ymin={}, xmax={}, ymax={} ]\n"
-          "offs={} max_angle={} max_size={}\n",
-          xmin, ymin, xmax, ymax, offs, max_angle, max_size
-        );
-      }
-    }
+    ) const override;
 
     void
-    bbTriangles_SAE(
+    bb_triangles_SAE(
       real_type            offs,
       vector<Triangle2D> & tvec,
       real_type            max_angle = Utils::m_pi/6, // 30 degree
       real_type            max_size  = 1e100,
       integer              icurve    = 0
     ) const override {
-      this->bbTriangles_ISO( -offs, tvec, max_angle, max_size, icurve );
+      this->bb_triangles_ISO( -offs, tvec, max_angle, max_size, icurve );
     }
 
     /*\
@@ -504,9 +474,7 @@ namespace G2lib {
       real_type & dst
     ) const override;
 
-    string
-    info() const
-    { return fmt::format( "LineSegment\n{}\n", *this ); }
+    string info() const;
 
     void
     info( ostream_type & stream ) const override
@@ -569,6 +537,7 @@ namespace G2lib {
     void build( BiarcList const & );
     void build( ClothoidList const & );
     void build( Dubins const & );
+    void build( Dubins3p const & );
 
     /*
     //             _ _ _     _

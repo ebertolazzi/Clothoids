@@ -1,5 +1,6 @@
 //#define _USE_MATH_DEFINES
 #include "Clothoids.hh"
+#include "Clothoids_fmt.hh"
 
 using G2lib::real_type;
 using G2lib::integer;
@@ -9,10 +10,10 @@ using namespace std;
 int
 main() {
 
-  G2lib::ClothoidCurve C1;
-  G2lib::ClothoidCurve C2;
-  G2lib::ClothoidCurve C3;
-  G2lib::ClothoidList  CL;
+  G2lib::ClothoidCurve C1{"temporary"};
+  G2lib::ClothoidCurve C2{"temporary"};
+  G2lib::ClothoidCurve C3{"temporary"};
+  G2lib::ClothoidList  CL{"temporary"};
   {
   real_type x0     = 0.30002986753543353649;
   real_type y0     = -0.50753271613409067786;

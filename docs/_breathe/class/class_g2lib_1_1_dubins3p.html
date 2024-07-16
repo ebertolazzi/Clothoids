@@ -1,0 +1,1068 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="../../">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <meta name="lang:clipboard.copy" content="Copy to clipboard">
+  <meta name="lang:clipboard.copied" content="Copied to clipboard">
+  <meta name="lang:search.language" content="en">
+  <meta name="lang:search.pipeline.stopwords" content="True">
+  <meta name="lang:search.pipeline.trimmer" content="True">
+  <meta name="lang:search.result.none" content="No matching documents">
+  <meta name="lang:search.result.one" content="1 matching document">
+  <meta name="lang:search.result.other" content="# matching documents">
+  <meta name="lang:search.tokenizer" content="[\s\-]+">
+
+  
+    <link href="https://fonts.gstatic.com/" rel="preconnect" crossorigin>
+    <link href="https://fonts.googleapis.com/css?family=Roboto+Mono:400,500,700|Roboto:300,400,400i,700&display=fallback" rel="stylesheet">
+
+    <style>
+      body,
+      input {
+        font-family: "Roboto", "Helvetica Neue", Helvetica, Arial, sans-serif
+      }
+
+      code,
+      kbd,
+      pre {
+        font-family: "Roboto Mono", "Courier New", Courier, monospace
+      }
+    </style>
+  
+
+  <link rel="stylesheet" href="../../_static/stylesheets/application.css"/>
+  <link rel="stylesheet" href="../../_static/stylesheets/application-palette.css"/>
+  <link rel="stylesheet" href="../../_static/stylesheets/application-fixes.css"/>
+  
+  <link rel="stylesheet" href="../../_static/fonts/material-icons.css"/>
+  
+  <meta name="theme-color" content="#3f51b5">
+  <script src="../../_static/javascripts/modernizr.js"></script>
+  
+  
+  
+    <title>Class G2lib::Dubins3p &#8212; CLOTHOIDS 0.1 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=83e35b93" />
+    <link rel="stylesheet" type="text/css" href="../../_static/material.css?v=79c92029" />
+    <script src="../../_static/documentation_options.js?v=2709fde1"></script>
+    <script src="../../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Class G2lib::G2solve2arc" href="class_g2lib_1_1_g2solve2arc.html" />
+    <link rel="prev" title="Class G2lib::Dubins" href="class_g2lib_1_1_dubins.html" />
+  
+   
+
+  </head>
+  <body dir=ltr
+        data-md-color-primary=blue-grey data-md-color-accent=blue>
+  
+  <svg class="md-svg">
+    <defs data-children-count="0">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" width="416" height="448" viewBox="0 0 416 448" id="__github"><path fill="currentColor" d="M160 304q0 10-3.125 20.5t-10.75 19T128 352t-18.125-8.5-10.75-19T96 304t3.125-20.5 10.75-19T128 256t18.125 8.5 10.75 19T160 304zm160 0q0 10-3.125 20.5t-10.75 19T288 352t-18.125-8.5-10.75-19T256 304t3.125-20.5 10.75-19T288 256t18.125 8.5 10.75 19T320 304zm40 0q0-30-17.25-51T296 232q-10.25 0-48.75 5.25Q229.5 240 208 240t-39.25-2.75Q130.75 232 120 232q-29.5 0-46.75 21T56 304q0 22 8 38.375t20.25 25.75 30.5 15 35 7.375 37.25 1.75h42q20.5 0 37.25-1.75t35-7.375 30.5-15 20.25-25.75T360 304zm56-44q0 51.75-15.25 82.75-9.5 19.25-26.375 33.25t-35.25 21.5-42.5 11.875-42.875 5.5T212 416q-19.5 0-35.5-.75t-36.875-3.125-38.125-7.5-34.25-12.875T37 371.5t-21.5-28.75Q0 312 0 260q0-59.25 34-99-6.75-20.5-6.75-42.5 0-29 12.75-54.5 27 0 47.5 9.875t47.25 30.875Q171.5 96 212 96q37 0 70 8 26.25-20.5 46.75-30.25T376 64q12.75 25.5 12.75 54.5 0 21.75-6.75 42 34 40 34 99.5z"/></svg>
+      
+    </defs>
+  </svg>
+  
+  <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer">
+  <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search">
+  <label class="md-overlay" data-md-component="overlay" for="__drawer"></label>
+  <a href="#_breathe/class/class_g2lib_1_1_dubins3p" tabindex="1" class="md-skip"> Skip to content </a>
+  <header class="md-header" data-md-component="header">
+  <nav class="md-header-nav md-grid">
+    <div class="md-flex navheader">
+      <div class="md-flex__cell md-flex__cell--shrink">
+        <a href="../../index.html" title="CLOTHOIDS 0.1 documentation"
+           class="md-header-nav__button md-logo">
+          
+            &nbsp;
+          
+        </a>
+      </div>
+      <div class="md-flex__cell md-flex__cell--shrink">
+        <label class="md-icon md-icon--menu md-header-nav__button" for="__drawer"></label>
+      </div>
+      <div class="md-flex__cell md-flex__cell--stretch">
+        <div class="md-flex__ellipsis md-header-nav__title" data-md-component="title">
+          <span class="md-header-nav__topic">CLOTHOIDS 0.1 documentation</span>
+          <span class="md-header-nav__topic"> Class G2lib::Dubins3p </span>
+        </div>
+      </div>
+      <div class="md-flex__cell md-flex__cell--shrink">
+        <label class="md-icon md-icon--search md-header-nav__button" for="__search"></label>
+        
+<div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" action="../../search.html" method="get" name="search">
+      <input type="text" class="md-search__input" name="q" placeholder=""Search""
+             autocapitalize="off" autocomplete="off" spellcheck="false"
+             data-md-component="query" data-md-state="active">
+      <label class="md-icon md-search__icon" for="__search"></label>
+      <button type="reset" class="md-icon md-search__icon" data-md-component="reset" tabindex="-1">
+        &#xE5CD;
+      </button>
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="result">
+          <div class="md-search-result__meta">
+            Type to start searching
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+      </div>
+      
+      
+  
+  <script src="../../_static/javascripts/version_dropdown.js"></script>
+  <script>
+    var json_loc = "../../"versions.json"",
+        target_loc = "../../../",
+        text = "Versions";
+    $( document ).ready( add_version_dropdown(json_loc, target_loc, text));
+  </script>
+  
+
+    </div>
+  </nav>
+</header>
+
+  
+  <div class="md-container">
+    
+    
+    
+  <nav class="md-tabs" data-md-component="tabs">
+    <div class="md-tabs__inner md-grid">
+      <ul class="md-tabs__list">
+          <li class="md-tabs__item"><a href="../../index.html" class="md-tabs__link">CLOTHOIDS 0.1 documentation</a></li>
+          <li class="md-tabs__item"><a href="../classlist.html" class="md-tabs__link">Class list</a></li>
+      </ul>
+    </div>
+  </nav>
+    <main class="md-main">
+      <div class="md-main__inner md-grid" data-md-component="container">
+        
+          <div class="md-sidebar md-sidebar--primary" data-md-component="navigation">
+            <div class="md-sidebar__scrollwrap">
+              <div class="md-sidebar__inner">
+                <nav class="md-nav md-nav--primary" data-md-level="0">
+  <label class="md-nav__title md-nav__title--site" for="__drawer">
+    <a href="../../index.html" title="CLOTHOIDS 0.1 documentation" class="md-nav__button md-logo">
+      
+        <img src="../../_static/" alt=" logo" width="48" height="48">
+      
+    </a>
+    <a href="../../index.html"
+       title="CLOTHOIDS 0.1 documentation">CLOTHOIDS 0.1 documentation</a>
+  </label>
+  
+
+</nav>
+              </div>
+            </div>
+          </div>
+          <div class="md-sidebar md-sidebar--secondary" data-md-component="toc">
+            <div class="md-sidebar__scrollwrap">
+              <div class="md-sidebar__inner">
+                
+<nav class="md-nav md-nav--secondary">
+    <label class="md-nav__title" for="__toc">"Contents"</label>
+  <ul class="md-nav__list" data-md-scrollfix="">
+        <li class="md-nav__item"><a href="#breathe-class-class-g2lib-1-1-dubins3p--page-root" class="md-nav__link">Class G2lib::Dubins3p</a><nav class="md-nav">
+              <ul class="md-nav__list">
+        <li class="md-nav__item"><a href="#_CPPv4N5G2lib8Dubins3pE" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">Dubins3p</span></code></a><nav class="md-nav">
+              <ul class="md-nav__list">
+        <li class="md-nav__item"><a href="#_CPPv4N5G2lib8Dubins3p8Dubins3pEv" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">Dubins3p::Dubins3p()</span></code></a>
+        </li>
+        <li class="md-nav__item"><a href="#_CPPv4N5G2lib8Dubins3p8Dubins3pERK8Dubins3p" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">Dubins3p::Dubins3p()</span></code></a>
+        </li>
+        <li class="md-nav__item"><a href="#_CPPv4N5G2lib8Dubins3p8Dubins3pE9real_type9real_type9real_type9real_type9real_type9real_type9real_type9real_type9real_type17Dubins3pBuildTypeRK6string" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">Dubins3p::Dubins3p()</span></code></a>
+        </li>
+        <li class="md-nav__item"><a href="#_CPPv4N5G2lib8Dubins3p4copyERK8Dubins3p" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">Dubins3p::copy()</span></code></a>
+        </li>
+        <li class="md-nav__item"><a href="#_CPPv4N5G2lib8Dubins3p5buildE9real_type9real_type9real_type9real_type9real_type9real_type9real_type9real_type9real_type17Dubins3pBuildType" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">Dubins3p::build()</span></code></a>
+        </li>
+        <li class="md-nav__item"><a href="#_CPPv4NK5G2lib8Dubins3p16get_range_anglesE9real_type9real_type9real_type9real_type9real_type9real_type9real_type9real_type9real_typeA_9real_type" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">Dubins3p::get_range_angles()</span></code></a>
+        </li>
+        <li class="md-nav__item"><a href="#_CPPv4NK5G2lib8Dubins3p17get_sample_anglesE9real_type9real_type9real_type9real_type9real_type9real_type9real_type9real_type9real_type9real_typeR6vectorI9real_typeE" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">Dubins3p::get_sample_angles()</span></code></a>
+        </li>
+        <li class="md-nav__item"><a href="#_CPPv4NK5G2lib8Dubins3p4bboxER9real_typeR9real_typeR9real_typeR9real_type" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">Dubins3p::bbox()</span></code></a>
+        </li>
+        <li class="md-nav__item"><a href="#_CPPv4NK5G2lib8Dubins3p8bbox_ISOE9real_typeR9real_typeR9real_typeR9real_typeR9real_type" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">Dubins3p::bbox_ISO()</span></code></a>
+        </li>
+        <li class="md-nav__item"><a href="#_CPPv4NK5G2lib8Dubins3p2C0Ev" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">Dubins3p::C0()</span></code></a>
+        </li>
+        <li class="md-nav__item"><a href="#_CPPv4NK5G2lib8Dubins3p2C1Ev" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">Dubins3p::C1()</span></code></a>
+        </li>
+        <li class="md-nav__item"><a href="#_CPPv4NK5G2lib8Dubins3p2C2Ev" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">Dubins3p::C2()</span></code></a>
+        </li>
+        <li class="md-nav__item"><a href="#_CPPv4NK5G2lib8Dubins3p2C3Ev" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">Dubins3p::C3()</span></code></a>
+        </li>
+        <li class="md-nav__item"><a href="#_CPPv4NK5G2lib8Dubins3p2C4Ev" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">Dubins3p::C4()</span></code></a>
+        </li>
+        <li class="md-nav__item"><a href="#_CPPv4NK5G2lib8Dubins3p2C5Ev" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">Dubins3p::C5()</span></code></a>
+        </li>
+        <li class="md-nav__item"><a href="#_CPPv4NK5G2lib8Dubins3p6lengthEv" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">Dubins3p::length()</span></code></a>
+        </li>
+        <li class="md-nav__item"><a href="#_CPPv4NK5G2lib8Dubins3p10length_ISOE9real_type" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">Dubins3p::length_ISO()</span></code></a>
+        </li>
+        <li class="md-nav__item"><a href="#_CPPv4NK5G2lib8Dubins3p11theta_beginEv" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">Dubins3p::theta_begin()</span></code></a>
+        </li>
+        <li class="md-nav__item"><a href="#_CPPv4NK5G2lib8Dubins3p9theta_endEv" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">Dubins3p::theta_end()</span></code></a>
+        </li>
+        <li class="md-nav__item"><a href="#_CPPv4NK5G2lib8Dubins3p11kappa_beginEv" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">Dubins3p::kappa_begin()</span></code></a>
+        </li>
+        <li class="md-nav__item"><a href="#_CPPv4NK5G2lib8Dubins3p9kappa_endEv" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">Dubins3p::kappa_end()</span></code></a>
+        </li>
+        <li class="md-nav__item"><a href="#_CPPv4NK5G2lib8Dubins3p7x_beginEv" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">Dubins3p::x_begin()</span></code></a>
+        </li>
+        <li class="md-nav__item"><a href="#_CPPv4NK5G2lib8Dubins3p5x_endEv" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">Dubins3p::x_end()</span></code></a>
+        </li>
+        <li class="md-nav__item"><a href="#_CPPv4NK5G2lib8Dubins3p7y_beginEv" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">Dubins3p::y_begin()</span></code></a>
+        </li>
+        <li class="md-nav__item"><a href="#_CPPv4NK5G2lib8Dubins3p5y_endEv" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">Dubins3p::y_end()</span></code></a>
+        </li>
+        <li class="md-nav__item"><a href="#_CPPv4NK5G2lib8Dubins3p8tx_beginEv" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">Dubins3p::tx_begin()</span></code></a>
+        </li>
+        <li class="md-nav__item"><a href="#_CPPv4NK5G2lib8Dubins3p6tx_endEv" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">Dubins3p::tx_end()</span></code></a>
+        </li>
+        <li class="md-nav__item"><a href="#_CPPv4NK5G2lib8Dubins3p8ty_beginEv" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">Dubins3p::ty_begin()</span></code></a>
+        </li>
+        <li class="md-nav__item"><a href="#_CPPv4NK5G2lib8Dubins3p6ty_endEv" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">Dubins3p::ty_end()</span></code></a>
+        </li>
+        <li class="md-nav__item"><a href="#_CPPv4NK5G2lib8Dubins3p12nx_begin_ISOEv" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">Dubins3p::nx_begin_ISO()</span></code></a>
+        </li>
+        <li class="md-nav__item"><a href="#_CPPv4NK5G2lib8Dubins3p10nx_end_ISOEv" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">Dubins3p::nx_end_ISO()</span></code></a>
+        </li>
+        <li class="md-nav__item"><a href="#_CPPv4NK5G2lib8Dubins3p12ny_begin_ISOEv" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">Dubins3p::ny_begin_ISO()</span></code></a>
+        </li>
+        <li class="md-nav__item"><a href="#_CPPv4NK5G2lib8Dubins3p10ny_end_ISOEv" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">Dubins3p::ny_end_ISO()</span></code></a>
+        </li>
+        <li class="md-nav__item"><a href="#_CPPv4NK5G2lib8Dubins3p5thetaE9real_type" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">Dubins3p::theta()</span></code></a>
+        </li>
+        <li class="md-nav__item"><a href="#_CPPv4NK5G2lib8Dubins3p7theta_DE9real_type" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">Dubins3p::theta_D()</span></code></a>
+        </li>
+        <li class="md-nav__item"><a href="#_CPPv4NK5G2lib8Dubins3p8theta_DDE9real_type" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">Dubins3p::theta_DD()</span></code></a>
+        </li>
+        <li class="md-nav__item"><a href="#_CPPv4NK5G2lib8Dubins3p9theta_DDDE9real_type" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">Dubins3p::theta_DDD()</span></code></a>
+        </li>
+        <li class="md-nav__item"><a href="#_CPPv4NK5G2lib8Dubins3p1XE9real_type" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">Dubins3p::X()</span></code></a>
+        </li>
+        <li class="md-nav__item"><a href="#_CPPv4NK5G2lib8Dubins3p1YE9real_type" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">Dubins3p::Y()</span></code></a>
+        </li>
+        <li class="md-nav__item"><a href="#_CPPv4NK5G2lib8Dubins3p3X_DE9real_type" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">Dubins3p::X_D()</span></code></a>
+        </li>
+        <li class="md-nav__item"><a href="#_CPPv4NK5G2lib8Dubins3p3Y_DE9real_type" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">Dubins3p::Y_D()</span></code></a>
+        </li>
+        <li class="md-nav__item"><a href="#_CPPv4NK5G2lib8Dubins3p4X_DDE9real_type" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">Dubins3p::X_DD()</span></code></a>
+        </li>
+        <li class="md-nav__item"><a href="#_CPPv4NK5G2lib8Dubins3p4Y_DDE9real_type" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">Dubins3p::Y_DD()</span></code></a>
+        </li>
+        <li class="md-nav__item"><a href="#_CPPv4NK5G2lib8Dubins3p5X_DDDE9real_type" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">Dubins3p::X_DDD()</span></code></a>
+        </li>
+        <li class="md-nav__item"><a href="#_CPPv4NK5G2lib8Dubins3p5Y_DDDE9real_type" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">Dubins3p::Y_DDD()</span></code></a>
+        </li>
+        <li class="md-nav__item"><a href="#_CPPv4N5G2lib8Dubins3p9translateE9real_type9real_type" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">Dubins3p::translate()</span></code></a>
+        </li>
+        <li class="md-nav__item"><a href="#_CPPv4N5G2lib8Dubins3p6rotateE9real_type9real_type9real_type" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">Dubins3p::rotate()</span></code></a>
+        </li>
+        <li class="md-nav__item"><a href="#_CPPv4N5G2lib8Dubins3p7reverseEv" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">Dubins3p::reverse()</span></code></a>
+        </li>
+        <li class="md-nav__item"><a href="#_CPPv4N5G2lib8Dubins3p13change_originE9real_type9real_type" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">Dubins3p::change_origin()</span></code></a>
+        </li>
+        <li class="md-nav__item"><a href="#_CPPv4N5G2lib8Dubins3p4trimE9real_type9real_type" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">Dubins3p::trim()</span></code></a>
+        </li>
+        <li class="md-nav__item"><a href="#_CPPv4N5G2lib8Dubins3p5scaleE9real_type" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">Dubins3p::scale()</span></code></a>
+        </li>
+        <li class="md-nav__item"><a href="#_CPPv4NK5G2lib8Dubins3p4evalE9real_typeR9real_typeR9real_type" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">Dubins3p::eval()</span></code></a>
+        </li>
+        <li class="md-nav__item"><a href="#_CPPv4NK5G2lib8Dubins3p6eval_DE9real_typeR9real_typeR9real_type" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">Dubins3p::eval_D()</span></code></a>
+        </li>
+        <li class="md-nav__item"><a href="#_CPPv4NK5G2lib8Dubins3p7eval_DDE9real_typeR9real_typeR9real_type" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">Dubins3p::eval_DD()</span></code></a>
+        </li>
+        <li class="md-nav__item"><a href="#_CPPv4NK5G2lib8Dubins3p8eval_DDDE9real_typeR9real_typeR9real_type" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">Dubins3p::eval_DDD()</span></code></a>
+        </li>
+        <li class="md-nav__item"><a href="#_CPPv4NK5G2lib8Dubins3p8eval_ISOE9real_type9real_typeR9real_typeR9real_type" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">Dubins3p::eval_ISO()</span></code></a>
+        </li>
+        <li class="md-nav__item"><a href="#_CPPv4NK5G2lib8Dubins3p10eval_ISO_DE9real_type9real_typeR9real_typeR9real_type" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">Dubins3p::eval_ISO_D()</span></code></a>
+        </li>
+        <li class="md-nav__item"><a href="#_CPPv4NK5G2lib8Dubins3p11eval_ISO_DDE9real_type9real_typeR9real_typeR9real_type" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">Dubins3p::eval_ISO_DD()</span></code></a>
+        </li>
+        <li class="md-nav__item"><a href="#_CPPv4NK5G2lib8Dubins3p12eval_ISO_DDDE9real_type9real_typeR9real_typeR9real_type" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">Dubins3p::eval_ISO_DDD()</span></code></a>
+        </li>
+        <li class="md-nav__item"><a href="#_CPPv4NK5G2lib8Dubins3p12bb_trianglesER6vectorI10Triangle2DE9real_type9real_type7integer" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">Dubins3p::bb_triangles()</span></code></a>
+        </li>
+        <li class="md-nav__item"><a href="#_CPPv4NK5G2lib8Dubins3p16bb_triangles_ISOE9real_typeR6vectorI10Triangle2DE9real_type9real_type7integer" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">Dubins3p::bb_triangles_ISO()</span></code></a>
+        </li>
+        <li class="md-nav__item"><a href="#_CPPv4NK5G2lib8Dubins3p16bb_triangles_SAEE9real_typeR6vectorI10Triangle2DE9real_type9real_type7integer" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">Dubins3p::bb_triangles_SAE()</span></code></a>
+        </li>
+        <li class="md-nav__item"><a href="#_CPPv4NK5G2lib8Dubins3p17closest_point_ISOE9real_type9real_typeR9real_typeR9real_typeR9real_typeR9real_typeR9real_type" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">Dubins3p::closest_point_ISO()</span></code></a>
+        </li>
+        <li class="md-nav__item"><a href="#_CPPv4NK5G2lib8Dubins3p17closest_point_ISOE9real_type9real_type9real_typeR9real_typeR9real_typeR9real_typeR9real_typeR9real_type" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">Dubins3p::closest_point_ISO()</span></code></a>
+        </li>
+        <li class="md-nav__item"><a href="#_CPPv4NK5G2lib8Dubins3p9collisionERK8Dubins3p" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">Dubins3p::collision()</span></code></a>
+        </li>
+        <li class="md-nav__item"><a href="#_CPPv4NK5G2lib8Dubins3p13collision_ISOE9real_typeRK8Dubins3p9real_type" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">Dubins3p::collision_ISO()</span></code></a>
+        </li>
+        <li class="md-nav__item"><a href="#_CPPv4NK5G2lib8Dubins3p9collisionEPK9BaseCurve" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">Dubins3p::collision()</span></code></a>
+        </li>
+        <li class="md-nav__item"><a href="#_CPPv4NK5G2lib8Dubins3p13collision_ISOE9real_typePK9BaseCurve9real_type" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">Dubins3p::collision_ISO()</span></code></a>
+        </li>
+        <li class="md-nav__item"><a href="#_CPPv4NK5G2lib8Dubins3p9intersectERK8Dubins3pR13IntersectList" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">Dubins3p::intersect()</span></code></a>
+        </li>
+        <li class="md-nav__item"><a href="#_CPPv4NK5G2lib8Dubins3p13intersect_ISOE9real_typeRK8Dubins3p9real_typeR13IntersectList" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">Dubins3p::intersect_ISO()</span></code></a>
+        </li>
+        <li class="md-nav__item"><a href="#_CPPv4NK5G2lib8Dubins3p9intersectEPK9BaseCurveR13IntersectList" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">Dubins3p::intersect()</span></code></a>
+        </li>
+        <li class="md-nav__item"><a href="#_CPPv4NK5G2lib8Dubins3p13intersect_ISOE9real_typePK9BaseCurve9real_typeR13IntersectList" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">Dubins3p::intersect_ISO()</span></code></a>
+        </li>
+        <li class="md-nav__item"><a href="#_CPPv4NK5G2lib8Dubins3p4infoER12ostream_type" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">Dubins3p::info()</span></code></a>
+        </li>
+        <li class="md-nav__item"><a href="#_CPPv4NK5G2lib8Dubins3p4typeEv" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">Dubins3p::type()</span></code></a>
+        </li>
+        <li class="md-nav__item"><a href="#_CPPv4N5G2lib8Dubins3plsER12ostream_typeRK8Dubins3p" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">Dubins3p::operator&lt;&lt;()</span></code></a>
+        </li></ul>
+            </nav>
+        </li></ul>
+            </nav>
+        </li>
+    
+<li class="md-nav__item"><a class="md-nav__extra_link" href="../../_sources/_breathe/class/class_g2lib_1_1_dubins3p.rst.txt">Show Source</a> </li>
+
+<li id="searchbox" class="md-nav__item"></li>
+
+  </ul>
+</nav>
+              </div>
+            </div>
+          </div>
+        
+        <div class="md-content">
+          <article class="md-content__inner md-typeset" role="main">
+            
+  <section id="class-g2lib-dubins3p">
+<h1 id="breathe-class-class-g2lib-1-1-dubins3p--page-root">Class G2lib::Dubins3p<a class="headerlink" href="#breathe-class-class-g2lib-1-1-dubins3p--page-root" title="Link to this heading">¶</a></h1>
+<dl class="cpp class">
+<dt class="sig sig-object cpp" id="_CPPv4N5G2lib8Dubins3pE">
+<span id="_CPPv3N5G2lib8Dubins3pE"></span><span id="_CPPv2N5G2lib8Dubins3pE"></span><span id="G2lib::Dubins3p"></span><span class="target" id="class_g2lib_1_1_dubins3p"></span><span class="k"><span class="pre">class</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">Dubins3p</span></span></span><span class="w"> </span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="k"><span class="pre">public</span></span><span class="w"> </span><a class="reference internal" href="../file/_b_box_8cc.html#_CPPv45G2lib" title="G2lib"><span class="n"><span class="pre">G2lib</span></span></a><span class="p"><span class="pre">::</span></span><a class="reference internal" href="class_g2lib_1_1_base_curve.html#_CPPv4N5G2lib9BaseCurveE" title="G2lib::BaseCurve"><span class="n"><span class="pre">BaseCurve</span></span></a><a class="headerlink" href="#_CPPv4N5G2lib8Dubins3pE" title="Link to this definition">¶</a><br/></dt>
+<dd><p>Class to manage a circle arc </p>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric" id="breathe-section-title-public-functions">Public Functions</p>
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N5G2lib8Dubins3p8Dubins3pEv">
+<span id="_CPPv3N5G2lib8Dubins3p8Dubins3pEv"></span><span id="_CPPv2N5G2lib8Dubins3p8Dubins3pEv"></span><span id="G2lib::Dubins3p::Dubins3p"></span><span class="target" id="class_g2lib_1_1_dubins3p_1a7f9bd4a15f67312989331deff554354b"></span><span class="sig-name descname"><span class="n"><span class="pre">Dubins3p</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="k"><span class="pre">delete</span></span><a class="headerlink" href="#_CPPv4N5G2lib8Dubins3p8Dubins3pEv" title="Link to this definition">¶</a><br/></dt>
+<dd><p>Build an empty circle </p>
+</dd></dl>
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N5G2lib8Dubins3p8Dubins3pERK8Dubins3p">
+<span id="_CPPv3N5G2lib8Dubins3p8Dubins3pERK8Dubins3p"></span><span id="_CPPv2N5G2lib8Dubins3p8Dubins3pERK8Dubins3p"></span><span id="G2lib::Dubins3p::Dubins3p__Dubins3pCR"></span><span class="target" id="class_g2lib_1_1_dubins3p_1aa4f968be2f8990259409b81ca7beccfa"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">Dubins3p</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="#_CPPv4N5G2lib8Dubins3p8Dubins3pERK8Dubins3p" title="G2lib::Dubins3p::Dubins3p"><span class="n"><span class="pre">Dubins3p</span></span></a><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">s</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N5G2lib8Dubins3p8Dubins3pERK8Dubins3p" title="Link to this definition">¶</a><br/></dt>
+<dd><p>Build a copy of an existing <a class="reference internal" href="../namespace/namespace_g2lib.html#class_g2lib_1_1_dubins"><span class="std std-ref">Dubins</span></a> problem. </p>
+</dd></dl>
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N5G2lib8Dubins3p8Dubins3pE9real_type9real_type9real_type9real_type9real_type9real_type9real_type9real_type9real_type17Dubins3pBuildTypeRK6string">
+<span id="_CPPv3N5G2lib8Dubins3p8Dubins3pE9real_type9real_type9real_type9real_type9real_type9real_type9real_type9real_type9real_type17Dubins3pBuildTypeRK6string"></span><span id="_CPPv2N5G2lib8Dubins3p8Dubins3pE9real_type9real_type9real_type9real_type9real_type9real_type9real_type9real_type9real_type17Dubins3pBuildTypeRK6string"></span><span id="G2lib::Dubins3p::Dubins3p__real_type.real_type.real_type.real_type.real_type.real_type.real_type.real_type.real_type.Dubins3pBuildType.stringCR"></span><span class="target" id="class_g2lib_1_1_dubins3p_1a1fe36b538fa26a73580e7eda59d1511b"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="k"><span class="pre">explicit</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">Dubins3p</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="../file/_clothoids_8hh.html#_CPPv4N5G2lib9real_typeE" title="G2lib::real_type"><span class="n"><span class="pre">real_type</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">xi</span></span>, <a class="reference internal" href="../file/_clothoids_8hh.html#_CPPv4N5G2lib9real_typeE" title="G2lib::real_type"><span class="n"><span class="pre">real_type</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">yi</span></span>, <a class="reference internal" href="../file/_clothoids_8hh.html#_CPPv4N5G2lib9real_typeE" title="G2lib::real_type"><span class="n"><span class="pre">real_type</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">thetai</span></span>, <a class="reference internal" href="../file/_clothoids_8hh.html#_CPPv4N5G2lib9real_typeE" title="G2lib::real_type"><span class="n"><span class="pre">real_type</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">xm</span></span>, <a class="reference internal" href="../file/_clothoids_8hh.html#_CPPv4N5G2lib9real_typeE" title="G2lib::real_type"><span class="n"><span class="pre">real_type</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">ym</span></span>, <a class="reference internal" href="../file/_clothoids_8hh.html#_CPPv4N5G2lib9real_typeE" title="G2lib::real_type"><span class="n"><span class="pre">real_type</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">xf</span></span>, <a class="reference internal" href="../file/_clothoids_8hh.html#_CPPv4N5G2lib9real_typeE" title="G2lib::real_type"><span class="n"><span class="pre">real_type</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">yf</span></span>, <a class="reference internal" href="../file/_clothoids_8hh.html#_CPPv4N5G2lib9real_typeE" title="G2lib::real_type"><span class="n"><span class="pre">real_type</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">thetaf</span></span>, <a class="reference internal" href="../file/_clothoids_8hh.html#_CPPv4N5G2lib9real_typeE" title="G2lib::real_type"><span class="n"><span class="pre">real_type</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">k_max</span></span>, <span class="n"><span class="pre">Dubins3pBuildType</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">method</span></span>, <span class="n"><span class="pre">string</span></span><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">name</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N5G2lib8Dubins3p8Dubins3pE9real_type9real_type9real_type9real_type9real_type9real_type9real_type9real_type9real_type17Dubins3pBuildTypeRK6string" title="Link to this definition">¶</a><br/></dt>
+<dd><p>Construct a <a class="reference internal" href="../namespace/namespace_g2lib.html#class_g2lib_1_1_dubins3p"><span class="std std-ref">Dubins3p</span></a> solution</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>xi</strong> – <strong>[in]</strong> initial position x-coordinate </p></li>
+<li><p><strong>yi</strong> – <strong>[in]</strong> initial position y-coordinate </p></li>
+<li><p><strong>thetai</strong> – <strong>[in]</strong> initial angle </p></li>
+<li><p><strong>xm</strong> – <strong>[in]</strong> intermediate position x-coordinate </p></li>
+<li><p><strong>ym</strong> – <strong>[in]</strong> intermediate position y-coordinate </p></li>
+<li><p><strong>xf</strong> – <strong>[in]</strong> final position x-coordinate </p></li>
+<li><p><strong>yf</strong> – <strong>[in]</strong> final position y-coordinate </p></li>
+<li><p><strong>thetaf</strong> – <strong>[in]</strong> final angle </p></li>
+<li><p><strong>k_max</strong> – <strong>[in]</strong> max curvature </p></li>
+<li><p><strong>method</strong> – <strong>[in]</strong> construction method </p></li>
+<li><p><strong>name</strong> – <strong>[in]</strong> name of the 3 points <a class="reference internal" href="../namespace/namespace_g2lib.html#class_g2lib_1_1_dubins"><span class="std std-ref">Dubins</span></a> object </p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N5G2lib8Dubins3p4copyERK8Dubins3p">
+<span id="_CPPv3N5G2lib8Dubins3p4copyERK8Dubins3p"></span><span id="_CPPv2N5G2lib8Dubins3p4copyERK8Dubins3p"></span><span id="G2lib::Dubins3p::copy__Dubins3pCR"></span><span class="target" id="class_g2lib_1_1_dubins3p_1a757c8ffba293d61b660a838993e2e0ae"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">copy</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="#_CPPv4N5G2lib8Dubins3pE" title="G2lib::Dubins3p"><span class="n"><span class="pre">Dubins3p</span></span></a><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">d3p</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N5G2lib8Dubins3p4copyERK8Dubins3p" title="Link to this definition">¶</a><br/></dt>
+<dd><p>Make a copy of an existing <a class="reference internal" href="../namespace/namespace_g2lib.html#class_g2lib_1_1_dubins"><span class="std std-ref">Dubins</span></a> solution. </p>
+</dd></dl>
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N5G2lib8Dubins3p5buildE9real_type9real_type9real_type9real_type9real_type9real_type9real_type9real_type9real_type17Dubins3pBuildType">
+<span id="_CPPv3N5G2lib8Dubins3p5buildE9real_type9real_type9real_type9real_type9real_type9real_type9real_type9real_type9real_type17Dubins3pBuildType"></span><span id="_CPPv2N5G2lib8Dubins3p5buildE9real_type9real_type9real_type9real_type9real_type9real_type9real_type9real_type9real_type17Dubins3pBuildType"></span><span id="G2lib::Dubins3p::build__real_type.real_type.real_type.real_type.real_type.real_type.real_type.real_type.real_type.Dubins3pBuildType"></span><span class="target" id="class_g2lib_1_1_dubins3p_1ada70824c412ec07609c544057d30750c"></span><span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">build</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="../file/_clothoids_8hh.html#_CPPv4N5G2lib9real_typeE" title="G2lib::real_type"><span class="n"><span class="pre">real_type</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">xi</span></span>, <a class="reference internal" href="../file/_clothoids_8hh.html#_CPPv4N5G2lib9real_typeE" title="G2lib::real_type"><span class="n"><span class="pre">real_type</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">yi</span></span>, <a class="reference internal" href="../file/_clothoids_8hh.html#_CPPv4N5G2lib9real_typeE" title="G2lib::real_type"><span class="n"><span class="pre">real_type</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">thetai</span></span>, <a class="reference internal" href="../file/_clothoids_8hh.html#_CPPv4N5G2lib9real_typeE" title="G2lib::real_type"><span class="n"><span class="pre">real_type</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">xm</span></span>, <a class="reference internal" href="../file/_clothoids_8hh.html#_CPPv4N5G2lib9real_typeE" title="G2lib::real_type"><span class="n"><span class="pre">real_type</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">ym</span></span>, <a class="reference internal" href="../file/_clothoids_8hh.html#_CPPv4N5G2lib9real_typeE" title="G2lib::real_type"><span class="n"><span class="pre">real_type</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">xf</span></span>, <a class="reference internal" href="../file/_clothoids_8hh.html#_CPPv4N5G2lib9real_typeE" title="G2lib::real_type"><span class="n"><span class="pre">real_type</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">yf</span></span>, <a class="reference internal" href="../file/_clothoids_8hh.html#_CPPv4N5G2lib9real_typeE" title="G2lib::real_type"><span class="n"><span class="pre">real_type</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">thetaf</span></span>, <a class="reference internal" href="../file/_clothoids_8hh.html#_CPPv4N5G2lib9real_typeE" title="G2lib::real_type"><span class="n"><span class="pre">real_type</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">k_max</span></span>, <span class="n"><span class="pre">Dubins3pBuildType</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">method</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N5G2lib8Dubins3p5buildE9real_type9real_type9real_type9real_type9real_type9real_type9real_type9real_type9real_type17Dubins3pBuildType" title="Link to this definition">¶</a><br/></dt>
+<dd><p>Construct a <a class="reference internal" href="../namespace/namespace_g2lib.html#class_g2lib_1_1_dubins3p"><span class="std std-ref">Dubins3p</span></a> solution</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>xi</strong> – <strong>[in]</strong> initial position x-coordinate </p></li>
+<li><p><strong>yi</strong> – <strong>[in]</strong> initial position y-coordinate </p></li>
+<li><p><strong>thetai</strong> – <strong>[in]</strong> initial angle </p></li>
+<li><p><strong>xm</strong> – <strong>[in]</strong> intermediate position x-coordinate </p></li>
+<li><p><strong>ym</strong> – <strong>[in]</strong> intermediate position y-coordinate </p></li>
+<li><p><strong>xf</strong> – <strong>[in]</strong> final position x-coordinate </p></li>
+<li><p><strong>yf</strong> – <strong>[in]</strong> final position y-coordinate </p></li>
+<li><p><strong>thetaf</strong> – <strong>[in]</strong> final angle </p></li>
+<li><p><strong>k_max</strong> – <strong>[in]</strong> max curvature </p></li>
+<li><p><strong>method</strong> – <strong>[in]</strong> construction method </p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4NK5G2lib8Dubins3p16get_range_anglesE9real_type9real_type9real_type9real_type9real_type9real_type9real_type9real_type9real_typeA_9real_type">
+<span id="_CPPv3NK5G2lib8Dubins3p16get_range_anglesE9real_type9real_type9real_type9real_type9real_type9real_type9real_type9real_type9real_typeA_9real_type"></span><span id="_CPPv2NK5G2lib8Dubins3p16get_range_anglesE9real_type9real_type9real_type9real_type9real_type9real_type9real_type9real_type9real_typeA_9real_type"></span><span id="G2lib::Dubins3p::get_range_angles__real_type.real_type.real_type.real_type.real_type.real_type.real_type.real_type.real_type.real_typeAC"></span><span class="target" id="class_g2lib_1_1_dubins3p_1a8d30e9f6d35fc2aa5cb4f103e7a50c93"></span><a class="reference internal" href="../file/_clothoids_8hh.html#_CPPv4N5G2lib7integerE" title="G2lib::integer"><span class="n"><span class="pre">integer</span></span></a><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">get_range_angles</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="../file/_clothoids_8hh.html#_CPPv4N5G2lib9real_typeE" title="G2lib::real_type"><span class="n"><span class="pre">real_type</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">xi</span></span>, <a class="reference internal" href="../file/_clothoids_8hh.html#_CPPv4N5G2lib9real_typeE" title="G2lib::real_type"><span class="n"><span class="pre">real_type</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">yi</span></span>, <a class="reference internal" href="../file/_clothoids_8hh.html#_CPPv4N5G2lib9real_typeE" title="G2lib::real_type"><span class="n"><span class="pre">real_type</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">thetai</span></span>, <a class="reference internal" href="../file/_clothoids_8hh.html#_CPPv4N5G2lib9real_typeE" title="G2lib::real_type"><span class="n"><span class="pre">real_type</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">xm</span></span>, <a class="reference internal" href="../file/_clothoids_8hh.html#_CPPv4N5G2lib9real_typeE" title="G2lib::real_type"><span class="n"><span class="pre">real_type</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">ym</span></span>, <a class="reference internal" href="../file/_clothoids_8hh.html#_CPPv4N5G2lib9real_typeE" title="G2lib::real_type"><span class="n"><span class="pre">real_type</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">xf</span></span>, <a class="reference internal" href="../file/_clothoids_8hh.html#_CPPv4N5G2lib9real_typeE" title="G2lib::real_type"><span class="n"><span class="pre">real_type</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">yf</span></span>, <a class="reference internal" href="../file/_clothoids_8hh.html#_CPPv4N5G2lib9real_typeE" title="G2lib::real_type"><span class="n"><span class="pre">real_type</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">thetaf</span></span>, <a class="reference internal" href="../file/_clothoids_8hh.html#_CPPv4N5G2lib9real_typeE" title="G2lib::real_type"><span class="n"><span class="pre">real_type</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">k_max</span></span>, <a class="reference internal" href="../file/_clothoids_8hh.html#_CPPv4N5G2lib9real_typeE" title="G2lib::real_type"><span class="n"><span class="pre">real_type</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">angles</span></span><span class="p"><span class="pre">[</span></span><span class="p"><span class="pre">]</span></span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><a class="headerlink" href="#_CPPv4NK5G2lib8Dubins3p16get_range_anglesE9real_type9real_type9real_type9real_type9real_type9real_type9real_type9real_type9real_typeA_9real_type" title="Link to this definition">¶</a><br/></dt>
+<dd><p>Get possible point of discontinuity for the length</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>xi</strong> – <strong>[in]</strong> initial position x-coordinate </p></li>
+<li><p><strong>yi</strong> – <strong>[in]</strong> initial position y-coordinate </p></li>
+<li><p><strong>thetai</strong> – <strong>[in]</strong> initial angle </p></li>
+<li><p><strong>xm</strong> – <strong>[in]</strong> intermediate position x-coordinate </p></li>
+<li><p><strong>ym</strong> – <strong>[in]</strong> intermediate position y-coordinate </p></li>
+<li><p><strong>xf</strong> – <strong>[in]</strong> final position x-coordinate </p></li>
+<li><p><strong>yf</strong> – <strong>[in]</strong> final position y-coordinate </p></li>
+<li><p><strong>thetaf</strong> – <strong>[in]</strong> final angle </p></li>
+<li><p><strong>k_max</strong> – <strong>[in]</strong> max curvature </p></li>
+<li><p><strong>angles</strong> – <strong>[out]</strong> angles of possibile dicontinuity </p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>number of point computed </p>
+</dd>
+</dl>
+</dd></dl>
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4NK5G2lib8Dubins3p17get_sample_anglesE9real_type9real_type9real_type9real_type9real_type9real_type9real_type9real_type9real_type9real_typeR6vectorI9real_typeE">
+<span id="_CPPv3NK5G2lib8Dubins3p17get_sample_anglesE9real_type9real_type9real_type9real_type9real_type9real_type9real_type9real_type9real_type9real_typeR6vectorI9real_typeE"></span><span id="_CPPv2NK5G2lib8Dubins3p17get_sample_anglesE9real_type9real_type9real_type9real_type9real_type9real_type9real_type9real_type9real_type9real_typeR6vectorI9real_typeE"></span><span id="G2lib::Dubins3p::get_sample_angles__real_type.real_type.real_type.real_type.real_type.real_type.real_type.real_type.real_type.real_type.vector:real_type:RC"></span><span class="target" id="class_g2lib_1_1_dubins3p_1a9eaf4dd5b6ca64d5dd12824f65ffe0a3"></span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">get_sample_angles</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="../file/_clothoids_8hh.html#_CPPv4N5G2lib9real_typeE" title="G2lib::real_type"><span class="n"><span class="pre">real_type</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">xi</span></span>, <a class="reference internal" href="../file/_clothoids_8hh.html#_CPPv4N5G2lib9real_typeE" title="G2lib::real_type"><span class="n"><span class="pre">real_type</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">yi</span></span>, <a class="reference internal" href="../file/_clothoids_8hh.html#_CPPv4N5G2lib9real_typeE" title="G2lib::real_type"><span class="n"><span class="pre">real_type</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">thetai</span></span>, <a class="reference internal" href="../file/_clothoids_8hh.html#_CPPv4N5G2lib9real_typeE" title="G2lib::real_type"><span class="n"><span class="pre">real_type</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">xm</span></span>, <a class="reference internal" href="../file/_clothoids_8hh.html#_CPPv4N5G2lib9real_typeE" title="G2lib::real_type"><span class="n"><span class="pre">real_type</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">ym</span></span>, <a class="reference internal" href="../file/_clothoids_8hh.html#_CPPv4N5G2lib9real_typeE" title="G2lib::real_type"><span class="n"><span class="pre">real_type</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">xf</span></span>, <a class="reference internal" href="../file/_clothoids_8hh.html#_CPPv4N5G2lib9real_typeE" title="G2lib::real_type"><span class="n"><span class="pre">real_type</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">yf</span></span>, <a class="reference internal" href="../file/_clothoids_8hh.html#_CPPv4N5G2lib9real_typeE" title="G2lib::real_type"><span class="n"><span class="pre">real_type</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">thetaf</span></span>, <a class="reference internal" href="../file/_clothoids_8hh.html#_CPPv4N5G2lib9real_typeE" title="G2lib::real_type"><span class="n"><span class="pre">real_type</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">k_max</span></span>, <a class="reference internal" href="../file/_clothoids_8hh.html#_CPPv4N5G2lib9real_typeE" title="G2lib::real_type"><span class="n"><span class="pre">real_type</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">tolerance</span></span>, <span class="n"><span class="pre">vector</span></span><span class="p"><span class="pre">&lt;</span></span><a class="reference internal" href="../file/_clothoids_8hh.html#_CPPv4N5G2lib9real_typeE" title="G2lib::real_type"><span class="n"><span class="pre">real_type</span></span></a><span class="p"><span class="pre">&gt;</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">angles</span></span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><a class="headerlink" href="#_CPPv4NK5G2lib8Dubins3p17get_sample_anglesE9real_type9real_type9real_type9real_type9real_type9real_type9real_type9real_type9real_type9real_typeR6vectorI9real_typeE" title="Link to this definition">¶</a><br/></dt>
+<dd><p>Get sample point for length minimization</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>xi</strong> – <strong>[in]</strong> initial position x-coordinate </p></li>
+<li><p><strong>yi</strong> – <strong>[in]</strong> initial position y-coordinate </p></li>
+<li><p><strong>thetai</strong> – <strong>[in]</strong> initial angle </p></li>
+<li><p><strong>xm</strong> – <strong>[in]</strong> intermediate position x-coordinate </p></li>
+<li><p><strong>ym</strong> – <strong>[in]</strong> intermediate position y-coordinate </p></li>
+<li><p><strong>xf</strong> – <strong>[in]</strong> final position x-coordinate </p></li>
+<li><p><strong>yf</strong> – <strong>[in]</strong> final position y-coordinate </p></li>
+<li><p><strong>thetaf</strong> – <strong>[in]</strong> final angle </p></li>
+<li><p><strong>k_max</strong> – <strong>[in]</strong> max curvature </p></li>
+<li><p><strong>tolerance</strong> – <strong>[in]</strong> tolerance angle used in point approximaton </p></li>
+<li><p><strong>angles</strong> – <strong>[out]</strong> sample points </p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4NK5G2lib8Dubins3p4bboxER9real_typeR9real_typeR9real_typeR9real_type">
+<span id="_CPPv3NK5G2lib8Dubins3p4bboxER9real_typeR9real_typeR9real_typeR9real_type"></span><span id="_CPPv2NK5G2lib8Dubins3p4bboxER9real_typeR9real_typeR9real_typeR9real_type"></span><span id="G2lib::Dubins3p::bbox__real_typeR.real_typeR.real_typeR.real_typeRC"></span><span class="target" id="class_g2lib_1_1_dubins3p_1a10b35e66b51bad3730771ebd629315df"></span><span class="k"><span class="pre">virtual</span></span><span class="w"> </span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">bbox</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="../file/_clothoids_8hh.html#_CPPv4N5G2lib9real_typeE" title="G2lib::real_type"><span class="n"><span class="pre">real_type</span></span></a><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">xmin</span></span>, <a class="reference internal" href="../file/_clothoids_8hh.html#_CPPv4N5G2lib9real_typeE" title="G2lib::real_type"><span class="n"><span class="pre">real_type</span></span></a><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">ymin</span></span>, <a class="reference internal" href="../file/_clothoids_8hh.html#_CPPv4N5G2lib9real_typeE" title="G2lib::real_type"><span class="n"><span class="pre">real_type</span></span></a><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">xmax</span></span>, <a class="reference internal" href="../file/_clothoids_8hh.html#_CPPv4N5G2lib9real_typeE" title="G2lib::real_type"><span class="n"><span class="pre">real_type</span></span></a><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">ymax</span></span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="k"><span class="pre">override</span></span><a class="headerlink" href="#_CPPv4NK5G2lib8Dubins3p4bboxER9real_typeR9real_typeR9real_typeR9real_type" title="Link to this definition">¶</a><br/></dt>
+<dd><p>Compute the bounding box of the curve.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>xmin</strong> – <strong>[out]</strong> left bottom </p></li>
+<li><p><strong>ymin</strong> – <strong>[out]</strong> left bottom </p></li>
+<li><p><strong>xmax</strong> – <strong>[out]</strong> right top </p></li>
+<li><p><strong>ymax</strong> – <strong>[out]</strong> right top </p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4NK5G2lib8Dubins3p8bbox_ISOE9real_typeR9real_typeR9real_typeR9real_typeR9real_type">
+<span id="_CPPv3NK5G2lib8Dubins3p8bbox_ISOE9real_typeR9real_typeR9real_typeR9real_typeR9real_type"></span><span id="_CPPv2NK5G2lib8Dubins3p8bbox_ISOE9real_typeR9real_typeR9real_typeR9real_typeR9real_type"></span><span id="G2lib::Dubins3p::bbox_ISO__real_type.real_typeR.real_typeR.real_typeR.real_typeRC"></span><span class="target" id="class_g2lib_1_1_dubins3p_1a5b449880752728513e83b158d3f61763"></span><span class="k"><span class="pre">virtual</span></span><span class="w"> </span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">bbox_ISO</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="../file/_clothoids_8hh.html#_CPPv4N5G2lib9real_typeE" title="G2lib::real_type"><span class="n"><span class="pre">real_type</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">offs</span></span>, <a class="reference internal" href="../file/_clothoids_8hh.html#_CPPv4N5G2lib9real_typeE" title="G2lib::real_type"><span class="n"><span class="pre">real_type</span></span></a><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">xmin</span></span>, <a class="reference internal" href="../file/_clothoids_8hh.html#_CPPv4N5G2lib9real_typeE" title="G2lib::real_type"><span class="n"><span class="pre">real_type</span></span></a><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">ymin</span></span>, <a class="reference internal" href="../file/_clothoids_8hh.html#_CPPv4N5G2lib9real_typeE" title="G2lib::real_type"><span class="n"><span class="pre">real_type</span></span></a><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">xmax</span></span>, <a class="reference internal" href="../file/_clothoids_8hh.html#_CPPv4N5G2lib9real_typeE" title="G2lib::real_type"><span class="n"><span class="pre">real_type</span></span></a><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">ymax</span></span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="k"><span class="pre">override</span></span><a class="headerlink" href="#_CPPv4NK5G2lib8Dubins3p8bbox_ISOE9real_typeR9real_typeR9real_typeR9real_typeR9real_type" title="Link to this definition">¶</a><br/></dt>
+<dd><p>Compute the bounding box of the curve with offset (ISO).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>offs</strong> – <strong>[in]</strong> curve offset </p></li>
+<li><p><strong>xmin</strong> – <strong>[out]</strong> left bottom </p></li>
+<li><p><strong>ymin</strong> – <strong>[out]</strong> left bottom </p></li>
+<li><p><strong>xmax</strong> – <strong>[out]</strong> right top </p></li>
+<li><p><strong>ymax</strong> – <strong>[out]</strong> right top </p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4NK5G2lib8Dubins3p2C0Ev">
+<span id="_CPPv3NK5G2lib8Dubins3p2C0Ev"></span><span id="_CPPv2NK5G2lib8Dubins3p2C0Ev"></span><span id="G2lib::Dubins3p::C0C"></span><span class="target" id="class_g2lib_1_1_dubins3p_1a05795a8fdf654ea060ff8b437e1fd80c"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><a class="reference internal" href="class_g2lib_1_1_circle_arc.html#_CPPv4N5G2lib9CircleArcE" title="G2lib::CircleArc"><span class="n"><span class="pre">CircleArc</span></span></a><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="sig-name descname"><span class="n"><span class="pre">C0</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><a class="headerlink" href="#_CPPv4NK5G2lib8Dubins3p2C0Ev" title="Link to this definition">¶</a><br/></dt>
+<dd><p>Return the first cicle of the <a class="reference internal" href="../namespace/namespace_g2lib.html#class_g2lib_1_1_dubins"><span class="std std-ref">Dubins</span></a> solution. </p>
+</dd></dl>
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4NK5G2lib8Dubins3p2C1Ev">
+<span id="_CPPv3NK5G2lib8Dubins3p2C1Ev"></span><span id="_CPPv2NK5G2lib8Dubins3p2C1Ev"></span><span id="G2lib::Dubins3p::C1C"></span><span class="target" id="class_g2lib_1_1_dubins3p_1a47bc6a56fdbd0e37c64fb72d87d30310"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><a class="reference internal" href="class_g2lib_1_1_circle_arc.html#_CPPv4N5G2lib9CircleArcE" title="G2lib::CircleArc"><span class="n"><span class="pre">CircleArc</span></span></a><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="sig-name descname"><span class="n"><span class="pre">C1</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><a class="headerlink" href="#_CPPv4NK5G2lib8Dubins3p2C1Ev" title="Link to this definition">¶</a><br/></dt>
+<dd><p>Return the second cicle of the <a class="reference internal" href="../namespace/namespace_g2lib.html#class_g2lib_1_1_dubins"><span class="std std-ref">Dubins</span></a> solution. </p>
+</dd></dl>
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4NK5G2lib8Dubins3p2C2Ev">
+<span id="_CPPv3NK5G2lib8Dubins3p2C2Ev"></span><span id="_CPPv2NK5G2lib8Dubins3p2C2Ev"></span><span id="G2lib::Dubins3p::C2C"></span><span class="target" id="class_g2lib_1_1_dubins3p_1a2ec9b1f9178ba0ebccc7fe9bde3d1a01"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><a class="reference internal" href="class_g2lib_1_1_circle_arc.html#_CPPv4N5G2lib9CircleArcE" title="G2lib::CircleArc"><span class="n"><span class="pre">CircleArc</span></span></a><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="sig-name descname"><span class="n"><span class="pre">C2</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><a class="headerlink" href="#_CPPv4NK5G2lib8Dubins3p2C2Ev" title="Link to this definition">¶</a><br/></dt>
+<dd><p>Return the third cicle of the <a class="reference internal" href="../namespace/namespace_g2lib.html#class_g2lib_1_1_dubins"><span class="std std-ref">Dubins</span></a> solution. </p>
+</dd></dl>
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4NK5G2lib8Dubins3p2C3Ev">
+<span id="_CPPv3NK5G2lib8Dubins3p2C3Ev"></span><span id="_CPPv2NK5G2lib8Dubins3p2C3Ev"></span><span id="G2lib::Dubins3p::C3C"></span><span class="target" id="class_g2lib_1_1_dubins3p_1a025f505b12df64dcc533cb21042ac5d8"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><a class="reference internal" href="class_g2lib_1_1_circle_arc.html#_CPPv4N5G2lib9CircleArcE" title="G2lib::CircleArc"><span class="n"><span class="pre">CircleArc</span></span></a><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="sig-name descname"><span class="n"><span class="pre">C3</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><a class="headerlink" href="#_CPPv4NK5G2lib8Dubins3p2C3Ev" title="Link to this definition">¶</a><br/></dt>
+<dd><p>Return the first cicle of the <a class="reference internal" href="../namespace/namespace_g2lib.html#class_g2lib_1_1_dubins"><span class="std std-ref">Dubins</span></a> solution. </p>
+</dd></dl>
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4NK5G2lib8Dubins3p2C4Ev">
+<span id="_CPPv3NK5G2lib8Dubins3p2C4Ev"></span><span id="_CPPv2NK5G2lib8Dubins3p2C4Ev"></span><span id="G2lib::Dubins3p::C4C"></span><span class="target" id="class_g2lib_1_1_dubins3p_1a571d49aaf041cf19f683d5e3e7063fb0"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><a class="reference internal" href="class_g2lib_1_1_circle_arc.html#_CPPv4N5G2lib9CircleArcE" title="G2lib::CircleArc"><span class="n"><span class="pre">CircleArc</span></span></a><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="sig-name descname"><span class="n"><span class="pre">C4</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><a class="headerlink" href="#_CPPv4NK5G2lib8Dubins3p2C4Ev" title="Link to this definition">¶</a><br/></dt>
+<dd><p>Return the seco4d cicle of the <a class="reference internal" href="../namespace/namespace_g2lib.html#class_g2lib_1_1_dubins"><span class="std std-ref">Dubins</span></a> solution. </p>
+</dd></dl>
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4NK5G2lib8Dubins3p2C5Ev">
+<span id="_CPPv3NK5G2lib8Dubins3p2C5Ev"></span><span id="_CPPv2NK5G2lib8Dubins3p2C5Ev"></span><span id="G2lib::Dubins3p::C5C"></span><span class="target" id="class_g2lib_1_1_dubins3p_1af2f4b13194146b8ed70e8c27c06aac0d"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><a class="reference internal" href="class_g2lib_1_1_circle_arc.html#_CPPv4N5G2lib9CircleArcE" title="G2lib::CircleArc"><span class="n"><span class="pre">CircleArc</span></span></a><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="sig-name descname"><span class="n"><span class="pre">C5</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><a class="headerlink" href="#_CPPv4NK5G2lib8Dubins3p2C5Ev" title="Link to this definition">¶</a><br/></dt>
+<dd><p>Return the third cicle of the <a class="reference internal" href="../namespace/namespace_g2lib.html#class_g2lib_1_1_dubins"><span class="std std-ref">Dubins</span></a> solution. </p>
+</dd></dl>
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4NK5G2lib8Dubins3p6lengthEv">
+<span id="_CPPv3NK5G2lib8Dubins3p6lengthEv"></span><span id="_CPPv2NK5G2lib8Dubins3p6lengthEv"></span><span id="G2lib::Dubins3p::lengthC"></span><span class="target" id="class_g2lib_1_1_dubins3p_1a2598680e0877ee625abbf9e9c7b6ee45"></span><span class="k"><span class="pre">virtual</span></span><span class="w"> </span><a class="reference internal" href="../file/_clothoids_8hh.html#_CPPv4N5G2lib9real_typeE" title="G2lib::real_type"><span class="n"><span class="pre">real_type</span></span></a><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">length</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="k"><span class="pre">override</span></span><a class="headerlink" href="#_CPPv4NK5G2lib8Dubins3p6lengthEv" title="Link to this definition">¶</a><br/></dt>
+<dd><p>The length of the curve </p>
+</dd></dl>
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4NK5G2lib8Dubins3p10length_ISOE9real_type">
+<span id="_CPPv3NK5G2lib8Dubins3p10length_ISOE9real_type"></span><span id="_CPPv2NK5G2lib8Dubins3p10length_ISOE9real_type"></span><span id="G2lib::Dubins3p::length_ISO__real_typeC"></span><span class="target" id="class_g2lib_1_1_dubins3p_1a1062aacb211863cfe2055ed530a678e2"></span><span class="k"><span class="pre">virtual</span></span><span class="w"> </span><a class="reference internal" href="../file/_clothoids_8hh.html#_CPPv4N5G2lib9real_typeE" title="G2lib::real_type"><span class="n"><span class="pre">real_type</span></span></a><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">length_ISO</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="../file/_clothoids_8hh.html#_CPPv4N5G2lib9real_typeE" title="G2lib::real_type"><span class="n"><span class="pre">real_type</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">offs</span></span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="k"><span class="pre">override</span></span><a class="headerlink" href="#_CPPv4NK5G2lib8Dubins3p10length_ISOE9real_type" title="Link to this definition">¶</a><br/></dt>
+<dd><p>The length of the curve with offset (ISO) </p>
+</dd></dl>
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4NK5G2lib8Dubins3p11theta_beginEv">
+<span id="_CPPv3NK5G2lib8Dubins3p11theta_beginEv"></span><span id="_CPPv2NK5G2lib8Dubins3p11theta_beginEv"></span><span id="G2lib::Dubins3p::theta_beginC"></span><span class="target" id="class_g2lib_1_1_dubins3p_1a56f490f94a4739704f1b65c4c965768e"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="k"><span class="pre">virtual</span></span><span class="w"> </span><a class="reference internal" href="../file/_clothoids_8hh.html#_CPPv4N5G2lib9real_typeE" title="G2lib::real_type"><span class="n"><span class="pre">real_type</span></span></a><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">theta_begin</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="k"><span class="pre">override</span></span><a class="headerlink" href="#_CPPv4NK5G2lib8Dubins3p11theta_beginEv" title="Link to this definition">¶</a><br/></dt>
+<dd><p>Initial angle of the curve. </p>
+</dd></dl>
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4NK5G2lib8Dubins3p9theta_endEv">
+<span id="_CPPv3NK5G2lib8Dubins3p9theta_endEv"></span><span id="_CPPv2NK5G2lib8Dubins3p9theta_endEv"></span><span id="G2lib::Dubins3p::theta_endC"></span><span class="target" id="class_g2lib_1_1_dubins3p_1a632809a42599f34aa199a8048e3320db"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="k"><span class="pre">virtual</span></span><span class="w"> </span><a class="reference internal" href="../file/_clothoids_8hh.html#_CPPv4N5G2lib9real_typeE" title="G2lib::real_type"><span class="n"><span class="pre">real_type</span></span></a><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">theta_end</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="k"><span class="pre">override</span></span><a class="headerlink" href="#_CPPv4NK5G2lib8Dubins3p9theta_endEv" title="Link to this definition">¶</a><br/></dt>
+<dd><p>Final angle of the curve. </p>
+</dd></dl>
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4NK5G2lib8Dubins3p11kappa_beginEv">
+<span id="_CPPv3NK5G2lib8Dubins3p11kappa_beginEv"></span><span id="_CPPv2NK5G2lib8Dubins3p11kappa_beginEv"></span><span id="G2lib::Dubins3p::kappa_beginC"></span><span class="target" id="class_g2lib_1_1_dubins3p_1a4cc71aa4d1e0bf93b6daada3e90d6f05"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="k"><span class="pre">virtual</span></span><span class="w"> </span><a class="reference internal" href="../file/_clothoids_8hh.html#_CPPv4N5G2lib9real_typeE" title="G2lib::real_type"><span class="n"><span class="pre">real_type</span></span></a><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">kappa_begin</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="k"><span class="pre">override</span></span><a class="headerlink" href="#_CPPv4NK5G2lib8Dubins3p11kappa_beginEv" title="Link to this definition">¶</a><br/></dt>
+<dd><p>Initial curvature. </p>
+</dd></dl>
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4NK5G2lib8Dubins3p9kappa_endEv">
+<span id="_CPPv3NK5G2lib8Dubins3p9kappa_endEv"></span><span id="_CPPv2NK5G2lib8Dubins3p9kappa_endEv"></span><span id="G2lib::Dubins3p::kappa_endC"></span><span class="target" id="class_g2lib_1_1_dubins3p_1a0e3060df888df8fdcfc9c6c0bbff0663"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="k"><span class="pre">virtual</span></span><span class="w"> </span><a class="reference internal" href="../file/_clothoids_8hh.html#_CPPv4N5G2lib9real_typeE" title="G2lib::real_type"><span class="n"><span class="pre">real_type</span></span></a><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">kappa_end</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="k"><span class="pre">override</span></span><a class="headerlink" href="#_CPPv4NK5G2lib8Dubins3p9kappa_endEv" title="Link to this definition">¶</a><br/></dt>
+<dd><p>Final curvature. </p>
+</dd></dl>
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4NK5G2lib8Dubins3p7x_beginEv">
+<span id="_CPPv3NK5G2lib8Dubins3p7x_beginEv"></span><span id="_CPPv2NK5G2lib8Dubins3p7x_beginEv"></span><span id="G2lib::Dubins3p::x_beginC"></span><span class="target" id="class_g2lib_1_1_dubins3p_1a59e31c10523d81eafb4e29bd75e28cc2"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="k"><span class="pre">virtual</span></span><span class="w"> </span><a class="reference internal" href="../file/_clothoids_8hh.html#_CPPv4N5G2lib9real_typeE" title="G2lib::real_type"><span class="n"><span class="pre">real_type</span></span></a><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">x_begin</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="k"><span class="pre">override</span></span><a class="headerlink" href="#_CPPv4NK5G2lib8Dubins3p7x_beginEv" title="Link to this definition">¶</a><br/></dt>
+<dd><p>Initial x-coordinate. </p>
+</dd></dl>
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4NK5G2lib8Dubins3p5x_endEv">
+<span id="_CPPv3NK5G2lib8Dubins3p5x_endEv"></span><span id="_CPPv2NK5G2lib8Dubins3p5x_endEv"></span><span id="G2lib::Dubins3p::x_endC"></span><span class="target" id="class_g2lib_1_1_dubins3p_1a9c6597e63f4521fb1fc7bc042477fb01"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="k"><span class="pre">virtual</span></span><span class="w"> </span><a class="reference internal" href="../file/_clothoids_8hh.html#_CPPv4N5G2lib9real_typeE" title="G2lib::real_type"><span class="n"><span class="pre">real_type</span></span></a><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">x_end</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="k"><span class="pre">override</span></span><a class="headerlink" href="#_CPPv4NK5G2lib8Dubins3p5x_endEv" title="Link to this definition">¶</a><br/></dt>
+<dd><p>Final x-coordinate. </p>
+</dd></dl>
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4NK5G2lib8Dubins3p7y_beginEv">
+<span id="_CPPv3NK5G2lib8Dubins3p7y_beginEv"></span><span id="_CPPv2NK5G2lib8Dubins3p7y_beginEv"></span><span id="G2lib::Dubins3p::y_beginC"></span><span class="target" id="class_g2lib_1_1_dubins3p_1ad6e6eaf52a5e887e241204c71ebd8304"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="k"><span class="pre">virtual</span></span><span class="w"> </span><a class="reference internal" href="../file/_clothoids_8hh.html#_CPPv4N5G2lib9real_typeE" title="G2lib::real_type"><span class="n"><span class="pre">real_type</span></span></a><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">y_begin</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="k"><span class="pre">override</span></span><a class="headerlink" href="#_CPPv4NK5G2lib8Dubins3p7y_beginEv" title="Link to this definition">¶</a><br/></dt>
+<dd><p>Initial y-coordinate. </p>
+</dd></dl>
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4NK5G2lib8Dubins3p5y_endEv">
+<span id="_CPPv3NK5G2lib8Dubins3p5y_endEv"></span><span id="_CPPv2NK5G2lib8Dubins3p5y_endEv"></span><span id="G2lib::Dubins3p::y_endC"></span><span class="target" id="class_g2lib_1_1_dubins3p_1adc4f3cdd5cb7145d293385e9b1dc6442"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="k"><span class="pre">virtual</span></span><span class="w"> </span><a class="reference internal" href="../file/_clothoids_8hh.html#_CPPv4N5G2lib9real_typeE" title="G2lib::real_type"><span class="n"><span class="pre">real_type</span></span></a><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">y_end</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="k"><span class="pre">override</span></span><a class="headerlink" href="#_CPPv4NK5G2lib8Dubins3p5y_endEv" title="Link to this definition">¶</a><br/></dt>
+<dd><p>Final y-coordinate. </p>
+</dd></dl>
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4NK5G2lib8Dubins3p8tx_beginEv">
+<span id="_CPPv3NK5G2lib8Dubins3p8tx_beginEv"></span><span id="_CPPv2NK5G2lib8Dubins3p8tx_beginEv"></span><span id="G2lib::Dubins3p::tx_beginC"></span><span class="target" id="class_g2lib_1_1_dubins3p_1ab99cff8c1fb6555573dc63c20cc512a7"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="k"><span class="pre">virtual</span></span><span class="w"> </span><a class="reference internal" href="../file/_clothoids_8hh.html#_CPPv4N5G2lib9real_typeE" title="G2lib::real_type"><span class="n"><span class="pre">real_type</span></span></a><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">tx_begin</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="k"><span class="pre">override</span></span><a class="headerlink" href="#_CPPv4NK5G2lib8Dubins3p8tx_beginEv" title="Link to this definition">¶</a><br/></dt>
+<dd><p>Initial tangent x-coordinate. </p>
+</dd></dl>
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4NK5G2lib8Dubins3p6tx_endEv">
+<span id="_CPPv3NK5G2lib8Dubins3p6tx_endEv"></span><span id="_CPPv2NK5G2lib8Dubins3p6tx_endEv"></span><span id="G2lib::Dubins3p::tx_endC"></span><span class="target" id="class_g2lib_1_1_dubins3p_1ac54e404b82b12c39450e4b1f9b75c57f"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="k"><span class="pre">virtual</span></span><span class="w"> </span><a class="reference internal" href="../file/_clothoids_8hh.html#_CPPv4N5G2lib9real_typeE" title="G2lib::real_type"><span class="n"><span class="pre">real_type</span></span></a><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">tx_end</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="k"><span class="pre">override</span></span><a class="headerlink" href="#_CPPv4NK5G2lib8Dubins3p6tx_endEv" title="Link to this definition">¶</a><br/></dt>
+<dd><p>Final tangent x-coordinate. </p>
+</dd></dl>
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4NK5G2lib8Dubins3p8ty_beginEv">
+<span id="_CPPv3NK5G2lib8Dubins3p8ty_beginEv"></span><span id="_CPPv2NK5G2lib8Dubins3p8ty_beginEv"></span><span id="G2lib::Dubins3p::ty_beginC"></span><span class="target" id="class_g2lib_1_1_dubins3p_1a1cbc997c60370424877a814408ca6992"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="k"><span class="pre">virtual</span></span><span class="w"> </span><a class="reference internal" href="../file/_clothoids_8hh.html#_CPPv4N5G2lib9real_typeE" title="G2lib::real_type"><span class="n"><span class="pre">real_type</span></span></a><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">ty_begin</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="k"><span class="pre">override</span></span><a class="headerlink" href="#_CPPv4NK5G2lib8Dubins3p8ty_beginEv" title="Link to this definition">¶</a><br/></dt>
+<dd><p>Initial tangent y-coordinate. </p>
+</dd></dl>
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4NK5G2lib8Dubins3p6ty_endEv">
+<span id="_CPPv3NK5G2lib8Dubins3p6ty_endEv"></span><span id="_CPPv2NK5G2lib8Dubins3p6ty_endEv"></span><span id="G2lib::Dubins3p::ty_endC"></span><span class="target" id="class_g2lib_1_1_dubins3p_1ac0668c8614128903fbef255f68f1b7cb"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="k"><span class="pre">virtual</span></span><span class="w"> </span><a class="reference internal" href="../file/_clothoids_8hh.html#_CPPv4N5G2lib9real_typeE" title="G2lib::real_type"><span class="n"><span class="pre">real_type</span></span></a><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">ty_end</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="k"><span class="pre">override</span></span><a class="headerlink" href="#_CPPv4NK5G2lib8Dubins3p6ty_endEv" title="Link to this definition">¶</a><br/></dt>
+<dd><p>Final tangent y-coordinate. </p>
+</dd></dl>
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4NK5G2lib8Dubins3p12nx_begin_ISOEv">
+<span id="_CPPv3NK5G2lib8Dubins3p12nx_begin_ISOEv"></span><span id="_CPPv2NK5G2lib8Dubins3p12nx_begin_ISOEv"></span><span id="G2lib::Dubins3p::nx_begin_ISOC"></span><span class="target" id="class_g2lib_1_1_dubins3p_1a446b73491bf04f91ff71cd6e84d5dc3c"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="k"><span class="pre">virtual</span></span><span class="w"> </span><a class="reference internal" href="../file/_clothoids_8hh.html#_CPPv4N5G2lib9real_typeE" title="G2lib::real_type"><span class="n"><span class="pre">real_type</span></span></a><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">nx_begin_ISO</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="k"><span class="pre">override</span></span><a class="headerlink" href="#_CPPv4NK5G2lib8Dubins3p12nx_begin_ISOEv" title="Link to this definition">¶</a><br/></dt>
+<dd><p>Intial normal x-coordinate (ISO). </p>
+</dd></dl>
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4NK5G2lib8Dubins3p10nx_end_ISOEv">
+<span id="_CPPv3NK5G2lib8Dubins3p10nx_end_ISOEv"></span><span id="_CPPv2NK5G2lib8Dubins3p10nx_end_ISOEv"></span><span id="G2lib::Dubins3p::nx_end_ISOC"></span><span class="target" id="class_g2lib_1_1_dubins3p_1a00d3b082ac5641c822cc98a0794022c7"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="k"><span class="pre">virtual</span></span><span class="w"> </span><a class="reference internal" href="../file/_clothoids_8hh.html#_CPPv4N5G2lib9real_typeE" title="G2lib::real_type"><span class="n"><span class="pre">real_type</span></span></a><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">nx_end_ISO</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="k"><span class="pre">override</span></span><a class="headerlink" href="#_CPPv4NK5G2lib8Dubins3p10nx_end_ISOEv" title="Link to this definition">¶</a><br/></dt>
+<dd><p>Final normal x-coordinate (ISO). </p>
+</dd></dl>
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4NK5G2lib8Dubins3p12ny_begin_ISOEv">
+<span id="_CPPv3NK5G2lib8Dubins3p12ny_begin_ISOEv"></span><span id="_CPPv2NK5G2lib8Dubins3p12ny_begin_ISOEv"></span><span id="G2lib::Dubins3p::ny_begin_ISOC"></span><span class="target" id="class_g2lib_1_1_dubins3p_1abd184f43dd3a74d8764fdb1883026c31"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="k"><span class="pre">virtual</span></span><span class="w"> </span><a class="reference internal" href="../file/_clothoids_8hh.html#_CPPv4N5G2lib9real_typeE" title="G2lib::real_type"><span class="n"><span class="pre">real_type</span></span></a><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">ny_begin_ISO</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="k"><span class="pre">override</span></span><a class="headerlink" href="#_CPPv4NK5G2lib8Dubins3p12ny_begin_ISOEv" title="Link to this definition">¶</a><br/></dt>
+<dd><p>Intial normal y-coordinate (ISO). </p>
+</dd></dl>
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4NK5G2lib8Dubins3p10ny_end_ISOEv">
+<span id="_CPPv3NK5G2lib8Dubins3p10ny_end_ISOEv"></span><span id="_CPPv2NK5G2lib8Dubins3p10ny_end_ISOEv"></span><span id="G2lib::Dubins3p::ny_end_ISOC"></span><span class="target" id="class_g2lib_1_1_dubins3p_1ae0090ff0a62a6bfe0e248ce1b3d24c40"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="k"><span class="pre">virtual</span></span><span class="w"> </span><a class="reference internal" href="../file/_clothoids_8hh.html#_CPPv4N5G2lib9real_typeE" title="G2lib::real_type"><span class="n"><span class="pre">real_type</span></span></a><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">ny_end_ISO</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="k"><span class="pre">override</span></span><a class="headerlink" href="#_CPPv4NK5G2lib8Dubins3p10ny_end_ISOEv" title="Link to this definition">¶</a><br/></dt>
+<dd><p>Final normal y-coordinate (ISO). </p>
+</dd></dl>
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4NK5G2lib8Dubins3p5thetaE9real_type">
+<span id="_CPPv3NK5G2lib8Dubins3p5thetaE9real_type"></span><span id="_CPPv2NK5G2lib8Dubins3p5thetaE9real_type"></span><span id="G2lib::Dubins3p::theta__real_typeC"></span><span class="target" id="class_g2lib_1_1_dubins3p_1a30aaa02d5b836f672ee446b2e2155d9c"></span><span class="k"><span class="pre">virtual</span></span><span class="w"> </span><a class="reference internal" href="../file/_clothoids_8hh.html#_CPPv4N5G2lib9real_typeE" title="G2lib::real_type"><span class="n"><span class="pre">real_type</span></span></a><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">theta</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="../file/_clothoids_8hh.html#_CPPv4N5G2lib9real_typeE" title="G2lib::real_type"><span class="n"><span class="pre">real_type</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">s</span></span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="k"><span class="pre">override</span></span><a class="headerlink" href="#_CPPv4NK5G2lib8Dubins3p5thetaE9real_type" title="Link to this definition">¶</a><br/></dt>
+<dd><p>Angle at curvilinear coodinate <code class="docutils literal notranslate"><span class="pre">s</span></code>. </p>
+</dd></dl>
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4NK5G2lib8Dubins3p7theta_DE9real_type">
+<span id="_CPPv3NK5G2lib8Dubins3p7theta_DE9real_type"></span><span id="_CPPv2NK5G2lib8Dubins3p7theta_DE9real_type"></span><span id="G2lib::Dubins3p::theta_D__real_typeC"></span><span class="target" id="class_g2lib_1_1_dubins3p_1aef0de99c6675e3f4bc8738a29abb355d"></span><span class="k"><span class="pre">virtual</span></span><span class="w"> </span><a class="reference internal" href="../file/_clothoids_8hh.html#_CPPv4N5G2lib9real_typeE" title="G2lib::real_type"><span class="n"><span class="pre">real_type</span></span></a><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">theta_D</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="../file/_clothoids_8hh.html#_CPPv4N5G2lib9real_typeE" title="G2lib::real_type"><span class="n"><span class="pre">real_type</span></span></a><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="k"><span class="pre">override</span></span><a class="headerlink" href="#_CPPv4NK5G2lib8Dubins3p7theta_DE9real_type" title="Link to this definition">¶</a><br/></dt>
+<dd><p>Angle derivative (curvature) at curvilinear coodinate <code class="docutils literal notranslate"><span class="pre">s</span></code>. </p>
+</dd></dl>
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4NK5G2lib8Dubins3p8theta_DDE9real_type">
+<span id="_CPPv3NK5G2lib8Dubins3p8theta_DDE9real_type"></span><span id="_CPPv2NK5G2lib8Dubins3p8theta_DDE9real_type"></span><span id="G2lib::Dubins3p::theta_DD__real_typeC"></span><span class="target" id="class_g2lib_1_1_dubins3p_1a68d8623afbb8a723f6703c5dd429ad31"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="k"><span class="pre">virtual</span></span><span class="w"> </span><a class="reference internal" href="../file/_clothoids_8hh.html#_CPPv4N5G2lib9real_typeE" title="G2lib::real_type"><span class="n"><span class="pre">real_type</span></span></a><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">theta_DD</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="../file/_clothoids_8hh.html#_CPPv4N5G2lib9real_typeE" title="G2lib::real_type"><span class="n"><span class="pre">real_type</span></span></a><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="k"><span class="pre">override</span></span><a class="headerlink" href="#_CPPv4NK5G2lib8Dubins3p8theta_DDE9real_type" title="Link to this definition">¶</a><br/></dt>
+<dd><p>Angle second derivative (devitive of curvature) at curvilinear coodinate <code class="docutils literal notranslate"><span class="pre">s</span></code>. </p>
+</dd></dl>
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4NK5G2lib8Dubins3p9theta_DDDE9real_type">
+<span id="_CPPv3NK5G2lib8Dubins3p9theta_DDDE9real_type"></span><span id="_CPPv2NK5G2lib8Dubins3p9theta_DDDE9real_type"></span><span id="G2lib::Dubins3p::theta_DDD__real_typeC"></span><span class="target" id="class_g2lib_1_1_dubins3p_1a59dd27aa9ede36a79d1b82067e9410c7"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="k"><span class="pre">virtual</span></span><span class="w"> </span><a class="reference internal" href="../file/_clothoids_8hh.html#_CPPv4N5G2lib9real_typeE" title="G2lib::real_type"><span class="n"><span class="pre">real_type</span></span></a><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">theta_DDD</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="../file/_clothoids_8hh.html#_CPPv4N5G2lib9real_typeE" title="G2lib::real_type"><span class="n"><span class="pre">real_type</span></span></a><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="k"><span class="pre">override</span></span><a class="headerlink" href="#_CPPv4NK5G2lib8Dubins3p9theta_DDDE9real_type" title="Link to this definition">¶</a><br/></dt>
+<dd><p>Angle third derivative at curvilinear coodinate <code class="docutils literal notranslate"><span class="pre">s</span></code>. </p>
+</dd></dl>
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4NK5G2lib8Dubins3p1XE9real_type">
+<span id="_CPPv3NK5G2lib8Dubins3p1XE9real_type"></span><span id="_CPPv2NK5G2lib8Dubins3p1XE9real_type"></span><span id="G2lib::Dubins3p::X__real_typeC"></span><span class="target" id="class_g2lib_1_1_dubins3p_1a7b0cf9bde6ee552ebae584140ad716ca"></span><span class="k"><span class="pre">virtual</span></span><span class="w"> </span><a class="reference internal" href="../file/_clothoids_8hh.html#_CPPv4N5G2lib9real_typeE" title="G2lib::real_type"><span class="n"><span class="pre">real_type</span></span></a><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">X</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="../file/_clothoids_8hh.html#_CPPv4N5G2lib9real_typeE" title="G2lib::real_type"><span class="n"><span class="pre">real_type</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">s</span></span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="k"><span class="pre">override</span></span><a class="headerlink" href="#_CPPv4NK5G2lib8Dubins3p1XE9real_type" title="Link to this definition">¶</a><br/></dt>
+<dd><p>x-coordinate at curvilinear coordinate <code class="docutils literal notranslate"><span class="pre">s</span></code>. </p>
+</dd></dl>
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4NK5G2lib8Dubins3p1YE9real_type">
+<span id="_CPPv3NK5G2lib8Dubins3p1YE9real_type"></span><span id="_CPPv2NK5G2lib8Dubins3p1YE9real_type"></span><span id="G2lib::Dubins3p::Y__real_typeC"></span><span class="target" id="class_g2lib_1_1_dubins3p_1ab752b60add13b14bb170f006a0a26640"></span><span class="k"><span class="pre">virtual</span></span><span class="w"> </span><a class="reference internal" href="../file/_clothoids_8hh.html#_CPPv4N5G2lib9real_typeE" title="G2lib::real_type"><span class="n"><span class="pre">real_type</span></span></a><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">Y</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="../file/_clothoids_8hh.html#_CPPv4N5G2lib9real_typeE" title="G2lib::real_type"><span class="n"><span class="pre">real_type</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">s</span></span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="k"><span class="pre">override</span></span><a class="headerlink" href="#_CPPv4NK5G2lib8Dubins3p1YE9real_type" title="Link to this definition">¶</a><br/></dt>
+<dd><p>y-coordinate at curvilinear coordinate <code class="docutils literal notranslate"><span class="pre">s</span></code>. </p>
+</dd></dl>
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4NK5G2lib8Dubins3p3X_DE9real_type">
+<span id="_CPPv3NK5G2lib8Dubins3p3X_DE9real_type"></span><span id="_CPPv2NK5G2lib8Dubins3p3X_DE9real_type"></span><span id="G2lib::Dubins3p::X_D__real_typeC"></span><span class="target" id="class_g2lib_1_1_dubins3p_1a015455c2e5ca4c5da0dccf26a7769a7e"></span><span class="k"><span class="pre">virtual</span></span><span class="w"> </span><a class="reference internal" href="../file/_clothoids_8hh.html#_CPPv4N5G2lib9real_typeE" title="G2lib::real_type"><span class="n"><span class="pre">real_type</span></span></a><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">X_D</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="../file/_clothoids_8hh.html#_CPPv4N5G2lib9real_typeE" title="G2lib::real_type"><span class="n"><span class="pre">real_type</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">s</span></span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="k"><span class="pre">override</span></span><a class="headerlink" href="#_CPPv4NK5G2lib8Dubins3p3X_DE9real_type" title="Link to this definition">¶</a><br/></dt>
+<dd><p>x-coordinate derivative at curvilinear coordinate <code class="docutils literal notranslate"><span class="pre">s</span></code>. </p>
+</dd></dl>
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4NK5G2lib8Dubins3p3Y_DE9real_type">
+<span id="_CPPv3NK5G2lib8Dubins3p3Y_DE9real_type"></span><span id="_CPPv2NK5G2lib8Dubins3p3Y_DE9real_type"></span><span id="G2lib::Dubins3p::Y_D__real_typeC"></span><span class="target" id="class_g2lib_1_1_dubins3p_1a863bb63463fd25127feed9c102a46eec"></span><span class="k"><span class="pre">virtual</span></span><span class="w"> </span><a class="reference internal" href="../file/_clothoids_8hh.html#_CPPv4N5G2lib9real_typeE" title="G2lib::real_type"><span class="n"><span class="pre">real_type</span></span></a><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">Y_D</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="../file/_clothoids_8hh.html#_CPPv4N5G2lib9real_typeE" title="G2lib::real_type"><span class="n"><span class="pre">real_type</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">s</span></span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="k"><span class="pre">override</span></span><a class="headerlink" href="#_CPPv4NK5G2lib8Dubins3p3Y_DE9real_type" title="Link to this definition">¶</a><br/></dt>
+<dd><p>y-coordinate derivative at curvilinear coordinate <code class="docutils literal notranslate"><span class="pre">s</span></code>. </p>
+</dd></dl>
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4NK5G2lib8Dubins3p4X_DDE9real_type">
+<span id="_CPPv3NK5G2lib8Dubins3p4X_DDE9real_type"></span><span id="_CPPv2NK5G2lib8Dubins3p4X_DDE9real_type"></span><span id="G2lib::Dubins3p::X_DD__real_typeC"></span><span class="target" id="class_g2lib_1_1_dubins3p_1afc3d5a51cec1934fb7a1582667bf055c"></span><span class="k"><span class="pre">virtual</span></span><span class="w"> </span><a class="reference internal" href="../file/_clothoids_8hh.html#_CPPv4N5G2lib9real_typeE" title="G2lib::real_type"><span class="n"><span class="pre">real_type</span></span></a><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">X_DD</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="../file/_clothoids_8hh.html#_CPPv4N5G2lib9real_typeE" title="G2lib::real_type"><span class="n"><span class="pre">real_type</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">s</span></span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="k"><span class="pre">override</span></span><a class="headerlink" href="#_CPPv4NK5G2lib8Dubins3p4X_DDE9real_type" title="Link to this definition">¶</a><br/></dt>
+<dd><p>x-coordinate second derivative at curvilinear coordinate <code class="docutils literal notranslate"><span class="pre">s</span></code>. </p>
+</dd></dl>
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4NK5G2lib8Dubins3p4Y_DDE9real_type">
+<span id="_CPPv3NK5G2lib8Dubins3p4Y_DDE9real_type"></span><span id="_CPPv2NK5G2lib8Dubins3p4Y_DDE9real_type"></span><span id="G2lib::Dubins3p::Y_DD__real_typeC"></span><span class="target" id="class_g2lib_1_1_dubins3p_1a4c62ef435036aaa9fbda76cf1ff06b28"></span><span class="k"><span class="pre">virtual</span></span><span class="w"> </span><a class="reference internal" href="../file/_clothoids_8hh.html#_CPPv4N5G2lib9real_typeE" title="G2lib::real_type"><span class="n"><span class="pre">real_type</span></span></a><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">Y_DD</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="../file/_clothoids_8hh.html#_CPPv4N5G2lib9real_typeE" title="G2lib::real_type"><span class="n"><span class="pre">real_type</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">s</span></span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="k"><span class="pre">override</span></span><a class="headerlink" href="#_CPPv4NK5G2lib8Dubins3p4Y_DDE9real_type" title="Link to this definition">¶</a><br/></dt>
+<dd><p>y-coordinate second derivative at curvilinear coordinate <code class="docutils literal notranslate"><span class="pre">s</span></code>. </p>
+</dd></dl>
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4NK5G2lib8Dubins3p5X_DDDE9real_type">
+<span id="_CPPv3NK5G2lib8Dubins3p5X_DDDE9real_type"></span><span id="_CPPv2NK5G2lib8Dubins3p5X_DDDE9real_type"></span><span id="G2lib::Dubins3p::X_DDD__real_typeC"></span><span class="target" id="class_g2lib_1_1_dubins3p_1a2d2d92ae944ae99cc3757a36a4e68165"></span><span class="k"><span class="pre">virtual</span></span><span class="w"> </span><a class="reference internal" href="../file/_clothoids_8hh.html#_CPPv4N5G2lib9real_typeE" title="G2lib::real_type"><span class="n"><span class="pre">real_type</span></span></a><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">X_DDD</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="../file/_clothoids_8hh.html#_CPPv4N5G2lib9real_typeE" title="G2lib::real_type"><span class="n"><span class="pre">real_type</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">s</span></span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="k"><span class="pre">override</span></span><a class="headerlink" href="#_CPPv4NK5G2lib8Dubins3p5X_DDDE9real_type" title="Link to this definition">¶</a><br/></dt>
+<dd><p>x-coordinate third derivative at curvilinear coordinate <code class="docutils literal notranslate"><span class="pre">s</span></code>. </p>
+</dd></dl>
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4NK5G2lib8Dubins3p5Y_DDDE9real_type">
+<span id="_CPPv3NK5G2lib8Dubins3p5Y_DDDE9real_type"></span><span id="_CPPv2NK5G2lib8Dubins3p5Y_DDDE9real_type"></span><span id="G2lib::Dubins3p::Y_DDD__real_typeC"></span><span class="target" id="class_g2lib_1_1_dubins3p_1a918eb80a79d0d3d5c6eab981033a951f"></span><span class="k"><span class="pre">virtual</span></span><span class="w"> </span><a class="reference internal" href="../file/_clothoids_8hh.html#_CPPv4N5G2lib9real_typeE" title="G2lib::real_type"><span class="n"><span class="pre">real_type</span></span></a><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">Y_DDD</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="../file/_clothoids_8hh.html#_CPPv4N5G2lib9real_typeE" title="G2lib::real_type"><span class="n"><span class="pre">real_type</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">s</span></span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="k"><span class="pre">override</span></span><a class="headerlink" href="#_CPPv4NK5G2lib8Dubins3p5Y_DDDE9real_type" title="Link to this definition">¶</a><br/></dt>
+<dd><p>y-coordinate third derivative at curvilinear coordinate <code class="docutils literal notranslate"><span class="pre">s</span></code>. </p>
+</dd></dl>
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N5G2lib8Dubins3p9translateE9real_type9real_type">
+<span id="_CPPv3N5G2lib8Dubins3p9translateE9real_type9real_type"></span><span id="_CPPv2N5G2lib8Dubins3p9translateE9real_type9real_type"></span><span id="G2lib::Dubins3p::translate__real_type.real_type"></span><span class="target" id="class_g2lib_1_1_dubins3p_1a02e2f99788f0c6f5a847dc03d5674301"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="k"><span class="pre">virtual</span></span><span class="w"> </span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">translate</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="../file/_clothoids_8hh.html#_CPPv4N5G2lib9real_typeE" title="G2lib::real_type"><span class="n"><span class="pre">real_type</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">tx</span></span>, <a class="reference internal" href="../file/_clothoids_8hh.html#_CPPv4N5G2lib9real_typeE" title="G2lib::real_type"><span class="n"><span class="pre">real_type</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">ty</span></span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">override</span></span><a class="headerlink" href="#_CPPv4N5G2lib8Dubins3p9translateE9real_type9real_type" title="Link to this definition">¶</a><br/></dt>
+<dd><p>translate curve by <span class="math notranslate nohighlight">\( (t_x,t_y) \)</span></p>
+</dd></dl>
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N5G2lib8Dubins3p6rotateE9real_type9real_type9real_type">
+<span id="_CPPv3N5G2lib8Dubins3p6rotateE9real_type9real_type9real_type"></span><span id="_CPPv2N5G2lib8Dubins3p6rotateE9real_type9real_type9real_type"></span><span id="G2lib::Dubins3p::rotate__real_type.real_type.real_type"></span><span class="target" id="class_g2lib_1_1_dubins3p_1a8b3865b4194b2d69b7be17986ef3e3be"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="k"><span class="pre">virtual</span></span><span class="w"> </span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">rotate</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="../file/_clothoids_8hh.html#_CPPv4N5G2lib9real_typeE" title="G2lib::real_type"><span class="n"><span class="pre">real_type</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">angle</span></span>, <a class="reference internal" href="../file/_clothoids_8hh.html#_CPPv4N5G2lib9real_typeE" title="G2lib::real_type"><span class="n"><span class="pre">real_type</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">cx</span></span>, <a class="reference internal" href="../file/_clothoids_8hh.html#_CPPv4N5G2lib9real_typeE" title="G2lib::real_type"><span class="n"><span class="pre">real_type</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">cy</span></span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">override</span></span><a class="headerlink" href="#_CPPv4N5G2lib8Dubins3p6rotateE9real_type9real_type9real_type" title="Link to this definition">¶</a><br/></dt>
+<dd><p>Rotate curve by angle <span class="math notranslate nohighlight">\( theta \)</span> centered at point <span class="math notranslate nohighlight">\( (c_x,c_y)\)</span>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>angle</strong> – <strong>[in]</strong> angle <span class="math notranslate nohighlight">\( theta \)</span></p></li>
+<li><p><strong>cx</strong> – <strong>[in]</strong> <span class="math notranslate nohighlight">\( c_x\)</span></p></li>
+<li><p><strong>cy</strong> – <strong>[in]</strong> <span class="math notranslate nohighlight">\( c_y\)</span></p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N5G2lib8Dubins3p7reverseEv">
+<span id="_CPPv3N5G2lib8Dubins3p7reverseEv"></span><span id="_CPPv2N5G2lib8Dubins3p7reverseEv"></span><span id="G2lib::Dubins3p::reverse"></span><span class="target" id="class_g2lib_1_1_dubins3p_1a2f6383740915f418798fe71e126b630d"></span><span class="k"><span class="pre">virtual</span></span><span class="w"> </span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">reverse</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">override</span></span><a class="headerlink" href="#_CPPv4N5G2lib8Dubins3p7reverseEv" title="Link to this definition">¶</a><br/></dt>
+<dd><p>Reverse curve parameterization. </p>
+</dd></dl>
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N5G2lib8Dubins3p13change_originE9real_type9real_type">
+<span id="_CPPv3N5G2lib8Dubins3p13change_originE9real_type9real_type"></span><span id="_CPPv2N5G2lib8Dubins3p13change_originE9real_type9real_type"></span><span id="G2lib::Dubins3p::change_origin__real_type.real_type"></span><span class="target" id="class_g2lib_1_1_dubins3p_1a2f4b25023ce9b74d1d0691345b6ddabc"></span><span class="k"><span class="pre">virtual</span></span><span class="w"> </span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">change_origin</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="../file/_clothoids_8hh.html#_CPPv4N5G2lib9real_typeE" title="G2lib::real_type"><span class="n"><span class="pre">real_type</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">newx0</span></span>, <a class="reference internal" href="../file/_clothoids_8hh.html#_CPPv4N5G2lib9real_typeE" title="G2lib::real_type"><span class="n"><span class="pre">real_type</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">newy0</span></span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">override</span></span><a class="headerlink" href="#_CPPv4N5G2lib8Dubins3p13change_originE9real_type9real_type" title="Link to this definition">¶</a><br/></dt>
+<dd><p>Translate curve so that origin will be (<code class="docutils literal notranslate"><span class="pre">newx0</span></code>, <code class="docutils literal notranslate"><span class="pre">newy0</span></code>). </p>
+</dd></dl>
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N5G2lib8Dubins3p4trimE9real_type9real_type">
+<span id="_CPPv3N5G2lib8Dubins3p4trimE9real_type9real_type"></span><span id="_CPPv2N5G2lib8Dubins3p4trimE9real_type9real_type"></span><span id="G2lib::Dubins3p::trim__real_type.real_type"></span><span class="target" id="class_g2lib_1_1_dubins3p_1a2bfa2622a1a455732708cb5d35b440a6"></span><span class="k"><span class="pre">virtual</span></span><span class="w"> </span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">trim</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="../file/_clothoids_8hh.html#_CPPv4N5G2lib9real_typeE" title="G2lib::real_type"><span class="n"><span class="pre">real_type</span></span></a>, <a class="reference internal" href="../file/_clothoids_8hh.html#_CPPv4N5G2lib9real_typeE" title="G2lib::real_type"><span class="n"><span class="pre">real_type</span></span></a><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">override</span></span><a class="headerlink" href="#_CPPv4N5G2lib8Dubins3p4trimE9real_type9real_type" title="Link to this definition">¶</a><br/></dt>
+<dd><p>Cut curve at parametrix coordinate <code class="docutils literal notranslate"><span class="pre">s_begin</span></code> and <code class="docutils literal notranslate"><span class="pre">s_end</span></code>. </p>
+</dd></dl>
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N5G2lib8Dubins3p5scaleE9real_type">
+<span id="_CPPv3N5G2lib8Dubins3p5scaleE9real_type"></span><span id="_CPPv2N5G2lib8Dubins3p5scaleE9real_type"></span><span id="G2lib::Dubins3p::scale__real_type"></span><span class="target" id="class_g2lib_1_1_dubins3p_1ad1d9d3cf6a2b9038692ecc7366202e07"></span><span class="k"><span class="pre">virtual</span></span><span class="w"> </span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">scale</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="../file/_clothoids_8hh.html#_CPPv4N5G2lib9real_typeE" title="G2lib::real_type"><span class="n"><span class="pre">real_type</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">s</span></span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">override</span></span><a class="headerlink" href="#_CPPv4N5G2lib8Dubins3p5scaleE9real_type" title="Link to this definition">¶</a><br/></dt>
+<dd><p>Scale curve by factor <code class="docutils literal notranslate"><span class="pre">sc</span></code>. </p>
+</dd></dl>
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4NK5G2lib8Dubins3p4evalE9real_typeR9real_typeR9real_type">
+<span id="_CPPv3NK5G2lib8Dubins3p4evalE9real_typeR9real_typeR9real_type"></span><span id="_CPPv2NK5G2lib8Dubins3p4evalE9real_typeR9real_typeR9real_type"></span><span id="G2lib::Dubins3p::eval__real_type.real_typeR.real_typeRC"></span><span class="target" id="class_g2lib_1_1_dubins3p_1ad97259f21ae8bccf68e82b164f67f04e"></span><span class="k"><span class="pre">virtual</span></span><span class="w"> </span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">eval</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="../file/_clothoids_8hh.html#_CPPv4N5G2lib9real_typeE" title="G2lib::real_type"><span class="n"><span class="pre">real_type</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">s</span></span>, <a class="reference internal" href="../file/_clothoids_8hh.html#_CPPv4N5G2lib9real_typeE" title="G2lib::real_type"><span class="n"><span class="pre">real_type</span></span></a><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">x</span></span>, <a class="reference internal" href="../file/_clothoids_8hh.html#_CPPv4N5G2lib9real_typeE" title="G2lib::real_type"><span class="n"><span class="pre">real_type</span></span></a><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">y</span></span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="k"><span class="pre">override</span></span><a class="headerlink" href="#_CPPv4NK5G2lib8Dubins3p4evalE9real_typeR9real_typeR9real_type" title="Link to this definition">¶</a><br/></dt>
+<dd><p>x and y-coordinate at curvilinear coordinate <code class="docutils literal notranslate"><span class="pre">s</span></code>. </p>
+</dd></dl>
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4NK5G2lib8Dubins3p6eval_DE9real_typeR9real_typeR9real_type">
+<span id="_CPPv3NK5G2lib8Dubins3p6eval_DE9real_typeR9real_typeR9real_type"></span><span id="_CPPv2NK5G2lib8Dubins3p6eval_DE9real_typeR9real_typeR9real_type"></span><span id="G2lib::Dubins3p::eval_D__real_type.real_typeR.real_typeRC"></span><span class="target" id="class_g2lib_1_1_dubins3p_1abed03f3abe6f882a424406eeeef28d97"></span><span class="k"><span class="pre">virtual</span></span><span class="w"> </span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">eval_D</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="../file/_clothoids_8hh.html#_CPPv4N5G2lib9real_typeE" title="G2lib::real_type"><span class="n"><span class="pre">real_type</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">s</span></span>, <a class="reference internal" href="../file/_clothoids_8hh.html#_CPPv4N5G2lib9real_typeE" title="G2lib::real_type"><span class="n"><span class="pre">real_type</span></span></a><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">x_D</span></span>, <a class="reference internal" href="../file/_clothoids_8hh.html#_CPPv4N5G2lib9real_typeE" title="G2lib::real_type"><span class="n"><span class="pre">real_type</span></span></a><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">y_D</span></span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="k"><span class="pre">override</span></span><a class="headerlink" href="#_CPPv4NK5G2lib8Dubins3p6eval_DE9real_typeR9real_typeR9real_type" title="Link to this definition">¶</a><br/></dt>
+<dd><p>x and y-coordinate derivative at curvilinear coordinate <code class="docutils literal notranslate"><span class="pre">s</span></code>. </p>
+</dd></dl>
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4NK5G2lib8Dubins3p7eval_DDE9real_typeR9real_typeR9real_type">
+<span id="_CPPv3NK5G2lib8Dubins3p7eval_DDE9real_typeR9real_typeR9real_type"></span><span id="_CPPv2NK5G2lib8Dubins3p7eval_DDE9real_typeR9real_typeR9real_type"></span><span id="G2lib::Dubins3p::eval_DD__real_type.real_typeR.real_typeRC"></span><span class="target" id="class_g2lib_1_1_dubins3p_1a93cd92eaa8cd8ace4656cf4a475d51a5"></span><span class="k"><span class="pre">virtual</span></span><span class="w"> </span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">eval_DD</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="../file/_clothoids_8hh.html#_CPPv4N5G2lib9real_typeE" title="G2lib::real_type"><span class="n"><span class="pre">real_type</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">s</span></span>, <a class="reference internal" href="../file/_clothoids_8hh.html#_CPPv4N5G2lib9real_typeE" title="G2lib::real_type"><span class="n"><span class="pre">real_type</span></span></a><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">x_DD</span></span>, <a class="reference internal" href="../file/_clothoids_8hh.html#_CPPv4N5G2lib9real_typeE" title="G2lib::real_type"><span class="n"><span class="pre">real_type</span></span></a><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">y_DD</span></span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="k"><span class="pre">override</span></span><a class="headerlink" href="#_CPPv4NK5G2lib8Dubins3p7eval_DDE9real_typeR9real_typeR9real_type" title="Link to this definition">¶</a><br/></dt>
+<dd><p>x and y-coordinate second derivative at curvilinear coordinate <code class="docutils literal notranslate"><span class="pre">s</span></code>. </p>
+</dd></dl>
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4NK5G2lib8Dubins3p8eval_DDDE9real_typeR9real_typeR9real_type">
+<span id="_CPPv3NK5G2lib8Dubins3p8eval_DDDE9real_typeR9real_typeR9real_type"></span><span id="_CPPv2NK5G2lib8Dubins3p8eval_DDDE9real_typeR9real_typeR9real_type"></span><span id="G2lib::Dubins3p::eval_DDD__real_type.real_typeR.real_typeRC"></span><span class="target" id="class_g2lib_1_1_dubins3p_1a4b94780c3cf51f52c986f1d7443ddf0c"></span><span class="k"><span class="pre">virtual</span></span><span class="w"> </span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">eval_DDD</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="../file/_clothoids_8hh.html#_CPPv4N5G2lib9real_typeE" title="G2lib::real_type"><span class="n"><span class="pre">real_type</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">s</span></span>, <a class="reference internal" href="../file/_clothoids_8hh.html#_CPPv4N5G2lib9real_typeE" title="G2lib::real_type"><span class="n"><span class="pre">real_type</span></span></a><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">x_DDD</span></span>, <a class="reference internal" href="../file/_clothoids_8hh.html#_CPPv4N5G2lib9real_typeE" title="G2lib::real_type"><span class="n"><span class="pre">real_type</span></span></a><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">y_DDD</span></span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="k"><span class="pre">override</span></span><a class="headerlink" href="#_CPPv4NK5G2lib8Dubins3p8eval_DDDE9real_typeR9real_typeR9real_type" title="Link to this definition">¶</a><br/></dt>
+<dd><p>x and y-coordinate third derivative at curvilinear coordinate <code class="docutils literal notranslate"><span class="pre">s</span></code>. </p>
+</dd></dl>
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4NK5G2lib8Dubins3p8eval_ISOE9real_type9real_typeR9real_typeR9real_type">
+<span id="_CPPv3NK5G2lib8Dubins3p8eval_ISOE9real_type9real_typeR9real_typeR9real_type"></span><span id="_CPPv2NK5G2lib8Dubins3p8eval_ISOE9real_type9real_typeR9real_typeR9real_type"></span><span id="G2lib::Dubins3p::eval_ISO__real_type.real_type.real_typeR.real_typeRC"></span><span class="target" id="class_g2lib_1_1_dubins3p_1ae4dc34504d1f067c5daff08acffbb5b9"></span><span class="k"><span class="pre">virtual</span></span><span class="w"> </span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">eval_ISO</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="../file/_clothoids_8hh.html#_CPPv4N5G2lib9real_typeE" title="G2lib::real_type"><span class="n"><span class="pre">real_type</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">s</span></span>, <a class="reference internal" href="../file/_clothoids_8hh.html#_CPPv4N5G2lib9real_typeE" title="G2lib::real_type"><span class="n"><span class="pre">real_type</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">offs</span></span>, <a class="reference internal" href="../file/_clothoids_8hh.html#_CPPv4N5G2lib9real_typeE" title="G2lib::real_type"><span class="n"><span class="pre">real_type</span></span></a><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">x</span></span>, <a class="reference internal" href="../file/_clothoids_8hh.html#_CPPv4N5G2lib9real_typeE" title="G2lib::real_type"><span class="n"><span class="pre">real_type</span></span></a><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">y</span></span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="k"><span class="pre">override</span></span><a class="headerlink" href="#_CPPv4NK5G2lib8Dubins3p8eval_ISOE9real_type9real_typeR9real_typeR9real_type" title="Link to this definition">¶</a><br/></dt>
+<dd><p>Compute curve at position <code class="docutils literal notranslate"><span class="pre">s</span></code> with offset <code class="docutils literal notranslate"><span class="pre">offs</span></code> (ISO).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>s</strong> – <strong>[in]</strong> parameter on the curve </p></li>
+<li><p><strong>offs</strong> – <strong>[in]</strong> offset of the curve </p></li>
+<li><p><strong>x</strong> – <strong>[out]</strong> coordinate </p></li>
+<li><p><strong>y</strong> – <strong>[out]</strong> coordinate </p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4NK5G2lib8Dubins3p10eval_ISO_DE9real_type9real_typeR9real_typeR9real_type">
+<span id="_CPPv3NK5G2lib8Dubins3p10eval_ISO_DE9real_type9real_typeR9real_typeR9real_type"></span><span id="_CPPv2NK5G2lib8Dubins3p10eval_ISO_DE9real_type9real_typeR9real_typeR9real_type"></span><span id="G2lib::Dubins3p::eval_ISO_D__real_type.real_type.real_typeR.real_typeRC"></span><span class="target" id="class_g2lib_1_1_dubins3p_1a74bf159a0013a46b1e5a3be475ac5dbc"></span><span class="k"><span class="pre">virtual</span></span><span class="w"> </span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">eval_ISO_D</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="../file/_clothoids_8hh.html#_CPPv4N5G2lib9real_typeE" title="G2lib::real_type"><span class="n"><span class="pre">real_type</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">s</span></span>, <a class="reference internal" href="../file/_clothoids_8hh.html#_CPPv4N5G2lib9real_typeE" title="G2lib::real_type"><span class="n"><span class="pre">real_type</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">offs</span></span>, <a class="reference internal" href="../file/_clothoids_8hh.html#_CPPv4N5G2lib9real_typeE" title="G2lib::real_type"><span class="n"><span class="pre">real_type</span></span></a><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">x_D</span></span>, <a class="reference internal" href="../file/_clothoids_8hh.html#_CPPv4N5G2lib9real_typeE" title="G2lib::real_type"><span class="n"><span class="pre">real_type</span></span></a><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">y_D</span></span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="k"><span class="pre">override</span></span><a class="headerlink" href="#_CPPv4NK5G2lib8Dubins3p10eval_ISO_DE9real_type9real_typeR9real_typeR9real_type" title="Link to this definition">¶</a><br/></dt>
+<dd><p>Compute derivative curve at position <code class="docutils literal notranslate"><span class="pre">s</span></code> with offset <code class="docutils literal notranslate"><span class="pre">offs</span></code> (ISO).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>s</strong> – <strong>[in]</strong> parameter on the curve </p></li>
+<li><p><strong>offs</strong> – <strong>[in]</strong> offset of the curve </p></li>
+<li><p><strong>x_D</strong> – <strong>[out]</strong> x-coordinate </p></li>
+<li><p><strong>y_D</strong> – <strong>[out]</strong> y-coordinate </p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4NK5G2lib8Dubins3p11eval_ISO_DDE9real_type9real_typeR9real_typeR9real_type">
+<span id="_CPPv3NK5G2lib8Dubins3p11eval_ISO_DDE9real_type9real_typeR9real_typeR9real_type"></span><span id="_CPPv2NK5G2lib8Dubins3p11eval_ISO_DDE9real_type9real_typeR9real_typeR9real_type"></span><span id="G2lib::Dubins3p::eval_ISO_DD__real_type.real_type.real_typeR.real_typeRC"></span><span class="target" id="class_g2lib_1_1_dubins3p_1ab38554ba1d8cc78395899f04d1f24725"></span><span class="k"><span class="pre">virtual</span></span><span class="w"> </span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">eval_ISO_DD</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="../file/_clothoids_8hh.html#_CPPv4N5G2lib9real_typeE" title="G2lib::real_type"><span class="n"><span class="pre">real_type</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">s</span></span>, <a class="reference internal" href="../file/_clothoids_8hh.html#_CPPv4N5G2lib9real_typeE" title="G2lib::real_type"><span class="n"><span class="pre">real_type</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">offs</span></span>, <a class="reference internal" href="../file/_clothoids_8hh.html#_CPPv4N5G2lib9real_typeE" title="G2lib::real_type"><span class="n"><span class="pre">real_type</span></span></a><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">x_DD</span></span>, <a class="reference internal" href="../file/_clothoids_8hh.html#_CPPv4N5G2lib9real_typeE" title="G2lib::real_type"><span class="n"><span class="pre">real_type</span></span></a><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">y_DD</span></span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="k"><span class="pre">override</span></span><a class="headerlink" href="#_CPPv4NK5G2lib8Dubins3p11eval_ISO_DDE9real_type9real_typeR9real_typeR9real_type" title="Link to this definition">¶</a><br/></dt>
+<dd><p>Compute second derivative curve at position <code class="docutils literal notranslate"><span class="pre">s</span></code> with offset <code class="docutils literal notranslate"><span class="pre">offs</span></code> (ISO).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>s</strong> – <strong>[in]</strong> parameter on the curve </p></li>
+<li><p><strong>offs</strong> – <strong>[in]</strong> offset of the curve </p></li>
+<li><p><strong>x_DD</strong> – <strong>[out]</strong> x-coordinate second derivative </p></li>
+<li><p><strong>y_DD</strong> – <strong>[out]</strong> y-coordinate second derivative </p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4NK5G2lib8Dubins3p12eval_ISO_DDDE9real_type9real_typeR9real_typeR9real_type">
+<span id="_CPPv3NK5G2lib8Dubins3p12eval_ISO_DDDE9real_type9real_typeR9real_typeR9real_type"></span><span id="_CPPv2NK5G2lib8Dubins3p12eval_ISO_DDDE9real_type9real_typeR9real_typeR9real_type"></span><span id="G2lib::Dubins3p::eval_ISO_DDD__real_type.real_type.real_typeR.real_typeRC"></span><span class="target" id="class_g2lib_1_1_dubins3p_1a7d75f9af2083e7de48b93fb21d60f885"></span><span class="k"><span class="pre">virtual</span></span><span class="w"> </span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">eval_ISO_DDD</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="../file/_clothoids_8hh.html#_CPPv4N5G2lib9real_typeE" title="G2lib::real_type"><span class="n"><span class="pre">real_type</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">s</span></span>, <a class="reference internal" href="../file/_clothoids_8hh.html#_CPPv4N5G2lib9real_typeE" title="G2lib::real_type"><span class="n"><span class="pre">real_type</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">offs</span></span>, <a class="reference internal" href="../file/_clothoids_8hh.html#_CPPv4N5G2lib9real_typeE" title="G2lib::real_type"><span class="n"><span class="pre">real_type</span></span></a><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">x_DDD</span></span>, <a class="reference internal" href="../file/_clothoids_8hh.html#_CPPv4N5G2lib9real_typeE" title="G2lib::real_type"><span class="n"><span class="pre">real_type</span></span></a><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">y_DDD</span></span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="k"><span class="pre">override</span></span><a class="headerlink" href="#_CPPv4NK5G2lib8Dubins3p12eval_ISO_DDDE9real_type9real_typeR9real_typeR9real_type" title="Link to this definition">¶</a><br/></dt>
+<dd><p>Compute third derivative curve at position <code class="docutils literal notranslate"><span class="pre">s</span></code> with offset <code class="docutils literal notranslate"><span class="pre">offs</span></code> (ISO).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>s</strong> – <strong>[in]</strong> parameter on the curve </p></li>
+<li><p><strong>offs</strong> – <strong>[in]</strong> offset of the curve </p></li>
+<li><p><strong>x_DDD</strong> – <strong>[out]</strong> x-coordinate third derivative </p></li>
+<li><p><strong>y_DDD</strong> – <strong>[out]</strong> y-coordinate third derivative </p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4NK5G2lib8Dubins3p12bb_trianglesER6vectorI10Triangle2DE9real_type9real_type7integer">
+<span id="_CPPv3NK5G2lib8Dubins3p12bb_trianglesER6vectorI10Triangle2DE9real_type9real_type7integer"></span><span id="_CPPv2NK5G2lib8Dubins3p12bb_trianglesER6vectorI10Triangle2DE9real_type9real_type7integer"></span><span id="G2lib::Dubins3p::bb_triangles__vector:Triangle2D:R.real_type.real_type.integerC"></span><span class="target" id="class_g2lib_1_1_dubins3p_1a6f422281cd6955cae75655feb9756193"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="k"><span class="pre">virtual</span></span><span class="w"> </span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">bb_triangles</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">vector</span></span><span class="p"><span class="pre">&lt;</span></span><a class="reference internal" href="class_g2lib_1_1_triangle2_d.html#_CPPv4N5G2lib10Triangle2DE" title="G2lib::Triangle2D"><span class="n"><span class="pre">Triangle2D</span></span></a><span class="p"><span class="pre">&gt;</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">tvec</span></span>, <a class="reference internal" href="../file/_clothoids_8hh.html#_CPPv4N5G2lib9real_typeE" title="G2lib::real_type"><span class="n"><span class="pre">real_type</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">max_angle</span></span><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="n"><span class="pre">Utils</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">m_pi</span></span><span class="w"> </span><span class="o"><span class="pre">/</span></span><span class="w"> </span><span class="m"><span class="pre">18</span></span>, <a class="reference internal" href="../file/_clothoids_8hh.html#_CPPv4N5G2lib9real_typeE" title="G2lib::real_type"><span class="n"><span class="pre">real_type</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">max_size</span></span><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="m"><span class="pre">1e100</span></span>, <a class="reference internal" href="../file/_clothoids_8hh.html#_CPPv4N5G2lib7integerE" title="G2lib::integer"><span class="n"><span class="pre">integer</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">icurve</span></span><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="m"><span class="pre">0</span></span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="k"><span class="pre">override</span></span><a class="headerlink" href="#_CPPv4NK5G2lib8Dubins3p12bb_trianglesER6vectorI10Triangle2DE9real_type9real_type7integer" title="Link to this definition">¶</a><br/></dt>
+<dd><p>Build a cover with triangles of the curve.</p>
+<p><img alt="../../_images/biarc_cover.jpg" src="../../_images/biarc_cover.jpg"/></p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>tvec</strong> – <strong>[out]</strong> list of covering triangles </p></li>
+<li><p><strong>max_angle</strong> – <strong>[out]</strong> maximum angle variation of the curve covered by a triangle </p></li>
+<li><p><strong>max_size</strong> – <strong>[out]</strong> maximum admissible size of the covering tirnagles </p></li>
+<li><p><strong>icurve</strong> – <strong>[out]</strong> index of the covering triangles</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4NK5G2lib8Dubins3p16bb_triangles_ISOE9real_typeR6vectorI10Triangle2DE9real_type9real_type7integer">
+<span id="_CPPv3NK5G2lib8Dubins3p16bb_triangles_ISOE9real_typeR6vectorI10Triangle2DE9real_type9real_type7integer"></span><span id="_CPPv2NK5G2lib8Dubins3p16bb_triangles_ISOE9real_typeR6vectorI10Triangle2DE9real_type9real_type7integer"></span><span id="G2lib::Dubins3p::bb_triangles_ISO__real_type.vector:Triangle2D:R.real_type.real_type.integerC"></span><span class="target" id="class_g2lib_1_1_dubins3p_1ad89ab6a1fab06fac23f66439ca075157"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="k"><span class="pre">virtual</span></span><span class="w"> </span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">bb_triangles_ISO</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="../file/_clothoids_8hh.html#_CPPv4N5G2lib9real_typeE" title="G2lib::real_type"><span class="n"><span class="pre">real_type</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">offs</span></span>, <span class="n"><span class="pre">vector</span></span><span class="p"><span class="pre">&lt;</span></span><a class="reference internal" href="class_g2lib_1_1_triangle2_d.html#_CPPv4N5G2lib10Triangle2DE" title="G2lib::Triangle2D"><span class="n"><span class="pre">Triangle2D</span></span></a><span class="p"><span class="pre">&gt;</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">tvec</span></span>, <a class="reference internal" href="../file/_clothoids_8hh.html#_CPPv4N5G2lib9real_typeE" title="G2lib::real_type"><span class="n"><span class="pre">real_type</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">max_angle</span></span><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="n"><span class="pre">Utils</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">m_pi</span></span><span class="w"> </span><span class="o"><span class="pre">/</span></span><span class="w"> </span><span class="m"><span class="pre">18</span></span>, <a class="reference internal" href="../file/_clothoids_8hh.html#_CPPv4N5G2lib9real_typeE" title="G2lib::real_type"><span class="n"><span class="pre">real_type</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">max_size</span></span><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="m"><span class="pre">1e100</span></span>, <a class="reference internal" href="../file/_clothoids_8hh.html#_CPPv4N5G2lib7integerE" title="G2lib::integer"><span class="n"><span class="pre">integer</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">icurve</span></span><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="m"><span class="pre">0</span></span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="k"><span class="pre">override</span></span><a class="headerlink" href="#_CPPv4NK5G2lib8Dubins3p16bb_triangles_ISOE9real_typeR6vectorI10Triangle2DE9real_type9real_type7integer" title="Link to this definition">¶</a><br/></dt>
+<dd><p>Build a cover with triangles of the curve with offset (ISO).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>offs</strong> – <strong>[out]</strong> curve offset </p></li>
+<li><p><strong>tvec</strong> – <strong>[out]</strong> list of covering triangles </p></li>
+<li><p><strong>max_angle</strong> – <strong>[out]</strong> maximum angle variation of the curve covered by a triangle </p></li>
+<li><p><strong>max_size</strong> – <strong>[out]</strong> maximum admissible size of the covering tirnagles </p></li>
+<li><p><strong>icurve</strong> – <strong>[out]</strong> index of the covering triangles </p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4NK5G2lib8Dubins3p16bb_triangles_SAEE9real_typeR6vectorI10Triangle2DE9real_type9real_type7integer">
+<span id="_CPPv3NK5G2lib8Dubins3p16bb_triangles_SAEE9real_typeR6vectorI10Triangle2DE9real_type9real_type7integer"></span><span id="_CPPv2NK5G2lib8Dubins3p16bb_triangles_SAEE9real_typeR6vectorI10Triangle2DE9real_type9real_type7integer"></span><span id="G2lib::Dubins3p::bb_triangles_SAE__real_type.vector:Triangle2D:R.real_type.real_type.integerC"></span><span class="target" id="class_g2lib_1_1_dubins3p_1a25801ae8a9ec640546b2e106c8065e7a"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="k"><span class="pre">virtual</span></span><span class="w"> </span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">bb_triangles_SAE</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="../file/_clothoids_8hh.html#_CPPv4N5G2lib9real_typeE" title="G2lib::real_type"><span class="n"><span class="pre">real_type</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">offs</span></span>, <span class="n"><span class="pre">vector</span></span><span class="p"><span class="pre">&lt;</span></span><a class="reference internal" href="class_g2lib_1_1_triangle2_d.html#_CPPv4N5G2lib10Triangle2DE" title="G2lib::Triangle2D"><span class="n"><span class="pre">Triangle2D</span></span></a><span class="p"><span class="pre">&gt;</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">tvec</span></span>, <a class="reference internal" href="../file/_clothoids_8hh.html#_CPPv4N5G2lib9real_typeE" title="G2lib::real_type"><span class="n"><span class="pre">real_type</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">max_angle</span></span><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="n"><span class="pre">Utils</span></span><span class="p"><span class="pre">::</span></span><span class="n"><span class="pre">m_pi</span></span><span class="w"> </span><span class="o"><span class="pre">/</span></span><span class="w"> </span><span class="m"><span class="pre">18</span></span>, <a class="reference internal" href="../file/_clothoids_8hh.html#_CPPv4N5G2lib9real_typeE" title="G2lib::real_type"><span class="n"><span class="pre">real_type</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">max_size</span></span><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="m"><span class="pre">1e100</span></span>, <a class="reference internal" href="../file/_clothoids_8hh.html#_CPPv4N5G2lib7integerE" title="G2lib::integer"><span class="n"><span class="pre">integer</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">icurve</span></span><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="m"><span class="pre">0</span></span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="k"><span class="pre">override</span></span><a class="headerlink" href="#_CPPv4NK5G2lib8Dubins3p16bb_triangles_SAEE9real_typeR6vectorI10Triangle2DE9real_type9real_type7integer" title="Link to this definition">¶</a><br/></dt>
+<dd><p>Build a cover with triangles of the curve with offset (SAE).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>offs</strong> – <strong>[out]</strong> curve offset </p></li>
+<li><p><strong>tvec</strong> – <strong>[out]</strong> list of covering triangles </p></li>
+<li><p><strong>max_angle</strong> – <strong>[out]</strong> maximum angle variation of the arc covered by a triangle </p></li>
+<li><p><strong>max_size</strong> – <strong>[out]</strong> maximum admissible size of the covering tirnagles </p></li>
+<li><p><strong>icurve</strong> – <strong>[out]</strong> index of the covering triangles </p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4NK5G2lib8Dubins3p17closest_point_ISOE9real_type9real_typeR9real_typeR9real_typeR9real_typeR9real_typeR9real_type">
+<span id="_CPPv3NK5G2lib8Dubins3p17closest_point_ISOE9real_type9real_typeR9real_typeR9real_typeR9real_typeR9real_typeR9real_type"></span><span id="_CPPv2NK5G2lib8Dubins3p17closest_point_ISOE9real_type9real_typeR9real_typeR9real_typeR9real_typeR9real_typeR9real_type"></span><span id="G2lib::Dubins3p::closest_point_ISO__real_type.real_type.real_typeR.real_typeR.real_typeR.real_typeR.real_typeRC"></span><span class="target" id="class_g2lib_1_1_dubins3p_1a729457dc26e04f7da709b3ee52a1b2bc"></span><span class="k"><span class="pre">virtual</span></span><span class="w"> </span><a class="reference internal" href="../file/_clothoids_8hh.html#_CPPv4N5G2lib7integerE" title="G2lib::integer"><span class="n"><span class="pre">integer</span></span></a><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">closest_point_ISO</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="../file/_clothoids_8hh.html#_CPPv4N5G2lib9real_typeE" title="G2lib::real_type"><span class="n"><span class="pre">real_type</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">qx</span></span>, <a class="reference internal" href="../file/_clothoids_8hh.html#_CPPv4N5G2lib9real_typeE" title="G2lib::real_type"><span class="n"><span class="pre">real_type</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">qy</span></span>, <a class="reference internal" href="../file/_clothoids_8hh.html#_CPPv4N5G2lib9real_typeE" title="G2lib::real_type"><span class="n"><span class="pre">real_type</span></span></a><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">x</span></span>, <a class="reference internal" href="../file/_clothoids_8hh.html#_CPPv4N5G2lib9real_typeE" title="G2lib::real_type"><span class="n"><span class="pre">real_type</span></span></a><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">y</span></span>, <a class="reference internal" href="../file/_clothoids_8hh.html#_CPPv4N5G2lib9real_typeE" title="G2lib::real_type"><span class="n"><span class="pre">real_type</span></span></a><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">s</span></span>, <a class="reference internal" href="../file/_clothoids_8hh.html#_CPPv4N5G2lib9real_typeE" title="G2lib::real_type"><span class="n"><span class="pre">real_type</span></span></a><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">t</span></span>, <a class="reference internal" href="../file/_clothoids_8hh.html#_CPPv4N5G2lib9real_typeE" title="G2lib::real_type"><span class="n"><span class="pre">real_type</span></span></a><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">dst</span></span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="k"><span class="pre">override</span></span><a class="headerlink" href="#_CPPv4NK5G2lib8Dubins3p17closest_point_ISOE9real_type9real_typeR9real_typeR9real_typeR9real_typeR9real_typeR9real_type" title="Link to this definition">¶</a><br/></dt>
+<dd><p>Given a point find closest point on the curve.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>qx</strong> – x-coordinate of the point </p></li>
+<li><p><strong>qy</strong> – y-coordinate of the point </p></li>
+<li><p><strong>x</strong> – x-coordinate of the projected point on the curve </p></li>
+<li><p><strong>y</strong> – y-coordinate of the projected point on the curve </p></li>
+<li><p><strong>s</strong> – parameter on the curve of the projection </p></li>
+<li><p><strong>t</strong> – curvilinear coordinate of the point x,y (if orthogonal projection) </p></li>
+<li><p><strong>dst</strong> – distance point projected point </p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>1 = point is projected orthogonal 0 = more than one projection (first returned) -1 = minimum point is not othogonal projection to curve </p>
+</dd>
+</dl>
+</dd></dl>
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4NK5G2lib8Dubins3p17closest_point_ISOE9real_type9real_type9real_typeR9real_typeR9real_typeR9real_typeR9real_typeR9real_type">
+<span id="_CPPv3NK5G2lib8Dubins3p17closest_point_ISOE9real_type9real_type9real_typeR9real_typeR9real_typeR9real_typeR9real_typeR9real_type"></span><span id="_CPPv2NK5G2lib8Dubins3p17closest_point_ISOE9real_type9real_type9real_typeR9real_typeR9real_typeR9real_typeR9real_typeR9real_type"></span><span id="G2lib::Dubins3p::closest_point_ISO__real_type.real_type.real_type.real_typeR.real_typeR.real_typeR.real_typeR.real_typeRC"></span><span class="target" id="class_g2lib_1_1_dubins3p_1a9aca6fdbeb71c08d3dc8ec2d4d8f14ea"></span><span class="k"><span class="pre">virtual</span></span><span class="w"> </span><a class="reference internal" href="../file/_clothoids_8hh.html#_CPPv4N5G2lib7integerE" title="G2lib::integer"><span class="n"><span class="pre">integer</span></span></a><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">closest_point_ISO</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="../file/_clothoids_8hh.html#_CPPv4N5G2lib9real_typeE" title="G2lib::real_type"><span class="n"><span class="pre">real_type</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">qx</span></span>, <a class="reference internal" href="../file/_clothoids_8hh.html#_CPPv4N5G2lib9real_typeE" title="G2lib::real_type"><span class="n"><span class="pre">real_type</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">qy</span></span>, <a class="reference internal" href="../file/_clothoids_8hh.html#_CPPv4N5G2lib9real_typeE" title="G2lib::real_type"><span class="n"><span class="pre">real_type</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">offs</span></span>, <a class="reference internal" href="../file/_clothoids_8hh.html#_CPPv4N5G2lib9real_typeE" title="G2lib::real_type"><span class="n"><span class="pre">real_type</span></span></a><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">x</span></span>, <a class="reference internal" href="../file/_clothoids_8hh.html#_CPPv4N5G2lib9real_typeE" title="G2lib::real_type"><span class="n"><span class="pre">real_type</span></span></a><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">y</span></span>, <a class="reference internal" href="../file/_clothoids_8hh.html#_CPPv4N5G2lib9real_typeE" title="G2lib::real_type"><span class="n"><span class="pre">real_type</span></span></a><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">s</span></span>, <a class="reference internal" href="../file/_clothoids_8hh.html#_CPPv4N5G2lib9real_typeE" title="G2lib::real_type"><span class="n"><span class="pre">real_type</span></span></a><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">t</span></span>, <a class="reference internal" href="../file/_clothoids_8hh.html#_CPPv4N5G2lib9real_typeE" title="G2lib::real_type"><span class="n"><span class="pre">real_type</span></span></a><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">dst</span></span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="k"><span class="pre">override</span></span><a class="headerlink" href="#_CPPv4NK5G2lib8Dubins3p17closest_point_ISOE9real_type9real_type9real_typeR9real_typeR9real_typeR9real_typeR9real_typeR9real_type" title="Link to this definition">¶</a><br/></dt>
+<dd><p>Given a point find closest point on the curve.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>qx</strong> – x-coordinate of the point </p></li>
+<li><p><strong>qy</strong> – y-coordinate of the point </p></li>
+<li><p><strong>offs</strong> – offset of the curve </p></li>
+<li><p><strong>x</strong> – x-coordinate of the projected point on the curve </p></li>
+<li><p><strong>y</strong> – y-coordinate of the projected point on the curve </p></li>
+<li><p><strong>s</strong> – parameter on the curve of the projection </p></li>
+<li><p><strong>t</strong> – curvilinear coordinate of the point x,y (if orthogonal projection) </p></li>
+<li><p><strong>dst</strong> – distance point projected point </p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>1 = point is projected orthogonal 0 = more than one projection (first returned) -1 = minimum point is not othogonal projection to curve </p>
+</dd>
+</dl>
+</dd></dl>
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4NK5G2lib8Dubins3p9collisionERK8Dubins3p">
+<span id="_CPPv3NK5G2lib8Dubins3p9collisionERK8Dubins3p"></span><span id="_CPPv2NK5G2lib8Dubins3p9collisionERK8Dubins3p"></span><span id="G2lib::Dubins3p::collision__Dubins3pCRC"></span><span class="target" id="class_g2lib_1_1_dubins3p_1a1f8aa354d34a225e2b17a1d2cb9c1a07"></span><span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">collision</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="#_CPPv4N5G2lib8Dubins3pE" title="G2lib::Dubins3p"><span class="n"><span class="pre">Dubins3p</span></span></a><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">B</span></span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><a class="headerlink" href="#_CPPv4NK5G2lib8Dubins3p9collisionERK8Dubins3p" title="Link to this definition">¶</a><br/></dt>
+<dd><p>Detect a collision with another biarc. </p>
+</dd></dl>
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4NK5G2lib8Dubins3p13collision_ISOE9real_typeRK8Dubins3p9real_type">
+<span id="_CPPv3NK5G2lib8Dubins3p13collision_ISOE9real_typeRK8Dubins3p9real_type"></span><span id="_CPPv2NK5G2lib8Dubins3p13collision_ISOE9real_typeRK8Dubins3p9real_type"></span><span id="G2lib::Dubins3p::collision_ISO__real_type.Dubins3pCR.real_typeC"></span><span class="target" id="class_g2lib_1_1_dubins3p_1a7da2f6f74493934ce3f253d81dfcea54"></span><span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">collision_ISO</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="../file/_clothoids_8hh.html#_CPPv4N5G2lib9real_typeE" title="G2lib::real_type"><span class="n"><span class="pre">real_type</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">offs</span></span>, <a class="reference internal" href="#_CPPv4N5G2lib8Dubins3pE" title="G2lib::Dubins3p"><span class="n"><span class="pre">Dubins3p</span></span></a><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">B</span></span>, <a class="reference internal" href="../file/_clothoids_8hh.html#_CPPv4N5G2lib9real_typeE" title="G2lib::real_type"><span class="n"><span class="pre">real_type</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">offs_B</span></span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><a class="headerlink" href="#_CPPv4NK5G2lib8Dubins3p13collision_ISOE9real_typeRK8Dubins3p9real_type" title="Link to this definition">¶</a><br/></dt>
+<dd><p>Detect a collision with another biarc with offset.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>offs</strong> – <strong>[in]</strong> offset of first biarc </p></li>
+<li><p><strong>B</strong> – <strong>[in]</strong> second biarc </p></li>
+<li><p><strong>offs_B</strong> – <strong>[in]</strong> offset of second biarc </p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4NK5G2lib8Dubins3p9collisionEPK9BaseCurve">
+<span id="_CPPv3NK5G2lib8Dubins3p9collisionEPK9BaseCurve"></span><span id="_CPPv2NK5G2lib8Dubins3p9collisionEPK9BaseCurve"></span><span id="G2lib::Dubins3p::collision__BaseCurveCPC"></span><span class="target" id="class_g2lib_1_1_dubins3p_1afa5fc56f67bbfdccd397168ac7298666"></span><span class="k"><span class="pre">virtual</span></span><span class="w"> </span><span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">collision</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="class_g2lib_1_1_base_curve.html#_CPPv4N5G2lib9BaseCurveE" title="G2lib::BaseCurve"><span class="n"><span class="pre">BaseCurve</span></span></a><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n sig-param"><span class="pre">pC</span></span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="k"><span class="pre">override</span></span><a class="headerlink" href="#_CPPv4NK5G2lib8Dubins3p9collisionEPK9BaseCurve" title="Link to this definition">¶</a><br/></dt>
+<dd><p>Check collision with another curve. </p>
+</dd></dl>
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4NK5G2lib8Dubins3p13collision_ISOE9real_typePK9BaseCurve9real_type">
+<span id="_CPPv3NK5G2lib8Dubins3p13collision_ISOE9real_typePK9BaseCurve9real_type"></span><span id="_CPPv2NK5G2lib8Dubins3p13collision_ISOE9real_typePK9BaseCurve9real_type"></span><span id="G2lib::Dubins3p::collision_ISO__real_type.BaseCurveCP.real_typeC"></span><span class="target" id="class_g2lib_1_1_dubins3p_1aab92e77f789d76ecb8db8c44df6c2a1e"></span><span class="k"><span class="pre">virtual</span></span><span class="w"> </span><span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">collision_ISO</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="../file/_clothoids_8hh.html#_CPPv4N5G2lib9real_typeE" title="G2lib::real_type"><span class="n"><span class="pre">real_type</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">offs</span></span>, <a class="reference internal" href="class_g2lib_1_1_base_curve.html#_CPPv4N5G2lib9BaseCurveE" title="G2lib::BaseCurve"><span class="n"><span class="pre">BaseCurve</span></span></a><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n sig-param"><span class="pre">pC</span></span>, <a class="reference internal" href="../file/_clothoids_8hh.html#_CPPv4N5G2lib9real_typeE" title="G2lib::real_type"><span class="n"><span class="pre">real_type</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">offs_C</span></span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="k"><span class="pre">override</span></span><a class="headerlink" href="#_CPPv4NK5G2lib8Dubins3p13collision_ISOE9real_typePK9BaseCurve9real_type" title="Link to this definition">¶</a><br/></dt>
+<dd><p>Check collision with another curve with offset (ISO).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>offs</strong> – <strong>[in]</strong> curve offset </p></li>
+<li><p><strong>pC</strong> – <strong>[in]</strong> second curve to check collision </p></li>
+<li><p><strong>offs_C</strong> – <strong>[in]</strong> curve offset of the second curve </p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>true if collision is detected </p>
+</dd>
+</dl>
+</dd></dl>
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4NK5G2lib8Dubins3p9intersectERK8Dubins3pR13IntersectList">
+<span id="_CPPv3NK5G2lib8Dubins3p9intersectERK8Dubins3pR13IntersectList"></span><span id="_CPPv2NK5G2lib8Dubins3p9intersectERK8Dubins3pR13IntersectList"></span><span id="G2lib::Dubins3p::intersect__Dubins3pCR.IntersectListRC"></span><span class="target" id="class_g2lib_1_1_dubins3p_1ad67f61ab68a8e30dc0b18c364a9a4163"></span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">intersect</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="#_CPPv4N5G2lib8Dubins3pE" title="G2lib::Dubins3p"><span class="n"><span class="pre">Dubins3p</span></span></a><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">B</span></span>, <a class="reference internal" href="../file/_base_curve_8hxx.html#_CPPv4N5G2lib13IntersectListE" title="G2lib::IntersectList"><span class="n"><span class="pre">IntersectList</span></span></a><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">ilist</span></span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><a class="headerlink" href="#_CPPv4NK5G2lib8Dubins3p9intersectERK8Dubins3pR13IntersectList" title="Link to this definition">¶</a><br/></dt>
+<dd><p>Intersect a biarc with another biarc.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>B</strong> – <strong>[in]</strong> second biarc </p></li>
+<li><p><strong>ilist</strong> – <strong>[out]</strong> list of the intersection (as parameter on the curves) </p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4NK5G2lib8Dubins3p13intersect_ISOE9real_typeRK8Dubins3p9real_typeR13IntersectList">
+<span id="_CPPv3NK5G2lib8Dubins3p13intersect_ISOE9real_typeRK8Dubins3p9real_typeR13IntersectList"></span><span id="_CPPv2NK5G2lib8Dubins3p13intersect_ISOE9real_typeRK8Dubins3p9real_typeR13IntersectList"></span><span id="G2lib::Dubins3p::intersect_ISO__real_type.Dubins3pCR.real_type.IntersectListRC"></span><span class="target" id="class_g2lib_1_1_dubins3p_1ae3bf9483b5bfab6a18427d0ca3eb3f22"></span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">intersect_ISO</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="../file/_clothoids_8hh.html#_CPPv4N5G2lib9real_typeE" title="G2lib::real_type"><span class="n"><span class="pre">real_type</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">offs</span></span>, <a class="reference internal" href="#_CPPv4N5G2lib8Dubins3pE" title="G2lib::Dubins3p"><span class="n"><span class="pre">Dubins3p</span></span></a><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">B</span></span>, <a class="reference internal" href="../file/_clothoids_8hh.html#_CPPv4N5G2lib9real_typeE" title="G2lib::real_type"><span class="n"><span class="pre">real_type</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">offs_B</span></span>, <a class="reference internal" href="../file/_base_curve_8hxx.html#_CPPv4N5G2lib13IntersectListE" title="G2lib::IntersectList"><span class="n"><span class="pre">IntersectList</span></span></a><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">ilist</span></span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><a class="headerlink" href="#_CPPv4NK5G2lib8Dubins3p13intersect_ISOE9real_typeRK8Dubins3p9real_typeR13IntersectList" title="Link to this definition">¶</a><br/></dt>
+<dd><p>Intersect a biarc with another biarc with offset (ISO).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>offs</strong> – <strong>[in]</strong> offset of first biarc </p></li>
+<li><p><strong>B</strong> – <strong>[in]</strong> second <a class="reference internal" href="../namespace/namespace_g2lib.html#class_g2lib_1_1_dubins"><span class="std std-ref">Dubins</span></a></p></li>
+<li><p><strong>offs_B</strong> – <strong>[in]</strong> offset of second biarc </p></li>
+<li><p><strong>ilist</strong> – <strong>[out]</strong> list of the intersection (as parameter on the curves) </p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4NK5G2lib8Dubins3p9intersectEPK9BaseCurveR13IntersectList">
+<span id="_CPPv3NK5G2lib8Dubins3p9intersectEPK9BaseCurveR13IntersectList"></span><span id="_CPPv2NK5G2lib8Dubins3p9intersectEPK9BaseCurveR13IntersectList"></span><span id="G2lib::Dubins3p::intersect__BaseCurveCP.IntersectListRC"></span><span class="target" id="class_g2lib_1_1_dubins3p_1a3b8d79a59bc3c5b23e11a92cf8775fe5"></span><span class="k"><span class="pre">virtual</span></span><span class="w"> </span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">intersect</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="class_g2lib_1_1_base_curve.html#_CPPv4N5G2lib9BaseCurveE" title="G2lib::BaseCurve"><span class="n"><span class="pre">BaseCurve</span></span></a><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n sig-param"><span class="pre">pC</span></span>, <a class="reference internal" href="../file/_base_curve_8hxx.html#_CPPv4N5G2lib13IntersectListE" title="G2lib::IntersectList"><span class="n"><span class="pre">IntersectList</span></span></a><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">ilist</span></span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="k"><span class="pre">override</span></span><a class="headerlink" href="#_CPPv4NK5G2lib8Dubins3p9intersectEPK9BaseCurveR13IntersectList" title="Link to this definition">¶</a><br/></dt>
+<dd><p>Intersect the curve with another curve.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>pC</strong> – <strong>[in]</strong> second curve intersect </p></li>
+<li><p><strong>ilist</strong> – <strong>[out]</strong> list of the intersection (as parameter on the curves) </p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4NK5G2lib8Dubins3p13intersect_ISOE9real_typePK9BaseCurve9real_typeR13IntersectList">
+<span id="_CPPv3NK5G2lib8Dubins3p13intersect_ISOE9real_typePK9BaseCurve9real_typeR13IntersectList"></span><span id="_CPPv2NK5G2lib8Dubins3p13intersect_ISOE9real_typePK9BaseCurve9real_typeR13IntersectList"></span><span id="G2lib::Dubins3p::intersect_ISO__real_type.BaseCurveCP.real_type.IntersectListRC"></span><span class="target" id="class_g2lib_1_1_dubins3p_1a7e39267bdbb2b6de64db5d7042369bbc"></span><span class="k"><span class="pre">virtual</span></span><span class="w"> </span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">intersect_ISO</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="../file/_clothoids_8hh.html#_CPPv4N5G2lib9real_typeE" title="G2lib::real_type"><span class="n"><span class="pre">real_type</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">offs</span></span>, <a class="reference internal" href="class_g2lib_1_1_base_curve.html#_CPPv4N5G2lib9BaseCurveE" title="G2lib::BaseCurve"><span class="n"><span class="pre">BaseCurve</span></span></a><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n sig-param"><span class="pre">pC</span></span>, <a class="reference internal" href="../file/_clothoids_8hh.html#_CPPv4N5G2lib9real_typeE" title="G2lib::real_type"><span class="n"><span class="pre">real_type</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">offs_LS</span></span>, <a class="reference internal" href="../file/_base_curve_8hxx.html#_CPPv4N5G2lib13IntersectListE" title="G2lib::IntersectList"><span class="n"><span class="pre">IntersectList</span></span></a><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">ilist</span></span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="k"><span class="pre">override</span></span><a class="headerlink" href="#_CPPv4NK5G2lib8Dubins3p13intersect_ISOE9real_typePK9BaseCurve9real_typeR13IntersectList" title="Link to this definition">¶</a><br/></dt>
+<dd><p>Intersect the curve with another curve with offset (ISO)</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>offs</strong> – <strong>[in]</strong> offset first curve </p></li>
+<li><p><strong>pC</strong> – <strong>[in]</strong> second curve intersect </p></li>
+<li><p><strong>offs_C</strong> – <strong>[in]</strong> offset second curve </p></li>
+<li><p><strong>ilist</strong> – <strong>[out]</strong> list of the intersection (as parameter on the curves) </p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4NK5G2lib8Dubins3p4infoER12ostream_type">
+<span id="_CPPv3NK5G2lib8Dubins3p4infoER12ostream_type"></span><span id="_CPPv2NK5G2lib8Dubins3p4infoER12ostream_type"></span><span id="G2lib::Dubins3p::info__ostream_typeRC"></span><span class="target" id="class_g2lib_1_1_dubins3p_1a955776c8830342e7e79924f0a7bc9da7"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="k"><span class="pre">virtual</span></span><span class="w"> </span><span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">info</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="../file/_clothoids_8hh.html#_CPPv4N5G2lib12ostream_typeE" title="G2lib::ostream_type"><span class="n"><span class="pre">ostream_type</span></span></a><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">stream</span></span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="k"><span class="pre">override</span></span><a class="headerlink" href="#_CPPv4NK5G2lib8Dubins3p4infoER12ostream_type" title="Link to this definition">¶</a><br/></dt>
+<dd><p>Pretty print of the curve data. </p>
+</dd></dl>
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4NK5G2lib8Dubins3p4typeEv">
+<span id="_CPPv3NK5G2lib8Dubins3p4typeEv"></span><span id="_CPPv2NK5G2lib8Dubins3p4typeEv"></span><span id="G2lib::Dubins3p::typeC"></span><span class="target" id="class_g2lib_1_1_dubins3p_1a6215a32593b20e9664d977b893aca641"></span><span class="k"><span class="pre">inline</span></span><span class="w"> </span><span class="k"><span class="pre">virtual</span></span><span class="w"> </span><span class="n"><span class="pre">CurveType</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">type</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="k"><span class="pre">override</span></span><a class="headerlink" href="#_CPPv4NK5G2lib8Dubins3p4typeEv" title="Link to this definition">¶</a><br/></dt>
+<dd><p>The name of the curve type </p>
+</dd></dl>
+</div>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric" id="breathe-section-title-friends">Friends</p>
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N5G2lib8Dubins3plsER12ostream_typeRK8Dubins3p">
+<span id="_CPPv3N5G2lib8Dubins3plsER12ostream_typeRK8Dubins3p"></span><span id="_CPPv2N5G2lib8Dubins3plsER12ostream_typeRK8Dubins3p"></span><span id="G2lib::Dubins3p::lshift-operator__ostream_typeR.Dubins3pCR"></span><span class="target" id="class_g2lib_1_1_dubins3p_1aa043e978758687f54f3747ed95fc7f36"></span><span class="k"><span class="pre">friend</span></span><span class="w"> </span><a class="reference internal" href="../file/_clothoids_8hh.html#_CPPv4N5G2lib12ostream_typeE" title="G2lib::ostream_type"><span class="n"><span class="pre">ostream_type</span></span></a><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="sig-name descname"><span class="k"><span class="pre">operator</span></span><span class="o"><span class="pre">&lt;&lt;</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="../file/_clothoids_8hh.html#_CPPv4N5G2lib12ostream_typeE" title="G2lib::ostream_type"><span class="n"><span class="pre">ostream_type</span></span></a><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">stream</span></span>, <a class="reference internal" href="#_CPPv4N5G2lib8Dubins3pE" title="G2lib::Dubins3p"><span class="n"><span class="pre">Dubins3p</span></span></a><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">bi</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N5G2lib8Dubins3plsER12ostream_typeRK8Dubins3p" title="Link to this definition">¶</a><br/></dt>
+<dd><p>Pretty print of <a class="reference internal" href="../namespace/namespace_g2lib.html#class_g2lib_1_1_dubins"><span class="std std-ref">Dubins</span></a> class. </p>
+</dd></dl>
+</div>
+</dd></dl>
+</section>
+
+
+          </article>
+        </div>
+      </div>
+    </main>
+  </div>
+  <footer class="md-footer">
+    <div class="md-footer-nav">
+      <nav class="md-footer-nav__inner md-grid">
+          
+            <a href="class_g2lib_1_1_dubins.html" title="Class G2lib::Dubins"
+               class="md-flex md-footer-nav__link md-footer-nav__link--prev"
+               rel="prev">
+              <div class="md-flex__cell md-flex__cell--shrink">
+                <i class="md-icon md-icon--arrow-back md-footer-nav__button"></i>
+              </div>
+              <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title">
+                <span class="md-flex__ellipsis">
+                  <span
+                      class="md-footer-nav__direction"> "Previous" </span> Class G2lib::Dubins </span>
+              </div>
+            </a>
+          
+          
+            <a href="class_g2lib_1_1_g2solve2arc.html" title="Class G2lib::G2solve2arc"
+               class="md-flex md-footer-nav__link md-footer-nav__link--next"
+               rel="next">
+            <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title"><span
+                class="md-flex__ellipsis"> <span
+                class="md-footer-nav__direction"> "Next" </span> Class G2lib::G2solve2arc </span>
+            </div>
+            <div class="md-flex__cell md-flex__cell--shrink"><i
+                class="md-icon md-icon--arrow-forward md-footer-nav__button"></i>
+            </div>
+          
+        </a>
+        
+      </nav>
+    </div>
+    <div class="md-footer-meta md-typeset">
+      <div class="md-footer-meta__inner md-grid">
+        <div class="md-footer-copyright">
+          <div class="md-footer-copyright__highlight">
+              &#169; Copyright 2024, E.Bertolazzi and M.Frego.
+              
+          </div>
+            Created using
+            <a href="http://www.sphinx-doc.org/">Sphinx</a> 7.4.4.
+             and
+            <a href="https://github.com/bashtage/sphinx-material/">Material for
+              Sphinx</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+  <script src="../../_static/javascripts/application.js"></script>
+  <script>app.initialize({version: "1.0.4", url: {base: ".."}})</script>
+  </body>
+</html>

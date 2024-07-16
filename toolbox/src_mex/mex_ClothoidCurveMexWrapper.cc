@@ -22,6 +22,7 @@
 #endif
 
 #include "Clothoids.hh"
+#include "Clothoids_fmt.hh"
 #include "Utils_mex.hh"
 #include "mex_info.hxx"
 
@@ -107,7 +108,7 @@ namespace G2lib {
       "ClothoidCurveMexWrapper, expected 1 output, nlhs = {}\n", nlhs
     );
 
-    ClothoidCurve * ptr = new ClothoidCurve();
+    ClothoidCurve * ptr = new ClothoidCurve("clothoid curve");
     arg_out_0 = Utils::mex_convert_ptr_to_mx<ClothoidCurve>(ptr);
 
     real_type x0(0), y0(0), theta0(0), k0(0), dk(0), L(0);
