@@ -173,11 +173,11 @@ namespace PolynomialRoots {
   // op[0] * x^n + .... + op[n-1]*x + op[n]
   complex_type
   evalPolyC(
-    real_type const      op[],
-    integer              Degree,
-    complex_type const & x
+    real_type const op[],
+    integer         Degree,
+    complex_type    x
   ) {
-    bool reverse = std::abs(x) > 1;
+    bool reverse{ std::abs(x) > 1 };
     if ( reverse ) {
       complex_type res(op[Degree]);
       complex_type xn(1,0);

@@ -35,20 +35,11 @@ namespace Utils {
 
   void
   ThreadPool1::Worker::worker_loop() {
-    TicToc tm;
     m_running.wait(); // wait to start the first job
     while ( m_active ) {
-      // ----------------------------
-      tm.tic();
-      m_job(); ++m_n_job; // run a job
-      tm.toc();
-      m_job_ms += tm.elapsed_ms();
-      // ----------------------------
-      tm.tic();
-      m_running.red(); // job done
+      m_job();
+      m_running.red();  // job done
       m_running.wait(); // wait to start a new job
-      tm.toc();
-      m_wait_ms += tm.elapsed_ms();
     }
   }
 
@@ -111,20 +102,6 @@ namespace Utils {
   void
   ThreadPool1::stop()
   { m_thread_to_send = 0; for ( auto && w : m_workers ) w.stop(); }
-
-  void
-  ThreadPool1::info( ostream_type & s ) const {
-    unsigned i = 0;
-    for ( auto const & w : m_workers )
-      fmt::print( s,
-        "Worker {:2}, #job = {:4}, [job {:10}, WAIT {:10}]"
-        " PUSH = {:10}\n",
-        i++, w.n_job(),
-        fmt::format( "{:.3} mus", 1000*w.job_ms()/w.n_job() ),
-        fmt::format( "{:.3} mus", 1000*w.wait_ms()/w.n_job() ),
-        fmt::format( "{:.3} mus", 1000*w.push_ms()/w.n_job() )
-      );
-  }
 
 }
 

@@ -45,12 +45,12 @@ namespace Utils {
 
   private:
 
-    ostream_type * m_stream;
+    ostream_type * m_stream{nullptr};
 
     // 0 only fatal, error
     // 1 + warning
     // 2
-    int m_level;
+    int m_level{4};
 
     Console_style m_message_style = { rang::style::reset,     rang::fg::reset,  rang::bg::reset };
     Console_style m_warning_style = { rang::style::reset,     rang::fg::yellow, rang::bg::reset };
@@ -64,6 +64,8 @@ namespace Utils {
 
     explicit
     Console( ostream_type * stream = &std::cout, int level = 4 );
+
+    ~Console() {}
 
     void change_level( int new_level );
     void changeLevel( int new_level ) { this->change_level(new_level); }

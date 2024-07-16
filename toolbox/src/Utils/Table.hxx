@@ -89,7 +89,7 @@ namespace Utils {
 
     public:
 
-      Style() UTILS_DEFAULT;
+      Style() = default;
 
       char border_top() const { return m_border_top; }
       void border_top( char borderStyle ) { m_border_top = borderStyle; }
@@ -159,7 +159,7 @@ namespace Utils {
 
     public:
 
-      Cell() UTILS_DEFAULT;
+      Cell() = default;
 
       explicit
       Cell(
@@ -198,7 +198,7 @@ namespace Utils {
 
     public:
 
-      Row() UTILS_DEFAULT;
+      Row() = default;
 
       explicit
       Row(
@@ -242,7 +242,7 @@ namespace Utils {
 
     public:
 
-      Table() UTILS_DEFAULT;
+      Table() = default;
 
       explicit
       Table(

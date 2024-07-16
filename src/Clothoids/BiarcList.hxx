@@ -168,6 +168,7 @@ namespace G2lib {
     void build( BiarcList const & );
     void build( PolyLine const & );
     void build( ClothoidList const & );
+    void build( Dubins const & );
 
     //!
     //! Append a line segment to the biarc list
@@ -688,11 +689,15 @@ namespace G2lib {
       real_type & dst
     ) const override;
 
+    string
+    info() const
+    { return fmt::format( "BiarcList\n{}\n", *this ); }
+
     void
     info( ostream_type & stream ) const override
-    { stream << "BiarcList\n" << *this << '\n'; }
+    { stream << this->info(); }
 
-    //! pretty print the biarc list
+    //! pretty print the BiarcList list
     friend
     ostream_type &
     operator << ( ostream_type & stream, BiarcList const & CL );

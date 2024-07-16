@@ -382,6 +382,7 @@ namespace G2lib {
     void build( PolyLine const & );
     void build( BiarcList const & );
     void build( ClothoidList const & );
+    void build( Dubins const & );
 
     //!
     //! Return the point at infinity of the clothoids \f$ P(s) \f$.
@@ -1160,9 +1161,13 @@ namespace G2lib {
       IntersectList   & ilist
     ) const override;
 
+    string
+    info() const
+    { return fmt::format( "Clothoid\n{}\n", *this ); }
+
     void
     info( ostream_type & stream ) const override
-    { stream << "Clothoid\n" << *this << '\n'; }
+    { stream << this->info(); }
 
     friend
     ostream_type &

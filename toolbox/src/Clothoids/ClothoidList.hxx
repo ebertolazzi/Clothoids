@@ -130,8 +130,7 @@ namespace G2lib {
       real_type G_2[2]
     ) const;
 
-    void
-    evalF( real_type const vars[2], real_type F[2] ) const;
+    void evalF( real_type const vars[2], real_type F[2] ) const;
 
     void
     evalFJ(
@@ -140,8 +139,7 @@ namespace G2lib {
       real_type       J[2][2]
     ) const;
 
-    void
-    buildSolution( real_type alpha, real_type L );
+    void build_solution( real_type alpha, real_type L );
 
   public:
 
@@ -269,8 +267,7 @@ namespace G2lib {
 
     ClothoidCurve S0, SM, S1;
 
-    bool
-    buildSolution( real_type sM, real_type thM );
+    bool build_solution( real_type sM, real_type thM );
 
   public:
 
@@ -442,14 +439,11 @@ namespace G2lib {
       real_type       J[2][2]
     ) const;
 
-    void
-    evalF( real_type const vars[2], real_type F[2] ) const;
+    void evalF( real_type const vars[2], real_type F[2] ) const;
 
-    void
-    buildSolution( real_type sM, real_type thM );
+    void build_solution( real_type sM, real_type thM );
 
-    int
-    solve( real_type sM_guess, real_type thM_guess );
+    int solve( real_type sM_guess, real_type thM_guess );
 
   public:
 
@@ -981,6 +975,7 @@ namespace G2lib {
     void build( PolyLine const & );
     void build( BiarcList const & );
     void build( ClothoidList const & );
+    void build( Dubins const & );
     void build( G2solve2arc const & );
     void build( G2solve3arc const & );
     void build( G2solveCLC const & );
@@ -1014,6 +1009,11 @@ namespace G2lib {
     //! Add a clothoid list to the tail of clothoid list
     //!
     void push_back( ClothoidList const & c );
+
+    //!
+    //! Add a dubins 3 arc curve to the tail of clothoid list
+    //!
+    void push_back( Dubins const & c );
 
     //!
     //! Add a G2solve2arc to the tail of clothoid list
@@ -1913,9 +1913,13 @@ namespace G2lib {
       return res;
     }
 
+    string
+    info() const
+    { return fmt::format( "ClothoidList\n{}\n", *this ); }
+
     void
     info( ostream_type & stream ) const override
-    { stream << "ClothoidList\n" << *this << '\n'; }
+    { stream << this->info(); }
 
     friend
     ostream_type &
@@ -2296,9 +2300,13 @@ namespace G2lib {
     bool
     jacobian( real_type const * theta, real_type * vals ) const;
 
+    string
+    info() const
+    { return fmt::format( "ClothoidSplineG2\n{}\n", *this ); }
+
     void
     info( ostream_type & stream ) const
-    { stream << "ClothoidSplineG2\n" << *this << '\n'; }
+    { stream << this->info(); }
 
     friend
     ostream_type &

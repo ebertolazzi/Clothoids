@@ -43,6 +43,7 @@ namespace G2lib {
   void LineSegment::build( PolyLine const & )       { UTILS_ERROR("can convert from PolyLine to LineSegment\n"); }
   void LineSegment::build( BiarcList const & )      { UTILS_ERROR("can convert from BiarcList to LineSegment\n"); }
   void LineSegment::build( ClothoidList const & )   { UTILS_ERROR("can convert from ClothoidList to LineSegment\n"); }
+  void LineSegment::build( Dubins const & )         { UTILS_ERROR("can convert from Dubins to LineSegment\n"); }
 
   LineSegment::LineSegment( BaseCurve const * pC ) {
 

@@ -20,6 +20,12 @@ project(
   HOMEPAGE_URL "https://ebertolazzi.github.io/Clothoids/"
 )
 
+if (APPLE)
+  set( CMAKE_OSX_DEPLOYMENT_TARGET "13.3" )
+  execute_process( COMMAND uname -m COMMAND tr -d '\n' OUTPUT_VARIABLE ARCHITECTURE )
+  set( CMAKE_OSX_ARCHITECTURES ${ARCHITECTURE} )
+endif()
+
 include(./cmake_utils/CMakeLists-cflags.txt)
 include(./cmake_utils/CMakeLists-utilities.txt)
 
@@ -83,10 +89,12 @@ set(UTILS_DEPEND_TARGETS)
 # DEPENDENCIES (TRY TO USE ALREADY COMPILED SUBMODULE IN LARGE PROJECT)
 utils_add_library_or_submodule( "quarticRootsFlocke" ROOTS )
 utils_add_library_or_submodule( "Utils" UTILS )
+utils_add_library_or_submodule( "GenericContainer" GC "GC" )
 
 message( STATUS "----------------------------------------------------------------" )
 message( STATUS "UTILS = ${UTILS}" )
 message( STATUS "ROOTS = ${ROOTS}" )
+message( STATUS "GC    = ${GC}" )
 message( STATUS "----------------------------------------------------------------" )
 
 #   _____                  _

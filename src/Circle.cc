@@ -60,6 +60,7 @@ namespace G2lib {
   void CircleArc::build( PolyLine const & )      { UTILS_ERROR("can convert from PolyLine to CircleArc\n"); }
   void CircleArc::build( BiarcList const & )     { UTILS_ERROR("can convert from BiarcList to CircleArc\n"); }
   void CircleArc::build( ClothoidList const & )  { UTILS_ERROR("can convert from ClothoidList to CircleArc\n"); }
+  void CircleArc::build( Dubins const & )        { UTILS_ERROR("can convert from Dubins to CircleArc\n"); }
 
   /*\
    |    ____ _          _         _

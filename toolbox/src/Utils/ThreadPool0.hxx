@@ -46,7 +46,7 @@ namespace Utils {
     : ThreadPoolBase()
     {}
 
-    virtual ~ThreadPool0() UTILS_DEFAULT;
+    virtual ~ThreadPool0() = default;
 
     void         exec( Func && fun )  override { fun(); }
     void         wait()               override { }

@@ -290,14 +290,14 @@ namespace G2lib {
       converged = lenF < tolerance;
     } while ( ++iter < maxIter && !converged );
     if ( converged ) converged = X[1] > 0 && X[0] > 0 && X[0] < 1;
-    if ( converged ) buildSolution( X[0], X[1] );
+    if ( converged ) build_solution( X[0], X[1] );
     return converged ? iter : -1;
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   void
-  G2solve2arc::buildSolution( real_type alpha, real_type L ) {
+  G2solve2arc::build_solution( real_type alpha, real_type L ) {
     real_type beta = 1-alpha;
     real_type s0   = L*alpha;
     real_type s1   = L*beta;
@@ -449,14 +449,14 @@ namespace G2lib {
       sM = cos(thM) + D1*X1[0]/k1 - D0*X0[0]/k0;
       converged = sM > 0 && sM < 1e100;
     }
-    if ( converged ) converged = buildSolution( sM, thM );
+    if ( converged ) converged = build_solution( sM, thM );
     return converged ? iter : -1;
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   bool
-  G2solveCLC::buildSolution( real_type sM, real_type thM ) {
+  G2solveCLC::build_solution( real_type sM, real_type thM ) {
     real_type dk0 = 0.5*power2(k0/lambda)/(th0-thM);
     real_type dk1 = 0.5*power2(k1/lambda)/(th1-thM);
     real_type L0  = 2*lambda*(thM-th0)/k0;
@@ -846,14 +846,14 @@ namespace G2lib {
       std::cerr << "G2solve3arc::solve, something go wrong\n";
       // nothing to do
     }
-    if ( converged ) buildSolution(X[0], X[1]); // costruisco comunque soluzione
+    if ( converged ) build_solution(X[0], X[1]); // costruisco comunque soluzione
     return converged ? iter : -1;
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   void
-  G2solve3arc::buildSolution( real_type sM, real_type thM ) {
+  G2solve3arc::build_solution( real_type sM, real_type thM ) {
     // soluzione nel frame di riferimento
     /* real_type k0 = K0
      S0.build( -1, 0, th0, k0, dK0,   0, L0 );

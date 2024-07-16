@@ -40,7 +40,7 @@ namespace Utils {
     ThreadPoolBase & operator = ( ThreadPoolBase const & ) = delete;
     ThreadPoolBase & operator = ( ThreadPoolBase && )      = delete;
 
-    ThreadPoolBase() UTILS_DEFAULT;
+    ThreadPoolBase() = default;
 
     virtual
     void
@@ -68,85 +68,6 @@ namespace Utils {
   namespace tp {
 
     /*\
-     |   ___ _            _  ___                    _ _         ___
-     |  | __(_)_ _____ __| |/ __|__ _ _ __  __ _ __(_) |_ _  _ / _ \ _  _ ___ _  _ ___
-     |  | _|| \ \ / -_) _` | (__/ _` | '_ \/ _` / _| |  _| || | (_) | || / -_) || / -_)
-     |  |_| |_/_\_\___\__,_|\___\__,_| .__/\__,_\__|_|\__|\_, |\__\_\\_,_\___|\_,_\___|
-     |                               |_|                  |__/
-    \*/
-    /*\
-        If we would use a deque, we would have to protect
-        against overlapping accesses to the front and the
-        back. The standard containers do not allow this. Use a
-        vector instead.  With a vector it is possible to access
-        both ends of the queue at the same time, as push()ing
-        and pop()ing does not modify the container itself but
-        only its elements.
-    \*/
-    template <class Function>
-    class FixedCapacityQueue {
-
-      union Fun {
-        Function m_fun; // Only used between pop_ptr and push_ptr
-        Fun() noexcept { }
-        Fun( Fun const & ) noexcept { }
-        Fun( Fun && ) noexcept { }
-        ~Fun() noexcept { }
-      };
-
-      std::vector<Fun> m_fun_vec;
-      unsigned m_size     = 0;
-      unsigned m_capacity = 0;
-      unsigned m_push_ptr = 0;
-      unsigned m_pop_ptr  = 0;
-
-    public:
-
-      FixedCapacityQueue( FixedCapacityQueue const & )              = delete;
-      FixedCapacityQueue( FixedCapacityQueue && )                   = delete;
-      FixedCapacityQueue& operator = ( FixedCapacityQueue const & ) = delete;
-      FixedCapacityQueue& operator = ( FixedCapacityQueue && )      = delete;
-
-      explicit
-      FixedCapacityQueue( unsigned capacity )
-      : m_fun_vec( size_t( capacity+1 ) )
-      , m_size( capacity+1 )
-      , m_capacity( capacity )
-      { }
-
-      void
-      push( Function && f ) {
-        new (&m_fun_vec[m_push_ptr].m_fun) Function(std::forward<Function>(f));
-        if ( ++m_push_ptr == m_size ) m_push_ptr = 0;
-      }
-
-      Function
-      pop() {
-        Function r = std::move(m_fun_vec[m_pop_ptr].m_fun);
-        m_fun_vec[m_pop_ptr].m_fun.~Function();
-        if ( ++m_pop_ptr == m_size ) m_pop_ptr = 0;
-        return r;
-      }
-
-      unsigned size()     const { return ((m_push_ptr + m_size) - m_pop_ptr) % m_size; }
-      bool     empty()    const { return m_push_ptr == m_pop_ptr; }
-      bool     is_full()  const { return this->size() >= m_capacity; }
-      unsigned capacity() const { return m_capacity; }
-
-      void
-      reserve( unsigned capacity ) {
-        assert(empty()); // Copying / moving of Fun not supported.
-        if ( capacity != m_capacity ) {
-          m_size     = capacity+1;
-          m_capacity = capacity;
-          m_fun_vec.resize( m_size );
-        }
-      }
-
-      ~FixedCapacityQueue() { while (!empty()) pop(); }
-    };
-
-    /*\
      |    ___
      |   / _ \ _   _  ___ _   _  ___
      |  | | | | | | |/ _ \ | | |/ _ \
@@ -163,7 +84,7 @@ namespace Utils {
         TaskData( std::function<void()> && f ) : m_fun(std::move(f)) { }
         TaskData( std::function<void()> & f ) : m_fun(f) { }
         void operator()() { m_fun(); delete this; }
-        ~TaskData() UTILS_DEFAULT;
+        ~TaskData() = default;
       };
 
     private:
@@ -217,7 +138,7 @@ namespace Utils {
         m_queue_data.resize( m_size );
       }
 
-      ~Queue() UTILS_DEFAULT;
+      ~Queue() = default;
     };
   }
 }

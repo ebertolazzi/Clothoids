@@ -7,3 +7,6 @@
 [submodule "cmake_utils"]
 	path = cmake_utils
 	url = https://github.com/ebertolazzi/cmake_utils.git
+[submodule "submodules/GenericContainer"]
+	path = submodules/GenericContainer
+	url = git@github.com:ebertolazzi/GenericContainer.git

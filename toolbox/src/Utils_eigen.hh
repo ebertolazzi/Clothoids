@@ -30,27 +30,47 @@
 #include "Utils.hh"
 
 #ifdef __clang__
-#pragma clang diagnostic push
-#pragma clang diagnostic ignored "-Wdeprecated-copy-with-dtor"
+  #pragma clang diagnostic push
+  #pragma clang diagnostic ignored "-Wdeprecated-copy-with-dtor"
 #endif
 
 #ifdef _MSC_VER
-#pragma warning( push )
-#pragma warning( disable : 4127 )
+  #pragma warning( push )
+  #pragma warning( disable : 4127 )
 #endif
 
-#define EIGEN_DONT_PARALLELIZE
-#define EIGEN_NO_AUTOMATIC_RESIZING
+#ifndef EIGEN_DONT_PARALLELIZE
+  #define EIGEN_DONT_PARALLELIZE
+#endif
+
+#ifndef EIGEN_NO_AUTOMATIC_RESIZING
+  #define EIGEN_NO_AUTOMATIC_RESIZING
+#endif
 
 #include "Eigen/Core"
 #include "Eigen/Dense"
+#include <type_traits>
+
+namespace fmt {
+  template <typename TYPE, int ROW, int COL>
+  struct formatter<Eigen::Matrix<TYPE,ROW,COL>> : ostream_formatter {};
+
+  template <typename PlainObjectType, int MapOptions, typename StrideType>
+  struct formatter<Eigen::Map<PlainObjectType,MapOptions,StrideType>> : ostream_formatter {};
+
+  template <typename MAT>
+  struct formatter<Eigen::Transpose<MAT>> : ostream_formatter {};
+
+  template <typename EXPR>
+  struct formatter<Eigen::WithFormat<EXPR>> : ostream_formatter {};
+}
 
 #ifdef __clang__
-#pragma clang diagnostic pop
+  #pragma clang diagnostic pop
 #endif
 
 #ifdef _MSC_VER
-#pragma warning( pop )
+  #pragma warning( pop )
 #endif
 
 #endif

@@ -121,8 +121,8 @@ namespace Utils {
 
   public:
 
-    Zeros() UTILS_DEFAULT;
-    ~Zeros() UTILS_DEFAULT;
+    Zeros() = default;
+    ~Zeros() = default;
 
     void set_max_iterations( Integer mit );
     void set_max_fun_evaluation( Integer mfev );

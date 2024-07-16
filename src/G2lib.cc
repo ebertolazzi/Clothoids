@@ -303,7 +303,7 @@ namespace G2lib {
     real_type b   = (Tx*kB+2*kA)*T-Ty2;
     real_type c   = T*T;
     PolynomialRoots::Quadratic qsolve( a, b, c);
-    if ( qsolve.complexRoots() ) return 0;
+    if ( qsolve.complexRoot() ) return 0;
     real_type z[2]{ qsolve.real_root0(), qsolve.real_root1() };
     integer nint{0};
     for ( integer i = 0; i < qsolve.numRoots(); ++i ) {

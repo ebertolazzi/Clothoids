@@ -141,7 +141,10 @@ namespace fmt {
   template <> struct formatter<G2lib::LineSegment>      : ostream_formatter {};
   template <> struct formatter<G2lib::PolyLine>         : ostream_formatter {};
   template <> struct formatter<G2lib::Triangle2D>       : ostream_formatter {};
+<<<<<<< HEAD
+=======
   template <> struct formatter<G2lib::Dubins>           : ostream_formatter {};
+>>>>>>> c06e106882506582c7168e6506f303188f07db00
 }
 
 namespace G2lib {

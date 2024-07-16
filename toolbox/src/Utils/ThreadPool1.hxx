@@ -52,11 +52,6 @@ namespace Utils {
 
       TicToc m_tm;
 
-      unsigned  m_n_job   = 0;
-      real_type m_job_ms  = 0;
-      real_type m_wait_ms = 0;
-      real_type m_push_ms = 0;
-
       void worker_loop();
 
     public:
@@ -86,25 +81,17 @@ namespace Utils {
 
       void
       exec( std::function<void()> & fun ) {
-        m_tm.tic();
         m_running.wait_red(); // se gia occupato in task aspetta
         m_job = fun;          // cambia funzione da eseguire
         m_running.green();    // activate computation
-        m_tm.toc();
-        m_push_ms += m_tm.elapsed_ms();
       }
 
       std::thread::id     get_id()     const { return m_running_thread.get_id(); }
       std::thread const & get_thread() const { return m_running_thread; }
       std::thread &       get_thread()       { return m_running_thread; }
-
-      unsigned  n_job()   const { return m_n_job; }
-      real_type job_ms()  const { return m_job_ms; }
-      real_type wait_ms() const { return m_wait_ms; }
-      real_type push_ms() const { return m_push_ms; }
-
     };
-    std::size_t m_thread_to_send = 0;
+
+    std::size_t m_thread_to_send{0};
 
     // need to keep track of threads so we can join them
     std::vector<Worker> m_workers;
@@ -160,8 +147,6 @@ namespace Utils {
     void start_all() { this->start(); }
     void stop_all()  { this->stop();  }
     unsigned size() const { return this->thread_count(); }
-
-    void info( ostream_type & s ) const override;
   };
 
   using ThreadPool = ThreadPool1;

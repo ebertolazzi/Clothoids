@@ -62,6 +62,7 @@ namespace G2lib {
   void Biarc::build( PolyLine const & )       { UTILS_ERROR("can convert from PolyLine to Biarc\n"); }
   void Biarc::build( BiarcList const & )      { UTILS_ERROR("can convert from BiarcList to Biarc\n"); }
   void Biarc::build( ClothoidList const & )   { UTILS_ERROR("can convert from ClothoidList to Biarc\n"); }
+  void Biarc::build( Dubins const & )         { UTILS_ERROR("can convert from Dubins to CircleArc\n"); }
 
   /*\
    |   ____  _
@@ -261,11 +262,9 @@ namespace G2lib {
 
   void
   Biarc::scale( real_type scl ) {
-    real_type newx0 = m_C0.x_begin() + scl*(m_C1.x_begin()-m_C0.x_begin());
-    real_type newy0 = m_C0.y_begin() + scl*(m_C1.y_begin()-m_C0.y_begin());
-    m_C1.change_origin( newx0, newy0 );
-    m_C1.scale( scl );
     m_C0.scale( scl );
+    m_C1.scale( scl );
+    m_C1.change_origin( m_C0.x_end(), m_C0.y_end() );
   }
 
   void
@@ -850,7 +849,7 @@ namespace G2lib {
     if ( dst1 < dst ) {
       x   = x1;
       y   = y1;
-      s   = s1;
+      s   = s1+m_C0.length();
       t   = t1;
       dst = dst1;
       res = res1;
@@ -917,7 +916,7 @@ namespace G2lib {
     if ( dst1 < dst ) {
       x   = x1;
       y   = y1;
-      s   = s1;
+      s   = s1+m_C0.length();
       t   = t1;
       dst = dst1;
       res = res1;

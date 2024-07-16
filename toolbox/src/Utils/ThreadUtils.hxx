@@ -214,7 +214,7 @@ namespace Utils {
   public:
     SpinLock() : m_lock(false) { }
     SpinLock( SpinLock const & ) = delete;
-    ~SpinLock() UTILS_DEFAULT;
+    ~SpinLock() = default;
 
     void
     wait() {
@@ -478,7 +478,7 @@ namespace Utils {
     #ifdef UTILS_OS_WINDOWS
     WaitWorker() { n_worker = 0; }
     #else
-    WaitWorker() UTILS_DEFAULT;
+    WaitWorker() = default;
     #endif
 
     void

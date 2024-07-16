@@ -92,10 +92,6 @@
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
 
-#ifndef FMT_DEPRECATED_OSTREAM
-#define FMT_DEPRECATED_OSTREAM
-#endif
-
 #include "fmt/printf.h"
 #include "fmt/chrono.h"
 #include "fmt/ostream.h"
@@ -222,7 +218,7 @@ namespace Utils {
     T_int        npts,
     T_real const X[],
     T_real     & x,
-    T_int      & lastInterval,
+    T_int      & last_interval,
     bool         closed,
     bool         can_extend
   );
@@ -232,7 +228,7 @@ namespace Utils {
     int32_t     npts,
     float const X[],
     float     & x,
-    int32_t   & lastInterval,
+    int32_t   & last_interval,
     bool        closed,
     bool        can_extend
   );
@@ -241,7 +237,7 @@ namespace Utils {
     int32_t      npts,
     double const X[],
     double     & x,
-    int32_t    & lastInterval,
+    int32_t    & last_interval,
     bool         closed,
     bool         can_extend
   );
@@ -250,7 +246,7 @@ namespace Utils {
     int64_t     npts,
     float const X[],
     float     & x,
-    int64_t   & lastInterval,
+    int64_t   & last_interval,
     bool        closed,
     bool        can_extend
   );
@@ -259,7 +255,7 @@ namespace Utils {
     int64_t      npts,
     double const X[],
     double     & x,
-    int64_t    & lastInterval,
+    int64_t    & last_interval,
     bool         closed,
     bool         can_extend
   );
@@ -272,11 +268,11 @@ namespace Utils {
     T_int        npts,
     T_real const X[],
     T_real     & x,
-    T_int      & lastInterval,
+    T_int      & last_interval,
     bool         closed,
     bool         can_extend
   ) {
-    search_interval( npts, X, x, lastInterval, closed, can_extend );
+    search_interval( npts, X, x, last_interval, closed, can_extend );
   }
 
   static
