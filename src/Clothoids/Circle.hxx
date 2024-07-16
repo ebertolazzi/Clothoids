@@ -73,6 +73,7 @@ namespace G2lib {
     //! \param[in] theta0 initial angle
     //! \param[in] k      curvature
     //! \param[in] L      length
+    //! \param[in] name   name of the circle arc
     //!
     explicit
     CircleArc(

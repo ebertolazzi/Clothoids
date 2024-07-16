@@ -1,0 +1,56 @@
+\doxysection{/\+Users/enrico/\+Ricerca/develop/\+PINS/pins-\/mechatronix/\+Lib\+Sources/submodules/\+Clothoids/src/\+Dubins3p.cc File Reference}
+\hypertarget{_dubins3p_8cc}{}\label{_dubins3p_8cc}\index{/Users/enrico/Ricerca/develop/PINS/pins-\/mechatronix/LibSources/submodules/Clothoids/src/Dubins3p.cc@{/Users/enrico/Ricerca/develop/PINS/pins-\/mechatronix/LibSources/submodules/Clothoids/src/Dubins3p.cc}}
+{\ttfamily \#include "{}Clothoids.\+hh"{}}\newline
+{\ttfamily \#include "{}Clothoids\+\_\+fmt.\+hh"{}}\newline
+{\ttfamily \#include "{}Polynomial\+Roots.\+hh"{}}\newline
+\doxysubsubsection*{Namespaces}
+\begin{DoxyCompactItemize}
+\item 
+namespace \mbox{\hyperlink{namespace_g2lib}{G2lib}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \mbox{\hyperlink{_dubins3p_8cc_af386788abcf0fc0eb0bc7212aff195b8}{DUBINS\+\_\+\+SELECT}}(FUN)
+\item 
+\#define \mbox{\hyperlink{_dubins3p_8cc_ad0a506cd9a6715c6d1b494ca152f4f7e}{DUBINS\+\_\+\+SELECT\+\_\+\+EVAL}}(FUN, ...)
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{namespace_g2lib_a2e15ce04198fc9325ba496d4e079df3b}{Dubins3p\+Build\+Type}} \mbox{\hyperlink{namespace_g2lib_a7bf0f8cf43f9a557604c6ed4516de9f8}{G2lib\+::string\+\_\+to\+\_\+\+Dubins3p\+Build\+Type}} (string const \&str)
+\item 
+\mbox{\hyperlink{namespace_g2lib_a8fcbace87db5a5e71391e0040878f2c3}{ostream\+\_\+type}} \& \mbox{\hyperlink{namespace_g2lib_acf1b67436dcfd317d727e6dd533fbf01}{G2lib\+::operator$<$$<$}} (\mbox{\hyperlink{namespace_g2lib_a8fcbace87db5a5e71391e0040878f2c3}{ostream\+\_\+type}} \&stream, \mbox{\hyperlink{class_g2lib_1_1_dubins3p}{Dubins3p}} const \&bi)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Macro Definition Documentation}
+\Hypertarget{_dubins3p_8cc_af386788abcf0fc0eb0bc7212aff195b8}\index{Dubins3p.cc@{Dubins3p.cc}!DUBINS\_SELECT@{DUBINS\_SELECT}}
+\index{DUBINS\_SELECT@{DUBINS\_SELECT}!Dubins3p.cc@{Dubins3p.cc}}
+\doxysubsubsection{\texorpdfstring{DUBINS\_SELECT}{DUBINS\_SELECT}}
+{\footnotesize\ttfamily \label{_dubins3p_8cc_af386788abcf0fc0eb0bc7212aff195b8} 
+\#define DUBINS\+\_\+\+SELECT(\begin{DoxyParamCaption}\item[{}]{FUN}{}\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{keywordflow}{if}\ (\ s\ <\ m\_Dubins0.length()\ )\ \textcolor{keywordflow}{return}\ m\_Dubins0.FUN(s);\ \ \(\backslash\)}
+\DoxyCodeLine{s\ -\/=\ m\_Dubins0.length();\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{\textcolor{keywordflow}{return}\ m\_Dubins1.FUN(s)}
+
+\end{DoxyCode}
+\Hypertarget{_dubins3p_8cc_ad0a506cd9a6715c6d1b494ca152f4f7e}\index{Dubins3p.cc@{Dubins3p.cc}!DUBINS\_SELECT\_EVAL@{DUBINS\_SELECT\_EVAL}}
+\index{DUBINS\_SELECT\_EVAL@{DUBINS\_SELECT\_EVAL}!Dubins3p.cc@{Dubins3p.cc}}
+\doxysubsubsection{\texorpdfstring{DUBINS\_SELECT\_EVAL}{DUBINS\_SELECT\_EVAL}}
+{\footnotesize\ttfamily \label{_dubins3p_8cc_ad0a506cd9a6715c6d1b494ca152f4f7e} 
+\#define DUBINS\+\_\+\+SELECT\+\_\+\+EVAL(\begin{DoxyParamCaption}\item[{}]{FUN}{, }\item[{}]{}...{}\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\ \ \textcolor{keywordflow}{if}\ (\ s\ <\ m\_Dubins0.length()\ )\ \{\ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ m\_Dubins0.FUN(\ s,\ \_\_VA\_ARGS\_\_\ );\ \ \ \(\backslash\)}
+\DoxyCodeLine{\ \ \}\ \textcolor{keywordflow}{else}\ \{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ s\ -\/=\ m\_Dubins0.length();\ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ m\_Dubins1.FUN(\ s,\ \_\_VA\_ARGS\_\_\ );\ \ \ \(\backslash\)}
+\DoxyCodeLine{\ \ \}}
+
+\end{DoxyCode}

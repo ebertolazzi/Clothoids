@@ -1,0 +1,92 @@
+\doxysection{Clothoid\+Asy\+Plot.\+hxx}
+\hypertarget{_clothoid_asy_plot_8hxx_source}{}\label{_clothoid_asy_plot_8hxx_source}\index{/Users/enrico/Ricerca/develop/PINS/pins-\/mechatronix/LibSources/submodules/Clothoids/src/Clothoids/ClothoidAsyPlot.hxx@{/Users/enrico/Ricerca/develop/PINS/pins-\/mechatronix/LibSources/submodules/Clothoids/src/Clothoids/ClothoidAsyPlot.hxx}}
+\mbox{\hyperlink{_clothoid_asy_plot_8hxx}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{comment}{/*-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/*\(\backslash\)}}
+\DoxyCodeLine{00002\ \textcolor{comment}{\ |\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ |}}
+\DoxyCodeLine{00003\ \textcolor{comment}{\ |\ \ Copyright\ (C)\ 2017\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ |}}
+\DoxyCodeLine{00004\ \textcolor{comment}{\ |\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ |}}
+\DoxyCodeLine{00005\ \textcolor{comment}{\ |\ \ \ \ \ \ \ \ \ ,\ \_\_\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ ,\ \_\_\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ |}}
+\DoxyCodeLine{00006\ \textcolor{comment}{\ |\ \ \ \ \ \ \ \ /|/\ \ \(\backslash\)\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ /|/\ \ \(\backslash\)\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ |}}
+\DoxyCodeLine{00007\ \textcolor{comment}{\ |\ \ \ \ \ \ \ \ \ |\ \_\_/\ \_\ \ \ ,\_\ \ \ \ \ \ \ \ \ |\ \_\_/\ \_\ \ \ ,\_\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ |}}
+\DoxyCodeLine{00008\ \textcolor{comment}{\ |\ \ \ \ \ \ \ \ \ |\ \ \ \(\backslash\)|/\ \ /\ \ |\ \ |\ \ \ |\ |\ \ \ \(\backslash\)|/\ \ /\ \ |\ \ |\ \ \ |\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ |}}
+\DoxyCodeLine{00009\ \textcolor{comment}{\ |\ \ \ \ \ \ \ \ \ |(\_\_/|\_\_/\ \ \ |\_/\ \(\backslash\)\_/|/|(\_\_/|\_\_/\ \ \ |\_/\ \(\backslash\)\_/|/\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ |}}
+\DoxyCodeLine{00010\ \textcolor{comment}{\ |\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ /|\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ /|\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ |}}
+\DoxyCodeLine{00011\ \textcolor{comment}{\ |\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)|\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)|\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ |}}
+\DoxyCodeLine{00012\ \textcolor{comment}{\ |\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ |}}
+\DoxyCodeLine{00013\ \textcolor{comment}{\ |\ \ \ \ \ \ Enrico\ Bertolazzi\ and\ Marco\ Frego\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ |}}
+\DoxyCodeLine{00014\ \textcolor{comment}{\ |\ \ \ \ \ \ Dipartimento\ di\ Ingegneria\ Industriale\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ |}}
+\DoxyCodeLine{00015\ \textcolor{comment}{\ |\ \ \ \ \ \ Universita`\ degli\ Studi\ di\ Trento\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ |}}
+\DoxyCodeLine{00016\ \textcolor{comment}{\ |\ \ \ \ \ \ email:\ enrico.bertolazzi@unitn.it\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ |}}
+\DoxyCodeLine{00017\ \textcolor{comment}{\ |\ \ \ \ \ \ email:\ marco.frego@unitn.it\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ |}}
+\DoxyCodeLine{00018\ \textcolor{comment}{\ |\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ |}}
+\DoxyCodeLine{00019\ \textcolor{comment}{\(\backslash\)*-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/*/}}
+\DoxyCodeLine{00020\ }
+\DoxyCodeLine{00021\ \textcolor{keyword}{namespace\ }\mbox{\hyperlink{namespace_g2lib}{G2lib}}\ \{}
+\DoxyCodeLine{00022\ }
+\DoxyCodeLine{00023\ \ \ \textcolor{keyword}{using\ }std::string;}
+\DoxyCodeLine{00024\ \ \ \textcolor{keyword}{using\ }std::ofstream;}
+\DoxyCodeLine{00025\ }
+\DoxyCodeLine{00026\ \ \ \textcolor{keyword}{class\ }\mbox{\hyperlink{class_g2lib_1_1_asy_plot}{AsyPlot}}\ \{}
+\DoxyCodeLine{00027\ \ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00028\ \ \ \ \ \mbox{\hyperlink{class_g2lib_1_1_asy_plot_a4815742da17f12c15fd05a6f40363040}{AsyPlot}}(\ \textcolor{keywordtype}{string}\ \mbox{\hyperlink{class_g2lib_1_1_asy_plot_ae12d991dc86267f4d863fe44b167a614}{filename}},\ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{class_g2lib_1_1_asy_plot_acc7c7a37b6a3812ec9c9c2eb84fbadc9}{showAxes}}\ );}
+\DoxyCodeLine{00029\ \ \ \ \ \mbox{\hyperlink{class_g2lib_1_1_asy_plot_abea893862e407fb96cab020430e98987}{\string~AsyPlot}}();}
+\DoxyCodeLine{00030\ }
+\DoxyCodeLine{00031\ \ \ \ \ \textcolor{keywordtype}{void}}
+\DoxyCodeLine{00032\ \ \ \ \ \mbox{\hyperlink{class_g2lib_1_1_asy_plot_ae7fe8fa822976d795cec8a93d3187e99}{drawClothoid}}(}
+\DoxyCodeLine{00033\ \ \ \ \ \ \ \mbox{\hyperlink{class_g2lib_1_1_clothoid_curve}{ClothoidCurve}}\ \textcolor{keyword}{const}\&\ c,}
+\DoxyCodeLine{00034\ \ \ \ \ \ \ \textcolor{keywordtype}{string}\ \textcolor{keyword}{const}\ \&\ penna=\textcolor{stringliteral}{"{}black"{}},}
+\DoxyCodeLine{00035\ \ \ \ \ \ \ \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\_type}}\ offset\ =\ 0}
+\DoxyCodeLine{00036\ \ \ \ \ )\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00037\ }
+\DoxyCodeLine{00038\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_g2lib_1_1_asy_plot_a7d8f6b6ab33b0e73e7fe48c0404e832e}{dot}}(\ \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\_type}}\ x,\ \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\_type}}\ y,\ \textcolor{keywordtype}{string}\ \textcolor{keyword}{const}\ \&\ penna=\textcolor{stringliteral}{"{}black"{}}\ )\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00039\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_g2lib_1_1_asy_plot_a41835e9ad8df4944a1691e331983356d}{triangle}}(\mbox{\hyperlink{class_g2lib_1_1_triangle2_d}{Triangle2D}}\ \textcolor{keyword}{const}\ \&\ t,\ \textcolor{keywordtype}{string}\ \textcolor{keyword}{const}\ \&\ penna=\textcolor{stringliteral}{"{}black"{}}\ )\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00040\ }
+\DoxyCodeLine{00041\ \ \ \ \ \textcolor{keywordtype}{void}}
+\DoxyCodeLine{00042\ \ \ \ \ \mbox{\hyperlink{class_g2lib_1_1_asy_plot_aa1342b47bf30bec897a9d32cc483812d}{drawRect}}(}
+\DoxyCodeLine{00043\ \ \ \ \ \ \ \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\_type}}\ x0,\ \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\_type}}\ y0,}
+\DoxyCodeLine{00044\ \ \ \ \ \ \ \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\_type}}\ x1,\ \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\_type}}\ y1,}
+\DoxyCodeLine{00045\ \ \ \ \ \ \ \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\_type}}\ x2,\ \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\_type}}\ y2,}
+\DoxyCodeLine{00046\ \ \ \ \ \ \ \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\_type}}\ x3,\ \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\_type}}\ y3,}
+\DoxyCodeLine{00047\ \ \ \ \ \ \ \textcolor{keywordtype}{string}\ \textcolor{keyword}{const}\ \&\ penna=\textcolor{stringliteral}{"{}black"{}}}
+\DoxyCodeLine{00048\ \ \ \ \ )\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00049\ }
+\DoxyCodeLine{00050\ \ \ \ \ \textcolor{keywordtype}{void}}
+\DoxyCodeLine{00051\ \ \ \ \ \mbox{\hyperlink{class_g2lib_1_1_asy_plot_aab3a1d4836a3eb2aab03b283f05f8938}{drawLine}}(}
+\DoxyCodeLine{00052\ \ \ \ \ \ \ \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\_type}}\ x0,\ \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\_type}}\ y0,}
+\DoxyCodeLine{00053\ \ \ \ \ \ \ \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\_type}}\ x1,\ \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\_type}}\ y1,}
+\DoxyCodeLine{00054\ \ \ \ \ \ \ \textcolor{keywordtype}{string}\ \textcolor{keyword}{const}\ \&\ penna=\textcolor{stringliteral}{"{}black"{}}}
+\DoxyCodeLine{00055\ \ \ \ \ )\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00056\ }
+\DoxyCodeLine{00057\ \ \ \ \ \textcolor{keywordtype}{void}}
+\DoxyCodeLine{00058\ \ \ \ \ \mbox{\hyperlink{class_g2lib_1_1_asy_plot_af1cffddfa974e1048d4e3855b184150c}{label}}(}
+\DoxyCodeLine{00059\ \ \ \ \ \ \ \textcolor{keywordtype}{string}\ \textcolor{keyword}{const}\ \&\ text,}
+\DoxyCodeLine{00060\ \ \ \ \ \ \ \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\_type}}\ \ \ \ \ \ x,}
+\DoxyCodeLine{00061\ \ \ \ \ \ \ \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\_type}}\ \ \ \ \ \ y,}
+\DoxyCodeLine{00062\ \ \ \ \ \ \ \textcolor{keywordtype}{string}\ \textcolor{keyword}{const}\ \&\ placement\ =\ \textcolor{stringliteral}{"{}"{}},}
+\DoxyCodeLine{00063\ \ \ \ \ \ \ \textcolor{keywordtype}{string}\ \textcolor{keyword}{const}\ \&\ penna\ =\ \textcolor{stringliteral}{"{}black"{}}}
+\DoxyCodeLine{00064\ \ \ \ \ )\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00065\ }
+\DoxyCodeLine{00066\ \ \ \ \ \textcolor{keywordtype}{void}}
+\DoxyCodeLine{00067\ \ \ \ \ \mbox{\hyperlink{class_g2lib_1_1_asy_plot_a06e972481bbd2c1b3c247b6766cecece}{displayAxes}}(}
+\DoxyCodeLine{00068\ \ \ \ \ \ \ \textcolor{keywordtype}{string}\ \textcolor{keyword}{const}\ \&\ labX,}
+\DoxyCodeLine{00069\ \ \ \ \ \ \ \textcolor{keywordtype}{string}\ \textcolor{keyword}{const}\ \&\ labY,}
+\DoxyCodeLine{00070\ \ \ \ \ \ \ \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\_type}}\ \ \ \ \ \ xmin,}
+\DoxyCodeLine{00071\ \ \ \ \ \ \ \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\_type}}\ \ \ \ \ \ xmax,}
+\DoxyCodeLine{00072\ \ \ \ \ \ \ \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\_type}}\ \ \ \ \ \ ymin,}
+\DoxyCodeLine{00073\ \ \ \ \ \ \ \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\_type}}\ \ \ \ \ \ ymax}
+\DoxyCodeLine{00074\ \ \ \ \ )\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00075\ }
+\DoxyCodeLine{00076\ \ \ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00077\ \ \ \ \ \textcolor{keyword}{mutable}\ ofstream\ \mbox{\hyperlink{class_g2lib_1_1_asy_plot_a24267e4736cc6e0ccd389bd4a9d96393}{file}};}
+\DoxyCodeLine{00078\ \ \ \ \ \textcolor{keywordtype}{string}\ \ \mbox{\hyperlink{class_g2lib_1_1_asy_plot_ae12d991dc86267f4d863fe44b167a614}{filename}};}
+\DoxyCodeLine{00079\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{class_g2lib_1_1_asy_plot_acc7c7a37b6a3812ec9c9c2eb84fbadc9}{showAxes}};}
+\DoxyCodeLine{00080\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{class_g2lib_1_1_asy_plot_a9ff37d912fb73d652509a43ea48fbd64}{openFile}}();}
+\DoxyCodeLine{00081\ \ \ \ \ \textcolor{keywordtype}{bool}\ \mbox{\hyperlink{class_g2lib_1_1_asy_plot_ae29910ba71dae502287f1156d5cf00dc}{closeFile}}();}
+\DoxyCodeLine{00082\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_g2lib_1_1_asy_plot_a68f434d2227c964aaea9e903e8984266}{initFile}}();}
+\DoxyCodeLine{00083\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_g2lib_1_1_asy_plot_a06e972481bbd2c1b3c247b6766cecece}{displayAxes}}()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00084\ \ \ \ \ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{class_g2lib_1_1_asy_plot_ab6505c07543b57cd37272fc15193b97f}{compileFile}}();}
+\DoxyCodeLine{00085\ \ \ \};}
+\DoxyCodeLine{00086\ \}}
+
+\end{DoxyCode}

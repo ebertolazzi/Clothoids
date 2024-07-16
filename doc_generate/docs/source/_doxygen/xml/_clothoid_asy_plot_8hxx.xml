@@ -1,0 +1,228 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.11.0" xml:lang="en-US">
+  <compounddef id="_clothoid_asy_plot_8hxx" kind="file" language="C++">
+    <compoundname>ClothoidAsyPlot.hxx</compoundname>
+    <includedby refid="_clothoids_8hh" local="yes">/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Clothoids.hh</includedby>
+    <invincdepgraph>
+      <node id="3">
+        <label>/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/BBox.cc</label>
+        <link refid="_b_box_8cc"/>
+      </node>
+      <node id="4">
+        <label>/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Biarc.cc</label>
+        <link refid="_biarc_8cc"/>
+      </node>
+      <node id="5">
+        <label>/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/BiarcList.cc</label>
+        <link refid="_biarc_list_8cc"/>
+      </node>
+      <node id="6">
+        <label>/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Circle.cc</label>
+        <link refid="_circle_8cc"/>
+      </node>
+      <node id="7">
+        <label>/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Clothoid.cc</label>
+        <link refid="_clothoid_8cc"/>
+      </node>
+      <node id="8">
+        <label>/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/ClothoidAsyPlot.cc</label>
+        <link refid="_clothoid_asy_plot_8cc"/>
+      </node>
+      <node id="9">
+        <label>/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/ClothoidDistance.cc</label>
+        <link refid="_clothoid_distance_8cc"/>
+      </node>
+      <node id="10">
+        <label>/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/ClothoidG2.cc</label>
+        <link refid="_clothoid_g2_8cc"/>
+      </node>
+      <node id="11">
+        <label>/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/ClothoidList.cc</label>
+        <link refid="_clothoid_list_8cc"/>
+      </node>
+      <node id="2">
+        <label>/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Clothoids.hh</label>
+        <link refid="_clothoids_8hh"/>
+        <childnode refid="3" relation="include">
+        </childnode>
+        <childnode refid="4" relation="include">
+        </childnode>
+        <childnode refid="5" relation="include">
+        </childnode>
+        <childnode refid="6" relation="include">
+        </childnode>
+        <childnode refid="7" relation="include">
+        </childnode>
+        <childnode refid="8" relation="include">
+        </childnode>
+        <childnode refid="9" relation="include">
+        </childnode>
+        <childnode refid="10" relation="include">
+        </childnode>
+        <childnode refid="11" relation="include">
+        </childnode>
+        <childnode refid="12" relation="include">
+        </childnode>
+        <childnode refid="13" relation="include">
+        </childnode>
+        <childnode refid="14" relation="include">
+        </childnode>
+        <childnode refid="15" relation="include">
+        </childnode>
+        <childnode refid="16" relation="include">
+        </childnode>
+        <childnode refid="17" relation="include">
+        </childnode>
+        <childnode refid="18" relation="include">
+        </childnode>
+        <childnode refid="19" relation="include">
+        </childnode>
+        <childnode refid="20" relation="include">
+        </childnode>
+        <childnode refid="21" relation="include">
+        </childnode>
+      </node>
+      <node id="1">
+        <label>/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Clothoids/ClothoidAsyPlot.hxx</label>
+        <link refid="_clothoid_asy_plot_8hxx"/>
+        <childnode refid="2" relation="include">
+        </childnode>
+      </node>
+      <node id="12">
+        <label>/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Dubins.cc</label>
+        <link refid="_dubins_8cc"/>
+      </node>
+      <node id="13">
+        <label>/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Dubins3p.cc</label>
+        <link refid="_dubins3p_8cc"/>
+      </node>
+      <node id="14">
+        <label>/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Dubins3p_ellipse.cc</label>
+        <link refid="_dubins3p__ellipse_8cc"/>
+      </node>
+      <node id="15">
+        <label>/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Dubins3p_pattern.cc</label>
+        <link refid="_dubins3p__pattern_8cc"/>
+      </node>
+      <node id="16">
+        <label>/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Fresnel.cc</label>
+        <link refid="_fresnel_8cc"/>
+      </node>
+      <node id="17">
+        <label>/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/G2lib.cc</label>
+        <link refid="_g2lib_8cc"/>
+      </node>
+      <node id="18">
+        <label>/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/G2lib_intersect.cc</label>
+        <link refid="_g2lib__intersect_8cc"/>
+      </node>
+      <node id="19">
+        <label>/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Line.cc</label>
+        <link refid="_line_8cc"/>
+      </node>
+      <node id="20">
+        <label>/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/PolyLine.cc</label>
+        <link refid="_poly_line_8cc"/>
+      </node>
+      <node id="21">
+        <label>/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Triangle2D.cc</label>
+        <link refid="_triangle2_d_8cc"/>
+      </node>
+    </invincdepgraph>
+    <innerclass refid="class_g2lib_1_1_asy_plot" prot="public">G2lib::AsyPlot</innerclass>
+    <innernamespace refid="namespace_g2lib">G2lib</innernamespace>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <programlisting>
+<codeline lineno="1"><highlight class="comment">/*--------------------------------------------------------------------------*\</highlight></codeline>
+<codeline lineno="2"><highlight class="comment"><sp/>|<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>|</highlight></codeline>
+<codeline lineno="3"><highlight class="comment"><sp/>|<sp/><sp/>Copyright<sp/>(C)<sp/>2017<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>|</highlight></codeline>
+<codeline lineno="4"><highlight class="comment"><sp/>|<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>|</highlight></codeline>
+<codeline lineno="5"><highlight class="comment"><sp/>|<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>,<sp/>__<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>,<sp/>__<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>|</highlight></codeline>
+<codeline lineno="6"><highlight class="comment"><sp/>|<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>/|/<sp/><sp/>\<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>/|/<sp/><sp/>\<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>|</highlight></codeline>
+<codeline lineno="7"><highlight class="comment"><sp/>|<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>|<sp/>__/<sp/>_<sp/><sp/><sp/>,_<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>|<sp/>__/<sp/>_<sp/><sp/><sp/>,_<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>|</highlight></codeline>
+<codeline lineno="8"><highlight class="comment"><sp/>|<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>|<sp/><sp/><sp/>\|/<sp/><sp/>/<sp/><sp/>|<sp/><sp/>|<sp/><sp/><sp/>|<sp/>|<sp/><sp/><sp/>\|/<sp/><sp/>/<sp/><sp/>|<sp/><sp/>|<sp/><sp/><sp/>|<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>|</highlight></codeline>
+<codeline lineno="9"><highlight class="comment"><sp/>|<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>|(__/|__/<sp/><sp/><sp/>|_/<sp/>\_/|/|(__/|__/<sp/><sp/><sp/>|_/<sp/>\_/|/<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>|</highlight></codeline>
+<codeline lineno="10"><highlight class="comment"><sp/>|<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>/|<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>/|<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>|</highlight></codeline>
+<codeline lineno="11"><highlight class="comment"><sp/>|<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>\|<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>\|<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>|</highlight></codeline>
+<codeline lineno="12"><highlight class="comment"><sp/>|<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>|</highlight></codeline>
+<codeline lineno="13"><highlight class="comment"><sp/>|<sp/><sp/><sp/><sp/><sp/><sp/>Enrico<sp/>Bertolazzi<sp/>and<sp/>Marco<sp/>Frego<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>|</highlight></codeline>
+<codeline lineno="14"><highlight class="comment"><sp/>|<sp/><sp/><sp/><sp/><sp/><sp/>Dipartimento<sp/>di<sp/>Ingegneria<sp/>Industriale<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>|</highlight></codeline>
+<codeline lineno="15"><highlight class="comment"><sp/>|<sp/><sp/><sp/><sp/><sp/><sp/>Universita`<sp/>degli<sp/>Studi<sp/>di<sp/>Trento<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>|</highlight></codeline>
+<codeline lineno="16"><highlight class="comment"><sp/>|<sp/><sp/><sp/><sp/><sp/><sp/>email:<sp/>enrico.bertolazzi@unitn.it<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>|</highlight></codeline>
+<codeline lineno="17"><highlight class="comment"><sp/>|<sp/><sp/><sp/><sp/><sp/><sp/>email:<sp/>marco.frego@unitn.it<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>|</highlight></codeline>
+<codeline lineno="18"><highlight class="comment"><sp/>|<sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/><sp/>|</highlight></codeline>
+<codeline lineno="19"><highlight class="comment">\*--------------------------------------------------------------------------*/</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="20"><highlight class="normal"></highlight></codeline>
+<codeline lineno="21"><highlight class="normal"></highlight><highlight class="keyword">namespace<sp/></highlight><highlight class="normal"><ref refid="namespace_g2lib" kindref="compound">G2lib</ref><sp/>{</highlight></codeline>
+<codeline lineno="22"><highlight class="normal"></highlight></codeline>
+<codeline lineno="23"><highlight class="normal"><sp/><sp/></highlight><highlight class="keyword">using<sp/></highlight><highlight class="normal">std::string;</highlight></codeline>
+<codeline lineno="24"><highlight class="normal"><sp/><sp/></highlight><highlight class="keyword">using<sp/></highlight><highlight class="normal">std::ofstream;</highlight></codeline>
+<codeline lineno="25"><highlight class="normal"></highlight></codeline>
+<codeline lineno="26" refid="class_g2lib_1_1_asy_plot" refkind="compound"><highlight class="normal"><sp/><sp/></highlight><highlight class="keyword">class<sp/></highlight><highlight class="normal"><ref refid="class_g2lib_1_1_asy_plot" kindref="compound">AsyPlot</ref><sp/>{</highlight></codeline>
+<codeline lineno="27"><highlight class="normal"><sp/><sp/></highlight><highlight class="keyword">public</highlight><highlight class="normal">:</highlight></codeline>
+<codeline lineno="28"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="class_g2lib_1_1_asy_plot_1a4815742da17f12c15fd05a6f40363040" kindref="member">AsyPlot</ref>(<sp/></highlight><highlight class="keywordtype">string</highlight><highlight class="normal"><sp/><ref refid="class_g2lib_1_1_asy_plot_1ae12d991dc86267f4d863fe44b167a614" kindref="member">filename</ref>,<sp/></highlight><highlight class="keywordtype">bool</highlight><highlight class="normal"><sp/><ref refid="class_g2lib_1_1_asy_plot_1acc7c7a37b6a3812ec9c9c2eb84fbadc9" kindref="member">showAxes</ref><sp/>);</highlight></codeline>
+<codeline lineno="29"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="class_g2lib_1_1_asy_plot_1abea893862e407fb96cab020430e98987" kindref="member">~AsyPlot</ref>();</highlight></codeline>
+<codeline lineno="30"><highlight class="normal"></highlight></codeline>
+<codeline lineno="31"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="32"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="class_g2lib_1_1_asy_plot_1ae7fe8fa822976d795cec8a93d3187e99" kindref="member">drawClothoid</ref>(</highlight></codeline>
+<codeline lineno="33"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="class_g2lib_1_1_clothoid_curve" kindref="compound">ClothoidCurve</ref><sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal">&amp;<sp/>c,</highlight></codeline>
+<codeline lineno="34"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">string</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/>&amp;<sp/>penna=</highlight><highlight class="stringliteral">&quot;black&quot;</highlight><highlight class="normal">,</highlight></codeline>
+<codeline lineno="35"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="namespace_g2lib_1acc8095aa40beedee44352de62f232033" kindref="member">real_type</ref><sp/>offset<sp/>=<sp/>0</highlight></codeline>
+<codeline lineno="36"><highlight class="normal"><sp/><sp/><sp/><sp/>)<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="37"><highlight class="normal"></highlight></codeline>
+<codeline lineno="38"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="class_g2lib_1_1_asy_plot_1a7d8f6b6ab33b0e73e7fe48c0404e832e" kindref="member">dot</ref>(<sp/><ref refid="namespace_g2lib_1acc8095aa40beedee44352de62f232033" kindref="member">real_type</ref><sp/>x,<sp/><ref refid="namespace_g2lib_1acc8095aa40beedee44352de62f232033" kindref="member">real_type</ref><sp/>y,<sp/></highlight><highlight class="keywordtype">string</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/>&amp;<sp/>penna=</highlight><highlight class="stringliteral">&quot;black&quot;</highlight><highlight class="normal"><sp/>)<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="39"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="class_g2lib_1_1_asy_plot_1a41835e9ad8df4944a1691e331983356d" kindref="member">triangle</ref>(<ref refid="class_g2lib_1_1_triangle2_d" kindref="compound">Triangle2D</ref><sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/>&amp;<sp/>t,<sp/></highlight><highlight class="keywordtype">string</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/>&amp;<sp/>penna=</highlight><highlight class="stringliteral">&quot;black&quot;</highlight><highlight class="normal"><sp/>)<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="40"><highlight class="normal"></highlight></codeline>
+<codeline lineno="41"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="42"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="class_g2lib_1_1_asy_plot_1aa1342b47bf30bec897a9d32cc483812d" kindref="member">drawRect</ref>(</highlight></codeline>
+<codeline lineno="43"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="namespace_g2lib_1acc8095aa40beedee44352de62f232033" kindref="member">real_type</ref><sp/>x0,<sp/><ref refid="namespace_g2lib_1acc8095aa40beedee44352de62f232033" kindref="member">real_type</ref><sp/>y0,</highlight></codeline>
+<codeline lineno="44"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="namespace_g2lib_1acc8095aa40beedee44352de62f232033" kindref="member">real_type</ref><sp/>x1,<sp/><ref refid="namespace_g2lib_1acc8095aa40beedee44352de62f232033" kindref="member">real_type</ref><sp/>y1,</highlight></codeline>
+<codeline lineno="45"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="namespace_g2lib_1acc8095aa40beedee44352de62f232033" kindref="member">real_type</ref><sp/>x2,<sp/><ref refid="namespace_g2lib_1acc8095aa40beedee44352de62f232033" kindref="member">real_type</ref><sp/>y2,</highlight></codeline>
+<codeline lineno="46"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="namespace_g2lib_1acc8095aa40beedee44352de62f232033" kindref="member">real_type</ref><sp/>x3,<sp/><ref refid="namespace_g2lib_1acc8095aa40beedee44352de62f232033" kindref="member">real_type</ref><sp/>y3,</highlight></codeline>
+<codeline lineno="47"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">string</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/>&amp;<sp/>penna=</highlight><highlight class="stringliteral">&quot;black&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="48"><highlight class="normal"><sp/><sp/><sp/><sp/>)<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="49"><highlight class="normal"></highlight></codeline>
+<codeline lineno="50"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="51"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="class_g2lib_1_1_asy_plot_1aab3a1d4836a3eb2aab03b283f05f8938" kindref="member">drawLine</ref>(</highlight></codeline>
+<codeline lineno="52"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="namespace_g2lib_1acc8095aa40beedee44352de62f232033" kindref="member">real_type</ref><sp/>x0,<sp/><ref refid="namespace_g2lib_1acc8095aa40beedee44352de62f232033" kindref="member">real_type</ref><sp/>y0,</highlight></codeline>
+<codeline lineno="53"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="namespace_g2lib_1acc8095aa40beedee44352de62f232033" kindref="member">real_type</ref><sp/>x1,<sp/><ref refid="namespace_g2lib_1acc8095aa40beedee44352de62f232033" kindref="member">real_type</ref><sp/>y1,</highlight></codeline>
+<codeline lineno="54"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">string</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/>&amp;<sp/>penna=</highlight><highlight class="stringliteral">&quot;black&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="55"><highlight class="normal"><sp/><sp/><sp/><sp/>)<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="56"><highlight class="normal"></highlight></codeline>
+<codeline lineno="57"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="58"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="class_g2lib_1_1_asy_plot_1af1cffddfa974e1048d4e3855b184150c" kindref="member">label</ref>(</highlight></codeline>
+<codeline lineno="59"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">string</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/>&amp;<sp/>text,</highlight></codeline>
+<codeline lineno="60"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="namespace_g2lib_1acc8095aa40beedee44352de62f232033" kindref="member">real_type</ref><sp/><sp/><sp/><sp/><sp/><sp/>x,</highlight></codeline>
+<codeline lineno="61"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="namespace_g2lib_1acc8095aa40beedee44352de62f232033" kindref="member">real_type</ref><sp/><sp/><sp/><sp/><sp/><sp/>y,</highlight></codeline>
+<codeline lineno="62"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">string</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/>&amp;<sp/>placement<sp/>=<sp/></highlight><highlight class="stringliteral">&quot;&quot;</highlight><highlight class="normal">,</highlight></codeline>
+<codeline lineno="63"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">string</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/>&amp;<sp/>penna<sp/>=<sp/></highlight><highlight class="stringliteral">&quot;black&quot;</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="64"><highlight class="normal"><sp/><sp/><sp/><sp/>)<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="65"><highlight class="normal"></highlight></codeline>
+<codeline lineno="66"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"></highlight></codeline>
+<codeline lineno="67"><highlight class="normal"><sp/><sp/><sp/><sp/><ref refid="class_g2lib_1_1_asy_plot_1a06e972481bbd2c1b3c247b6766cecece" kindref="member">displayAxes</ref>(</highlight></codeline>
+<codeline lineno="68"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">string</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/>&amp;<sp/>labX,</highlight></codeline>
+<codeline lineno="69"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">string</highlight><highlight class="normal"><sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal"><sp/>&amp;<sp/>labY,</highlight></codeline>
+<codeline lineno="70"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="namespace_g2lib_1acc8095aa40beedee44352de62f232033" kindref="member">real_type</ref><sp/><sp/><sp/><sp/><sp/><sp/>xmin,</highlight></codeline>
+<codeline lineno="71"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="namespace_g2lib_1acc8095aa40beedee44352de62f232033" kindref="member">real_type</ref><sp/><sp/><sp/><sp/><sp/><sp/>xmax,</highlight></codeline>
+<codeline lineno="72"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="namespace_g2lib_1acc8095aa40beedee44352de62f232033" kindref="member">real_type</ref><sp/><sp/><sp/><sp/><sp/><sp/>ymin,</highlight></codeline>
+<codeline lineno="73"><highlight class="normal"><sp/><sp/><sp/><sp/><sp/><sp/><ref refid="namespace_g2lib_1acc8095aa40beedee44352de62f232033" kindref="member">real_type</ref><sp/><sp/><sp/><sp/><sp/><sp/>ymax</highlight></codeline>
+<codeline lineno="74"><highlight class="normal"><sp/><sp/><sp/><sp/>)<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="75"><highlight class="normal"></highlight></codeline>
+<codeline lineno="76"><highlight class="normal"><sp/><sp/></highlight><highlight class="keyword">private</highlight><highlight class="normal">:</highlight></codeline>
+<codeline lineno="77" refid="class_g2lib_1_1_asy_plot_1a24267e4736cc6e0ccd389bd4a9d96393" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keyword">mutable</highlight><highlight class="normal"><sp/>ofstream<sp/><ref refid="class_g2lib_1_1_asy_plot_1a24267e4736cc6e0ccd389bd4a9d96393" kindref="member">file</ref>;</highlight></codeline>
+<codeline lineno="78" refid="class_g2lib_1_1_asy_plot_1ae12d991dc86267f4d863fe44b167a614" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">string</highlight><highlight class="normal"><sp/><sp/><ref refid="class_g2lib_1_1_asy_plot_1ae12d991dc86267f4d863fe44b167a614" kindref="member">filename</ref>;</highlight></codeline>
+<codeline lineno="79" refid="class_g2lib_1_1_asy_plot_1acc7c7a37b6a3812ec9c9c2eb84fbadc9" refkind="member"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">bool</highlight><highlight class="normal"><sp/><ref refid="class_g2lib_1_1_asy_plot_1acc7c7a37b6a3812ec9c9c2eb84fbadc9" kindref="member">showAxes</ref>;</highlight></codeline>
+<codeline lineno="80"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">bool</highlight><highlight class="normal"><sp/><ref refid="class_g2lib_1_1_asy_plot_1a9ff37d912fb73d652509a43ea48fbd64" kindref="member">openFile</ref>();</highlight></codeline>
+<codeline lineno="81"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">bool</highlight><highlight class="normal"><sp/><ref refid="class_g2lib_1_1_asy_plot_1ae29910ba71dae502287f1156d5cf00dc" kindref="member">closeFile</ref>();</highlight></codeline>
+<codeline lineno="82"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="class_g2lib_1_1_asy_plot_1a68f434d2227c964aaea9e903e8984266" kindref="member">initFile</ref>();</highlight></codeline>
+<codeline lineno="83"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="class_g2lib_1_1_asy_plot_1a06e972481bbd2c1b3c247b6766cecece" kindref="member">displayAxes</ref>()<sp/></highlight><highlight class="keyword">const</highlight><highlight class="normal">;</highlight></codeline>
+<codeline lineno="84"><highlight class="normal"><sp/><sp/><sp/><sp/></highlight><highlight class="keywordtype">void</highlight><highlight class="normal"><sp/><ref refid="class_g2lib_1_1_asy_plot_1ab6505c07543b57cd37272fc15193b97f" kindref="member">compileFile</ref>();</highlight></codeline>
+<codeline lineno="85"><highlight class="normal"><sp/><sp/>};</highlight></codeline>
+<codeline lineno="86"><highlight class="normal">}</highlight></codeline>
+    </programlisting>
+    <location file="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Clothoids/ClothoidAsyPlot.hxx"/>
+  </compounddef>
+</doxygen>

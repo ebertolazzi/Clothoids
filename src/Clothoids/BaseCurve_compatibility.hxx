@@ -31,7 +31,7 @@ length( real_type offs ) const
 //!
 //! Compute the bounding box of the curve (ISO/SAE).
 //!
-//! \param[in]  off  curve offset
+//! \param[in]  offs curve offset
 //! \param[out] xmin left bottom
 //! \param[out] ymin left bottom
 //! \param[out] xmax right top

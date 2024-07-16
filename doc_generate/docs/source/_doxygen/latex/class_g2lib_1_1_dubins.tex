@@ -1,0 +1,1884 @@
+\doxysection{G2lib\+::Dubins Class Reference}
+\hypertarget{class_g2lib_1_1_dubins}{}\label{class_g2lib_1_1_dubins}\index{G2lib::Dubins@{G2lib::Dubins}}
+
+
+{\ttfamily \#include $<$Dubins.\+hxx$>$}
+
+Inheritance diagram for G2lib\+::Dubins\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_g2lib_1_1_dubins}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_g2lib_1_1_dubins_a87a4d9f1048b0e4aee46cfa492431945}{Dubins}} ()=delete
+\begin{DoxyCompactList}\small\item\em Three arc solution of DUBINS problem. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{class_g2lib_1_1_dubins_a405a4f792d4aeb965a69ffa499523c39}{Dubins}} (string const \&\mbox{\hyperlink{class_g2lib_1_1_base_curve_a15a9cd79a8c95b3c9b1b95721e076de7}{name}})
+\item 
+void \mbox{\hyperlink{class_g2lib_1_1_dubins_ab54afa5c5061e63193fbb74f0cd97a11}{setup}} (\mbox{\hyperlink{namespace_g2lib_a2bee1fb11cb401bacb26ad157b301feb}{Generic\+Container}} const \&gc) override
+\item 
+\mbox{\hyperlink{class_g2lib_1_1_dubins_a834f016a91c983a66ce8d9a0ae10679b}{Dubins}} (\mbox{\hyperlink{class_g2lib_1_1_dubins}{Dubins}} const \&s)
+\item 
+\mbox{\hyperlink{class_g2lib_1_1_dubins_a55168bf46dc26c9d870999aa29b71c92}{Dubins}} (\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} x0, \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} y0, \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \mbox{\hyperlink{class_g2lib_1_1_dubins_ac69f8cc1b52135aa490be0427fd4f00c}{theta0}}, \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} x1, \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} y1, \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \mbox{\hyperlink{class_g2lib_1_1_dubins_a300bc44930168a2a99ba14bd1c7d89c0}{theta1}}, \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} k\+\_\+max, string const \&\mbox{\hyperlink{class_g2lib_1_1_base_curve_a15a9cd79a8c95b3c9b1b95721e076de7}{name}})
+\item 
+void \mbox{\hyperlink{class_g2lib_1_1_dubins_af77ff6087da141ca46c5c4e3ec8d1575}{copy}} (\mbox{\hyperlink{class_g2lib_1_1_dubins}{Dubins}} const \&d)
+\item 
+bool \mbox{\hyperlink{class_g2lib_1_1_dubins_a4b227758adcabb4f7741f58fb6551747}{build}} (\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} x0, \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} y0, \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \mbox{\hyperlink{class_g2lib_1_1_dubins_ac69f8cc1b52135aa490be0427fd4f00c}{theta0}}, \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} x1, \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} y1, \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \mbox{\hyperlink{class_g2lib_1_1_dubins_a300bc44930168a2a99ba14bd1c7d89c0}{theta1}}, \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} k\+\_\+max)
+\item 
+\mbox{\hyperlink{namespace_g2lib_a17146eb1606475bedc9a2d27f3b29e34}{integer}} \mbox{\hyperlink{class_g2lib_1_1_dubins_a815b75a9a2be3c65f5256fc3cca957d3}{get\+\_\+range\+\_\+angles\+\_\+begin}} (\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} x0, \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} y0, \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} x1, \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} y1, \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \mbox{\hyperlink{class_g2lib_1_1_dubins_a300bc44930168a2a99ba14bd1c7d89c0}{theta1}}, \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} k\+\_\+max, \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} angles\mbox{[}$\,$\mbox{]}) const
+\item 
+\mbox{\hyperlink{namespace_g2lib_a17146eb1606475bedc9a2d27f3b29e34}{integer}} \mbox{\hyperlink{class_g2lib_1_1_dubins_a0f312fe635ef13985e109d3d5ed02e11}{get\+\_\+range\+\_\+angles\+\_\+end}} (\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} x0, \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} y0, \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \mbox{\hyperlink{class_g2lib_1_1_dubins_ac69f8cc1b52135aa490be0427fd4f00c}{theta0}}, \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} x1, \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} y1, \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} k\+\_\+max, \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} angles\mbox{[}$\,$\mbox{]}) const
+\item 
+void \mbox{\hyperlink{class_g2lib_1_1_dubins_ad432d0f7cf9e3f1bb53dbffecfb3e70f}{build}} (\mbox{\hyperlink{class_g2lib_1_1_line_segment}{Line\+Segment}} const \&L)
+\item 
+void \mbox{\hyperlink{class_g2lib_1_1_dubins_a84ce2cb91f2e2ad2c0b513080c9c4fff}{build}} (\mbox{\hyperlink{class_g2lib_1_1_circle_arc}{Circle\+Arc}} const \&C)
+\item 
+void \mbox{\hyperlink{class_g2lib_1_1_dubins_a03cda37db32d08116a902e103e132337}{build}} (\mbox{\hyperlink{class_g2lib_1_1_clothoid_curve}{Clothoid\+Curve}} const \&)
+\item 
+void \mbox{\hyperlink{class_g2lib_1_1_dubins_a8abaf866e455411b1db705ddba752cf9}{build}} (\mbox{\hyperlink{class_g2lib_1_1_biarc}{Biarc}} const \&)
+\item 
+void \mbox{\hyperlink{class_g2lib_1_1_dubins_a03a14fd7655415064a2daabeb830e46a}{build}} (\mbox{\hyperlink{class_g2lib_1_1_biarc_list}{Biarc\+List}} const \&)
+\item 
+void \mbox{\hyperlink{class_g2lib_1_1_dubins_ae8a63db1a31b7dbe0b3d200b736b96db}{build}} (\mbox{\hyperlink{class_g2lib_1_1_poly_line}{Poly\+Line}} const \&)
+\item 
+void \mbox{\hyperlink{class_g2lib_1_1_dubins_ad771ebda302811ae5a3bafb7aabb8d73}{build}} (\mbox{\hyperlink{class_g2lib_1_1_clothoid_list}{Clothoid\+List}} const \&)
+\item 
+void \mbox{\hyperlink{class_g2lib_1_1_dubins_ae63011016015a0e934c7a05a3608ef6f}{build}} (\mbox{\hyperlink{class_g2lib_1_1_dubins}{Dubins}} const \&)
+\item 
+void \mbox{\hyperlink{class_g2lib_1_1_dubins_a929ff1978ec761dc915e8ef02f44f978}{build}} (\mbox{\hyperlink{class_g2lib_1_1_dubins3p}{Dubins3p}} const \&)
+\item 
+void \mbox{\hyperlink{class_g2lib_1_1_dubins_a6f76915cf8dc5d38defd04fd52a19bc5}{bbox}} (\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \&xmin, \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \&ymin, \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \&xmax, \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \&ymax) const override
+\item 
+void \mbox{\hyperlink{class_g2lib_1_1_dubins_af7b4b4d28a20c4f3a37fb67672e55cb9}{bbox\+\_\+\+ISO}} (\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} offs, \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \&xmin, \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \&ymin, \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \&xmax, \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \&ymax) const override
+\item 
+\mbox{\hyperlink{class_g2lib_1_1_circle_arc}{Circle\+Arc}} const \& \mbox{\hyperlink{class_g2lib_1_1_dubins_a658d4be3c32068af6e5a0ebcf42eb087}{C0}} () const
+\item 
+\mbox{\hyperlink{class_g2lib_1_1_circle_arc}{Circle\+Arc}} const \& \mbox{\hyperlink{class_g2lib_1_1_dubins_a5b2765c187b73559585225695c63537e}{C1}} () const
+\item 
+\mbox{\hyperlink{class_g2lib_1_1_circle_arc}{Circle\+Arc}} const \& \mbox{\hyperlink{class_g2lib_1_1_dubins_af8bc4bc485b0522c78244328c14a63aa}{C2}} () const
+\item 
+void \mbox{\hyperlink{class_g2lib_1_1_dubins_aaa5367c66888e9500905a585ae0efeda}{get\+\_\+solution}} (\mbox{\hyperlink{class_g2lib_1_1_clothoid_list}{Clothoid\+List}} \&CL) const
+\item 
+\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \mbox{\hyperlink{class_g2lib_1_1_dubins_a8f9a892fc53ad6838fa12cccdef59678}{length}} () const override
+\item 
+\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \mbox{\hyperlink{class_g2lib_1_1_dubins_a473a073f71e57b2f9b84b724a97afc87}{length\+\_\+\+Dalpha}} () const
+\item 
+\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \mbox{\hyperlink{class_g2lib_1_1_dubins_a7a189add336d84eea25c473d486c7d33}{length\+\_\+\+Dbeta}} () const
+\item 
+\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \mbox{\hyperlink{class_g2lib_1_1_dubins_a5e37d96c9b66d616ce078d9984d4af7e}{length\+\_\+\+ISO}} (\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} offs) const override
+\item 
+void \mbox{\hyperlink{class_g2lib_1_1_dubins_ab3765782f9edbd928f267f63c2508fe5}{length\+\_\+grad}} (\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} grad\mbox{[}2\mbox{]}) const
+\item 
+\mbox{\hyperlink{namespace_g2lib_aa8734fcd1e1418071dbcf2e187947ec9}{Dubins\+Type}} \mbox{\hyperlink{class_g2lib_1_1_dubins_a1e68558b119e7c449ff59a12bbf73607}{solution\+\_\+type}} () const
+\item 
+string \mbox{\hyperlink{class_g2lib_1_1_dubins_a93a5ca40193cff07a3aaf4b9965b51ea}{solution\+\_\+type\+\_\+string}} () const
+\item 
+string \mbox{\hyperlink{class_g2lib_1_1_dubins_a5d137944fa34482cfe1a7cb9f6dd0972}{solution\+\_\+type\+\_\+string\+\_\+short}} () const
+\item 
+\mbox{\hyperlink{namespace_g2lib_a17146eb1606475bedc9a2d27f3b29e34}{integer}} \mbox{\hyperlink{class_g2lib_1_1_dubins_a15704a946c935af8bd4c585b47e6944a}{icode}} () const
+\item 
+\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \mbox{\hyperlink{class_g2lib_1_1_dubins_a47bcab58bedf2bd11a9801c7206a73b1}{length0}} () const
+\item 
+\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \mbox{\hyperlink{class_g2lib_1_1_dubins_abfd9dacc7b291b39c579fcffaf200a3d}{length1}} () const
+\item 
+\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \mbox{\hyperlink{class_g2lib_1_1_dubins_a5ec04c4676057f4434b0227bd0ad22ac}{length2}} () const
+\item 
+\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \mbox{\hyperlink{class_g2lib_1_1_dubins_afc49146f8bbc9f2a5a84e1db01bdb6f0}{kappa0}} () const
+\item 
+\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \mbox{\hyperlink{class_g2lib_1_1_dubins_a5b440dd84d51546acd1c05ad311ec8e7}{kappa1}} () const
+\item 
+\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \mbox{\hyperlink{class_g2lib_1_1_dubins_aca2248f15a1a8d2988dff89b2e45c9ba}{kappa2}} () const
+\item 
+\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \mbox{\hyperlink{class_g2lib_1_1_dubins_a262ae9e476151cf2c85db93bac0ad72d}{X0}} (\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} s) const
+\item 
+\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \mbox{\hyperlink{class_g2lib_1_1_dubins_ad93ca4490d33522156252bf232578286}{Y0}} (\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} s) const
+\item 
+\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \mbox{\hyperlink{class_g2lib_1_1_dubins_a5f81e09f771d1da4a8308ccf94a05aab}{X1}} (\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} s) const
+\item 
+\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \mbox{\hyperlink{class_g2lib_1_1_dubins_a69cfe15818379e29bf67734b06a1ff2f}{Y1}} (\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} s) const
+\item 
+\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \mbox{\hyperlink{class_g2lib_1_1_dubins_ac8e36e33f48bbfb4ce042749f71d75de}{X2}} (\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} s) const
+\item 
+\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \mbox{\hyperlink{class_g2lib_1_1_dubins_a6d7b29807e7f22391c2da47408db5dd3}{Y2}} (\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} s) const
+\item 
+\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \mbox{\hyperlink{class_g2lib_1_1_dubins_ac69f8cc1b52135aa490be0427fd4f00c}{theta0}} (\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} s) const
+\item 
+\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \mbox{\hyperlink{class_g2lib_1_1_dubins_a300bc44930168a2a99ba14bd1c7d89c0}{theta1}} (\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} s) const
+\item 
+\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \mbox{\hyperlink{class_g2lib_1_1_dubins_a83ef2f42cec6c8225039cc9bd4d18cbf}{theta2}} (\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} s) const
+\item 
+\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \mbox{\hyperlink{class_g2lib_1_1_dubins_a04566c2796ae90558b089b8611256cb3}{theta\+\_\+begin}} () const override
+\item 
+\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \mbox{\hyperlink{class_g2lib_1_1_dubins_adc295c85f0bbbe94318532b173207748}{theta\+\_\+end}} () const override
+\item 
+\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \mbox{\hyperlink{class_g2lib_1_1_dubins_a19624d2ea5f9e537d5b3e79187ce50c3}{kappa\+\_\+begin}} () const override
+\item 
+\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \mbox{\hyperlink{class_g2lib_1_1_dubins_a9fa9c7d873f2834ef650158a26586958}{kappa\+\_\+end}} () const override
+\item 
+\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \mbox{\hyperlink{class_g2lib_1_1_dubins_aa97d1cd023f023f44260e9bbdbb0509a}{x\+\_\+begin}} () const override
+\item 
+\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \mbox{\hyperlink{class_g2lib_1_1_dubins_a36a95ae7347e275cc796fa0b24fdc44f}{x\+\_\+end}} () const override
+\item 
+\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \mbox{\hyperlink{class_g2lib_1_1_dubins_a20a060df56c6aaf3cecd3cab50f3964e}{y\+\_\+begin}} () const override
+\item 
+\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \mbox{\hyperlink{class_g2lib_1_1_dubins_a63c067e24bcc35f46b0828f1c30b656e}{y\+\_\+end}} () const override
+\item 
+\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \mbox{\hyperlink{class_g2lib_1_1_dubins_a26ac83cccaf67d0976402e509007b5d1}{tx\+\_\+begin}} () const override
+\item 
+\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \mbox{\hyperlink{class_g2lib_1_1_dubins_a92fd58c7f371f8eb36f6c1240f86933a}{tx\+\_\+end}} () const override
+\item 
+\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \mbox{\hyperlink{class_g2lib_1_1_dubins_a01e0e61f81439db18fe9772d0ce69595}{ty\+\_\+begin}} () const override
+\item 
+\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \mbox{\hyperlink{class_g2lib_1_1_dubins_a17635261822c122015387c1dc1a4a0c6}{ty\+\_\+end}} () const override
+\item 
+\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \mbox{\hyperlink{class_g2lib_1_1_dubins_ab4ffd416a8aa7c3cc37bf891b6b0a80b}{nx\+\_\+begin\+\_\+\+ISO}} () const override
+\item 
+\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \mbox{\hyperlink{class_g2lib_1_1_dubins_ae71069ba84456a1d23802eed627a8cd1}{nx\+\_\+end\+\_\+\+ISO}} () const override
+\item 
+\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \mbox{\hyperlink{class_g2lib_1_1_dubins_addb19aeddae1f43079430a8a30716636}{ny\+\_\+begin\+\_\+\+ISO}} () const override
+\item 
+\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \mbox{\hyperlink{class_g2lib_1_1_dubins_af96e35df4b6519a48866ddb5d9b7b294}{ny\+\_\+end\+\_\+\+ISO}} () const override
+\item 
+\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \mbox{\hyperlink{class_g2lib_1_1_dubins_ab23242854fd9807e144747ca9aff3a52}{theta0\+\_\+begin}} () const
+\item 
+\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \mbox{\hyperlink{class_g2lib_1_1_dubins_a59d8991cf4dd52c83c234898acac34c1}{theta0\+\_\+end}} () const
+\item 
+\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \mbox{\hyperlink{class_g2lib_1_1_dubins_af5df2c60ee92deba5cb896ed70b69108}{theta1\+\_\+begin}} () const
+\item 
+\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \mbox{\hyperlink{class_g2lib_1_1_dubins_a5418edd16b965abd32b7eb14b62ed238}{theta1\+\_\+end}} () const
+\item 
+\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \mbox{\hyperlink{class_g2lib_1_1_dubins_ac374d178f9f02f5d7d0787622d859f06}{theta2\+\_\+begin}} () const
+\item 
+\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \mbox{\hyperlink{class_g2lib_1_1_dubins_aa90b0c32f87f02583374206610e83316}{theta2\+\_\+end}} () const
+\item 
+\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \mbox{\hyperlink{class_g2lib_1_1_dubins_abea1078733c69f4cfd5a6c765f290f9d}{x0\+\_\+begin}} () const
+\item 
+\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \mbox{\hyperlink{class_g2lib_1_1_dubins_a606c8d5da57a79ef5b808cd0d7edffa3}{x0\+\_\+end}} () const
+\item 
+\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \mbox{\hyperlink{class_g2lib_1_1_dubins_afeb3498ba79509eb0974fe10d00fe027}{y0\+\_\+begin}} () const
+\item 
+\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \mbox{\hyperlink{class_g2lib_1_1_dubins_af39663c41fe81e79e10ceb8762299d0e}{y0\+\_\+end}} () const
+\item 
+\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \mbox{\hyperlink{class_g2lib_1_1_dubins_ae4c3143a9dad0660d69135fd5c0ef41f}{x1\+\_\+begin}} () const
+\item 
+\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \mbox{\hyperlink{class_g2lib_1_1_dubins_adaf485710d82631278e7b076e3810c2c}{x1\+\_\+end}} () const
+\item 
+\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \mbox{\hyperlink{class_g2lib_1_1_dubins_ad9095e4d440c10e3ced0c82fd0c250bd}{y1\+\_\+begin}} () const
+\item 
+\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \mbox{\hyperlink{class_g2lib_1_1_dubins_a0d3ddf3ecc9d235600eafe4be75d8717}{y1\+\_\+end}} () const
+\item 
+\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \mbox{\hyperlink{class_g2lib_1_1_dubins_a5415f18a9c07ab49ecf6ce024b5268cf}{x2\+\_\+begin}} () const
+\item 
+\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \mbox{\hyperlink{class_g2lib_1_1_dubins_a1a1ae0b57402ec5fa655c665192a9ef1}{x2\+\_\+end}} () const
+\item 
+\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \mbox{\hyperlink{class_g2lib_1_1_dubins_aa2aba7619e2b13050a8070abb3dc2a67}{y2\+\_\+begin}} () const
+\item 
+\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \mbox{\hyperlink{class_g2lib_1_1_dubins_a33243fcd8a9537db550595d02ad5c5b7}{y2\+\_\+end}} () const
+\item 
+\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \mbox{\hyperlink{class_g2lib_1_1_dubins_a21e31f47b08c9787265baf31b24d1abf}{theta}} (\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} s) const override
+\item 
+\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \mbox{\hyperlink{class_g2lib_1_1_dubins_ac0510ca11f5117d759e348575449e839}{theta\+\_\+D}} (\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}}) const override
+\item 
+\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \mbox{\hyperlink{class_g2lib_1_1_dubins_aa02b230b486d2591bd5ab1c19046e305}{theta\+\_\+\+DD}} (\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}}) const override
+\item 
+\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \mbox{\hyperlink{class_g2lib_1_1_dubins_aa43fbb7b69e7f59befda6ece3b244183}{theta\+\_\+\+DDD}} (\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}}) const override
+\item 
+\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \mbox{\hyperlink{class_g2lib_1_1_dubins_ada22c6829f4c05fa2a48cb5b979bf767}{X}} (\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} s) const override
+\item 
+\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \mbox{\hyperlink{class_g2lib_1_1_dubins_a2e0f22c99bd0ed1c418a47a1ddd035ea}{Y}} (\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} s) const override
+\item 
+\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \mbox{\hyperlink{class_g2lib_1_1_dubins_ab476f221e0f7991a37aa08ed7affff21}{X\+\_\+D}} (\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} s) const override
+\item 
+\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \mbox{\hyperlink{class_g2lib_1_1_dubins_a71ce7a3a5c0e6019f11dbcca14cd7f70}{Y\+\_\+D}} (\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} s) const override
+\item 
+\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \mbox{\hyperlink{class_g2lib_1_1_dubins_a90813ab765e3b43c2ff44862c7a76b66}{X\+\_\+\+DD}} (\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} s) const override
+\item 
+\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \mbox{\hyperlink{class_g2lib_1_1_dubins_a499d6cfdf0ee70bd7afe5180bda4d463}{Y\+\_\+\+DD}} (\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} s) const override
+\item 
+\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \mbox{\hyperlink{class_g2lib_1_1_dubins_a75a8bbaeddf3d2bbe05b6b151bfc8e18}{X\+\_\+\+DDD}} (\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} s) const override
+\item 
+\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \mbox{\hyperlink{class_g2lib_1_1_dubins_a4216ef8b1b59fa75490c61eb93f914fa}{Y\+\_\+\+DDD}} (\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} s) const override
+\item 
+void \mbox{\hyperlink{class_g2lib_1_1_dubins_a879bbe756c6818baad084d21a2936893}{translate}} (\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \mbox{\hyperlink{class_g2lib_1_1_base_curve_a632f1f7d0026bb833da3955fc05b8add}{tx}}, \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \mbox{\hyperlink{class_g2lib_1_1_base_curve_adeab817ad54d681f5446d0ddc878d622}{ty}}) override
+\begin{DoxyCompactList}\small\item\em translate curve by $ (t_x,t_y) $ \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_g2lib_1_1_dubins_a17a211549b689590ae708baa40893aa5}{rotate}} (\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} angle, \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} cx, \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} cy) override
+\item 
+void \mbox{\hyperlink{class_g2lib_1_1_dubins_af506634425bbea51d56acee1d08f0fa0}{reverse}} () override
+\item 
+void \mbox{\hyperlink{class_g2lib_1_1_dubins_ae485fea968ed119376e99cc224a50b6a}{change\+\_\+origin}} (\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} newx0, \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} newy0) override
+\item 
+void \mbox{\hyperlink{class_g2lib_1_1_dubins_a239c1b6a5c65a5d98b0624812ff5c867}{trim}} (\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}}, \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}}) override
+\item 
+void \mbox{\hyperlink{class_g2lib_1_1_dubins_a130b60e5a4deb6931a9050d6872fce2b}{scale}} (\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} s) override
+\item 
+void \mbox{\hyperlink{class_g2lib_1_1_dubins_a316c314af0f1f65f854d077a99f7fa9e}{eval}} (\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} s, \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \&\mbox{\hyperlink{class_g2lib_1_1_dubins_a21e31f47b08c9787265baf31b24d1abf}{theta}}, \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \&\mbox{\hyperlink{class_g2lib_1_1_base_curve_a41f205653319adf3cac7a1aa103ee410}{kappa}}, \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \&x, \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \&y) const
+\item 
+void \mbox{\hyperlink{class_g2lib_1_1_dubins_ac45d047b5c37afae103f907541b31586}{eval}} (\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} s, \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \&x, \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \&y) const override
+\item 
+void \mbox{\hyperlink{class_g2lib_1_1_dubins_af9300f3340438ffa45899d75ca3d2e9c}{eval\+\_\+D}} (\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} s, \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \&x\+\_\+D, \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \&y\+\_\+D) const override
+\item 
+void \mbox{\hyperlink{class_g2lib_1_1_dubins_a79a453ed3c3db2ec24ea83f81767c20f}{eval\+\_\+\+DD}} (\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} s, \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \&x\+\_\+\+DD, \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \&y\+\_\+\+DD) const override
+\item 
+void \mbox{\hyperlink{class_g2lib_1_1_dubins_ab0350b3341ac381849355452272b0d71}{eval\+\_\+\+DDD}} (\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} s, \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \&x\+\_\+\+DDD, \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \&y\+\_\+\+DDD) const override
+\item 
+void \mbox{\hyperlink{class_g2lib_1_1_dubins_ad7038cf1a989285c1d22a8006864bf01}{eval\+\_\+\+ISO}} (\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} s, \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} offs, \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \&x, \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \&y) const override
+\item 
+void \mbox{\hyperlink{class_g2lib_1_1_dubins_abe283fd27a08e156b877e754dd3119b4}{eval\+\_\+\+ISO\+\_\+D}} (\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} s, \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} offs, \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \&x\+\_\+D, \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \&y\+\_\+D) const override
+\item 
+void \mbox{\hyperlink{class_g2lib_1_1_dubins_ab0da842c78b6daef4f6066e2acb423d2}{eval\+\_\+\+ISO\+\_\+\+DD}} (\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} s, \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} offs, \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \&x\+\_\+\+DD, \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \&y\+\_\+\+DD) const override
+\item 
+void \mbox{\hyperlink{class_g2lib_1_1_dubins_aba89a81799252e5d118be0142efd4bc9}{eval\+\_\+\+ISO\+\_\+\+DDD}} (\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} s, \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} offs, \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \&x\+\_\+\+DDD, \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \&y\+\_\+\+DDD) const override
+\item 
+void \mbox{\hyperlink{class_g2lib_1_1_dubins_a4933cc1baea21dd8dfacdb9768de1c76}{bb\+\_\+triangles}} (vector$<$ \mbox{\hyperlink{class_g2lib_1_1_triangle2_d}{Triangle2D}} $>$ \&tvec, \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} max\+\_\+angle=Utils\+::m\+\_\+pi/18, \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} max\+\_\+size=1e100, \mbox{\hyperlink{namespace_g2lib_a17146eb1606475bedc9a2d27f3b29e34}{integer}} icurve=0) const override
+\item 
+void \mbox{\hyperlink{class_g2lib_1_1_dubins_ac58301dde55d6e2246b8bcd936278631}{bb\+\_\+triangles\+\_\+\+ISO}} (\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} offs, vector$<$ \mbox{\hyperlink{class_g2lib_1_1_triangle2_d}{Triangle2D}} $>$ \&tvec, \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} max\+\_\+angle=Utils\+::m\+\_\+pi/18, \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} max\+\_\+size=1e100, \mbox{\hyperlink{namespace_g2lib_a17146eb1606475bedc9a2d27f3b29e34}{integer}} icurve=0) const override
+\item 
+void \mbox{\hyperlink{class_g2lib_1_1_dubins_a91d5464ac8cd8ad25cbc3625f91e20a2}{bb\+\_\+triangles\+\_\+\+SAE}} (\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} offs, vector$<$ \mbox{\hyperlink{class_g2lib_1_1_triangle2_d}{Triangle2D}} $>$ \&tvec, \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} max\+\_\+angle=Utils\+::m\+\_\+pi/18, \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} max\+\_\+size=1e100, \mbox{\hyperlink{namespace_g2lib_a17146eb1606475bedc9a2d27f3b29e34}{integer}} icurve=0) const override
+\item 
+\mbox{\hyperlink{namespace_g2lib_a17146eb1606475bedc9a2d27f3b29e34}{integer}} \mbox{\hyperlink{class_g2lib_1_1_dubins_a4ac634fa9f92ed777b1a82d93ef6da65}{closest\+\_\+point\+\_\+\+ISO}} (\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} qx, \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} qy, \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \&x, \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \&y, \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \&s, \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \&t, \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \&dst) const override
+\item 
+\mbox{\hyperlink{namespace_g2lib_a17146eb1606475bedc9a2d27f3b29e34}{integer}} \mbox{\hyperlink{class_g2lib_1_1_dubins_aae4288a958cc426a4f2f4f4809360801}{closest\+\_\+point\+\_\+\+ISO}} (\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} qx, \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} qy, \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} offs, \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \&x, \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \&y, \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \&s, \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \&t, \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \&dst) const override
+\item 
+bool \mbox{\hyperlink{class_g2lib_1_1_dubins_ae0b9dcf7638a9e82fc5a62f819fd1091}{collision}} (\mbox{\hyperlink{class_g2lib_1_1_dubins}{Dubins}} const \&B) const
+\item 
+bool \mbox{\hyperlink{class_g2lib_1_1_dubins_ab7bd830c2ccc72079561a2f9e05a7bf1}{collision\+\_\+\+ISO}} (\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} offs, \mbox{\hyperlink{class_g2lib_1_1_dubins}{Dubins}} const \&B, \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} offs\+\_\+B) const
+\item 
+bool \mbox{\hyperlink{class_g2lib_1_1_dubins_a1fe6dd9984aaeec6164106ed555bc5b4}{collision}} (\mbox{\hyperlink{class_g2lib_1_1_base_curve}{Base\+Curve}} const \texorpdfstring{$\ast$}{*}pC) const override
+\item 
+bool \mbox{\hyperlink{class_g2lib_1_1_dubins_afecfd52235d0bcbf01ebbf0d34a9275f}{collision\+\_\+\+ISO}} (\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} offs, \mbox{\hyperlink{class_g2lib_1_1_base_curve}{Base\+Curve}} const \texorpdfstring{$\ast$}{*}pC, \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} offs\+\_\+C) const override
+\item 
+void \mbox{\hyperlink{class_g2lib_1_1_dubins_a79e46e36c663de78aabac6998699dd64}{intersect}} (\mbox{\hyperlink{class_g2lib_1_1_dubins}{Dubins}} const \&B, \mbox{\hyperlink{namespace_g2lib_a511fce3368282f6ef2984bf1b7480375}{Intersect\+List}} \&ilist) const
+\item 
+void \mbox{\hyperlink{class_g2lib_1_1_dubins_a18f7141c8aa8cd47c5591e2faf9ef6eb}{intersect\+\_\+\+ISO}} (\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} offs, \mbox{\hyperlink{class_g2lib_1_1_dubins}{Dubins}} const \&B, \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} offs\+\_\+B, \mbox{\hyperlink{namespace_g2lib_a511fce3368282f6ef2984bf1b7480375}{Intersect\+List}} \&ilist) const
+\item 
+void \mbox{\hyperlink{class_g2lib_1_1_dubins_a7b955973ac260736f4b3600dee78d312}{intersect}} (\mbox{\hyperlink{class_g2lib_1_1_base_curve}{Base\+Curve}} const \texorpdfstring{$\ast$}{*}pC, \mbox{\hyperlink{namespace_g2lib_a511fce3368282f6ef2984bf1b7480375}{Intersect\+List}} \&ilist) const override
+\item 
+void \mbox{\hyperlink{class_g2lib_1_1_dubins_a5a0239eb85095f63544a29391c65d485}{intersect\+\_\+\+ISO}} (\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} offs, \mbox{\hyperlink{class_g2lib_1_1_base_curve}{Base\+Curve}} const \texorpdfstring{$\ast$}{*}pC, \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} offs\+\_\+\+LS, \mbox{\hyperlink{namespace_g2lib_a511fce3368282f6ef2984bf1b7480375}{Intersect\+List}} \&ilist) const override
+\item 
+string \mbox{\hyperlink{class_g2lib_1_1_dubins_a4eef46912b7233014d8c546f14b50476}{info}} () const
+\item 
+void \mbox{\hyperlink{class_g2lib_1_1_dubins_a0a0dc38d40d654db4700172d85fbc081}{info}} (\mbox{\hyperlink{namespace_g2lib_a8fcbace87db5a5e71391e0040878f2c3}{ostream\+\_\+type}} \&stream) const override
+\item 
+\mbox{\hyperlink{namespace_g2lib_ac18621126b9485db2bc878d6a1c8b0c9}{Curve\+Type}} \mbox{\hyperlink{class_g2lib_1_1_dubins_ad8deab46243280d2286f73fdcf20d70e}{type}} () const override
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions inherited from \mbox{\hyperlink{class_g2lib_1_1_base_curve}{G2lib\+::\+Base\+Curve}}}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_g2lib_1_1_base_curve_af595a08609144b9d5eac1c9a44896c9d}{Base\+Curve}} ()=delete
+\item 
+\mbox{\hyperlink{class_g2lib_1_1_base_curve_a70eaf67549fcb4ff99abb34dd0aeb0de}{Base\+Curve}} (\mbox{\hyperlink{class_g2lib_1_1_base_curve}{Base\+Curve}} const \&)=delete
+\item 
+\mbox{\hyperlink{class_g2lib_1_1_base_curve}{Base\+Curve}} const \& \mbox{\hyperlink{class_g2lib_1_1_base_curve_a84ce8f95e2cdd7a82f3846f94b59fb52}{operator=}} (\mbox{\hyperlink{class_g2lib_1_1_base_curve}{Base\+Curve}} const \&)=delete
+\item 
+\mbox{\hyperlink{class_g2lib_1_1_base_curve_afd4b00d42570e14fa585fbb43c04ea06}{Base\+Curve}} (string const \&\mbox{\hyperlink{class_g2lib_1_1_base_curve_a15a9cd79a8c95b3c9b1b95721e076de7}{name}})
+\item 
+virtual \mbox{\hyperlink{class_g2lib_1_1_base_curve_a16dcdb10827d26196201d467ac6f9f79}{\texorpdfstring{$\sim$}{\string~}\+Base\+Curve}} ()=default
+\item 
+void \mbox{\hyperlink{class_g2lib_1_1_base_curve_aaeb11d904c0bc8219f0bfea1bfc3144d}{build}} (\mbox{\hyperlink{namespace_g2lib_a2bee1fb11cb401bacb26ad157b301feb}{Generic\+Container}} const \&gc)
+\item 
+string \mbox{\hyperlink{class_g2lib_1_1_base_curve_a15a9cd79a8c95b3c9b1b95721e076de7}{name}} () const
+\item 
+string \mbox{\hyperlink{class_g2lib_1_1_base_curve_a0a409d606f8ce9d3df8f3849fa5877a0}{type\+\_\+name}} () const
+\item 
+\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \mbox{\hyperlink{class_g2lib_1_1_base_curve_af4e7c308bc05c9e51ffa393bd592c3b7}{length\+\_\+\+SAE}} (\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} offs) const
+\item 
+void \mbox{\hyperlink{class_g2lib_1_1_base_curve_ab822f14dc9b0093bae1ff1f8efbf1acc}{bbox\+\_\+\+SAE}} (\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} offs, \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \&xmin, \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \&ymin, \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \&xmax, \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \&ymax) const
+\item 
+virtual \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \mbox{\hyperlink{class_g2lib_1_1_base_curve_ab5340de5bb11b7d565da06d2b1a8ea51}{x\+\_\+begin\+\_\+\+ISO}} (\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} offs) const
+\item 
+virtual \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \mbox{\hyperlink{class_g2lib_1_1_base_curve_afc9b4bd73d5d8acf54f8ec0710c6ece6}{y\+\_\+begin\+\_\+\+ISO}} (\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} offs) const
+\item 
+virtual \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \mbox{\hyperlink{class_g2lib_1_1_base_curve_a5093b13c81a630b3c26d28381edd59ca}{x\+\_\+end\+\_\+\+ISO}} (\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} offs) const
+\item 
+virtual \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \mbox{\hyperlink{class_g2lib_1_1_base_curve_a0cf7cfef07ef4d65971bfee7b75eb54f}{y\+\_\+end\+\_\+\+ISO}} (\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} offs) const
+\item 
+\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \mbox{\hyperlink{class_g2lib_1_1_base_curve_a94e8659498c13d3eb3179b17257dc3ab}{x\+\_\+begin\+\_\+\+SAE}} (\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} offs) const
+\item 
+\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \mbox{\hyperlink{class_g2lib_1_1_base_curve_ab819cddea8bf31505d76ae5812bbca8b}{y\+\_\+begin\+\_\+\+SAE}} (\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} offs) const
+\item 
+\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \mbox{\hyperlink{class_g2lib_1_1_base_curve_ac5089be2dcba7c99f5e6564a362e53b4}{x\+\_\+end\+\_\+\+SAE}} (\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} offs) const
+\item 
+\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \mbox{\hyperlink{class_g2lib_1_1_base_curve_a5ceac5192e08ba68a3eeec832434dcca}{y\+\_\+end\+\_\+\+SAE}} (\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} offs) const
+\item 
+\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \mbox{\hyperlink{class_g2lib_1_1_base_curve_a6397098569ca145802e1d7c703fc6eb1}{nx\+\_\+begin\+\_\+\+SAE}} () const
+\item 
+\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \mbox{\hyperlink{class_g2lib_1_1_base_curve_a345fcb6084b454a4d67e54ce4730f10f}{ny\+\_\+begin\+\_\+\+SAE}} () const
+\item 
+\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \mbox{\hyperlink{class_g2lib_1_1_base_curve_a34d3cdf9bf4de2e0502499a3efd0cc1a}{nx\+\_\+end\+\_\+\+SAE}} () const
+\item 
+\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \mbox{\hyperlink{class_g2lib_1_1_base_curve_ae738b5e6fa69c317c60318949acf18d7}{ny\+\_\+end\+\_\+\+SAE}} () const
+\item 
+\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \mbox{\hyperlink{class_g2lib_1_1_base_curve_a41f205653319adf3cac7a1aa103ee410}{kappa}} (\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} s) const
+\item 
+\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \mbox{\hyperlink{class_g2lib_1_1_base_curve_aef669e2c0c32cbf1769261aa75d3fbea}{kappa\+\_\+D}} (\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} s) const
+\item 
+\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \mbox{\hyperlink{class_g2lib_1_1_base_curve_a6a530f129afccdd57e5d36abaf069680}{kappa\+\_\+\+DD}} (\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} s) const
+\item 
+virtual \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \mbox{\hyperlink{class_g2lib_1_1_base_curve_a632f1f7d0026bb833da3955fc05b8add}{tx}} (\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} s) const
+\item 
+virtual \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \mbox{\hyperlink{class_g2lib_1_1_base_curve_adeab817ad54d681f5446d0ddc878d622}{ty}} (\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} s) const
+\item 
+virtual \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \mbox{\hyperlink{class_g2lib_1_1_base_curve_a02d9ba0057553f38f37e64d9de3471f3}{tx\+\_\+D}} (\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} s) const
+\item 
+virtual \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \mbox{\hyperlink{class_g2lib_1_1_base_curve_a2bee4a4e229cc7b529ea15af7bf825c5}{ty\+\_\+D}} (\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} s) const
+\item 
+virtual \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \mbox{\hyperlink{class_g2lib_1_1_base_curve_a606aa6120893a54543f91e300fc33bd5}{tx\+\_\+\+DD}} (\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} s) const
+\item 
+virtual \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \mbox{\hyperlink{class_g2lib_1_1_base_curve_ad63a63192c8346cf744e07312b7be28a}{ty\+\_\+\+DD}} (\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} s) const
+\item 
+virtual \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \mbox{\hyperlink{class_g2lib_1_1_base_curve_a3cff0048c88505721919493f4182fca1}{tx\+\_\+\+DDD}} (\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} s) const
+\item 
+virtual \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \mbox{\hyperlink{class_g2lib_1_1_base_curve_a0d8caababa8475ba7d54704341699941}{ty\+\_\+\+DDD}} (\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} s) const
+\item 
+\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \mbox{\hyperlink{class_g2lib_1_1_base_curve_a03f9e541723a019784aabeb0383541c3}{nx\+\_\+\+ISO}} (\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} s) const
+\item 
+\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \mbox{\hyperlink{class_g2lib_1_1_base_curve_a169c2b35bf9198f9a7e6cb56adb03efd}{nx\+\_\+\+ISO\+\_\+D}} (\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} s) const
+\item 
+\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \mbox{\hyperlink{class_g2lib_1_1_base_curve_a55c5d74dbaa012a140472982c4e9c6be}{nx\+\_\+\+ISO\+\_\+\+DD}} (\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} s) const
+\item 
+\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \mbox{\hyperlink{class_g2lib_1_1_base_curve_afb5dc4e2dbf01740a265887050aafe45}{nx\+\_\+\+ISO\+\_\+\+DDD}} (\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} s) const
+\item 
+\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \mbox{\hyperlink{class_g2lib_1_1_base_curve_a57be41a7d752393dad8f893804cb32a9}{ny\+\_\+\+ISO}} (\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} s) const
+\item 
+\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \mbox{\hyperlink{class_g2lib_1_1_base_curve_ad1705049c0c15b1654aefae5b48c963b}{ny\+\_\+\+ISO\+\_\+D}} (\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} s) const
+\item 
+\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \mbox{\hyperlink{class_g2lib_1_1_base_curve_a689a2826bf4207a25bd219ae8da8747d}{ny\+\_\+\+ISO\+\_\+\+DD}} (\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} s) const
+\item 
+\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \mbox{\hyperlink{class_g2lib_1_1_base_curve_ae54c85e07f09d917517a591a6770d9df}{ny\+\_\+\+ISO\+\_\+\+DDD}} (\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} s) const
+\item 
+\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \mbox{\hyperlink{class_g2lib_1_1_base_curve_a6790665125fdfa21a71ff0afa67a511e}{nx\+\_\+\+SAE}} (\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} s) const
+\item 
+\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \mbox{\hyperlink{class_g2lib_1_1_base_curve_a4d6acf36dbc751b7ebb22e913551ecc9}{nx\+\_\+\+SAE\+\_\+D}} (\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} s) const
+\item 
+\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \mbox{\hyperlink{class_g2lib_1_1_base_curve_ab223bb937233dd3519b8a00b558e6cbb}{nx\+\_\+\+SAE\+\_\+\+DD}} (\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} s) const
+\item 
+\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \mbox{\hyperlink{class_g2lib_1_1_base_curve_ae3a593c3851ae3ef939621ab4d8a538b}{nx\+\_\+\+SAE\+\_\+\+DDD}} (\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} s) const
+\item 
+\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \mbox{\hyperlink{class_g2lib_1_1_base_curve_ae9e27c34557b6f484fc2e2d54e444c82}{ny\+\_\+\+SAE}} (\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} s) const
+\item 
+\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \mbox{\hyperlink{class_g2lib_1_1_base_curve_a0840b203a2215ccc16fe487a643be881}{ny\+\_\+\+SAE\+\_\+D}} (\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} s) const
+\item 
+\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \mbox{\hyperlink{class_g2lib_1_1_base_curve_a8507f40dfd9191b17bec7d1e272aa571}{ny\+\_\+\+SAE\+\_\+\+DD}} (\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} s) const
+\item 
+\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \mbox{\hyperlink{class_g2lib_1_1_base_curve_ad7a18e92294f5c212ff180cd635ed705}{ny\+\_\+\+SAE\+\_\+\+DDD}} (\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} s) const
+\item 
+virtual void \mbox{\hyperlink{class_g2lib_1_1_base_curve_a2a6ee63395e82dfc977f26bfc46e87e6}{tg}} (\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} s, \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \&tg\+\_\+x, \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \&tg\+\_\+y) const
+\item 
+virtual void \mbox{\hyperlink{class_g2lib_1_1_base_curve_a341d92e523e2844ea43242fc581e6410}{tg\+\_\+D}} (\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} s, \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \&tg\+\_\+x\+\_\+D, \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \&tg\+\_\+y\+\_\+D) const
+\item 
+virtual void \mbox{\hyperlink{class_g2lib_1_1_base_curve_a20836a21d2fdb947c60ce7208b650312}{tg\+\_\+\+DD}} (\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} s, \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \&tg\+\_\+x\+\_\+\+DD, \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \&tg\+\_\+y\+\_\+\+DD) const
+\item 
+virtual void \mbox{\hyperlink{class_g2lib_1_1_base_curve_a67b52e2bfdf921d5d34de008fe7688e0}{tg\+\_\+\+DDD}} (\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} s, \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \&tg\+\_\+x\+\_\+\+DDD, \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \&tg\+\_\+y\+\_\+\+DDD) const
+\item 
+void \mbox{\hyperlink{class_g2lib_1_1_base_curve_a011f9fac8b36feea75eee742e70b3b7a}{nor\+\_\+\+ISO}} (\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} s, \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \&\mbox{\hyperlink{_base_curve__compatibility_8hxx_a0823ad2cb05b7e1c773361d49f95bad8}{nx}}, \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \&\mbox{\hyperlink{_base_curve__compatibility_8hxx_abec84214d67c2a8b2f1d4bb7a3ebc31f}{ny}}) const
+\item 
+void \mbox{\hyperlink{class_g2lib_1_1_base_curve_a654f4b5962ffadac25a51138f8f1e82d}{nor\+\_\+\+ISO\+\_\+D}} (\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} s, \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \&\mbox{\hyperlink{_base_curve__compatibility_8hxx_aac92aa76e00b585a7c7b4782bb3bd48d}{nx\+\_\+D}}, \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \&\mbox{\hyperlink{_base_curve__compatibility_8hxx_a537c0e6b6ec66959113c0c9891a838b0}{ny\+\_\+D}}) const
+\item 
+void \mbox{\hyperlink{class_g2lib_1_1_base_curve_a944106e0aa406e79a75ceb462d2c4dfa}{nor\+\_\+\+ISO\+\_\+\+DD}} (\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} s, \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \&\mbox{\hyperlink{_base_curve__compatibility_8hxx_a26eba6a4baeca50d661fc491f5322ee3}{nx\+\_\+\+DD}}, \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \&\mbox{\hyperlink{_base_curve__compatibility_8hxx_a7205322f98eabff71152802de25d501b}{ny\+\_\+\+DD}}) const
+\item 
+void \mbox{\hyperlink{class_g2lib_1_1_base_curve_a3ed0991682dafdf83489b4fe55547c3e}{nor\+\_\+\+ISO\+\_\+\+DDD}} (\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} s, \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \&\mbox{\hyperlink{_base_curve__compatibility_8hxx_ad2a9863ed9911671fa923d185454d34b}{nx\+\_\+\+DDD}}, \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \&\mbox{\hyperlink{_base_curve__compatibility_8hxx_a940b6738d0b4254cb500f2d5d47e9e0a}{ny\+\_\+\+DDD}}) const
+\item 
+void \mbox{\hyperlink{class_g2lib_1_1_base_curve_a1ed4ee167b77d2e9c42c7d52b6b74f72}{nor\+\_\+\+SAE}} (\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} s, \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \&\mbox{\hyperlink{_base_curve__compatibility_8hxx_a0823ad2cb05b7e1c773361d49f95bad8}{nx}}, \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \&\mbox{\hyperlink{_base_curve__compatibility_8hxx_abec84214d67c2a8b2f1d4bb7a3ebc31f}{ny}}) const
+\item 
+void \mbox{\hyperlink{class_g2lib_1_1_base_curve_a62c28cc86c3cb95753f61cbf5b241e93}{nor\+\_\+\+SAE\+\_\+D}} (\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} s, \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \&\mbox{\hyperlink{_base_curve__compatibility_8hxx_aac92aa76e00b585a7c7b4782bb3bd48d}{nx\+\_\+D}}, \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \&\mbox{\hyperlink{_base_curve__compatibility_8hxx_a537c0e6b6ec66959113c0c9891a838b0}{ny\+\_\+D}}) const
+\item 
+void \mbox{\hyperlink{class_g2lib_1_1_base_curve_ac5a0b3499e7e8193d1068c1aea233bce}{nor\+\_\+\+SAE\+\_\+\+DD}} (\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} s, \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \&\mbox{\hyperlink{_base_curve__compatibility_8hxx_a26eba6a4baeca50d661fc491f5322ee3}{nx\+\_\+\+DD}}, \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \&\mbox{\hyperlink{_base_curve__compatibility_8hxx_a7205322f98eabff71152802de25d501b}{ny\+\_\+\+DD}}) const
+\item 
+void \mbox{\hyperlink{class_g2lib_1_1_base_curve_a5f5e0183f651ca0cc900f16dee99dbf4}{nor\+\_\+\+SAE\+\_\+\+DDD}} (\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} s, \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \&\mbox{\hyperlink{_base_curve__compatibility_8hxx_ad2a9863ed9911671fa923d185454d34b}{nx\+\_\+\+DDD}}, \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \&\mbox{\hyperlink{_base_curve__compatibility_8hxx_a940b6738d0b4254cb500f2d5d47e9e0a}{ny\+\_\+\+DDD}}) const
+\item 
+virtual void \mbox{\hyperlink{class_g2lib_1_1_base_curve_af8226ce833300299e27348f025201ac5}{evaluate}} (\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} s, \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \&th, \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \&k, \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \&x, \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \&y) const
+\item 
+virtual void \mbox{\hyperlink{class_g2lib_1_1_base_curve_a9e3e9c206e60b454bd0dc879e1e82b1c}{evaluate\+\_\+\+ISO}} (\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} s, \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} offs, \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \&th, \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \&k, \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \&x, \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \&y) const
+\item 
+virtual void \mbox{\hyperlink{class_g2lib_1_1_base_curve_a3f725d32569450d65c15cd66239fb190}{evaluate\+\_\+\+SAE}} (\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} s, \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} offs, \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \&th, \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \&k, \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \&x, \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \&y) const
+\item 
+virtual \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \mbox{\hyperlink{class_g2lib_1_1_base_curve_a97e48915bc26523dbf6bcf3ab45af8f3}{X\+\_\+\+ISO}} (\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} s, \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} offs) const
+\item 
+virtual \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \mbox{\hyperlink{class_g2lib_1_1_base_curve_a4631e967b6d25014264d2cf3e07ba144}{Y\+\_\+\+ISO}} (\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} s, \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} offs) const
+\item 
+virtual \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \mbox{\hyperlink{class_g2lib_1_1_base_curve_a95336be5ef5d74ddc73557816579d68d}{X\+\_\+\+ISO\+\_\+D}} (\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} s, \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} offs) const
+\item 
+virtual \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \mbox{\hyperlink{class_g2lib_1_1_base_curve_ad31078bfa71d088e049cff36f2fb8353}{Y\+\_\+\+ISO\+\_\+D}} (\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} s, \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} offs) const
+\item 
+virtual \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \mbox{\hyperlink{class_g2lib_1_1_base_curve_a4bf612e0067ed96aa00266b358bcb064}{X\+\_\+\+ISO\+\_\+\+DD}} (\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} s, \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} offs) const
+\item 
+virtual \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \mbox{\hyperlink{class_g2lib_1_1_base_curve_a38b8dae1eee05bbd491541a3e3fd11eb}{Y\+\_\+\+ISO\+\_\+\+DD}} (\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} s, \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} offs) const
+\item 
+virtual \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \mbox{\hyperlink{class_g2lib_1_1_base_curve_a6c3f83df16fa6c579c04b25ef6f96fe4}{X\+\_\+\+ISO\+\_\+\+DDD}} (\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} s, \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} offs) const
+\item 
+virtual \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \mbox{\hyperlink{class_g2lib_1_1_base_curve_a394f6d2095d4dea7c3f211ae7678517e}{Y\+\_\+\+ISO\+\_\+\+DDD}} (\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} s, \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} offs) const
+\item 
+\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \mbox{\hyperlink{class_g2lib_1_1_base_curve_afdd8ded9108c686e430e0b593900841d}{X\+\_\+\+SAE}} (\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} s, \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} offs) const
+\item 
+\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \mbox{\hyperlink{class_g2lib_1_1_base_curve_a5bbfa1fc7a18107f60b6df0c4a035ff1}{Y\+\_\+\+SAE}} (\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} s, \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} offs) const
+\item 
+\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \mbox{\hyperlink{class_g2lib_1_1_base_curve_a70b3610ffeb6f2840e8c6abae56686e6}{X\+\_\+\+SAE\+\_\+D}} (\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} s, \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} offs) const
+\item 
+\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \mbox{\hyperlink{class_g2lib_1_1_base_curve_ad4379bb952fd2df3e1a696f53291064d}{Y\+\_\+\+SAE\+\_\+D}} (\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} s, \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} offs) const
+\item 
+\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \mbox{\hyperlink{class_g2lib_1_1_base_curve_afcc404c200853c95063c8af66b4307dd}{X\+\_\+\+SAE\+\_\+\+DD}} (\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} s, \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} offs) const
+\item 
+\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \mbox{\hyperlink{class_g2lib_1_1_base_curve_a6b684a4e37dcc2714b6d3933279c6be2}{Y\+\_\+\+SAE\+\_\+\+DD}} (\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} s, \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} offs) const
+\item 
+\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \mbox{\hyperlink{class_g2lib_1_1_base_curve_ac1f539ad3cd88233c08fe57336687e05}{X\+\_\+\+SAE\+\_\+\+DDD}} (\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} s, \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} offs) const
+\item 
+\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \mbox{\hyperlink{class_g2lib_1_1_base_curve_abf80381f3fb040f7e4daded7cf263ab4}{Y\+\_\+\+SAE\+\_\+\+DDD}} (\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} s, \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} offs) const
+\item 
+void \mbox{\hyperlink{class_g2lib_1_1_base_curve_ae1b73c2a8be8d0b12179fb05d96c3828}{eval\+\_\+\+SAE}} (\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} s, \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} offs, \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \&x, \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \&y) const
+\item 
+void \mbox{\hyperlink{class_g2lib_1_1_base_curve_a8071ba383b1f84381bc84c5d170ae664}{eval\+\_\+\+SAE\+\_\+D}} (\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} s, \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} offs, \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \&x\+\_\+D, \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \&y\+\_\+D) const
+\item 
+void \mbox{\hyperlink{class_g2lib_1_1_base_curve_a7e88be8a60c2520e5b0ab4aff1253b36}{eval\+\_\+\+SAE\+\_\+\+DD}} (\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} s, \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} offs, \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \&x\+\_\+\+DD, \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \&y\+\_\+\+DD) const
+\item 
+void \mbox{\hyperlink{class_g2lib_1_1_base_curve_abec3d37c0e957015e6458f46d7bacde1}{eval\+\_\+\+SAE\+\_\+\+DDD}} (\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} s, \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} offs, \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \&x\+\_\+\+DDD, \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \&y\+\_\+\+DDD) const
+\item 
+bool \mbox{\hyperlink{class_g2lib_1_1_base_curve_a15dd6f4c647f4444a0713a555c70b6a8}{collision\+\_\+\+SAE}} (\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} offs, \mbox{\hyperlink{class_g2lib_1_1_base_curve}{Base\+Curve}} const \texorpdfstring{$\ast$}{*}pC, \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} offs\+\_\+C) const
+\item 
+void \mbox{\hyperlink{class_g2lib_1_1_base_curve_a04ba10242ad1355b070978ab4251146f}{intersect\+\_\+\+SAE}} (\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} offs, \mbox{\hyperlink{class_g2lib_1_1_base_curve}{Base\+Curve}} const \texorpdfstring{$\ast$}{*}pC, \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} offs\+\_\+C, \mbox{\hyperlink{namespace_g2lib_a511fce3368282f6ef2984bf1b7480375}{Intersect\+List}} \&ilist) const
+\item 
+\mbox{\hyperlink{namespace_g2lib_a17146eb1606475bedc9a2d27f3b29e34}{integer}} \mbox{\hyperlink{class_g2lib_1_1_base_curve_a4c289422bb6cac3c90ecdbfd3f123f41}{closest\+\_\+point\+\_\+\+SAE}} (\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} qx, \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} qy, \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \&x, \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \&y, \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \&s, \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \&t, \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \&dst) const
+\item 
+\mbox{\hyperlink{namespace_g2lib_a17146eb1606475bedc9a2d27f3b29e34}{integer}} \mbox{\hyperlink{class_g2lib_1_1_base_curve_a4664361bfe4b4ac0378f68a476c21f69}{closest\+\_\+point\+\_\+\+SAE}} (\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} qx, \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} qy, \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} offs, \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \&x, \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \&y, \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \&s, \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \&t, \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \&dst) const
+\item 
+virtual \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \mbox{\hyperlink{class_g2lib_1_1_base_curve_ab2107c4a1aa7e35effb9b121a709f2ca}{distance}} (\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} qx, \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} qy) const
+\item 
+\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \mbox{\hyperlink{class_g2lib_1_1_base_curve_a242689bd9095962b8b402994fea39360}{distance\+\_\+\+ISO}} (\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} qx, \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} qy, \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} offs) const
+\item 
+\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \mbox{\hyperlink{class_g2lib_1_1_base_curve_abe288951f9673d840e86c65c771f1b1e}{distance\+\_\+\+SAE}} (\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} qx, \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} qy, \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} offs) const
+\item 
+bool \mbox{\hyperlink{class_g2lib_1_1_base_curve_a9e6db7bbf4fa54ae81a9afbe2450d2e0}{find\+ST\+\_\+\+ISO}} (\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} x, \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} y, \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \&s, \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \&t) const
+\item 
+bool \mbox{\hyperlink{class_g2lib_1_1_base_curve_a1741fc9d97c2ddbcebc341ecf769eed2}{find\+ST\+\_\+\+SAE}} (\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} x, \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} y, \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \&s, \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \&t) const
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{namespace_g2lib_aa8734fcd1e1418071dbcf2e187947ec9}{Dubins\+Type}} \mbox{\hyperlink{class_g2lib_1_1_dubins_a0a8774895e837c35f48685fe667ff2b7}{m\+\_\+solution\+\_\+type}} \{Dubins\+Type\+::\+DUBINS\+\_\+\+ERROR\}
+\item 
+\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \mbox{\hyperlink{class_g2lib_1_1_dubins_a8f777a87b003edff17ffc4a2f27f09a2}{m\+\_\+length}} \{0\}
+\item 
+\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \mbox{\hyperlink{class_g2lib_1_1_dubins_a66cd1b3623df925120565ef9da6eb70b}{m\+\_\+length\+\_\+\+Dalpha}} \{0\}
+\item 
+\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \mbox{\hyperlink{class_g2lib_1_1_dubins_ab65c564c4a242cee6ba73c046a42748a}{m\+\_\+length\+\_\+\+Dbeta}} \{0\}
+\item 
+\mbox{\hyperlink{class_g2lib_1_1_circle_arc}{Circle\+Arc}} \mbox{\hyperlink{class_g2lib_1_1_dubins_ac775fcf544341599a5b1489d3538b80c}{m\+\_\+\+C0}} \{"{}Dubins\+\_\+\+C0"{}\}
+\item 
+\mbox{\hyperlink{class_g2lib_1_1_circle_arc}{Circle\+Arc}} \mbox{\hyperlink{class_g2lib_1_1_dubins_a6b2485527fcb7bf204f3046c7593c1ae}{m\+\_\+\+C1}} \{"{}Dubins\+\_\+\+C1"{}\}
+\begin{DoxyCompactList}\small\item\em Three arc solution of DUBINS problem. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{class_g2lib_1_1_circle_arc}{Circle\+Arc}} \mbox{\hyperlink{class_g2lib_1_1_dubins_ada1cde5da3e98adbd00c744b2b2264b5}{m\+\_\+\+C2}} \{"{}Dubins\+\_\+\+C2"{}\}
+\begin{DoxyCompactList}\small\item\em Three arc solution of DUBINS problem. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Friends}
+\begin{DoxyCompactItemize}
+\item 
+class \mbox{\hyperlink{class_g2lib_1_1_dubins_ae970e1a42b318363ea91632626baf4d6}{Dubins3p}}
+\item 
+\mbox{\hyperlink{namespace_g2lib_a8fcbace87db5a5e71391e0040878f2c3}{ostream\+\_\+type}} \& \mbox{\hyperlink{class_g2lib_1_1_dubins_a7b6b895e1ae9af96e035ef868fcb32f8}{operator$<$$<$}} (\mbox{\hyperlink{namespace_g2lib_a8fcbace87db5a5e71391e0040878f2c3}{ostream\+\_\+type}} \&stream, \mbox{\hyperlink{class_g2lib_1_1_dubins}{Dubins}} const \&bi)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Class to manage a \doxylink{class_g2lib_1_1_dubins}{Dubins} curve 
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{class_g2lib_1_1_dubins_a87a4d9f1048b0e4aee46cfa492431945}\index{G2lib::Dubins@{G2lib::Dubins}!Dubins@{Dubins}}
+\index{Dubins@{Dubins}!G2lib::Dubins@{G2lib::Dubins}}
+\doxysubsubsection{\texorpdfstring{Dubins()}{Dubins()}\hspace{0.1cm}{\footnotesize\ttfamily [1/4]}}
+{\footnotesize\ttfamily \label{class_g2lib_1_1_dubins_a87a4d9f1048b0e4aee46cfa492431945} 
+G2lib\+::\+Dubins\+::\+Dubins (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [delete]}}
+
+
+
+Three arc solution of DUBINS problem. 
+
+Build an empty circle \Hypertarget{class_g2lib_1_1_dubins_a405a4f792d4aeb965a69ffa499523c39}\index{G2lib::Dubins@{G2lib::Dubins}!Dubins@{Dubins}}
+\index{Dubins@{Dubins}!G2lib::Dubins@{G2lib::Dubins}}
+\doxysubsubsection{\texorpdfstring{Dubins()}{Dubins()}\hspace{0.1cm}{\footnotesize\ttfamily [2/4]}}
+{\footnotesize\ttfamily \label{class_g2lib_1_1_dubins_a405a4f792d4aeb965a69ffa499523c39} 
+G2lib\+::\+Dubins\+::\+Dubins (\begin{DoxyParamCaption}\item[{string const \&}]{name}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{class_g2lib_1_1_dubins_a834f016a91c983a66ce8d9a0ae10679b}\index{G2lib::Dubins@{G2lib::Dubins}!Dubins@{Dubins}}
+\index{Dubins@{Dubins}!G2lib::Dubins@{G2lib::Dubins}}
+\doxysubsubsection{\texorpdfstring{Dubins()}{Dubins()}\hspace{0.1cm}{\footnotesize\ttfamily [3/4]}}
+{\footnotesize\ttfamily \label{class_g2lib_1_1_dubins_a834f016a91c983a66ce8d9a0ae10679b} 
+G2lib\+::\+Dubins\+::\+Dubins (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_g2lib_1_1_dubins}{Dubins}} const \&}]{s}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Build a copy of an existing \doxylink{class_g2lib_1_1_dubins}{Dubins} problem. \Hypertarget{class_g2lib_1_1_dubins_a55168bf46dc26c9d870999aa29b71c92}\index{G2lib::Dubins@{G2lib::Dubins}!Dubins@{Dubins}}
+\index{Dubins@{Dubins}!G2lib::Dubins@{G2lib::Dubins}}
+\doxysubsubsection{\texorpdfstring{Dubins()}{Dubins()}\hspace{0.1cm}{\footnotesize\ttfamily [4/4]}}
+{\footnotesize\ttfamily \label{class_g2lib_1_1_dubins_a55168bf46dc26c9d870999aa29b71c92} 
+G2lib\+::\+Dubins\+::\+Dubins (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}}}]{x0}{, }\item[{\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}}}]{y0}{, }\item[{\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}}}]{theta0}{, }\item[{\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}}}]{x1}{, }\item[{\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}}}]{y1}{, }\item[{\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}}}]{theta1}{, }\item[{\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}}}]{k\+\_\+max}{, }\item[{string const \&}]{name}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [explicit]}}
+
+Construct a \doxylink{class_g2lib_1_1_dubins}{Dubins} solution
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em x0} & initial position x-\/coordinate \\
+\hline
+\mbox{\texttt{ in}}  & {\em y0} & initial position y-\/coordinate \\
+\hline
+\mbox{\texttt{ in}}  & {\em theta0} & initial angle \\
+\hline
+\mbox{\texttt{ in}}  & {\em x1} & final position x-\/coordinate \\
+\hline
+\mbox{\texttt{ in}}  & {\em y1} & final position y-\/coordinate \\
+\hline
+\mbox{\texttt{ in}}  & {\em theta1} & final angle \\
+\hline
+\mbox{\texttt{ in}}  & {\em k\+\_\+max} & max curvature \\
+\hline
+\mbox{\texttt{ in}}  & {\em name} & name of the \doxylink{class_g2lib_1_1_dubins}{Dubins} object \\
+\hline
+\end{DoxyParams}
+
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{class_g2lib_1_1_dubins_a4933cc1baea21dd8dfacdb9768de1c76}\index{G2lib::Dubins@{G2lib::Dubins}!bb\_triangles@{bb\_triangles}}
+\index{bb\_triangles@{bb\_triangles}!G2lib::Dubins@{G2lib::Dubins}}
+\doxysubsubsection{\texorpdfstring{bb\_triangles()}{bb\_triangles()}}
+{\footnotesize\ttfamily \label{class_g2lib_1_1_dubins_a4933cc1baea21dd8dfacdb9768de1c76} 
+void G2lib\+::\+Dubins\+::bb\+\_\+triangles (\begin{DoxyParamCaption}\item[{vector$<$ \mbox{\hyperlink{class_g2lib_1_1_triangle2_d}{Triangle2D}} $>$ \&}]{tvec}{, }\item[{\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}}}]{max\+\_\+angle}{ = {\ttfamily Utils\+:\+:m\+\_\+pi/18}, }\item[{\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}}}]{max\+\_\+size}{ = {\ttfamily 1e100}, }\item[{\mbox{\hyperlink{namespace_g2lib_a17146eb1606475bedc9a2d27f3b29e34}{integer}}}]{icurve}{ = {\ttfamily 0}}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+Build a cover with triangles of the curve.
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ out}}  & {\em tvec} & list of covering triangles \\
+\hline
+\mbox{\texttt{ out}}  & {\em max\+\_\+angle} & maximum angle variation of the curve covered by a triangle \\
+\hline
+\mbox{\texttt{ out}}  & {\em max\+\_\+size} & maximum admissible size of the covering tirnagles \\
+\hline
+\mbox{\texttt{ out}}  & {\em icurve} & index of the covering triangles\\
+\hline
+\end{DoxyParams}
+ 
+
+Implements \mbox{\hyperlink{class_g2lib_1_1_base_curve_a7557f20dd418085ead40ace4e4a3a234}{G2lib\+::\+Base\+Curve}}.
+
+\Hypertarget{class_g2lib_1_1_dubins_ac58301dde55d6e2246b8bcd936278631}\index{G2lib::Dubins@{G2lib::Dubins}!bb\_triangles\_ISO@{bb\_triangles\_ISO}}
+\index{bb\_triangles\_ISO@{bb\_triangles\_ISO}!G2lib::Dubins@{G2lib::Dubins}}
+\doxysubsubsection{\texorpdfstring{bb\_triangles\_ISO()}{bb\_triangles\_ISO()}}
+{\footnotesize\ttfamily \label{class_g2lib_1_1_dubins_ac58301dde55d6e2246b8bcd936278631} 
+void G2lib\+::\+Dubins\+::bb\+\_\+triangles\+\_\+\+ISO (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}}}]{offs}{, }\item[{vector$<$ \mbox{\hyperlink{class_g2lib_1_1_triangle2_d}{Triangle2D}} $>$ \&}]{tvec}{, }\item[{\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}}}]{max\+\_\+angle}{ = {\ttfamily Utils\+:\+:m\+\_\+pi/18}, }\item[{\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}}}]{max\+\_\+size}{ = {\ttfamily 1e100}, }\item[{\mbox{\hyperlink{namespace_g2lib_a17146eb1606475bedc9a2d27f3b29e34}{integer}}}]{icurve}{ = {\ttfamily 0}}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+Build a cover with triangles of the curve with offset (ISO).
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ out}}  & {\em offs} & curve offset \\
+\hline
+\mbox{\texttt{ out}}  & {\em tvec} & list of covering triangles \\
+\hline
+\mbox{\texttt{ out}}  & {\em max\+\_\+angle} & maximum angle variation of the curve covered by a triangle \\
+\hline
+\mbox{\texttt{ out}}  & {\em max\+\_\+size} & maximum admissible size of the covering tirnagles \\
+\hline
+\mbox{\texttt{ out}}  & {\em icurve} & index of the covering triangles \\
+\hline
+\end{DoxyParams}
+
+
+Implements \mbox{\hyperlink{class_g2lib_1_1_base_curve_a1c8b7f429197a75c343365f8e20c2180}{G2lib\+::\+Base\+Curve}}.
+
+\Hypertarget{class_g2lib_1_1_dubins_a91d5464ac8cd8ad25cbc3625f91e20a2}\index{G2lib::Dubins@{G2lib::Dubins}!bb\_triangles\_SAE@{bb\_triangles\_SAE}}
+\index{bb\_triangles\_SAE@{bb\_triangles\_SAE}!G2lib::Dubins@{G2lib::Dubins}}
+\doxysubsubsection{\texorpdfstring{bb\_triangles\_SAE()}{bb\_triangles\_SAE()}}
+{\footnotesize\ttfamily \label{class_g2lib_1_1_dubins_a91d5464ac8cd8ad25cbc3625f91e20a2} 
+void G2lib\+::\+Dubins\+::bb\+\_\+triangles\+\_\+\+SAE (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}}}]{offs}{, }\item[{vector$<$ \mbox{\hyperlink{class_g2lib_1_1_triangle2_d}{Triangle2D}} $>$ \&}]{tvec}{, }\item[{\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}}}]{max\+\_\+angle}{ = {\ttfamily Utils\+:\+:m\+\_\+pi/18}, }\item[{\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}}}]{max\+\_\+size}{ = {\ttfamily 1e100}, }\item[{\mbox{\hyperlink{namespace_g2lib_a17146eb1606475bedc9a2d27f3b29e34}{integer}}}]{icurve}{ = {\ttfamily 0}}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+Build a cover with triangles of the curve with offset (SAE).
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ out}}  & {\em offs} & curve offset \\
+\hline
+\mbox{\texttt{ out}}  & {\em tvec} & list of covering triangles \\
+\hline
+\mbox{\texttt{ out}}  & {\em max\+\_\+angle} & maximum angle variation of the arc covered by a triangle \\
+\hline
+\mbox{\texttt{ out}}  & {\em max\+\_\+size} & maximum admissible size of the covering tirnagles \\
+\hline
+\mbox{\texttt{ out}}  & {\em icurve} & index of the covering triangles \\
+\hline
+\end{DoxyParams}
+
+
+Implements \mbox{\hyperlink{class_g2lib_1_1_base_curve_ab78e15370aabfba6719c974c8b4fceeb}{G2lib\+::\+Base\+Curve}}.
+
+\Hypertarget{class_g2lib_1_1_dubins_a6f76915cf8dc5d38defd04fd52a19bc5}\index{G2lib::Dubins@{G2lib::Dubins}!bbox@{bbox}}
+\index{bbox@{bbox}!G2lib::Dubins@{G2lib::Dubins}}
+\doxysubsubsection{\texorpdfstring{bbox()}{bbox()}}
+{\footnotesize\ttfamily \label{class_g2lib_1_1_dubins_a6f76915cf8dc5d38defd04fd52a19bc5} 
+void G2lib\+::\+Dubins\+::bbox (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \&}]{xmin}{, }\item[{\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \&}]{ymin}{, }\item[{\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \&}]{xmax}{, }\item[{\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \&}]{ymax}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+Compute the bounding box of the curve.
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ out}}  & {\em xmin} & left bottom \\
+\hline
+\mbox{\texttt{ out}}  & {\em ymin} & left bottom \\
+\hline
+\mbox{\texttt{ out}}  & {\em xmax} & right top \\
+\hline
+\mbox{\texttt{ out}}  & {\em ymax} & right top \\
+\hline
+\end{DoxyParams}
+
+
+Implements \mbox{\hyperlink{class_g2lib_1_1_base_curve_a7fae2861a0111645fd30fbe63a130db0}{G2lib\+::\+Base\+Curve}}.
+
+\Hypertarget{class_g2lib_1_1_dubins_af7b4b4d28a20c4f3a37fb67672e55cb9}\index{G2lib::Dubins@{G2lib::Dubins}!bbox\_ISO@{bbox\_ISO}}
+\index{bbox\_ISO@{bbox\_ISO}!G2lib::Dubins@{G2lib::Dubins}}
+\doxysubsubsection{\texorpdfstring{bbox\_ISO()}{bbox\_ISO()}}
+{\footnotesize\ttfamily \label{class_g2lib_1_1_dubins_af7b4b4d28a20c4f3a37fb67672e55cb9} 
+void G2lib\+::\+Dubins\+::bbox\+\_\+\+ISO (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}}}]{offs}{, }\item[{\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \&}]{xmin}{, }\item[{\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \&}]{ymin}{, }\item[{\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \&}]{xmax}{, }\item[{\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \&}]{ymax}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+Compute the bounding box of the curve with offset (ISO).
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em offs} & curve offset \\
+\hline
+\mbox{\texttt{ out}}  & {\em xmin} & left bottom \\
+\hline
+\mbox{\texttt{ out}}  & {\em ymin} & left bottom \\
+\hline
+\mbox{\texttt{ out}}  & {\em xmax} & right top \\
+\hline
+\mbox{\texttt{ out}}  & {\em ymax} & right top \\
+\hline
+\end{DoxyParams}
+
+
+Implements \mbox{\hyperlink{class_g2lib_1_1_base_curve_aacdf92880dce851cb1b562797ba73018}{G2lib\+::\+Base\+Curve}}.
+
+\Hypertarget{class_g2lib_1_1_dubins_a8abaf866e455411b1db705ddba752cf9}\index{G2lib::Dubins@{G2lib::Dubins}!build@{build}}
+\index{build@{build}!G2lib::Dubins@{G2lib::Dubins}}
+\doxysubsubsection{\texorpdfstring{build()}{build()}\hspace{0.1cm}{\footnotesize\ttfamily [1/10]}}
+{\footnotesize\ttfamily \label{class_g2lib_1_1_dubins_a8abaf866e455411b1db705ddba752cf9} 
+void G2lib\+::\+Dubins\+::build (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_g2lib_1_1_biarc}{Biarc}} const \&}]{}{}\end{DoxyParamCaption})}
+
+\Hypertarget{class_g2lib_1_1_dubins_a03a14fd7655415064a2daabeb830e46a}\index{G2lib::Dubins@{G2lib::Dubins}!build@{build}}
+\index{build@{build}!G2lib::Dubins@{G2lib::Dubins}}
+\doxysubsubsection{\texorpdfstring{build()}{build()}\hspace{0.1cm}{\footnotesize\ttfamily [2/10]}}
+{\footnotesize\ttfamily \label{class_g2lib_1_1_dubins_a03a14fd7655415064a2daabeb830e46a} 
+void G2lib\+::\+Dubins\+::build (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_g2lib_1_1_biarc_list}{Biarc\+List}} const \&}]{}{}\end{DoxyParamCaption})}
+
+\Hypertarget{class_g2lib_1_1_dubins_a84ce2cb91f2e2ad2c0b513080c9c4fff}\index{G2lib::Dubins@{G2lib::Dubins}!build@{build}}
+\index{build@{build}!G2lib::Dubins@{G2lib::Dubins}}
+\doxysubsubsection{\texorpdfstring{build()}{build()}\hspace{0.1cm}{\footnotesize\ttfamily [3/10]}}
+{\footnotesize\ttfamily \label{class_g2lib_1_1_dubins_a84ce2cb91f2e2ad2c0b513080c9c4fff} 
+void G2lib\+::\+Dubins\+::build (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_g2lib_1_1_circle_arc}{Circle\+Arc}} const \&}]{C}{}\end{DoxyParamCaption})}
+
+\Hypertarget{class_g2lib_1_1_dubins_a03cda37db32d08116a902e103e132337}\index{G2lib::Dubins@{G2lib::Dubins}!build@{build}}
+\index{build@{build}!G2lib::Dubins@{G2lib::Dubins}}
+\doxysubsubsection{\texorpdfstring{build()}{build()}\hspace{0.1cm}{\footnotesize\ttfamily [4/10]}}
+{\footnotesize\ttfamily \label{class_g2lib_1_1_dubins_a03cda37db32d08116a902e103e132337} 
+void G2lib\+::\+Dubins\+::build (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_g2lib_1_1_clothoid_curve}{Clothoid\+Curve}} const \&}]{}{}\end{DoxyParamCaption})}
+
+\Hypertarget{class_g2lib_1_1_dubins_ad771ebda302811ae5a3bafb7aabb8d73}\index{G2lib::Dubins@{G2lib::Dubins}!build@{build}}
+\index{build@{build}!G2lib::Dubins@{G2lib::Dubins}}
+\doxysubsubsection{\texorpdfstring{build()}{build()}\hspace{0.1cm}{\footnotesize\ttfamily [5/10]}}
+{\footnotesize\ttfamily \label{class_g2lib_1_1_dubins_ad771ebda302811ae5a3bafb7aabb8d73} 
+void G2lib\+::\+Dubins\+::build (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_g2lib_1_1_clothoid_list}{Clothoid\+List}} const \&}]{}{}\end{DoxyParamCaption})}
+
+\Hypertarget{class_g2lib_1_1_dubins_ae63011016015a0e934c7a05a3608ef6f}\index{G2lib::Dubins@{G2lib::Dubins}!build@{build}}
+\index{build@{build}!G2lib::Dubins@{G2lib::Dubins}}
+\doxysubsubsection{\texorpdfstring{build()}{build()}\hspace{0.1cm}{\footnotesize\ttfamily [6/10]}}
+{\footnotesize\ttfamily \label{class_g2lib_1_1_dubins_ae63011016015a0e934c7a05a3608ef6f} 
+void G2lib\+::\+Dubins\+::build (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_g2lib_1_1_dubins}{Dubins}} const \&}]{DB}{}\end{DoxyParamCaption})}
+
+\Hypertarget{class_g2lib_1_1_dubins_a929ff1978ec761dc915e8ef02f44f978}\index{G2lib::Dubins@{G2lib::Dubins}!build@{build}}
+\index{build@{build}!G2lib::Dubins@{G2lib::Dubins}}
+\doxysubsubsection{\texorpdfstring{build()}{build()}\hspace{0.1cm}{\footnotesize\ttfamily [7/10]}}
+{\footnotesize\ttfamily \label{class_g2lib_1_1_dubins_a929ff1978ec761dc915e8ef02f44f978} 
+void G2lib\+::\+Dubins\+::build (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_g2lib_1_1_dubins3p}{Dubins3p}} const \&}]{}{}\end{DoxyParamCaption})}
+
+\Hypertarget{class_g2lib_1_1_dubins_ad432d0f7cf9e3f1bb53dbffecfb3e70f}\index{G2lib::Dubins@{G2lib::Dubins}!build@{build}}
+\index{build@{build}!G2lib::Dubins@{G2lib::Dubins}}
+\doxysubsubsection{\texorpdfstring{build()}{build()}\hspace{0.1cm}{\footnotesize\ttfamily [8/10]}}
+{\footnotesize\ttfamily \label{class_g2lib_1_1_dubins_ad432d0f7cf9e3f1bb53dbffecfb3e70f} 
+void G2lib\+::\+Dubins\+::build (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_g2lib_1_1_line_segment}{Line\+Segment}} const \&}]{L}{}\end{DoxyParamCaption})}
+
+\Hypertarget{class_g2lib_1_1_dubins_ae8a63db1a31b7dbe0b3d200b736b96db}\index{G2lib::Dubins@{G2lib::Dubins}!build@{build}}
+\index{build@{build}!G2lib::Dubins@{G2lib::Dubins}}
+\doxysubsubsection{\texorpdfstring{build()}{build()}\hspace{0.1cm}{\footnotesize\ttfamily [9/10]}}
+{\footnotesize\ttfamily \label{class_g2lib_1_1_dubins_ae8a63db1a31b7dbe0b3d200b736b96db} 
+void G2lib\+::\+Dubins\+::build (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_g2lib_1_1_poly_line}{Poly\+Line}} const \&}]{}{}\end{DoxyParamCaption})}
+
+\Hypertarget{class_g2lib_1_1_dubins_a4b227758adcabb4f7741f58fb6551747}\index{G2lib::Dubins@{G2lib::Dubins}!build@{build}}
+\index{build@{build}!G2lib::Dubins@{G2lib::Dubins}}
+\doxysubsubsection{\texorpdfstring{build()}{build()}\hspace{0.1cm}{\footnotesize\ttfamily [10/10]}}
+{\footnotesize\ttfamily \label{class_g2lib_1_1_dubins_a4b227758adcabb4f7741f58fb6551747} 
+bool G2lib\+::\+Dubins\+::build (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}}}]{x0}{, }\item[{\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}}}]{y0}{, }\item[{\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}}}]{theta0}{, }\item[{\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}}}]{x1}{, }\item[{\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}}}]{y1}{, }\item[{\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}}}]{theta1}{, }\item[{\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}}}]{k\+\_\+max}{}\end{DoxyParamCaption})}
+
+Construct a \doxylink{class_g2lib_1_1_dubins}{Dubins} solution
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em x0} & initial position x-\/coordinate \\
+\hline
+\mbox{\texttt{ in}}  & {\em y0} & initial position y-\/coordinate \\
+\hline
+\mbox{\texttt{ in}}  & {\em theta0} & initial angle \\
+\hline
+\mbox{\texttt{ in}}  & {\em x1} & final position x-\/coordinate \\
+\hline
+\mbox{\texttt{ in}}  & {\em y1} & final position y-\/coordinate \\
+\hline
+\mbox{\texttt{ in}}  & {\em theta1} & final angle \\
+\hline
+\mbox{\texttt{ in}}  & {\em k\+\_\+max} & max curvature \\
+\hline
+\end{DoxyParams}
+\Hypertarget{class_g2lib_1_1_dubins_a658d4be3c32068af6e5a0ebcf42eb087}\index{G2lib::Dubins@{G2lib::Dubins}!C0@{C0}}
+\index{C0@{C0}!G2lib::Dubins@{G2lib::Dubins}}
+\doxysubsubsection{\texorpdfstring{C0()}{C0()}}
+{\footnotesize\ttfamily \label{class_g2lib_1_1_dubins_a658d4be3c32068af6e5a0ebcf42eb087} 
+\mbox{\hyperlink{class_g2lib_1_1_circle_arc}{Circle\+Arc}} const  \& G2lib\+::\+Dubins\+::\+C0 (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+Return the first cicle of the \doxylink{class_g2lib_1_1_dubins}{Dubins} solution \Hypertarget{class_g2lib_1_1_dubins_a5b2765c187b73559585225695c63537e}\index{G2lib::Dubins@{G2lib::Dubins}!C1@{C1}}
+\index{C1@{C1}!G2lib::Dubins@{G2lib::Dubins}}
+\doxysubsubsection{\texorpdfstring{C1()}{C1()}}
+{\footnotesize\ttfamily \label{class_g2lib_1_1_dubins_a5b2765c187b73559585225695c63537e} 
+\mbox{\hyperlink{class_g2lib_1_1_circle_arc}{Circle\+Arc}} const  \& G2lib\+::\+Dubins\+::\+C1 (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+Return the second cicle of the \doxylink{class_g2lib_1_1_dubins}{Dubins} solution \Hypertarget{class_g2lib_1_1_dubins_af8bc4bc485b0522c78244328c14a63aa}\index{G2lib::Dubins@{G2lib::Dubins}!C2@{C2}}
+\index{C2@{C2}!G2lib::Dubins@{G2lib::Dubins}}
+\doxysubsubsection{\texorpdfstring{C2()}{C2()}}
+{\footnotesize\ttfamily \label{class_g2lib_1_1_dubins_af8bc4bc485b0522c78244328c14a63aa} 
+\mbox{\hyperlink{class_g2lib_1_1_circle_arc}{Circle\+Arc}} const  \& G2lib\+::\+Dubins\+::\+C2 (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+Return the third cicle of the \doxylink{class_g2lib_1_1_dubins}{Dubins} solution \Hypertarget{class_g2lib_1_1_dubins_ae485fea968ed119376e99cc224a50b6a}\index{G2lib::Dubins@{G2lib::Dubins}!change\_origin@{change\_origin}}
+\index{change\_origin@{change\_origin}!G2lib::Dubins@{G2lib::Dubins}}
+\doxysubsubsection{\texorpdfstring{change\_origin()}{change\_origin()}}
+{\footnotesize\ttfamily \label{class_g2lib_1_1_dubins_ae485fea968ed119376e99cc224a50b6a} 
+void G2lib\+::\+Dubins\+::change\+\_\+origin (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}}}]{newx0}{, }\item[{\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}}}]{newy0}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+Translate curve so that origin will be ({\ttfamily newx0}, {\ttfamily newy0}). 
+
+Implements \mbox{\hyperlink{class_g2lib_1_1_base_curve_a301aee32196afe335a04cbffc3dbe3ce}{G2lib\+::\+Base\+Curve}}.
+
+\Hypertarget{class_g2lib_1_1_dubins_a4ac634fa9f92ed777b1a82d93ef6da65}\index{G2lib::Dubins@{G2lib::Dubins}!closest\_point\_ISO@{closest\_point\_ISO}}
+\index{closest\_point\_ISO@{closest\_point\_ISO}!G2lib::Dubins@{G2lib::Dubins}}
+\doxysubsubsection{\texorpdfstring{closest\_point\_ISO()}{closest\_point\_ISO()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{class_g2lib_1_1_dubins_a4ac634fa9f92ed777b1a82d93ef6da65} 
+\mbox{\hyperlink{namespace_g2lib_a17146eb1606475bedc9a2d27f3b29e34}{integer}} G2lib\+::\+Dubins\+::closest\+\_\+point\+\_\+\+ISO (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}}}]{qx}{, }\item[{\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}}}]{qy}{, }\item[{\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \&}]{x}{, }\item[{\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \&}]{y}{, }\item[{\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \&}]{s}{, }\item[{\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \&}]{t}{, }\item[{\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \&}]{dst}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+Given a point find closest point on the curve.
+
+
+\begin{DoxyParams}{Parameters}
+{\em qx} & x-\/coordinate of the point \\
+\hline
+{\em qy} & y-\/coordinate of the point \\
+\hline
+{\em x} & x-\/coordinate of the projected point on the curve \\
+\hline
+{\em y} & y-\/coordinate of the projected point on the curve \\
+\hline
+{\em s} & parameter on the curve of the projection \\
+\hline
+{\em t} & curvilinear coordinate of the point x,y (if orthogonal projection) \\
+\hline
+{\em dst} & distance point projected point \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+1 = point is projected orthogonal 0 = more than one projection (first returned) -\/1 = minimum point is not othogonal projection to curve 
+\end{DoxyReturn}
+
+
+Implements \mbox{\hyperlink{class_g2lib_1_1_base_curve_abfa1b5a7ebf24a6068512df027025a4f}{G2lib\+::\+Base\+Curve}}.
+
+\Hypertarget{class_g2lib_1_1_dubins_aae4288a958cc426a4f2f4f4809360801}\index{G2lib::Dubins@{G2lib::Dubins}!closest\_point\_ISO@{closest\_point\_ISO}}
+\index{closest\_point\_ISO@{closest\_point\_ISO}!G2lib::Dubins@{G2lib::Dubins}}
+\doxysubsubsection{\texorpdfstring{closest\_point\_ISO()}{closest\_point\_ISO()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{class_g2lib_1_1_dubins_aae4288a958cc426a4f2f4f4809360801} 
+\mbox{\hyperlink{namespace_g2lib_a17146eb1606475bedc9a2d27f3b29e34}{integer}} G2lib\+::\+Dubins\+::closest\+\_\+point\+\_\+\+ISO (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}}}]{qx}{, }\item[{\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}}}]{qy}{, }\item[{\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}}}]{offs}{, }\item[{\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \&}]{x}{, }\item[{\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \&}]{y}{, }\item[{\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \&}]{s}{, }\item[{\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \&}]{t}{, }\item[{\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \&}]{dst}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+Given a point find closest point on the curve.
+
+
+\begin{DoxyParams}{Parameters}
+{\em qx} & x-\/coordinate of the point \\
+\hline
+{\em qy} & y-\/coordinate of the point \\
+\hline
+{\em offs} & offset of the curve \\
+\hline
+{\em x} & x-\/coordinate of the projected point on the curve \\
+\hline
+{\em y} & y-\/coordinate of the projected point on the curve \\
+\hline
+{\em s} & parameter on the curve of the projection \\
+\hline
+{\em t} & curvilinear coordinate of the point x,y (if orthogonal projection) \\
+\hline
+{\em dst} & distance point projected point \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+1 = point is projected orthogonal 0 = more than one projection (first returned) -\/1 = minimum point is not othogonal projection to curve 
+\end{DoxyReturn}
+
+
+Implements \mbox{\hyperlink{class_g2lib_1_1_base_curve_a883c6d1d89c92bf619c618348962ff89}{G2lib\+::\+Base\+Curve}}.
+
+\Hypertarget{class_g2lib_1_1_dubins_a1fe6dd9984aaeec6164106ed555bc5b4}\index{G2lib::Dubins@{G2lib::Dubins}!collision@{collision}}
+\index{collision@{collision}!G2lib::Dubins@{G2lib::Dubins}}
+\doxysubsubsection{\texorpdfstring{collision()}{collision()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{class_g2lib_1_1_dubins_a1fe6dd9984aaeec6164106ed555bc5b4} 
+bool G2lib\+::\+Dubins\+::collision (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_g2lib_1_1_base_curve}{Base\+Curve}} const \texorpdfstring{$\ast$}{*}}]{pC}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+Check collision with another curve. 
+
+Implements \mbox{\hyperlink{class_g2lib_1_1_base_curve_a0d8ebec8c2a968685307daa29278a3d0}{G2lib\+::\+Base\+Curve}}.
+
+\Hypertarget{class_g2lib_1_1_dubins_ae0b9dcf7638a9e82fc5a62f819fd1091}\index{G2lib::Dubins@{G2lib::Dubins}!collision@{collision}}
+\index{collision@{collision}!G2lib::Dubins@{G2lib::Dubins}}
+\doxysubsubsection{\texorpdfstring{collision()}{collision()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{class_g2lib_1_1_dubins_ae0b9dcf7638a9e82fc5a62f819fd1091} 
+bool G2lib\+::\+Dubins\+::collision (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_g2lib_1_1_dubins}{Dubins}} const \&}]{B}{}\end{DoxyParamCaption}) const}
+
+Detect a collision with another biarc. \Hypertarget{class_g2lib_1_1_dubins_afecfd52235d0bcbf01ebbf0d34a9275f}\index{G2lib::Dubins@{G2lib::Dubins}!collision\_ISO@{collision\_ISO}}
+\index{collision\_ISO@{collision\_ISO}!G2lib::Dubins@{G2lib::Dubins}}
+\doxysubsubsection{\texorpdfstring{collision\_ISO()}{collision\_ISO()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{class_g2lib_1_1_dubins_afecfd52235d0bcbf01ebbf0d34a9275f} 
+bool G2lib\+::\+Dubins\+::collision\+\_\+\+ISO (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}}}]{offs}{, }\item[{\mbox{\hyperlink{class_g2lib_1_1_base_curve}{Base\+Curve}} const \texorpdfstring{$\ast$}{*}}]{pC}{, }\item[{\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}}}]{offs\+\_\+C}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+Check collision with another curve with offset (ISO).
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em offs} & curve offset \\
+\hline
+\mbox{\texttt{ in}}  & {\em pC} & second curve to check collision \\
+\hline
+\mbox{\texttt{ in}}  & {\em offs\+\_\+C} & curve offset of the second curve \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true if collision is detected 
+\end{DoxyReturn}
+
+
+Implements \mbox{\hyperlink{class_g2lib_1_1_base_curve_aa5b664cf05285def70bb3c4fe8e5bb42}{G2lib\+::\+Base\+Curve}}.
+
+\Hypertarget{class_g2lib_1_1_dubins_ab7bd830c2ccc72079561a2f9e05a7bf1}\index{G2lib::Dubins@{G2lib::Dubins}!collision\_ISO@{collision\_ISO}}
+\index{collision\_ISO@{collision\_ISO}!G2lib::Dubins@{G2lib::Dubins}}
+\doxysubsubsection{\texorpdfstring{collision\_ISO()}{collision\_ISO()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{class_g2lib_1_1_dubins_ab7bd830c2ccc72079561a2f9e05a7bf1} 
+bool G2lib\+::\+Dubins\+::collision\+\_\+\+ISO (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}}}]{offs}{, }\item[{\mbox{\hyperlink{class_g2lib_1_1_dubins}{Dubins}} const \&}]{B}{, }\item[{\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}}}]{offs\+\_\+B}{}\end{DoxyParamCaption}) const}
+
+Detect a collision with another biarc with offset.
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em offs} & offset of first biarc \\
+\hline
+\mbox{\texttt{ in}}  & {\em B} & second biarc \\
+\hline
+\mbox{\texttt{ in}}  & {\em offs\+\_\+B} & offset of second biarc \\
+\hline
+\end{DoxyParams}
+\Hypertarget{class_g2lib_1_1_dubins_af77ff6087da141ca46c5c4e3ec8d1575}\index{G2lib::Dubins@{G2lib::Dubins}!copy@{copy}}
+\index{copy@{copy}!G2lib::Dubins@{G2lib::Dubins}}
+\doxysubsubsection{\texorpdfstring{copy()}{copy()}}
+{\footnotesize\ttfamily \label{class_g2lib_1_1_dubins_af77ff6087da141ca46c5c4e3ec8d1575} 
+void G2lib\+::\+Dubins\+::copy (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_g2lib_1_1_dubins}{Dubins}} const \&}]{d}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+Make a copy of an existing \doxylink{class_g2lib_1_1_dubins}{Dubins} solution. \Hypertarget{class_g2lib_1_1_dubins_a316c314af0f1f65f854d077a99f7fa9e}\index{G2lib::Dubins@{G2lib::Dubins}!eval@{eval}}
+\index{eval@{eval}!G2lib::Dubins@{G2lib::Dubins}}
+\doxysubsubsection{\texorpdfstring{eval()}{eval()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{class_g2lib_1_1_dubins_a316c314af0f1f65f854d077a99f7fa9e} 
+void G2lib\+::\+Dubins\+::eval (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}}}]{s}{, }\item[{\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \&}]{theta}{, }\item[{\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \&}]{kappa}{, }\item[{\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \&}]{x}{, }\item[{\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \&}]{y}{}\end{DoxyParamCaption}) const}
+
+\Hypertarget{class_g2lib_1_1_dubins_ac45d047b5c37afae103f907541b31586}\index{G2lib::Dubins@{G2lib::Dubins}!eval@{eval}}
+\index{eval@{eval}!G2lib::Dubins@{G2lib::Dubins}}
+\doxysubsubsection{\texorpdfstring{eval()}{eval()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{class_g2lib_1_1_dubins_ac45d047b5c37afae103f907541b31586} 
+void G2lib\+::\+Dubins\+::eval (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}}}]{s}{, }\item[{\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \&}]{x}{, }\item[{\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \&}]{y}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+x and y-\/coordinate at curvilinear coordinate {\ttfamily s}. 
+
+Implements \mbox{\hyperlink{class_g2lib_1_1_base_curve_a69b6b964fffd70cb3416010105c72d6a}{G2lib\+::\+Base\+Curve}}.
+
+\Hypertarget{class_g2lib_1_1_dubins_af9300f3340438ffa45899d75ca3d2e9c}\index{G2lib::Dubins@{G2lib::Dubins}!eval\_D@{eval\_D}}
+\index{eval\_D@{eval\_D}!G2lib::Dubins@{G2lib::Dubins}}
+\doxysubsubsection{\texorpdfstring{eval\_D()}{eval\_D()}}
+{\footnotesize\ttfamily \label{class_g2lib_1_1_dubins_af9300f3340438ffa45899d75ca3d2e9c} 
+void G2lib\+::\+Dubins\+::eval\+\_\+D (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}}}]{s}{, }\item[{\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \&}]{x\+\_\+D}{, }\item[{\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \&}]{y\+\_\+D}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+x and y-\/coordinate derivative at curvilinear coordinate {\ttfamily s}. 
+
+Implements \mbox{\hyperlink{class_g2lib_1_1_base_curve_a0346229c8a71a2014b363552fbea1f96}{G2lib\+::\+Base\+Curve}}.
+
+\Hypertarget{class_g2lib_1_1_dubins_a79a453ed3c3db2ec24ea83f81767c20f}\index{G2lib::Dubins@{G2lib::Dubins}!eval\_DD@{eval\_DD}}
+\index{eval\_DD@{eval\_DD}!G2lib::Dubins@{G2lib::Dubins}}
+\doxysubsubsection{\texorpdfstring{eval\_DD()}{eval\_DD()}}
+{\footnotesize\ttfamily \label{class_g2lib_1_1_dubins_a79a453ed3c3db2ec24ea83f81767c20f} 
+void G2lib\+::\+Dubins\+::eval\+\_\+\+DD (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}}}]{s}{, }\item[{\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \&}]{x\+\_\+\+DD}{, }\item[{\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \&}]{y\+\_\+\+DD}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+x and y-\/coordinate second derivative at curvilinear coordinate {\ttfamily s}. 
+
+Implements \mbox{\hyperlink{class_g2lib_1_1_base_curve_a80fdf6defef350fca123ecf59bf4220e}{G2lib\+::\+Base\+Curve}}.
+
+\Hypertarget{class_g2lib_1_1_dubins_ab0350b3341ac381849355452272b0d71}\index{G2lib::Dubins@{G2lib::Dubins}!eval\_DDD@{eval\_DDD}}
+\index{eval\_DDD@{eval\_DDD}!G2lib::Dubins@{G2lib::Dubins}}
+\doxysubsubsection{\texorpdfstring{eval\_DDD()}{eval\_DDD()}}
+{\footnotesize\ttfamily \label{class_g2lib_1_1_dubins_ab0350b3341ac381849355452272b0d71} 
+void G2lib\+::\+Dubins\+::eval\+\_\+\+DDD (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}}}]{s}{, }\item[{\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \&}]{x\+\_\+\+DDD}{, }\item[{\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \&}]{y\+\_\+\+DDD}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+x and y-\/coordinate third derivative at curvilinear coordinate {\ttfamily s}. 
+
+Implements \mbox{\hyperlink{class_g2lib_1_1_base_curve_a0296b231d4e3d3635c54d088488754e6}{G2lib\+::\+Base\+Curve}}.
+
+\Hypertarget{class_g2lib_1_1_dubins_ad7038cf1a989285c1d22a8006864bf01}\index{G2lib::Dubins@{G2lib::Dubins}!eval\_ISO@{eval\_ISO}}
+\index{eval\_ISO@{eval\_ISO}!G2lib::Dubins@{G2lib::Dubins}}
+\doxysubsubsection{\texorpdfstring{eval\_ISO()}{eval\_ISO()}}
+{\footnotesize\ttfamily \label{class_g2lib_1_1_dubins_ad7038cf1a989285c1d22a8006864bf01} 
+void G2lib\+::\+Dubins\+::eval\+\_\+\+ISO (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}}}]{s}{, }\item[{\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}}}]{offs}{, }\item[{\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \&}]{x}{, }\item[{\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \&}]{y}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+Compute curve at position {\ttfamily s} with offset {\ttfamily offs} (ISO).
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em s} & parameter on the curve \\
+\hline
+\mbox{\texttt{ in}}  & {\em offs} & offset of the curve \\
+\hline
+\mbox{\texttt{ out}}  & {\em x} & coordinate \\
+\hline
+\mbox{\texttt{ out}}  & {\em y} & coordinate \\
+\hline
+\end{DoxyParams}
+
+
+Reimplemented from \mbox{\hyperlink{class_g2lib_1_1_base_curve_a3698172a3440654cd0ba9985237f25ac}{G2lib\+::\+Base\+Curve}}.
+
+\Hypertarget{class_g2lib_1_1_dubins_abe283fd27a08e156b877e754dd3119b4}\index{G2lib::Dubins@{G2lib::Dubins}!eval\_ISO\_D@{eval\_ISO\_D}}
+\index{eval\_ISO\_D@{eval\_ISO\_D}!G2lib::Dubins@{G2lib::Dubins}}
+\doxysubsubsection{\texorpdfstring{eval\_ISO\_D()}{eval\_ISO\_D()}}
+{\footnotesize\ttfamily \label{class_g2lib_1_1_dubins_abe283fd27a08e156b877e754dd3119b4} 
+void G2lib\+::\+Dubins\+::eval\+\_\+\+ISO\+\_\+D (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}}}]{s}{, }\item[{\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}}}]{offs}{, }\item[{\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \&}]{x\+\_\+D}{, }\item[{\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \&}]{y\+\_\+D}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+Compute derivative curve at position {\ttfamily s} with offset {\ttfamily offs} (ISO).
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em s} & parameter on the curve \\
+\hline
+\mbox{\texttt{ in}}  & {\em offs} & offset of the curve \\
+\hline
+\mbox{\texttt{ out}}  & {\em x\+\_\+D} & x-\/coordinate \\
+\hline
+\mbox{\texttt{ out}}  & {\em y\+\_\+D} & y-\/coordinate \\
+\hline
+\end{DoxyParams}
+
+
+Reimplemented from \mbox{\hyperlink{class_g2lib_1_1_base_curve_a22132936dc89926dfa5e2d3bb2f5a4db}{G2lib\+::\+Base\+Curve}}.
+
+\Hypertarget{class_g2lib_1_1_dubins_ab0da842c78b6daef4f6066e2acb423d2}\index{G2lib::Dubins@{G2lib::Dubins}!eval\_ISO\_DD@{eval\_ISO\_DD}}
+\index{eval\_ISO\_DD@{eval\_ISO\_DD}!G2lib::Dubins@{G2lib::Dubins}}
+\doxysubsubsection{\texorpdfstring{eval\_ISO\_DD()}{eval\_ISO\_DD()}}
+{\footnotesize\ttfamily \label{class_g2lib_1_1_dubins_ab0da842c78b6daef4f6066e2acb423d2} 
+void G2lib\+::\+Dubins\+::eval\+\_\+\+ISO\+\_\+\+DD (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}}}]{s}{, }\item[{\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}}}]{offs}{, }\item[{\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \&}]{x\+\_\+\+DD}{, }\item[{\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \&}]{y\+\_\+\+DD}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+Compute second derivative curve at position {\ttfamily s} with offset {\ttfamily offs} (ISO).
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em s} & parameter on the curve \\
+\hline
+\mbox{\texttt{ in}}  & {\em offs} & offset of the curve \\
+\hline
+\mbox{\texttt{ out}}  & {\em x\+\_\+\+DD} & x-\/coordinate second derivative \\
+\hline
+\mbox{\texttt{ out}}  & {\em y\+\_\+\+DD} & y-\/coordinate second derivative \\
+\hline
+\end{DoxyParams}
+
+
+Reimplemented from \mbox{\hyperlink{class_g2lib_1_1_base_curve_a0407dd52c3aedff3e19b752e6df1f6f0}{G2lib\+::\+Base\+Curve}}.
+
+\Hypertarget{class_g2lib_1_1_dubins_aba89a81799252e5d118be0142efd4bc9}\index{G2lib::Dubins@{G2lib::Dubins}!eval\_ISO\_DDD@{eval\_ISO\_DDD}}
+\index{eval\_ISO\_DDD@{eval\_ISO\_DDD}!G2lib::Dubins@{G2lib::Dubins}}
+\doxysubsubsection{\texorpdfstring{eval\_ISO\_DDD()}{eval\_ISO\_DDD()}}
+{\footnotesize\ttfamily \label{class_g2lib_1_1_dubins_aba89a81799252e5d118be0142efd4bc9} 
+void G2lib\+::\+Dubins\+::eval\+\_\+\+ISO\+\_\+\+DDD (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}}}]{s}{, }\item[{\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}}}]{offs}{, }\item[{\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \&}]{x\+\_\+\+DDD}{, }\item[{\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \&}]{y\+\_\+\+DDD}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+Compute third derivative curve at position {\ttfamily s} with offset {\ttfamily offs} (ISO).
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em s} & parameter on the curve \\
+\hline
+\mbox{\texttt{ in}}  & {\em offs} & offset of the curve \\
+\hline
+\mbox{\texttt{ out}}  & {\em x\+\_\+\+DDD} & x-\/coordinate third derivative \\
+\hline
+\mbox{\texttt{ out}}  & {\em y\+\_\+\+DDD} & y-\/coordinate third derivative \\
+\hline
+\end{DoxyParams}
+
+
+Reimplemented from \mbox{\hyperlink{class_g2lib_1_1_base_curve_a91490373a921ef1a85f3dd091b2f6fc0}{G2lib\+::\+Base\+Curve}}.
+
+\Hypertarget{class_g2lib_1_1_dubins_a815b75a9a2be3c65f5256fc3cca957d3}\index{G2lib::Dubins@{G2lib::Dubins}!get\_range\_angles\_begin@{get\_range\_angles\_begin}}
+\index{get\_range\_angles\_begin@{get\_range\_angles\_begin}!G2lib::Dubins@{G2lib::Dubins}}
+\doxysubsubsection{\texorpdfstring{get\_range\_angles\_begin()}{get\_range\_angles\_begin()}}
+{\footnotesize\ttfamily \label{class_g2lib_1_1_dubins_a815b75a9a2be3c65f5256fc3cca957d3} 
+\mbox{\hyperlink{namespace_g2lib_a17146eb1606475bedc9a2d27f3b29e34}{integer}} G2lib\+::\+Dubins\+::get\+\_\+range\+\_\+angles\+\_\+begin (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}}}]{x0}{, }\item[{\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}}}]{y0}{, }\item[{\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}}}]{x1}{, }\item[{\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}}}]{y1}{, }\item[{\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}}}]{theta1}{, }\item[{\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}}}]{k\+\_\+max}{, }\item[{\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}}}]{angles}{\mbox{[}$\,$\mbox{]}}\end{DoxyParamCaption}) const}
+
+Construct a \doxylink{class_g2lib_1_1_dubins}{Dubins} solution
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em x0} & initial position x-\/coordinate \\
+\hline
+\mbox{\texttt{ in}}  & {\em y0} & initial position y-\/coordinate \\
+\hline
+\mbox{\texttt{ in}}  & {\em x1} & final position x-\/coordinate \\
+\hline
+\mbox{\texttt{ in}}  & {\em y1} & final position y-\/coordinate \\
+\hline
+\mbox{\texttt{ in}}  & {\em theta1} & final angle \\
+\hline
+\mbox{\texttt{ in}}  & {\em k\+\_\+max} & max curvature \\
+\hline
+\mbox{\texttt{ out}}  & {\em angles} & range points \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+number of range points 
+\end{DoxyReturn}
+\Hypertarget{class_g2lib_1_1_dubins_a0f312fe635ef13985e109d3d5ed02e11}\index{G2lib::Dubins@{G2lib::Dubins}!get\_range\_angles\_end@{get\_range\_angles\_end}}
+\index{get\_range\_angles\_end@{get\_range\_angles\_end}!G2lib::Dubins@{G2lib::Dubins}}
+\doxysubsubsection{\texorpdfstring{get\_range\_angles\_end()}{get\_range\_angles\_end()}}
+{\footnotesize\ttfamily \label{class_g2lib_1_1_dubins_a0f312fe635ef13985e109d3d5ed02e11} 
+\mbox{\hyperlink{namespace_g2lib_a17146eb1606475bedc9a2d27f3b29e34}{integer}} G2lib\+::\+Dubins\+::get\+\_\+range\+\_\+angles\+\_\+end (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}}}]{x0}{, }\item[{\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}}}]{y0}{, }\item[{\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}}}]{theta0}{, }\item[{\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}}}]{x1}{, }\item[{\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}}}]{y1}{, }\item[{\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}}}]{k\+\_\+max}{, }\item[{\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}}}]{angles}{\mbox{[}$\,$\mbox{]}}\end{DoxyParamCaption}) const}
+
+Construct a \doxylink{class_g2lib_1_1_dubins}{Dubins} solution
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em x0} & initial position x-\/coordinate \\
+\hline
+\mbox{\texttt{ in}}  & {\em y0} & initial position y-\/coordinate \\
+\hline
+\mbox{\texttt{ in}}  & {\em theta0} & initial angle \\
+\hline
+\mbox{\texttt{ in}}  & {\em x1} & final position x-\/coordinate \\
+\hline
+\mbox{\texttt{ in}}  & {\em y1} & final position y-\/coordinate \\
+\hline
+\mbox{\texttt{ in}}  & {\em k\+\_\+max} & max curvature \\
+\hline
+\mbox{\texttt{ out}}  & {\em angles} & range points \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+number of range points 
+\end{DoxyReturn}
+\Hypertarget{class_g2lib_1_1_dubins_aaa5367c66888e9500905a585ae0efeda}\index{G2lib::Dubins@{G2lib::Dubins}!get\_solution@{get\_solution}}
+\index{get\_solution@{get\_solution}!G2lib::Dubins@{G2lib::Dubins}}
+\doxysubsubsection{\texorpdfstring{get\_solution()}{get\_solution()}}
+{\footnotesize\ttfamily \label{class_g2lib_1_1_dubins_aaa5367c66888e9500905a585ae0efeda} 
+void G2lib\+::\+Dubins\+::get\+\_\+solution (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_g2lib_1_1_clothoid_list}{Clothoid\+List}} \&}]{CL}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{class_g2lib_1_1_dubins_a15704a946c935af8bd4c585b47e6944a}\index{G2lib::Dubins@{G2lib::Dubins}!icode@{icode}}
+\index{icode@{icode}!G2lib::Dubins@{G2lib::Dubins}}
+\doxysubsubsection{\texorpdfstring{icode()}{icode()}}
+{\footnotesize\ttfamily \label{class_g2lib_1_1_dubins_a15704a946c935af8bd4c585b47e6944a} 
+\mbox{\hyperlink{namespace_g2lib_a17146eb1606475bedc9a2d27f3b29e34}{integer}} G2lib\+::\+Dubins\+::icode (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{class_g2lib_1_1_dubins_a4eef46912b7233014d8c546f14b50476}\index{G2lib::Dubins@{G2lib::Dubins}!info@{info}}
+\index{info@{info}!G2lib::Dubins@{G2lib::Dubins}}
+\doxysubsubsection{\texorpdfstring{info()}{info()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{class_g2lib_1_1_dubins_a4eef46912b7233014d8c546f14b50476} 
+string G2lib\+::\+Dubins\+::info (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const}
+
+\Hypertarget{class_g2lib_1_1_dubins_a0a0dc38d40d654db4700172d85fbc081}\index{G2lib::Dubins@{G2lib::Dubins}!info@{info}}
+\index{info@{info}!G2lib::Dubins@{G2lib::Dubins}}
+\doxysubsubsection{\texorpdfstring{info()}{info()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{class_g2lib_1_1_dubins_a0a0dc38d40d654db4700172d85fbc081} 
+void G2lib\+::\+Dubins\+::info (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{namespace_g2lib_a8fcbace87db5a5e71391e0040878f2c3}{ostream\+\_\+type}} \&}]{stream}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+Pretty print of the curve data. 
+
+Implements \mbox{\hyperlink{class_g2lib_1_1_base_curve_aabe0f5a09fac538545f829b6905433ba}{G2lib\+::\+Base\+Curve}}.
+
+\Hypertarget{class_g2lib_1_1_dubins_a7b955973ac260736f4b3600dee78d312}\index{G2lib::Dubins@{G2lib::Dubins}!intersect@{intersect}}
+\index{intersect@{intersect}!G2lib::Dubins@{G2lib::Dubins}}
+\doxysubsubsection{\texorpdfstring{intersect()}{intersect()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{class_g2lib_1_1_dubins_a7b955973ac260736f4b3600dee78d312} 
+void G2lib\+::\+Dubins\+::intersect (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_g2lib_1_1_base_curve}{Base\+Curve}} const \texorpdfstring{$\ast$}{*}}]{pC}{, }\item[{\mbox{\hyperlink{namespace_g2lib_a511fce3368282f6ef2984bf1b7480375}{Intersect\+List}} \&}]{ilist}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+Intersect the curve with another curve.
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em pC} & second curve intersect \\
+\hline
+\mbox{\texttt{ out}}  & {\em ilist} & list of the intersection (as parameter on the curves) \\
+\hline
+\end{DoxyParams}
+
+
+Implements \mbox{\hyperlink{class_g2lib_1_1_base_curve_ab05e6075a268c8763dd1f08f39c4ac48}{G2lib\+::\+Base\+Curve}}.
+
+\Hypertarget{class_g2lib_1_1_dubins_a79e46e36c663de78aabac6998699dd64}\index{G2lib::Dubins@{G2lib::Dubins}!intersect@{intersect}}
+\index{intersect@{intersect}!G2lib::Dubins@{G2lib::Dubins}}
+\doxysubsubsection{\texorpdfstring{intersect()}{intersect()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{class_g2lib_1_1_dubins_a79e46e36c663de78aabac6998699dd64} 
+void G2lib\+::\+Dubins\+::intersect (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_g2lib_1_1_dubins}{Dubins}} const \&}]{B}{, }\item[{\mbox{\hyperlink{namespace_g2lib_a511fce3368282f6ef2984bf1b7480375}{Intersect\+List}} \&}]{ilist}{}\end{DoxyParamCaption}) const}
+
+Intersect a biarc with another biarc.
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em B} & second biarc \\
+\hline
+\mbox{\texttt{ out}}  & {\em ilist} & list of the intersection (as parameter on the curves) \\
+\hline
+\end{DoxyParams}
+\Hypertarget{class_g2lib_1_1_dubins_a5a0239eb85095f63544a29391c65d485}\index{G2lib::Dubins@{G2lib::Dubins}!intersect\_ISO@{intersect\_ISO}}
+\index{intersect\_ISO@{intersect\_ISO}!G2lib::Dubins@{G2lib::Dubins}}
+\doxysubsubsection{\texorpdfstring{intersect\_ISO()}{intersect\_ISO()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{class_g2lib_1_1_dubins_a5a0239eb85095f63544a29391c65d485} 
+void G2lib\+::\+Dubins\+::intersect\+\_\+\+ISO (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}}}]{offs}{, }\item[{\mbox{\hyperlink{class_g2lib_1_1_base_curve}{Base\+Curve}} const \texorpdfstring{$\ast$}{*}}]{pC}{, }\item[{\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}}}]{offs\+\_\+C}{, }\item[{\mbox{\hyperlink{namespace_g2lib_a511fce3368282f6ef2984bf1b7480375}{Intersect\+List}} \&}]{ilist}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+Intersect the curve with another curve with offset (ISO)
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em offs} & offset first curve \\
+\hline
+\mbox{\texttt{ in}}  & {\em pC} & second curve intersect \\
+\hline
+\mbox{\texttt{ in}}  & {\em offs\+\_\+C} & offset second curve \\
+\hline
+\mbox{\texttt{ out}}  & {\em ilist} & list of the intersection (as parameter on the curves) \\
+\hline
+\end{DoxyParams}
+
+
+Implements \mbox{\hyperlink{class_g2lib_1_1_base_curve_a59447653f27a2ce05678f3c314acf9b3}{G2lib\+::\+Base\+Curve}}.
+
+\Hypertarget{class_g2lib_1_1_dubins_a18f7141c8aa8cd47c5591e2faf9ef6eb}\index{G2lib::Dubins@{G2lib::Dubins}!intersect\_ISO@{intersect\_ISO}}
+\index{intersect\_ISO@{intersect\_ISO}!G2lib::Dubins@{G2lib::Dubins}}
+\doxysubsubsection{\texorpdfstring{intersect\_ISO()}{intersect\_ISO()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{class_g2lib_1_1_dubins_a18f7141c8aa8cd47c5591e2faf9ef6eb} 
+void G2lib\+::\+Dubins\+::intersect\+\_\+\+ISO (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}}}]{offs}{, }\item[{\mbox{\hyperlink{class_g2lib_1_1_dubins}{Dubins}} const \&}]{B}{, }\item[{\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}}}]{offs\+\_\+B}{, }\item[{\mbox{\hyperlink{namespace_g2lib_a511fce3368282f6ef2984bf1b7480375}{Intersect\+List}} \&}]{ilist}{}\end{DoxyParamCaption}) const}
+
+Intersect a biarc with another biarc with offset (ISO).
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em offs} & offset of first biarc \\
+\hline
+\mbox{\texttt{ in}}  & {\em B} & second \doxylink{class_g2lib_1_1_dubins}{Dubins} \\
+\hline
+\mbox{\texttt{ in}}  & {\em offs\+\_\+B} & offset of second biarc \\
+\hline
+\mbox{\texttt{ out}}  & {\em ilist} & list of the intersection (as parameter on the curves) \\
+\hline
+\end{DoxyParams}
+\Hypertarget{class_g2lib_1_1_dubins_afc49146f8bbc9f2a5a84e1db01bdb6f0}\index{G2lib::Dubins@{G2lib::Dubins}!kappa0@{kappa0}}
+\index{kappa0@{kappa0}!G2lib::Dubins@{G2lib::Dubins}}
+\doxysubsubsection{\texorpdfstring{kappa0()}{kappa0()}}
+{\footnotesize\ttfamily \label{class_g2lib_1_1_dubins_afc49146f8bbc9f2a5a84e1db01bdb6f0} 
+\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} G2lib\+::\+Dubins\+::kappa0 (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{class_g2lib_1_1_dubins_a5b440dd84d51546acd1c05ad311ec8e7}\index{G2lib::Dubins@{G2lib::Dubins}!kappa1@{kappa1}}
+\index{kappa1@{kappa1}!G2lib::Dubins@{G2lib::Dubins}}
+\doxysubsubsection{\texorpdfstring{kappa1()}{kappa1()}}
+{\footnotesize\ttfamily \label{class_g2lib_1_1_dubins_a5b440dd84d51546acd1c05ad311ec8e7} 
+\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} G2lib\+::\+Dubins\+::kappa1 (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{class_g2lib_1_1_dubins_aca2248f15a1a8d2988dff89b2e45c9ba}\index{G2lib::Dubins@{G2lib::Dubins}!kappa2@{kappa2}}
+\index{kappa2@{kappa2}!G2lib::Dubins@{G2lib::Dubins}}
+\doxysubsubsection{\texorpdfstring{kappa2()}{kappa2()}}
+{\footnotesize\ttfamily \label{class_g2lib_1_1_dubins_aca2248f15a1a8d2988dff89b2e45c9ba} 
+\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} G2lib\+::\+Dubins\+::kappa2 (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{class_g2lib_1_1_dubins_a19624d2ea5f9e537d5b3e79187ce50c3}\index{G2lib::Dubins@{G2lib::Dubins}!kappa\_begin@{kappa\_begin}}
+\index{kappa\_begin@{kappa\_begin}!G2lib::Dubins@{G2lib::Dubins}}
+\doxysubsubsection{\texorpdfstring{kappa\_begin()}{kappa\_begin()}}
+{\footnotesize\ttfamily \label{class_g2lib_1_1_dubins_a19624d2ea5f9e537d5b3e79187ce50c3} 
+\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} G2lib\+::\+Dubins\+::kappa\+\_\+begin (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+Initial curvature. 
+
+Reimplemented from \mbox{\hyperlink{class_g2lib_1_1_base_curve_abf36d50dce16aec6b9607057eb31f78e}{G2lib\+::\+Base\+Curve}}.
+
+\Hypertarget{class_g2lib_1_1_dubins_a9fa9c7d873f2834ef650158a26586958}\index{G2lib::Dubins@{G2lib::Dubins}!kappa\_end@{kappa\_end}}
+\index{kappa\_end@{kappa\_end}!G2lib::Dubins@{G2lib::Dubins}}
+\doxysubsubsection{\texorpdfstring{kappa\_end()}{kappa\_end()}}
+{\footnotesize\ttfamily \label{class_g2lib_1_1_dubins_a9fa9c7d873f2834ef650158a26586958} 
+\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} G2lib\+::\+Dubins\+::kappa\+\_\+end (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+Final curvature. 
+
+Reimplemented from \mbox{\hyperlink{class_g2lib_1_1_base_curve_aad176b31983e486b9643007bcfc2979d}{G2lib\+::\+Base\+Curve}}.
+
+\Hypertarget{class_g2lib_1_1_dubins_a8f9a892fc53ad6838fa12cccdef59678}\index{G2lib::Dubins@{G2lib::Dubins}!length@{length}}
+\index{length@{length}!G2lib::Dubins@{G2lib::Dubins}}
+\doxysubsubsection{\texorpdfstring{length()}{length()}}
+{\footnotesize\ttfamily \label{class_g2lib_1_1_dubins_a8f9a892fc53ad6838fa12cccdef59678} 
+\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} G2lib\+::\+Dubins\+::length (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+The length of the curve 
+
+Implements \mbox{\hyperlink{class_g2lib_1_1_base_curve_aa0271571d539147148e94d0a28054f47}{G2lib\+::\+Base\+Curve}}.
+
+\Hypertarget{class_g2lib_1_1_dubins_a47bcab58bedf2bd11a9801c7206a73b1}\index{G2lib::Dubins@{G2lib::Dubins}!length0@{length0}}
+\index{length0@{length0}!G2lib::Dubins@{G2lib::Dubins}}
+\doxysubsubsection{\texorpdfstring{length0()}{length0()}}
+{\footnotesize\ttfamily \label{class_g2lib_1_1_dubins_a47bcab58bedf2bd11a9801c7206a73b1} 
+\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} G2lib\+::\+Dubins\+::length0 (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{class_g2lib_1_1_dubins_abfd9dacc7b291b39c579fcffaf200a3d}\index{G2lib::Dubins@{G2lib::Dubins}!length1@{length1}}
+\index{length1@{length1}!G2lib::Dubins@{G2lib::Dubins}}
+\doxysubsubsection{\texorpdfstring{length1()}{length1()}}
+{\footnotesize\ttfamily \label{class_g2lib_1_1_dubins_abfd9dacc7b291b39c579fcffaf200a3d} 
+\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} G2lib\+::\+Dubins\+::length1 (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{class_g2lib_1_1_dubins_a5ec04c4676057f4434b0227bd0ad22ac}\index{G2lib::Dubins@{G2lib::Dubins}!length2@{length2}}
+\index{length2@{length2}!G2lib::Dubins@{G2lib::Dubins}}
+\doxysubsubsection{\texorpdfstring{length2()}{length2()}}
+{\footnotesize\ttfamily \label{class_g2lib_1_1_dubins_a5ec04c4676057f4434b0227bd0ad22ac} 
+\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} G2lib\+::\+Dubins\+::length2 (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{class_g2lib_1_1_dubins_a473a073f71e57b2f9b84b724a97afc87}\index{G2lib::Dubins@{G2lib::Dubins}!length\_Dalpha@{length\_Dalpha}}
+\index{length\_Dalpha@{length\_Dalpha}!G2lib::Dubins@{G2lib::Dubins}}
+\doxysubsubsection{\texorpdfstring{length\_Dalpha()}{length\_Dalpha()}}
+{\footnotesize\ttfamily \label{class_g2lib_1_1_dubins_a473a073f71e57b2f9b84b724a97afc87} 
+\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} G2lib\+::\+Dubins\+::length\+\_\+\+Dalpha (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{class_g2lib_1_1_dubins_a7a189add336d84eea25c473d486c7d33}\index{G2lib::Dubins@{G2lib::Dubins}!length\_Dbeta@{length\_Dbeta}}
+\index{length\_Dbeta@{length\_Dbeta}!G2lib::Dubins@{G2lib::Dubins}}
+\doxysubsubsection{\texorpdfstring{length\_Dbeta()}{length\_Dbeta()}}
+{\footnotesize\ttfamily \label{class_g2lib_1_1_dubins_a7a189add336d84eea25c473d486c7d33} 
+\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} G2lib\+::\+Dubins\+::length\+\_\+\+Dbeta (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{class_g2lib_1_1_dubins_ab3765782f9edbd928f267f63c2508fe5}\index{G2lib::Dubins@{G2lib::Dubins}!length\_grad@{length\_grad}}
+\index{length\_grad@{length\_grad}!G2lib::Dubins@{G2lib::Dubins}}
+\doxysubsubsection{\texorpdfstring{length\_grad()}{length\_grad()}}
+{\footnotesize\ttfamily \label{class_g2lib_1_1_dubins_ab3765782f9edbd928f267f63c2508fe5} 
+void G2lib\+::\+Dubins\+::length\+\_\+grad (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}}}]{grad}{\mbox{[}2\mbox{]}}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{class_g2lib_1_1_dubins_a5e37d96c9b66d616ce078d9984d4af7e}\index{G2lib::Dubins@{G2lib::Dubins}!length\_ISO@{length\_ISO}}
+\index{length\_ISO@{length\_ISO}!G2lib::Dubins@{G2lib::Dubins}}
+\doxysubsubsection{\texorpdfstring{length\_ISO()}{length\_ISO()}}
+{\footnotesize\ttfamily \label{class_g2lib_1_1_dubins_a5e37d96c9b66d616ce078d9984d4af7e} 
+\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} G2lib\+::\+Dubins\+::length\+\_\+\+ISO (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}}}]{offs}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+The length of the curve with offset (ISO) 
+
+Implements \mbox{\hyperlink{class_g2lib_1_1_base_curve_adf6ca6cb32570c070ea25a8be9a3ff4f}{G2lib\+::\+Base\+Curve}}.
+
+\Hypertarget{class_g2lib_1_1_dubins_ab4ffd416a8aa7c3cc37bf891b6b0a80b}\index{G2lib::Dubins@{G2lib::Dubins}!nx\_begin\_ISO@{nx\_begin\_ISO}}
+\index{nx\_begin\_ISO@{nx\_begin\_ISO}!G2lib::Dubins@{G2lib::Dubins}}
+\doxysubsubsection{\texorpdfstring{nx\_begin\_ISO()}{nx\_begin\_ISO()}}
+{\footnotesize\ttfamily \label{class_g2lib_1_1_dubins_ab4ffd416a8aa7c3cc37bf891b6b0a80b} 
+\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} G2lib\+::\+Dubins\+::nx\+\_\+begin\+\_\+\+ISO (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+Intial normal x-\/coordinate (ISO). 
+
+Reimplemented from \mbox{\hyperlink{class_g2lib_1_1_base_curve_a56a87e1a32c603a35302dcf3b9d44e48}{G2lib\+::\+Base\+Curve}}.
+
+\Hypertarget{class_g2lib_1_1_dubins_ae71069ba84456a1d23802eed627a8cd1}\index{G2lib::Dubins@{G2lib::Dubins}!nx\_end\_ISO@{nx\_end\_ISO}}
+\index{nx\_end\_ISO@{nx\_end\_ISO}!G2lib::Dubins@{G2lib::Dubins}}
+\doxysubsubsection{\texorpdfstring{nx\_end\_ISO()}{nx\_end\_ISO()}}
+{\footnotesize\ttfamily \label{class_g2lib_1_1_dubins_ae71069ba84456a1d23802eed627a8cd1} 
+\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} G2lib\+::\+Dubins\+::nx\+\_\+end\+\_\+\+ISO (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+Final normal x-\/coordinate (ISO). 
+
+Reimplemented from \mbox{\hyperlink{class_g2lib_1_1_base_curve_a917bf627318c9a73310c7146703810a9}{G2lib\+::\+Base\+Curve}}.
+
+\Hypertarget{class_g2lib_1_1_dubins_addb19aeddae1f43079430a8a30716636}\index{G2lib::Dubins@{G2lib::Dubins}!ny\_begin\_ISO@{ny\_begin\_ISO}}
+\index{ny\_begin\_ISO@{ny\_begin\_ISO}!G2lib::Dubins@{G2lib::Dubins}}
+\doxysubsubsection{\texorpdfstring{ny\_begin\_ISO()}{ny\_begin\_ISO()}}
+{\footnotesize\ttfamily \label{class_g2lib_1_1_dubins_addb19aeddae1f43079430a8a30716636} 
+\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} G2lib\+::\+Dubins\+::ny\+\_\+begin\+\_\+\+ISO (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+Intial normal y-\/coordinate (ISO). 
+
+Reimplemented from \mbox{\hyperlink{class_g2lib_1_1_base_curve_a75a85eac0865476d1a4bed8bd137d502}{G2lib\+::\+Base\+Curve}}.
+
+\Hypertarget{class_g2lib_1_1_dubins_af96e35df4b6519a48866ddb5d9b7b294}\index{G2lib::Dubins@{G2lib::Dubins}!ny\_end\_ISO@{ny\_end\_ISO}}
+\index{ny\_end\_ISO@{ny\_end\_ISO}!G2lib::Dubins@{G2lib::Dubins}}
+\doxysubsubsection{\texorpdfstring{ny\_end\_ISO()}{ny\_end\_ISO()}}
+{\footnotesize\ttfamily \label{class_g2lib_1_1_dubins_af96e35df4b6519a48866ddb5d9b7b294} 
+\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} G2lib\+::\+Dubins\+::ny\+\_\+end\+\_\+\+ISO (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+Final normal y-\/coordinate (ISO). 
+
+Reimplemented from \mbox{\hyperlink{class_g2lib_1_1_base_curve_ab0dfe4bb2162b9f11eb801eb98782331}{G2lib\+::\+Base\+Curve}}.
+
+\Hypertarget{class_g2lib_1_1_dubins_af506634425bbea51d56acee1d08f0fa0}\index{G2lib::Dubins@{G2lib::Dubins}!reverse@{reverse}}
+\index{reverse@{reverse}!G2lib::Dubins@{G2lib::Dubins}}
+\doxysubsubsection{\texorpdfstring{reverse()}{reverse()}}
+{\footnotesize\ttfamily \label{class_g2lib_1_1_dubins_af506634425bbea51d56acee1d08f0fa0} 
+void G2lib\+::\+Dubins\+::reverse (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+Reverse curve parameterization. 
+
+Implements \mbox{\hyperlink{class_g2lib_1_1_base_curve_a802296c0172c888acfc3bb3eb2e125c7}{G2lib\+::\+Base\+Curve}}.
+
+\Hypertarget{class_g2lib_1_1_dubins_a17a211549b689590ae708baa40893aa5}\index{G2lib::Dubins@{G2lib::Dubins}!rotate@{rotate}}
+\index{rotate@{rotate}!G2lib::Dubins@{G2lib::Dubins}}
+\doxysubsubsection{\texorpdfstring{rotate()}{rotate()}}
+{\footnotesize\ttfamily \label{class_g2lib_1_1_dubins_a17a211549b689590ae708baa40893aa5} 
+void G2lib\+::\+Dubins\+::rotate (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}}}]{angle}{, }\item[{\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}}}]{cx}{, }\item[{\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}}}]{cy}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+Rotate curve by angle $ theta $ centered at point $ (c_x,c_y)$.
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em angle} & angle $ theta $ \\
+\hline
+\mbox{\texttt{ in}}  & {\em cx} & $ c_x$ \\
+\hline
+\mbox{\texttt{ in}}  & {\em cy} & $ c_y$ \\
+\hline
+\end{DoxyParams}
+
+
+Implements \mbox{\hyperlink{class_g2lib_1_1_base_curve_ae561f940bc65ef73a8cbea2b3458c04f}{G2lib\+::\+Base\+Curve}}.
+
+\Hypertarget{class_g2lib_1_1_dubins_a130b60e5a4deb6931a9050d6872fce2b}\index{G2lib::Dubins@{G2lib::Dubins}!scale@{scale}}
+\index{scale@{scale}!G2lib::Dubins@{G2lib::Dubins}}
+\doxysubsubsection{\texorpdfstring{scale()}{scale()}}
+{\footnotesize\ttfamily \label{class_g2lib_1_1_dubins_a130b60e5a4deb6931a9050d6872fce2b} 
+void G2lib\+::\+Dubins\+::scale (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}}}]{sc}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+Scale curve by factor {\ttfamily sc}. 
+
+Implements \mbox{\hyperlink{class_g2lib_1_1_base_curve_a717ce9c6e08774b86a4b0f4a44d8281d}{G2lib\+::\+Base\+Curve}}.
+
+\Hypertarget{class_g2lib_1_1_dubins_ab54afa5c5061e63193fbb74f0cd97a11}\index{G2lib::Dubins@{G2lib::Dubins}!setup@{setup}}
+\index{setup@{setup}!G2lib::Dubins@{G2lib::Dubins}}
+\doxysubsubsection{\texorpdfstring{setup()}{setup()}}
+{\footnotesize\ttfamily \label{class_g2lib_1_1_dubins_ab54afa5c5061e63193fbb74f0cd97a11} 
+void G2lib\+::\+Dubins\+::setup (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{namespace_g2lib_a2bee1fb11cb401bacb26ad157b301feb}{Generic\+Container}} const \&}]{gc}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{class_g2lib_1_1_base_curve_adadaf2046770441b539272693fb40ed2}{G2lib\+::\+Base\+Curve}}.
+
+\Hypertarget{class_g2lib_1_1_dubins_a1e68558b119e7c449ff59a12bbf73607}\index{G2lib::Dubins@{G2lib::Dubins}!solution\_type@{solution\_type}}
+\index{solution\_type@{solution\_type}!G2lib::Dubins@{G2lib::Dubins}}
+\doxysubsubsection{\texorpdfstring{solution\_type()}{solution\_type()}}
+{\footnotesize\ttfamily \label{class_g2lib_1_1_dubins_a1e68558b119e7c449ff59a12bbf73607} 
+\mbox{\hyperlink{namespace_g2lib_aa8734fcd1e1418071dbcf2e187947ec9}{Dubins\+Type}} G2lib\+::\+Dubins\+::solution\+\_\+type (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{class_g2lib_1_1_dubins_a93a5ca40193cff07a3aaf4b9965b51ea}\index{G2lib::Dubins@{G2lib::Dubins}!solution\_type\_string@{solution\_type\_string}}
+\index{solution\_type\_string@{solution\_type\_string}!G2lib::Dubins@{G2lib::Dubins}}
+\doxysubsubsection{\texorpdfstring{solution\_type\_string()}{solution\_type\_string()}}
+{\footnotesize\ttfamily \label{class_g2lib_1_1_dubins_a93a5ca40193cff07a3aaf4b9965b51ea} 
+string G2lib\+::\+Dubins\+::solution\+\_\+type\+\_\+string (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const}
+
+\Hypertarget{class_g2lib_1_1_dubins_a5d137944fa34482cfe1a7cb9f6dd0972}\index{G2lib::Dubins@{G2lib::Dubins}!solution\_type\_string\_short@{solution\_type\_string\_short}}
+\index{solution\_type\_string\_short@{solution\_type\_string\_short}!G2lib::Dubins@{G2lib::Dubins}}
+\doxysubsubsection{\texorpdfstring{solution\_type\_string\_short()}{solution\_type\_string\_short()}}
+{\footnotesize\ttfamily \label{class_g2lib_1_1_dubins_a5d137944fa34482cfe1a7cb9f6dd0972} 
+string G2lib\+::\+Dubins\+::solution\+\_\+type\+\_\+string\+\_\+short (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const}
+
+\Hypertarget{class_g2lib_1_1_dubins_a21e31f47b08c9787265baf31b24d1abf}\index{G2lib::Dubins@{G2lib::Dubins}!theta@{theta}}
+\index{theta@{theta}!G2lib::Dubins@{G2lib::Dubins}}
+\doxysubsubsection{\texorpdfstring{theta()}{theta()}}
+{\footnotesize\ttfamily \label{class_g2lib_1_1_dubins_a21e31f47b08c9787265baf31b24d1abf} 
+\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} G2lib\+::\+Dubins\+::theta (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}}}]{s}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+Angle at curvilinear coodinate {\ttfamily s}. 
+
+Implements \mbox{\hyperlink{class_g2lib_1_1_base_curve_abd4dcae926b50de3e348440bd92bf923}{G2lib\+::\+Base\+Curve}}.
+
+\Hypertarget{class_g2lib_1_1_dubins_ac69f8cc1b52135aa490be0427fd4f00c}\index{G2lib::Dubins@{G2lib::Dubins}!theta0@{theta0}}
+\index{theta0@{theta0}!G2lib::Dubins@{G2lib::Dubins}}
+\doxysubsubsection{\texorpdfstring{theta0()}{theta0()}}
+{\footnotesize\ttfamily \label{class_g2lib_1_1_dubins_ac69f8cc1b52135aa490be0427fd4f00c} 
+\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} G2lib\+::\+Dubins\+::theta0 (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}}}]{s}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{class_g2lib_1_1_dubins_ab23242854fd9807e144747ca9aff3a52}\index{G2lib::Dubins@{G2lib::Dubins}!theta0\_begin@{theta0\_begin}}
+\index{theta0\_begin@{theta0\_begin}!G2lib::Dubins@{G2lib::Dubins}}
+\doxysubsubsection{\texorpdfstring{theta0\_begin()}{theta0\_begin()}}
+{\footnotesize\ttfamily \label{class_g2lib_1_1_dubins_ab23242854fd9807e144747ca9aff3a52} 
+\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} G2lib\+::\+Dubins\+::theta0\+\_\+begin (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{class_g2lib_1_1_dubins_a59d8991cf4dd52c83c234898acac34c1}\index{G2lib::Dubins@{G2lib::Dubins}!theta0\_end@{theta0\_end}}
+\index{theta0\_end@{theta0\_end}!G2lib::Dubins@{G2lib::Dubins}}
+\doxysubsubsection{\texorpdfstring{theta0\_end()}{theta0\_end()}}
+{\footnotesize\ttfamily \label{class_g2lib_1_1_dubins_a59d8991cf4dd52c83c234898acac34c1} 
+\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} G2lib\+::\+Dubins\+::theta0\+\_\+end (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{class_g2lib_1_1_dubins_a300bc44930168a2a99ba14bd1c7d89c0}\index{G2lib::Dubins@{G2lib::Dubins}!theta1@{theta1}}
+\index{theta1@{theta1}!G2lib::Dubins@{G2lib::Dubins}}
+\doxysubsubsection{\texorpdfstring{theta1()}{theta1()}}
+{\footnotesize\ttfamily \label{class_g2lib_1_1_dubins_a300bc44930168a2a99ba14bd1c7d89c0} 
+\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} G2lib\+::\+Dubins\+::theta1 (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}}}]{s}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{class_g2lib_1_1_dubins_af5df2c60ee92deba5cb896ed70b69108}\index{G2lib::Dubins@{G2lib::Dubins}!theta1\_begin@{theta1\_begin}}
+\index{theta1\_begin@{theta1\_begin}!G2lib::Dubins@{G2lib::Dubins}}
+\doxysubsubsection{\texorpdfstring{theta1\_begin()}{theta1\_begin()}}
+{\footnotesize\ttfamily \label{class_g2lib_1_1_dubins_af5df2c60ee92deba5cb896ed70b69108} 
+\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} G2lib\+::\+Dubins\+::theta1\+\_\+begin (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{class_g2lib_1_1_dubins_a5418edd16b965abd32b7eb14b62ed238}\index{G2lib::Dubins@{G2lib::Dubins}!theta1\_end@{theta1\_end}}
+\index{theta1\_end@{theta1\_end}!G2lib::Dubins@{G2lib::Dubins}}
+\doxysubsubsection{\texorpdfstring{theta1\_end()}{theta1\_end()}}
+{\footnotesize\ttfamily \label{class_g2lib_1_1_dubins_a5418edd16b965abd32b7eb14b62ed238} 
+\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} G2lib\+::\+Dubins\+::theta1\+\_\+end (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{class_g2lib_1_1_dubins_a83ef2f42cec6c8225039cc9bd4d18cbf}\index{G2lib::Dubins@{G2lib::Dubins}!theta2@{theta2}}
+\index{theta2@{theta2}!G2lib::Dubins@{G2lib::Dubins}}
+\doxysubsubsection{\texorpdfstring{theta2()}{theta2()}}
+{\footnotesize\ttfamily \label{class_g2lib_1_1_dubins_a83ef2f42cec6c8225039cc9bd4d18cbf} 
+\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} G2lib\+::\+Dubins\+::theta2 (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}}}]{s}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{class_g2lib_1_1_dubins_ac374d178f9f02f5d7d0787622d859f06}\index{G2lib::Dubins@{G2lib::Dubins}!theta2\_begin@{theta2\_begin}}
+\index{theta2\_begin@{theta2\_begin}!G2lib::Dubins@{G2lib::Dubins}}
+\doxysubsubsection{\texorpdfstring{theta2\_begin()}{theta2\_begin()}}
+{\footnotesize\ttfamily \label{class_g2lib_1_1_dubins_ac374d178f9f02f5d7d0787622d859f06} 
+\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} G2lib\+::\+Dubins\+::theta2\+\_\+begin (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{class_g2lib_1_1_dubins_aa90b0c32f87f02583374206610e83316}\index{G2lib::Dubins@{G2lib::Dubins}!theta2\_end@{theta2\_end}}
+\index{theta2\_end@{theta2\_end}!G2lib::Dubins@{G2lib::Dubins}}
+\doxysubsubsection{\texorpdfstring{theta2\_end()}{theta2\_end()}}
+{\footnotesize\ttfamily \label{class_g2lib_1_1_dubins_aa90b0c32f87f02583374206610e83316} 
+\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} G2lib\+::\+Dubins\+::theta2\+\_\+end (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{class_g2lib_1_1_dubins_a04566c2796ae90558b089b8611256cb3}\index{G2lib::Dubins@{G2lib::Dubins}!theta\_begin@{theta\_begin}}
+\index{theta\_begin@{theta\_begin}!G2lib::Dubins@{G2lib::Dubins}}
+\doxysubsubsection{\texorpdfstring{theta\_begin()}{theta\_begin()}}
+{\footnotesize\ttfamily \label{class_g2lib_1_1_dubins_a04566c2796ae90558b089b8611256cb3} 
+\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} G2lib\+::\+Dubins\+::theta\+\_\+begin (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+Initial angle of the curve. 
+
+Reimplemented from \mbox{\hyperlink{class_g2lib_1_1_base_curve_abf3e1283ab3634d0290f634c2a236fbe}{G2lib\+::\+Base\+Curve}}.
+
+\Hypertarget{class_g2lib_1_1_dubins_ac0510ca11f5117d759e348575449e839}\index{G2lib::Dubins@{G2lib::Dubins}!theta\_D@{theta\_D}}
+\index{theta\_D@{theta\_D}!G2lib::Dubins@{G2lib::Dubins}}
+\doxysubsubsection{\texorpdfstring{theta\_D()}{theta\_D()}}
+{\footnotesize\ttfamily \label{class_g2lib_1_1_dubins_ac0510ca11f5117d759e348575449e839} 
+\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} G2lib\+::\+Dubins\+::theta\+\_\+D (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}}}]{s}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+Angle derivative (curvature) at curvilinear coodinate {\ttfamily s}. 
+
+Implements \mbox{\hyperlink{class_g2lib_1_1_base_curve_a01767567a3efcb2728bac21e30b47893}{G2lib\+::\+Base\+Curve}}.
+
+\Hypertarget{class_g2lib_1_1_dubins_aa02b230b486d2591bd5ab1c19046e305}\index{G2lib::Dubins@{G2lib::Dubins}!theta\_DD@{theta\_DD}}
+\index{theta\_DD@{theta\_DD}!G2lib::Dubins@{G2lib::Dubins}}
+\doxysubsubsection{\texorpdfstring{theta\_DD()}{theta\_DD()}}
+{\footnotesize\ttfamily \label{class_g2lib_1_1_dubins_aa02b230b486d2591bd5ab1c19046e305} 
+\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} G2lib\+::\+Dubins\+::theta\+\_\+\+DD (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}}}]{s}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+Angle second derivative (devitive of curvature) at curvilinear coodinate {\ttfamily s}. 
+
+Implements \mbox{\hyperlink{class_g2lib_1_1_base_curve_a64abf5828c7887040b2d5ca9155b54fe}{G2lib\+::\+Base\+Curve}}.
+
+\Hypertarget{class_g2lib_1_1_dubins_aa43fbb7b69e7f59befda6ece3b244183}\index{G2lib::Dubins@{G2lib::Dubins}!theta\_DDD@{theta\_DDD}}
+\index{theta\_DDD@{theta\_DDD}!G2lib::Dubins@{G2lib::Dubins}}
+\doxysubsubsection{\texorpdfstring{theta\_DDD()}{theta\_DDD()}}
+{\footnotesize\ttfamily \label{class_g2lib_1_1_dubins_aa43fbb7b69e7f59befda6ece3b244183} 
+\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} G2lib\+::\+Dubins\+::theta\+\_\+\+DDD (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}}}]{s}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+Angle third derivative at curvilinear coodinate {\ttfamily s}. 
+
+Implements \mbox{\hyperlink{class_g2lib_1_1_base_curve_a2fcc4d5b32555b47d76faf7dee1bce6a}{G2lib\+::\+Base\+Curve}}.
+
+\Hypertarget{class_g2lib_1_1_dubins_adc295c85f0bbbe94318532b173207748}\index{G2lib::Dubins@{G2lib::Dubins}!theta\_end@{theta\_end}}
+\index{theta\_end@{theta\_end}!G2lib::Dubins@{G2lib::Dubins}}
+\doxysubsubsection{\texorpdfstring{theta\_end()}{theta\_end()}}
+{\footnotesize\ttfamily \label{class_g2lib_1_1_dubins_adc295c85f0bbbe94318532b173207748} 
+\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} G2lib\+::\+Dubins\+::theta\+\_\+end (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+Final angle of the curve. 
+
+Reimplemented from \mbox{\hyperlink{class_g2lib_1_1_base_curve_a0bbb3715af400d84669cb54fefb97225}{G2lib\+::\+Base\+Curve}}.
+
+\Hypertarget{class_g2lib_1_1_dubins_a879bbe756c6818baad084d21a2936893}\index{G2lib::Dubins@{G2lib::Dubins}!translate@{translate}}
+\index{translate@{translate}!G2lib::Dubins@{G2lib::Dubins}}
+\doxysubsubsection{\texorpdfstring{translate()}{translate()}}
+{\footnotesize\ttfamily \label{class_g2lib_1_1_dubins_a879bbe756c6818baad084d21a2936893} 
+void G2lib\+::\+Dubins\+::translate (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}}}]{tx}{, }\item[{\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}}}]{ty}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+translate curve by $ (t_x,t_y) $ 
+
+
+
+Implements \mbox{\hyperlink{class_g2lib_1_1_base_curve_a71ee5d31fb60206f42227bf0ea59f350}{G2lib\+::\+Base\+Curve}}.
+
+\Hypertarget{class_g2lib_1_1_dubins_a239c1b6a5c65a5d98b0624812ff5c867}\index{G2lib::Dubins@{G2lib::Dubins}!trim@{trim}}
+\index{trim@{trim}!G2lib::Dubins@{G2lib::Dubins}}
+\doxysubsubsection{\texorpdfstring{trim()}{trim()}}
+{\footnotesize\ttfamily \label{class_g2lib_1_1_dubins_a239c1b6a5c65a5d98b0624812ff5c867} 
+void G2lib\+::\+Dubins\+::trim (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}}}]{s\+\_\+begin}{, }\item[{\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}}}]{s\+\_\+end}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+Cut curve at parametrix coordinate {\ttfamily s\+\_\+begin} and {\ttfamily s\+\_\+end}. 
+
+Implements \mbox{\hyperlink{class_g2lib_1_1_base_curve_a54a41847f42ba4e412f30388b5b9bd00}{G2lib\+::\+Base\+Curve}}.
+
+\Hypertarget{class_g2lib_1_1_dubins_a26ac83cccaf67d0976402e509007b5d1}\index{G2lib::Dubins@{G2lib::Dubins}!tx\_begin@{tx\_begin}}
+\index{tx\_begin@{tx\_begin}!G2lib::Dubins@{G2lib::Dubins}}
+\doxysubsubsection{\texorpdfstring{tx\_begin()}{tx\_begin()}}
+{\footnotesize\ttfamily \label{class_g2lib_1_1_dubins_a26ac83cccaf67d0976402e509007b5d1} 
+\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} G2lib\+::\+Dubins\+::tx\+\_\+begin (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+Initial tangent x-\/coordinate. 
+
+Reimplemented from \mbox{\hyperlink{class_g2lib_1_1_base_curve_aa8267048f5d7e9be64343bb57fd046ec}{G2lib\+::\+Base\+Curve}}.
+
+\Hypertarget{class_g2lib_1_1_dubins_a92fd58c7f371f8eb36f6c1240f86933a}\index{G2lib::Dubins@{G2lib::Dubins}!tx\_end@{tx\_end}}
+\index{tx\_end@{tx\_end}!G2lib::Dubins@{G2lib::Dubins}}
+\doxysubsubsection{\texorpdfstring{tx\_end()}{tx\_end()}}
+{\footnotesize\ttfamily \label{class_g2lib_1_1_dubins_a92fd58c7f371f8eb36f6c1240f86933a} 
+\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} G2lib\+::\+Dubins\+::tx\+\_\+end (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+Final tangent x-\/coordinate. 
+
+Reimplemented from \mbox{\hyperlink{class_g2lib_1_1_base_curve_a5198fda593040dd0027152407d6f97ff}{G2lib\+::\+Base\+Curve}}.
+
+\Hypertarget{class_g2lib_1_1_dubins_a01e0e61f81439db18fe9772d0ce69595}\index{G2lib::Dubins@{G2lib::Dubins}!ty\_begin@{ty\_begin}}
+\index{ty\_begin@{ty\_begin}!G2lib::Dubins@{G2lib::Dubins}}
+\doxysubsubsection{\texorpdfstring{ty\_begin()}{ty\_begin()}}
+{\footnotesize\ttfamily \label{class_g2lib_1_1_dubins_a01e0e61f81439db18fe9772d0ce69595} 
+\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} G2lib\+::\+Dubins\+::ty\+\_\+begin (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+Initial tangent y-\/coordinate. 
+
+Reimplemented from \mbox{\hyperlink{class_g2lib_1_1_base_curve_adefa9286291b53b9d713d972d5f1be22}{G2lib\+::\+Base\+Curve}}.
+
+\Hypertarget{class_g2lib_1_1_dubins_a17635261822c122015387c1dc1a4a0c6}\index{G2lib::Dubins@{G2lib::Dubins}!ty\_end@{ty\_end}}
+\index{ty\_end@{ty\_end}!G2lib::Dubins@{G2lib::Dubins}}
+\doxysubsubsection{\texorpdfstring{ty\_end()}{ty\_end()}}
+{\footnotesize\ttfamily \label{class_g2lib_1_1_dubins_a17635261822c122015387c1dc1a4a0c6} 
+\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} G2lib\+::\+Dubins\+::ty\+\_\+end (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+Final tangent y-\/coordinate. 
+
+Reimplemented from \mbox{\hyperlink{class_g2lib_1_1_base_curve_a0d7aa31d6f64be3e95a3e27756872100}{G2lib\+::\+Base\+Curve}}.
+
+\Hypertarget{class_g2lib_1_1_dubins_ad8deab46243280d2286f73fdcf20d70e}\index{G2lib::Dubins@{G2lib::Dubins}!type@{type}}
+\index{type@{type}!G2lib::Dubins@{G2lib::Dubins}}
+\doxysubsubsection{\texorpdfstring{type()}{type()}}
+{\footnotesize\ttfamily \label{class_g2lib_1_1_dubins_ad8deab46243280d2286f73fdcf20d70e} 
+\mbox{\hyperlink{namespace_g2lib_ac18621126b9485db2bc878d6a1c8b0c9}{Curve\+Type}} G2lib\+::\+Dubins\+::type (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+The name of the curve type 
+
+Implements \mbox{\hyperlink{class_g2lib_1_1_base_curve_a6e33757b359413dedeaa67e38616c93e}{G2lib\+::\+Base\+Curve}}.
+
+\Hypertarget{class_g2lib_1_1_dubins_ada22c6829f4c05fa2a48cb5b979bf767}\index{G2lib::Dubins@{G2lib::Dubins}!X@{X}}
+\index{X@{X}!G2lib::Dubins@{G2lib::Dubins}}
+\doxysubsubsection{\texorpdfstring{X()}{X()}}
+{\footnotesize\ttfamily \label{class_g2lib_1_1_dubins_ada22c6829f4c05fa2a48cb5b979bf767} 
+\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} G2lib\+::\+Dubins\+::X (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}}}]{s}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+x-\/coordinate at curvilinear coordinate {\ttfamily s}. 
+
+Implements \mbox{\hyperlink{class_g2lib_1_1_base_curve_a939db34844cfd0991d4e29729192be76}{G2lib\+::\+Base\+Curve}}.
+
+\Hypertarget{class_g2lib_1_1_dubins_a262ae9e476151cf2c85db93bac0ad72d}\index{G2lib::Dubins@{G2lib::Dubins}!X0@{X0}}
+\index{X0@{X0}!G2lib::Dubins@{G2lib::Dubins}}
+\doxysubsubsection{\texorpdfstring{X0()}{X0()}}
+{\footnotesize\ttfamily \label{class_g2lib_1_1_dubins_a262ae9e476151cf2c85db93bac0ad72d} 
+\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} G2lib\+::\+Dubins\+::\+X0 (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}}}]{s}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{class_g2lib_1_1_dubins_abea1078733c69f4cfd5a6c765f290f9d}\index{G2lib::Dubins@{G2lib::Dubins}!x0\_begin@{x0\_begin}}
+\index{x0\_begin@{x0\_begin}!G2lib::Dubins@{G2lib::Dubins}}
+\doxysubsubsection{\texorpdfstring{x0\_begin()}{x0\_begin()}}
+{\footnotesize\ttfamily \label{class_g2lib_1_1_dubins_abea1078733c69f4cfd5a6c765f290f9d} 
+\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} G2lib\+::\+Dubins\+::x0\+\_\+begin (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{class_g2lib_1_1_dubins_a606c8d5da57a79ef5b808cd0d7edffa3}\index{G2lib::Dubins@{G2lib::Dubins}!x0\_end@{x0\_end}}
+\index{x0\_end@{x0\_end}!G2lib::Dubins@{G2lib::Dubins}}
+\doxysubsubsection{\texorpdfstring{x0\_end()}{x0\_end()}}
+{\footnotesize\ttfamily \label{class_g2lib_1_1_dubins_a606c8d5da57a79ef5b808cd0d7edffa3} 
+\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} G2lib\+::\+Dubins\+::x0\+\_\+end (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{class_g2lib_1_1_dubins_a5f81e09f771d1da4a8308ccf94a05aab}\index{G2lib::Dubins@{G2lib::Dubins}!X1@{X1}}
+\index{X1@{X1}!G2lib::Dubins@{G2lib::Dubins}}
+\doxysubsubsection{\texorpdfstring{X1()}{X1()}}
+{\footnotesize\ttfamily \label{class_g2lib_1_1_dubins_a5f81e09f771d1da4a8308ccf94a05aab} 
+\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} G2lib\+::\+Dubins\+::\+X1 (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}}}]{s}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{class_g2lib_1_1_dubins_ae4c3143a9dad0660d69135fd5c0ef41f}\index{G2lib::Dubins@{G2lib::Dubins}!x1\_begin@{x1\_begin}}
+\index{x1\_begin@{x1\_begin}!G2lib::Dubins@{G2lib::Dubins}}
+\doxysubsubsection{\texorpdfstring{x1\_begin()}{x1\_begin()}}
+{\footnotesize\ttfamily \label{class_g2lib_1_1_dubins_ae4c3143a9dad0660d69135fd5c0ef41f} 
+\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} G2lib\+::\+Dubins\+::x1\+\_\+begin (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{class_g2lib_1_1_dubins_adaf485710d82631278e7b076e3810c2c}\index{G2lib::Dubins@{G2lib::Dubins}!x1\_end@{x1\_end}}
+\index{x1\_end@{x1\_end}!G2lib::Dubins@{G2lib::Dubins}}
+\doxysubsubsection{\texorpdfstring{x1\_end()}{x1\_end()}}
+{\footnotesize\ttfamily \label{class_g2lib_1_1_dubins_adaf485710d82631278e7b076e3810c2c} 
+\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} G2lib\+::\+Dubins\+::x1\+\_\+end (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{class_g2lib_1_1_dubins_ac8e36e33f48bbfb4ce042749f71d75de}\index{G2lib::Dubins@{G2lib::Dubins}!X2@{X2}}
+\index{X2@{X2}!G2lib::Dubins@{G2lib::Dubins}}
+\doxysubsubsection{\texorpdfstring{X2()}{X2()}}
+{\footnotesize\ttfamily \label{class_g2lib_1_1_dubins_ac8e36e33f48bbfb4ce042749f71d75de} 
+\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} G2lib\+::\+Dubins\+::\+X2 (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}}}]{s}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{class_g2lib_1_1_dubins_a5415f18a9c07ab49ecf6ce024b5268cf}\index{G2lib::Dubins@{G2lib::Dubins}!x2\_begin@{x2\_begin}}
+\index{x2\_begin@{x2\_begin}!G2lib::Dubins@{G2lib::Dubins}}
+\doxysubsubsection{\texorpdfstring{x2\_begin()}{x2\_begin()}}
+{\footnotesize\ttfamily \label{class_g2lib_1_1_dubins_a5415f18a9c07ab49ecf6ce024b5268cf} 
+\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} G2lib\+::\+Dubins\+::x2\+\_\+begin (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{class_g2lib_1_1_dubins_a1a1ae0b57402ec5fa655c665192a9ef1}\index{G2lib::Dubins@{G2lib::Dubins}!x2\_end@{x2\_end}}
+\index{x2\_end@{x2\_end}!G2lib::Dubins@{G2lib::Dubins}}
+\doxysubsubsection{\texorpdfstring{x2\_end()}{x2\_end()}}
+{\footnotesize\ttfamily \label{class_g2lib_1_1_dubins_a1a1ae0b57402ec5fa655c665192a9ef1} 
+\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} G2lib\+::\+Dubins\+::x2\+\_\+end (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{class_g2lib_1_1_dubins_aa97d1cd023f023f44260e9bbdbb0509a}\index{G2lib::Dubins@{G2lib::Dubins}!x\_begin@{x\_begin}}
+\index{x\_begin@{x\_begin}!G2lib::Dubins@{G2lib::Dubins}}
+\doxysubsubsection{\texorpdfstring{x\_begin()}{x\_begin()}}
+{\footnotesize\ttfamily \label{class_g2lib_1_1_dubins_aa97d1cd023f023f44260e9bbdbb0509a} 
+\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} G2lib\+::\+Dubins\+::x\+\_\+begin (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+Initial x-\/coordinate. 
+
+Reimplemented from \mbox{\hyperlink{class_g2lib_1_1_base_curve_a82c6e2f117ec93a9a9fa8fdfce721304}{G2lib\+::\+Base\+Curve}}.
+
+\Hypertarget{class_g2lib_1_1_dubins_ab476f221e0f7991a37aa08ed7affff21}\index{G2lib::Dubins@{G2lib::Dubins}!X\_D@{X\_D}}
+\index{X\_D@{X\_D}!G2lib::Dubins@{G2lib::Dubins}}
+\doxysubsubsection{\texorpdfstring{X\_D()}{X\_D()}}
+{\footnotesize\ttfamily \label{class_g2lib_1_1_dubins_ab476f221e0f7991a37aa08ed7affff21} 
+\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} G2lib\+::\+Dubins\+::\+X\+\_\+D (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}}}]{s}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+x-\/coordinate derivative at curvilinear coordinate {\ttfamily s}. 
+
+Implements \mbox{\hyperlink{class_g2lib_1_1_base_curve_acc2069ee2eb041b7db5c2bb01cf56484}{G2lib\+::\+Base\+Curve}}.
+
+\Hypertarget{class_g2lib_1_1_dubins_a90813ab765e3b43c2ff44862c7a76b66}\index{G2lib::Dubins@{G2lib::Dubins}!X\_DD@{X\_DD}}
+\index{X\_DD@{X\_DD}!G2lib::Dubins@{G2lib::Dubins}}
+\doxysubsubsection{\texorpdfstring{X\_DD()}{X\_DD()}}
+{\footnotesize\ttfamily \label{class_g2lib_1_1_dubins_a90813ab765e3b43c2ff44862c7a76b66} 
+\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} G2lib\+::\+Dubins\+::\+X\+\_\+\+DD (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}}}]{s}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+x-\/coordinate second derivative at curvilinear coordinate {\ttfamily s}. 
+
+Implements \mbox{\hyperlink{class_g2lib_1_1_base_curve_a1873395f4b82c7c65a01fe357ae0d13e}{G2lib\+::\+Base\+Curve}}.
+
+\Hypertarget{class_g2lib_1_1_dubins_a75a8bbaeddf3d2bbe05b6b151bfc8e18}\index{G2lib::Dubins@{G2lib::Dubins}!X\_DDD@{X\_DDD}}
+\index{X\_DDD@{X\_DDD}!G2lib::Dubins@{G2lib::Dubins}}
+\doxysubsubsection{\texorpdfstring{X\_DDD()}{X\_DDD()}}
+{\footnotesize\ttfamily \label{class_g2lib_1_1_dubins_a75a8bbaeddf3d2bbe05b6b151bfc8e18} 
+\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} G2lib\+::\+Dubins\+::\+X\+\_\+\+DDD (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}}}]{s}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+x-\/coordinate third derivative at curvilinear coordinate {\ttfamily s}. 
+
+Implements \mbox{\hyperlink{class_g2lib_1_1_base_curve_aca5563af7447a1ee975063a6e18b48e0}{G2lib\+::\+Base\+Curve}}.
+
+\Hypertarget{class_g2lib_1_1_dubins_a36a95ae7347e275cc796fa0b24fdc44f}\index{G2lib::Dubins@{G2lib::Dubins}!x\_end@{x\_end}}
+\index{x\_end@{x\_end}!G2lib::Dubins@{G2lib::Dubins}}
+\doxysubsubsection{\texorpdfstring{x\_end()}{x\_end()}}
+{\footnotesize\ttfamily \label{class_g2lib_1_1_dubins_a36a95ae7347e275cc796fa0b24fdc44f} 
+\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} G2lib\+::\+Dubins\+::x\+\_\+end (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+Final x-\/coordinate. 
+
+Reimplemented from \mbox{\hyperlink{class_g2lib_1_1_base_curve_a6d515143a2fd58081a8b040ee067ba5a}{G2lib\+::\+Base\+Curve}}.
+
+\Hypertarget{class_g2lib_1_1_dubins_a2e0f22c99bd0ed1c418a47a1ddd035ea}\index{G2lib::Dubins@{G2lib::Dubins}!Y@{Y}}
+\index{Y@{Y}!G2lib::Dubins@{G2lib::Dubins}}
+\doxysubsubsection{\texorpdfstring{Y()}{Y()}}
+{\footnotesize\ttfamily \label{class_g2lib_1_1_dubins_a2e0f22c99bd0ed1c418a47a1ddd035ea} 
+\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} G2lib\+::\+Dubins\+::Y (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}}}]{s}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+y-\/coordinate at curvilinear coordinate {\ttfamily s}. 
+
+Implements \mbox{\hyperlink{class_g2lib_1_1_base_curve_a3e9984f0898bf9c8fcb7df7203636f04}{G2lib\+::\+Base\+Curve}}.
+
+\Hypertarget{class_g2lib_1_1_dubins_ad93ca4490d33522156252bf232578286}\index{G2lib::Dubins@{G2lib::Dubins}!Y0@{Y0}}
+\index{Y0@{Y0}!G2lib::Dubins@{G2lib::Dubins}}
+\doxysubsubsection{\texorpdfstring{Y0()}{Y0()}}
+{\footnotesize\ttfamily \label{class_g2lib_1_1_dubins_ad93ca4490d33522156252bf232578286} 
+\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} G2lib\+::\+Dubins\+::\+Y0 (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}}}]{s}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{class_g2lib_1_1_dubins_afeb3498ba79509eb0974fe10d00fe027}\index{G2lib::Dubins@{G2lib::Dubins}!y0\_begin@{y0\_begin}}
+\index{y0\_begin@{y0\_begin}!G2lib::Dubins@{G2lib::Dubins}}
+\doxysubsubsection{\texorpdfstring{y0\_begin()}{y0\_begin()}}
+{\footnotesize\ttfamily \label{class_g2lib_1_1_dubins_afeb3498ba79509eb0974fe10d00fe027} 
+\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} G2lib\+::\+Dubins\+::y0\+\_\+begin (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{class_g2lib_1_1_dubins_af39663c41fe81e79e10ceb8762299d0e}\index{G2lib::Dubins@{G2lib::Dubins}!y0\_end@{y0\_end}}
+\index{y0\_end@{y0\_end}!G2lib::Dubins@{G2lib::Dubins}}
+\doxysubsubsection{\texorpdfstring{y0\_end()}{y0\_end()}}
+{\footnotesize\ttfamily \label{class_g2lib_1_1_dubins_af39663c41fe81e79e10ceb8762299d0e} 
+\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} G2lib\+::\+Dubins\+::y0\+\_\+end (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{class_g2lib_1_1_dubins_a69cfe15818379e29bf67734b06a1ff2f}\index{G2lib::Dubins@{G2lib::Dubins}!Y1@{Y1}}
+\index{Y1@{Y1}!G2lib::Dubins@{G2lib::Dubins}}
+\doxysubsubsection{\texorpdfstring{Y1()}{Y1()}}
+{\footnotesize\ttfamily \label{class_g2lib_1_1_dubins_a69cfe15818379e29bf67734b06a1ff2f} 
+\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} G2lib\+::\+Dubins\+::\+Y1 (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}}}]{s}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{class_g2lib_1_1_dubins_ad9095e4d440c10e3ced0c82fd0c250bd}\index{G2lib::Dubins@{G2lib::Dubins}!y1\_begin@{y1\_begin}}
+\index{y1\_begin@{y1\_begin}!G2lib::Dubins@{G2lib::Dubins}}
+\doxysubsubsection{\texorpdfstring{y1\_begin()}{y1\_begin()}}
+{\footnotesize\ttfamily \label{class_g2lib_1_1_dubins_ad9095e4d440c10e3ced0c82fd0c250bd} 
+\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} G2lib\+::\+Dubins\+::y1\+\_\+begin (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{class_g2lib_1_1_dubins_a0d3ddf3ecc9d235600eafe4be75d8717}\index{G2lib::Dubins@{G2lib::Dubins}!y1\_end@{y1\_end}}
+\index{y1\_end@{y1\_end}!G2lib::Dubins@{G2lib::Dubins}}
+\doxysubsubsection{\texorpdfstring{y1\_end()}{y1\_end()}}
+{\footnotesize\ttfamily \label{class_g2lib_1_1_dubins_a0d3ddf3ecc9d235600eafe4be75d8717} 
+\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} G2lib\+::\+Dubins\+::y1\+\_\+end (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{class_g2lib_1_1_dubins_a6d7b29807e7f22391c2da47408db5dd3}\index{G2lib::Dubins@{G2lib::Dubins}!Y2@{Y2}}
+\index{Y2@{Y2}!G2lib::Dubins@{G2lib::Dubins}}
+\doxysubsubsection{\texorpdfstring{Y2()}{Y2()}}
+{\footnotesize\ttfamily \label{class_g2lib_1_1_dubins_a6d7b29807e7f22391c2da47408db5dd3} 
+\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} G2lib\+::\+Dubins\+::\+Y2 (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}}}]{s}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{class_g2lib_1_1_dubins_aa2aba7619e2b13050a8070abb3dc2a67}\index{G2lib::Dubins@{G2lib::Dubins}!y2\_begin@{y2\_begin}}
+\index{y2\_begin@{y2\_begin}!G2lib::Dubins@{G2lib::Dubins}}
+\doxysubsubsection{\texorpdfstring{y2\_begin()}{y2\_begin()}}
+{\footnotesize\ttfamily \label{class_g2lib_1_1_dubins_aa2aba7619e2b13050a8070abb3dc2a67} 
+\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} G2lib\+::\+Dubins\+::y2\+\_\+begin (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{class_g2lib_1_1_dubins_a33243fcd8a9537db550595d02ad5c5b7}\index{G2lib::Dubins@{G2lib::Dubins}!y2\_end@{y2\_end}}
+\index{y2\_end@{y2\_end}!G2lib::Dubins@{G2lib::Dubins}}
+\doxysubsubsection{\texorpdfstring{y2\_end()}{y2\_end()}}
+{\footnotesize\ttfamily \label{class_g2lib_1_1_dubins_a33243fcd8a9537db550595d02ad5c5b7} 
+\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} G2lib\+::\+Dubins\+::y2\+\_\+end (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+\Hypertarget{class_g2lib_1_1_dubins_a20a060df56c6aaf3cecd3cab50f3964e}\index{G2lib::Dubins@{G2lib::Dubins}!y\_begin@{y\_begin}}
+\index{y\_begin@{y\_begin}!G2lib::Dubins@{G2lib::Dubins}}
+\doxysubsubsection{\texorpdfstring{y\_begin()}{y\_begin()}}
+{\footnotesize\ttfamily \label{class_g2lib_1_1_dubins_a20a060df56c6aaf3cecd3cab50f3964e} 
+\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} G2lib\+::\+Dubins\+::y\+\_\+begin (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+Initial y-\/coordinate. 
+
+Reimplemented from \mbox{\hyperlink{class_g2lib_1_1_base_curve_a6dbdfada69d109ff89f2eeeb3a942779}{G2lib\+::\+Base\+Curve}}.
+
+\Hypertarget{class_g2lib_1_1_dubins_a71ce7a3a5c0e6019f11dbcca14cd7f70}\index{G2lib::Dubins@{G2lib::Dubins}!Y\_D@{Y\_D}}
+\index{Y\_D@{Y\_D}!G2lib::Dubins@{G2lib::Dubins}}
+\doxysubsubsection{\texorpdfstring{Y\_D()}{Y\_D()}}
+{\footnotesize\ttfamily \label{class_g2lib_1_1_dubins_a71ce7a3a5c0e6019f11dbcca14cd7f70} 
+\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} G2lib\+::\+Dubins\+::\+Y\+\_\+D (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}}}]{s}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+y-\/coordinate derivative at curvilinear coordinate {\ttfamily s}. 
+
+Implements \mbox{\hyperlink{class_g2lib_1_1_base_curve_a1832d5b03a439887ea918e9b8c8074c3}{G2lib\+::\+Base\+Curve}}.
+
+\Hypertarget{class_g2lib_1_1_dubins_a499d6cfdf0ee70bd7afe5180bda4d463}\index{G2lib::Dubins@{G2lib::Dubins}!Y\_DD@{Y\_DD}}
+\index{Y\_DD@{Y\_DD}!G2lib::Dubins@{G2lib::Dubins}}
+\doxysubsubsection{\texorpdfstring{Y\_DD()}{Y\_DD()}}
+{\footnotesize\ttfamily \label{class_g2lib_1_1_dubins_a499d6cfdf0ee70bd7afe5180bda4d463} 
+\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} G2lib\+::\+Dubins\+::\+Y\+\_\+\+DD (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}}}]{s}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+y-\/coordinate second derivative at curvilinear coordinate {\ttfamily s}. 
+
+Implements \mbox{\hyperlink{class_g2lib_1_1_base_curve_a5f3575f5e5581b400e904516e7cd32d0}{G2lib\+::\+Base\+Curve}}.
+
+\Hypertarget{class_g2lib_1_1_dubins_a4216ef8b1b59fa75490c61eb93f914fa}\index{G2lib::Dubins@{G2lib::Dubins}!Y\_DDD@{Y\_DDD}}
+\index{Y\_DDD@{Y\_DDD}!G2lib::Dubins@{G2lib::Dubins}}
+\doxysubsubsection{\texorpdfstring{Y\_DDD()}{Y\_DDD()}}
+{\footnotesize\ttfamily \label{class_g2lib_1_1_dubins_a4216ef8b1b59fa75490c61eb93f914fa} 
+\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} G2lib\+::\+Dubins\+::\+Y\+\_\+\+DDD (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}}}]{s}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+y-\/coordinate third derivative at curvilinear coordinate {\ttfamily s}. 
+
+Implements \mbox{\hyperlink{class_g2lib_1_1_base_curve_a91a1737a9461be4eef4961b97f085d4c}{G2lib\+::\+Base\+Curve}}.
+
+\Hypertarget{class_g2lib_1_1_dubins_a63c067e24bcc35f46b0828f1c30b656e}\index{G2lib::Dubins@{G2lib::Dubins}!y\_end@{y\_end}}
+\index{y\_end@{y\_end}!G2lib::Dubins@{G2lib::Dubins}}
+\doxysubsubsection{\texorpdfstring{y\_end()}{y\_end()}}
+{\footnotesize\ttfamily \label{class_g2lib_1_1_dubins_a63c067e24bcc35f46b0828f1c30b656e} 
+\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} G2lib\+::\+Dubins\+::y\+\_\+end (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [virtual]}}
+
+Final y-\/coordinate. 
+
+Reimplemented from \mbox{\hyperlink{class_g2lib_1_1_base_curve_a9a6286210898b802333d5f73ed7dd755}{G2lib\+::\+Base\+Curve}}.
+
+
+
+\doxysubsection{Friends And Related Symbol Documentation}
+\Hypertarget{class_g2lib_1_1_dubins_ae970e1a42b318363ea91632626baf4d6}\index{G2lib::Dubins@{G2lib::Dubins}!Dubins3p@{Dubins3p}}
+\index{Dubins3p@{Dubins3p}!G2lib::Dubins@{G2lib::Dubins}}
+\doxysubsubsection{\texorpdfstring{Dubins3p}{Dubins3p}}
+{\footnotesize\ttfamily \label{class_g2lib_1_1_dubins_ae970e1a42b318363ea91632626baf4d6} 
+friend class \mbox{\hyperlink{class_g2lib_1_1_dubins3p}{Dubins3p}}\hspace{0.3cm}{\ttfamily [friend]}}
+
+\Hypertarget{class_g2lib_1_1_dubins_a7b6b895e1ae9af96e035ef868fcb32f8}\index{G2lib::Dubins@{G2lib::Dubins}!operator$<$$<$@{operator$<$$<$}}
+\index{operator$<$$<$@{operator$<$$<$}!G2lib::Dubins@{G2lib::Dubins}}
+\doxysubsubsection{\texorpdfstring{operator$<$$<$}{operator<<}}
+{\footnotesize\ttfamily \label{class_g2lib_1_1_dubins_a7b6b895e1ae9af96e035ef868fcb32f8} 
+\mbox{\hyperlink{namespace_g2lib_a8fcbace87db5a5e71391e0040878f2c3}{ostream\+\_\+type}} \& operator$<$$<$ (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{namespace_g2lib_a8fcbace87db5a5e71391e0040878f2c3}{ostream\+\_\+type}} \&}]{stream}{, }\item[{\mbox{\hyperlink{class_g2lib_1_1_dubins}{Dubins}} const \&}]{bi}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [friend]}}
+
+Pretty print of \doxylink{class_g2lib_1_1_dubins}{Dubins} class. 
+
+\doxysubsection{Member Data Documentation}
+\Hypertarget{class_g2lib_1_1_dubins_ac775fcf544341599a5b1489d3538b80c}\index{G2lib::Dubins@{G2lib::Dubins}!m\_C0@{m\_C0}}
+\index{m\_C0@{m\_C0}!G2lib::Dubins@{G2lib::Dubins}}
+\doxysubsubsection{\texorpdfstring{m\_C0}{m\_C0}}
+{\footnotesize\ttfamily \label{class_g2lib_1_1_dubins_ac775fcf544341599a5b1489d3538b80c} 
+\mbox{\hyperlink{class_g2lib_1_1_circle_arc}{Circle\+Arc}} G2lib\+::\+Dubins\+::m\+\_\+\+C0 \{"{}Dubins\+\_\+\+C0"{}\}\hspace{0.3cm}{\ttfamily [private]}}
+
+\Hypertarget{class_g2lib_1_1_dubins_a6b2485527fcb7bf204f3046c7593c1ae}\index{G2lib::Dubins@{G2lib::Dubins}!m\_C1@{m\_C1}}
+\index{m\_C1@{m\_C1}!G2lib::Dubins@{G2lib::Dubins}}
+\doxysubsubsection{\texorpdfstring{m\_C1}{m\_C1}}
+{\footnotesize\ttfamily \label{class_g2lib_1_1_dubins_a6b2485527fcb7bf204f3046c7593c1ae} 
+\mbox{\hyperlink{class_g2lib_1_1_circle_arc}{Circle\+Arc}} G2lib\+::\+Dubins\+::m\+\_\+\+C1 \{"{}Dubins\+\_\+\+C1"{}\}\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Three arc solution of DUBINS problem. 
+
+\Hypertarget{class_g2lib_1_1_dubins_ada1cde5da3e98adbd00c744b2b2264b5}\index{G2lib::Dubins@{G2lib::Dubins}!m\_C2@{m\_C2}}
+\index{m\_C2@{m\_C2}!G2lib::Dubins@{G2lib::Dubins}}
+\doxysubsubsection{\texorpdfstring{m\_C2}{m\_C2}}
+{\footnotesize\ttfamily \label{class_g2lib_1_1_dubins_ada1cde5da3e98adbd00c744b2b2264b5} 
+\mbox{\hyperlink{class_g2lib_1_1_circle_arc}{Circle\+Arc}} G2lib\+::\+Dubins\+::m\+\_\+\+C2 \{"{}Dubins\+\_\+\+C2"{}\}\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Three arc solution of DUBINS problem. 
+
+\Hypertarget{class_g2lib_1_1_dubins_a8f777a87b003edff17ffc4a2f27f09a2}\index{G2lib::Dubins@{G2lib::Dubins}!m\_length@{m\_length}}
+\index{m\_length@{m\_length}!G2lib::Dubins@{G2lib::Dubins}}
+\doxysubsubsection{\texorpdfstring{m\_length}{m\_length}}
+{\footnotesize\ttfamily \label{class_g2lib_1_1_dubins_a8f777a87b003edff17ffc4a2f27f09a2} 
+\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} G2lib\+::\+Dubins\+::m\+\_\+length \{0\}\hspace{0.3cm}{\ttfamily [private]}}
+
+\Hypertarget{class_g2lib_1_1_dubins_a66cd1b3623df925120565ef9da6eb70b}\index{G2lib::Dubins@{G2lib::Dubins}!m\_length\_Dalpha@{m\_length\_Dalpha}}
+\index{m\_length\_Dalpha@{m\_length\_Dalpha}!G2lib::Dubins@{G2lib::Dubins}}
+\doxysubsubsection{\texorpdfstring{m\_length\_Dalpha}{m\_length\_Dalpha}}
+{\footnotesize\ttfamily \label{class_g2lib_1_1_dubins_a66cd1b3623df925120565ef9da6eb70b} 
+\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} G2lib\+::\+Dubins\+::m\+\_\+length\+\_\+\+Dalpha \{0\}\hspace{0.3cm}{\ttfamily [private]}}
+
+\Hypertarget{class_g2lib_1_1_dubins_ab65c564c4a242cee6ba73c046a42748a}\index{G2lib::Dubins@{G2lib::Dubins}!m\_length\_Dbeta@{m\_length\_Dbeta}}
+\index{m\_length\_Dbeta@{m\_length\_Dbeta}!G2lib::Dubins@{G2lib::Dubins}}
+\doxysubsubsection{\texorpdfstring{m\_length\_Dbeta}{m\_length\_Dbeta}}
+{\footnotesize\ttfamily \label{class_g2lib_1_1_dubins_ab65c564c4a242cee6ba73c046a42748a} 
+\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} G2lib\+::\+Dubins\+::m\+\_\+length\+\_\+\+Dbeta \{0\}\hspace{0.3cm}{\ttfamily [private]}}
+
+\Hypertarget{class_g2lib_1_1_dubins_a0a8774895e837c35f48685fe667ff2b7}\index{G2lib::Dubins@{G2lib::Dubins}!m\_solution\_type@{m\_solution\_type}}
+\index{m\_solution\_type@{m\_solution\_type}!G2lib::Dubins@{G2lib::Dubins}}
+\doxysubsubsection{\texorpdfstring{m\_solution\_type}{m\_solution\_type}}
+{\footnotesize\ttfamily \label{class_g2lib_1_1_dubins_a0a8774895e837c35f48685fe667ff2b7} 
+\mbox{\hyperlink{namespace_g2lib_aa8734fcd1e1418071dbcf2e187947ec9}{Dubins\+Type}} G2lib\+::\+Dubins\+::m\+\_\+solution\+\_\+type \{Dubins\+Type\+::\+DUBINS\+\_\+\+ERROR\}\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+/\+Users/enrico/\+Ricerca/develop/\+PINS/pins-\/mechatronix/\+Lib\+Sources/submodules/\+Clothoids/src/\+Clothoids/\mbox{\hyperlink{_dubins_8hxx}{Dubins.\+hxx}}\item 
+/\+Users/enrico/\+Ricerca/develop/\+PINS/pins-\/mechatronix/\+Lib\+Sources/submodules/\+Clothoids/src/\mbox{\hyperlink{_dubins_8cc}{Dubins.\+cc}}\end{DoxyCompactItemize}

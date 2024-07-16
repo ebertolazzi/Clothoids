@@ -141,8 +141,9 @@ namespace G2lib {
     //! \param[in] xf     final position x-coordinate
     //! \param[in] yf     final position y-coordinate
     //! \param[in] thetaf final angle
-    //! \param[in] kmax   max curvature
+    //! \param[in] k_max  max curvature
     //! \param[in] method construction method
+    //! \param[in] name   name of the 3 points Dubins object
     //!
     explicit
     Dubins3p(
@@ -156,7 +157,7 @@ namespace G2lib {
       real_type         thetaf,
       real_type         k_max,
       Dubins3pBuildType method,
-      string const & name
+      string const &    name
     ) : BaseCurve( name ) {
       this->build( xi, yi, thetai, xm, ym, xf, yf, thetaf, k_max, method );
     }
@@ -181,7 +182,7 @@ namespace G2lib {
     //! \param[in] xf     final position x-coordinate
     //! \param[in] yf     final position y-coordinate
     //! \param[in] thetaf final angle
-    //! \param[in] kmax   max curvature
+    //! \param[in] k_max  max curvature
     //! \param[in] method construction method
     //!
     bool
@@ -237,7 +238,7 @@ namespace G2lib {
     //! \param[in]  xf     final position x-coordinate
     //! \param[in]  yf     final position y-coordinate
     //! \param[in]  thetaf final angle
-    //! \param[in]  kmax   max curvature
+    //! \param[in]  k_max  max curvature
     //! \param[out] angles angles of possibile dicontinuity
     //! \return     number of point computed
     //!
@@ -258,16 +259,17 @@ namespace G2lib {
     //!
     //! Get sample point for length minimization
     //!
-    //! \param[in]  xi      initial position x-coordinate
-    //! \param[in]  yi      initial position y-coordinate
-    //! \param[in]  thetai  initial angle
-    //! \param[in]  xm      intermediate position x-coordinate
-    //! \param[in]  ym      intermediate position y-coordinate
-    //! \param[in]  xf      final position x-coordinate
-    //! \param[in]  yf      final position y-coordinate
-    //! \param[in]  thetaf  final angle
-    //! \param[in]  kmax    max curvature
-    //! \param[out] angles sample points
+    //! \param[in]  xi        initial position x-coordinate
+    //! \param[in]  yi        initial position y-coordinate
+    //! \param[in]  thetai    initial angle
+    //! \param[in]  xm        intermediate position x-coordinate
+    //! \param[in]  ym        intermediate position y-coordinate
+    //! \param[in]  xf        final position x-coordinate
+    //! \param[in]  yf        final position y-coordinate
+    //! \param[in]  thetaf    final angle
+    //! \param[in]  k_max     max curvature
+    //! \param[in]  tolerance tolerance angle used in point approximaton
+    //! \param[out] angles    sample points
     //!
     void
     get_sample_angles(

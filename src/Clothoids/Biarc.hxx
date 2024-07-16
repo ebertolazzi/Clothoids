@@ -34,13 +34,7 @@ namespace G2lib {
   //!
   //! Compute biarc fitting by Hemite data
   //!
-  //! \rst
-  //!
-  //!   .. image:: ../../images/biarc.jpg
-  //!      :width: 80%
-  //!      :align: center
-  //!
-  //! \endrst
+  //! \image html biarc.jpg "Biarc" width=8cm
   //!
 
   class Biarc : public BaseCurve {
@@ -88,6 +82,7 @@ namespace G2lib {
     //! \param[in] x1      \f$ x_1 \f$
     //! \param[in] y1      \f$ y_1 \f$
     //! \param[in] theta1  \f$ \theta_1 \f$
+    //! \param[in] name    name of the biarc
     //!
     explicit
     Biarc(

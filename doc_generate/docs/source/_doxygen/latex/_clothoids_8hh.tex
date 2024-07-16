@@ -1,0 +1,102 @@
+\doxysection{/\+Users/enrico/\+Ricerca/develop/\+PINS/pins-\/mechatronix/\+Lib\+Sources/submodules/\+Clothoids/src/\+Clothoids.hh File Reference}
+\hypertarget{_clothoids_8hh}{}\label{_clothoids_8hh}\index{/Users/enrico/Ricerca/develop/PINS/pins-\/mechatronix/LibSources/submodules/Clothoids/src/Clothoids.hh@{/Users/enrico/Ricerca/develop/PINS/pins-\/mechatronix/LibSources/submodules/Clothoids/src/Clothoids.hh}}
+{\ttfamily \#include $<$Utils.\+hh$>$}\newline
+{\ttfamily \#include $<$Utils\+\_\+\+AABB\+\_\+tree.\+hh$>$}\newline
+{\ttfamily \#include "{}Generic\+Container/\+Generic\+Container.\+hh"{}}\newline
+{\ttfamily \#include $<$string$>$}\newline
+{\ttfamily \#include $<$fstream$>$}\newline
+{\ttfamily \#include $<$iostream$>$}\newline
+{\ttfamily \#include $<$iomanip$>$}\newline
+{\ttfamily \#include $<$cmath$>$}\newline
+{\ttfamily \#include $<$vector$>$}\newline
+{\ttfamily \#include $<$map$>$}\newline
+{\ttfamily \#include $<$utility$>$}\newline
+{\ttfamily \#include $<$algorithm$>$}\newline
+{\ttfamily \#include $<$iterator$>$}\newline
+{\ttfamily \#include $<$memory$>$}\newline
+{\ttfamily \#include "{}Clothoids/\+G2lib.\+hxx"{}}\newline
+{\ttfamily \#include "{}Clothoids/\+Triangle2\+D.\+hxx"{}}\newline
+{\ttfamily \#include "{}Clothoids/\+BBox.\+hxx"{}}\newline
+{\ttfamily \#include "{}Clothoids/\+Base\+Curve.\+hxx"{}}\newline
+{\ttfamily \#include "{}Clothoids/\+Fresnel.\+hxx"{}}\newline
+{\ttfamily \#include "{}Clothoids/\+Line.\+hxx"{}}\newline
+{\ttfamily \#include "{}Clothoids/\+Circle.\+hxx"{}}\newline
+{\ttfamily \#include "{}Clothoids/\+Biarc.\+hxx"{}}\newline
+{\ttfamily \#include "{}Clothoids/\+Clothoid.\+hxx"{}}\newline
+{\ttfamily \#include "{}Clothoids/\+Poly\+Line.\+hxx"{}}\newline
+{\ttfamily \#include "{}Clothoids/\+Biarc\+List.\+hxx"{}}\newline
+{\ttfamily \#include "{}Clothoids/\+Clothoid\+List.\+hxx"{}}\newline
+{\ttfamily \#include "{}Clothoids/\+Clothoid\+Asy\+Plot.\+hxx"{}}\newline
+{\ttfamily \#include "{}Clothoids/\+Dubins.\+hxx"{}}\newline
+{\ttfamily \#include "{}Clothoids/\+Dubins3p.\+hxx"{}}\newline
+\doxysubsubsection*{Namespaces}
+\begin{DoxyCompactItemize}
+\item 
+namespace \mbox{\hyperlink{namespace_g2lib}{G2lib}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \mbox{\hyperlink{_clothoids_8hh_ad3b2b8f6737fe03a8b92631f17344d5b}{CLOTHOIDS\+\_\+dot\+\_\+\+HH}}
+\item 
+\#define \mbox{\hyperlink{_clothoids_8hh_a81f1cf836d0e3c0e6301cf1bbad9fd39}{CLOTHOIDS\+\_\+\+USE\+\_\+\+THREADS}}~1
+\item 
+\#define \mbox{\hyperlink{_clothoids_8hh_a50b619e42946f472ff4030e0bbd74f2e}{G2\+LIB\+\_\+\+DEBUG\+\_\+\+MESSAGE}}(...)
+\item 
+\#define \mbox{\hyperlink{_clothoids_8hh_ab80a1f996b6c8ba6a757bfde8c3689b6}{GLIB2\+\_\+\+TOL\+\_\+\+ANGLE}}~1e-\/8
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Typedefs}
+\begin{DoxyCompactItemize}
+\item 
+using \mbox{\hyperlink{namespace_g2lib_a7ed8321a8bada9eae2f914f6fb70a208}{G2lib\+::istream\+\_\+type}} = std\+::basic\+\_\+istream$<$char$>$
+\item 
+using \mbox{\hyperlink{namespace_g2lib_a8fcbace87db5a5e71391e0040878f2c3}{G2lib\+::ostream\+\_\+type}} = std\+::basic\+\_\+ostream$<$char$>$
+\item 
+using \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{G2lib\+::real\+\_\+type}} = double
+\item 
+using \mbox{\hyperlink{namespace_g2lib_a17146eb1606475bedc9a2d27f3b29e34}{G2lib\+::integer}} = int
+\item 
+using \mbox{\hyperlink{namespace_g2lib_ae1a048466025088b97bf20caddd13693}{G2lib\+::\+AABB\+\_\+\+TREE}} = Utils\+::\+AABBtree$<$\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}}$>$
+\item 
+using \mbox{\hyperlink{namespace_g2lib_a5f1ad3dfe878836c222addf6619be7b6}{G2lib\+::\+AABB\+\_\+\+SET}} = Utils\+::\+AABBtree$<$\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}}$>$\+::\+AABB\+\_\+\+SET
+\item 
+using \mbox{\hyperlink{namespace_g2lib_a5dd1788676dfa912a9389cd18ed753a5}{G2lib\+::\+AABB\+\_\+\+MAP}} = Utils\+::\+AABBtree$<$\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}}$>$\+::\+AABB\+\_\+\+MAP
+\item 
+using \mbox{\hyperlink{namespace_g2lib_a2bee1fb11cb401bacb26ad157b301feb}{G2lib\+::\+Generic\+Container}} = GC\+\_\+namespace\+::\+Generic\+Container
+\item 
+using \mbox{\hyperlink{namespace_g2lib_ac18621126b9485db2bc878d6a1c8b0c9}{G2lib\+::\+Curve\+Type}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+string \mbox{\hyperlink{namespace_g2lib_a3b5a717bff4e10ce2a9b52cb628f2227}{G2lib\+::to\+\_\+string}} (\mbox{\hyperlink{namespace_g2lib_ac18621126b9485db2bc878d6a1c8b0c9}{Curve\+Type}} n)
+\item 
+\mbox{\hyperlink{namespace_g2lib_ac18621126b9485db2bc878d6a1c8b0c9}{Curve\+Type}} \mbox{\hyperlink{namespace_g2lib_a10b486198edf32e38559a8310723f5ba}{G2lib\+::curve\+\_\+promote}} (\mbox{\hyperlink{namespace_g2lib_ac18621126b9485db2bc878d6a1c8b0c9}{Curve\+Type}}, \mbox{\hyperlink{namespace_g2lib_ac18621126b9485db2bc878d6a1c8b0c9}{Curve\+Type}})
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Macro Definition Documentation}
+\Hypertarget{_clothoids_8hh_ad3b2b8f6737fe03a8b92631f17344d5b}\index{Clothoids.hh@{Clothoids.hh}!CLOTHOIDS\_dot\_HH@{CLOTHOIDS\_dot\_HH}}
+\index{CLOTHOIDS\_dot\_HH@{CLOTHOIDS\_dot\_HH}!Clothoids.hh@{Clothoids.hh}}
+\doxysubsubsection{\texorpdfstring{CLOTHOIDS\_dot\_HH}{CLOTHOIDS\_dot\_HH}}
+{\footnotesize\ttfamily \label{_clothoids_8hh_ad3b2b8f6737fe03a8b92631f17344d5b} 
+\#define CLOTHOIDS\+\_\+dot\+\_\+\+HH}
+
+file\+: \doxylink{_clothoids_8hh}{Clothoids.\+hh} \Hypertarget{_clothoids_8hh_a81f1cf836d0e3c0e6301cf1bbad9fd39}\index{Clothoids.hh@{Clothoids.hh}!CLOTHOIDS\_USE\_THREADS@{CLOTHOIDS\_USE\_THREADS}}
+\index{CLOTHOIDS\_USE\_THREADS@{CLOTHOIDS\_USE\_THREADS}!Clothoids.hh@{Clothoids.hh}}
+\doxysubsubsection{\texorpdfstring{CLOTHOIDS\_USE\_THREADS}{CLOTHOIDS\_USE\_THREADS}}
+{\footnotesize\ttfamily \label{_clothoids_8hh_a81f1cf836d0e3c0e6301cf1bbad9fd39} 
+\#define CLOTHOIDS\+\_\+\+USE\+\_\+\+THREADS~1}
+
+\Hypertarget{_clothoids_8hh_a50b619e42946f472ff4030e0bbd74f2e}\index{Clothoids.hh@{Clothoids.hh}!G2LIB\_DEBUG\_MESSAGE@{G2LIB\_DEBUG\_MESSAGE}}
+\index{G2LIB\_DEBUG\_MESSAGE@{G2LIB\_DEBUG\_MESSAGE}!Clothoids.hh@{Clothoids.hh}}
+\doxysubsubsection{\texorpdfstring{G2LIB\_DEBUG\_MESSAGE}{G2LIB\_DEBUG\_MESSAGE}}
+{\footnotesize\ttfamily \label{_clothoids_8hh_a50b619e42946f472ff4030e0bbd74f2e} 
+\#define G2\+LIB\+\_\+\+DEBUG\+\_\+\+MESSAGE(\begin{DoxyParamCaption}\item[{}]{}...{}\end{DoxyParamCaption})}
+
+\Hypertarget{_clothoids_8hh_ab80a1f996b6c8ba6a757bfde8c3689b6}\index{Clothoids.hh@{Clothoids.hh}!GLIB2\_TOL\_ANGLE@{GLIB2\_TOL\_ANGLE}}
+\index{GLIB2\_TOL\_ANGLE@{GLIB2\_TOL\_ANGLE}!Clothoids.hh@{Clothoids.hh}}
+\doxysubsubsection{\texorpdfstring{GLIB2\_TOL\_ANGLE}{GLIB2\_TOL\_ANGLE}}
+{\footnotesize\ttfamily \label{_clothoids_8hh_ab80a1f996b6c8ba6a757bfde8c3689b6} 
+\#define GLIB2\+\_\+\+TOL\+\_\+\+ANGLE~1e-\/8}
+

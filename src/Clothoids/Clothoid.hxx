@@ -43,13 +43,7 @@ namespace G2lib {
   //!   \end{cases}
   //! \f]
   //!
-  //! \rst
-  //!
-  //!   .. image:: ../../images/G1problem.jpg
-  //!      :width: 80%
-  //!      :align: center
-  //!
-  //! \endrst
+  //! \image html G1problem.jpg width=8cm
   //!
   class ClothoidCurve : public BaseCurve {
     friend class ClothoidList;
@@ -153,6 +147,7 @@ namespace G2lib {
     //! \param[in] k      curvature
     //! \param[in] dk     curvature derivative
     //! \param[in] L      length
+    //! \param[in] name   name of the clothoid curve
     //!
     explicit
     ClothoidCurve(
@@ -181,6 +176,7 @@ namespace G2lib {
     //! \param[in] theta0 initial angle \f$ \theta_0 \f$
     //! \param[in] P1     final point \f$ \mathbf{p}_1 \f$
     //! \param[in] theta1 final angle \f$ \theta_1 \f$
+    //! \param[in] name   name of the clothoid curve
     //!
     explicit
     ClothoidCurve(
@@ -347,13 +343,7 @@ namespace G2lib {
     //! \param[out] plus it true return \f$ \lim_{s\to+\infty} P(s) \f$
     //!                  otherwise return \f$ \lim_{s\to-\infty} P(s) \f$
     //!
-    //! \rst
-    //!
-    //!   .. image:: ../../images/Pinfinity.jpg
-    //!      :width: 80%
-    //!      :align: center
-    //!
-    //! \endrst
+    //! \image html Pinfinity.jpg width=8cm
     //!
     void
     Pinfinity( real_type & x, real_type & y, bool plus = true ) const

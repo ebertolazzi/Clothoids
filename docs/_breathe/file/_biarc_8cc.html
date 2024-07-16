@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="../../">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <meta name="lang:clipboard.copy" content="Copy to clipboard">
+  <meta name="lang:clipboard.copied" content="Copied to clipboard">
+  <meta name="lang:search.language" content="en">
+  <meta name="lang:search.pipeline.stopwords" content="True">
+  <meta name="lang:search.pipeline.trimmer" content="True">
+  <meta name="lang:search.result.none" content="No matching documents">
+  <meta name="lang:search.result.one" content="1 matching document">
+  <meta name="lang:search.result.other" content="# matching documents">
+  <meta name="lang:search.tokenizer" content="[\s\-]+">
+
+  
+    <link href="https://fonts.gstatic.com/" rel="preconnect" crossorigin>
+    <link href="https://fonts.googleapis.com/css?family=Roboto+Mono:400,500,700|Roboto:300,400,400i,700&display=fallback" rel="stylesheet">
+
+    <style>
+      body,
+      input {
+        font-family: "Roboto", "Helvetica Neue", Helvetica, Arial, sans-serif
+      }
+
+      code,
+      kbd,
+      pre {
+        font-family: "Roboto Mono", "Courier New", Courier, monospace
+      }
+    </style>
+  
+
+  <link rel="stylesheet" href="../../_static/stylesheets/application.css"/>
+  <link rel="stylesheet" href="../../_static/stylesheets/application-palette.css"/>
+  <link rel="stylesheet" href="../../_static/stylesheets/application-fixes.css"/>
+  
+  <link rel="stylesheet" href="../../_static/fonts/material-icons.css"/>
+  
+  <meta name="theme-color" content="#3f51b5">
+  <script src="../../_static/javascripts/modernizr.js"></script>
+  
+  
+  
+    <title>File Biarc.cc &#8212; CLOTHOIDS 0.1 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=83e35b93" />
+    <link rel="stylesheet" type="text/css" href="../../_static/material.css?v=79c92029" />
+    <script src="../../_static/documentation_options.js?v=2709fde1"></script>
+    <script src="../../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="File Biarc.hxx" href="_biarc_8hxx.html" />
+    <link rel="prev" title="File BaseCurve_using.hxx" href="_base_curve__using_8hxx.html" />
+  
+   
+
+  </head>
+  <body dir=ltr
+        data-md-color-primary=blue-grey data-md-color-accent=blue>
+  
+  <svg class="md-svg">
+    <defs data-children-count="0">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" width="416" height="448" viewBox="0 0 416 448" id="__github"><path fill="currentColor" d="M160 304q0 10-3.125 20.5t-10.75 19T128 352t-18.125-8.5-10.75-19T96 304t3.125-20.5 10.75-19T128 256t18.125 8.5 10.75 19T160 304zm160 0q0 10-3.125 20.5t-10.75 19T288 352t-18.125-8.5-10.75-19T256 304t3.125-20.5 10.75-19T288 256t18.125 8.5 10.75 19T320 304zm40 0q0-30-17.25-51T296 232q-10.25 0-48.75 5.25Q229.5 240 208 240t-39.25-2.75Q130.75 232 120 232q-29.5 0-46.75 21T56 304q0 22 8 38.375t20.25 25.75 30.5 15 35 7.375 37.25 1.75h42q20.5 0 37.25-1.75t35-7.375 30.5-15 20.25-25.75T360 304zm56-44q0 51.75-15.25 82.75-9.5 19.25-26.375 33.25t-35.25 21.5-42.5 11.875-42.875 5.5T212 416q-19.5 0-35.5-.75t-36.875-3.125-38.125-7.5-34.25-12.875T37 371.5t-21.5-28.75Q0 312 0 260q0-59.25 34-99-6.75-20.5-6.75-42.5 0-29 12.75-54.5 27 0 47.5 9.875t47.25 30.875Q171.5 96 212 96q37 0 70 8 26.25-20.5 46.75-30.25T376 64q12.75 25.5 12.75 54.5 0 21.75-6.75 42 34 40 34 99.5z"/></svg>
+      
+    </defs>
+  </svg>
+  
+  <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer">
+  <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search">
+  <label class="md-overlay" data-md-component="overlay" for="__drawer"></label>
+  <a href="#_breathe/file/_biarc_8cc" tabindex="1" class="md-skip"> Skip to content </a>
+  <header class="md-header" data-md-component="header">
+  <nav class="md-header-nav md-grid">
+    <div class="md-flex navheader">
+      <div class="md-flex__cell md-flex__cell--shrink">
+        <a href="../../index.html" title="CLOTHOIDS 0.1 documentation"
+           class="md-header-nav__button md-logo">
+          
+            &nbsp;
+          
+        </a>
+      </div>
+      <div class="md-flex__cell md-flex__cell--shrink">
+        <label class="md-icon md-icon--menu md-header-nav__button" for="__drawer"></label>
+      </div>
+      <div class="md-flex__cell md-flex__cell--stretch">
+        <div class="md-flex__ellipsis md-header-nav__title" data-md-component="title">
+          <span class="md-header-nav__topic">CLOTHOIDS 0.1 documentation</span>
+          <span class="md-header-nav__topic"> File Biarc.cc </span>
+        </div>
+      </div>
+      <div class="md-flex__cell md-flex__cell--shrink">
+        <label class="md-icon md-icon--search md-header-nav__button" for="__search"></label>
+        
+<div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" action="../../search.html" method="get" name="search">
+      <input type="text" class="md-search__input" name="q" placeholder=""Search""
+             autocapitalize="off" autocomplete="off" spellcheck="false"
+             data-md-component="query" data-md-state="active">
+      <label class="md-icon md-search__icon" for="__search"></label>
+      <button type="reset" class="md-icon md-search__icon" data-md-component="reset" tabindex="-1">
+        &#xE5CD;
+      </button>
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="result">
+          <div class="md-search-result__meta">
+            Type to start searching
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+      </div>
+      
+      
+  
+  <script src="../../_static/javascripts/version_dropdown.js"></script>
+  <script>
+    var json_loc = "../../"versions.json"",
+        target_loc = "../../../",
+        text = "Versions";
+    $( document ).ready( add_version_dropdown(json_loc, target_loc, text));
+  </script>
+  
+
+    </div>
+  </nav>
+</header>
+
+  
+  <div class="md-container">
+    
+    
+    
+  <nav class="md-tabs" data-md-component="tabs">
+    <div class="md-tabs__inner md-grid">
+      <ul class="md-tabs__list">
+          <li class="md-tabs__item"><a href="../../index.html" class="md-tabs__link">CLOTHOIDS 0.1 documentation</a></li>
+          <li class="md-tabs__item"><a href="../filelist.html" class="md-tabs__link">File list</a></li>
+      </ul>
+    </div>
+  </nav>
+    <main class="md-main">
+      <div class="md-main__inner md-grid" data-md-component="container">
+        
+          <div class="md-sidebar md-sidebar--primary" data-md-component="navigation">
+            <div class="md-sidebar__scrollwrap">
+              <div class="md-sidebar__inner">
+                <nav class="md-nav md-nav--primary" data-md-level="0">
+  <label class="md-nav__title md-nav__title--site" for="__drawer">
+    <a href="../../index.html" title="CLOTHOIDS 0.1 documentation" class="md-nav__button md-logo">
+      
+        <img src="../../_static/" alt=" logo" width="48" height="48">
+      
+    </a>
+    <a href="../../index.html"
+       title="CLOTHOIDS 0.1 documentation">CLOTHOIDS 0.1 documentation</a>
+  </label>
+  
+
+</nav>
+              </div>
+            </div>
+          </div>
+          <div class="md-sidebar md-sidebar--secondary" data-md-component="toc">
+            <div class="md-sidebar__scrollwrap">
+              <div class="md-sidebar__inner">
+                
+<nav class="md-nav md-nav--secondary">
+    <label class="md-nav__title" for="__toc">"Contents"</label>
+  <ul class="md-nav__list" data-md-scrollfix="">
+        <li class="md-nav__item"><a href="#breathe-file-biarc-8cc--page-root" class="md-nav__link">File Biarc.cc</a><nav class="md-nav">
+              <ul class="md-nav__list">
+        <li class="md-nav__item"><a href="#_CPPv45G2lib" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">G2lib</span></code></a><nav class="md-nav">
+              <ul class="md-nav__list">
+        <li class="md-nav__item"><a href="#_CPPv4N5G2lib17build_guess_thetaE7integerA_K9real_typeA_K9real_typeA_9real_type" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">G2lib::build_guess_theta()</span></code></a>
+        </li>
+        <li class="md-nav__item"><a href="#_CPPv4N5G2liblsER12ostream_typeRK5Biarc" class="md-nav__link"><code class="docutils literal notranslate"><span class="pre">G2lib::operator&lt;&lt;()</span></code></a>
+        </li></ul>
+            </nav>
+        </li></ul>
+            </nav>
+        </li>
+    
+<li class="md-nav__item"><a class="md-nav__extra_link" href="../../_sources/_breathe/file/_biarc_8cc.rst.txt">Show Source</a> </li>
+
+<li id="searchbox" class="md-nav__item"></li>
+
+  </ul>
+</nav>
+              </div>
+            </div>
+          </div>
+        
+        <div class="md-content">
+          <article class="md-content__inner md-typeset" role="main">
+            
+  <section id="file-biarc-cc">
+<h1 id="breathe-file-biarc-8cc--page-root">File Biarc.cc<a class="headerlink" href="#breathe-file-biarc-8cc--page-root" title="Link to this heading">¶</a></h1>
+<dl class="cpp type">
+<dt class="sig sig-object cpp" id="_CPPv45G2lib">
+<span id="_CPPv35G2lib"></span><span id="_CPPv25G2lib"></span><span id="G2lib"></span><span class="target" id="namespace_g2lib"></span><span class="k"><span class="pre">namespace</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">G2lib</span></span></span><br/></dt>
+<dd><p>file: BBox.cc</p>
+<p>file: Biarc.cc</p>
+<p>file: BaseCurve.hh</p>
+<p>file: BBox.hxx</p>
+<p>file: Biarc.hxx</p>
+<p>file: BiarcList.hh</p>
+<p>file: Circle.hxx</p>
+<p>file: Clothoid.hxx</p>
+<p>file: ClothoidList.hxx</p>
+<p>file: Dubins.hxx</p>
+<p>file: Dubins3p.hxx</p>
+<p>file: Fresnel.hxx</p>
+<p>file: Line.hxx</p>
+<p>file: PolyLine.hxx</p>
+<p>file: Triangle2D.hxx</p>
+<p>file: Dubins.cc</p>
+<p>file: Dubins3p.cc</p>
+<p>file: Dubins3p_ellipse.cc</p>
+<p>file: Dubins3p_pattern.cc</p>
+<div class="breathe-sectiondef docutils container">
+<p class="breathe-sectiondef-title rubric" id="breathe-section-title-functions">Functions</p>
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N5G2lib17build_guess_thetaE7integerA_K9real_typeA_K9real_typeA_9real_type">
+<span id="_CPPv3N5G2lib17build_guess_thetaE7integerA_K9real_typeA_K9real_typeA_9real_type"></span><span id="_CPPv2N5G2lib17build_guess_thetaE7integerA_K9real_typeA_K9real_typeA_9real_type"></span><span id="G2lib::build_guess_theta__integer.real_typeCA.real_typeCA.real_typeA"></span><span class="target" id="namespace_g2lib_1a24c9c37c42e5ead0f924cefa812ae0aa"></span><span class="kt"><span class="pre">bool</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">build_guess_theta</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="_clothoids_8hh.html#_CPPv4N5G2lib7integerE" title="G2lib::integer"><span class="n"><span class="pre">integer</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">n</span></span>, <a class="reference internal" href="_clothoids_8hh.html#_CPPv4N5G2lib9real_typeE" title="G2lib::real_type"><span class="n"><span class="pre">real_type</span></span></a><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">x</span></span><span class="p"><span class="pre">[</span></span><span class="p"><span class="pre">]</span></span>, <a class="reference internal" href="_clothoids_8hh.html#_CPPv4N5G2lib9real_typeE" title="G2lib::real_type"><span class="n"><span class="pre">real_type</span></span></a><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="n sig-param"><span class="pre">y</span></span><span class="p"><span class="pre">[</span></span><span class="p"><span class="pre">]</span></span>, <a class="reference internal" href="_clothoids_8hh.html#_CPPv4N5G2lib9real_typeE" title="G2lib::real_type"><span class="n"><span class="pre">real_type</span></span></a><span class="w"> </span><span class="n sig-param"><span class="pre">theta</span></span><span class="p"><span class="pre">[</span></span><span class="p"><span class="pre">]</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N5G2lib17build_guess_thetaE7integerA_K9real_typeA_K9real_typeA_9real_type" title="Link to this definition">¶</a><br/></dt>
+<dd><p>Given a list of points <span class="math notranslate nohighlight">\( (x_i,y_i) \)</span> build a guess of angles for a spline of biarc.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>n</strong> – <strong>[in]</strong> number of points </p></li>
+<li><p><strong>x</strong> – <strong>[in]</strong> x-coordinates </p></li>
+<li><p><strong>y</strong> – <strong>[in]</strong> y-coordinates </p></li>
+<li><p><strong>theta</strong> – <strong>[out]</strong> guessed angles </p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+<dl class="cpp function">
+<dt class="sig sig-object cpp" id="_CPPv4N5G2liblsER12ostream_typeRK5Biarc">
+<span id="_CPPv3N5G2liblsER12ostream_typeRK5Biarc"></span><span id="_CPPv2N5G2liblsER12ostream_typeRK5Biarc"></span><span id="G2lib::lshift-operator__ostream_typeR.BiarcCR"></span><span class="target" id="namespace_g2lib_1a96b7fc2853ca6de16269e745bd03f832"></span><a class="reference internal" href="_clothoids_8hh.html#_CPPv4N5G2lib12ostream_typeE" title="G2lib::ostream_type"><span class="n"><span class="pre">ostream_type</span></span></a><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="sig-name descname"><span class="k"><span class="pre">operator</span></span><span class="o"><span class="pre">&lt;&lt;</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="_clothoids_8hh.html#_CPPv4N5G2lib12ostream_typeE" title="G2lib::ostream_type"><span class="n"><span class="pre">ostream_type</span></span></a><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">stream</span></span>, <a class="reference internal" href="../class/class_g2lib_1_1_biarc.html#_CPPv4N5G2lib5BiarcE" title="G2lib::Biarc"><span class="n"><span class="pre">Biarc</span></span></a><span class="w"> </span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="p"><span class="pre">&amp;</span></span><span class="n sig-param"><span class="pre">bi</span></span><span class="sig-paren">)</span><a class="headerlink" href="#_CPPv4N5G2liblsER12ostream_typeRK5Biarc" title="Link to this definition">¶</a><br/></dt>
+<dd><p>Pretty print of the biarc. </p>
+</dd></dl>
+</div>
+</dd></dl>
+</section>
+
+
+          </article>
+        </div>
+      </div>
+    </main>
+  </div>
+  <footer class="md-footer">
+    <div class="md-footer-nav">
+      <nav class="md-footer-nav__inner md-grid">
+          
+            <a href="_base_curve__using_8hxx.html" title="File BaseCurve_using.hxx"
+               class="md-flex md-footer-nav__link md-footer-nav__link--prev"
+               rel="prev">
+              <div class="md-flex__cell md-flex__cell--shrink">
+                <i class="md-icon md-icon--arrow-back md-footer-nav__button"></i>
+              </div>
+              <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title">
+                <span class="md-flex__ellipsis">
+                  <span
+                      class="md-footer-nav__direction"> "Previous" </span> File BaseCurve_using.hxx </span>
+              </div>
+            </a>
+          
+          
+            <a href="_biarc_8hxx.html" title="File Biarc.hxx"
+               class="md-flex md-footer-nav__link md-footer-nav__link--next"
+               rel="next">
+            <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title"><span
+                class="md-flex__ellipsis"> <span
+                class="md-footer-nav__direction"> "Next" </span> File Biarc.hxx </span>
+            </div>
+            <div class="md-flex__cell md-flex__cell--shrink"><i
+                class="md-icon md-icon--arrow-forward md-footer-nav__button"></i>
+            </div>
+          
+        </a>
+        
+      </nav>
+    </div>
+    <div class="md-footer-meta md-typeset">
+      <div class="md-footer-meta__inner md-grid">
+        <div class="md-footer-copyright">
+          <div class="md-footer-copyright__highlight">
+              &#169; Copyright 2024, E.Bertolazzi and M.Frego.
+              
+          </div>
+            Created using
+            <a href="http://www.sphinx-doc.org/">Sphinx</a> 7.4.4.
+             and
+            <a href="https://github.com/bashtage/sphinx-material/">Material for
+              Sphinx</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+  <script src="../../_static/javascripts/application.js"></script>
+  <script>app.initialize({version: "1.0.4", url: {base: ".."}})</script>
+  </body>
+</html>

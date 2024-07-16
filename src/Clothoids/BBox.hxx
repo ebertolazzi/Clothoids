@@ -109,9 +109,10 @@ namespace G2lib {
     //!
     //! Construct a bounding box with additional information
     //!
-    //! \param[in] bbox bbox [pmin, pmax]
-    //! \param[in] id   identifier of the box
-    //! \param[in] ipos ranking position of the box
+    //! \param[in] bbox_min bounding box lower corner
+    //! \param[in] bbox_max bounding box upper corner
+    //! \param[in] id       identifier of the box
+    //! \param[in] ipos     ranking position of the box
     //!
     BBox(
       real_type const bbox_min[2],

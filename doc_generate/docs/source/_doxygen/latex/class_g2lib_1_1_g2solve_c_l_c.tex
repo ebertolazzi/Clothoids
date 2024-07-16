@@ -1,0 +1,347 @@
+\doxysection{G2lib\+::G2solve\+CLC Class Reference}
+\hypertarget{class_g2lib_1_1_g2solve_c_l_c}{}\label{class_g2lib_1_1_g2solve_c_l_c}\index{G2lib::G2solveCLC@{G2lib::G2solveCLC}}
+
+
+{\ttfamily \#include $<$Clothoid\+List.\+hxx$>$}
+
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_g2lib_1_1_g2solve_c_l_c_a2c3d3352b796b5c4d86ad2ae75e617f2}{G2solve\+CLC}} ()=default
+\item 
+\mbox{\hyperlink{class_g2lib_1_1_g2solve_c_l_c_a8979a0d7245256d1255f1f24cdd46295}{\texorpdfstring{$\sim$}{\string~}\+G2solve\+CLC}} ()=default
+\item 
+int \mbox{\hyperlink{class_g2lib_1_1_g2solve_c_l_c_a032145b6285d84d2c9022e8fd950933d}{build}} (\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} x0, \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} y0, \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} theta0, \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} kappa0, \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} x1, \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} y1, \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} theta1, \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} kappa1)
+\item 
+void \mbox{\hyperlink{class_g2lib_1_1_g2solve_c_l_c_a537e09ec176adecbc4b860aa0c5100ea}{set\+\_\+tolerance}} (\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} tol)
+\item 
+void \mbox{\hyperlink{class_g2lib_1_1_g2solve_c_l_c_ac7393eb106763fee4af751f97ff2ff28}{set\+\_\+max\+\_\+iter}} (\mbox{\hyperlink{namespace_g2lib_a17146eb1606475bedc9a2d27f3b29e34}{integer}} miter)
+\item 
+int \mbox{\hyperlink{class_g2lib_1_1_g2solve_c_l_c_aa4d4cfd4eca8c1394e4556b2d0178df2}{solve}} ()
+\item 
+\mbox{\hyperlink{class_g2lib_1_1_clothoid_curve}{Clothoid\+Curve}} const \& \mbox{\hyperlink{class_g2lib_1_1_g2solve_c_l_c_ae5e00ff372d58e5e75937bff259c0aa7}{S0}} () const
+\item 
+\mbox{\hyperlink{class_g2lib_1_1_clothoid_curve}{Clothoid\+Curve}} const \& \mbox{\hyperlink{class_g2lib_1_1_g2solve_c_l_c_ab831c094b55c9487382f1c57f8a5d836}{SM}} () const
+\item 
+\mbox{\hyperlink{class_g2lib_1_1_clothoid_curve}{Clothoid\+Curve}} const \& \mbox{\hyperlink{class_g2lib_1_1_g2solve_c_l_c_ae11c43ced9b6ebf1098bb9eafaacdd7e}{S1}} () const
+\item 
+void \mbox{\hyperlink{class_g2lib_1_1_g2solve_c_l_c_a7e7c9fb6c6e17db49c7a48538898b027}{save}} (\mbox{\hyperlink{namespace_g2lib_a8fcbace87db5a5e71391e0040878f2c3}{ostream\+\_\+type}} \&stream) const
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Private Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+bool \mbox{\hyperlink{class_g2lib_1_1_g2solve_c_l_c_a240c1ca283a5341d5a55455b870cea18}{build\+\_\+solution}} (\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} sM, \mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} thM)
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \mbox{\hyperlink{class_g2lib_1_1_g2solve_c_l_c_ada67552bf06e980822738884654b6eab}{m\+\_\+tolerance}} \{\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}}(1e-\/10)\}
+\item 
+int \mbox{\hyperlink{class_g2lib_1_1_g2solve_c_l_c_a6de64890d694bb5bc7e1fefcf4aa1098}{m\+\_\+max\+\_\+iter}} \{20\}
+\item 
+\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \mbox{\hyperlink{class_g2lib_1_1_g2solve_c_l_c_a27fc782d1fcb571f0a4f3f3f7c1e5474}{m\+\_\+x0}} \{\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}}(0)\}
+\item 
+\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \mbox{\hyperlink{class_g2lib_1_1_g2solve_c_l_c_ac39761ead97de251a969fd2f7605e1a4}{m\+\_\+y0}} \{\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}}(0)\}
+\item 
+\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \mbox{\hyperlink{class_g2lib_1_1_g2solve_c_l_c_adf20cbb305d9c6c5a0c53345019df305}{m\+\_\+theta0}} \{\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}}(0)\}
+\item 
+\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \mbox{\hyperlink{class_g2lib_1_1_g2solve_c_l_c_af26e485fce5933f118a9968375e9512e}{m\+\_\+kappa0}} \{\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}}(0)\}
+\item 
+\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \mbox{\hyperlink{class_g2lib_1_1_g2solve_c_l_c_a717422e6a3d8478ba6a01c27e44ac95b}{m\+\_\+x1}} \{\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}}(0)\}
+\item 
+\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \mbox{\hyperlink{class_g2lib_1_1_g2solve_c_l_c_af6b820a5b13a8b15f4a1eb54a0d8f410}{m\+\_\+y1}} \{\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}}(0)\}
+\item 
+\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \mbox{\hyperlink{class_g2lib_1_1_g2solve_c_l_c_a02d0729789a3f693fc3729595ceced52}{m\+\_\+theta1}} \{\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}}(0)\}
+\item 
+\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \mbox{\hyperlink{class_g2lib_1_1_g2solve_c_l_c_a95fa69f16e3f51c084bbeae8c3b0a0ca}{m\+\_\+kappa1}} \{\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}}(0)\}
+\item 
+\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \mbox{\hyperlink{class_g2lib_1_1_g2solve_c_l_c_a6b044cf8e9fab4e6942d041b91b9dfec}{m\+\_\+lambda}} \{\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}}(0)\}
+\item 
+\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \mbox{\hyperlink{class_g2lib_1_1_g2solve_c_l_c_aa5101830cd1feeb9fec8a8863dda9f69}{m\+\_\+phi}} \{\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}}(0)\}
+\item 
+\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \mbox{\hyperlink{class_g2lib_1_1_g2solve_c_l_c_a11bfca68136773470e9f37110c61284b}{m\+\_\+xbar}} \{\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}}(0)\}
+\item 
+\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \mbox{\hyperlink{class_g2lib_1_1_g2solve_c_l_c_a8fa85acd9146d7ab686ecd157db0dd44}{m\+\_\+ybar}} \{\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}}(0)\}
+\item 
+\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \mbox{\hyperlink{class_g2lib_1_1_g2solve_c_l_c_ac2a9b24f3ce24ee2deec9421176cef40}{m\+\_\+th0}} \{\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}}(0)\}
+\item 
+\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \mbox{\hyperlink{class_g2lib_1_1_g2solve_c_l_c_af8267402d0b4f67d1425368ebed8f3bf}{m\+\_\+th1}} \{\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}}(0)\}
+\item 
+\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \mbox{\hyperlink{class_g2lib_1_1_g2solve_c_l_c_a970bb9366f91155f3c87d3ac34234e91}{m\+\_\+k0}} \{\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}}(0)\}
+\item 
+\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} \mbox{\hyperlink{class_g2lib_1_1_g2solve_c_l_c_a3640d9c77ec1a465a38f535db3cd9fdb}{m\+\_\+k1}} \{\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}}(0)\}
+\item 
+\mbox{\hyperlink{class_g2lib_1_1_clothoid_curve}{Clothoid\+Curve}} \mbox{\hyperlink{class_g2lib_1_1_g2solve_c_l_c_a020bb6587f5dec325959c964aadf1a23}{m\+\_\+\+S0}} \{"{}G2solve\+CLC\+\_\+\+S0"{}\}
+\item 
+\mbox{\hyperlink{class_g2lib_1_1_clothoid_curve}{Clothoid\+Curve}} \mbox{\hyperlink{class_g2lib_1_1_g2solve_c_l_c_af3e4270fef4a7b3e3cb53f419a96fd11}{m\+\_\+\+SM}} \{"{}G2solve\+CLC\+\_\+\+SM"{}\}
+\item 
+\mbox{\hyperlink{class_g2lib_1_1_clothoid_curve}{Clothoid\+Curve}} \mbox{\hyperlink{class_g2lib_1_1_g2solve_c_l_c_a215e4b57dfa1e923ab99d31d34f282d1}{m\+\_\+\+S1}} \{"{}G2solve\+CLC\+\_\+\+S1"{}\}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Construct a piecewise clothoids $ G(s) $ composed by 2 clothoid and one line segment that solve the G2 problem
+
+\[
+\begin{array}{ll}
+\textrm{endpoints:}\quad &
+\begin{cases}
+  G(0) = \mathbf{p}_0 & \\[0.5em]
+  G(L) = \mathbf{p}_1 &
+\end{cases}
+\\[1em]
+\textrm{angles:}\quad &
+\begin{cases}
+  \theta(0) = \theta_0 & \\[0.5em]
+  \theta(L) = \theta_1 &
+\end{cases}
+\\[1em]
+\textrm{curvature:}\quad &
+\begin{cases}
+  \kappa(0) = \kappa_0 & \\[0.5em]
+  \kappa(L)  = \kappa_1 &
+\end{cases}
+\end{array}
+\]
+
+{\bfseries{note}}
+
+The solution do not exist for all the combination of points/angle/curvature 
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{class_g2lib_1_1_g2solve_c_l_c_a2c3d3352b796b5c4d86ad2ae75e617f2}\index{G2lib::G2solveCLC@{G2lib::G2solveCLC}!G2solveCLC@{G2solveCLC}}
+\index{G2solveCLC@{G2solveCLC}!G2lib::G2solveCLC@{G2lib::G2solveCLC}}
+\doxysubsubsection{\texorpdfstring{G2solveCLC()}{G2solveCLC()}}
+{\footnotesize\ttfamily \label{class_g2lib_1_1_g2solve_c_l_c_a2c3d3352b796b5c4d86ad2ae75e617f2} 
+G2lib\+::\+G2solve\+CLC\+::\+G2solve\+CLC (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [default]}}
+
+Build an empty clothoid list \Hypertarget{class_g2lib_1_1_g2solve_c_l_c_a8979a0d7245256d1255f1f24cdd46295}\index{G2lib::G2solveCLC@{G2lib::G2solveCLC}!````~G2solveCLC@{\texorpdfstring{$\sim$}{\string~}G2solveCLC}}
+\index{````~G2solveCLC@{\texorpdfstring{$\sim$}{\string~}G2solveCLC}!G2lib::G2solveCLC@{G2lib::G2solveCLC}}
+\doxysubsubsection{\texorpdfstring{\texorpdfstring{$\sim$}{\string~}G2solveCLC()}{\string~G2solveCLC()}}
+{\footnotesize\ttfamily \label{class_g2lib_1_1_g2solve_c_l_c_a8979a0d7245256d1255f1f24cdd46295} 
+G2lib\+::\+G2solve\+CLC\+::\texorpdfstring{$\sim$}{\string~}\+G2solve\+CLC (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [default]}}
+
+
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{class_g2lib_1_1_g2solve_c_l_c_a032145b6285d84d2c9022e8fd950933d}\index{G2lib::G2solveCLC@{G2lib::G2solveCLC}!build@{build}}
+\index{build@{build}!G2lib::G2solveCLC@{G2lib::G2solveCLC}}
+\doxysubsubsection{\texorpdfstring{build()}{build()}}
+{\footnotesize\ttfamily \label{class_g2lib_1_1_g2solve_c_l_c_a032145b6285d84d2c9022e8fd950933d} 
+int G2lib\+::\+G2solve\+CLC\+::build (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}}}]{x0}{, }\item[{\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}}}]{y0}{, }\item[{\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}}}]{theta0}{, }\item[{\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}}}]{kappa0}{, }\item[{\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}}}]{x1}{, }\item[{\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}}}]{y1}{, }\item[{\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}}}]{theta1}{, }\item[{\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}}}]{kappa1}{}\end{DoxyParamCaption})}
+
+Construct a piecewise clothoids $ G(s) $ composed by two clothoids and one line segment that solve the G2 problem, with data
+
+\[ \mathbf{p}_0 = (x_0,y_0)^T, \qquad \mathbf{p}_1 = (x_1,y_1)^T \] \[ \theta_0, \qquad \theta_1, \qquad \kappa_0, \qquad \kappa_1 \]
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\texttt{ in}}  & {\em x0} & $ x_0      $ \\
+\hline
+\mbox{\texttt{ in}}  & {\em y0} & $ y_0      $ \\
+\hline
+\mbox{\texttt{ in}}  & {\em theta0} & $ \theta_0 $ \\
+\hline
+\mbox{\texttt{ in}}  & {\em kappa0} & $ \kappa_0 $ \\
+\hline
+\mbox{\texttt{ in}}  & {\em x1} & $ x_1      $ \\
+\hline
+\mbox{\texttt{ in}}  & {\em y1} & $ y_1      $ \\
+\hline
+\mbox{\texttt{ in}}  & {\em theta1} & $ \theta_1 $ \\
+\hline
+\mbox{\texttt{ in}}  & {\em kappa1} & $ \kappa_1 $ \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+number of iterations of -\/1 if failed 
+\end{DoxyReturn}
+\Hypertarget{class_g2lib_1_1_g2solve_c_l_c_a240c1ca283a5341d5a55455b870cea18}\index{G2lib::G2solveCLC@{G2lib::G2solveCLC}!build\_solution@{build\_solution}}
+\index{build\_solution@{build\_solution}!G2lib::G2solveCLC@{G2lib::G2solveCLC}}
+\doxysubsubsection{\texorpdfstring{build\_solution()}{build\_solution()}}
+{\footnotesize\ttfamily \label{class_g2lib_1_1_g2solve_c_l_c_a240c1ca283a5341d5a55455b870cea18} 
+bool G2lib\+::\+G2solve\+CLC\+::build\+\_\+solution (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}}}]{sM}{, }\item[{\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}}}]{thM}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+\Hypertarget{class_g2lib_1_1_g2solve_c_l_c_ae5e00ff372d58e5e75937bff259c0aa7}\index{G2lib::G2solveCLC@{G2lib::G2solveCLC}!S0@{S0}}
+\index{S0@{S0}!G2lib::G2solveCLC@{G2lib::G2solveCLC}}
+\doxysubsubsection{\texorpdfstring{S0()}{S0()}}
+{\footnotesize\ttfamily \label{class_g2lib_1_1_g2solve_c_l_c_ae5e00ff372d58e5e75937bff259c0aa7} 
+\mbox{\hyperlink{class_g2lib_1_1_clothoid_curve}{Clothoid\+Curve}} const  \& G2lib\+::\+G2solve\+CLC\+::\+S0 (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+Return the first clothoid of the G2 clothoid list \Hypertarget{class_g2lib_1_1_g2solve_c_l_c_ae11c43ced9b6ebf1098bb9eafaacdd7e}\index{G2lib::G2solveCLC@{G2lib::G2solveCLC}!S1@{S1}}
+\index{S1@{S1}!G2lib::G2solveCLC@{G2lib::G2solveCLC}}
+\doxysubsubsection{\texorpdfstring{S1()}{S1()}}
+{\footnotesize\ttfamily \label{class_g2lib_1_1_g2solve_c_l_c_ae11c43ced9b6ebf1098bb9eafaacdd7e} 
+\mbox{\hyperlink{class_g2lib_1_1_clothoid_curve}{Clothoid\+Curve}} const  \& G2lib\+::\+G2solve\+CLC\+::\+S1 (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+Return the third clothoid of the G2 clothoid list \Hypertarget{class_g2lib_1_1_g2solve_c_l_c_a7e7c9fb6c6e17db49c7a48538898b027}\index{G2lib::G2solveCLC@{G2lib::G2solveCLC}!save@{save}}
+\index{save@{save}!G2lib::G2solveCLC@{G2lib::G2solveCLC}}
+\doxysubsubsection{\texorpdfstring{save()}{save()}}
+{\footnotesize\ttfamily \label{class_g2lib_1_1_g2solve_c_l_c_a7e7c9fb6c6e17db49c7a48538898b027} 
+void G2lib\+::\+G2solve\+CLC\+::save (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{namespace_g2lib_a8fcbace87db5a5e71391e0040878f2c3}{ostream\+\_\+type}} \&}]{stream}{}\end{DoxyParamCaption}) const}
+
+\Hypertarget{class_g2lib_1_1_g2solve_c_l_c_ac7393eb106763fee4af751f97ff2ff28}\index{G2lib::G2solveCLC@{G2lib::G2solveCLC}!set\_max\_iter@{set\_max\_iter}}
+\index{set\_max\_iter@{set\_max\_iter}!G2lib::G2solveCLC@{G2lib::G2solveCLC}}
+\doxysubsubsection{\texorpdfstring{set\_max\_iter()}{set\_max\_iter()}}
+{\footnotesize\ttfamily \label{class_g2lib_1_1_g2solve_c_l_c_ac7393eb106763fee4af751f97ff2ff28} 
+void G2lib\+::\+G2solve\+CLC\+::set\+\_\+max\+\_\+iter (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{namespace_g2lib_a17146eb1606475bedc9a2d27f3b29e34}{integer}}}]{miter}{}\end{DoxyParamCaption})}
+
+Fix maximum number of iteration for the G2 problem \Hypertarget{class_g2lib_1_1_g2solve_c_l_c_a537e09ec176adecbc4b860aa0c5100ea}\index{G2lib::G2solveCLC@{G2lib::G2solveCLC}!set\_tolerance@{set\_tolerance}}
+\index{set\_tolerance@{set\_tolerance}!G2lib::G2solveCLC@{G2lib::G2solveCLC}}
+\doxysubsubsection{\texorpdfstring{set\_tolerance()}{set\_tolerance()}}
+{\footnotesize\ttfamily \label{class_g2lib_1_1_g2solve_c_l_c_a537e09ec176adecbc4b860aa0c5100ea} 
+void G2lib\+::\+G2solve\+CLC\+::set\+\_\+tolerance (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}}}]{tol}{}\end{DoxyParamCaption})}
+
+Fix tolerance for the G2 problem \Hypertarget{class_g2lib_1_1_g2solve_c_l_c_ab831c094b55c9487382f1c57f8a5d836}\index{G2lib::G2solveCLC@{G2lib::G2solveCLC}!SM@{SM}}
+\index{SM@{SM}!G2lib::G2solveCLC@{G2lib::G2solveCLC}}
+\doxysubsubsection{\texorpdfstring{SM()}{SM()}}
+{\footnotesize\ttfamily \label{class_g2lib_1_1_g2solve_c_l_c_ab831c094b55c9487382f1c57f8a5d836} 
+\mbox{\hyperlink{class_g2lib_1_1_clothoid_curve}{Clothoid\+Curve}} const  \& G2lib\+::\+G2solve\+CLC\+::\+SM (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+Return the second segment (the line) as a clothoid \Hypertarget{class_g2lib_1_1_g2solve_c_l_c_aa4d4cfd4eca8c1394e4556b2d0178df2}\index{G2lib::G2solveCLC@{G2lib::G2solveCLC}!solve@{solve}}
+\index{solve@{solve}!G2lib::G2solveCLC@{G2lib::G2solveCLC}}
+\doxysubsubsection{\texorpdfstring{solve()}{solve()}}
+{\footnotesize\ttfamily \label{class_g2lib_1_1_g2solve_c_l_c_aa4d4cfd4eca8c1394e4556b2d0178df2} 
+int G2lib\+::\+G2solve\+CLC\+::solve (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption})}
+
+Solve the G2 problem
+
+\begin{DoxyReturn}{Returns}
+number of iterations of -\/1 if failed 
+\end{DoxyReturn}
+
+
+\doxysubsection{Member Data Documentation}
+\Hypertarget{class_g2lib_1_1_g2solve_c_l_c_a970bb9366f91155f3c87d3ac34234e91}\index{G2lib::G2solveCLC@{G2lib::G2solveCLC}!m\_k0@{m\_k0}}
+\index{m\_k0@{m\_k0}!G2lib::G2solveCLC@{G2lib::G2solveCLC}}
+\doxysubsubsection{\texorpdfstring{m\_k0}{m\_k0}}
+{\footnotesize\ttfamily \label{class_g2lib_1_1_g2solve_c_l_c_a970bb9366f91155f3c87d3ac34234e91} 
+\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} G2lib\+::\+G2solve\+CLC\+::m\+\_\+k0 \{\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}}(0)\}\hspace{0.3cm}{\ttfamily [private]}}
+
+\Hypertarget{class_g2lib_1_1_g2solve_c_l_c_a3640d9c77ec1a465a38f535db3cd9fdb}\index{G2lib::G2solveCLC@{G2lib::G2solveCLC}!m\_k1@{m\_k1}}
+\index{m\_k1@{m\_k1}!G2lib::G2solveCLC@{G2lib::G2solveCLC}}
+\doxysubsubsection{\texorpdfstring{m\_k1}{m\_k1}}
+{\footnotesize\ttfamily \label{class_g2lib_1_1_g2solve_c_l_c_a3640d9c77ec1a465a38f535db3cd9fdb} 
+\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} G2lib\+::\+G2solve\+CLC\+::m\+\_\+k1 \{\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}}(0)\}\hspace{0.3cm}{\ttfamily [private]}}
+
+\Hypertarget{class_g2lib_1_1_g2solve_c_l_c_af26e485fce5933f118a9968375e9512e}\index{G2lib::G2solveCLC@{G2lib::G2solveCLC}!m\_kappa0@{m\_kappa0}}
+\index{m\_kappa0@{m\_kappa0}!G2lib::G2solveCLC@{G2lib::G2solveCLC}}
+\doxysubsubsection{\texorpdfstring{m\_kappa0}{m\_kappa0}}
+{\footnotesize\ttfamily \label{class_g2lib_1_1_g2solve_c_l_c_af26e485fce5933f118a9968375e9512e} 
+\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} G2lib\+::\+G2solve\+CLC\+::m\+\_\+kappa0 \{\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}}(0)\}\hspace{0.3cm}{\ttfamily [private]}}
+
+\Hypertarget{class_g2lib_1_1_g2solve_c_l_c_a95fa69f16e3f51c084bbeae8c3b0a0ca}\index{G2lib::G2solveCLC@{G2lib::G2solveCLC}!m\_kappa1@{m\_kappa1}}
+\index{m\_kappa1@{m\_kappa1}!G2lib::G2solveCLC@{G2lib::G2solveCLC}}
+\doxysubsubsection{\texorpdfstring{m\_kappa1}{m\_kappa1}}
+{\footnotesize\ttfamily \label{class_g2lib_1_1_g2solve_c_l_c_a95fa69f16e3f51c084bbeae8c3b0a0ca} 
+\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} G2lib\+::\+G2solve\+CLC\+::m\+\_\+kappa1 \{\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}}(0)\}\hspace{0.3cm}{\ttfamily [private]}}
+
+\Hypertarget{class_g2lib_1_1_g2solve_c_l_c_a6b044cf8e9fab4e6942d041b91b9dfec}\index{G2lib::G2solveCLC@{G2lib::G2solveCLC}!m\_lambda@{m\_lambda}}
+\index{m\_lambda@{m\_lambda}!G2lib::G2solveCLC@{G2lib::G2solveCLC}}
+\doxysubsubsection{\texorpdfstring{m\_lambda}{m\_lambda}}
+{\footnotesize\ttfamily \label{class_g2lib_1_1_g2solve_c_l_c_a6b044cf8e9fab4e6942d041b91b9dfec} 
+\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} G2lib\+::\+G2solve\+CLC\+::m\+\_\+lambda \{\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}}(0)\}\hspace{0.3cm}{\ttfamily [private]}}
+
+\Hypertarget{class_g2lib_1_1_g2solve_c_l_c_a6de64890d694bb5bc7e1fefcf4aa1098}\index{G2lib::G2solveCLC@{G2lib::G2solveCLC}!m\_max\_iter@{m\_max\_iter}}
+\index{m\_max\_iter@{m\_max\_iter}!G2lib::G2solveCLC@{G2lib::G2solveCLC}}
+\doxysubsubsection{\texorpdfstring{m\_max\_iter}{m\_max\_iter}}
+{\footnotesize\ttfamily \label{class_g2lib_1_1_g2solve_c_l_c_a6de64890d694bb5bc7e1fefcf4aa1098} 
+int G2lib\+::\+G2solve\+CLC\+::m\+\_\+max\+\_\+iter \{20\}\hspace{0.3cm}{\ttfamily [private]}}
+
+\Hypertarget{class_g2lib_1_1_g2solve_c_l_c_aa5101830cd1feeb9fec8a8863dda9f69}\index{G2lib::G2solveCLC@{G2lib::G2solveCLC}!m\_phi@{m\_phi}}
+\index{m\_phi@{m\_phi}!G2lib::G2solveCLC@{G2lib::G2solveCLC}}
+\doxysubsubsection{\texorpdfstring{m\_phi}{m\_phi}}
+{\footnotesize\ttfamily \label{class_g2lib_1_1_g2solve_c_l_c_aa5101830cd1feeb9fec8a8863dda9f69} 
+\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} G2lib\+::\+G2solve\+CLC\+::m\+\_\+phi \{\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}}(0)\}\hspace{0.3cm}{\ttfamily [private]}}
+
+\Hypertarget{class_g2lib_1_1_g2solve_c_l_c_a020bb6587f5dec325959c964aadf1a23}\index{G2lib::G2solveCLC@{G2lib::G2solveCLC}!m\_S0@{m\_S0}}
+\index{m\_S0@{m\_S0}!G2lib::G2solveCLC@{G2lib::G2solveCLC}}
+\doxysubsubsection{\texorpdfstring{m\_S0}{m\_S0}}
+{\footnotesize\ttfamily \label{class_g2lib_1_1_g2solve_c_l_c_a020bb6587f5dec325959c964aadf1a23} 
+\mbox{\hyperlink{class_g2lib_1_1_clothoid_curve}{Clothoid\+Curve}} G2lib\+::\+G2solve\+CLC\+::m\+\_\+\+S0 \{"{}G2solve\+CLC\+\_\+\+S0"{}\}\hspace{0.3cm}{\ttfamily [private]}}
+
+\Hypertarget{class_g2lib_1_1_g2solve_c_l_c_a215e4b57dfa1e923ab99d31d34f282d1}\index{G2lib::G2solveCLC@{G2lib::G2solveCLC}!m\_S1@{m\_S1}}
+\index{m\_S1@{m\_S1}!G2lib::G2solveCLC@{G2lib::G2solveCLC}}
+\doxysubsubsection{\texorpdfstring{m\_S1}{m\_S1}}
+{\footnotesize\ttfamily \label{class_g2lib_1_1_g2solve_c_l_c_a215e4b57dfa1e923ab99d31d34f282d1} 
+\mbox{\hyperlink{class_g2lib_1_1_clothoid_curve}{Clothoid\+Curve}} G2lib\+::\+G2solve\+CLC\+::m\+\_\+\+S1 \{"{}G2solve\+CLC\+\_\+\+S1"{}\}\hspace{0.3cm}{\ttfamily [private]}}
+
+\Hypertarget{class_g2lib_1_1_g2solve_c_l_c_af3e4270fef4a7b3e3cb53f419a96fd11}\index{G2lib::G2solveCLC@{G2lib::G2solveCLC}!m\_SM@{m\_SM}}
+\index{m\_SM@{m\_SM}!G2lib::G2solveCLC@{G2lib::G2solveCLC}}
+\doxysubsubsection{\texorpdfstring{m\_SM}{m\_SM}}
+{\footnotesize\ttfamily \label{class_g2lib_1_1_g2solve_c_l_c_af3e4270fef4a7b3e3cb53f419a96fd11} 
+\mbox{\hyperlink{class_g2lib_1_1_clothoid_curve}{Clothoid\+Curve}} G2lib\+::\+G2solve\+CLC\+::m\+\_\+\+SM \{"{}G2solve\+CLC\+\_\+\+SM"{}\}\hspace{0.3cm}{\ttfamily [private]}}
+
+\Hypertarget{class_g2lib_1_1_g2solve_c_l_c_ac2a9b24f3ce24ee2deec9421176cef40}\index{G2lib::G2solveCLC@{G2lib::G2solveCLC}!m\_th0@{m\_th0}}
+\index{m\_th0@{m\_th0}!G2lib::G2solveCLC@{G2lib::G2solveCLC}}
+\doxysubsubsection{\texorpdfstring{m\_th0}{m\_th0}}
+{\footnotesize\ttfamily \label{class_g2lib_1_1_g2solve_c_l_c_ac2a9b24f3ce24ee2deec9421176cef40} 
+\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} G2lib\+::\+G2solve\+CLC\+::m\+\_\+th0 \{\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}}(0)\}\hspace{0.3cm}{\ttfamily [private]}}
+
+\Hypertarget{class_g2lib_1_1_g2solve_c_l_c_af8267402d0b4f67d1425368ebed8f3bf}\index{G2lib::G2solveCLC@{G2lib::G2solveCLC}!m\_th1@{m\_th1}}
+\index{m\_th1@{m\_th1}!G2lib::G2solveCLC@{G2lib::G2solveCLC}}
+\doxysubsubsection{\texorpdfstring{m\_th1}{m\_th1}}
+{\footnotesize\ttfamily \label{class_g2lib_1_1_g2solve_c_l_c_af8267402d0b4f67d1425368ebed8f3bf} 
+\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} G2lib\+::\+G2solve\+CLC\+::m\+\_\+th1 \{\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}}(0)\}\hspace{0.3cm}{\ttfamily [private]}}
+
+\Hypertarget{class_g2lib_1_1_g2solve_c_l_c_adf20cbb305d9c6c5a0c53345019df305}\index{G2lib::G2solveCLC@{G2lib::G2solveCLC}!m\_theta0@{m\_theta0}}
+\index{m\_theta0@{m\_theta0}!G2lib::G2solveCLC@{G2lib::G2solveCLC}}
+\doxysubsubsection{\texorpdfstring{m\_theta0}{m\_theta0}}
+{\footnotesize\ttfamily \label{class_g2lib_1_1_g2solve_c_l_c_adf20cbb305d9c6c5a0c53345019df305} 
+\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} G2lib\+::\+G2solve\+CLC\+::m\+\_\+theta0 \{\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}}(0)\}\hspace{0.3cm}{\ttfamily [private]}}
+
+\Hypertarget{class_g2lib_1_1_g2solve_c_l_c_a02d0729789a3f693fc3729595ceced52}\index{G2lib::G2solveCLC@{G2lib::G2solveCLC}!m\_theta1@{m\_theta1}}
+\index{m\_theta1@{m\_theta1}!G2lib::G2solveCLC@{G2lib::G2solveCLC}}
+\doxysubsubsection{\texorpdfstring{m\_theta1}{m\_theta1}}
+{\footnotesize\ttfamily \label{class_g2lib_1_1_g2solve_c_l_c_a02d0729789a3f693fc3729595ceced52} 
+\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} G2lib\+::\+G2solve\+CLC\+::m\+\_\+theta1 \{\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}}(0)\}\hspace{0.3cm}{\ttfamily [private]}}
+
+\Hypertarget{class_g2lib_1_1_g2solve_c_l_c_ada67552bf06e980822738884654b6eab}\index{G2lib::G2solveCLC@{G2lib::G2solveCLC}!m\_tolerance@{m\_tolerance}}
+\index{m\_tolerance@{m\_tolerance}!G2lib::G2solveCLC@{G2lib::G2solveCLC}}
+\doxysubsubsection{\texorpdfstring{m\_tolerance}{m\_tolerance}}
+{\footnotesize\ttfamily \label{class_g2lib_1_1_g2solve_c_l_c_ada67552bf06e980822738884654b6eab} 
+\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} G2lib\+::\+G2solve\+CLC\+::m\+\_\+tolerance \{\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}}(1e-\/10)\}\hspace{0.3cm}{\ttfamily [private]}}
+
+\Hypertarget{class_g2lib_1_1_g2solve_c_l_c_a27fc782d1fcb571f0a4f3f3f7c1e5474}\index{G2lib::G2solveCLC@{G2lib::G2solveCLC}!m\_x0@{m\_x0}}
+\index{m\_x0@{m\_x0}!G2lib::G2solveCLC@{G2lib::G2solveCLC}}
+\doxysubsubsection{\texorpdfstring{m\_x0}{m\_x0}}
+{\footnotesize\ttfamily \label{class_g2lib_1_1_g2solve_c_l_c_a27fc782d1fcb571f0a4f3f3f7c1e5474} 
+\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} G2lib\+::\+G2solve\+CLC\+::m\+\_\+x0 \{\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}}(0)\}\hspace{0.3cm}{\ttfamily [private]}}
+
+\Hypertarget{class_g2lib_1_1_g2solve_c_l_c_a717422e6a3d8478ba6a01c27e44ac95b}\index{G2lib::G2solveCLC@{G2lib::G2solveCLC}!m\_x1@{m\_x1}}
+\index{m\_x1@{m\_x1}!G2lib::G2solveCLC@{G2lib::G2solveCLC}}
+\doxysubsubsection{\texorpdfstring{m\_x1}{m\_x1}}
+{\footnotesize\ttfamily \label{class_g2lib_1_1_g2solve_c_l_c_a717422e6a3d8478ba6a01c27e44ac95b} 
+\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} G2lib\+::\+G2solve\+CLC\+::m\+\_\+x1 \{\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}}(0)\}\hspace{0.3cm}{\ttfamily [private]}}
+
+\Hypertarget{class_g2lib_1_1_g2solve_c_l_c_a11bfca68136773470e9f37110c61284b}\index{G2lib::G2solveCLC@{G2lib::G2solveCLC}!m\_xbar@{m\_xbar}}
+\index{m\_xbar@{m\_xbar}!G2lib::G2solveCLC@{G2lib::G2solveCLC}}
+\doxysubsubsection{\texorpdfstring{m\_xbar}{m\_xbar}}
+{\footnotesize\ttfamily \label{class_g2lib_1_1_g2solve_c_l_c_a11bfca68136773470e9f37110c61284b} 
+\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} G2lib\+::\+G2solve\+CLC\+::m\+\_\+xbar \{\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}}(0)\}\hspace{0.3cm}{\ttfamily [private]}}
+
+\Hypertarget{class_g2lib_1_1_g2solve_c_l_c_ac39761ead97de251a969fd2f7605e1a4}\index{G2lib::G2solveCLC@{G2lib::G2solveCLC}!m\_y0@{m\_y0}}
+\index{m\_y0@{m\_y0}!G2lib::G2solveCLC@{G2lib::G2solveCLC}}
+\doxysubsubsection{\texorpdfstring{m\_y0}{m\_y0}}
+{\footnotesize\ttfamily \label{class_g2lib_1_1_g2solve_c_l_c_ac39761ead97de251a969fd2f7605e1a4} 
+\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} G2lib\+::\+G2solve\+CLC\+::m\+\_\+y0 \{\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}}(0)\}\hspace{0.3cm}{\ttfamily [private]}}
+
+\Hypertarget{class_g2lib_1_1_g2solve_c_l_c_af6b820a5b13a8b15f4a1eb54a0d8f410}\index{G2lib::G2solveCLC@{G2lib::G2solveCLC}!m\_y1@{m\_y1}}
+\index{m\_y1@{m\_y1}!G2lib::G2solveCLC@{G2lib::G2solveCLC}}
+\doxysubsubsection{\texorpdfstring{m\_y1}{m\_y1}}
+{\footnotesize\ttfamily \label{class_g2lib_1_1_g2solve_c_l_c_af6b820a5b13a8b15f4a1eb54a0d8f410} 
+\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} G2lib\+::\+G2solve\+CLC\+::m\+\_\+y1 \{\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}}(0)\}\hspace{0.3cm}{\ttfamily [private]}}
+
+\Hypertarget{class_g2lib_1_1_g2solve_c_l_c_a8fa85acd9146d7ab686ecd157db0dd44}\index{G2lib::G2solveCLC@{G2lib::G2solveCLC}!m\_ybar@{m\_ybar}}
+\index{m\_ybar@{m\_ybar}!G2lib::G2solveCLC@{G2lib::G2solveCLC}}
+\doxysubsubsection{\texorpdfstring{m\_ybar}{m\_ybar}}
+{\footnotesize\ttfamily \label{class_g2lib_1_1_g2solve_c_l_c_a8fa85acd9146d7ab686ecd157db0dd44} 
+\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}} G2lib\+::\+G2solve\+CLC\+::m\+\_\+ybar \{\mbox{\hyperlink{namespace_g2lib_acc8095aa40beedee44352de62f232033}{real\+\_\+type}}(0)\}\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+/\+Users/enrico/\+Ricerca/develop/\+PINS/pins-\/mechatronix/\+Lib\+Sources/submodules/\+Clothoids/src/\+Clothoids/\mbox{\hyperlink{_clothoid_list_8hxx}{Clothoid\+List.\+hxx}}\item 
+/\+Users/enrico/\+Ricerca/develop/\+PINS/pins-\/mechatronix/\+Lib\+Sources/submodules/\+Clothoids/src/\mbox{\hyperlink{_clothoid_g2_8cc}{Clothoid\+G2.\+cc}}\item 
+/\+Users/enrico/\+Ricerca/develop/\+PINS/pins-\/mechatronix/\+Lib\+Sources/submodules/\+Clothoids/src/\mbox{\hyperlink{_clothoid_list_8cc}{Clothoid\+List.\+cc}}\end{DoxyCompactItemize}

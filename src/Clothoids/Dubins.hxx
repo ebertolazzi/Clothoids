@@ -91,7 +91,8 @@ namespace G2lib {
     //! \param[in] x1     final position x-coordinate
     //! \param[in] y1     final position y-coordinate
     //! \param[in] theta1 final angle
-    //! \param[in] kmax   max curvature
+    //! \param[in] k_max  max curvature
+    //! \param[in] name   name of the Dubins object
     //!
     explicit
     Dubins(
@@ -130,7 +131,7 @@ namespace G2lib {
     //! \param[in] x1     final position x-coordinate
     //! \param[in] y1     final position y-coordinate
     //! \param[in] theta1 final angle
-    //! \param[in] kmax   max curvature
+    //! \param[in] k_max  max curvature
     //!
     bool
     build(
@@ -151,7 +152,7 @@ namespace G2lib {
     //! \param[in]  x1     final position x-coordinate
     //! \param[in]  y1     final position y-coordinate
     //! \param[in]  theta1 final angle
-    //! \param[in]  kmax   max curvature
+    //! \param[in]  k_max  max curvature
     //! \param[out] angles range points
     //! \return     number of range points
     //!
@@ -174,7 +175,7 @@ namespace G2lib {
     //! \param[in]  theta0 initial angle
     //! \param[in]  x1     final position x-coordinate
     //! \param[in]  y1     final position y-coordinate
-    //! \param[in]  kmax   max curvature
+    //! \param[in]  k_max  max curvature
     //! \param[out] angles range points
     //! \return     number of range points
     //!

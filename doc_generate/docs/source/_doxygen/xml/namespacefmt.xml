@@ -1,0 +1,23 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<doxygen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="compound.xsd" version="1.11.0" xml:lang="en-US">
+  <compounddef id="namespacefmt" kind="namespace" language="C++">
+    <compoundname>fmt</compoundname>
+    <innerclass refid="structfmt_1_1formatter_3_01_g2lib_1_1_b_box_01_4" prot="public">fmt::formatter&lt; G2lib::BBox &gt;</innerclass>
+    <innerclass refid="structfmt_1_1formatter_3_01_g2lib_1_1_biarc_01_4" prot="public">fmt::formatter&lt; G2lib::Biarc &gt;</innerclass>
+    <innerclass refid="structfmt_1_1formatter_3_01_g2lib_1_1_biarc_list_01_4" prot="public">fmt::formatter&lt; G2lib::BiarcList &gt;</innerclass>
+    <innerclass refid="structfmt_1_1formatter_3_01_g2lib_1_1_circle_arc_01_4" prot="public">fmt::formatter&lt; G2lib::CircleArc &gt;</innerclass>
+    <innerclass refid="structfmt_1_1formatter_3_01_g2lib_1_1_clothoid_curve_01_4" prot="public">fmt::formatter&lt; G2lib::ClothoidCurve &gt;</innerclass>
+    <innerclass refid="structfmt_1_1formatter_3_01_g2lib_1_1_clothoid_list_01_4" prot="public">fmt::formatter&lt; G2lib::ClothoidList &gt;</innerclass>
+    <innerclass refid="structfmt_1_1formatter_3_01_g2lib_1_1_clothoid_spline_g2_01_4" prot="public">fmt::formatter&lt; G2lib::ClothoidSplineG2 &gt;</innerclass>
+    <innerclass refid="structfmt_1_1formatter_3_01_g2lib_1_1_dubins_01_4" prot="public">fmt::formatter&lt; G2lib::Dubins &gt;</innerclass>
+    <innerclass refid="structfmt_1_1formatter_3_01_g2lib_1_1_dubins3p_01_4" prot="public">fmt::formatter&lt; G2lib::Dubins3p &gt;</innerclass>
+    <innerclass refid="structfmt_1_1formatter_3_01_g2lib_1_1_line_segment_01_4" prot="public">fmt::formatter&lt; G2lib::LineSegment &gt;</innerclass>
+    <innerclass refid="structfmt_1_1formatter_3_01_g2lib_1_1_poly_line_01_4" prot="public">fmt::formatter&lt; G2lib::PolyLine &gt;</innerclass>
+    <innerclass refid="structfmt_1_1formatter_3_01_g2lib_1_1_triangle2_d_01_4" prot="public">fmt::formatter&lt; G2lib::Triangle2D &gt;</innerclass>
+    <briefdescription>
+    </briefdescription>
+    <detaileddescription>
+    </detaileddescription>
+    <location file="/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Clothoids_fmt.hh" line="39" column="1"/>
+  </compounddef>
+</doxygen>
