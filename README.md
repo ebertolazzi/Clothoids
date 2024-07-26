@@ -88,6 +88,10 @@ and fast algorithms involving the objects, in particular:
 
 Library is written in `C++11` with a `MATLAB` mex interface. Thus can be used in fast compiled application or in `MATLAB` scripts.
 
+
+Compilation
+===========
+
 To compile the `C++11` library the easy way require `cmake` and `rake`
 
 ```
@@ -99,5 +103,14 @@ then
 ```
 rake
 ```
+
+to build the `MATLAB` toolbox
+
+```
+cd toolbox
+ruby populate_toolbox.rb
+ruby build.rb
+```
+
 
 for more details see: **online documentation** at http://ebertolazzi.github.io/Clothoids/
