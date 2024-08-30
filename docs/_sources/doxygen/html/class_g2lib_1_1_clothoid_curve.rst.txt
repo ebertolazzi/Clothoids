@@ -1,0 +1,14 @@
+.. meta::575287e1eb1e73857cab3fddef84863cd6bb184720e6e9c7d300768f922b472b4b7e8dfd134766dee9b7ccc189787f8504fcb3bff12a41ef2c02a88e0e74d76d
+
+:orphan:
+
+.. title:: Clothoids: G2lib::ClothoidCurve Class Reference
+
+ClothoidCurve Class Reference
+=============================
+
+.. container:: doxygen-content
+
+   
+   .. raw:: html
+     :file: class_g2lib_1_1_clothoid_curve.html

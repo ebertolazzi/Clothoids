@@ -6,15 +6,14 @@ classdef Biarc < CurveBase
     %>
     %> **Usage:**
     %>
-    %> \rst
-    %> .. code-block:: matlab
+    %> ```{matlab}
     %>
     %>   self = Biarc();
     %>   self = Biarc( x0, y0, theta0, x1, y1, theta1 );
     %>
-    %> \endrst
+    %> ```
     %>
-    %> **Optinal Arguments:**
+    %> **Optional Arguments:**
     %>
     %> - `x0`, `y0`: coordinate of initial point
     %> - `theta0`    : orientation of the clothoid at initial point
@@ -40,12 +39,11 @@ classdef Biarc < CurveBase
     %>
     %> **Usage:**
     %>
-    %> \rst
-    %> .. code-block:: matlab
+    %> ```{matlab}
     %>
     %>   ref.build_G1( x0, y0, theta0, x1, y1, theta1 );
     %>
-    %> \endrst
+    %> ```
     %>
     %> **On input:**
     %>
@@ -63,13 +61,12 @@ classdef Biarc < CurveBase
     %>
     %> **Usage:**
     %>
-    %> \rst
-    %> .. code-block:: matlab
+    %> ```{matlab}
     %>
     %>   ref.build_3P( x0, y0, x1, y1, x2, y2 );
     %>   ref.build_3P( [x0, y0], [x1, y1], [x2, y2] );
-    %> 
-    %> \endrst
+    %>
+    %> ```
     %>
     %> **On input:**
     %>
@@ -91,17 +88,19 @@ classdef Biarc < CurveBase
     %>
     %> **Usage:**
     %>
-    %> \rst
-    %> .. code-block:: matlab
+    %> ```{matlab}
     %>
     %>   x = ref.x_middle();
-    %> 
-    %> \endrst
+    %>
+    %> ```
     %>
     function res = x_middle( self )
       res = BiarcMexWrapper( 'x_middle', self.objectHandle );
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    %>
+    %> \deprecated  whill be removed in future version
+    %>
     function res = xMiddle( self )
       res = self.x_middle();
     end
@@ -110,17 +109,19 @@ classdef Biarc < CurveBase
     %>
     %> **Usage:**
     %>
-    %> \rst
-    %> .. code-block:: matlab
+    %> ```{matlab}
     %>
     %>   x = ref.y_middle();
-    %> 
-    %> \endrst
+    %>
+    %> ```
     %>
     function res = y_middle( self )
       res = BiarcMexWrapper( 'y_middle', self.objectHandle );
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    %>
+    %> \deprecated  whill be removed in future version
+    %>
     function res = yMiddle( self )
       res = self.y_middle();
     end
@@ -129,17 +130,19 @@ classdef Biarc < CurveBase
     %>
     %> **Usage:**
     %>
-    %> \rst
-    %> .. code-block:: matlab
+    %> ```{matlab}
     %>
     %>   theta = ref.theta_middle();
-    %> 
-    %> \endrst
+    %>
+    %> ```
     %>
     function res = theta_middle( self )
       res = BiarcMexWrapper( 'theta_middle', self.objectHandle );
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    %>
+    %> \deprecated  whill be removed in future version
+    %>
     function res = thetaMiddle( self )
       res = self.theta_middle();
     end
@@ -148,12 +151,11 @@ classdef Biarc < CurveBase
     %>
     %> **Usage:**
     %>
-    %> \rst
-    %> .. code-block:: matlab
+    %> ```{matlab}
     %>
     %>   kappa0 = ref.kappa0();
-    %> 
-    %> \endrst
+    %>
+    %> ```
     %>
     function res = kappa0( self )
       res = BiarcMexWrapper( 'kappa0', self.objectHandle );
@@ -163,12 +165,11 @@ classdef Biarc < CurveBase
     %>
     %> **Usage:**
     %>
-    %> \rst
-    %> .. code-block:: matlab
+    %> ```{matlab}
     %>
     %>   kappa1 = ref.kappa1();
-    %> 
-    %> \endrst
+    %>
+    %> ```
     %>
     function res = kappa1( self )
       res = BiarcMexWrapper( 'kappa1', self.objectHandle );
@@ -178,12 +179,11 @@ classdef Biarc < CurveBase
     %>
     %> **Usage:**
     %>
-    %> \rst
-    %> .. code-block:: matlab
+    %> ```{matlab}
     %>
     %>   length0 = ref.length0();
-    %> 
-    %> \endrst
+    %>
+    %> ```
     %>
     function res = length0( self )
       res = BiarcMexWrapper( 'length0', self.objectHandle );
@@ -193,12 +193,11 @@ classdef Biarc < CurveBase
     %>
     %> **Usage:**
     %>
-    %> \rst
-    %> .. code-block:: matlab
+    %> ```{matlab}
     %>
     %>   length1 = ref.length1();
-    %> 
-    %> \endrst
+    %>
+    %> ```
     %>
     function res = length1( self )
       res = BiarcMexWrapper( 'length1', self.objectHandle );
@@ -208,12 +207,11 @@ classdef Biarc < CurveBase
     %>
     %> **Usage:**
     %>
-    %> \rst
-    %> .. code-block:: matlab
+    %> ```{matlab}
     %>
     %>   [x0,y0,theta0,x1,y1,theta1] = ref.getData();
     %>
-    %> \endrst
+    %> ```
     %>
     %> - `x0`, `y0`: initial point of the biarc
     %> - `theta0`    : initial angle of the biarc
@@ -233,12 +231,11 @@ classdef Biarc < CurveBase
     %>
     %> **Usage:**
     %>
-    %> \rst
-    %> .. code-block:: matlab
+    %> ```{matlab}
     %>
     %>   [C0,C1] = ref.get_circles();
     %>
-    %> \endrst
+    %> ```
     %>
     function [ C0, C1 ] = get_circles( self )
       x0     = self.x_begin();
@@ -263,12 +260,11 @@ classdef Biarc < CurveBase
     %>
     %> **Usage:**
     %>
-    %> \rst
-    %> .. code-block:: matlab
+    %> ```{matlab}
     %>
     %>   [arc0,arc1] = ref.to_nurbs();
     %>
-    %> \endrst
+    %> ```
     %>
     %> - `arc0`: the nurbs of the first arc
     %> - `arc1`: the nurbs of the second arc
@@ -281,12 +277,11 @@ classdef Biarc < CurveBase
     %>
     %> **Usage:**
     %>
-    %> \rst
-    %> .. code-block:: matlab
+    %> ```{matlab}
     %>
     %>   [s,t] = ref.find_coord( x, y );
-    %> 
-    %> \endrst
+    %>
+    %> ```
     %>
     %> - `s`: curvilinear coordinate along the curve
     %> - `t`: curvilinear coordinate along the normal of the curve
@@ -299,16 +294,15 @@ classdef Biarc < CurveBase
     %>
     %> **Usage:**
     %>
-    %> \rst
-    %> .. code-block:: matlab
+    %> ```{matlab}
     %>
     %>   ref.plot( npts );
     %>
     %>   fmt1 = {'Color','blue','Linewidth',2};
     %>   fmt2 = {'Color','red','Linewidth',2};
     %>   ref.plot( npts, fmt1, fmt2 );
-    %> 
-    %> \endrst
+    %>
+    %> ```
     %>
     %> - `npts`: number of sampling points for plotting
     %> - `fmt1`: format of the first arc
@@ -338,16 +332,15 @@ classdef Biarc < CurveBase
     %>
     %> **Usage:**
     %>
-    %> \rst
-    %> .. code-block:: matlab
+    %> ```{matlab}
     %>
     %>   ref.plotCurvature( npts );
     %>
     %>   fmt1 = {'Color','blue','Linewidth',2};
     %>   fmt2 = {'Color','red','Linewidth',2};
     %>   ref.plot_curvature( npts, fmt1, fmt2 );
-    %> 
-    %> \endrst
+    %>
+    %> ```
     %>
     %> - `npts`: number of sampling points for plotting
     %> - `fmt1`: format of the first arc
@@ -363,6 +356,9 @@ classdef Biarc < CurveBase
       plot( S, kappa, varargin{:} );
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    %>
+    %> \deprecated  whill be removed in future version
+    %>
     function plotCurvature( self, npts, varargin )
       self.plot_curvature( npts, varargin{:} );
     end
@@ -371,16 +367,15 @@ classdef Biarc < CurveBase
     %>
     %> **Usage:**
     %>
-    %> \rst
-    %> .. code-block:: matlab
+    %> ```{matlab}
     %>
     %>   ref.plot_angle( npts );
     %>
     %>   fmt1 = {'Color','blue','Linewidth',2};
     %>   fmt2 = {'Color','red','Linewidth',2};
     %>   ref.plot_angle( npts, fmt1, fmt2 );
-    %> 
-    %> \endrst
+    %>
+    %> ```
     %>
     %> - `npts`: number of sampling points for plotting
     %> - `fmt1`: format of the first arc
@@ -396,6 +391,9 @@ classdef Biarc < CurveBase
       plot( S, theta, varargin{:} );
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    %>
+    %> \deprecated  whill be removed in future version
+    %>
     function plotAngle( self, npts, varargin )
       self.plot_angle( npts, varargin{:} );
     end
@@ -404,12 +402,11 @@ classdef Biarc < CurveBase
     %>
     %> **Usage:**
     %>
-    %> \rst
-    %> .. code-block:: matlab
+    %> ```{matlab}
     %>
     %>   ref.plot_normal( step, len );
-    %> 
-    %> \endrst
+    %>
+    %> ```
     %>
     %> - `step`: number of sampling normals
     %> - `len`:  length of the plotted normal
@@ -425,6 +422,9 @@ classdef Biarc < CurveBase
       end
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    %>
+    %> \deprecated  whill be removed in future version
+    %>
     function plotNormal( self, step, len )
       self.plot_normal( step, len );
     end

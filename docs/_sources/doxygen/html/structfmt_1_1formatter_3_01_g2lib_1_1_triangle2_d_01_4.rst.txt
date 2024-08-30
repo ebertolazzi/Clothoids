@@ -1,0 +1,14 @@
+.. meta::ded8a5757921a5eb35cf36d21a02da4b0be24fa29fb8b86b5f8d1202883ea16fac30fbd6bd4c46509cafa4d3668b243bf7ac93b27cea773c22f073eec0e99d42
+
+:orphan:
+
+.. title:: Clothoids: fmt::formatter&lt; G2lib::Triangle2D &gt; Struct Reference
+
+Triangle2D &gt; Struct Reference
+================================
+
+.. container:: doxygen-content
+
+   
+   .. raw:: html
+     :file: structfmt_1_1formatter_3_01_g2lib_1_1_triangle2_d_01_4.html

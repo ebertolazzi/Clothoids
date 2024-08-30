@@ -38,11 +38,11 @@ namespace G2lib {
 
     friend class Biarc;
 
-    real_type m_x0{0};     //!< initial x coordinate of the clothoid
-    real_type m_y0{0};     //!< initial y coordinate of the clothoid
+    real_type m_x0{0};     //!< initial \f$x\f$-coordinate of the clothoid
+    real_type m_y0{0};     //!< initial \f$y\f$-coordinate of the clothoid
     real_type m_theta0{0}; //!< initial angle of the clothoid
-    real_type m_c0{1};     //!< initial cos(angle) of the clothoid
-    real_type m_s0{0};     //!< initial sin(angle) of the clothoid
+    real_type m_c0{1};     //!< initial \f$\cos(\f$ angle \f$)\f$ of the clothoid
+    real_type m_s0{0};     //!< initial \f$\sin(\f$ angle \f$)\f$ of the clothoid
     real_type m_k{0};      //!< curvature
 
     real_type m_L{0};      //!< length of the circle segment
@@ -68,8 +68,8 @@ namespace G2lib {
     //!
     //! Construct a circle arc with the standard parameters.
     //!
-    //! \param[in] x0     starting position x-coordinate
-    //! \param[in] y0     starting position y-coordinate
+    //! \param[in] x0     starting position \f$x\f$-coordinate
+    //! \param[in] y0     starting position \f$y\f$-coordinate
     //! \param[in] theta0 initial angle
     //! \param[in] k      curvature
     //! \param[in] L      length
@@ -142,8 +142,8 @@ namespace G2lib {
     //!
     //! Construct a circle arc with the standard parameters.
     //!
-    //! \param[in] x0     starting position x-coordinate
-    //! \param[in] y0     starting position y-coordinate
+    //! \param[in] x0     starting position \f$x\f$-coordinate
+    //! \param[in] y0     starting position \f$y\f$-coordinate
     //! \param[in] theta0 initial angle
     //! \param[in] k      curvature
     //! \param[in] L      length
@@ -164,13 +164,13 @@ namespace G2lib {
     }
 
     //!
-    //! Build a circle by solving the hermite G1 problem.
+    //! Build a circle by solving the hermite \f$ G^1 \f$ problem.
     //!
-    //! \param[in] x0     starting position x-coordinate
-    //! \param[in] y0     starting position y-coordinate
+    //! \param[in] x0     starting position \f$x\f$-coordinate
+    //! \param[in] y0     starting position \f$y\f$-coordinate
     //! \param[in] theta0 initial angle
-    //! \param[in] x1     final position x-coordinate
-    //! \param[in] y1     final position y-coordinate
+    //! \param[in] x1     final position \f$x\f$-coordinate
+    //! \param[in] y1     final position \f$y\f$-coordinate
     //! \return true if success
     //!
     bool
@@ -185,12 +185,12 @@ namespace G2lib {
     //!
     //! Build a circle passing by 3 points.
     //!
-    //! \param[in] x0 starting point x-coordinate
-    //! \param[in] y0 starting point y-coordinate
-    //! \param[in] x1 intermediate point x-coordinate
-    //! \param[in] y1 intermediate point y-coordinate
-    //! \param[in] x2 final point x-coordinate
-    //! \param[in] y2 final point y-coordinate
+    //! \param[in] x0 starting point \f$x\f$-coordinate
+    //! \param[in] y0 starting point \f$y\f$-coordinate
+    //! \param[in] x1 intermediate point \f$x\f$-coordinate
+    //! \param[in] y1 intermediate point \f$y\f$-coordinate
+    //! \param[in] x2 final point \f$x\f$-coordinate
+    //! \param[in] y2 final point \f$y\f$-coordinate
     //! \return true if success
     //!
     bool
@@ -222,12 +222,12 @@ namespace G2lib {
     //!
     //! Get the bounding box triangle (if angle variation less that pi/3).
     //!
-    //! \param[out] x0 first triangle point x-coordinate
-    //! \param[out] y0 first triangle point y-coordinate
-    //! \param[out] x1 second triangle point x-coordinate
-    //! \param[out] y1 second triangle point y-coordinate
-    //! \param[out] x2 third triangle point x-coordinate
-    //! \param[out] y2 third triangle point y-coordinate
+    //! \param[out] x0 first triangle point \f$x\f$-coordinate
+    //! \param[out] y0 first triangle point \f$y\f$-coordinate
+    //! \param[out] x1 second triangle point \f$x\f$-coordinate
+    //! \param[out] y1 second triangle point \f$y\f$-coordinate
+    //! \param[out] x2 third triangle point \f$x\f$-coordinate
+    //! \param[out] y2 third triangle point \f$y\f$-coordinate
     //! \return true if success
     //!
     bool
@@ -242,12 +242,12 @@ namespace G2lib {
     //! (if angle variation less that \f$ \pi/3 \f$).
     //!
     //! \param[in]  offs offset
-    //! \param[out] x0   first triangle point x-coordinate
-    //! \param[out] y0   first triangle point y-coordinate
-    //! \param[out] x1   second triangle point x-coordinate
-    //! \param[out] y1   second triangle point y-coordinate
-    //! \param[out] x2   third triangle point x-coordinate
-    //! \param[out] y2   third triangle point y-coordinate
+    //! \param[out] x0   first triangle point \f$x\f$-coordinate
+    //! \param[out] y0   first triangle point \f$y\f$-coordinate
+    //! \param[out] x1   second triangle point \f$x\f$-coordinate
+    //! \param[out] y1   second triangle point \f$y\f$-coordinate
+    //! \param[out] x2   third triangle point \f$x\f$-coordinate
+    //! \param[out] y2   third triangle point \f$y\f$-coordinate
     //! \return true if success
     //!
     bool
@@ -263,12 +263,12 @@ namespace G2lib {
     //! if angle variation less that \f$ \pi/3 \f$).
     //!
     //! \param[in]  offs offset
-    //! \param[out] x0   first triangle point x-coordinate
-    //! \param[out] y0   first triangle point y-coordinate
-    //! \param[out] x1   second triangle point x-coordinate
-    //! \param[out] y1   second triangle point y-coordinate
-    //! \param[out] x2   third triangle point x-coordinate
-    //! \param[out] y2   third triangle point y-coordinate
+    //! \param[out] x0   first triangle point \f$x\f$-coordinate
+    //! \param[out] y0   first triangle point \f$y\f$-coordinate
+    //! \param[out] x1   second triangle point \f$x\f$-coordinate
+    //! \param[out] y1   second triangle point \f$y\f$-coordinate
+    //! \param[out] x2   third triangle point \f$x\f$-coordinate
+    //! \param[out] y2   third triangle point \f$y\f$-coordinate
     //! \return true if success
     //!
     bool
@@ -292,9 +292,9 @@ namespace G2lib {
     //!
     bool
     bbTriangle(
-      real_type * p0,
-      real_type * p1,
-      real_type * p2
+      real_type p0[],
+      real_type p1[],
+      real_type p2[]
     ) const {
       return bbTriangle( p0[0], p0[1], p1[0], p1[1], p2[0], p2[1] );
     }
@@ -312,9 +312,9 @@ namespace G2lib {
     bool
     bbTriangle_ISO(
       real_type   offs,
-      real_type * p0,
-      real_type * p1,
-      real_type * p2
+      real_type p0[],
+      real_type p1[],
+      real_type p2[]
     ) const {
       return bbTriangle_ISO( offs, p0[0], p0[1], p1[0], p1[1], p2[0], p2[1] );
     }
@@ -331,10 +331,10 @@ namespace G2lib {
     //!
     bool
     bbTriangle_SAE(
-      real_type   offs,
-      real_type * p0,
-      real_type * p1,
-      real_type * p2
+      real_type offs,
+      real_type p0[],
+      real_type p1[],
+      real_type p2[]
     ) const {
       return bbTriangle_SAE( offs, p0[0], p0[1], p1[0], p1[1], p2[0], p2[1] );
     }
@@ -654,9 +654,6 @@ namespace G2lib {
     info( ostream_type & stream ) const override
     { stream << this->info(); }
 
-    //!
-    //! Pretty print of the CirleArc.
-    //!
     friend
     ostream_type &
     operator << ( ostream_type & stream, CircleArc const & bi );
@@ -802,7 +799,7 @@ namespace G2lib {
     //! and the length of the arc to  \f$ L \f$.
     //!
     //! \param[in] s0   \f$ s_0 \f$
-    //! \param[in] newL \f$ L \f$
+    //! \param[in] newL \f$ L   \f$
     //!
     void
     change_curvilinear_origin( real_type s0, real_type newL );
@@ -845,7 +842,7 @@ namespace G2lib {
     //! \param[out] Poly  points of the polygon of the NURBS
     //!
     void
-    toNURBS( real_type * knots, real_type Poly[][3] ) const;
+    toNURBS( real_type knots[], real_type Poly[][3] ) const;
 
     friend class ClothoidCurve;
 

@@ -1,3 +1,5 @@
+# LICENSE
+
 Copyright (c) 2020, Enrico Bertolazzi and Marco Frego
 All rights reserved.
 

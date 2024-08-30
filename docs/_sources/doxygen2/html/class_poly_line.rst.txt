@@ -1,0 +1,14 @@
+.. meta::c028bdad8386a0ee96de3a23ad34ce3df61f8dff1509b7bd299547c1c744673444f55045f8105305d34b75da01a2914b33b2299a7cd418d994f9d403e37040ea
+
+:orphan:
+
+.. title:: Clothoids: PolyLine Class Reference
+
+PolyLine Class Reference
+========================
+
+.. container:: doxygen-content
+
+   
+   .. raw:: html
+     :file: class_poly_line.html

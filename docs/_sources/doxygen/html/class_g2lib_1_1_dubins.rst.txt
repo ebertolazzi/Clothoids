@@ -1,0 +1,14 @@
+.. meta::71cda1eabf2e796969e70016a36c3d036b0f075922c60428c8e14720aa20db270707165e46c0ce05ceb8704325ae290f3f1d26cf36a4cb8efd5e28c9f3acdceb
+
+:orphan:
+
+.. title:: Clothoids: G2lib::Dubins Class Reference
+
+Dubins Class Reference
+======================
+
+.. container:: doxygen-content
+
+   
+   .. raw:: html
+     :file: class_g2lib_1_1_dubins.html

@@ -1,0 +1,14 @@
+.. meta::cdacc5b8675fa32382e46c16564731bb057f55f622acd224727f9fe1d92afb5f3450e4a41a05b2a73fa86a219a18218ce797796e139c41cde4c8414dc1ac5536
+
+:orphan:
+
+.. title:: Clothoids: ClothoidCurve Class Reference
+
+ClothoidCurve Class Reference
+=============================
+
+.. container:: doxygen-content
+
+   
+   .. raw:: html
+     :file: class_clothoid_curve.html

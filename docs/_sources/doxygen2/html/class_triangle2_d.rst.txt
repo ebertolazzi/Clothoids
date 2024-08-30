@@ -1,0 +1,14 @@
+.. meta::21afaccfcd3f75ecc9c740ebdd9a617ded3eaa6e568ea883534448f922ef661576391190bd0808b86017420db557fabc7922816d30d12504ba5b9edf32eb5b7c
+
+:orphan:
+
+.. title:: Clothoids: Triangle2D Class Reference
+
+Triangle2D Class Reference
+==========================
+
+.. container:: doxygen-content
+
+   
+   .. raw:: html
+     :file: class_triangle2_d.html

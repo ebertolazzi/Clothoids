@@ -1,0 +1,14 @@
+.. meta::1a51c134a83e833ca7cac5ebd0ba7e5d968d015adc5da6627643a611b7633e80c981bd3f599ab810516f50e0751ef49746631c3832ddc1d98516c526b4c30ee7
+
+:orphan:
+
+.. title:: Clothoids: G2lib::BBox Class Reference
+
+BBox Class Reference
+====================
+
+.. container:: doxygen-content
+
+   
+   .. raw:: html
+     :file: class_g2lib_1_1_b_box.html

@@ -1,0 +1,14 @@
+.. meta::89f106310afa71f4c7b3e1b1f34cbe87edba8a50cfda39712c341648154fe5a162493d23a113c766e5eff00e4bfd1523301026961025910a9724ea4548d77909
+
+:orphan:
+
+.. title:: Clothoids: fmt::formatter&lt; G2lib::ClothoidSplineG2 &gt; Struct Reference
+
+ClothoidSplineG2 &gt; Struct Reference
+======================================
+
+.. container:: doxygen-content
+
+   
+   .. raw:: html
+     :file: structfmt_1_1formatter_3_01_g2lib_1_1_clothoid_spline_g2_01_4.html

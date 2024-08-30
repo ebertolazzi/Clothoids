@@ -1,0 +1,14 @@
+.. meta::c23ea3399993cb1c1f7466f95aa7bbc8aeee02edd740ad36f572dc248cae8ff042952c96d22f03986b47d388dbeb52f05960574dabefd12d6e8bda443d6d7ccc
+
+:orphan:
+
+.. title:: Clothoids: CurveBase Class Reference
+
+CurveBase Class Reference
+=========================
+
+.. container:: doxygen-content
+
+   
+   .. raw:: html
+     :file: class_curve_base.html

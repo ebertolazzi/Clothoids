@@ -6,15 +6,14 @@ classdef CircleArc < CurveBase
     %>
     %> **Usage:**
     %>
-    %> \rst
-    %> .. code-block:: matlab
+    %> ```{matlab}
     %>
     %>   ref = CircleArc() % create empty circle
     %>   ref = CircleArc( x0, y0, theta0, k0, L ) % circle passing from (x0,y0)
     %>                                            % at angle theta0 with curvature k0
     %>                                            % and length L
     %>
-    %> \endrst
+    %> ```
     %>
     %> **On input:**
     %>
@@ -37,12 +36,11 @@ classdef CircleArc < CurveBase
     %>
     %> **Usage:**
     %>
-    %> \rst
-    %> .. code-block:: matlab
+    %> ```{matlab}
     %>
     %>    ref.build( x0, y0, theta0, k0, L )
     %>
-    %> \endrst
+    %> ```
     %>
     %> build a circle passing from (x0,y0) at angle theta0 with curvature and length
     %>
@@ -62,14 +60,13 @@ classdef CircleArc < CurveBase
     %>
     %> **Usage:**
     %>
-    %> \rst
-    %> .. code-block:: matlab
+    %> ```{matlab}
     %>
     %>    ref.build( x0, y0, theta0, x1, y1 ); % circle passing to [x0,y0] and [x1,y1]
     %>                                         % with angle theta0 at [x0,y0]
     %>    ref.build( p0, theta0, p1 ); % circle passing to p0 and p1 with angle theta0 at p0
     %>
-    %> \endrst
+    %> ```
     %>
     %> **On input:**
     %>
@@ -90,12 +87,11 @@ classdef CircleArc < CurveBase
     %>
     %> **Usage:**
     %>
-    %> \rst
-    %> .. code-block:: matlab
+    %> ```{matlab}
     %>
     %>    ref.build_3P( x0, y0, x1, y1, x2, y2 )
     %>    ref.build_3P( p0, p1, p2 )
-    %> \endrst
+    %> ```
     %>
     function ok = build_3P( self, varargin )
       ok = CircleArcMexWrapper( 'build_3P', self.objectHandle, varargin{:} );
@@ -106,11 +102,10 @@ classdef CircleArc < CurveBase
     %>
     %> **Usage:**
     %>
-    %> \rst
-    %> .. code-block:: matlab
+    %> ```{matlab}
     %>
     %>    ref.scale( sc );
-    %> \endrst
+    %> ```
     %>
     function scale( self, sc )
       CircleArcMexWrapper( 'scale', self.objectHandle, sc );
@@ -120,16 +115,18 @@ classdef CircleArc < CurveBase
     %>
     %> **Usage:**
     %>
-    %> \rst
-    %> .. code-block:: matlab
+    %> ```{matlab}
     %>
     %>    ref.change_curvilinear_origin( s0, L );
-    %> \endrst
+    %> ```
     %>
     function change_curvilinear_origin( self, s0, L )
       CircleArcMexWrapper( 'change_curvilinear_origin', self.objectHandle, s0, L );
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    %>
+    %> \deprecated  whill be removed in future version
+    %>
     function changeCurvilinearOrigin( self, s0, L )
       self.change_curvilinear_origin( s0, L );
     end
@@ -143,15 +140,14 @@ classdef CircleArc < CurveBase
     %>
     %> **Usage:**
     %>
-    %> \rst
-    %> .. code-block:: matlab
+    %> ```{matlab}
     %>
     %>   ref.plot( npts );
     %>
     %>   fmt = {'Color','blue','Linewidth',2};
     %>   ref.plot( npts, fmt );
     %>
-    %> \endrst
+    %> ```
     %>
     %> - `npts`: number of sampling points for plotting
     %> - `fmt` : format of the arc
@@ -173,12 +169,11 @@ classdef CircleArc < CurveBase
     %>
     %> **Usage:**
     %>
-    %> \rst
-    %> .. code-block:: matlab
+    %> ```{matlab}
     %>
     %>    S = ref.export();
     %>
-    %> \endrst
+    %> ```
     %>
     %> - `S.x0`, `S.y0`: initial point of the circle arc
     %> - `S.x1`, `S.y1`: final point of the circle arc
@@ -202,13 +197,12 @@ classdef CircleArc < CurveBase
     %>
     %> **Usage:**
     %>
-    %> \rst
-    %> .. code-block:: matlab
+    %> ```{matlab}
     %>
     %>   ref.plotPolygon();
     %>   ref.plotPolygon( 'Color','blue','Linewidth',2 );
     %>
-    %> \endrst
+    %> ```
     %>
     %> - `fmt` : format of the arc
     %>
@@ -223,6 +217,9 @@ classdef CircleArc < CurveBase
       end
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    %>
+    %> \deprecated  whill be removed in future version
+    %>
     function plotPolygon( self, varargin )
       self.plot_polygon( varargin{:} );
     end

@@ -74,15 +74,18 @@ namespace G2lib {
   using std::map;
   using std::set;
 
-  using istream_type     = std::basic_istream<char>;
-  using ostream_type     = std::basic_ostream<char>;
-  using real_type        = double;
-  using integer          = int;
-  using AABB_TREE        = Utils::AABBtree<real_type>;
-  using AABB_SET         = Utils::AABBtree<real_type>::AABB_SET;
-  using AABB_MAP         = Utils::AABBtree<real_type>::AABB_MAP;
-  using GenericContainer = GC_namespace::GenericContainer;
+  using istream_type     = std::basic_istream<char>;             //!< input streaming
+  using ostream_type     = std::basic_ostream<char>;             //!< output streaming
+  using real_type        = double;                               //!< real type number
+  using integer          = int;                                  //!< integer type number
+  using AABB_TREE        = Utils::AABBtree<real_type>;           //!< `AABB` tree type
+  using AABB_SET         = Utils::AABBtree<real_type>::AABB_SET; //!< Set type used in `AABB` tree object
+  using AABB_MAP         = Utils::AABBtree<real_type>::AABB_MAP; //!< Map type used in `AABB` tree object
+  using GenericContainer = GC_namespace::GenericContainer;       //!< Generic container object
 
+  //!
+  //! Enumeration type for curve type
+  //!
   using CurveType = enum class CurveType : integer {
     LINE,
     POLYLINE,
@@ -95,6 +98,9 @@ namespace G2lib {
     DUBINS3P
   };
 
+  //!
+  //! Convert curve type to a string
+  //!
   inline
   string
   to_string( CurveType n ) {
@@ -113,7 +119,14 @@ namespace G2lib {
     return res;
   };
 
-  extern CurveType curve_promote( CurveType, CurveType );
+  //!
+  //! Given two curve type determine curve type that cointain both type
+  //!
+  //! \param[in] A first curve type
+  //! \param[in] B second curve type
+  //! \return the curve type super type of both
+  //!
+  extern CurveType curve_promote( CurveType A, CurveType B );
 
   class LineSegment;
   class CircleArc;
@@ -141,24 +154,6 @@ namespace G2lib {
 #include "Clothoids/ClothoidAsyPlot.hxx"
 #include "Clothoids/Dubins.hxx"
 #include "Clothoids/Dubins3p.hxx"
-
-namespace G2lib {
-
-  using std::string;
-  using std::vector;
-  using std::map;
-  using std::set;
-
-  using istream_type = std::basic_istream<char>;
-  using ostream_type = std::basic_ostream<char>;
-  using real_type    = double;
-  using integer      = int;
-  using AABB_TREE    = Utils::AABBtree<real_type>;
-  using AABB_SET     = Utils::AABBtree<real_type>::AABB_SET;
-  using AABB_MAP     = Utils::AABBtree<real_type>::AABB_MAP;
-
-  extern CurveType curve_promote( CurveType, CurveType );
-}
 
 #endif
 

@@ -1,0 +1,686 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Clothoids: G2lib::BBox Class Reference &mdash; Clothoids</title>
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=19f00094" />
+      <link rel="stylesheet" type="text/css" href="../../_static/graphviz.css?v=fd3f3429" />
+      <link rel="stylesheet" type="text/css" href="../../_static/plot_directive.css?v=7f9a90b1" />
+      <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
+      <link rel="stylesheet" type="text/css" href="../../_static/sphinx-design.min.css?v=95c83b7e" />
+      <link rel="stylesheet" type="text/css" href="../../_static/sphinx-data-viewer/jsonview.bundle.css?v=f6ef2277" />
+      <link rel="stylesheet" type="text/css" href="../../_static/sphinx-needs/libs/html/datatables.min.css?v=4b4fd840" />
+      <link rel="stylesheet" type="text/css" href="../../_static/sphinx-needs/common_css/need_style.css?v=678fb11e" />
+      <link rel="stylesheet" type="text/css" href="../../_static/sphinx-needs/common_css/need_core.css?v=f5b60a78" />
+      <link rel="stylesheet" type="text/css" href="../../_static/sphinx-needs/common_css/needstable.css?v=5e1b6797" />
+      <link rel="stylesheet" type="text/css" href="../../_static/sphinx-needs/common_css/need_links.css?v=2150a916" />
+      <link rel="stylesheet" type="text/css" href="../../_static/sphinx-needs/common_css/need_toggle.css?v=5c6620df" />
+      <link rel="stylesheet" type="text/css" href="../../_static/sphinx-needs/modern.css?v=803738c0" />
+      <link rel="stylesheet" type="text/css" href="../../_static/sphinx-rtd-theme-custom.css?v=76d57d84" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../../_static/documentation_options.js?v=60dbed4a"></script>
+        <script src="../../_static/doctools.js?v=9a2dae69"></script>
+        <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+        <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
+        <script src="../../_static/copybutton.js?v=f281be69"></script>
+        <script src="../../_static/design-tabs.js?v=f930bc37"></script>
+        <script src="../../_static/sphinx-data-viewer/jsonview.bundle.js?v=18cd53c5"></script>
+        <script src="../../_static/sphinx-data-viewer/jsonview_loader.js?v=f7ff7e7d"></script>
+        <script src="../../_static/sphinx-needs/libs/html/datatables.min.js?v=8a4aee21"></script>
+        <script src="../../_static/sphinx-needs/libs/html/datatables_loader.js?v=a2cae175"></script>
+        <script src="../../_static/sphinx-needs/libs/html/sphinx_needs_collapse.js?v=dca66431"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            Clothoids
+              <img src="../../_static/logo.png" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                2.0.13
+
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../README.html">Clothoids</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../index_CPP.html">Clothoids C++ interface</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="namespaces_namespaces.html">Namespaces</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="namespaces.html">Namespace List</a></li>
+<li class="toctree-l3"><a class="reference internal" href="namespacemembers_namespace_members.html">Namespace Members</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="namespacemembers.html">All</a></li>
+<li class="toctree-l4"><a class="reference internal" href="namespacemembers_func.html">Functions</a></li>
+<li class="toctree-l4"><a class="reference internal" href="namespacemembers_type.html">Typedefs</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="annotated_classes.html">Classes</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="annotated.html">Class List</a></li>
+<li class="toctree-l3"><a class="reference internal" href="classes.html">Class Index</a></li>
+<li class="toctree-l3"><a class="reference internal" href="hierarchy.html">Class Hierarchy</a></li>
+<li class="toctree-l3"><a class="reference internal" href="functions_class_members.html">Class Members</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="functions_all.html">All</a></li>
+<li class="toctree-l4"><a class="reference internal" href="functions_func_functions.html">Functions</a></li>
+<li class="toctree-l4"><a class="reference internal" href="functions_type.html">Typedefs</a></li>
+<li class="toctree-l4"><a class="reference internal" href="functions_rela.html">Related Symbols</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="files.html">Files</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../index_MATLAB.html">Clothoids MATLAB interface</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../doxygen2/html/annotated_classes.html">Classes</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../doxygen2/html/annotated.html">Class List</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../doxygen2/html/classes.html">Class Index</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../doxygen2/html/hierarchy.html">Class Hierarchy</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../doxygen2/html/functions_class_members.html">Class Members</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../doxygen2/html/functions.html">All</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../doxygen2/html/functions_func.html">Functions</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../doxygen2/html/functions_func.html">Functions</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../LICENSE.html">LICENSE</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">Clothoids</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Clothoids: G2lib::BBox Class Reference</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../_sources/doxygen/html/class_g2lib_1_1_b_box.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="bbox-class-reference">
+<h1>BBox Class Reference<a class="headerlink" href="#bbox-class-reference" title="Link to this heading"></a></h1>
+<div class="doxygen-content docutils container">
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en-US">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=11"/>
+<meta name="generator" content="Doxygen 1.12.0"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Clothoids: G2lib::BBox Class Reference</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<script type="text/javascript" src="clipboard.js"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="resize.js"></script>
+<script type="text/javascript">
+window.MathJax = {
+  options: {
+    ignoreHtmlClass: 'tex2jax_ignore',
+    processHtmlClass: 'tex2jax_process'
+  }
+};
+</script>
+<script type="text/javascript" id="MathJax-script" async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+<link href="doxygen-awesome.css" rel="stylesheet" type="text/css"/>
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr id="projectrow">
+  <td id="projectalign">
+   <div id="projectname">Clothoids
+   </div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Generated by Doxygen 1.12.0 -->
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(function() { codefold.init(0); });
+/* @license-end */
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(function() {
+  initMenu('',false,false,'search.php','Search',false);
+});
+/* @license-end */
+</script>
+<div id="main-nav"></div>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(function(){ initResizable(false); });
+/* @license-end */
+</script>
+<div id="nav-path" class="navpath">
+  <ul>
+<li class="navelem"><a class="el" href="namespace_g2lib.html">G2lib</a></li><li class="navelem"><a class="el" href="class_g2lib_1_1_b_box.html">BBox</a></li>  </ul>
+</div>
+</div><!-- top -->
+<div id="doc-content">
+<div class="header">
+  <div class="summary">
+<a href="#pub-types">Public Types</a> &#124;
+<a href="#pub-methods">Public Member Functions</a> &#124;
+<a href="class_g2lib_1_1_b_box-members.html">List of all members</a>  </div>
+  <div class="headertitle"><div class="title">G2lib::BBox Class Reference</div></div>
+</div><!--header-->
+<div class="contents">
+
+<p><code>#include &lt;<a class="el" href="_b_box_8hxx_source.html">BBox.hxx</a>&gt;</code></p>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-types" name="pub-types"></a>
+Public Types</h2></td></tr>
+<tr class="memitem:a336df4f23f9b6ce7cffcbcf4c8a5f79b" id="r_a336df4f23f9b6ce7cffcbcf4c8a5f79b"><td class="memItemLeft" align="right" valign="top"><a id="a336df4f23f9b6ce7cffcbcf4c8a5f79b" name="a336df4f23f9b6ce7cffcbcf4c8a5f79b"></a>
+using&#160;</td><td class="memItemRight" valign="bottom"><b>PtrBBox</b> = shared_ptr&lt;<a class="el" href="class_g2lib_1_1_b_box.html">BBox</a> const&gt;</td></tr>
+<tr class="separator:a336df4f23f9b6ce7cffcbcf4c8a5f79b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a884f685315201930568f06393c1173e0" id="r_a884f685315201930568f06393c1173e0"><td class="memItemLeft" align="right" valign="top"><a id="a884f685315201930568f06393c1173e0" name="a884f685315201930568f06393c1173e0"></a>
+using&#160;</td><td class="memItemRight" valign="bottom"><b>PairPtrBBox</b> = pair&lt;PtrBBox,PtrBBox&gt;</td></tr>
+<tr class="separator:a884f685315201930568f06393c1173e0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4438bf5f768ecb1b453f5385ad98527d" id="r_a4438bf5f768ecb1b453f5385ad98527d"><td class="memItemLeft" align="right" valign="top"><a id="a4438bf5f768ecb1b453f5385ad98527d" name="a4438bf5f768ecb1b453f5385ad98527d"></a>
+using&#160;</td><td class="memItemRight" valign="bottom"><b>VecPtrBBox</b> = vector&lt;PtrBBox&gt;</td></tr>
+<tr class="separator:a4438bf5f768ecb1b453f5385ad98527d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad1f3249c9d2a9f2aba4b441bb5dc4a1a" id="r_ad1f3249c9d2a9f2aba4b441bb5dc4a1a"><td class="memItemLeft" align="right" valign="top"><a id="ad1f3249c9d2a9f2aba4b441bb5dc4a1a" name="ad1f3249c9d2a9f2aba4b441bb5dc4a1a"></a>
+using&#160;</td><td class="memItemRight" valign="bottom"><b>VecPairPtrBBox</b> = vector&lt;PairPtrBBox&gt;</td></tr>
+<tr class="separator:ad1f3249c9d2a9f2aba4b441bb5dc4a1a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
+Public Member Functions</h2></td></tr>
+<tr class="memitem:a5fb8b4dca3efc22fce4558fc736f6e53" id="r_a5fb8b4dca3efc22fce4558fc736f6e53"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a5fb8b4dca3efc22fce4558fc736f6e53">BBox</a> (<a class="el" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> xmin, <a class="el" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> ymin, <a class="el" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> xmax, <a class="el" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> ymax, <a class="el" href="namespace_g2lib.html#affd533209e1ea0ddab7324812690f0b8">integer</a> id, <a class="el" href="namespace_g2lib.html#affd533209e1ea0ddab7324812690f0b8">integer</a> ipos)</td></tr>
+<tr class="separator:a5fb8b4dca3efc22fce4558fc736f6e53"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a498eca5214dd2148041eee4bca816cdc" id="r_a498eca5214dd2148041eee4bca816cdc"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a498eca5214dd2148041eee4bca816cdc">BBox</a> (<a class="el" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> const bbox[4], <a class="el" href="namespace_g2lib.html#affd533209e1ea0ddab7324812690f0b8">integer</a> id, <a class="el" href="namespace_g2lib.html#affd533209e1ea0ddab7324812690f0b8">integer</a> ipos)</td></tr>
+<tr class="separator:a498eca5214dd2148041eee4bca816cdc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7aa8b4f44c35b86dc680b2166729ed0c" id="r_a7aa8b4f44c35b86dc680b2166729ed0c"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a7aa8b4f44c35b86dc680b2166729ed0c">BBox</a> (<a class="el" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> const bbox_min[2], <a class="el" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> const bbox_max[2], <a class="el" href="namespace_g2lib.html#affd533209e1ea0ddab7324812690f0b8">integer</a> id, <a class="el" href="namespace_g2lib.html#affd533209e1ea0ddab7324812690f0b8">integer</a> ipos)</td></tr>
+<tr class="separator:a7aa8b4f44c35b86dc680b2166729ed0c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad680fd1907e19b7493fbbf01a7e16b6c" id="r_ad680fd1907e19b7493fbbf01a7e16b6c"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ad680fd1907e19b7493fbbf01a7e16b6c">BBox</a> (vector&lt; PtrBBox &gt; const &amp;bboxes, <a class="el" href="namespace_g2lib.html#affd533209e1ea0ddab7324812690f0b8">integer</a> id, <a class="el" href="namespace_g2lib.html#affd533209e1ea0ddab7324812690f0b8">integer</a> ipos)</td></tr>
+<tr class="separator:ad680fd1907e19b7493fbbf01a7e16b6c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a853994680b7f7e23688dee797a606445" id="r_a853994680b7f7e23688dee797a606445"><td class="memItemLeft" align="right" valign="top"><a id="a853994680b7f7e23688dee797a606445" name="a853994680b7f7e23688dee797a606445"></a>
+<a class="el" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> const *&#160;</td><td class="memItemRight" valign="bottom"><b>bbox</b> ()</td></tr>
+<tr class="separator:a853994680b7f7e23688dee797a606445"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a11712b792b09f50b5dc02d47d18f472f" id="r_a11712b792b09f50b5dc02d47d18f472f"><td class="memItemLeft" align="right" valign="top"><a id="a11712b792b09f50b5dc02d47d18f472f" name="a11712b792b09f50b5dc02d47d18f472f"></a>
+<a class="el" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> const *&#160;</td><td class="memItemRight" valign="bottom"><b>bbox_min</b> ()</td></tr>
+<tr class="separator:a11712b792b09f50b5dc02d47d18f472f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4300bb22eb669508a69a493acb61d356" id="r_a4300bb22eb669508a69a493acb61d356"><td class="memItemLeft" align="right" valign="top"><a id="a4300bb22eb669508a69a493acb61d356" name="a4300bb22eb669508a69a493acb61d356"></a>
+<a class="el" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> const *&#160;</td><td class="memItemRight" valign="bottom"><b>bbox_max</b> ()</td></tr>
+<tr class="separator:a4300bb22eb669508a69a493acb61d356"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6e0ca12f451588adaff49b895a62d556" id="r_a6e0ca12f451588adaff49b895a62d556"><td class="memItemLeft" align="right" valign="top"><a id="a6e0ca12f451588adaff49b895a62d556" name="a6e0ca12f451588adaff49b895a62d556"></a>
+<a class="el" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>x_min</b> ()</td></tr>
+<tr class="memdesc:a6e0ca12f451588adaff49b895a62d556"><td class="mdescLeft">&#160;</td><td class="mdescRight">x-minimum coordinate of the bbox <br /></td></tr>
+<tr class="separator:a6e0ca12f451588adaff49b895a62d556"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa5bff22f191e2eb377edc2689ad06cba" id="r_aa5bff22f191e2eb377edc2689ad06cba"><td class="memItemLeft" align="right" valign="top"><a id="aa5bff22f191e2eb377edc2689ad06cba" name="aa5bff22f191e2eb377edc2689ad06cba"></a>
+<a class="el" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>y_min</b> ()</td></tr>
+<tr class="memdesc:aa5bff22f191e2eb377edc2689ad06cba"><td class="mdescLeft">&#160;</td><td class="mdescRight">y-minimum coordinate of the bbox <br /></td></tr>
+<tr class="separator:aa5bff22f191e2eb377edc2689ad06cba"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aab8f8794e892face6c61284887afc5ce" id="r_aab8f8794e892face6c61284887afc5ce"><td class="memItemLeft" align="right" valign="top"><a id="aab8f8794e892face6c61284887afc5ce" name="aab8f8794e892face6c61284887afc5ce"></a>
+<a class="el" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>x_max</b> ()</td></tr>
+<tr class="memdesc:aab8f8794e892face6c61284887afc5ce"><td class="mdescLeft">&#160;</td><td class="mdescRight">x-maximum coordinate of the bbox <br /></td></tr>
+<tr class="separator:aab8f8794e892face6c61284887afc5ce"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a48b92fb0ded5e8eb9125dd93de94dac7" id="r_a48b92fb0ded5e8eb9125dd93de94dac7"><td class="memItemLeft" align="right" valign="top"><a id="a48b92fb0ded5e8eb9125dd93de94dac7" name="a48b92fb0ded5e8eb9125dd93de94dac7"></a>
+<a class="el" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>y_max</b> ()</td></tr>
+<tr class="memdesc:a48b92fb0ded5e8eb9125dd93de94dac7"><td class="mdescLeft">&#160;</td><td class="mdescRight">y-maximum coordinate of the bbox <br /></td></tr>
+<tr class="separator:a48b92fb0ded5e8eb9125dd93de94dac7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a97c801b11ff730785030bd2aa2aa8fe0" id="r_a97c801b11ff730785030bd2aa2aa8fe0"><td class="memItemLeft" align="right" valign="top"><a id="a97c801b11ff730785030bd2aa2aa8fe0" name="a97c801b11ff730785030bd2aa2aa8fe0"></a>
+<a class="el" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> const &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>x_min</b> () const</td></tr>
+<tr class="memdesc:a97c801b11ff730785030bd2aa2aa8fe0"><td class="mdescLeft">&#160;</td><td class="mdescRight">x-minimum coordinate of the bbox <br /></td></tr>
+<tr class="separator:a97c801b11ff730785030bd2aa2aa8fe0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab8997bf107a31b17974dc5818981a2a4" id="r_ab8997bf107a31b17974dc5818981a2a4"><td class="memItemLeft" align="right" valign="top"><a id="ab8997bf107a31b17974dc5818981a2a4" name="ab8997bf107a31b17974dc5818981a2a4"></a>
+<a class="el" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> const &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>y_min</b> () const</td></tr>
+<tr class="memdesc:ab8997bf107a31b17974dc5818981a2a4"><td class="mdescLeft">&#160;</td><td class="mdescRight">y-minimum coordinate of the bbox <br /></td></tr>
+<tr class="separator:ab8997bf107a31b17974dc5818981a2a4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7cbe90d9631ea45610b1b63a3954ecf6" id="r_a7cbe90d9631ea45610b1b63a3954ecf6"><td class="memItemLeft" align="right" valign="top"><a id="a7cbe90d9631ea45610b1b63a3954ecf6" name="a7cbe90d9631ea45610b1b63a3954ecf6"></a>
+<a class="el" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> const &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>x_max</b> () const</td></tr>
+<tr class="memdesc:a7cbe90d9631ea45610b1b63a3954ecf6"><td class="mdescLeft">&#160;</td><td class="mdescRight">x-maximum coordinate of the bbox <br /></td></tr>
+<tr class="separator:a7cbe90d9631ea45610b1b63a3954ecf6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2890ee97adf75a1d31b1b46dd9bbe524" id="r_a2890ee97adf75a1d31b1b46dd9bbe524"><td class="memItemLeft" align="right" valign="top"><a id="a2890ee97adf75a1d31b1b46dd9bbe524" name="a2890ee97adf75a1d31b1b46dd9bbe524"></a>
+<a class="el" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> const &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>y_max</b> () const</td></tr>
+<tr class="memdesc:a2890ee97adf75a1d31b1b46dd9bbe524"><td class="mdescLeft">&#160;</td><td class="mdescRight">y-maximum coordinate of the bbox <br /></td></tr>
+<tr class="separator:a2890ee97adf75a1d31b1b46dd9bbe524"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae8aa858db0f3f6e57b5c38602d45b266" id="r_ae8aa858db0f3f6e57b5c38602d45b266"><td class="memItemLeft" align="right" valign="top"><a id="ae8aa858db0f3f6e57b5c38602d45b266" name="ae8aa858db0f3f6e57b5c38602d45b266"></a>
+<a class="el" href="namespace_g2lib.html#affd533209e1ea0ddab7324812690f0b8">integer</a> const &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>Id</b> () const</td></tr>
+<tr class="memdesc:ae8aa858db0f3f6e57b5c38602d45b266"><td class="mdescLeft">&#160;</td><td class="mdescRight">return BBOX id <br /></td></tr>
+<tr class="separator:ae8aa858db0f3f6e57b5c38602d45b266"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2126758a184472cbe58d62edf98c74ee" id="r_a2126758a184472cbe58d62edf98c74ee"><td class="memItemLeft" align="right" valign="top"><a id="a2126758a184472cbe58d62edf98c74ee" name="a2126758a184472cbe58d62edf98c74ee"></a>
+<a class="el" href="namespace_g2lib.html#affd533209e1ea0ddab7324812690f0b8">integer</a> const &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>Ipos</b> () const</td></tr>
+<tr class="memdesc:a2126758a184472cbe58d62edf98c74ee"><td class="mdescLeft">&#160;</td><td class="mdescRight">return BBOX position <br /></td></tr>
+<tr class="separator:a2126758a184472cbe58d62edf98c74ee"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a06ca2872d9b80f275a8f755243375656" id="r_a06ca2872d9b80f275a8f755243375656"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_g2lib_1_1_b_box.html">BBox</a> const &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a06ca2872d9b80f275a8f755243375656">operator=</a> (<a class="el" href="class_g2lib_1_1_b_box.html">BBox</a> const &amp;rhs)</td></tr>
+<tr class="separator:a06ca2872d9b80f275a8f755243375656"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3b98db48add6859ab67fb00a0710a21e" id="r_a3b98db48add6859ab67fb00a0710a21e"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a3b98db48add6859ab67fb00a0710a21e">collision</a> (<a class="el" href="class_g2lib_1_1_b_box.html">BBox</a> const &amp;box) const</td></tr>
+<tr class="separator:a3b98db48add6859ab67fb00a0710a21e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad0aaba5511ff29c7e0fd0049ea0da67b" id="r_ad0aaba5511ff29c7e0fd0049ea0da67b"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ad0aaba5511ff29c7e0fd0049ea0da67b">join</a> (vector&lt; PtrBBox &gt; const &amp;bboxes)</td></tr>
+<tr class="separator:ad0aaba5511ff29c7e0fd0049ea0da67b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac6fc969999b473220bc8ef684108ab74" id="r_ac6fc969999b473220bc8ef684108ab74"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ac6fc969999b473220bc8ef684108ab74">distance</a> (<a class="el" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> x, <a class="el" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> y) const</td></tr>
+<tr class="separator:ac6fc969999b473220bc8ef684108ab74"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a81d505f4ec1c979177f83be91922c8d0" id="r_a81d505f4ec1c979177f83be91922c8d0"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a81d505f4ec1c979177f83be91922c8d0">max_distance</a> (<a class="el" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> x, <a class="el" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> y) const</td></tr>
+<tr class="separator:a81d505f4ec1c979177f83be91922c8d0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a67cd88140fdf70d4de76bacdf7396cd5" id="r_a67cd88140fdf70d4de76bacdf7396cd5"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a67cd88140fdf70d4de76bacdf7396cd5">print</a> (<a class="el" href="namespace_g2lib.html#a3beb82d20ee75367fbcf9cf79d908ed7">ostream_type</a> &amp;stream) const</td></tr>
+<tr class="separator:a67cd88140fdf70d4de76bacdf7396cd5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><p>Class to manipulate bounding box </p>
+</div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
+<a id="a5fb8b4dca3efc22fce4558fc736f6e53" name="a5fb8b4dca3efc22fce4558fc736f6e53"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5fb8b4dca3efc22fce4558fc736f6e53">&#9670;&#160;</a></span>BBox() <span class="overload">[1/4]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">G2lib::BBox::BBox </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a></td>          <td class="paramname"><span class="paramname"><em>xmin</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a></td>          <td class="paramname"><span class="paramname"><em>ymin</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a></td>          <td class="paramname"><span class="paramname"><em>xmax</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a></td>          <td class="paramname"><span class="paramname"><em>ymax</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="namespace_g2lib.html#affd533209e1ea0ddab7324812690f0b8">integer</a></td>          <td class="paramname"><span class="paramname"><em>id</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="namespace_g2lib.html#affd533209e1ea0ddab7324812690f0b8">integer</a></td>          <td class="paramname"><span class="paramname"><em>ipos</em></span>&#160;)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Construct a bounding box with additional information</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">xmin</td><td>\( x \)-minimimum box coordinate </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">ymin</td><td>\( y \)-minimimum box coordinate </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">xmax</td><td>\( x \)-maximum box coordinate </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">ymax</td><td>\( y \)-maximum box coordinate </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">id</td><td>identifier of the box </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">ipos</td><td>ranking position of the box </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a498eca5214dd2148041eee4bca816cdc" name="a498eca5214dd2148041eee4bca816cdc"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a498eca5214dd2148041eee4bca816cdc">&#9670;&#160;</a></span>BBox() <span class="overload">[2/4]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">G2lib::BBox::BBox </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> const</td>          <td class="paramname"><span class="paramname"><em>bbox</em></span>[4], </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="namespace_g2lib.html#affd533209e1ea0ddab7324812690f0b8">integer</a></td>          <td class="paramname"><span class="paramname"><em>id</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="namespace_g2lib.html#affd533209e1ea0ddab7324812690f0b8">integer</a></td>          <td class="paramname"><span class="paramname"><em>ipos</em></span>&#160;)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Construct a bounding box with additional information</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">bbox</td><td>bbox [pmin, pmax] </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">id</td><td>identifier of the box </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">ipos</td><td>ranking position of the box </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a7aa8b4f44c35b86dc680b2166729ed0c" name="a7aa8b4f44c35b86dc680b2166729ed0c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7aa8b4f44c35b86dc680b2166729ed0c">&#9670;&#160;</a></span>BBox() <span class="overload">[3/4]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">G2lib::BBox::BBox </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> const</td>          <td class="paramname"><span class="paramname"><em>bbox_min</em></span>[2], </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> const</td>          <td class="paramname"><span class="paramname"><em>bbox_max</em></span>[2], </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="namespace_g2lib.html#affd533209e1ea0ddab7324812690f0b8">integer</a></td>          <td class="paramname"><span class="paramname"><em>id</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="namespace_g2lib.html#affd533209e1ea0ddab7324812690f0b8">integer</a></td>          <td class="paramname"><span class="paramname"><em>ipos</em></span>&#160;)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Construct a bounding box with additional information</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">bbox_min</td><td>bounding box lower corner </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">bbox_max</td><td>bounding box upper corner </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">id</td><td>identifier of the box </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">ipos</td><td>ranking position of the box </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="ad680fd1907e19b7493fbbf01a7e16b6c" name="ad680fd1907e19b7493fbbf01a7e16b6c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad680fd1907e19b7493fbbf01a7e16b6c">&#9670;&#160;</a></span>BBox() <span class="overload">[4/4]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">G2lib::BBox::BBox </td>
+          <td>(</td>
+          <td class="paramtype">vector&lt; PtrBBox &gt; const &amp;</td>          <td class="paramname"><span class="paramname"><em>bboxes</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="namespace_g2lib.html#affd533209e1ea0ddab7324812690f0b8">integer</a></td>          <td class="paramname"><span class="paramname"><em>id</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="namespace_g2lib.html#affd533209e1ea0ddab7324812690f0b8">integer</a></td>          <td class="paramname"><span class="paramname"><em>ipos</em></span>&#160;)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Build a buonding box that cover a list of bounding box</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">bboxes</td><td>list of bounding box </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">id</td><td>identifier of the box </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">ipos</td><td>ranking position of the box </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<h2 class="groupheader">Member Function Documentation</h2>
+<a id="a3b98db48add6859ab67fb00a0710a21e" name="a3b98db48add6859ab67fb00a0710a21e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3b98db48add6859ab67fb00a0710a21e">&#9670;&#160;</a></span>collision()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool G2lib::BBox::collision </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="class_g2lib_1_1_b_box.html">BBox</a> const &amp;</td>          <td class="paramname"><span class="paramname"><em>box</em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>detect if two bbox collide </p>
+
+</div>
+</div>
+<a id="ac6fc969999b473220bc8ef684108ab74" name="ac6fc969999b473220bc8ef684108ab74"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac6fc969999b473220bc8ef684108ab74">&#9670;&#160;</a></span>distance()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> G2lib::BBox::distance </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a></td>          <td class="paramname"><span class="paramname"><em>x</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a></td>          <td class="paramname"><span class="paramname"><em>y</em></span>&#160;) const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>distance of the point <code>(x,y)</code> to the bbox </p>
+
+</div>
+</div>
+<a id="ad0aaba5511ff29c7e0fd0049ea0da67b" name="ad0aaba5511ff29c7e0fd0049ea0da67b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad0aaba5511ff29c7e0fd0049ea0da67b">&#9670;&#160;</a></span>join()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void G2lib::BBox::join </td>
+          <td>(</td>
+          <td class="paramtype">vector&lt; PtrBBox &gt; const &amp;</td>          <td class="paramname"><span class="paramname"><em>bboxes</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Build bbox for a list of bbox </p>
+
+</div>
+</div>
+<a id="a81d505f4ec1c979177f83be91922c8d0" name="a81d505f4ec1c979177f83be91922c8d0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a81d505f4ec1c979177f83be91922c8d0">&#9670;&#160;</a></span>max_distance()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> G2lib::BBox::max_distance </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a></td>          <td class="paramname"><span class="paramname"><em>x</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a></td>          <td class="paramname"><span class="paramname"><em>y</em></span>&#160;) const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Maximum distance of the point <code>(x,y)</code> to the point of bbox </p>
+
+</div>
+</div>
+<a id="a06ca2872d9b80f275a8f755243375656" name="a06ca2872d9b80f275a8f755243375656"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a06ca2872d9b80f275a8f755243375656">&#9670;&#160;</a></span>operator=()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="class_g2lib_1_1_b_box.html">BBox</a> const  &amp; G2lib::BBox::operator= </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="class_g2lib_1_1_b_box.html">BBox</a> const &amp;</td>          <td class="paramname"><span class="paramname"><em>rhs</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>copy a bbox </p>
+
+</div>
+</div>
+<a id="a67cd88140fdf70d4de76bacdf7396cd5" name="a67cd88140fdf70d4de76bacdf7396cd5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a67cd88140fdf70d4de76bacdf7396cd5">&#9670;&#160;</a></span>print()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void G2lib::BBox::print </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="namespace_g2lib.html#a3beb82d20ee75367fbcf9cf79d908ed7">ostream_type</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>stream</em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Pretty print a bbox </p>
+
+</div>
+</div>
+<hr/>The documentation for this class was generated from the following files:<ul>
+<li>/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Clothoids/<a class="el" href="_b_box_8hxx_source.html">BBox.hxx</a></li>
+<li>/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/<b>BBox.cc</b></li>
+</ul>
+</div><!-- contents -->
+<!-- start footer part -->
+<hr class="footer"/><address class="footer"><small>
+Generated by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.12.0
+</small></address>
+</div><!-- doc-content -->
+</body>
+</html>
+</div>
+</section>
+
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p></p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

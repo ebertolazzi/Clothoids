@@ -1,0 +1,14 @@
+.. meta::7f43ba2764c772286d44273b6e1fa0b9aa87d6b9c88d693058d6200911e106dc333bcf5729e746ae2069a6c66cafe08ce2cc0f73bef4116dff81201ef15e7789
+
+:orphan:
+
+.. title:: Clothoids: Class Members
+
+Class Members
+=============
+
+.. container:: doxygen-content
+
+   
+   .. raw:: html
+     :file: functions_b.html

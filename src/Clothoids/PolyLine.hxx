@@ -386,10 +386,10 @@ namespace G2lib {
     //!
     //! Compute the point at minimum distance from a point `[x,y]` and the line segment
     //!
-    //! \param[in]  x   x-coordinate
-    //! \param[in]  y   y-coordinate
-    //! \param[out] X   x-coordinate of the closest point
-    //! \param[out] Y   y-coordinate of the closest point
+    //! \param[in]  x   \f$x\f$-coordinate
+    //! \param[in]  y   \f$y\f$-coordinate
+    //! \param[out] X   \f$x\f$-coordinate of the closest point
+    //! \param[out] Y   \f$y\f$-coordinate of the closest point
     //! \param[out] S   s-param of the closest point
     //! \param[out] T   t-param of the closest point
     //! \param[out] DST the distance point-segment

@@ -1,0 +1,14 @@
+.. meta::6af7d6ae19ee29968f75854c377e8e6af523afaae98943fdc0aff0952ad398d94516dae40520e2165f8067431f76fcb59c22d605df9d62f64af2537d181b0996
+
+:orphan:
+
+.. title:: Clothoids: G2lib::CircleArc Class Reference
+
+CircleArc Class Reference
+=========================
+
+.. container:: doxygen-content
+
+   
+   .. raw:: html
+     :file: class_g2lib_1_1_circle_arc.html

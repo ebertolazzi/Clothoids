@@ -1,0 +1,14 @@
+.. meta::69be199fd4fa2885202d1ffe02e119b35acc4791b4c36f935e639e05df178e6b7004ee36428d3ef1ff51cbda7353ad151050285e5e88d9bc091cf1eb32c2d519
+
+:orphan:
+
+.. title:: Clothoids: Dubins Class Reference
+
+Dubins Class Reference
+======================
+
+.. container:: doxygen-content
+
+   
+   .. raw:: html
+     :file: class_dubins.html

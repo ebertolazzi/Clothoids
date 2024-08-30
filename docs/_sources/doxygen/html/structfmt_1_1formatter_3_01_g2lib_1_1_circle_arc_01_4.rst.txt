@@ -1,0 +1,14 @@
+.. meta::5b7c707f96a70b8d9bb81577cb8ea56071d3f074bd24d998f8d7d0e1ef781d573a12bb92d417e92fdba6219b94a2602d592da5b0d27e533520936e627177b656
+
+:orphan:
+
+.. title:: Clothoids: fmt::formatter&lt; G2lib::CircleArc &gt; Struct Reference
+
+CircleArc &gt; Struct Reference
+===============================
+
+.. container:: doxygen-content
+
+   
+   .. raw:: html
+     :file: structfmt_1_1formatter_3_01_g2lib_1_1_circle_arc_01_4.html

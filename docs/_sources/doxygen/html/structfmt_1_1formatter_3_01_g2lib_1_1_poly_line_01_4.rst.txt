@@ -1,0 +1,14 @@
+.. meta::ea00573271e90f0ae3dba42b57bd4c8d0994ca244e8a2d39da123fc606e8f9d6c4988ac1563c10f5b61812a87c68480fd3ff10ccbcfa72c3c9ff509c3d615bb5
+
+:orphan:
+
+.. title:: Clothoids: fmt::formatter&lt; G2lib::PolyLine &gt; Struct Reference
+
+PolyLine &gt; Struct Reference
+==============================
+
+.. container:: doxygen-content
+
+   
+   .. raw:: html
+     :file: structfmt_1_1formatter_3_01_g2lib_1_1_poly_line_01_4.html

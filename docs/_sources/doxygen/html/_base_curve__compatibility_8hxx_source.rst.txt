@@ -1,0 +1,14 @@
+.. meta::14072c0e1eb161782b8907f80115fde6c1f4e75c1732d79b0866ac43f33df99a359d7dad7248fcd76ac0c4555ac10b97d8a756421decbe0f7f57ce6e1b24bcf1
+
+:orphan:
+
+.. title:: Clothoids: /Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Clothoids/BaseCurve_compatibility.hxx Source File
+
+/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Clothoids/BaseCurve\_compatibility.hxx Source File
+==========================================================================================================================================
+
+.. container:: doxygen-content
+
+   
+   .. raw:: html
+     :file: _base_curve__compatibility_8hxx_source.html

@@ -1,0 +1,14 @@
+.. meta::6bc93a2af744cc62c01d6c63c2249af53ba898aa1b4468bf31a74cdbeafe12e4701362184bcd7f2da80958f22cbead7ab9010a8d2cb59505747b108aff005a1a
+
+:orphan:
+
+.. title:: Clothoids: Biarc Class Reference
+
+Biarc Class Reference
+=====================
+
+.. container:: doxygen-content
+
+   
+   .. raw:: html
+     :file: class_biarc.html

@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Clothoids: Triangle2D Class Reference &mdash; Clothoids</title>
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=19f00094" />
+      <link rel="stylesheet" type="text/css" href="../../_static/graphviz.css?v=fd3f3429" />
+      <link rel="stylesheet" type="text/css" href="../../_static/plot_directive.css?v=7f9a90b1" />
+      <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
+      <link rel="stylesheet" type="text/css" href="../../_static/sphinx-design.min.css?v=95c83b7e" />
+      <link rel="stylesheet" type="text/css" href="../../_static/sphinx-data-viewer/jsonview.bundle.css?v=f6ef2277" />
+      <link rel="stylesheet" type="text/css" href="../../_static/sphinx-needs/libs/html/datatables.min.css?v=4b4fd840" />
+      <link rel="stylesheet" type="text/css" href="../../_static/sphinx-needs/common_css/need_style.css?v=678fb11e" />
+      <link rel="stylesheet" type="text/css" href="../../_static/sphinx-needs/common_css/need_core.css?v=f5b60a78" />
+      <link rel="stylesheet" type="text/css" href="../../_static/sphinx-needs/common_css/needstable.css?v=5e1b6797" />
+      <link rel="stylesheet" type="text/css" href="../../_static/sphinx-needs/common_css/need_links.css?v=2150a916" />
+      <link rel="stylesheet" type="text/css" href="../../_static/sphinx-needs/common_css/need_toggle.css?v=5c6620df" />
+      <link rel="stylesheet" type="text/css" href="../../_static/sphinx-needs/modern.css?v=803738c0" />
+      <link rel="stylesheet" type="text/css" href="../../_static/sphinx-rtd-theme-custom.css?v=76d57d84" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../../_static/documentation_options.js?v=60dbed4a"></script>
+        <script src="../../_static/doctools.js?v=9a2dae69"></script>
+        <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+        <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
+        <script src="../../_static/copybutton.js?v=f281be69"></script>
+        <script src="../../_static/design-tabs.js?v=f930bc37"></script>
+        <script src="../../_static/sphinx-data-viewer/jsonview.bundle.js?v=18cd53c5"></script>
+        <script src="../../_static/sphinx-data-viewer/jsonview_loader.js?v=f7ff7e7d"></script>
+        <script src="../../_static/sphinx-needs/libs/html/datatables.min.js?v=8a4aee21"></script>
+        <script src="../../_static/sphinx-needs/libs/html/datatables_loader.js?v=a2cae175"></script>
+        <script src="../../_static/sphinx-needs/libs/html/sphinx_needs_collapse.js?v=dca66431"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            Clothoids
+              <img src="../../_static/logo.png" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                2.0.13
+
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../README.html">Clothoids</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../index_CPP.html">Clothoids C++ interface</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../doxygen/html/namespaces_namespaces.html">Namespaces</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../doxygen/html/namespaces.html">Namespace List</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../doxygen/html/namespacemembers_namespace_members.html">Namespace Members</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../doxygen/html/namespacemembers.html">All</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../doxygen/html/namespacemembers_func.html">Functions</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../doxygen/html/namespacemembers_type.html">Typedefs</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../doxygen/html/annotated_classes.html">Classes</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../doxygen/html/annotated.html">Class List</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../doxygen/html/classes.html">Class Index</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../doxygen/html/hierarchy.html">Class Hierarchy</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../doxygen/html/functions_class_members.html">Class Members</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../doxygen/html/functions_all.html">All</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../doxygen/html/functions_func_functions.html">Functions</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../doxygen/html/functions_type.html">Typedefs</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../doxygen/html/functions_rela.html">Related Symbols</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../doxygen/html/files.html">Files</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../index_MATLAB.html">Clothoids MATLAB interface</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="annotated_classes.html">Classes</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="annotated.html">Class List</a></li>
+<li class="toctree-l3"><a class="reference internal" href="classes.html">Class Index</a></li>
+<li class="toctree-l3"><a class="reference internal" href="hierarchy.html">Class Hierarchy</a></li>
+<li class="toctree-l3"><a class="reference internal" href="functions_class_members.html">Class Members</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="functions.html">All</a></li>
+<li class="toctree-l4"><a class="reference internal" href="functions_func.html">Functions</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="functions_func.html">Functions</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../LICENSE.html">LICENSE</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">Clothoids</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Clothoids: Triangle2D Class Reference</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../_sources/doxygen2/html/class_triangle2_d.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="triangle2d-class-reference">
+<h1>Triangle2D Class Reference<a class="headerlink" href="#triangle2d-class-reference" title="Link to this heading"></a></h1>
+<div class="doxygen-content docutils container">
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en-US">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=11"/>
+<meta name="generator" content="Doxygen 1.12.0"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Clothoids: Triangle2D Class Reference</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<script type="text/javascript" src="clipboard.js"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="resize.js"></script>
+<script type="text/javascript">
+window.MathJax = {
+  options: {
+    ignoreHtmlClass: 'tex2jax_ignore',
+    processHtmlClass: 'tex2jax_process'
+  }
+};
+</script>
+<script type="text/javascript" id="MathJax-script" async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+<link href="doxygen-awesome.css" rel="stylesheet" type="text/css"/>
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr id="projectrow">
+  <td id="projectalign">
+   <div id="projectname">Clothoids
+   </div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Generated by Doxygen 1.12.0 -->
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(function() { codefold.init(0); });
+/* @license-end */
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(function() {
+  initMenu('',false,false,'search.php','Search',false);
+});
+/* @license-end */
+</script>
+<div id="main-nav"></div>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(function(){ initResizable(false); });
+/* @license-end */
+</script>
+</div><!-- top -->
+<div id="doc-content">
+<div class="header">
+  <div class="summary">
+<a href="#pub-methods">Public Member Functions</a> &#124;
+<a href="class_triangle2_d-members.html">List of all members</a>  </div>
+  <div class="headertitle"><div class="title">Triangle2D Class Reference</div></div>
+</div><!--header-->
+<div class="contents">
+<div class="dynheader">
+Inheritance diagram for Triangle2D:</div>
+<div class="dyncontent">
+ <div class="center">
+  <img src="class_triangle2_d.png" alt=""/>
+ </div></div>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
+Public Member Functions</h2></td></tr>
+<tr class="memitem:a281863bb5a2e1d42709c380ca7bb4764" id="r_a281863bb5a2e1d42709c380ca7bb4764"><td class="memItemLeft" align="right" valign="top">function&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a281863bb5a2e1d42709c380ca7bb4764">Triangle2D</a> (in varargin)</td></tr>
+<tr class="separator:a281863bb5a2e1d42709c380ca7bb4764"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3e1a2aad5ed587052d5584e4ffdfff30" id="r_a3e1a2aad5ed587052d5584e4ffdfff30"><td class="memItemLeft" align="right" valign="top"><a id="a3e1a2aad5ed587052d5584e4ffdfff30" name="a3e1a2aad5ed587052d5584e4ffdfff30"></a>
+function&#160;</td><td class="memItemRight" valign="bottom"><b>obj_handle</b> (in self)</td></tr>
+<tr class="memdesc:a3e1a2aad5ed587052d5584e4ffdfff30"><td class="mdescLeft">&#160;</td><td class="mdescRight">Destroy the C++ class instance. <br /></td></tr>
+<tr class="separator:a3e1a2aad5ed587052d5584e4ffdfff30"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acb3e4a7b274d2058e483ca5b7489dc79" id="r_acb3e4a7b274d2058e483ca5b7489dc79"><td class="memItemLeft" align="right" valign="top"><a id="acb3e4a7b274d2058e483ca5b7489dc79" name="acb3e4a7b274d2058e483ca5b7489dc79"></a>
+function&#160;</td><td class="memItemRight" valign="bottom"><b>is_type</b> (in ignoredArg)</td></tr>
+<tr class="separator:acb3e4a7b274d2058e483ca5b7489dc79"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5514d07e7d1b9c7ee9a6442c13165fe2" id="r_a5514d07e7d1b9c7ee9a6442c13165fe2"><td class="memItemLeft" align="right" valign="top"><a id="a5514d07e7d1b9c7ee9a6442c13165fe2" name="a5514d07e7d1b9c7ee9a6442c13165fe2"></a>
+function&#160;</td><td class="memItemRight" valign="bottom"><b>build</b> (in self, in varargin)</td></tr>
+<tr class="separator:a5514d07e7d1b9c7ee9a6442c13165fe2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1326d4204864e893594d875a17207a40" id="r_a1326d4204864e893594d875a17207a40"><td class="memItemLeft" align="right" valign="top"><a id="a1326d4204864e893594d875a17207a40" name="a1326d4204864e893594d875a17207a40"></a>
+function&#160;</td><td class="memItemRight" valign="bottom"><b>translate</b> (in self, in tx, in ty)</td></tr>
+<tr class="memdesc:a1326d4204864e893594d875a17207a40"><td class="mdescLeft">&#160;</td><td class="mdescRight">move the triangle by <code>(tx,ty)</code> <br /></td></tr>
+<tr class="separator:a1326d4204864e893594d875a17207a40"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8a25f755e4563db39230c1cf31715578" id="r_a8a25f755e4563db39230c1cf31715578"><td class="memItemLeft" align="right" valign="top"><a id="a8a25f755e4563db39230c1cf31715578" name="a8a25f755e4563db39230c1cf31715578"></a>
+function&#160;</td><td class="memItemRight" valign="bottom"><b>scale</b> (in self, in sc)</td></tr>
+<tr class="memdesc:a8a25f755e4563db39230c1cf31715578"><td class="mdescLeft">&#160;</td><td class="mdescRight">scale triangle by <code>sc</code> factor <br /></td></tr>
+<tr class="separator:a8a25f755e4563db39230c1cf31715578"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7d8c92b6fb957e2a2186e6749b522b8e" id="r_a7d8c92b6fb957e2a2186e6749b522b8e"><td class="memItemLeft" align="right" valign="top"><a id="a7d8c92b6fb957e2a2186e6749b522b8e" name="a7d8c92b6fb957e2a2186e6749b522b8e"></a>
+function&#160;</td><td class="memItemRight" valign="bottom"><b>points</b> (in self)</td></tr>
+<tr class="separator:a7d8c92b6fb957e2a2186e6749b522b8e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acb433c27bb9dffbb71d833ffd6951461" id="r_acb433c27bb9dffbb71d833ffd6951461"><td class="memItemLeft" align="right" valign="top">function&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#acb433c27bb9dffbb71d833ffd6951461">rotate</a> (in self, in angle, in cx, in cy)</td></tr>
+<tr class="separator:acb433c27bb9dffbb71d833ffd6951461"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6ca4c450947b580c9b6e84c14982065b" id="r_a6ca4c450947b580c9b6e84c14982065b"><td class="memItemLeft" align="right" valign="top"><a id="a6ca4c450947b580c9b6e84c14982065b" name="a6ca4c450947b580c9b6e84c14982065b"></a>
+function&#160;</td><td class="memItemRight" valign="bottom"><b>isInside</b> (in self, in x, in y)</td></tr>
+<tr class="separator:a6ca4c450947b580c9b6e84c14982065b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a99394f3c06b34db943c0df823439f17b" id="r_a99394f3c06b34db943c0df823439f17b"><td class="memItemLeft" align="right" valign="top"><a id="a99394f3c06b34db943c0df823439f17b" name="a99394f3c06b34db943c0df823439f17b"></a>
+function&#160;</td><td class="memItemRight" valign="bottom"><b>distanceMin</b> (in self, in x, in y)</td></tr>
+<tr class="separator:a99394f3c06b34db943c0df823439f17b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abfdf8190451374a5e32d02fb2bfd9649" id="r_abfdf8190451374a5e32d02fb2bfd9649"><td class="memItemLeft" align="right" valign="top"><a id="abfdf8190451374a5e32d02fb2bfd9649" name="abfdf8190451374a5e32d02fb2bfd9649"></a>
+function&#160;</td><td class="memItemRight" valign="bottom"><b>distanceMax</b> (in self, in x, in y)</td></tr>
+<tr class="separator:abfdf8190451374a5e32d02fb2bfd9649"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7c85ed06836b0a9b625aee7247726e32" id="r_a7c85ed06836b0a9b625aee7247726e32"><td class="memItemLeft" align="right" valign="top"><a id="a7c85ed06836b0a9b625aee7247726e32" name="a7c85ed06836b0a9b625aee7247726e32"></a>
+function&#160;</td><td class="memItemRight" valign="bottom"><b>info</b> (in self)</td></tr>
+<tr class="separator:a7c85ed06836b0a9b625aee7247726e32"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa7d11b3c0dd09e94052ea9bbb8f4a5a3" id="r_aa7d11b3c0dd09e94052ea9bbb8f4a5a3"><td class="memItemLeft" align="right" valign="top"><a id="aa7d11b3c0dd09e94052ea9bbb8f4a5a3" name="aa7d11b3c0dd09e94052ea9bbb8f4a5a3"></a>
+function&#160;</td><td class="memItemRight" valign="bottom"><b>overlap</b> (in self, in obj)</td></tr>
+<tr class="separator:aa7d11b3c0dd09e94052ea9bbb8f4a5a3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a370a06505826e6c0afc824a83283bba1" id="r_a370a06505826e6c0afc824a83283bba1"><td class="memItemLeft" align="right" valign="top"><a id="a370a06505826e6c0afc824a83283bba1" name="a370a06505826e6c0afc824a83283bba1"></a>
+function&#160;</td><td class="memItemRight" valign="bottom"><b>plot</b> (in self, in color, in varargin)</td></tr>
+<tr class="separator:a370a06505826e6c0afc824a83283bba1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad1878c868bb71db387ef821f37af7c95" id="r_ad1878c868bb71db387ef821f37af7c95"><td class="memItemLeft" align="right" valign="top"><a id="ad1878c868bb71db387ef821f37af7c95" name="ad1878c868bb71db387ef821f37af7c95"></a>
+function&#160;</td><td class="memItemRight" valign="bottom"><b>plot2</b> (in self, in varargin)</td></tr>
+<tr class="separator:ad1878c868bb71db387ef821f37af7c95"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
+<a id="a281863bb5a2e1d42709c380ca7bb4764" name="a281863bb5a2e1d42709c380ca7bb4764"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a281863bb5a2e1d42709c380ca7bb4764">&#9670;&#160;</a></span>Triangle2D()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">function Triangle2D::Triangle2D </td>
+          <td>(</td>
+          <td class="paramtype">in</td>          <td class="paramname"><span class="paramname"><em>varargin</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Create a new C++ class instance for the triangle object</p>
+<p><b>Usage:</b></p>
+<div class="fragment"><div class="line">ref = Triangle2D();</div>
+<div class="line">ref = Triangle2D( x0, y0, x1, y1, x2, y2 );</div>
+<div class="line">ref = Triangle2D( p0, p1, p2 );</div>
+</div><!-- fragment --><p><b>On output:</b></p>
+<ul>
+<li><code>ref</code>: reference handle to the object instance </li>
+</ul>
+
+</div>
+</div>
+<h2 class="groupheader">Member Function Documentation</h2>
+<a id="acb433c27bb9dffbb71d833ffd6951461" name="acb433c27bb9dffbb71d833ffd6951461"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#acb433c27bb9dffbb71d833ffd6951461">&#9670;&#160;</a></span>rotate()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">function Triangle2D::rotate </td>
+          <td>(</td>
+          <td class="paramtype">in</td>          <td class="paramname"><span class="paramname"><em>self</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">in</td>          <td class="paramname"><span class="paramname"><em>angle</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">in</td>          <td class="paramname"><span class="paramname"><em>cx</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">in</td>          <td class="paramname"><span class="paramname"><em>cy</em></span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Rotate the triangle by angle with center of rotation <code>(cx,cy)</code></p>
+<p><b>Usage:</b></p>
+<div class="fragment"><div class="line">ref.rotate(angle, cx, cy)</div>
+</div><!-- fragment --><p><b>On input:</b></p>
+<ul>
+<li><code>angle</code>: the angle of rotation</li>
+<li><code>cx</code>, <code>cy</code>: coordinates of the centre of rotation </li>
+</ul>
+
+</div>
+</div>
+<hr/>The documentation for this class was generated from the following file:<ul>
+<li>/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/toolbox/lib/<b>Triangle2D.m</b></li>
+</ul>
+</div><!-- contents -->
+<!-- start footer part -->
+<hr class="footer"/><address class="footer"><small>
+Generated by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.12.0
+</small></address>
+</div><!-- doc-content -->
+</body>
+</html>
+</div>
+</section>
+
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p></p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

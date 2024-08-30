@@ -1,0 +1,14 @@
+.. meta::c45f94f81820f4799cf3c12636674c58b0356b6eeb587772b397b23678bdc2ba116d4fff1b3b4310837566bd328573c364af092626633578b1f1eebd2d3038b7
+
+:orphan:
+
+.. title:: Clothoids: G2lib::Solve2x2 Class Reference
+
+Solve2x2 Class Reference
+========================
+
+.. container:: doxygen-content
+
+   
+   .. raw:: html
+     :file: class_g2lib_1_1_solve2x2.html

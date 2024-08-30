@@ -1,0 +1,14 @@
+.. meta::f804b65052c719e21b158a6b7bf1fbffb10293fedab50c425ffe1ae043bc742393968e3f9986006c01a569b96d87a38c69ad6a56133bef1c385c960355cde0dc
+
+:orphan:
+
+.. title:: Clothoids: G2lib::BaseCurve Class Reference
+
+BaseCurve Class Reference
+=========================
+
+.. container:: doxygen-content
+
+   
+   .. raw:: html
+     :file: class_g2lib_1_1_base_curve.html

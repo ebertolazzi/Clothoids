@@ -1,0 +1,84 @@
+/**
+=====================================================================================
+ C O P Y R I G H T
+-------------------------------------------------------------------------------------
+ Copyright (c) 2022 by Robert Bosch GmbH. All rights reserved.
+
+ Author(s):
+ - Markus Braun, :em engineering methods AG (contracted by Robert Bosch GmbH)
+=====================================================================================
+*/
+
+/* make sphinx book scale over the complete width:*/
+@media(min-width: 960px) {
+    .bd-page-width {
+        max-width: 100% !important;
+        width: 100%
+    }
+}
+
+@media (min-width: 992px) {
+    .bd-sidebar-primary {
+        flex-basis: 20%;
+        max-width: 25em;
+    }
+}
+
+body div.bd-container {
+    justify-content: left;
+}
+
+div.bd-article-container {
+    max-width: 100% !important;
+}
+
+.bd-main .bd-content .bd-article-container {
+    max-width: 100%;
+    /* default is 60em */
+}
+
+.bd-page-width {
+    max-width: 100%;
+    /* default is 88rem */
+}
+
+/* color fixes to have sidebar in white smoke */
+
+.bd-sidebar {
+    background: whitesmoke;
+}
+
+body {
+    background-color: white;
+}
+
+/* other styling stuff */
+
+.copyright {
+    font-size: small;
+    font-weight: 300;
+    color: rgba(0, 0, 0, 0.5);
+}
+
+.attribution {
+    font-size: smaller;
+    font-weight: 200;
+    color: rgba(0, 0, 0, 0.4);
+}
+
+.attribution a {
+    color: rgba(0, 0, 0, 0.6);
+    font-weight: 300;
+}
+
+.attribution a:hover {
+    color: rgba(0, 0, 0, 1);
+}
+
+p.rubric {
+    border-bottom: none !important;
+}
+
+#search-input {
+    border-radius: .3em
+}

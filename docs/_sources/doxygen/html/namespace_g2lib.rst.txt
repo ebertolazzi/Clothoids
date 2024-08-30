@@ -1,0 +1,14 @@
+.. meta::e8b2d043868255c4e58eb82139dcafc9d693cdf7be074c8ac4792868ea6684a73641a1cb4abb7685a38fa668e211bc11a0cb3b5e02ea9f5aed5602e684a899cf
+
+:orphan:
+
+.. title:: Clothoids: G2lib Namespace Reference
+
+G2lib Namespace Reference
+=========================
+
+.. container:: doxygen-content
+
+   
+   .. raw:: html
+     :file: namespace_g2lib.html

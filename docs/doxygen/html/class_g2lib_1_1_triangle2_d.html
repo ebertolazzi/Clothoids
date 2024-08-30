@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Clothoids: G2lib::Triangle2D Class Reference &mdash; Clothoids</title>
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=19f00094" />
+      <link rel="stylesheet" type="text/css" href="../../_static/graphviz.css?v=fd3f3429" />
+      <link rel="stylesheet" type="text/css" href="../../_static/plot_directive.css?v=7f9a90b1" />
+      <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
+      <link rel="stylesheet" type="text/css" href="../../_static/sphinx-design.min.css?v=95c83b7e" />
+      <link rel="stylesheet" type="text/css" href="../../_static/sphinx-data-viewer/jsonview.bundle.css?v=f6ef2277" />
+      <link rel="stylesheet" type="text/css" href="../../_static/sphinx-needs/libs/html/datatables.min.css?v=4b4fd840" />
+      <link rel="stylesheet" type="text/css" href="../../_static/sphinx-needs/common_css/need_style.css?v=678fb11e" />
+      <link rel="stylesheet" type="text/css" href="../../_static/sphinx-needs/common_css/need_core.css?v=f5b60a78" />
+      <link rel="stylesheet" type="text/css" href="../../_static/sphinx-needs/common_css/needstable.css?v=5e1b6797" />
+      <link rel="stylesheet" type="text/css" href="../../_static/sphinx-needs/common_css/need_links.css?v=2150a916" />
+      <link rel="stylesheet" type="text/css" href="../../_static/sphinx-needs/common_css/need_toggle.css?v=5c6620df" />
+      <link rel="stylesheet" type="text/css" href="../../_static/sphinx-needs/modern.css?v=803738c0" />
+      <link rel="stylesheet" type="text/css" href="../../_static/sphinx-rtd-theme-custom.css?v=76d57d84" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../../_static/documentation_options.js?v=60dbed4a"></script>
+        <script src="../../_static/doctools.js?v=9a2dae69"></script>
+        <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+        <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
+        <script src="../../_static/copybutton.js?v=f281be69"></script>
+        <script src="../../_static/design-tabs.js?v=f930bc37"></script>
+        <script src="../../_static/sphinx-data-viewer/jsonview.bundle.js?v=18cd53c5"></script>
+        <script src="../../_static/sphinx-data-viewer/jsonview_loader.js?v=f7ff7e7d"></script>
+        <script src="../../_static/sphinx-needs/libs/html/datatables.min.js?v=8a4aee21"></script>
+        <script src="../../_static/sphinx-needs/libs/html/datatables_loader.js?v=a2cae175"></script>
+        <script src="../../_static/sphinx-needs/libs/html/sphinx_needs_collapse.js?v=dca66431"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            Clothoids
+              <img src="../../_static/logo.png" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                2.0.13
+
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../README.html">Clothoids</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../index_CPP.html">Clothoids C++ interface</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="namespaces_namespaces.html">Namespaces</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="namespaces.html">Namespace List</a></li>
+<li class="toctree-l3"><a class="reference internal" href="namespacemembers_namespace_members.html">Namespace Members</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="namespacemembers.html">All</a></li>
+<li class="toctree-l4"><a class="reference internal" href="namespacemembers_func.html">Functions</a></li>
+<li class="toctree-l4"><a class="reference internal" href="namespacemembers_type.html">Typedefs</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="annotated_classes.html">Classes</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="annotated.html">Class List</a></li>
+<li class="toctree-l3"><a class="reference internal" href="classes.html">Class Index</a></li>
+<li class="toctree-l3"><a class="reference internal" href="hierarchy.html">Class Hierarchy</a></li>
+<li class="toctree-l3"><a class="reference internal" href="functions_class_members.html">Class Members</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="functions_all.html">All</a></li>
+<li class="toctree-l4"><a class="reference internal" href="functions_func_functions.html">Functions</a></li>
+<li class="toctree-l4"><a class="reference internal" href="functions_type.html">Typedefs</a></li>
+<li class="toctree-l4"><a class="reference internal" href="functions_rela.html">Related Symbols</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="files.html">Files</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../index_MATLAB.html">Clothoids MATLAB interface</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../doxygen2/html/annotated_classes.html">Classes</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../doxygen2/html/annotated.html">Class List</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../doxygen2/html/classes.html">Class Index</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../doxygen2/html/hierarchy.html">Class Hierarchy</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../doxygen2/html/functions_class_members.html">Class Members</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../doxygen2/html/functions.html">All</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../doxygen2/html/functions_func.html">Functions</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../doxygen2/html/functions_func.html">Functions</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../LICENSE.html">LICENSE</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">Clothoids</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Clothoids: G2lib::Triangle2D Class Reference</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../_sources/doxygen/html/class_g2lib_1_1_triangle2_d.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="triangle2d-class-reference">
+<h1>Triangle2D Class Reference<a class="headerlink" href="#triangle2d-class-reference" title="Link to this heading"></a></h1>
+<div class="doxygen-content docutils container">
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en-US">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=11"/>
+<meta name="generator" content="Doxygen 1.12.0"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Clothoids: G2lib::Triangle2D Class Reference</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<script type="text/javascript" src="clipboard.js"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="resize.js"></script>
+<script type="text/javascript">
+window.MathJax = {
+  options: {
+    ignoreHtmlClass: 'tex2jax_ignore',
+    processHtmlClass: 'tex2jax_process'
+  }
+};
+</script>
+<script type="text/javascript" id="MathJax-script" async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+<link href="doxygen-awesome.css" rel="stylesheet" type="text/css"/>
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr id="projectrow">
+  <td id="projectalign">
+   <div id="projectname">Clothoids
+   </div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Generated by Doxygen 1.12.0 -->
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(function() { codefold.init(0); });
+/* @license-end */
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(function() {
+  initMenu('',false,false,'search.php','Search',false);
+});
+/* @license-end */
+</script>
+<div id="main-nav"></div>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(function(){ initResizable(false); });
+/* @license-end */
+</script>
+<div id="nav-path" class="navpath">
+  <ul>
+<li class="navelem"><a class="el" href="namespace_g2lib.html">G2lib</a></li><li class="navelem"><a class="el" href="class_g2lib_1_1_triangle2_d.html">Triangle2D</a></li>  </ul>
+</div>
+</div><!-- top -->
+<div id="doc-content">
+<div class="header">
+  <div class="summary">
+<a href="#pub-methods">Public Member Functions</a> &#124;
+<a href="#friends">Friends</a> &#124;
+<a href="class_g2lib_1_1_triangle2_d-members.html">List of all members</a>  </div>
+  <div class="headertitle"><div class="title">G2lib::Triangle2D Class Reference</div></div>
+</div><!--header-->
+<div class="contents">
+
+<p><code>#include &lt;<a class="el" href="_triangle2_d_8hxx_source.html">Triangle2D.hxx</a>&gt;</code></p>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
+Public Member Functions</h2></td></tr>
+<tr class="memitem:abe759a8801fbc52b279c5d645eaf20e5" id="r_abe759a8801fbc52b279c5d645eaf20e5"><td class="memItemLeft" align="right" valign="top"><a id="abe759a8801fbc52b279c5d645eaf20e5" name="abe759a8801fbc52b279c5d645eaf20e5"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><b>Triangle2D</b> (<a class="el" href="class_g2lib_1_1_triangle2_d.html">Triangle2D</a> const &amp;t)</td></tr>
+<tr class="separator:abe759a8801fbc52b279c5d645eaf20e5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afa327f410ad0463ff5fc3eade053985c" id="r_afa327f410ad0463ff5fc3eade053985c"><td class="memItemLeft" align="right" valign="top"><a id="afa327f410ad0463ff5fc3eade053985c" name="afa327f410ad0463ff5fc3eade053985c"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><b>Triangle2D</b> (<a class="el" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> x1, <a class="el" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> y1, <a class="el" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> x2, <a class="el" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> y2, <a class="el" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> x3, <a class="el" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> y3, <a class="el" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> s0, <a class="el" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> s1, <a class="el" href="namespace_g2lib.html#affd533209e1ea0ddab7324812690f0b8">integer</a> icurve)</td></tr>
+<tr class="separator:afa327f410ad0463ff5fc3eade053985c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9f717e3822767b9e228318ca4bd66397" id="r_a9f717e3822767b9e228318ca4bd66397"><td class="memItemLeft" align="right" valign="top"><a id="a9f717e3822767b9e228318ca4bd66397" name="a9f717e3822767b9e228318ca4bd66397"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><b>Triangle2D</b> (<a class="el" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> const p1[2], <a class="el" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> const p2[2], <a class="el" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> const p3[2], <a class="el" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> s0, <a class="el" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> s1, <a class="el" href="namespace_g2lib.html#affd533209e1ea0ddab7324812690f0b8">integer</a> icurve)</td></tr>
+<tr class="separator:a9f717e3822767b9e228318ca4bd66397"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3a66624dd419be3052f8746dc2b713bb" id="r_a3a66624dd419be3052f8746dc2b713bb"><td class="memItemLeft" align="right" valign="top"><a id="a3a66624dd419be3052f8746dc2b713bb" name="a3a66624dd419be3052f8746dc2b713bb"></a>
+<a class="el" href="class_g2lib_1_1_triangle2_d.html">Triangle2D</a> const &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>operator=</b> (<a class="el" href="class_g2lib_1_1_triangle2_d.html">Triangle2D</a> const &amp;t)</td></tr>
+<tr class="separator:a3a66624dd419be3052f8746dc2b713bb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a98c609fecb86b76e1f2eb463d512f840" id="r_a98c609fecb86b76e1f2eb463d512f840"><td class="memItemLeft" align="right" valign="top"><a id="a98c609fecb86b76e1f2eb463d512f840" name="a98c609fecb86b76e1f2eb463d512f840"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>build</b> (<a class="el" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> const p1[2], <a class="el" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> const p2[2], <a class="el" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> const p3[2], <a class="el" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> s0, <a class="el" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> s1, <a class="el" href="namespace_g2lib.html#affd533209e1ea0ddab7324812690f0b8">integer</a> icurve)</td></tr>
+<tr class="separator:a98c609fecb86b76e1f2eb463d512f840"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aed692e088caaefa887d9b000be219776" id="r_aed692e088caaefa887d9b000be219776"><td class="memItemLeft" align="right" valign="top"><a id="aed692e088caaefa887d9b000be219776" name="aed692e088caaefa887d9b000be219776"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>build</b> (<a class="el" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> x1, <a class="el" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> y1, <a class="el" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> x2, <a class="el" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> y2, <a class="el" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> x3, <a class="el" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> y3, <a class="el" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> s0, <a class="el" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> s1, <a class="el" href="namespace_g2lib.html#affd533209e1ea0ddab7324812690f0b8">integer</a> icurve)</td></tr>
+<tr class="separator:aed692e088caaefa887d9b000be219776"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad3b07b8f6bbfd6767369040fde62ef35" id="r_ad3b07b8f6bbfd6767369040fde62ef35"><td class="memItemLeft" align="right" valign="top"><a id="ad3b07b8f6bbfd6767369040fde62ef35" name="ad3b07b8f6bbfd6767369040fde62ef35"></a>
+<a class="el" href="namespace_g2lib.html#affd533209e1ea0ddab7324812690f0b8">integer</a>&#160;</td><td class="memItemRight" valign="bottom"><b>Icurve</b> () const</td></tr>
+<tr class="separator:ad3b07b8f6bbfd6767369040fde62ef35"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a75db7c8ee1accfd3ffb0ef38712e6b7b" id="r_a75db7c8ee1accfd3ffb0ef38712e6b7b"><td class="memItemLeft" align="right" valign="top"><a id="a75db7c8ee1accfd3ffb0ef38712e6b7b" name="a75db7c8ee1accfd3ffb0ef38712e6b7b"></a>
+<a class="el" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a>&#160;</td><td class="memItemRight" valign="bottom"><b>x1</b> () const</td></tr>
+<tr class="separator:a75db7c8ee1accfd3ffb0ef38712e6b7b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a80683285a017d97f3b3718f9c1a95539" id="r_a80683285a017d97f3b3718f9c1a95539"><td class="memItemLeft" align="right" valign="top"><a id="a80683285a017d97f3b3718f9c1a95539" name="a80683285a017d97f3b3718f9c1a95539"></a>
+<a class="el" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a>&#160;</td><td class="memItemRight" valign="bottom"><b>y1</b> () const</td></tr>
+<tr class="separator:a80683285a017d97f3b3718f9c1a95539"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7becffa8c1980bab4d2428b768daf521" id="r_a7becffa8c1980bab4d2428b768daf521"><td class="memItemLeft" align="right" valign="top"><a id="a7becffa8c1980bab4d2428b768daf521" name="a7becffa8c1980bab4d2428b768daf521"></a>
+<a class="el" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a>&#160;</td><td class="memItemRight" valign="bottom"><b>x2</b> () const</td></tr>
+<tr class="separator:a7becffa8c1980bab4d2428b768daf521"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8c683340bfecb803c604fdc473f914d7" id="r_a8c683340bfecb803c604fdc473f914d7"><td class="memItemLeft" align="right" valign="top"><a id="a8c683340bfecb803c604fdc473f914d7" name="a8c683340bfecb803c604fdc473f914d7"></a>
+<a class="el" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a>&#160;</td><td class="memItemRight" valign="bottom"><b>y2</b> () const</td></tr>
+<tr class="separator:a8c683340bfecb803c604fdc473f914d7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3494480846ff5fec86076eeae037e09f" id="r_a3494480846ff5fec86076eeae037e09f"><td class="memItemLeft" align="right" valign="top"><a id="a3494480846ff5fec86076eeae037e09f" name="a3494480846ff5fec86076eeae037e09f"></a>
+<a class="el" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a>&#160;</td><td class="memItemRight" valign="bottom"><b>x3</b> () const</td></tr>
+<tr class="separator:a3494480846ff5fec86076eeae037e09f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a99aef0fef753412b0846a320d8d5cb5a" id="r_a99aef0fef753412b0846a320d8d5cb5a"><td class="memItemLeft" align="right" valign="top"><a id="a99aef0fef753412b0846a320d8d5cb5a" name="a99aef0fef753412b0846a320d8d5cb5a"></a>
+<a class="el" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a>&#160;</td><td class="memItemRight" valign="bottom"><b>y3</b> () const</td></tr>
+<tr class="separator:a99aef0fef753412b0846a320d8d5cb5a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7108ea6ba7e14dd2ad27fce4acb642b0" id="r_a7108ea6ba7e14dd2ad27fce4acb642b0"><td class="memItemLeft" align="right" valign="top"><a id="a7108ea6ba7e14dd2ad27fce4acb642b0" name="a7108ea6ba7e14dd2ad27fce4acb642b0"></a>
+<a class="el" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a>&#160;</td><td class="memItemRight" valign="bottom"><b>S0</b> () const</td></tr>
+<tr class="separator:a7108ea6ba7e14dd2ad27fce4acb642b0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a904d3d86a46a577567dc7c20e41139df" id="r_a904d3d86a46a577567dc7c20e41139df"><td class="memItemLeft" align="right" valign="top"><a id="a904d3d86a46a577567dc7c20e41139df" name="a904d3d86a46a577567dc7c20e41139df"></a>
+<a class="el" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a>&#160;</td><td class="memItemRight" valign="bottom"><b>S1</b> () const</td></tr>
+<tr class="separator:a904d3d86a46a577567dc7c20e41139df"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae3813623e80087bc269e79e7af3acd99" id="r_ae3813623e80087bc269e79e7af3acd99"><td class="memItemLeft" align="right" valign="top"><a id="ae3813623e80087bc269e79e7af3acd99" name="ae3813623e80087bc269e79e7af3acd99"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>translate</b> (<a class="el" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> tx, <a class="el" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> ty)</td></tr>
+<tr class="separator:ae3813623e80087bc269e79e7af3acd99"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad21e949f92ed3ad18774f048e85941f2" id="r_ad21e949f92ed3ad18774f048e85941f2"><td class="memItemLeft" align="right" valign="top"><a id="ad21e949f92ed3ad18774f048e85941f2" name="ad21e949f92ed3ad18774f048e85941f2"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>rotate</b> (<a class="el" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> angle, <a class="el" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> cx, <a class="el" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> cy)</td></tr>
+<tr class="separator:ad21e949f92ed3ad18774f048e85941f2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aca9fc621930e92ff97115ba3fdca8a7c" id="r_aca9fc621930e92ff97115ba3fdca8a7c"><td class="memItemLeft" align="right" valign="top"><a id="aca9fc621930e92ff97115ba3fdca8a7c" name="aca9fc621930e92ff97115ba3fdca8a7c"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>scale</b> (<a class="el" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> sc)</td></tr>
+<tr class="separator:aca9fc621930e92ff97115ba3fdca8a7c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aac6787fd7260a0956dab7c9555b826ce" id="r_aac6787fd7260a0956dab7c9555b826ce"><td class="memItemLeft" align="right" valign="top"><a id="aac6787fd7260a0956dab7c9555b826ce" name="aac6787fd7260a0956dab7c9555b826ce"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>bbox</b> (<a class="el" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> &amp;xmin, <a class="el" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> &amp;ymin, <a class="el" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> &amp;xmax, <a class="el" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> &amp;ymax) const</td></tr>
+<tr class="separator:aac6787fd7260a0956dab7c9555b826ce"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2042e9e9b2919559d641f4798de0dfd8" id="r_a2042e9e9b2919559d641f4798de0dfd8"><td class="memItemLeft" align="right" valign="top"><a id="a2042e9e9b2919559d641f4798de0dfd8" name="a2042e9e9b2919559d641f4798de0dfd8"></a>
+<a class="el" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a>&#160;</td><td class="memItemRight" valign="bottom"><b>baricenter_x</b> () const</td></tr>
+<tr class="separator:a2042e9e9b2919559d641f4798de0dfd8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2f6879177a24f7187482bd4ce2f518fc" id="r_a2f6879177a24f7187482bd4ce2f518fc"><td class="memItemLeft" align="right" valign="top"><a id="a2f6879177a24f7187482bd4ce2f518fc" name="a2f6879177a24f7187482bd4ce2f518fc"></a>
+<a class="el" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a>&#160;</td><td class="memItemRight" valign="bottom"><b>baricenter_y</b> () const</td></tr>
+<tr class="separator:a2f6879177a24f7187482bd4ce2f518fc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a390301395046798f296b5f5003991f46" id="r_a390301395046798f296b5f5003991f46"><td class="memItemLeft" align="right" valign="top"><a id="a390301395046798f296b5f5003991f46" name="a390301395046798f296b5f5003991f46"></a>
+<a class="el" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> const *&#160;</td><td class="memItemRight" valign="bottom"><b>P1</b> () const</td></tr>
+<tr class="separator:a390301395046798f296b5f5003991f46"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2cbbd4c358d927e7896a0c1b61c89a88" id="r_a2cbbd4c358d927e7896a0c1b61c89a88"><td class="memItemLeft" align="right" valign="top"><a id="a2cbbd4c358d927e7896a0c1b61c89a88" name="a2cbbd4c358d927e7896a0c1b61c89a88"></a>
+<a class="el" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> const *&#160;</td><td class="memItemRight" valign="bottom"><b>P2</b> () const</td></tr>
+<tr class="separator:a2cbbd4c358d927e7896a0c1b61c89a88"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6b91aa4e946399a3dab6b4b1995e4d32" id="r_a6b91aa4e946399a3dab6b4b1995e4d32"><td class="memItemLeft" align="right" valign="top"><a id="a6b91aa4e946399a3dab6b4b1995e4d32" name="a6b91aa4e946399a3dab6b4b1995e4d32"></a>
+<a class="el" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> const *&#160;</td><td class="memItemRight" valign="bottom"><b>P3</b> () const</td></tr>
+<tr class="separator:a6b91aa4e946399a3dab6b4b1995e4d32"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a35368243803de8f6c49d3de25d7c6c88" id="r_a35368243803de8f6c49d3de25d7c6c88"><td class="memItemLeft" align="right" valign="top"><a id="a35368243803de8f6c49d3de25d7c6c88" name="a35368243803de8f6c49d3de25d7c6c88"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><b>overlap</b> (<a class="el" href="class_g2lib_1_1_triangle2_d.html">Triangle2D</a> const &amp;) const</td></tr>
+<tr class="separator:a35368243803de8f6c49d3de25d7c6c88"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7fbd51b5a6a6d96a603bd7579b53ba07" id="r_a7fbd51b5a6a6d96a603bd7579b53ba07"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespace_g2lib.html#affd533209e1ea0ddab7324812690f0b8">integer</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a7fbd51b5a6a6d96a603bd7579b53ba07">is_counter_clockwise</a> () const</td></tr>
+<tr class="separator:a7fbd51b5a6a6d96a603bd7579b53ba07"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aeaa605bda8c25c79121daa3cc193ddde" id="r_aeaa605bda8c25c79121daa3cc193ddde"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespace_g2lib.html#affd533209e1ea0ddab7324812690f0b8">integer</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aeaa605bda8c25c79121daa3cc193ddde">is_inside</a> (<a class="el" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> x, <a class="el" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> y) const</td></tr>
+<tr class="separator:aeaa605bda8c25c79121daa3cc193ddde"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a033a63cbf6126862cdbf67e3e7146aad" id="r_a033a63cbf6126862cdbf67e3e7146aad"><td class="memItemLeft" align="right" valign="top"><a id="a033a63cbf6126862cdbf67e3e7146aad" name="a033a63cbf6126862cdbf67e3e7146aad"></a>
+<a class="el" href="namespace_g2lib.html#affd533209e1ea0ddab7324812690f0b8">integer</a>&#160;</td><td class="memItemRight" valign="bottom"><b>is_inside</b> (<a class="el" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> const pt[2]) const</td></tr>
+<tr class="separator:a033a63cbf6126862cdbf67e3e7146aad"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a98a56b27d7aa8a52eddab103e21bdd9b" id="r_a98a56b27d7aa8a52eddab103e21bdd9b"><td class="memItemLeft" align="right" valign="top"><a id="a98a56b27d7aa8a52eddab103e21bdd9b" name="a98a56b27d7aa8a52eddab103e21bdd9b"></a>
+<a class="el" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a>&#160;</td><td class="memItemRight" valign="bottom"><b>dist_min</b> (<a class="el" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> x, <a class="el" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> y) const</td></tr>
+<tr class="separator:a98a56b27d7aa8a52eddab103e21bdd9b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8ec24550042e5bc89bb2e460a5f1be6f" id="r_a8ec24550042e5bc89bb2e460a5f1be6f"><td class="memItemLeft" align="right" valign="top"><a id="a8ec24550042e5bc89bb2e460a5f1be6f" name="a8ec24550042e5bc89bb2e460a5f1be6f"></a>
+<a class="el" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a>&#160;</td><td class="memItemRight" valign="bottom"><b>dist_max</b> (<a class="el" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> x, <a class="el" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> y) const</td></tr>
+<tr class="separator:a8ec24550042e5bc89bb2e460a5f1be6f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2f37b3b7c58bbf7c344732fa0114ec17" id="r_a2f37b3b7c58bbf7c344732fa0114ec17"><td class="memItemLeft" align="right" valign="top"><a id="a2f37b3b7c58bbf7c344732fa0114ec17" name="a2f37b3b7c58bbf7c344732fa0114ec17"></a>
+string&#160;</td><td class="memItemRight" valign="bottom"><b>info</b> () const</td></tr>
+<tr class="separator:a2f37b3b7c58bbf7c344732fa0114ec17"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aee1c0183873de4b13f33e804bf776af4" id="r_aee1c0183873de4b13f33e804bf776af4"><td class="memItemLeft" align="right" valign="top"><a id="aee1c0183873de4b13f33e804bf776af4" name="aee1c0183873de4b13f33e804bf776af4"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>info</b> (<a class="el" href="namespace_g2lib.html#a3beb82d20ee75367fbcf9cf79d908ed7">ostream_type</a> &amp;stream) const</td></tr>
+<tr class="separator:aee1c0183873de4b13f33e804bf776af4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="friends" name="friends"></a>
+Friends</h2></td></tr>
+<tr class="memitem:ae7de5a3897272969a8c3bd2539fb02ad" id="r_ae7de5a3897272969a8c3bd2539fb02ad"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespace_g2lib.html#a3beb82d20ee75367fbcf9cf79d908ed7">ostream_type</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ae7de5a3897272969a8c3bd2539fb02ad">operator&lt;&lt;</a> (<a class="el" href="namespace_g2lib.html#a3beb82d20ee75367fbcf9cf79d908ed7">ostream_type</a> &amp;stream, <a class="el" href="class_g2lib_1_1_triangle2_d.html">Triangle2D</a> const &amp;c)</td></tr>
+<tr class="separator:ae7de5a3897272969a8c3bd2539fb02ad"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><p>Class to manage Triangle for BB of clothoid curve </p>
+</div><h2 class="groupheader">Member Function Documentation</h2>
+<a id="a7fbd51b5a6a6d96a603bd7579b53ba07" name="a7fbd51b5a6a6d96a603bd7579b53ba07"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7fbd51b5a6a6d96a603bd7579b53ba07">&#9670;&#160;</a></span>is_counter_clockwise()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="namespace_g2lib.html#affd533209e1ea0ddab7324812690f0b8">integer</a> G2lib::Triangle2D::is_counter_clockwise </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>return +1 = CounterClockwise return -1 = Clockwise return 0 = degenerate triangle </p>
+
+</div>
+</div>
+<a id="aeaa605bda8c25c79121daa3cc193ddde" name="aeaa605bda8c25c79121daa3cc193ddde"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aeaa605bda8c25c79121daa3cc193ddde">&#9670;&#160;</a></span>is_inside()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="namespace_g2lib.html#affd533209e1ea0ddab7324812690f0b8">integer</a> G2lib::Triangle2D::is_inside </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a></td>          <td class="paramname"><span class="paramname"><em>x</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a></td>          <td class="paramname"><span class="paramname"><em>y</em></span>&#160;) const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>return +1 = inside return -1 = outside return 0 = on the border </p>
+
+</div>
+</div>
+<h2 class="groupheader">Friends And Related Symbol Documentation</h2>
+<a id="ae7de5a3897272969a8c3bd2539fb02ad" name="ae7de5a3897272969a8c3bd2539fb02ad"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae7de5a3897272969a8c3bd2539fb02ad">&#9670;&#160;</a></span>operator&lt;&lt;</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="namespace_g2lib.html#a3beb82d20ee75367fbcf9cf79d908ed7">ostream_type</a> &amp; operator&lt;&lt; </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="namespace_g2lib.html#a3beb82d20ee75367fbcf9cf79d908ed7">ostream_type</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>stream</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="class_g2lib_1_1_triangle2_d.html">Triangle2D</a> const &amp;</td>          <td class="paramname"><span class="paramname"><em>c</em></span>&#160;)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">friend</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Print on strem the <code><a class="el" href="class_g2lib_1_1_triangle2_d.html">Triangle2D</a></code> object</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">stream</td><td>the output stream </td></tr>
+    <tr><td class="paramname">t</td><td>an instance of <code><a class="el" href="class_g2lib_1_1_triangle2_d.html">Triangle2D</a></code> object </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>the output stream </dd></dl>
+
+</div>
+</div>
+<hr/>The documentation for this class was generated from the following files:<ul>
+<li>/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Clothoids/<a class="el" href="_triangle2_d_8hxx_source.html">Triangle2D.hxx</a></li>
+<li>/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/<b>Triangle2D.cc</b></li>
+</ul>
+</div><!-- contents -->
+<!-- start footer part -->
+<hr class="footer"/><address class="footer"><small>
+Generated by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.12.0
+</small></address>
+</div><!-- doc-content -->
+</body>
+</html>
+</div>
+</section>
+
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p></p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

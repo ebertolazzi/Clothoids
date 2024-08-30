@@ -1,15 +1,26 @@
-Clothoids
-=========
+# Clothoids
 
 [![](https://travis-ci.org/ebertolazzi/Clothoids.svg?branch=master)](https://travis-ci.org/ebertolazzi/Splines) [![](https://www.mathworks.com/matlabcentral/images/matlab-file-exchange.svg)](https://it.mathworks.com/matlabcentral/fileexchange/64849-ebertolazzi-clothoids)
 
-G1 and G2 fitting with clothoids, spline of clothoids, circle arc and
+A clothoid is a curve $(x(s),y(x))$ is described by the parametric equations:
+
+- $$
+  x(s)=\int_0^s \cos\left(\frac{1}{2}\kappa'\tau^2+\kappa_0\tau+\vartheta_0\right)\,\mathrm{d}\tau
+  $$
+
+- $$
+  y(s)=\int_0^s \sin\left(\frac{1}{2}\kappa'\tau^2+\kappa_0\tau+\vartheta_0\right)\,\mathrm{d}\tau
+  $$
+
+when $\kappa'=0$ the clothoids reduce to a circle arc and when $\kappa'=\kappa_0=0$ the clothoids reduce to a straight segment.
+
+This library implements algorithms for $G^1$ and $G^2$ fitting with clothoids, spline of clothoids, circle arc and
 biarc.
 
-This library contains the implementation of the algorithms on clothoids, splines of clothoids,  arc, bi-arc splines of biarcs described in the works:
+The implementation of the algorithms on clothoids, splines of clothoids, arc, bi-arc splines of biarcs are described in the works:
 
 - **E.Bertolazzi, M.Frego**,
-  G1 fitting with clothoids,
+  $G^1$ fitting with clothoids,
   Mathematical Methods in the Applied Sciences, 2015,
   https://doi.org/10.1002/mma.3114
 
@@ -50,35 +61,24 @@ This library contains the implementation of the algorithms on clothoids, splines
 
 - **M.Frego**,
   Closed form parametrisation of 3D clothoids by arclength
-with both linear varying curvature and torsion,
+  with both linear varying curvature and torsion,
   Applied Mathematics and Computation, 2022,
   https://doi.org/10.1016/j.amc.2021.126907
 
-A clothoid is a curve described by the parametric eqautions:
-
-$$
-  x(s)=\int_0^s \cos\left(\frac{1}{2}\kappa'\tau^2+\kappa_0\tau+\vartheta_0\right)\,\mathrm{d}\tau
-$$
-
-$$
-  y(s)=\int_0^s \sin\left(\frac{1}{2}\kappa'\tau^2+\kappa_0\tau+\vartheta_0\right)\,\mathrm{d}\tau
-$$
-
-when $\kappa'=0$ the clothoids reduce to a circle arc and when $\kappa'=\kappa_0=0$ the clothoids reduce to a straight segment.
 
 The library contains the following objects:
 
-- Segment
-- Circle Arc
-- Clothoids
-- Bi-arc
+- `Segment`
+- `CircleArc`
+- `Clothoids`
+- `BiArc`
 - spline of
-  - Segment
-  - Circle Arc
-  - Clothoids (with G1 and G2 continuity)
-  - Bi-arc
-- triangles
-- bounding box
+  - `Segment`
+  - `CircleArc`
+  - `Clothoids` (with $G^1$ and $G^2$ continuity)
+  - `BiArc`
+- `Triangles`
+- `BBox` (bounding box)
 
 and fast algorithms involving the objects, in particular:
 

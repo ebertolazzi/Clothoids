@@ -214,7 +214,7 @@ namespace G2lib {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   void
-  PolyLine::polygon( real_type * x, real_type * y) const {
+  PolyLine::polygon( real_type x[], real_type y[] ) const {
     integer n = integer(m_polyline_list.size());
     for ( size_t k = 0; k < size_t(n); ++k ) {
       x[k] = m_polyline_list[k].x_begin();
@@ -978,7 +978,13 @@ namespace G2lib {
   { return fmt::format( "PolyLine\n{}\n", *this ); }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
+  //!
+  //!  Print on strem the `PolyLine` object
+  //!
+  //!  \param stream the output stream
+  //!  \param P      an instance of `PolyLine` object
+  //!  \return the output stream
+  //!
   ostream_type &
   operator << ( ostream_type & stream, PolyLine const & P ) {
     fmt::print( stream,

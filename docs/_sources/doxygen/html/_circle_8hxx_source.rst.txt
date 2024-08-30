@@ -1,0 +1,14 @@
+.. meta::cf284b1dfdcc1fa332c121946dfc799a83e5e27ccf8cb09a0c3be447fbb6b7c56193c40845093a4f6d8497f84d6be52cdafb00f01acc765387372b4420e03b05
+
+:orphan:
+
+.. title:: Clothoids: /Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Clothoids/Circle.hxx Source File
+
+/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Clothoids/Circle.hxx Source File
+========================================================================================================================
+
+.. container:: doxygen-content
+
+   
+   .. raw:: html
+     :file: _circle_8hxx_source.html

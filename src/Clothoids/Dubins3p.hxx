@@ -32,6 +32,30 @@ namespace G2lib {
   //                                      |_|
   */
 
+  //!
+  //! Type of Dubins for three points construction algorithm
+  //!
+  //! - SAMPLE_ONE_DEGREE
+  //!   search solution by sampling a fixed angles
+  //!
+  //! - PATTERN_SEARCH
+  //!   search solution by using pattern search
+  //!
+  //! - PATTERN_TRICHOTOMY
+  //!   search solution by using pattern search based on tricotomy
+  //!
+  //! - PATTERN_SEARCH_WITH_ALGO748
+  //!   search solution by using pattern search and refinement using ALGO748
+  //!
+  //! - PATTERN_TRICHOTOMY_WITH_ALGO748
+  //!   search solution by using pattern search with tricotomy and refinement using ALGO748
+  //!
+  //! - ELLIPSE
+  //!   search solution by using ellipse geometric construction
+  //!
+  //! - POLYNOMIAL_SYSTEM
+  //!   search solution by solving polinomial system
+  //!
   using Dubins3pBuildType = enum class Dubins3pBuildType : integer {
     SAMPLE_ONE_DEGREE,
     PATTERN_SEARCH,
@@ -42,6 +66,10 @@ namespace G2lib {
     POLYNOMIAL_SYSTEM
   };
 
+  //!
+  //!  \param[in] str name of the `Dubins3pBuildType` type
+  //!  \return the `Dubins3pBuildType` enumerator
+  //!
   Dubins3pBuildType string_to_Dubins3pBuildType( string const & str );
 
   //!
@@ -133,13 +161,13 @@ namespace G2lib {
     //!
     //! Construct a Dubins3p solution
     //!
-    //! \param[in] xi     initial position x-coordinate
-    //! \param[in] yi     initial position y-coordinate
+    //! \param[in] xi     initial position \f$x\f$-coordinate
+    //! \param[in] yi     initial position \f$y\f$-coordinate
     //! \param[in] thetai initial angle
-    //! \param[in] xm     intermediate position x-coordinate
-    //! \param[in] ym     intermediate position y-coordinate
-    //! \param[in] xf     final position x-coordinate
-    //! \param[in] yf     final position y-coordinate
+    //! \param[in] xm     intermediate position \f$x\f$-coordinate
+    //! \param[in] ym     intermediate position \f$y\f$-coordinate
+    //! \param[in] xf     final position \f$x\f$-coordinate
+    //! \param[in] yf     final position \f$y\f$-coordinate
     //! \param[in] thetaf final angle
     //! \param[in] k_max  max curvature
     //! \param[in] method construction method
@@ -174,13 +202,13 @@ namespace G2lib {
     //!
     //! Construct a Dubins3p solution
     //!
-    //! \param[in] xi     initial position x-coordinate
-    //! \param[in] yi     initial position y-coordinate
+    //! \param[in] xi     initial position \f$x\f$-coordinate
+    //! \param[in] yi     initial position \f$y\f$-coordinate
     //! \param[in] thetai initial angle
-    //! \param[in] xm     intermediate position x-coordinate
-    //! \param[in] ym     intermediate position y-coordinate
-    //! \param[in] xf     final position x-coordinate
-    //! \param[in] yf     final position y-coordinate
+    //! \param[in] xm     intermediate position \f$x\f$-coordinate
+    //! \param[in] ym     intermediate position \f$y\f$-coordinate
+    //! \param[in] xf     final position \f$x\f$-coordinate
+    //! \param[in] yf     final position \f$y\f$-coordinate
     //! \param[in] thetaf final angle
     //! \param[in] k_max  max curvature
     //! \param[in] method construction method
@@ -230,13 +258,13 @@ namespace G2lib {
     //!
     //! Get possible point of discontinuity for the length
     //!
-    //! \param[in]  xi     initial position x-coordinate
-    //! \param[in]  yi     initial position y-coordinate
+    //! \param[in]  xi     initial position \f$x\f$-coordinate
+    //! \param[in]  yi     initial position \f$y\f$-coordinate
     //! \param[in]  thetai initial angle
-    //! \param[in]  xm     intermediate position x-coordinate
-    //! \param[in]  ym     intermediate position y-coordinate
-    //! \param[in]  xf     final position x-coordinate
-    //! \param[in]  yf     final position y-coordinate
+    //! \param[in]  xm     intermediate position \f$x\f$-coordinate
+    //! \param[in]  ym     intermediate position \f$y\f$-coordinate
+    //! \param[in]  xf     final position \f$x\f$-coordinate
+    //! \param[in]  yf     final position \f$y\f$-coordinate
     //! \param[in]  thetaf final angle
     //! \param[in]  k_max  max curvature
     //! \param[out] angles angles of possibile dicontinuity
@@ -259,13 +287,13 @@ namespace G2lib {
     //!
     //! Get sample point for length minimization
     //!
-    //! \param[in]  xi        initial position x-coordinate
-    //! \param[in]  yi        initial position y-coordinate
+    //! \param[in]  xi        initial position \f$x\f$-coordinate
+    //! \param[in]  yi        initial position \f$y\f$-coordinate
     //! \param[in]  thetai    initial angle
-    //! \param[in]  xm        intermediate position x-coordinate
-    //! \param[in]  ym        intermediate position y-coordinate
-    //! \param[in]  xf        final position x-coordinate
-    //! \param[in]  yf        final position y-coordinate
+    //! \param[in]  xm        intermediate position \f$x\f$-coordinate
+    //! \param[in]  ym        intermediate position \f$y\f$-coordinate
+    //! \param[in]  xf        final position \f$x\f$-coordinate
+    //! \param[in]  yf        final position \f$y\f$-coordinate
     //! \param[in]  thetaf    final angle
     //! \param[in]  k_max     max curvature
     //! \param[in]  tolerance tolerance angle used in point approximaton
@@ -724,9 +752,6 @@ namespace G2lib {
     info( ostream_type & stream ) const override
     { stream << this->info(); }
 
-    //!
-    //! Pretty print of Dubins class.
-    //!
     friend
     ostream_type &
     operator << ( ostream_type & stream, Dubins3p const & bi );

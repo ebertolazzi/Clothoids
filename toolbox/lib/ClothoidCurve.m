@@ -5,13 +5,12 @@ classdef ClothoidCurve < CurveBase
     %>
     %> **Usage:**
     %>
-    %> \rst
-    %> .. code-block:: matlab
+    %> ```{matlab}
     %>
     %>    ref = ClothoidCurve()
     %>    ref = ClothoidCurve( x0, y0, theta0, k0, dk, L )
     %>
-    %> \endrst
+    %> ```
     %>
     %> **On input:**
     %> - `x0`, `y0`: coordinate of initial point
@@ -34,12 +33,11 @@ classdef ClothoidCurve < CurveBase
     %>
     %> **Usage:**
     %>
-    %> \rst
-    %> .. code-block:: matlab
+    %> ```{matlab}
     %>
     %>    ref.build( x0, y0, theta0, k0, dk, L )
     %>
-    %> \endrst
+    %> ```
     %>
     %> **On input:**
     %>
@@ -57,12 +55,11 @@ classdef ClothoidCurve < CurveBase
     %>
     %> **Usage:**
     %>
-    %> \rst
-    %> .. code-block:: matlab
+    %> ```{matlab}
     %>
     %>    ref.build_G1( x0, y0, theta0, x1, y1, theta1 )
     %>
-    %> \endrst
+    %> ```
     %>
     %> **On input:**
     %>
@@ -87,12 +84,11 @@ classdef ClothoidCurve < CurveBase
     %>
     %> **Usage:**
     %>
-    %> \rst
-    %> .. code-block:: matlab
+    %> ```{matlab}
     %>
     %>    ok = ref.build_forward( x0, y0, theta0, k0, x1, y1 );
     %>
-    %> \endrst
+    %> ```
     %>
     %> **On input:**
     %>
@@ -118,16 +114,15 @@ classdef ClothoidCurve < CurveBase
     %>  | *E. Bertolazzi, M. Frego*, **Point-Clothoid Distance and Projection Computation**,
     %>  | SIAM Journal on Scientific Computing, 2019, 41(5).
     %>  | https://doi.org/10.1137/18M1200439
-    %>  \endrst
+    %>  ```
     %>
     %> **Usage:**
     %>
-    %> \rst
-    %> .. code-block:: matlab
+    %> ```{matlab}
     %>
     %>    [ X, Y, S, DST ] = ref.closest_point( qx, qy );
     %>
-    %> \endrst
+    %> ```
     %>
     %> **On input:**
     %>
@@ -144,18 +139,21 @@ classdef ClothoidCurve < CurveBase
         'closest_point', self.objectHandle, qx, qy ...
       );
     end
+    % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    %>
+    %> \deprecated  whill be removed in future version
+    %>
     function [ X, Y, S, DST ] = closestPoint( self, qx, qy )
       [ X, Y, S, DST ] = self.closest_point( qx, qy );
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     %> Find the closest point to a clothoid by sampling points
     %>
-    %> \rst
-    %> .. code-block:: matlab
+    %> ```{matlab}
     %>
     %>    [ X, Y, S, DST ] = ref.closest_point_by_sample( qx, qy, ds );
     %>
-    %> \endrst
+    %> ```
     %>
     %> **On input:**
     %>
@@ -174,18 +172,20 @@ classdef ClothoidCurve < CurveBase
       );
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    %>
+    %> \deprecated  whill be removed in future version
+    %>
     function [ X, Y, S, DST ] = closestPointBySample( self, qx, qy, ds )
       [ X, Y, S, DST ] = self.closest_point_by_sample( qx, qy, ds );
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     %> Find the distance between a point and a clothoid by sampling
     %>
-    %> \rst
-    %> .. code-block:: matlab
+    %> ```{matlab}
     %>
     %>    [ DST, S ] = ref.distanceBySample( qx, qy, ds );
     %>
-    %> \endrst
+    %> ```
     %>
     %> **On input:**
     %>
@@ -207,12 +207,11 @@ classdef ClothoidCurve < CurveBase
     %>
     %> **Usage:**
     %>
-    %> \rst
-    %> .. code-block:: matlab
+    %> ```{matlab}
     %>
     %>    dk = ref.dkappa(s0,L);
     %>
-    %> \endrst
+    %> ```
     %>
     function res = dkappa( self )
       res = ClothoidCurveMexWrapper( 'dkappa', self.objectHandle );
@@ -222,12 +221,11 @@ classdef ClothoidCurve < CurveBase
     %>
     %> **Usage:**
     %>
-    %> \rst
-    %> .. code-block:: matlab
+    %> ```{matlab}
     %>
     %>    ref.change_curvilinear_origin(s0,L);
     %>
-    %> \endrst
+    %> ```
     %>
     %> **On input:**
     %>
@@ -240,6 +238,9 @@ classdef ClothoidCurve < CurveBase
       );
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    %>
+    %> \deprecated  whill be removed in future version
+    %>
     function changeCurvilinearOrigin( self, s0, L )
       self.change_curvilinear_origin( s0, L );
     end
@@ -254,12 +255,11 @@ classdef ClothoidCurve < CurveBase
     %>
     %> **Usage:**
     %>
-    %> \rst
-    %> .. code-block:: matlab
+    %> ```{matlab}
     %>
     %>    [xp,yp,xm,ym] = ref.infinity();
     %>
-    %> \endrst
+    %> ```
     %>
     %> - `xp`, `yp`: point at infinity (positive arc)
     %> - `xm`, `ym`: point at infinity (negative arc)
@@ -272,12 +272,11 @@ classdef ClothoidCurve < CurveBase
     %>
     %> **Usage:**
     %>
-    %> \rst
-    %> .. code-block:: matlab
+    %> ```{matlab}
     %>
     %>    [ x0, y0, theta0, k0, dk, L ] = ref.get_pars();
     %>
-    %> \endrst
+    %> ```
     %>
     %> - `x0`, `y0`: initial point of the clothoid arc
     %> - `theta0`:   initial angle of the clothoid arc
@@ -298,12 +297,11 @@ classdef ClothoidCurve < CurveBase
     %>
     %> **Usage:**
     %>
-    %> \rst
-    %> .. code-block:: matlab
+    %> ```{matlab}
     %>
     %>    S = ref.export();
     %>
-    %> \endrst
+    %> ```
     %>
     %> - `S.x0`, `S.y0`: initial point of the clothoid arc
     %> - `S.x1`, `S.y1`: final point of the clothoid arc
@@ -331,14 +329,13 @@ classdef ClothoidCurve < CurveBase
     %>
     %> **Usage:**
     %>
-    %> \rst
-    %> .. code-block:: matlab
+    %> ```{matlab}
     %>
     %>    S = ref.optimized_sample(npts,max_angle,offs);
     %>    S = ref.optimized_sample(npts,max_angle,offs,'ISO');
     %>    S = ref.optimized_sample(npts,max_angle,offs,'SAE');
     %>
-    %> \endrst
+    %> ```
     %>
     %> **Input:**
     %>
@@ -361,14 +358,13 @@ classdef ClothoidCurve < CurveBase
     %>
     %> **Usage:**
     %>
-    %> \rst
-    %> .. code-block:: matlab
+    %> ```{matlab}
     %>
     %>   ref.plot();
     %>   ref.plot( npts );
     %>   ref.plot( npts, 'Color','blue','Linewidth',2);
     %>
-    %> \endrst
+    %> ```
     %>
     %> - `npts`: number of sampling points for plotting
     %>
@@ -385,14 +381,13 @@ classdef ClothoidCurve < CurveBase
     %>
     %> **Usage:**
     %>
-    %> \rst
-    %> .. code-block:: matlab
+    %> ```{matlab}
     %>
     %>   ref.plot_offs( offs );
     %>   ref.plot_offs( offs, npts );
     %>   ref.pplot_offslot( offs, npts, 'Color','blue','Linewidth',2);
     %>
-    %> \endrst
+    %> ```
     %>
     %> - `npts`: number of sampling points for plotting
     %> - `offs`:      offset of the curve
@@ -407,13 +402,12 @@ classdef ClothoidCurve < CurveBase
     %>
     %> **Usage:**
     %>
-    %> \rst
-    %> .. code-block:: matlab
+    %> ```{matlab}
     %>
     %>   ref.plotCurvature( npts );
     %>   ref.plotCurvature( npts, 'Color','blue','Linewidth',2);
     %>
-    %> \endrst
+    %> ```
     %>
     %> - `npts`: number of sampling points for plotting
     %>
@@ -429,6 +423,9 @@ classdef ClothoidCurve < CurveBase
       plot( S, kappa, varargin{:} );
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    %>
+    %> \deprecated  whill be removed in future version
+    %>
     function plotCurvature( self, npts, varargin )
       self.plot_curvature( npts, varargin{:} );
     end
@@ -437,13 +434,12 @@ classdef ClothoidCurve < CurveBase
     %>
     %> **Usage:**
     %>
-    %> \rst
-    %> .. code-block:: matlab
+    %> ```{matlab}
     %>
     %>   ref.plotAngle( npts );
     %>   ref.plotAngle( npts, 'Color','blue','Linewidth',2);
     %>
-    %> \endrst
+    %> ```
     %>
     %> - `npts`: number of sampling points for plotting
     %>
@@ -459,6 +455,9 @@ classdef ClothoidCurve < CurveBase
       plot( S, theta, varargin{:} );
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    %>
+    %> \deprecated  whill be removed in future version
+    %>
     function plotAngle( self, npts, varargin )
       self.plot_angle( nots, varargin{:} );
     end
@@ -467,12 +466,11 @@ classdef ClothoidCurve < CurveBase
     %>
     %> **Usage:**
     %>
-    %> \rst
-    %> .. code-block:: matlab
+    %> ```{matlab}
     %>
     %>   ref.plotNormal( step, len );
     %>
-    %> \endrst
+    %> ```
     %>
     %> - `step`: number of sampling normals
     %> - `len`:  length of the plotted normal
@@ -488,6 +486,9 @@ classdef ClothoidCurve < CurveBase
       end
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    %>
+    %> \deprecated  whill be removed in future version
+    %>
     function plotNormal( self, step, len )
       self.plot_normal( step, len );
     end

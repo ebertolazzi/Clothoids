@@ -1,0 +1,14 @@
+.. meta::a5e5a511d353af1db6736c549cdadae00a0c26e8dc7cc1b86ed0b2cc8921fc1de7ad242a89fb0290b5f617d3232266993b54bfeb8cd329b63b9515a3ba4d4602
+
+:orphan:
+
+.. title:: Clothoids: CircleArc Class Reference
+
+CircleArc Class Reference
+=========================
+
+.. container:: doxygen-content
+
+   
+   .. raw:: html
+     :file: class_circle_arc.html

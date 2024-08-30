@@ -1,0 +1,14 @@
+.. meta::83384aa0857272d58108a53497e7bf0ca2e9b43ac3f0713d1af67e561c5d62635f0765d78a0e1b08ff341e1ed0d576563e69178d80c44be9cb8996c42f7cd3ae
+
+:orphan:
+
+.. title:: Clothoids: Class Members - Typedefs
+
+Class Members - Typedefs
+========================
+
+.. container:: doxygen-content
+
+   
+   .. raw:: html
+     :file: functions_type.html

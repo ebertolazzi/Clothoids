@@ -1,0 +1,14 @@
+.. meta::ba08bdf7c61de194d187a915abb6e75ac3cd58a4f0ffcbf80a526d648787d3ef43e858e2a6a7498af2768500fcc900463f95778a6865dbe87a335fc01b1abaa8
+
+:orphan:
+
+.. title:: Clothoids: fmt::formatter&lt; G2lib::BBox &gt; Struct Reference
+
+BBox &gt; Struct Reference
+==========================
+
+.. container:: doxygen-content
+
+   
+   .. raw:: html
+     :file: structfmt_1_1formatter_3_01_g2lib_1_1_b_box_01_4.html

@@ -1,0 +1,14 @@
+.. meta::5a06ea5e817aab6e48689b1397e17f9b3247e62511caa4e4a0cab1f6ec6ceab0ef83d324b36c4078329c9abc71f2aa34ca8217faac0fc8d92b1ac7284c84bd69
+
+:orphan:
+
+.. title:: Clothoids: fmt::formatter&lt; G2lib::BiarcList &gt; Struct Reference
+
+BiarcList &gt; Struct Reference
+===============================
+
+.. container:: doxygen-content
+
+   
+   .. raw:: html
+     :file: structfmt_1_1formatter_3_01_g2lib_1_1_biarc_list_01_4.html

@@ -1,0 +1,14 @@
+.. meta::592acf627300916e90dd49d09c5d79edf75b27ab6952bffb00c9a6e58502adc44311ef8e2ed447d8505f0d9d8729aae1ee5e77f7949873be8d75b3c4aef89c47
+
+:orphan:
+
+.. title:: Clothoids: G2lib::BiarcList Class Reference
+
+BiarcList Class Reference
+=========================
+
+.. container:: doxygen-content
+
+   
+   .. raw:: html
+     :file: class_g2lib_1_1_biarc_list.html

@@ -1,0 +1,14 @@
+.. meta::a957cf6191c1d930e5cf2bf7533a75c8d1936ccb795986a9565cd899d4af660f90e0aa1d0bf4809f1a88dcaa1e65ce01c6933f778f62c13c232798eb4d368175
+
+:orphan:
+
+.. title:: Clothoids: /Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Clothoids/Fresnel.hxx Source File
+
+/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Clothoids/Fresnel.hxx Source File
+=========================================================================================================================
+
+.. container:: doxygen-content
+
+   
+   .. raw:: html
+     :file: _fresnel_8hxx_source.html

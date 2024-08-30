@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Clothoids: G2lib::ClothoidSplineG2 Class Reference &mdash; Clothoids</title>
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=19f00094" />
+      <link rel="stylesheet" type="text/css" href="../../_static/graphviz.css?v=fd3f3429" />
+      <link rel="stylesheet" type="text/css" href="../../_static/plot_directive.css?v=7f9a90b1" />
+      <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
+      <link rel="stylesheet" type="text/css" href="../../_static/sphinx-design.min.css?v=95c83b7e" />
+      <link rel="stylesheet" type="text/css" href="../../_static/sphinx-data-viewer/jsonview.bundle.css?v=f6ef2277" />
+      <link rel="stylesheet" type="text/css" href="../../_static/sphinx-needs/libs/html/datatables.min.css?v=4b4fd840" />
+      <link rel="stylesheet" type="text/css" href="../../_static/sphinx-needs/common_css/need_style.css?v=678fb11e" />
+      <link rel="stylesheet" type="text/css" href="../../_static/sphinx-needs/common_css/need_core.css?v=f5b60a78" />
+      <link rel="stylesheet" type="text/css" href="../../_static/sphinx-needs/common_css/needstable.css?v=5e1b6797" />
+      <link rel="stylesheet" type="text/css" href="../../_static/sphinx-needs/common_css/need_links.css?v=2150a916" />
+      <link rel="stylesheet" type="text/css" href="../../_static/sphinx-needs/common_css/need_toggle.css?v=5c6620df" />
+      <link rel="stylesheet" type="text/css" href="../../_static/sphinx-needs/modern.css?v=803738c0" />
+      <link rel="stylesheet" type="text/css" href="../../_static/sphinx-rtd-theme-custom.css?v=76d57d84" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../../_static/documentation_options.js?v=60dbed4a"></script>
+        <script src="../../_static/doctools.js?v=9a2dae69"></script>
+        <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+        <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
+        <script src="../../_static/copybutton.js?v=f281be69"></script>
+        <script src="../../_static/design-tabs.js?v=f930bc37"></script>
+        <script src="../../_static/sphinx-data-viewer/jsonview.bundle.js?v=18cd53c5"></script>
+        <script src="../../_static/sphinx-data-viewer/jsonview_loader.js?v=f7ff7e7d"></script>
+        <script src="../../_static/sphinx-needs/libs/html/datatables.min.js?v=8a4aee21"></script>
+        <script src="../../_static/sphinx-needs/libs/html/datatables_loader.js?v=a2cae175"></script>
+        <script src="../../_static/sphinx-needs/libs/html/sphinx_needs_collapse.js?v=dca66431"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            Clothoids
+              <img src="../../_static/logo.png" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                2.0.13
+
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../README.html">Clothoids</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../index_CPP.html">Clothoids C++ interface</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="namespaces_namespaces.html">Namespaces</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="namespaces.html">Namespace List</a></li>
+<li class="toctree-l3"><a class="reference internal" href="namespacemembers_namespace_members.html">Namespace Members</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="namespacemembers.html">All</a></li>
+<li class="toctree-l4"><a class="reference internal" href="namespacemembers_func.html">Functions</a></li>
+<li class="toctree-l4"><a class="reference internal" href="namespacemembers_type.html">Typedefs</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="annotated_classes.html">Classes</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="annotated.html">Class List</a></li>
+<li class="toctree-l3"><a class="reference internal" href="classes.html">Class Index</a></li>
+<li class="toctree-l3"><a class="reference internal" href="hierarchy.html">Class Hierarchy</a></li>
+<li class="toctree-l3"><a class="reference internal" href="functions_class_members.html">Class Members</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="functions_all.html">All</a></li>
+<li class="toctree-l4"><a class="reference internal" href="functions_func_functions.html">Functions</a></li>
+<li class="toctree-l4"><a class="reference internal" href="functions_type.html">Typedefs</a></li>
+<li class="toctree-l4"><a class="reference internal" href="functions_rela.html">Related Symbols</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="files.html">Files</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../index_MATLAB.html">Clothoids MATLAB interface</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../doxygen2/html/annotated_classes.html">Classes</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../doxygen2/html/annotated.html">Class List</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../doxygen2/html/classes.html">Class Index</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../doxygen2/html/hierarchy.html">Class Hierarchy</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../doxygen2/html/functions_class_members.html">Class Members</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../doxygen2/html/functions.html">All</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../doxygen2/html/functions_func.html">Functions</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../doxygen2/html/functions_func.html">Functions</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../LICENSE.html">LICENSE</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">Clothoids</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Clothoids: G2lib::ClothoidSplineG2 Class Reference</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../_sources/doxygen/html/class_g2lib_1_1_clothoid_spline_g2.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="clothoidsplineg2-class-reference">
+<h1>ClothoidSplineG2 Class Reference<a class="headerlink" href="#clothoidsplineg2-class-reference" title="Link to this heading"></a></h1>
+<div class="doxygen-content docutils container">
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en-US">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=11"/>
+<meta name="generator" content="Doxygen 1.12.0"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Clothoids: G2lib::ClothoidSplineG2 Class Reference</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<script type="text/javascript" src="clipboard.js"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="resize.js"></script>
+<script type="text/javascript">
+window.MathJax = {
+  options: {
+    ignoreHtmlClass: 'tex2jax_ignore',
+    processHtmlClass: 'tex2jax_process'
+  }
+};
+</script>
+<script type="text/javascript" id="MathJax-script" async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+<link href="doxygen-awesome.css" rel="stylesheet" type="text/css"/>
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr id="projectrow">
+  <td id="projectalign">
+   <div id="projectname">Clothoids
+   </div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Generated by Doxygen 1.12.0 -->
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(function() { codefold.init(0); });
+/* @license-end */
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(function() {
+  initMenu('',false,false,'search.php','Search',false);
+});
+/* @license-end */
+</script>
+<div id="main-nav"></div>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(function(){ initResizable(false); });
+/* @license-end */
+</script>
+<div id="nav-path" class="navpath">
+  <ul>
+<li class="navelem"><a class="el" href="namespace_g2lib.html">G2lib</a></li><li class="navelem"><a class="el" href="class_g2lib_1_1_clothoid_spline_g2.html">ClothoidSplineG2</a></li>  </ul>
+</div>
+</div><!-- top -->
+<div id="doc-content">
+<div class="header">
+  <div class="summary">
+<a href="#pub-types">Public Types</a> &#124;
+<a href="#pub-methods">Public Member Functions</a> &#124;
+<a href="#pub-static-methods">Static Public Member Functions</a> &#124;
+<a href="#friends">Friends</a> &#124;
+<a href="class_g2lib_1_1_clothoid_spline_g2-members.html">List of all members</a>  </div>
+  <div class="headertitle"><div class="title">G2lib::ClothoidSplineG2 Class Reference</div></div>
+</div><!--header-->
+<div class="contents">
+
+<p><code>#include &lt;<a class="el" href="_clothoid_list_8hxx_source.html">ClothoidList.hxx</a>&gt;</code></p>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-types" name="pub-types"></a>
+Public Types</h2></td></tr>
+<tr class="memitem:a1faebe4c47761250e62fc059e22b3c80" id="r_a1faebe4c47761250e62fc059e22b3c80"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a1faebe4c47761250e62fc059e22b3c80">TargetType</a></td></tr>
+<tr class="separator:a1faebe4c47761250e62fc059e22b3c80"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
+Public Member Functions</h2></td></tr>
+<tr class="memitem:aa394296e02348f3d0c5832137336dea6" id="r_aa394296e02348f3d0c5832137336dea6"><td class="memItemLeft" align="right" valign="top"><a id="aa394296e02348f3d0c5832137336dea6" name="aa394296e02348f3d0c5832137336dea6"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>setP1</b> (<a class="el" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> theta0, <a class="el" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> thetaN)</td></tr>
+<tr class="separator:aa394296e02348f3d0c5832137336dea6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ada7bb1a21e1e10020a70ef0a28093689" id="r_ada7bb1a21e1e10020a70ef0a28093689"><td class="memItemLeft" align="right" valign="top"><a id="ada7bb1a21e1e10020a70ef0a28093689" name="ada7bb1a21e1e10020a70ef0a28093689"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>setP2</b> ()</td></tr>
+<tr class="separator:ada7bb1a21e1e10020a70ef0a28093689"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a90a14f610581691a6bb61b42f47d6aeb" id="r_a90a14f610581691a6bb61b42f47d6aeb"><td class="memItemLeft" align="right" valign="top"><a id="a90a14f610581691a6bb61b42f47d6aeb" name="a90a14f610581691a6bb61b42f47d6aeb"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>setP3</b> ()</td></tr>
+<tr class="separator:a90a14f610581691a6bb61b42f47d6aeb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a990c69a26c3976e2eb0126a022e9ffc3" id="r_a990c69a26c3976e2eb0126a022e9ffc3"><td class="memItemLeft" align="right" valign="top"><a id="a990c69a26c3976e2eb0126a022e9ffc3" name="a990c69a26c3976e2eb0126a022e9ffc3"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>setP4</b> ()</td></tr>
+<tr class="separator:a990c69a26c3976e2eb0126a022e9ffc3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6acc5f9bae89dc7d89701247698210bc" id="r_a6acc5f9bae89dc7d89701247698210bc"><td class="memItemLeft" align="right" valign="top"><a id="a6acc5f9bae89dc7d89701247698210bc" name="a6acc5f9bae89dc7d89701247698210bc"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>setP5</b> ()</td></tr>
+<tr class="separator:a6acc5f9bae89dc7d89701247698210bc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9466df9804270455bbb25c222f43c0dc" id="r_a9466df9804270455bbb25c222f43c0dc"><td class="memItemLeft" align="right" valign="top"><a id="a9466df9804270455bbb25c222f43c0dc" name="a9466df9804270455bbb25c222f43c0dc"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>setP6</b> ()</td></tr>
+<tr class="separator:a9466df9804270455bbb25c222f43c0dc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aefa91d946d697665c74e171da05b1d6b" id="r_aefa91d946d697665c74e171da05b1d6b"><td class="memItemLeft" align="right" valign="top"><a id="aefa91d946d697665c74e171da05b1d6b" name="aefa91d946d697665c74e171da05b1d6b"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>setP7</b> ()</td></tr>
+<tr class="separator:aefa91d946d697665c74e171da05b1d6b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aaccf933b3fde6c0703334dd744e1f986" id="r_aaccf933b3fde6c0703334dd744e1f986"><td class="memItemLeft" align="right" valign="top"><a id="aaccf933b3fde6c0703334dd744e1f986" name="aaccf933b3fde6c0703334dd744e1f986"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>setP8</b> ()</td></tr>
+<tr class="separator:aaccf933b3fde6c0703334dd744e1f986"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6a6a6bcd9cf0d0605ddb28399b091f60" id="r_a6a6a6bcd9cf0d0605ddb28399b091f60"><td class="memItemLeft" align="right" valign="top"><a id="a6a6a6bcd9cf0d0605ddb28399b091f60" name="a6a6a6bcd9cf0d0605ddb28399b091f60"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>setP9</b> ()</td></tr>
+<tr class="separator:a6a6a6bcd9cf0d0605ddb28399b091f60"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a76ad05249d387ffd26b0208cda55e2b0" id="r_a76ad05249d387ffd26b0208cda55e2b0"><td class="memItemLeft" align="right" valign="top"><a id="a76ad05249d387ffd26b0208cda55e2b0" name="a76ad05249d387ffd26b0208cda55e2b0"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>build</b> (<a class="el" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> const xvec[], <a class="el" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> const yvec[], <a class="el" href="namespace_g2lib.html#affd533209e1ea0ddab7324812690f0b8">integer</a> npts)</td></tr>
+<tr class="separator:a76ad05249d387ffd26b0208cda55e2b0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0ac08de6ae3d482e4cb6f964206e7e8c" id="r_a0ac08de6ae3d482e4cb6f964206e7e8c"><td class="memItemLeft" align="right" valign="top"><a id="a0ac08de6ae3d482e4cb6f964206e7e8c" name="a0ac08de6ae3d482e4cb6f964206e7e8c"></a>
+<a class="el" href="namespace_g2lib.html#affd533209e1ea0ddab7324812690f0b8">integer</a>&#160;</td><td class="memItemRight" valign="bottom"><b>numPnts</b> () const</td></tr>
+<tr class="separator:a0ac08de6ae3d482e4cb6f964206e7e8c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a70b733f145c32079a8991a7f2e380ddb" id="r_a70b733f145c32079a8991a7f2e380ddb"><td class="memItemLeft" align="right" valign="top"><a id="a70b733f145c32079a8991a7f2e380ddb" name="a70b733f145c32079a8991a7f2e380ddb"></a>
+<a class="el" href="namespace_g2lib.html#affd533209e1ea0ddab7324812690f0b8">integer</a>&#160;</td><td class="memItemRight" valign="bottom"><b>numTheta</b> () const</td></tr>
+<tr class="separator:a70b733f145c32079a8991a7f2e380ddb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a13601559d623d59a486ce88c0cd9aaca" id="r_a13601559d623d59a486ce88c0cd9aaca"><td class="memItemLeft" align="right" valign="top"><a id="a13601559d623d59a486ce88c0cd9aaca" name="a13601559d623d59a486ce88c0cd9aaca"></a>
+<a class="el" href="namespace_g2lib.html#affd533209e1ea0ddab7324812690f0b8">integer</a>&#160;</td><td class="memItemRight" valign="bottom"><b>numConstraints</b> () const</td></tr>
+<tr class="separator:a13601559d623d59a486ce88c0cd9aaca"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5925d5cf7f38e2991c20df2111c33cc4" id="r_a5925d5cf7f38e2991c20df2111c33cc4"><td class="memItemLeft" align="right" valign="top"><a id="a5925d5cf7f38e2991c20df2111c33cc4" name="a5925d5cf7f38e2991c20df2111c33cc4"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>guess</b> (<a class="el" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> theta_guess[], <a class="el" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> theta_min[], <a class="el" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> theta_max[]) const</td></tr>
+<tr class="separator:a5925d5cf7f38e2991c20df2111c33cc4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac6a206f906122db8cef68d025d4bbe6d" id="r_ac6a206f906122db8cef68d025d4bbe6d"><td class="memItemLeft" align="right" valign="top"><a id="ac6a206f906122db8cef68d025d4bbe6d" name="ac6a206f906122db8cef68d025d4bbe6d"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><b>objective</b> (<a class="el" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> const theta[], <a class="el" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> &amp;f) const</td></tr>
+<tr class="separator:ac6a206f906122db8cef68d025d4bbe6d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7e987ea3b72596c7ddfa4ef9786a6286" id="r_a7e987ea3b72596c7ddfa4ef9786a6286"><td class="memItemLeft" align="right" valign="top"><a id="a7e987ea3b72596c7ddfa4ef9786a6286" name="a7e987ea3b72596c7ddfa4ef9786a6286"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><b>gradient</b> (<a class="el" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> const theta[], <a class="el" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> g[]) const</td></tr>
+<tr class="separator:a7e987ea3b72596c7ddfa4ef9786a6286"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a03f40d7d82dafc1548211da615948d08" id="r_a03f40d7d82dafc1548211da615948d08"><td class="memItemLeft" align="right" valign="top"><a id="a03f40d7d82dafc1548211da615948d08" name="a03f40d7d82dafc1548211da615948d08"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><b>constraints</b> (<a class="el" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> const theta[], <a class="el" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> c[]) const</td></tr>
+<tr class="separator:a03f40d7d82dafc1548211da615948d08"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a670fcaf10286ad4ab7c312bdd2e8d7ab" id="r_a670fcaf10286ad4ab7c312bdd2e8d7ab"><td class="memItemLeft" align="right" valign="top"><a id="a670fcaf10286ad4ab7c312bdd2e8d7ab" name="a670fcaf10286ad4ab7c312bdd2e8d7ab"></a>
+<a class="el" href="namespace_g2lib.html#affd533209e1ea0ddab7324812690f0b8">integer</a>&#160;</td><td class="memItemRight" valign="bottom"><b>jacobian_nnz</b> () const</td></tr>
+<tr class="separator:a670fcaf10286ad4ab7c312bdd2e8d7ab"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac335b14d49e5bb925fc96ffc7cd2be4e" id="r_ac335b14d49e5bb925fc96ffc7cd2be4e"><td class="memItemLeft" align="right" valign="top"><a id="ac335b14d49e5bb925fc96ffc7cd2be4e" name="ac335b14d49e5bb925fc96ffc7cd2be4e"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><b>jacobian_pattern</b> (<a class="el" href="namespace_g2lib.html#affd533209e1ea0ddab7324812690f0b8">integer</a> i[], <a class="el" href="namespace_g2lib.html#affd533209e1ea0ddab7324812690f0b8">integer</a> j[]) const</td></tr>
+<tr class="separator:ac335b14d49e5bb925fc96ffc7cd2be4e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aae5c055765b9d4c51284f962f0db3e9c" id="r_aae5c055765b9d4c51284f962f0db3e9c"><td class="memItemLeft" align="right" valign="top"><a id="aae5c055765b9d4c51284f962f0db3e9c" name="aae5c055765b9d4c51284f962f0db3e9c"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><b>jacobian_pattern_matlab</b> (<a class="el" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> i[], <a class="el" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> j[]) const</td></tr>
+<tr class="separator:aae5c055765b9d4c51284f962f0db3e9c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0afc6828cd3f5af332a66c3ed7ae3a18" id="r_a0afc6828cd3f5af332a66c3ed7ae3a18"><td class="memItemLeft" align="right" valign="top"><a id="a0afc6828cd3f5af332a66c3ed7ae3a18" name="a0afc6828cd3f5af332a66c3ed7ae3a18"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><b>jacobian</b> (<a class="el" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> const theta[], <a class="el" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> vals[]) const</td></tr>
+<tr class="separator:a0afc6828cd3f5af332a66c3ed7ae3a18"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad6fe9c6f2c4f4e559ed2f44a42cc60c6" id="r_ad6fe9c6f2c4f4e559ed2f44a42cc60c6"><td class="memItemLeft" align="right" valign="top"><a id="ad6fe9c6f2c4f4e559ed2f44a42cc60c6" name="ad6fe9c6f2c4f4e559ed2f44a42cc60c6"></a>
+string&#160;</td><td class="memItemRight" valign="bottom"><b>info</b> () const</td></tr>
+<tr class="separator:ad6fe9c6f2c4f4e559ed2f44a42cc60c6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a396c89c48d7611f4c4b5ee250022489c" id="r_a396c89c48d7611f4c4b5ee250022489c"><td class="memItemLeft" align="right" valign="top"><a id="a396c89c48d7611f4c4b5ee250022489c" name="a396c89c48d7611f4c4b5ee250022489c"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>info</b> (<a class="el" href="namespace_g2lib.html#a3beb82d20ee75367fbcf9cf79d908ed7">ostream_type</a> &amp;stream) const</td></tr>
+<tr class="separator:a396c89c48d7611f4c4b5ee250022489c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-static-methods" name="pub-static-methods"></a>
+Static Public Member Functions</h2></td></tr>
+<tr class="memitem:a275930dd9479302488c6652940121695" id="r_a275930dd9479302488c6652940121695"><td class="memItemLeft" align="right" valign="top">static string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a275930dd9479302488c6652940121695">to_string</a> (<a class="el" href="#a1faebe4c47761250e62fc059e22b3c80">TargetType</a> n)</td></tr>
+<tr class="separator:a275930dd9479302488c6652940121695"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="friends" name="friends"></a>
+Friends</h2></td></tr>
+<tr class="memitem:a406f0cfa3728ce21b7345fb7af2a3738" id="r_a406f0cfa3728ce21b7345fb7af2a3738"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespace_g2lib.html#a3beb82d20ee75367fbcf9cf79d908ed7">ostream_type</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a406f0cfa3728ce21b7345fb7af2a3738">operator&lt;&lt;</a> (<a class="el" href="namespace_g2lib.html#a3beb82d20ee75367fbcf9cf79d908ed7">ostream_type</a> &amp;stream, <a class="el" href="class_g2lib_1_1_clothoid_spline_g2.html">ClothoidSplineG2</a> const &amp;c)</td></tr>
+<tr class="separator:a406f0cfa3728ce21b7345fb7af2a3738"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><p>Class for the computation of \( G^2 \) spljne of clothoids </p>
+</div><h2 class="groupheader">Member Typedef Documentation</h2>
+<a id="a1faebe4c47761250e62fc059e22b3c80" name="a1faebe4c47761250e62fc059e22b3c80"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1faebe4c47761250e62fc059e22b3c80">&#9670;&#160;</a></span>TargetType</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">using <a class="el" href="#a1faebe4c47761250e62fc059e22b3c80">G2lib::ClothoidSplineG2::TargetType</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<b>Initial value:</b><div class="fragment"><div class="line"> <span class="keyword">enum class</span> <a class="code hl_typedef" href="#a1faebe4c47761250e62fc059e22b3c80">TargetType</a> : <a class="code hl_typedef" href="namespace_g2lib.html#affd533209e1ea0ddab7324812690f0b8">integer</a></div>
+<div class="line">    { P1, P2, P3, P4, P5, P6, P7, P8, P9 }</div>
+<div class="ttc" id="aclass_g2lib_1_1_clothoid_spline_g2_html_a1faebe4c47761250e62fc059e22b3c80"><div class="ttname"><a href="#a1faebe4c47761250e62fc059e22b3c80">G2lib::ClothoidSplineG2::TargetType</a></div><div class="ttdeci">enum class TargetType :integer { P1, P2, P3, P4, P5, P6, P7, P8, P9 } TargetType</div><div class="ttdef"><b>Definition</b> ClothoidList.hxx:2234</div></div>
+<div class="ttc" id="anamespace_g2lib_html_affd533209e1ea0ddab7324812690f0b8"><div class="ttname"><a href="namespace_g2lib.html#affd533209e1ea0ddab7324812690f0b8">G2lib::integer</a></div><div class="ttdeci">int integer</div><div class="ttdoc">integer type number</div><div class="ttdef"><b>Definition</b> Clothoids.hh:80</div></div>
+</div><!-- fragment --><p>Type of Spline list to be build </p>
+
+</div>
+</div>
+<h2 class="groupheader">Member Function Documentation</h2>
+<a id="a275930dd9479302488c6652940121695" name="a275930dd9479302488c6652940121695"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a275930dd9479302488c6652940121695">&#9670;&#160;</a></span>to_string()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static string G2lib::ClothoidSplineG2::to_string </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="#a1faebe4c47761250e62fc059e22b3c80">TargetType</a></td>          <td class="paramname"><span class="paramname"><em>n</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Convert <code>TargetType</code> to string</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">n</td><td>the target type </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>a string with the name of the target </dd></dl>
+
+</div>
+</div>
+<h2 class="groupheader">Friends And Related Symbol Documentation</h2>
+<a id="a406f0cfa3728ce21b7345fb7af2a3738" name="a406f0cfa3728ce21b7345fb7af2a3738"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a406f0cfa3728ce21b7345fb7af2a3738">&#9670;&#160;</a></span>operator&lt;&lt;</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="namespace_g2lib.html#a3beb82d20ee75367fbcf9cf79d908ed7">ostream_type</a> &amp; operator&lt;&lt; </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="namespace_g2lib.html#a3beb82d20ee75367fbcf9cf79d908ed7">ostream_type</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>stream</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="class_g2lib_1_1_clothoid_spline_g2.html">ClothoidSplineG2</a> const &amp;</td>          <td class="paramname"><span class="paramname"><em>c</em></span>&#160;)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">friend</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Print on strem the <code><a class="el" href="class_g2lib_1_1_clothoid_spline_g2.html">ClothoidSplineG2</a></code> object</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">stream</td><td>the output stream </td></tr>
+    <tr><td class="paramname">c</td><td>an instance of <code><a class="el" href="class_g2lib_1_1_clothoid_spline_g2.html">ClothoidSplineG2</a></code> object </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>the output stream </dd></dl>
+
+</div>
+</div>
+<hr/>The documentation for this class was generated from the following files:<ul>
+<li>/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Clothoids/<a class="el" href="_clothoid_list_8hxx_source.html">ClothoidList.hxx</a></li>
+<li>/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/<b>ClothoidG2.cc</b></li>
+<li>/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/<b>ClothoidList.cc</b></li>
+</ul>
+</div><!-- contents -->
+<!-- start footer part -->
+<hr class="footer"/><address class="footer"><small>
+Generated by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.12.0
+</small></address>
+</div><!-- doc-content -->
+</body>
+</html>
+</div>
+</section>
+
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p></p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
