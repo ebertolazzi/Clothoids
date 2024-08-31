@@ -5,15 +5,14 @@ classdef LineSegment < CurveBase
     %>
     %> **Usage:**
     %>
-    %> \rst
-    %> .. code-block:: matlab
+    %> ```{matlab}
     %>
     %>    ref = LineSegment(); % (1)
     %>    ref = LineSegment( x0, y0, theta0, L ); % (2)
     %>    ref = LineSegment( x0, y0, theta0, smin, smax ); % (3)
     %>    ref = LineSegment( p0, p1 ); % (4)
     %>
-    %> \endrst
+    %> ```
     %>
     %> - (1) empty segment
     %> - (2) line segment passing from (x0,y0) at angle theta0
@@ -44,13 +43,12 @@ classdef LineSegment < CurveBase
     %>
     %> **Usage:**
     %>
-    %> \rst
-    %> .. code-block:: matlab
+    %> ```{matlab}
     %>
     %>    ref.build( x0, y0, theta0, L );
     %>    ref.build( p0, p1 );
     %>
-    %> \endrst
+    %> ```
     %>
     %> **Build 1:**
     %>
@@ -81,12 +79,11 @@ classdef LineSegment < CurveBase
     %>
     %> **Usage:**
     %>
-    %> \rst
-    %> .. code-block:: matlab
+    %> ```{matlab}
     %>
     %>    S = ref.export();
     %>
-    %> \endrst
+    %> ```
     %>
     %> - `S.x0`, `S.y0`: initial point of the line segment
     %> - `S.x1`, `S.y1`: final point of the line segment
@@ -106,13 +103,12 @@ classdef LineSegment < CurveBase
     %>
     %> **Usage:**
     %>
-    %> \rst
-    %> .. code-block:: matlab
+    %> ```{matlab}
     %>
     %>   ref.plot();
     %>   ref.plot( 'Color','blue','Linewidth',2);
     %> 
-    %> \endrst
+    %> ```
     %>
     %>
     function plot( self, varargin )

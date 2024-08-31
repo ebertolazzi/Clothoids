@@ -50,163 +50,163 @@ bbox(
 }
 
 //!
-//! Initial x-coordinate with offset (ISO or SAE).
+//! Initial \f$x\f$-coordinate with offset (ISO or SAE).
 //!
 real_type xBegin( real_type offs ) const
 { return G2lib::use_ISO ? this->x_begin_ISO(offs) : this->x_begin_SAE(offs); }
 
 //!
-//! Initial y-coordinate with offset (ISO or SAE).
+//! Initial \f$y\f$-coordinate with offset (ISO or SAE).
 //!
 real_type yBegin( real_type offs ) const
 { return G2lib::use_ISO ? this->y_begin_ISO(offs) : this->y_begin_SAE(offs); }
 
 //!
-//! Final x-coordinate with offset (ISO or SAE).
+//! Final \f$x\f$-coordinate with offset (ISO or SAE).
 //!
 real_type xEnd( real_type offs ) const
 { return G2lib::use_ISO ? this->x_end_ISO(offs) : this->x_end_SAE(offs); }
 
 //!
-//! Final y-coordinate with offset (ISO or SAE).
+//! Final \f$y\f$-coordinate with offset (ISO or SAE).
 //!
 real_type yEnd( real_type offs ) const
 { return G2lib::use_ISO ? this->y_end_ISO(offs) : this->y_end_SAE(offs); }
 
 //!
-//! Intial normal x-coordinate.
+//! Intial normal \f$x\f$-coordinate.
 //!
 real_type nx_Begin() const
 { return G2lib::use_ISO ? this->nx_begin_ISO() : this->nx_begin_SAE(); }
 
 //!
-//! Intial normal y-coordinate.
+//! Intial normal \f$y\f$-coordinate.
 //!
 real_type ny_Begin() const
 { return G2lib::use_ISO ? this->ny_begin_ISO() : this->ny_begin_SAE(); }
 
 //!
-//! Final normal x-coordinate.
+//! Final normal \f$x\f$-coordinate.
 //!
 real_type nx_End() const
 { return G2lib::use_ISO ? this->nx_end_ISO() : this->nx_end_SAE(); }
 
 //!
-//! Final normal y-coordinate.
+//! Final normal \f$y\f$-coordinate.
 //!
 real_type ny_End() const
 { return G2lib::use_ISO ? this->ny_end_ISO() : this->ny_end_SAE(); }
 
 //!
-//! Normal x-coordinate at curvilinear coodinate `s` (ISO/SAE).
+//! Normal \f$x\f$-coordinate at curvilinear coordinate \f$s\f$ (ISO/SAE).
 //!
 real_type nx( real_type s ) const
 { return G2lib::use_ISO ? this->nx_ISO(s) : this->nx_SAE(s); }
 
 //!
-//! Normal derivative x-coordinate at curvilinear coodinate `s` (ISO/SAE).
+//! Normal derivative \f$x\f$-coordinate at curvilinear coordinate \f$s\f$ (ISO/SAE).
 //!
 real_type nx_D( real_type s ) const
 { return G2lib::use_ISO ? this->nx_ISO_D(s) : this->nx_SAE_D(s); }
 
 //!
-//! Normal second derivative x-coordinate at curvilinear coodinate `s` (ISO/SAE).
+//! Normal second derivative \f$x\f$-coordinate at curvilinear coordinate \f$s\f$ (ISO/SAE).
 //!
 real_type nx_DD( real_type s ) const
 { return G2lib::use_ISO ? this->nx_ISO_DD(s) : this->nx_SAE_DD(s); }
 
 //!
-//! Normal third derivative x-coordinate at curvilinear coodinate `s` (ISO/SAE).
+//! Normal third derivative \f$x\f$-coordinate at curvilinear coordinate \f$s\f$ (ISO/SAE).
 //!
 real_type nx_DDD( real_type s ) const
 { return G2lib::use_ISO ? this->nx_ISO_DDD(s) : this->nx_SAE_DDD(s); }
 
 //!
-//! Normal y-coordinate at curvilinear coodinate `s` (ISO/SAE).
+//! Normal \f$y\f$-coordinate at curvilinear coordinate \f$s\f$ (ISO/SAE).
 //!
 real_type ny( real_type s ) const
 { return G2lib::use_ISO ? this->ny_ISO(s) : this->ny_SAE(s); }
 
 //!
-//! Normal derivative y-coordinate at curvilinear coodinate `s` (ISO/SAE).
+//! Normal derivative \f$y\f$-coordinate at curvilinear coordinate \f$s\f$ (ISO/SAE).
 //!
 real_type ny_D( real_type s ) const
 { return G2lib::use_ISO ? this->ny_ISO_D(s) : this->ny_SAE_D(s); }
 
 //!
-//! Normal second derivative y-coordinate at curvilinear coodinate `s` (ISO/SAE).
+//! Normal second derivative \f$y\f$-coordinate at curvilinear coordinate \f$s\f$ (ISO/SAE).
 //!
 real_type ny_DD( real_type s ) const
 { return G2lib::use_ISO ? this->ny_ISO_DD(s) : this->ny_SAE_DD(s); }
 
 //!
-//! Normal third derivative y-coordinate at curvilinear coodinate `s` (ISO/SAE).
+//! Normal third derivative \f$y\f$-coordinate at curvilinear coordinate \f$s\f$ (ISO/SAE).
 //!
 real_type ny_DDD( real_type s ) const
 { return G2lib::use_ISO ? this->ny_ISO_DDD(s) : this->ny_SAE_DDD(s); }
 
 //!
-//! Initial tangent x-coordinate.
+//! Initial tangent \f$x\f$-coordinate.
 //!
 real_type tx_Begin() const { return this->tx_begin(); }
 
 //!
-//! Initial tangent y-coordinate.
+//! Initial tangent \f$y\f$-coordinate.
 //!
 real_type ty_Begin() const { return this->ty_begin(); }
 
 //!
-//! Final tangent x-coordinate.
+//! Final tangent \f$x\f$-coordinate.
 //!
 real_type tx_End() const { return this->tx_end(); }
 
 //!
-//! Final tangent y-coordinate.
+//! Final tangent \f$y\f$-coordinate.
 //!
 real_type ty_End() const { return this->ty_end(); }
 
 //!
-//! Intial normal x-coordinate (ISO).
+//! Intial normal \f$x\f$-coordinate (ISO).
 //!
 real_type nx_Begin_ISO() const { return nx_begin_ISO(); }
 
 //!
-//! Intial normal y-coordinate (ISO).
+//! Intial normal \f$y\f$-coordinate (ISO).
 //!
 real_type ny_Begin_ISO() const { return this->ny_begin_ISO(); }
 
 //!
-//! Final normal x-coordinate (ISO).
+//! Final normal \f$x\f$-coordinate (ISO).
 //!
 real_type nx_End_ISO() const { return nx_end_ISO(); }
 
 //!
-//! Final normal y-coordinate (ISO).
+//! Final normal \f$y\f$-coordinate (ISO).
 //!
 real_type ny_End_ISO() const { return this->ny_end_ISO(); }
 
 //!
-//! Intial normal x-coordinate (SAE).
+//! Intial normal \f$x\f$-coordinate (SAE).
 //!
 real_type nx_Begin_SAE() const { return nx_begin_SAE(); }
 
 //!
-//! Intial normal y-coordinate (SAE).
+//! Intial normal \f$y\f$-coordinate (SAE).
 //!
 real_type ny_Begin_SAE() const { return ny_begin_SAE(); }
 
 //!
-//! Final normal x-coordinate (SAE).
+//! Final normal \f$x\f$-coordinate (SAE).
 //!
 real_type nx_End_SAE() const { return nx_end_SAE(); }
 
 //!
-//! Intial normal y-coordinate (SAE).
+//! Intial normal \f$y\f$-coordinate (SAE).
 //!
 real_type ny_End_SAE() const { return ny_end_SAE(); }
 
 //!
-//! Normal at curvilinear coodinate `s` (ISO/SAE).
+//! Normal at curvilinear coordinate \f$s\f$ (ISO/SAE).
 //!
 void
 nor( real_type s, real_type & nx, real_type & ny ) const {
@@ -215,7 +215,7 @@ nor( real_type s, real_type & nx, real_type & ny ) const {
 }
 
 //!
-//! Normal derivative at curvilinear coodinate `s` (ISO/SAE).
+//! Normal derivative at curvilinear coordinate \f$s\f$ (ISO/SAE).
 //!
 void
 nor_D( real_type s, real_type & nx_D, real_type & ny_D ) const {
@@ -224,7 +224,7 @@ nor_D( real_type s, real_type & nx_D, real_type & ny_D ) const {
 }
 
 //!
-//! Normal second derivative at curvilinear coodinate `s` (ISO/SAE).
+//! Normal second derivative at curvilinear coordinate \f$s\f$ (ISO/SAE).
 //!
 void
 nor_DD( real_type s, real_type & nx_DD, real_type & ny_DD ) const {
@@ -233,7 +233,7 @@ nor_DD( real_type s, real_type & nx_DD, real_type & ny_DD ) const {
 }
 
 //!
-//! Normal third at curvilinear coodinate `s` (ISO/SAE).
+//! Normal third at curvilinear coordinate \f$s\f$ (ISO/SAE).
 //!
 void
 nor_DDD( real_type s, real_type & nx_DDD, real_type & ny_DDD ) const {
@@ -242,14 +242,14 @@ nor_DDD( real_type s, real_type & nx_DDD, real_type & ny_DDD ) const {
 }
 
 //!
-//! Evaluate curve with offset at curvilinear coordinate `s` (ISO/SAE).
+//! Evaluate curve with offset at curvilinear coordinate \f$s\f$ (ISO/SAE).
 //!
 //! \param[in]  s    curvilinear coordinate
 //! \param[in]  offs offset
 //! \param[out] th   angle
 //! \param[out] k    curvature
-//! \param[out] x    x-coordinate
-//! \param[out] y    y-coordinate
+//! \param[out] x    \f$x\f$-coordinate
+//! \param[out] y    \f$y\f$-coordinate
 //!
 void
 evaluate(
@@ -265,56 +265,56 @@ evaluate(
 }
 
 //!
-//! x-coordinate at curvilinear coordinate `s` with offset `offs` (ISO/SAE).
+//! \f$x\f$-coordinate at curvilinear coordinate \f$s\f$ with offset `offs` (ISO/SAE).
 //!
 real_type
 X( real_type s, real_type offs ) const
 { return G2lib::use_ISO ? this->X_ISO( s, offs ) : this->X_SAE( s, offs ); }
 
 //!
-//! y-coordinate at curvilinear coordinate `s` with offset `offs` (ISO/SAE).
+//! \f$y\f$-coordinate at curvilinear coordinate \f$s\f$ with offset `offs` (ISO/SAE).
 //!
 real_type
 Y( real_type s, real_type offs ) const
 { return G2lib::use_ISO ? this->Y_ISO( s, offs ) : this->Y_SAE( s, offs ); }
 
 //!
-//! x-coordinate derivative at curvilinear coordinate `s` with offset `offs` (ISO/SAE).
+//! \f$x\f$-coordinate derivative at curvilinear coordinate \f$s\f$ with offset `offs` (ISO/SAE).
 //!
 real_type
 X_D( real_type s, real_type offs ) const
 { return G2lib::use_ISO ? this->X_ISO_D( s, offs ) : this->X_SAE_D( s, offs ); }
 
 //!
-//! y-coordinate derivative at curvilinear coordinate `s` with offset `offs` (ISO/SAE).
+//! \f$y\f$-coordinate derivative at curvilinear coordinate \f$s\f$ with offset `offs` (ISO/SAE).
 //!
 real_type
 Y_D( real_type s, real_type offs ) const
 { return G2lib::use_ISO ? this->Y_ISO_D( s, offs ) : this->Y_SAE_D( s, offs ); }
 
 //!
-//! x-coordinate second derivative at curvilinear coordinate `s` with offset `offs` (ISO/SAE).
+//! \f$x\f$-coordinate second derivative at curvilinear coordinate \f$s\f$ with offset `offs` (ISO/SAE).
 //!
 real_type
 X_DD( real_type s, real_type offs ) const
 { return G2lib::use_ISO ? this->X_ISO_DD( s, offs ) : this->X_SAE_DD( s, offs ); }
 
 //!
-//! y-coordinate second derivative at curvilinear coordinate `s` with offset `offs` (ISO/SAE).
+//! \f$y\f$-coordinate second derivative at curvilinear coordinate \f$s\f$ with offset `offs` (ISO/SAE).
 //!
 real_type
 Y_DD( real_type s, real_type offs ) const
 { return G2lib::use_ISO ? this->Y_ISO_DD( s, offs ) : this->Y_SAE_DD( s, offs ); }
 
 //!
-//! x-coordinate third derivative at curvilinear coordinate `s` with offset `offs` (ISO/SAE).
+//! \f$x\f$-coordinate third derivative at curvilinear coordinate \f$s\f$ with offset `offs` (ISO/SAE).
 //!
 real_type
 X_DDD( real_type s, real_type offs ) const
 { return G2lib::use_ISO ? this->X_ISO_DDD( s, offs ) : this->X_SAE_DDD( s, offs ); }
 
 //!
-//! y-coordinate third derivative at curvilinear coordinate `s` with offset `offs` (ISO/SAE).
+//! \f$y\f$-coordinate third derivative at curvilinear coordinate \f$s\f$ with offset `offs` (ISO/SAE).
 //!
 real_type
 Y_DDD( real_type s, real_type offs ) const
@@ -325,8 +325,8 @@ Y_DDD( real_type s, real_type offs ) const
 //!
 //! \param[in]  s     parameter on the curve
 //! \param[in]  offs  offset of the curve
-//! \param[out] x     coordinate
-//! \param[out] y     coordinate
+//! \param[out] x     \f$ x\f$-coordinate
+//! \param[out] y     \f$ y\f$-coordinate
 //!
 void
 eval(
@@ -344,8 +344,8 @@ eval(
 //!
 //! \param[in]  s     parameter on the curve
 //! \param[in]  offs  offset of the curve
-//! \param[out] x_D   x-coordinate first derivative
-//! \param[out] y_D   y-coordinate first derivative
+//! \param[out] x_D   \f$x\f$-coordinate first derivative
+//! \param[out] y_D   \f$y\f$-coordinate first derivative
 //!
 void
 eval_D(
@@ -363,8 +363,8 @@ eval_D(
 //!
 //! \param[in]  s     parameter on the curve
 //! \param[in]  offs  offset of the curve
-//! \param[out] x_DD  x-coordinate second derivative
-//! \param[out] y_DD  y-coordinate second derivative
+//! \param[out] x_DD  \f$x\f$-coordinate second derivative
+//! \param[out] y_DD  \f$y\f$-coordinate second derivative
 //!
 void
 eval_DD(
@@ -382,8 +382,8 @@ eval_DD(
 //!
 //! \param[in]  s     parameter on the curve
 //! \param[in]  offs  offset of the curve
-//! \param[out] x_DDD x-coordinate third derivative
-//! \param[out] y_DDD y-coordinate third derivative
+//! \param[out] x_DDD \f$x\f$-coordinate third derivative
+//! \param[out] y_DDD \f$y\f$-coordinate third derivative
 //!
 void
 eval_DDD(

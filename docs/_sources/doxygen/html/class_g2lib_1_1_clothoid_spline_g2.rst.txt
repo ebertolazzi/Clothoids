@@ -1,0 +1,14 @@
+.. meta::6215ea13de1c41257dd0487ba8d96fc9e01b168b876d2093e495a53e2e2b351cbcd08755b33f095279c94bc56028d988cbb030404c3bcdde8e008259eaeeb4bb
+
+:orphan:
+
+.. title:: Clothoids: G2lib::ClothoidSplineG2 Class Reference
+
+ClothoidSplineG2 Class Reference
+================================
+
+.. container:: doxygen-content
+
+   
+   .. raw:: html
+     :file: class_g2lib_1_1_clothoid_spline_g2.html

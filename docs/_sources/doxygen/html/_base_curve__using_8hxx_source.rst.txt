@@ -1,0 +1,14 @@
+.. meta::ba90792f976e48f2e8fd9db05b37ba758a029b5ba7e38646212d2daf10a9d364cd37ca13430578ebbf70a4b923aa53e58a40f460e6e4e054359e87d0ac873da0
+
+:orphan:
+
+.. title:: Clothoids: /Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Clothoids/BaseCurve_using.hxx Source File
+
+/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Clothoids/BaseCurve\_using.hxx Source File
+==================================================================================================================================
+
+.. container:: doxygen-content
+
+   
+   .. raw:: html
+     :file: _base_curve__using_8hxx_source.html

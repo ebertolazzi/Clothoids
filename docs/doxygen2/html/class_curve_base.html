@@ -1,0 +1,1992 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Clothoids: CurveBase Class Reference &mdash; Clothoids</title>
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=19f00094" />
+      <link rel="stylesheet" type="text/css" href="../../_static/graphviz.css?v=fd3f3429" />
+      <link rel="stylesheet" type="text/css" href="../../_static/plot_directive.css?v=7f9a90b1" />
+      <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
+      <link rel="stylesheet" type="text/css" href="../../_static/sphinx-design.min.css?v=95c83b7e" />
+      <link rel="stylesheet" type="text/css" href="../../_static/sphinx-data-viewer/jsonview.bundle.css?v=f6ef2277" />
+      <link rel="stylesheet" type="text/css" href="../../_static/sphinx-needs/libs/html/datatables.min.css?v=4b4fd840" />
+      <link rel="stylesheet" type="text/css" href="../../_static/sphinx-needs/common_css/need_style.css?v=678fb11e" />
+      <link rel="stylesheet" type="text/css" href="../../_static/sphinx-needs/common_css/need_core.css?v=f5b60a78" />
+      <link rel="stylesheet" type="text/css" href="../../_static/sphinx-needs/common_css/needstable.css?v=5e1b6797" />
+      <link rel="stylesheet" type="text/css" href="../../_static/sphinx-needs/common_css/need_links.css?v=2150a916" />
+      <link rel="stylesheet" type="text/css" href="../../_static/sphinx-needs/common_css/need_toggle.css?v=5c6620df" />
+      <link rel="stylesheet" type="text/css" href="../../_static/sphinx-needs/modern.css?v=803738c0" />
+      <link rel="stylesheet" type="text/css" href="../../_static/sphinx-rtd-theme-custom.css?v=76d57d84" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../../_static/documentation_options.js?v=60dbed4a"></script>
+        <script src="../../_static/doctools.js?v=9a2dae69"></script>
+        <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+        <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
+        <script src="../../_static/copybutton.js?v=f281be69"></script>
+        <script src="../../_static/design-tabs.js?v=f930bc37"></script>
+        <script src="../../_static/sphinx-data-viewer/jsonview.bundle.js?v=18cd53c5"></script>
+        <script src="../../_static/sphinx-data-viewer/jsonview_loader.js?v=f7ff7e7d"></script>
+        <script src="../../_static/sphinx-needs/libs/html/datatables.min.js?v=8a4aee21"></script>
+        <script src="../../_static/sphinx-needs/libs/html/datatables_loader.js?v=a2cae175"></script>
+        <script src="../../_static/sphinx-needs/libs/html/sphinx_needs_collapse.js?v=dca66431"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            Clothoids
+              <img src="../../_static/logo.png" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                2.0.13
+
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../README.html">Clothoids</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../index_CPP.html">Clothoids C++ interface</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../doxygen/html/namespaces_namespaces.html">Namespaces</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../doxygen/html/namespaces.html">Namespace List</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../doxygen/html/namespacemembers_namespace_members.html">Namespace Members</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../doxygen/html/namespacemembers.html">All</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../doxygen/html/namespacemembers_func.html">Functions</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../doxygen/html/namespacemembers_type.html">Typedefs</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../doxygen/html/annotated_classes.html">Classes</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../doxygen/html/annotated.html">Class List</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../doxygen/html/classes.html">Class Index</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../doxygen/html/hierarchy.html">Class Hierarchy</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../doxygen/html/functions_class_members.html">Class Members</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../doxygen/html/functions_all.html">All</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../doxygen/html/functions_func_functions.html">Functions</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../doxygen/html/functions_type.html">Typedefs</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../doxygen/html/functions_rela.html">Related Symbols</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../doxygen/html/files.html">Files</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../index_MATLAB.html">Clothoids MATLAB interface</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="annotated_classes.html">Classes</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="annotated.html">Class List</a></li>
+<li class="toctree-l3"><a class="reference internal" href="classes.html">Class Index</a></li>
+<li class="toctree-l3"><a class="reference internal" href="hierarchy.html">Class Hierarchy</a></li>
+<li class="toctree-l3"><a class="reference internal" href="functions_class_members.html">Class Members</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="functions.html">All</a></li>
+<li class="toctree-l4"><a class="reference internal" href="functions_func.html">Functions</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="functions_func.html">Functions</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../LICENSE.html">LICENSE</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">Clothoids</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Clothoids: CurveBase Class Reference</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../_sources/doxygen2/html/class_curve_base.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="curvebase-class-reference">
+<h1>CurveBase Class Reference<a class="headerlink" href="#curvebase-class-reference" title="Link to this heading"></a></h1>
+<div class="doxygen-content docutils container">
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en-US">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=11"/>
+<meta name="generator" content="Doxygen 1.12.0"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Clothoids: CurveBase Class Reference</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<script type="text/javascript" src="clipboard.js"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="resize.js"></script>
+<script type="text/javascript">
+window.MathJax = {
+  options: {
+    ignoreHtmlClass: 'tex2jax_ignore',
+    processHtmlClass: 'tex2jax_process'
+  }
+};
+</script>
+<script type="text/javascript" id="MathJax-script" async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+<link href="doxygen-awesome.css" rel="stylesheet" type="text/css"/>
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr id="projectrow">
+  <td id="projectalign">
+   <div id="projectname">Clothoids
+   </div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Generated by Doxygen 1.12.0 -->
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(function() { codefold.init(0); });
+/* @license-end */
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(function() {
+  initMenu('',false,false,'search.php','Search',false);
+});
+/* @license-end */
+</script>
+<div id="main-nav"></div>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(function(){ initResizable(false); });
+/* @license-end */
+</script>
+</div><!-- top -->
+<div id="doc-content">
+<div class="header">
+  <div class="summary">
+<a href="#pub-methods">Public Member Functions</a> &#124;
+<a href="#pro-methods">Protected Member Functions</a> &#124;
+<a href="#pro-attribs">Protected Attributes</a> &#124;
+<a href="class_curve_base-members.html">List of all members</a>  </div>
+  <div class="headertitle"><div class="title">CurveBase Class Reference</div></div>
+</div><!--header-->
+<div class="contents">
+<div class="dynheader">
+Inheritance diagram for CurveBase:</div>
+<div class="dyncontent">
+ <div class="center">
+  <img src="class_curve_base.png" usemap="#CurveBase_map" alt=""/>
+  <map id="CurveBase_map" name="CurveBase_map">
+<area href="class_biarc.html" alt="Biarc" shape="rect" coords="152,112,294,136"/>
+<area href="class_biarc_list.html" alt="BiarcList" shape="rect" coords="152,168,294,192"/>
+<area href="class_circle_arc.html" alt="CircleArc" shape="rect" coords="152,224,294,248"/>
+<area href="class_clothoid_curve.html" alt="ClothoidCurve" shape="rect" coords="152,280,294,304"/>
+<area href="class_clothoid_list.html" alt="ClothoidList" shape="rect" coords="152,336,294,360"/>
+<area href="class_dubins.html" alt="Dubins" shape="rect" coords="152,392,294,416"/>
+<area href="class_dubins3p.html" alt="Dubins3p" shape="rect" coords="152,448,294,472"/>
+<area href="class_line_segment.html" alt="LineSegment" shape="rect" coords="152,504,294,528"/>
+<area href="class_poly_line.html" alt="PolyLine" shape="rect" coords="152,560,294,584"/>
+  </map>
+</div></div>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
+Public Member Functions</h2></td></tr>
+<tr class="memitem:a614718cf53a44366cd5ecac81f4b1dad" id="r_a614718cf53a44366cd5ecac81f4b1dad"><td class="memItemLeft" align="right" valign="top"><a id="a614718cf53a44366cd5ecac81f4b1dad" name="a614718cf53a44366cd5ecac81f4b1dad"></a>
+function&#160;</td><td class="memItemRight" valign="bottom"><b>CurveBase</b> (in mexName, in objectType)</td></tr>
+<tr class="separator:a614718cf53a44366cd5ecac81f4b1dad"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1453250354e19f9d9fe16a0deef75c18" id="r_a1453250354e19f9d9fe16a0deef75c18"><td class="memItemLeft" align="right" valign="top">function&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a1453250354e19f9d9fe16a0deef75c18">obj_handle</a> (in self)</td></tr>
+<tr class="separator:a1453250354e19f9d9fe16a0deef75c18"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad5d2a5c0f8086f3723a8cff7ff2d75d0" id="r_ad5d2a5c0f8086f3723a8cff7ff2d75d0"><td class="memItemLeft" align="right" valign="top"><a id="ad5d2a5c0f8086f3723a8cff7ff2d75d0" name="ad5d2a5c0f8086f3723a8cff7ff2d75d0"></a>
+function&#160;</td><td class="memItemRight" valign="bottom"><b>is_type</b> (in self)</td></tr>
+<tr class="separator:ad5d2a5c0f8086f3723a8cff7ff2d75d0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa52f163db1cc07702c33b058de62ccbe" id="r_aa52f163db1cc07702c33b058de62ccbe"><td class="memItemLeft" align="right" valign="top"><a id="aa52f163db1cc07702c33b058de62ccbe" name="aa52f163db1cc07702c33b058de62ccbe"></a>
+function&#160;</td><td class="memItemRight" valign="bottom"><b>load</b> (in self, in OBJ)</td></tr>
+<tr class="separator:aa52f163db1cc07702c33b058de62ccbe"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afb7d6a660cd3a44e2876b1cc1f976f12" id="r_afb7d6a660cd3a44e2876b1cc1f976f12"><td class="memItemLeft" align="right" valign="top">function&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#afb7d6a660cd3a44e2876b1cc1f976f12">bbox</a> (in self, in varargin)</td></tr>
+<tr class="separator:afb7d6a660cd3a44e2876b1cc1f976f12"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a72fc0cdd9c31f5ffb583146fbe203dcf" id="r_a72fc0cdd9c31f5ffb583146fbe203dcf"><td class="memItemLeft" align="right" valign="top">function&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a72fc0cdd9c31f5ffb583146fbe203dcf">translate</a> (in self, in tx, in ty)</td></tr>
+<tr class="separator:a72fc0cdd9c31f5ffb583146fbe203dcf"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a89c01df85b041077157d9bfe5743ea0a" id="r_a89c01df85b041077157d9bfe5743ea0a"><td class="memItemLeft" align="right" valign="top">function&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a89c01df85b041077157d9bfe5743ea0a">trim</a> (in self, in smin, in smax)</td></tr>
+<tr class="separator:a89c01df85b041077157d9bfe5743ea0a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a524a9c870aef837dfd9009a93fdfbf2a" id="r_a524a9c870aef837dfd9009a93fdfbf2a"><td class="memItemLeft" align="right" valign="top">function&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a524a9c870aef837dfd9009a93fdfbf2a">rotate</a> (in self, in angle, in cx, in cy)</td></tr>
+<tr class="separator:a524a9c870aef837dfd9009a93fdfbf2a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abb94c933007695f005928d0dcac14cdf" id="r_abb94c933007695f005928d0dcac14cdf"><td class="memItemLeft" align="right" valign="top">function&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#abb94c933007695f005928d0dcac14cdf">reverse</a> (in self)</td></tr>
+<tr class="separator:abb94c933007695f005928d0dcac14cdf"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a543e2da6d394c97adf496a2046e7d402" id="r_a543e2da6d394c97adf496a2046e7d402"><td class="memItemLeft" align="right" valign="top">function&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a543e2da6d394c97adf496a2046e7d402">scale</a> (in self, in sc)</td></tr>
+<tr class="separator:a543e2da6d394c97adf496a2046e7d402"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af4636cee4a04dfe442584b712c06ea3c" id="r_af4636cee4a04dfe442584b712c06ea3c"><td class="memItemLeft" align="right" valign="top">function&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#af4636cee4a04dfe442584b712c06ea3c">change_origin</a> (in self, in newX0, in newY0)</td></tr>
+<tr class="separator:af4636cee4a04dfe442584b712c06ea3c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0a0012fd549eb2653f43e2c03839ecec" id="r_a0a0012fd549eb2653f43e2c03839ecec"><td class="memItemLeft" align="right" valign="top">function&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a0a0012fd549eb2653f43e2c03839ecec">changeOrigin</a> (in self, in newX0, in newY0)</td></tr>
+<tr class="separator:a0a0012fd549eb2653f43e2c03839ecec"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a288e0542951a0688cf986ab5a77f3909" id="r_a288e0542951a0688cf986ab5a77f3909"><td class="memItemLeft" align="right" valign="top">function&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a288e0542951a0688cf986ab5a77f3909">evaluate</a> (in self, in s, in varargin)</td></tr>
+<tr class="separator:a288e0542951a0688cf986ab5a77f3909"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ace84ba94906e2f8cb6ccbff57cb40c83" id="r_ace84ba94906e2f8cb6ccbff57cb40c83"><td class="memItemLeft" align="right" valign="top">function&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ace84ba94906e2f8cb6ccbff57cb40c83">eval</a> (in self, in varargin)</td></tr>
+<tr class="separator:ace84ba94906e2f8cb6ccbff57cb40c83"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a988c5660ecb7806775fe0a8df9213d47" id="r_a988c5660ecb7806775fe0a8df9213d47"><td class="memItemLeft" align="right" valign="top">function&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a988c5660ecb7806775fe0a8df9213d47">eval_D</a> (in self, in varargin)</td></tr>
+<tr class="separator:a988c5660ecb7806775fe0a8df9213d47"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a09e63f53bc95899d7529a924dd16f427" id="r_a09e63f53bc95899d7529a924dd16f427"><td class="memItemLeft" align="right" valign="top">function&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a09e63f53bc95899d7529a924dd16f427">eval_DD</a> (in self, in varargin)</td></tr>
+<tr class="separator:a09e63f53bc95899d7529a924dd16f427"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a97c153ccdd0fbd09cb405c6f53ed939e" id="r_a97c153ccdd0fbd09cb405c6f53ed939e"><td class="memItemLeft" align="right" valign="top">function&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a97c153ccdd0fbd09cb405c6f53ed939e">eval_DDD</a> (in self, in varargin)</td></tr>
+<tr class="separator:a97c153ccdd0fbd09cb405c6f53ed939e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2737beff5b4fa9653f7015ffd1cd37a8" id="r_a2737beff5b4fa9653f7015ffd1cd37a8"><td class="memItemLeft" align="right" valign="top">function&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a2737beff5b4fa9653f7015ffd1cd37a8">theta</a> (in self, in s)</td></tr>
+<tr class="separator:a2737beff5b4fa9653f7015ffd1cd37a8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a45af03eef0ae38e7f39a2bbe2a53150a" id="r_a45af03eef0ae38e7f39a2bbe2a53150a"><td class="memItemLeft" align="right" valign="top">function&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a45af03eef0ae38e7f39a2bbe2a53150a">theta_D</a> (in self, in s)</td></tr>
+<tr class="separator:a45af03eef0ae38e7f39a2bbe2a53150a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a63b753018b8ccffd2b1c2378770f8a0d" id="r_a63b753018b8ccffd2b1c2378770f8a0d"><td class="memItemLeft" align="right" valign="top">function&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a63b753018b8ccffd2b1c2378770f8a0d">theta_DD</a> (in self, in s)</td></tr>
+<tr class="separator:a63b753018b8ccffd2b1c2378770f8a0d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1543fbc2744e6798776f1bfc92efc891" id="r_a1543fbc2744e6798776f1bfc92efc891"><td class="memItemLeft" align="right" valign="top">function&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a1543fbc2744e6798776f1bfc92efc891">theta_DDD</a> (in self, in s)</td></tr>
+<tr class="separator:a1543fbc2744e6798776f1bfc92efc891"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af9299e0a4f6ba27785c2ea28f4e2e8cf" id="r_af9299e0a4f6ba27785c2ea28f4e2e8cf"><td class="memItemLeft" align="right" valign="top">function&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#af9299e0a4f6ba27785c2ea28f4e2e8cf">kappa</a> (in self, in s)</td></tr>
+<tr class="separator:af9299e0a4f6ba27785c2ea28f4e2e8cf"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a85489b8d48a85e621ea3b22506a1e859" id="r_a85489b8d48a85e621ea3b22506a1e859"><td class="memItemLeft" align="right" valign="top">function&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a85489b8d48a85e621ea3b22506a1e859">kappa_D</a> (in self, in s)</td></tr>
+<tr class="separator:a85489b8d48a85e621ea3b22506a1e859"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acc8104f92805d378e8b2306ba54064b5" id="r_acc8104f92805d378e8b2306ba54064b5"><td class="memItemLeft" align="right" valign="top">function&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#acc8104f92805d378e8b2306ba54064b5">kappa_DD</a> (in self, in s)</td></tr>
+<tr class="separator:acc8104f92805d378e8b2306ba54064b5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3df1c2fe86bb5b0dbb00f3f936f1dd16" id="r_a3df1c2fe86bb5b0dbb00f3f936f1dd16"><td class="memItemLeft" align="right" valign="top">function&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a3df1c2fe86bb5b0dbb00f3f936f1dd16">xy_begin</a> (in self)</td></tr>
+<tr class="separator:a3df1c2fe86bb5b0dbb00f3f936f1dd16"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7472254e4d4d33895efb42af712e79ff" id="r_a7472254e4d4d33895efb42af712e79ff"><td class="memItemLeft" align="right" valign="top">function&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a7472254e4d4d33895efb42af712e79ff">xyBegin</a> (in self)</td></tr>
+<tr class="separator:a7472254e4d4d33895efb42af712e79ff"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a41800e02380ba67944e355332a6c6e7c" id="r_a41800e02380ba67944e355332a6c6e7c"><td class="memItemLeft" align="right" valign="top">function&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a41800e02380ba67944e355332a6c6e7c">xy_end</a> (in self)</td></tr>
+<tr class="separator:a41800e02380ba67944e355332a6c6e7c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aad64122209f71187d9710b1e03ba9e08" id="r_aad64122209f71187d9710b1e03ba9e08"><td class="memItemLeft" align="right" valign="top">function&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aad64122209f71187d9710b1e03ba9e08">xyEnd</a> (in self)</td></tr>
+<tr class="separator:aad64122209f71187d9710b1e03ba9e08"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad7e53299494450d82386443d06143cf0" id="r_ad7e53299494450d82386443d06143cf0"><td class="memItemLeft" align="right" valign="top">function&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ad7e53299494450d82386443d06143cf0">x_begin</a> (in self)</td></tr>
+<tr class="separator:ad7e53299494450d82386443d06143cf0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af0112d88f91a2ce47de67aade29c7785" id="r_af0112d88f91a2ce47de67aade29c7785"><td class="memItemLeft" align="right" valign="top">function&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#af0112d88f91a2ce47de67aade29c7785">xBegin</a> (in self)</td></tr>
+<tr class="separator:af0112d88f91a2ce47de67aade29c7785"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1d58d7c231a6450f124cfe1ddbbdb271" id="r_a1d58d7c231a6450f124cfe1ddbbdb271"><td class="memItemLeft" align="right" valign="top">function&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a1d58d7c231a6450f124cfe1ddbbdb271">x_end</a> (in self)</td></tr>
+<tr class="separator:a1d58d7c231a6450f124cfe1ddbbdb271"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a920ba7285e158c3448daccfd2cdc2bcc" id="r_a920ba7285e158c3448daccfd2cdc2bcc"><td class="memItemLeft" align="right" valign="top">function&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a920ba7285e158c3448daccfd2cdc2bcc">xEnd</a> (in self)</td></tr>
+<tr class="separator:a920ba7285e158c3448daccfd2cdc2bcc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a686ac3c3a94f202effdea69f65c0a0f9" id="r_a686ac3c3a94f202effdea69f65c0a0f9"><td class="memItemLeft" align="right" valign="top">function&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a686ac3c3a94f202effdea69f65c0a0f9">y_begin</a> (in self)</td></tr>
+<tr class="separator:a686ac3c3a94f202effdea69f65c0a0f9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af30cb9956277fcd8c9beb91c06f667d5" id="r_af30cb9956277fcd8c9beb91c06f667d5"><td class="memItemLeft" align="right" valign="top">function&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#af30cb9956277fcd8c9beb91c06f667d5">yBegin</a> (in self)</td></tr>
+<tr class="separator:af30cb9956277fcd8c9beb91c06f667d5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a48cb85bde2f451f042e84615316ca535" id="r_a48cb85bde2f451f042e84615316ca535"><td class="memItemLeft" align="right" valign="top">function&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a48cb85bde2f451f042e84615316ca535">y_end</a> (in self)</td></tr>
+<tr class="separator:a48cb85bde2f451f042e84615316ca535"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae3fab8b50b2af4b2dfd4d7f6770c5df3" id="r_ae3fab8b50b2af4b2dfd4d7f6770c5df3"><td class="memItemLeft" align="right" valign="top">function&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ae3fab8b50b2af4b2dfd4d7f6770c5df3">yEnd</a> (in self)</td></tr>
+<tr class="separator:ae3fab8b50b2af4b2dfd4d7f6770c5df3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a28daf669859d3cb467bea34a07d5bb95" id="r_a28daf669859d3cb467bea34a07d5bb95"><td class="memItemLeft" align="right" valign="top">function&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a28daf669859d3cb467bea34a07d5bb95">theta_begin</a> (in self)</td></tr>
+<tr class="separator:a28daf669859d3cb467bea34a07d5bb95"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2341de8ad257521c910f78577663247c" id="r_a2341de8ad257521c910f78577663247c"><td class="memItemLeft" align="right" valign="top">function&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a2341de8ad257521c910f78577663247c">thetaBegin</a> (in self)</td></tr>
+<tr class="separator:a2341de8ad257521c910f78577663247c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa2729a6c9b2d14b8a01baac788b8f24d" id="r_aa2729a6c9b2d14b8a01baac788b8f24d"><td class="memItemLeft" align="right" valign="top">function&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aa2729a6c9b2d14b8a01baac788b8f24d">theta_end</a> (in self)</td></tr>
+<tr class="separator:aa2729a6c9b2d14b8a01baac788b8f24d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac4868d7d8f46bc8d61b6f31271e63a41" id="r_ac4868d7d8f46bc8d61b6f31271e63a41"><td class="memItemLeft" align="right" valign="top">function&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ac4868d7d8f46bc8d61b6f31271e63a41">thetaEnd</a> (in self)</td></tr>
+<tr class="separator:ac4868d7d8f46bc8d61b6f31271e63a41"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a099ef478b2316f976c18d57f456e8249" id="r_a099ef478b2316f976c18d57f456e8249"><td class="memItemLeft" align="right" valign="top">function&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a099ef478b2316f976c18d57f456e8249">kappa_begin</a> (in self)</td></tr>
+<tr class="separator:a099ef478b2316f976c18d57f456e8249"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa5388c8571e8b782af658890c28c9ba7" id="r_aa5388c8571e8b782af658890c28c9ba7"><td class="memItemLeft" align="right" valign="top">function&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aa5388c8571e8b782af658890c28c9ba7">kappaBegin</a> (in self)</td></tr>
+<tr class="separator:aa5388c8571e8b782af658890c28c9ba7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a19fb4e9afadb94a5cb00b6e5c9556da4" id="r_a19fb4e9afadb94a5cb00b6e5c9556da4"><td class="memItemLeft" align="right" valign="top">function&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a19fb4e9afadb94a5cb00b6e5c9556da4">kappa_end</a> (in self)</td></tr>
+<tr class="separator:a19fb4e9afadb94a5cb00b6e5c9556da4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5e9c99136558125699be44751885c3f0" id="r_a5e9c99136558125699be44751885c3f0"><td class="memItemLeft" align="right" valign="top">function&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a5e9c99136558125699be44751885c3f0">kappaEnd</a> (in self)</td></tr>
+<tr class="separator:a5e9c99136558125699be44751885c3f0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a71fe78bbbf98ab12481e4c1224585e15" id="r_a71fe78bbbf98ab12481e4c1224585e15"><td class="memItemLeft" align="right" valign="top">function&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a71fe78bbbf98ab12481e4c1224585e15">length</a> (in self, in varargin)</td></tr>
+<tr class="separator:a71fe78bbbf98ab12481e4c1224585e15"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a32b0b9a4a2ee5e0e1ffdb8cbda4ba782" id="r_a32b0b9a4a2ee5e0e1ffdb8cbda4ba782"><td class="memItemLeft" align="right" valign="top"><a id="a32b0b9a4a2ee5e0e1ffdb8cbda4ba782" name="a32b0b9a4a2ee5e0e1ffdb8cbda4ba782"></a>
+function&#160;</td><td class="memItemRight" valign="bottom"><b>points</b> (in self)</td></tr>
+<tr class="separator:a32b0b9a4a2ee5e0e1ffdb8cbda4ba782"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aaa400df7ce766246d06ae21207a1c626" id="r_aaa400df7ce766246d06ae21207a1c626"><td class="memItemLeft" align="right" valign="top">function&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aaa400df7ce766246d06ae21207a1c626">bbTriangles</a> (in self, in varargin)</td></tr>
+<tr class="separator:aaa400df7ce766246d06ae21207a1c626"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1c49592ad04bc3605f08cb4d4d4e6cb2" id="r_a1c49592ad04bc3605f08cb4d4d4e6cb2"><td class="memItemLeft" align="right" valign="top">function&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a1c49592ad04bc3605f08cb4d4d4e6cb2">closest_point</a> (in self, in qx, in qy, in varargin)</td></tr>
+<tr class="separator:a1c49592ad04bc3605f08cb4d4d4e6cb2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9f9c42653a38cc5b028b7a889eca354e" id="r_a9f9c42653a38cc5b028b7a889eca354e"><td class="memItemLeft" align="right" valign="top">function&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a9f9c42653a38cc5b028b7a889eca354e">closestPoint</a> (in self, in qx, in qy, in varargin)</td></tr>
+<tr class="separator:a9f9c42653a38cc5b028b7a889eca354e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a995541e2da9997cad68133cfd9fd6f76" id="r_a995541e2da9997cad68133cfd9fd6f76"><td class="memItemLeft" align="right" valign="top">function&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a995541e2da9997cad68133cfd9fd6f76">distance</a> (in self, in qx, in qy, in varargin)</td></tr>
+<tr class="separator:a995541e2da9997cad68133cfd9fd6f76"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3af6ed231aa1e5eb4092833138c92ee9" id="r_a3af6ed231aa1e5eb4092833138c92ee9"><td class="memItemLeft" align="right" valign="top">function&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a3af6ed231aa1e5eb4092833138c92ee9">collision</a> (in self, in OBJ, in varargin)</td></tr>
+<tr class="separator:a3af6ed231aa1e5eb4092833138c92ee9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a76563ee1040c154c4b1b14383fed424f" id="r_a76563ee1040c154c4b1b14383fed424f"><td class="memItemLeft" align="right" valign="top">function&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a76563ee1040c154c4b1b14383fed424f">intersect</a> (in self, in OBJ, in varargin)</td></tr>
+<tr class="separator:a76563ee1040c154c4b1b14383fed424f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa0b8d69de7c0df5962c8ba2d22350a9c" id="r_aa0b8d69de7c0df5962c8ba2d22350a9c"><td class="memItemLeft" align="right" valign="top">function&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aa0b8d69de7c0df5962c8ba2d22350a9c">info</a> (in self)</td></tr>
+<tr class="separator:aa0b8d69de7c0df5962c8ba2d22350a9c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aee7315c2b8b883404d7efa74c51b702f" id="r_aee7315c2b8b883404d7efa74c51b702f"><td class="memItemLeft" align="right" valign="top">function&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aee7315c2b8b883404d7efa74c51b702f">find_coord</a> (in self, in x, in y)</td></tr>
+<tr class="separator:aee7315c2b8b883404d7efa74c51b702f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0a189e9b5f75026098c616b855613a71" id="r_a0a189e9b5f75026098c616b855613a71"><td class="memItemLeft" align="right" valign="top">function&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a0a189e9b5f75026098c616b855613a71">yesAABBtree</a> (in self)</td></tr>
+<tr class="separator:a0a189e9b5f75026098c616b855613a71"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a324d0bd2548f6d56ae58764a98071e12" id="r_a324d0bd2548f6d56ae58764a98071e12"><td class="memItemLeft" align="right" valign="top">function&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a324d0bd2548f6d56ae58764a98071e12">noAABBtree</a> (in self)</td></tr>
+<tr class="separator:a324d0bd2548f6d56ae58764a98071e12"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aec824865ca16dd58b16b806ddc00f98d" id="r_aec824865ca16dd58b16b806ddc00f98d"><td class="memItemLeft" align="right" valign="top">function&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aec824865ca16dd58b16b806ddc00f98d">plot_tbox</a> (in self, in P1, in P2, in P3, in varargin)</td></tr>
+<tr class="separator:aec824865ca16dd58b16b806ddc00f98d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a424731565309e427755c873a03b39274" id="r_a424731565309e427755c873a03b39274"><td class="memItemLeft" align="right" valign="top">function&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a424731565309e427755c873a03b39274">plotTBox</a> (in self, in P1, in P2, in P3, in varargin)</td></tr>
+<tr class="separator:a424731565309e427755c873a03b39274"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6377dbc03efaee295d3acca0c955b1ad" id="r_a6377dbc03efaee295d3acca0c955b1ad"><td class="memItemLeft" align="right" valign="top">function&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a6377dbc03efaee295d3acca0c955b1ad">plot_bbox</a> (in self, in varargin)</td></tr>
+<tr class="separator:a6377dbc03efaee295d3acca0c955b1ad"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a59acec48078144adab8084fa3813a47b" id="r_a59acec48078144adab8084fa3813a47b"><td class="memItemLeft" align="right" valign="top">function&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a59acec48078144adab8084fa3813a47b">plotBBox</a> (in self, in varargin)</td></tr>
+<tr class="separator:a59acec48078144adab8084fa3813a47b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab6cc5118af06314b2ffe64603a8473fd" id="r_ab6cc5118af06314b2ffe64603a8473fd"><td class="memItemLeft" align="right" valign="top">function&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ab6cc5118af06314b2ffe64603a8473fd">plot_triangles</a> (in self, in varargin)</td></tr>
+<tr class="separator:ab6cc5118af06314b2ffe64603a8473fd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a72b1ff3c010bff3b2d422e6198273c1d" id="r_a72b1ff3c010bff3b2d422e6198273c1d"><td class="memItemLeft" align="right" valign="top">function&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a72b1ff3c010bff3b2d422e6198273c1d">plotTriangles</a> (in self, in varargin)</td></tr>
+<tr class="separator:a72b1ff3c010bff3b2d422e6198273c1d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pro-methods" name="pro-methods"></a>
+Protected Member Functions</h2></td></tr>
+<tr class="memitem:a4fd99904e45161a25cc38e9afaefc1fc" id="r_a4fd99904e45161a25cc38e9afaefc1fc"><td class="memItemLeft" align="right" valign="top">function&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a4fd99904e45161a25cc38e9afaefc1fc">copyElement</a> (in self)</td></tr>
+<tr class="separator:a4fd99904e45161a25cc38e9afaefc1fc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pro-attribs" name="pro-attribs"></a>
+Protected Attributes</h2></td></tr>
+<tr class="memitem:a51da94c3220ec334e1f21f53fac2529a" id="r_a51da94c3220ec334e1f21f53fac2529a"><td class="memItemLeft" align="right" valign="top"><a id="a51da94c3220ec334e1f21f53fac2529a" name="a51da94c3220ec334e1f21f53fac2529a"></a>
+Property&#160;</td><td class="memItemRight" valign="bottom"><b>mexName</b></td></tr>
+<tr class="separator:a51da94c3220ec334e1f21f53fac2529a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aaab64ae6da706e2c529c9d74149cd57b" id="r_aaab64ae6da706e2c529c9d74149cd57b"><td class="memItemLeft" align="right" valign="top"><a id="aaab64ae6da706e2c529c9d74149cd57b" name="aaab64ae6da706e2c529c9d74149cd57b"></a>
+Property&#160;</td><td class="memItemRight" valign="bottom"><b>objectHandle</b></td></tr>
+<tr class="separator:aaab64ae6da706e2c529c9d74149cd57b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8c7ae0eb68369ccdfc6f6ddb930d04c0" id="r_a8c7ae0eb68369ccdfc6f6ddb930d04c0"><td class="memItemLeft" align="right" valign="top"><a id="a8c7ae0eb68369ccdfc6f6ddb930d04c0" name="a8c7ae0eb68369ccdfc6f6ddb930d04c0"></a>
+Property&#160;</td><td class="memItemRight" valign="bottom"><b>call_delete</b></td></tr>
+<tr class="separator:a8c7ae0eb68369ccdfc6f6ddb930d04c0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a28a41b07a4fdb80b4bd7671e9cd87ebe" id="r_a28a41b07a4fdb80b4bd7671e9cd87ebe"><td class="memItemLeft" align="right" valign="top"><a id="a28a41b07a4fdb80b4bd7671e9cd87ebe" name="a28a41b07a4fdb80b4bd7671e9cd87ebe"></a>
+Property&#160;</td><td class="memItemRight" valign="bottom"><b>objectType</b></td></tr>
+<tr class="separator:a28a41b07a4fdb80b4bd7671e9cd87ebe"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<h2 class="groupheader">Member Function Documentation</h2>
+<a id="afb7d6a660cd3a44e2876b1cc1f976f12" name="afb7d6a660cd3a44e2876b1cc1f976f12"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#afb7d6a660cd3a44e2876b1cc1f976f12">&#9670;&#160;</a></span>bbox()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">function CurveBase::bbox </td>
+          <td>(</td>
+          <td class="paramtype">in</td>          <td class="paramname"><span class="paramname"><em>self</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">in</td>          <td class="paramname"><span class="paramname"><em>varargin</em></span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Return the bounding box of the curve object</p>
+<p><b>Usage</b></p>
+<div class="fragment"><div class="line">[ xmin, ymin, xmax, ymax ] = ref.bbox( C );</div>
+<div class="line">[ xmin, ymin, xmax, ymax ] = ref.bbox( C, offs );</div>
+<div class="line">[ xmin, ymin, xmax, ymax ] = ref.bbox( C, offs, &#39;ISO&#39; );</div>
+<div class="line">[ xmin, ymin, xmax, ymax ] = ref.bbox( C, offs, &#39;SAE&#39; );</div>
+</div><!-- fragment --><ul>
+<li>xmin: x minimum coordinate of the bounding box</li>
+<li>ymin: y minimum coordinate of the bounding box</li>
+<li>xmax: x maximum coordinate of the bounding box</li>
+<li>ymax: y maximum coordinate of the bounding box</li>
+</ul>
+<p><b>Optional Arguments</b></p>
+<ul>
+<li>offs: offset of the curve used in the bbox computation</li>
+<li>'ISO'/'SAE': use ISO or SAE orientation of the normal for offset computation </li>
+</ul>
+
+</div>
+</div>
+<a id="aaa400df7ce766246d06ae21207a1c626" name="aaa400df7ce766246d06ae21207a1c626"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aaa400df7ce766246d06ae21207a1c626">&#9670;&#160;</a></span>bbTriangles()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">function CurveBase::bbTriangles </td>
+          <td>(</td>
+          <td class="paramtype">in</td>          <td class="paramname"><span class="paramname"><em>self</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">in</td>          <td class="paramname"><span class="paramname"><em>varargin</em></span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Evaluate the bounding box triangles of curve.</p>
+<p><b>Usage</b></p>
+<div class="fragment"><div class="line">[P1,P2,P3] = ref.bbTriangles();</div>
+<div class="line">[P1,P2,P3] = ref.bbTriangles(max_angle,max_size);</div>
+<div class="line">[P1,P2,P3] = ref.bbTriangles(max_angle,max_size,offs);</div>
+<div class="line">[P1,P2,P3] = ref.bbTriangles(max_angle,max_size,offs,&#39;ISO&#39;);</div>
+<div class="line">[P1,P2,P3] = ref.bbTriangles(max_angle,max_size,offs,&#39;SAE&#39;);</div>
+</div><!-- fragment --><p><b>Optional Arguments</b></p>
+<ul>
+<li><code>max_angle</code>: maximum curve angle variation admitted in a triangle</li>
+<li><code>max_size</code>: maximum triangles size</li>
+<li><code>offs</code>: offset of the curve used in computation</li>
+<li>'ISO'/'SAE': use ISO or SAE orientation of the normal for the offset</li>
+</ul>
+<p><b>Output</b></p>
+<ul>
+<li><code>P1</code>: <code>2 x n</code> matrix with the first points of the triangles</li>
+<li><code>P2</code>: <code>2 x n</code> matrix with the second points of the triangles</li>
+<li><code>P3</code>: <code>2 x n</code> matrix with the third points of the triangles </li>
+</ul>
+
+</div>
+</div>
+<a id="af4636cee4a04dfe442584b712c06ea3c" name="af4636cee4a04dfe442584b712c06ea3c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af4636cee4a04dfe442584b712c06ea3c">&#9670;&#160;</a></span>change_origin()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">function CurveBase::change_origin </td>
+          <td>(</td>
+          <td class="paramtype">in</td>          <td class="paramname"><span class="paramname"><em>self</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">in</td>          <td class="paramname"><span class="paramname"><em>newX0</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">in</td>          <td class="paramname"><span class="paramname"><em>newY0</em></span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Translate the curve in such a way the origin is at <code>(newX0,newY0)</code>.</p>
+<p><b>Usage</b></p>
+<div class="fragment"><div class="line">ref.change_origin( newX0, newY0 );</div>
+</div><!-- fragment --> 
+</div>
+</div>
+<a id="a0a0012fd549eb2653f43e2c03839ecec" name="a0a0012fd549eb2653f43e2c03839ecec"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0a0012fd549eb2653f43e2c03839ecec">&#9670;&#160;</a></span>changeOrigin()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">function CurveBase::changeOrigin </td>
+          <td>(</td>
+          <td class="paramtype">in</td>          <td class="paramname"><span class="paramname"><em>self</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">in</td>          <td class="paramname"><span class="paramname"><em>newX0</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">in</td>          <td class="paramname"><span class="paramname"><em>newY0</em></span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="deprecated"><dt><b><a class="el" href="deprecated.html#_deprecated000020">Deprecated</a></b></dt><dd>whill be removed in future version </dd></dl>
+
+</div>
+</div>
+<a id="a1c49592ad04bc3605f08cb4d4d4e6cb2" name="a1c49592ad04bc3605f08cb4d4d4e6cb2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1c49592ad04bc3605f08cb4d4d4e6cb2">&#9670;&#160;</a></span>closest_point()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">function CurveBase::closest_point </td>
+          <td>(</td>
+          <td class="paramtype">in</td>          <td class="paramname"><span class="paramname"><em>self</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">in</td>          <td class="paramname"><span class="paramname"><em>qx</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">in</td>          <td class="paramname"><span class="paramname"><em>qy</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">in</td>          <td class="paramname"><span class="paramname"><em>varargin</em></span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Evaluate the point at minimum distance of another point on the curve. <code>qx</code> and <code>qy</code> may be vectors so that the return values are vectors too.</p>
+<p><b>Usage</b></p>
+<div class="fragment"><div class="line">[ x, y, s, t, iflag, dst ] = ref.closest_point( qx, qy );</div>
+<div class="line">[ x, y, s, t, iflag, dst ] = ref.closest_point( qx, qy, offs );</div>
+<div class="line">[ x, y, s, t, iflag, dst ] = ref.closest_point( qx, qy, offs, &#39;ISO&#39; );</div>
+<div class="line">[ x, y, s, t, iflag, dst ] = ref.closest_point( qx, qy, offs, &#39;SAE&#39; );</div>
+</div><!-- fragment --><p><b>Optional Arguments</b></p>
+<ul>
+<li>offs: offset of the curve used in computation</li>
+<li>'ISO'/'SAE': use ISO or SAE orientation of the normal for the offset</li>
+</ul>
+<p><b>Output</b></p>
+<ul>
+<li><code>x</code>, <code>y</code>: Point at minimum distance from <code>(qx,qy)</code> on the curve.</li>
+<li><code>s</code>, <code>t</code>: Curvilinear coordinates of the point <code>(qx,qy)</code>.</li>
+<li><code>iflag</code>: <code>iflag &lt; 0</code> some error in computation, iflag &gt;0 is the numer of segment containing the point at minimum distance.</li>
+<li><code>dst</code>: point curve distance. </li>
+</ul>
+
+</div>
+</div>
+<a id="a9f9c42653a38cc5b028b7a889eca354e" name="a9f9c42653a38cc5b028b7a889eca354e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9f9c42653a38cc5b028b7a889eca354e">&#9670;&#160;</a></span>closestPoint()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">function CurveBase::closestPoint </td>
+          <td>(</td>
+          <td class="paramtype">in</td>          <td class="paramname"><span class="paramname"><em>self</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">in</td>          <td class="paramname"><span class="paramname"><em>qx</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">in</td>          <td class="paramname"><span class="paramname"><em>qy</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">in</td>          <td class="paramname"><span class="paramname"><em>varargin</em></span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="deprecated"><dt><b><a class="el" href="deprecated.html#_deprecated000031">Deprecated</a></b></dt><dd>whill be removed in future version </dd></dl>
+
+</div>
+</div>
+<a id="a3af6ed231aa1e5eb4092833138c92ee9" name="a3af6ed231aa1e5eb4092833138c92ee9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3af6ed231aa1e5eb4092833138c92ee9">&#9670;&#160;</a></span>collision()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">function CurveBase::collision </td>
+          <td>(</td>
+          <td class="paramtype">in</td>          <td class="paramname"><span class="paramname"><em>self</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">in</td>          <td class="paramname"><span class="paramname"><em>OBJ</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">in</td>          <td class="paramname"><span class="paramname"><em>varargin</em></span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Check if two curve collide.</p>
+<p><b>Usage</b></p>
+<div class="fragment"><div class="line">ok = ref.collision( obj );</div>
+<div class="line">ok = ref.collision( obj, offs, offs1 );</div>
+<div class="line">ok = ref.collision( obj, offs, offs1, &#39;ISO&#39; );</div>
+<div class="line">ok = ref.collision( obj, offs, offs1, &#39;SAE&#39; );</div>
+</div><!-- fragment --><p><b>Optional Arguments</b></p>
+<ul>
+<li><code>offs</code>, <code>offs1</code>: offset of the curves used in computation</li>
+<li>'ISO'/'SAE': use ISO or SAE orientation of the normal for the offsets </li>
+</ul>
+
+</div>
+</div>
+<a id="a4fd99904e45161a25cc38e9afaefc1fc" name="a4fd99904e45161a25cc38e9afaefc1fc"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4fd99904e45161a25cc38e9afaefc1fc">&#9670;&#160;</a></span>copyElement()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">function CurveBase::copyElement </td>
+          <td>(</td>
+          <td class="paramtype">in</td>          <td class="paramname"><span class="paramname"><em>self</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Make a deep copy of a curve object</p>
+<p><b>Usage</b></p>
+<div class="fragment"><div class="line">B = A.copy();</div>
+</div><!-- fragment --><p>where <code>A</code> is the curve object to be copied. </p>
+
+</div>
+</div>
+<a id="a995541e2da9997cad68133cfd9fd6f76" name="a995541e2da9997cad68133cfd9fd6f76"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a995541e2da9997cad68133cfd9fd6f76">&#9670;&#160;</a></span>distance()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">function CurveBase::distance </td>
+          <td>(</td>
+          <td class="paramtype">in</td>          <td class="paramname"><span class="paramname"><em>self</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">in</td>          <td class="paramname"><span class="paramname"><em>qx</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">in</td>          <td class="paramname"><span class="paramname"><em>qy</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">in</td>          <td class="paramname"><span class="paramname"><em>varargin</em></span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Evaluate the distance of a point <code>(qx,qy)</code> to the curve. <code>qx</code> and <code>qy</code> may be vectors so that the return values are vectors too.</p>
+<p><b>Usage</b></p>
+<div class="fragment"><div class="line">dst = ref.distance( qx, qy );</div>
+<div class="line">dst = ref.distance( qx, qy, offs );</div>
+<div class="line">dst = ref.distance( qx, qy, offs, &#39;ISO&#39; );</div>
+<div class="line">dst = ref.distance( qx, qy, offs, &#39;SAE&#39; );</div>
+</div><!-- fragment --><p><b>Optional Arguments</b></p>
+<ul>
+<li><code>offs</code>: offset of the curve used in computation</li>
+<li>'ISO'/'SAE': use ISO or SAE orientation of the normal for the offset </li>
+</ul>
+
+</div>
+</div>
+<a id="ace84ba94906e2f8cb6ccbff57cb40c83" name="ace84ba94906e2f8cb6ccbff57cb40c83"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ace84ba94906e2f8cb6ccbff57cb40c83">&#9670;&#160;</a></span>eval()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">function CurveBase::eval </td>
+          <td>(</td>
+          <td class="paramtype">in</td>          <td class="paramname"><span class="paramname"><em>self</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">in</td>          <td class="paramname"><span class="paramname"><em>varargin</em></span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Evaluate the curve at curvilinear coordinate <code>s</code>. Argument <code>s</code> may be a vector for multiple evaluations.</p>
+<p><b>Usage</b></p>
+<div class="fragment"><div class="line">XY = ref.eval( s );</div>
+<div class="line">XY = ref.eval( s, offs );</div>
+<div class="line">XY = ref.eval( s, offs, &#39;ISO&#39; );</div>
+<div class="line">XY = ref.eval( s, offs, &#39;SAE&#39; );</div>
+<div class="line"> </div>
+<div class="line">[X,Y] = ref.eval( s );</div>
+<div class="line">[X,Y] = ref.eval( s, offs );</div>
+<div class="line">[X,Y] = ref.eval( s, offs, &#39;ISO&#39; );</div>
+<div class="line">[X,Y] = ref.eval( s, offs, &#39;SAE&#39; );</div>
+</div><!-- fragment --><p><b>Optional Arguments</b></p>
+<ul>
+<li>offs: offset of the curve used compiutation</li>
+<li>'ISO'/'SAE': use ISO or SAE orientation of the normal for offset computation</li>
+</ul>
+<p><b>Output</b></p>
+<ul>
+<li>XY: matrix <code>2 x n</code> of the evaluated points</li>
+<li>X: vector of the x-coordinates of the evaluated points</li>
+<li>Y: vector of the y-coordinates of the evaluated points </li>
+</ul>
+
+</div>
+</div>
+<a id="a988c5660ecb7806775fe0a8df9213d47" name="a988c5660ecb7806775fe0a8df9213d47"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a988c5660ecb7806775fe0a8df9213d47">&#9670;&#160;</a></span>eval_D()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">function CurveBase::eval_D </td>
+          <td>(</td>
+          <td class="paramtype">in</td>          <td class="paramname"><span class="paramname"><em>self</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">in</td>          <td class="paramname"><span class="paramname"><em>varargin</em></span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Evaluate the first derivatives of the curve at curvilinear coordinate <code>s</code>. Argument <code>s</code> may be a vector for multiple evaluations.</p>
+<p><b>Usage</b></p>
+<div class="fragment"><div class="line">XY = ref.eval_D( s );</div>
+<div class="line">XY = ref.eval_D( s, offs );</div>
+<div class="line">XY = ref.eval_D( s, offs, &#39;ISO&#39; );</div>
+<div class="line">XY = ref.eval_D( s, offs, &#39;SAE&#39; );</div>
+<div class="line"> </div>
+<div class="line">[X,Y] = ref.eval_D( s );</div>
+<div class="line">[X,Y] = ref.eval_D( s, offs );</div>
+<div class="line">[X,Y] = ref.eval_D( s, offs, &#39;ISO&#39; );</div>
+<div class="line">[X,Y] = ref.eval_D( s, offs, &#39;SAE&#39; );</div>
+</div><!-- fragment --><p><b>Optional Arguments</b></p>
+<ul>
+<li><code>offs</code>: offset of the curve used in computation</li>
+<li>'ISO'/'SAE': use ISO or SAE orientation of the normal for offset computation</li>
+</ul>
+<p><b>Output</b></p>
+<ul>
+<li><code>XY</code>: matrix <code>2 x n</code> of the evaluated points</li>
+<li><code>X</code>: vector of the x-coordinates of the evaluated point derivatives</li>
+<li><code>Y</code>: vector of the y-coordinates of the evaluated point derivatives </li>
+</ul>
+
+</div>
+</div>
+<a id="a09e63f53bc95899d7529a924dd16f427" name="a09e63f53bc95899d7529a924dd16f427"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a09e63f53bc95899d7529a924dd16f427">&#9670;&#160;</a></span>eval_DD()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">function CurveBase::eval_DD </td>
+          <td>(</td>
+          <td class="paramtype">in</td>          <td class="paramname"><span class="paramname"><em>self</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">in</td>          <td class="paramname"><span class="paramname"><em>varargin</em></span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Evaluate the second derivatives of the curve at curvilinear coordinate <code>s</code>. Argument <code>s</code> may be a vector for multiple evaluations.</p>
+<p><b>Usage</b></p>
+<div class="fragment"><div class="line">XY = ref.eval_DD( s );</div>
+<div class="line">XY = ref.eval_DD( s, offs );</div>
+<div class="line">XY = ref.eval_DD( s, offs, &#39;ISO&#39; );</div>
+<div class="line">XY = ref.eval_DD( s, offs, &#39;SAE&#39; );</div>
+<div class="line"> </div>
+<div class="line">[X,Y] = ref.eval_DD( s );</div>
+<div class="line">[X,Y] = ref.eval_DD( s, offs );</div>
+<div class="line">[X,Y] = ref.eval_DD( s, offs, &#39;ISO&#39; );</div>
+<div class="line">[X,Y] = ref.eval_DD( s, offs, &#39;SAE&#39; );</div>
+</div><!-- fragment --><p><b>Optional Arguments</b></p>
+<ul>
+<li><code>offs</code>: offset of the curve used in computation</li>
+<li>'ISO'/'SAE': use ISO or SAE orientation of the normal for offset computation</li>
+</ul>
+<p><b>Output</b></p>
+<ul>
+<li><code>XY</code>: matrix <code>2 x n</code> of the evaluated points</li>
+<li><code>X</code>: vector of the x-coordinates of the evaluated point derivatives</li>
+<li><code>Y</code>: vector of the y-coordinates of the evaluated point derivatives </li>
+</ul>
+
+</div>
+</div>
+<a id="a97c153ccdd0fbd09cb405c6f53ed939e" name="a97c153ccdd0fbd09cb405c6f53ed939e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a97c153ccdd0fbd09cb405c6f53ed939e">&#9670;&#160;</a></span>eval_DDD()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">function CurveBase::eval_DDD </td>
+          <td>(</td>
+          <td class="paramtype">in</td>          <td class="paramname"><span class="paramname"><em>self</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">in</td>          <td class="paramname"><span class="paramname"><em>varargin</em></span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Evaluate the third derivatives of the curve at curvilinear coordinate <code>s</code>. Argument <code>s</code> may be a vector for multiple evaluations.</p>
+<p><b>Usage</b></p>
+<div class="fragment"><div class="line">XY = ref.eval_DDD( s );</div>
+<div class="line">XY = ref.eval_DDD( s, offs );</div>
+<div class="line">XY = ref.eval_DDD( s, offs, &#39;ISO&#39; );</div>
+<div class="line">XY = ref.eval_DDD( s, offs, &#39;SAE&#39; );</div>
+<div class="line"> </div>
+<div class="line">[X,Y] = ref.eval_DDD( s );</div>
+<div class="line">[X,Y] = ref.eval_DDD( s, offs );</div>
+<div class="line">[X,Y] = ref.eval_DDD( s, offs, &#39;ISO&#39; );</div>
+<div class="line">[X,Y] = ref.eval_DDD( s, offs, &#39;SAE&#39; );</div>
+</div><!-- fragment --><p><b>Optional Arguments</b></p>
+<ul>
+<li><code>offs</code>: offset of the curve used in computation</li>
+<li>'ISO'/'SAE': use ISO or SAE orientation of the normal for offset computation</li>
+</ul>
+<p><b>Output</b></p>
+<ul>
+<li><code>XY</code>: matrix <code>2 x n</code> of the evaluated points</li>
+<li><code>X</code>: vector of the x-coordinates of the evaluated point derivatives</li>
+<li><code>Y</code>: vector of the y-coordinates of the evaluated point derivatives </li>
+</ul>
+
+</div>
+</div>
+<a id="a288e0542951a0688cf986ab5a77f3909" name="a288e0542951a0688cf986ab5a77f3909"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a288e0542951a0688cf986ab5a77f3909">&#9670;&#160;</a></span>evaluate()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">function CurveBase::evaluate </td>
+          <td>(</td>
+          <td class="paramtype">in</td>          <td class="paramname"><span class="paramname"><em>self</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">in</td>          <td class="paramname"><span class="paramname"><em>s</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">in</td>          <td class="paramname"><span class="paramname"><em>varargin</em></span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Evaluate the curve at curvilinear coordinate <code>s</code>. Argument <code>s</code> may be a vector for multiple evaluations.</p>
+<p><b>Usage</b></p>
+<div class="fragment"><div class="line">[ x, y, theta, kappa ] = ref.evaluate( s );</div>
+<div class="line">[ x, y, theta, kappa ] = ref.evaluate( s, offs );</div>
+<div class="line">[ x, y, theta, kappa ] = ref.evaluate( s, offs, &#39;ISO&#39; );</div>
+<div class="line">[ x, y, theta, kappa ] = ref.evaluate( s, offs, &#39;SAE&#39; );</div>
+</div><!-- fragment --><p><b>Optional Arguments</b></p>
+<ul>
+<li>offs: offset of the curve used in computation</li>
+<li>'ISO'/'SAE': use ISO or SAE orientation of the normal for offset computation </li>
+</ul>
+
+</div>
+</div>
+<a id="aee7315c2b8b883404d7efa74c51b702f" name="aee7315c2b8b883404d7efa74c51b702f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aee7315c2b8b883404d7efa74c51b702f">&#9670;&#160;</a></span>find_coord()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">function CurveBase::find_coord </td>
+          <td>(</td>
+          <td class="paramtype">in</td>          <td class="paramname"><span class="paramname"><em>self</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">in</td>          <td class="paramname"><span class="paramname"><em>x</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">in</td>          <td class="paramname"><span class="paramname"><em>y</em></span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Get the curvilinear coordinates of the point <code>(x,y)</code></p>
+<p><b>Usage:</b></p>
+<div class="fragment"><div class="line">[s,t] = ref.find_coord( x, y );</div>
+</div><!-- fragment --><ul>
+<li><code>s</code>: curvilinear coordinate along the curve</li>
+<li><code>t</code>: curvilinear coordinate along the normal of the curve </li>
+</ul>
+
+</div>
+</div>
+<a id="aa0b8d69de7c0df5962c8ba2d22350a9c" name="aa0b8d69de7c0df5962c8ba2d22350a9c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa0b8d69de7c0df5962c8ba2d22350a9c">&#9670;&#160;</a></span>info()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">function CurveBase::info </td>
+          <td>(</td>
+          <td class="paramtype">in</td>          <td class="paramname"><span class="paramname"><em>self</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Print on the console some information on the stored curve.</p>
+<p><b>Usage</b></p>
+<div class="fragment"><div class="line">ref.info();</div>
+</div><!-- fragment --> 
+</div>
+</div>
+<a id="a76563ee1040c154c4b1b14383fed424f" name="a76563ee1040c154c4b1b14383fed424f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a76563ee1040c154c4b1b14383fed424f">&#9670;&#160;</a></span>intersect()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">function CurveBase::intersect </td>
+          <td>(</td>
+          <td class="paramtype">in</td>          <td class="paramname"><span class="paramname"><em>self</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">in</td>          <td class="paramname"><span class="paramname"><em>OBJ</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">in</td>          <td class="paramname"><span class="paramname"><em>varargin</em></span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Intersect two curves.</p>
+<p><b>Usage</b></p>
+<div class="fragment"><div class="line">[s1,s2] = ref.intersect( obj );</div>
+<div class="line">[s1,s2] = ref.intersect( obj, offs, offs1 );</div>
+<div class="line">[s1,s2] = ref.intersect( obj, offs, offs1, &#39;ISO&#39; );</div>
+<div class="line">[s1,s2] = ref.intersect( obj, offs, offs1, &#39;SAE&#39; );</div>
+</div><!-- fragment --><ul>
+<li><code>s1</code>: curvilinear coordinates of the intersections on the first curve</li>
+<li><code>s2</code>: curvilinear coordinates of the intersections on the second curve</li>
+</ul>
+<p><b>Optional Argument</b></p>
+<ul>
+<li><code>offs</code>, <code>offs1</code>: offset of the curves used in computation</li>
+<li>'ISO'/'SAE': use ISO or SAE orientation of the normal for the offsets </li>
+</ul>
+
+</div>
+</div>
+<a id="af9299e0a4f6ba27785c2ea28f4e2e8cf" name="af9299e0a4f6ba27785c2ea28f4e2e8cf"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af9299e0a4f6ba27785c2ea28f4e2e8cf">&#9670;&#160;</a></span>kappa()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">function CurveBase::kappa </td>
+          <td>(</td>
+          <td class="paramtype">in</td>          <td class="paramname"><span class="paramname"><em>self</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">in</td>          <td class="paramname"><span class="paramname"><em>s</em></span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Evaluate the curvature of the curve at curvilinear coordinate <code>s</code>. Argument <code>s</code> may be a vector for multiple evaluations.</p>
+<p><b>Usage</b></p>
+<div class="fragment"><div class="line">theta = ref.kappa( s );</div>
+</div><!-- fragment --> 
+</div>
+</div>
+<a id="a099ef478b2316f976c18d57f456e8249" name="a099ef478b2316f976c18d57f456e8249"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a099ef478b2316f976c18d57f456e8249">&#9670;&#160;</a></span>kappa_begin()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">function CurveBase::kappa_begin </td>
+          <td>(</td>
+          <td class="paramtype">in</td>          <td class="paramname"><span class="paramname"><em>self</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Evaluate initial curvature of the curve.</p>
+<p><b>Usage</b></p>
+<div class="fragment"><div class="line">kappa0 = ref.kappa_begin();</div>
+</div><!-- fragment --> 
+</div>
+</div>
+<a id="a85489b8d48a85e621ea3b22506a1e859" name="a85489b8d48a85e621ea3b22506a1e859"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a85489b8d48a85e621ea3b22506a1e859">&#9670;&#160;</a></span>kappa_D()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">function CurveBase::kappa_D </td>
+          <td>(</td>
+          <td class="paramtype">in</td>          <td class="paramname"><span class="paramname"><em>self</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">in</td>          <td class="paramname"><span class="paramname"><em>s</em></span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Evaluate the curvature derivative of the curve at curvilinear coordinate <code>s</code>. Argument <code>s</code> may be a vector for multiple evaluations.</p>
+<p><b>Usage</b></p>
+<div class="fragment"><div class="line">theta = ref.kappa_D( s );</div>
+</div><!-- fragment --> 
+</div>
+</div>
+<a id="acc8104f92805d378e8b2306ba54064b5" name="acc8104f92805d378e8b2306ba54064b5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#acc8104f92805d378e8b2306ba54064b5">&#9670;&#160;</a></span>kappa_DD()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">function CurveBase::kappa_DD </td>
+          <td>(</td>
+          <td class="paramtype">in</td>          <td class="paramname"><span class="paramname"><em>self</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">in</td>          <td class="paramname"><span class="paramname"><em>s</em></span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Evaluate the curvature second derivative of the curve at curvilinear coordinate <code>s</code>. Argument <code>s</code> may be a vector for multiple evaluations.</p>
+<p><b>Usage</b></p>
+<div class="fragment"><div class="line">theta = ref.kappa_DD( s );</div>
+</div><!-- fragment --> 
+</div>
+</div>
+<a id="a19fb4e9afadb94a5cb00b6e5c9556da4" name="a19fb4e9afadb94a5cb00b6e5c9556da4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a19fb4e9afadb94a5cb00b6e5c9556da4">&#9670;&#160;</a></span>kappa_end()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">function CurveBase::kappa_end </td>
+          <td>(</td>
+          <td class="paramtype">in</td>          <td class="paramname"><span class="paramname"><em>self</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Evaluate final curvature of the curve.</p>
+<p><b>Usage</b></p>
+<div class="fragment"><div class="line">kappa1 = ref.kappa_end();</div>
+</div><!-- fragment --> 
+</div>
+</div>
+<a id="aa5388c8571e8b782af658890c28c9ba7" name="aa5388c8571e8b782af658890c28c9ba7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa5388c8571e8b782af658890c28c9ba7">&#9670;&#160;</a></span>kappaBegin()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">function CurveBase::kappaBegin </td>
+          <td>(</td>
+          <td class="paramtype">in</td>          <td class="paramname"><span class="paramname"><em>self</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="deprecated"><dt><b><a class="el" href="deprecated.html#_deprecated000029">Deprecated</a></b></dt><dd>whill be removed in future version </dd></dl>
+
+</div>
+</div>
+<a id="a5e9c99136558125699be44751885c3f0" name="a5e9c99136558125699be44751885c3f0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5e9c99136558125699be44751885c3f0">&#9670;&#160;</a></span>kappaEnd()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">function CurveBase::kappaEnd </td>
+          <td>(</td>
+          <td class="paramtype">in</td>          <td class="paramname"><span class="paramname"><em>self</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="deprecated"><dt><b><a class="el" href="deprecated.html#_deprecated000030">Deprecated</a></b></dt><dd>whill be removed in future version </dd></dl>
+
+</div>
+</div>
+<a id="a71fe78bbbf98ab12481e4c1224585e15" name="a71fe78bbbf98ab12481e4c1224585e15"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a71fe78bbbf98ab12481e4c1224585e15">&#9670;&#160;</a></span>length()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">function CurveBase::length </td>
+          <td>(</td>
+          <td class="paramtype">in</td>          <td class="paramname"><span class="paramname"><em>self</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">in</td>          <td class="paramname"><span class="paramname"><em>varargin</em></span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Return the length of the curve.</p>
+<p><b>Usage</b></p>
+<div class="fragment"><div class="line">length = ref.length();</div>
+</div><!-- fragment --> 
+</div>
+</div>
+<a id="a324d0bd2548f6d56ae58764a98071e12" name="a324d0bd2548f6d56ae58764a98071e12"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a324d0bd2548f6d56ae58764a98071e12">&#9670;&#160;</a></span>noAABBtree()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">function CurveBase::noAABBtree </td>
+          <td>(</td>
+          <td class="paramtype">in</td>          <td class="paramname"><span class="paramname"><em>self</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Deactivate the use of AABB three in intersection/collision computations </p>
+
+</div>
+</div>
+<a id="a1453250354e19f9d9fe16a0deef75c18" name="a1453250354e19f9d9fe16a0deef75c18"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1453250354e19f9d9fe16a0deef75c18">&#9670;&#160;</a></span>obj_handle()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">function CurveBase::obj_handle </td>
+          <td>(</td>
+          <td class="paramtype">in</td>          <td class="paramname"><span class="paramname"><em>self</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Return the <code>pointer</code> of the interbal stored c++ object</p>
+<p><b>Usage</b></p>
+<div class="fragment"><div class="line">obj = ref.obj_handle();</div>
+</div><!-- fragment --> 
+</div>
+</div>
+<a id="a6377dbc03efaee295d3acca0c955b1ad" name="a6377dbc03efaee295d3acca0c955b1ad"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6377dbc03efaee295d3acca0c955b1ad">&#9670;&#160;</a></span>plot_bbox()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">function CurveBase::plot_bbox </td>
+          <td>(</td>
+          <td class="paramtype">in</td>          <td class="paramname"><span class="paramname"><em>self</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">in</td>          <td class="paramname"><span class="paramname"><em>varargin</em></span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Plot the bounding box of the curve</p>
+<p><b>Usage:</b></p>
+<div class="fragment"><div class="line">ref.plot_bbox();</div>
+<div class="line">ref.plot_bbox( &#39;Color&#39;, &#39;red&#39; );</div>
+</div><!-- fragment --> 
+</div>
+</div>
+<a id="aec824865ca16dd58b16b806ddc00f98d" name="aec824865ca16dd58b16b806ddc00f98d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aec824865ca16dd58b16b806ddc00f98d">&#9670;&#160;</a></span>plot_tbox()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">function CurveBase::plot_tbox </td>
+          <td>(</td>
+          <td class="paramtype">in</td>          <td class="paramname"><span class="paramname"><em>self</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">in</td>          <td class="paramname"><span class="paramname"><em>P1</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">in</td>          <td class="paramname"><span class="paramname"><em>P2</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">in</td>          <td class="paramname"><span class="paramname"><em>P3</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">in</td>          <td class="paramname"><span class="paramname"><em>varargin</em></span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Plot a triangle BBOX</p>
+<p><b>Usage:</b></p>
+<div class="fragment"><div class="line">ref.plot_tbox( P1, P2, P3 );</div>
+<div class="line">ref.plot_tbox( P1, P2, P3, &#39;Color&#39;, &#39;red&#39; );</div>
+</div><!-- fragment --> 
+</div>
+</div>
+<a id="ab6cc5118af06314b2ffe64603a8473fd" name="ab6cc5118af06314b2ffe64603a8473fd"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab6cc5118af06314b2ffe64603a8473fd">&#9670;&#160;</a></span>plot_triangles()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">function CurveBase::plot_triangles </td>
+          <td>(</td>
+          <td class="paramtype">in</td>          <td class="paramname"><span class="paramname"><em>self</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">in</td>          <td class="paramname"><span class="paramname"><em>varargin</em></span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Plot the covering triangles of the curve</p>
+<p><b>Usage:</b></p>
+<div class="fragment"><div class="line">ref.plot_triangles()</div>
+<div class="line">ref.plot_triangles(&#39;red&#39;,&#39;FaceAlpha&#39;, 0.5);</div>
+</div><!-- fragment --> 
+</div>
+</div>
+<a id="a59acec48078144adab8084fa3813a47b" name="a59acec48078144adab8084fa3813a47b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a59acec48078144adab8084fa3813a47b">&#9670;&#160;</a></span>plotBBox()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">function CurveBase::plotBBox </td>
+          <td>(</td>
+          <td class="paramtype">in</td>          <td class="paramname"><span class="paramname"><em>self</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">in</td>          <td class="paramname"><span class="paramname"><em>varargin</em></span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="deprecated"><dt><b><a class="el" href="deprecated.html#_deprecated000033">Deprecated</a></b></dt><dd>whill be removed in future version </dd></dl>
+
+</div>
+</div>
+<a id="a424731565309e427755c873a03b39274" name="a424731565309e427755c873a03b39274"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a424731565309e427755c873a03b39274">&#9670;&#160;</a></span>plotTBox()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">function CurveBase::plotTBox </td>
+          <td>(</td>
+          <td class="paramtype">in</td>          <td class="paramname"><span class="paramname"><em>self</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">in</td>          <td class="paramname"><span class="paramname"><em>P1</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">in</td>          <td class="paramname"><span class="paramname"><em>P2</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">in</td>          <td class="paramname"><span class="paramname"><em>P3</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">in</td>          <td class="paramname"><span class="paramname"><em>varargin</em></span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="deprecated"><dt><b><a class="el" href="deprecated.html#_deprecated000032">Deprecated</a></b></dt><dd>whill be removed in future version </dd></dl>
+
+</div>
+</div>
+<a id="a72b1ff3c010bff3b2d422e6198273c1d" name="a72b1ff3c010bff3b2d422e6198273c1d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a72b1ff3c010bff3b2d422e6198273c1d">&#9670;&#160;</a></span>plotTriangles()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">function CurveBase::plotTriangles </td>
+          <td>(</td>
+          <td class="paramtype">in</td>          <td class="paramname"><span class="paramname"><em>self</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">in</td>          <td class="paramname"><span class="paramname"><em>varargin</em></span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="deprecated"><dt><b><a class="el" href="deprecated.html#_deprecated000034">Deprecated</a></b></dt><dd>whill be removed in future version </dd></dl>
+
+</div>
+</div>
+<a id="abb94c933007695f005928d0dcac14cdf" name="abb94c933007695f005928d0dcac14cdf"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#abb94c933007695f005928d0dcac14cdf">&#9670;&#160;</a></span>reverse()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">function CurveBase::reverse </td>
+          <td>(</td>
+          <td class="paramtype">in</td>          <td class="paramname"><span class="paramname"><em>self</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Reverse the direction of travel of the curve.</p>
+<p><b>Usage</b></p>
+<div class="fragment"><div class="line">ref.reverse();</div>
+</div><!-- fragment --> 
+</div>
+</div>
+<a id="a524a9c870aef837dfd9009a93fdfbf2a" name="a524a9c870aef837dfd9009a93fdfbf2a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a524a9c870aef837dfd9009a93fdfbf2a">&#9670;&#160;</a></span>rotate()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">function CurveBase::rotate </td>
+          <td>(</td>
+          <td class="paramtype">in</td>          <td class="paramname"><span class="paramname"><em>self</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">in</td>          <td class="paramname"><span class="paramname"><em>angle</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">in</td>          <td class="paramname"><span class="paramname"><em>cx</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">in</td>          <td class="paramname"><span class="paramname"><em>cy</em></span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Rotate the curve by angle <code>angle</code> around point <code>(cx, cy)</code></p>
+<p><b>Usage</b></p>
+<div class="fragment"><div class="line">ref.rotate( angle, cx, cy );</div>
+</div><!-- fragment --> 
+</div>
+</div>
+<a id="a543e2da6d394c97adf496a2046e7d402" name="a543e2da6d394c97adf496a2046e7d402"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a543e2da6d394c97adf496a2046e7d402">&#9670;&#160;</a></span>scale()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">function CurveBase::scale </td>
+          <td>(</td>
+          <td class="paramtype">in</td>          <td class="paramname"><span class="paramname"><em>self</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">in</td>          <td class="paramname"><span class="paramname"><em>sc</em></span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Scale the curve by factor <code>sc</code></p>
+<p><b>Usage</b></p>
+<div class="fragment"><div class="line">ref.scale( sc );</div>
+</div><!-- fragment --> 
+</div>
+</div>
+<a id="a2737beff5b4fa9653f7015ffd1cd37a8" name="a2737beff5b4fa9653f7015ffd1cd37a8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2737beff5b4fa9653f7015ffd1cd37a8">&#9670;&#160;</a></span>theta()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">function CurveBase::theta </td>
+          <td>(</td>
+          <td class="paramtype">in</td>          <td class="paramname"><span class="paramname"><em>self</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">in</td>          <td class="paramname"><span class="paramname"><em>s</em></span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Evaluate the angle of the curve at curvilinear coordinate <code>s</code>. Argument <code>s</code> may be a vector for multiple evaluations.</p>
+<p><b>Usage</b></p>
+<div class="fragment"><div class="line">theta = ref.theta( s );</div>
+</div><!-- fragment --> 
+</div>
+</div>
+<a id="a28daf669859d3cb467bea34a07d5bb95" name="a28daf669859d3cb467bea34a07d5bb95"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a28daf669859d3cb467bea34a07d5bb95">&#9670;&#160;</a></span>theta_begin()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">function CurveBase::theta_begin </td>
+          <td>(</td>
+          <td class="paramtype">in</td>          <td class="paramname"><span class="paramname"><em>self</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Evaluate initial angle of the curve.</p>
+<p><b>Usage</b></p>
+<div class="fragment"><div class="line">theta = ref.theta_begin();</div>
+</div><!-- fragment --> 
+</div>
+</div>
+<a id="a45af03eef0ae38e7f39a2bbe2a53150a" name="a45af03eef0ae38e7f39a2bbe2a53150a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a45af03eef0ae38e7f39a2bbe2a53150a">&#9670;&#160;</a></span>theta_D()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">function CurveBase::theta_D </td>
+          <td>(</td>
+          <td class="paramtype">in</td>          <td class="paramname"><span class="paramname"><em>self</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">in</td>          <td class="paramname"><span class="paramname"><em>s</em></span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Evaluate the angle derivatives (curvature) of the curve at curvilinear coordinate <code>s</code>. Argument <code>s</code> may be a vector for multiple evaluations.</p>
+<p><b>Usage</b></p>
+<div class="fragment"><div class="line">theta = ref.theta_D( s );</div>
+</div><!-- fragment --> 
+</div>
+</div>
+<a id="a63b753018b8ccffd2b1c2378770f8a0d" name="a63b753018b8ccffd2b1c2378770f8a0d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a63b753018b8ccffd2b1c2378770f8a0d">&#9670;&#160;</a></span>theta_DD()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">function CurveBase::theta_DD </td>
+          <td>(</td>
+          <td class="paramtype">in</td>          <td class="paramname"><span class="paramname"><em>self</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">in</td>          <td class="paramname"><span class="paramname"><em>s</em></span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Evaluate the angle second derivatuve of the curve at curvilinear coordinate <code>s</code>. Argument <code>s</code> may be a vector for multiple evaluations.</p>
+<p><b>Usage</b></p>
+<div class="fragment"><div class="line">theta = ref.theta_DD( s );</div>
+</div><!-- fragment --> 
+</div>
+</div>
+<a id="a1543fbc2744e6798776f1bfc92efc891" name="a1543fbc2744e6798776f1bfc92efc891"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1543fbc2744e6798776f1bfc92efc891">&#9670;&#160;</a></span>theta_DDD()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">function CurveBase::theta_DDD </td>
+          <td>(</td>
+          <td class="paramtype">in</td>          <td class="paramname"><span class="paramname"><em>self</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">in</td>          <td class="paramname"><span class="paramname"><em>s</em></span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Evaluate the angle third derivative of the curve at curvilinear coordinate <code>s</code>. Argument <code>s</code> may be a vector for multiple evaluations.</p>
+<p><b>Usage</b></p>
+<div class="fragment"><div class="line">theta = ref.theta_DDD( s );</div>
+</div><!-- fragment --> 
+</div>
+</div>
+<a id="aa2729a6c9b2d14b8a01baac788b8f24d" name="aa2729a6c9b2d14b8a01baac788b8f24d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa2729a6c9b2d14b8a01baac788b8f24d">&#9670;&#160;</a></span>theta_end()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">function CurveBase::theta_end </td>
+          <td>(</td>
+          <td class="paramtype">in</td>          <td class="paramname"><span class="paramname"><em>self</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Evaluate final angle of the curve.</p>
+<p><b>Usage</b></p>
+<div class="fragment"><div class="line">theta = ref.theta_end();</div>
+</div><!-- fragment --> 
+</div>
+</div>
+<a id="a2341de8ad257521c910f78577663247c" name="a2341de8ad257521c910f78577663247c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2341de8ad257521c910f78577663247c">&#9670;&#160;</a></span>thetaBegin()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">function CurveBase::thetaBegin </td>
+          <td>(</td>
+          <td class="paramtype">in</td>          <td class="paramname"><span class="paramname"><em>self</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="deprecated"><dt><b><a class="el" href="deprecated.html#_deprecated000027">Deprecated</a></b></dt><dd>whill be removed in future version </dd></dl>
+
+</div>
+</div>
+<a id="ac4868d7d8f46bc8d61b6f31271e63a41" name="ac4868d7d8f46bc8d61b6f31271e63a41"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac4868d7d8f46bc8d61b6f31271e63a41">&#9670;&#160;</a></span>thetaEnd()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">function CurveBase::thetaEnd </td>
+          <td>(</td>
+          <td class="paramtype">in</td>          <td class="paramname"><span class="paramname"><em>self</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="deprecated"><dt><b><a class="el" href="deprecated.html#_deprecated000028">Deprecated</a></b></dt><dd>whill be removed in future version </dd></dl>
+
+</div>
+</div>
+<a id="a72fc0cdd9c31f5ffb583146fbe203dcf" name="a72fc0cdd9c31f5ffb583146fbe203dcf"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a72fc0cdd9c31f5ffb583146fbe203dcf">&#9670;&#160;</a></span>translate()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">function CurveBase::translate </td>
+          <td>(</td>
+          <td class="paramtype">in</td>          <td class="paramname"><span class="paramname"><em>self</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">in</td>          <td class="paramname"><span class="paramname"><em>tx</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">in</td>          <td class="paramname"><span class="paramname"><em>ty</em></span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Translate the curve by <code>(tx,ty)</code></p>
+<p><b>Usage</b></p>
+<div class="fragment"><div class="line">ref.translate( tx, ty );</div>
+</div><!-- fragment --> 
+</div>
+</div>
+<a id="a89c01df85b041077157d9bfe5743ea0a" name="a89c01df85b041077157d9bfe5743ea0a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a89c01df85b041077157d9bfe5743ea0a">&#9670;&#160;</a></span>trim()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">function CurveBase::trim </td>
+          <td>(</td>
+          <td class="paramtype">in</td>          <td class="paramname"><span class="paramname"><em>self</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">in</td>          <td class="paramname"><span class="paramname"><em>smin</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">in</td>          <td class="paramname"><span class="paramname"><em>smax</em></span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Cut the curve at the curvilinear parameter <code>smin</code> up to <code>smax</code></p>
+<p><b>Usage</b></p>
+<p>ref.trim( smin, smax ); </p>
+
+</div>
+</div>
+<a id="ad7e53299494450d82386443d06143cf0" name="ad7e53299494450d82386443d06143cf0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad7e53299494450d82386443d06143cf0">&#9670;&#160;</a></span>x_begin()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">function CurveBase::x_begin </td>
+          <td>(</td>
+          <td class="paramtype">in</td>          <td class="paramname"><span class="paramname"><em>self</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Evaluate initial x-coordinate of the curve.</p>
+<p><b>Usage</b></p>
+<div class="fragment"><div class="line">x0 = ref.x_begin();</div>
+</div><!-- fragment --> 
+</div>
+</div>
+<a id="a1d58d7c231a6450f124cfe1ddbbdb271" name="a1d58d7c231a6450f124cfe1ddbbdb271"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1d58d7c231a6450f124cfe1ddbbdb271">&#9670;&#160;</a></span>x_end()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">function CurveBase::x_end </td>
+          <td>(</td>
+          <td class="paramtype">in</td>          <td class="paramname"><span class="paramname"><em>self</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Evaluate final x-coordinate of the curve.</p>
+<p><b>Usage</b></p>
+<div class="fragment"><div class="line">x1 = ref.x_end();</div>
+</div><!-- fragment --> 
+</div>
+</div>
+<a id="af0112d88f91a2ce47de67aade29c7785" name="af0112d88f91a2ce47de67aade29c7785"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af0112d88f91a2ce47de67aade29c7785">&#9670;&#160;</a></span>xBegin()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">function CurveBase::xBegin </td>
+          <td>(</td>
+          <td class="paramtype">in</td>          <td class="paramname"><span class="paramname"><em>self</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="deprecated"><dt><b><a class="el" href="deprecated.html#_deprecated000023">Deprecated</a></b></dt><dd>whill be removed in future version </dd></dl>
+
+</div>
+</div>
+<a id="a920ba7285e158c3448daccfd2cdc2bcc" name="a920ba7285e158c3448daccfd2cdc2bcc"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a920ba7285e158c3448daccfd2cdc2bcc">&#9670;&#160;</a></span>xEnd()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">function CurveBase::xEnd </td>
+          <td>(</td>
+          <td class="paramtype">in</td>          <td class="paramname"><span class="paramname"><em>self</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="deprecated"><dt><b><a class="el" href="deprecated.html#_deprecated000024">Deprecated</a></b></dt><dd>whill be removed in future version </dd></dl>
+
+</div>
+</div>
+<a id="a3df1c2fe86bb5b0dbb00f3f936f1dd16" name="a3df1c2fe86bb5b0dbb00f3f936f1dd16"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3df1c2fe86bb5b0dbb00f3f936f1dd16">&#9670;&#160;</a></span>xy_begin()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">function CurveBase::xy_begin </td>
+          <td>(</td>
+          <td class="paramtype">in</td>          <td class="paramname"><span class="paramname"><em>self</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Evaluate initial point of the curve.</p>
+<p><b>Usage</b></p>
+<div class="fragment"><div class="line">[ x0, y0 ] = ref.xy_begin();</div>
+</div><!-- fragment --> 
+</div>
+</div>
+<a id="a41800e02380ba67944e355332a6c6e7c" name="a41800e02380ba67944e355332a6c6e7c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a41800e02380ba67944e355332a6c6e7c">&#9670;&#160;</a></span>xy_end()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">function CurveBase::xy_end </td>
+          <td>(</td>
+          <td class="paramtype">in</td>          <td class="paramname"><span class="paramname"><em>self</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Evaluate final point of the curve.</p>
+<p><b>Usage</b></p>
+<div class="fragment"><div class="line">[ x1, y1 ] = ref.xy_end();</div>
+</div><!-- fragment --> 
+</div>
+</div>
+<a id="a7472254e4d4d33895efb42af712e79ff" name="a7472254e4d4d33895efb42af712e79ff"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7472254e4d4d33895efb42af712e79ff">&#9670;&#160;</a></span>xyBegin()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">function CurveBase::xyBegin </td>
+          <td>(</td>
+          <td class="paramtype">in</td>          <td class="paramname"><span class="paramname"><em>self</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="deprecated"><dt><b><a class="el" href="deprecated.html#_deprecated000021">Deprecated</a></b></dt><dd>whill be removed in future version </dd></dl>
+
+</div>
+</div>
+<a id="aad64122209f71187d9710b1e03ba9e08" name="aad64122209f71187d9710b1e03ba9e08"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aad64122209f71187d9710b1e03ba9e08">&#9670;&#160;</a></span>xyEnd()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">function CurveBase::xyEnd </td>
+          <td>(</td>
+          <td class="paramtype">in</td>          <td class="paramname"><span class="paramname"><em>self</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="deprecated"><dt><b><a class="el" href="deprecated.html#_deprecated000022">Deprecated</a></b></dt><dd>whill be removed in future version </dd></dl>
+
+</div>
+</div>
+<a id="a686ac3c3a94f202effdea69f65c0a0f9" name="a686ac3c3a94f202effdea69f65c0a0f9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a686ac3c3a94f202effdea69f65c0a0f9">&#9670;&#160;</a></span>y_begin()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">function CurveBase::y_begin </td>
+          <td>(</td>
+          <td class="paramtype">in</td>          <td class="paramname"><span class="paramname"><em>self</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Evaluate initial y-coordinate of the curve.</p>
+<p><b>Usage</b></p>
+<div class="fragment"><div class="line">y0 = ref.y_begin();</div>
+</div><!-- fragment --> 
+</div>
+</div>
+<a id="a48cb85bde2f451f042e84615316ca535" name="a48cb85bde2f451f042e84615316ca535"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a48cb85bde2f451f042e84615316ca535">&#9670;&#160;</a></span>y_end()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">function CurveBase::y_end </td>
+          <td>(</td>
+          <td class="paramtype">in</td>          <td class="paramname"><span class="paramname"><em>self</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Evaluate final y-coordinate of the curve.</p>
+<p><b>Usage</b></p>
+<div class="fragment"><div class="line">y1 = ref.y_end();</div>
+</div><!-- fragment --> 
+</div>
+</div>
+<a id="af30cb9956277fcd8c9beb91c06f667d5" name="af30cb9956277fcd8c9beb91c06f667d5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af30cb9956277fcd8c9beb91c06f667d5">&#9670;&#160;</a></span>yBegin()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">function CurveBase::yBegin </td>
+          <td>(</td>
+          <td class="paramtype">in</td>          <td class="paramname"><span class="paramname"><em>self</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="deprecated"><dt><b><a class="el" href="deprecated.html#_deprecated000025">Deprecated</a></b></dt><dd>whill be removed in future version </dd></dl>
+
+</div>
+</div>
+<a id="ae3fab8b50b2af4b2dfd4d7f6770c5df3" name="ae3fab8b50b2af4b2dfd4d7f6770c5df3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae3fab8b50b2af4b2dfd4d7f6770c5df3">&#9670;&#160;</a></span>yEnd()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">function CurveBase::yEnd </td>
+          <td>(</td>
+          <td class="paramtype">in</td>          <td class="paramname"><span class="paramname"><em>self</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="deprecated"><dt><b><a class="el" href="deprecated.html#_deprecated000026">Deprecated</a></b></dt><dd>whill be removed in future version </dd></dl>
+
+</div>
+</div>
+<a id="a0a189e9b5f75026098c616b855613a71" name="a0a189e9b5f75026098c616b855613a71"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0a189e9b5f75026098c616b855613a71">&#9670;&#160;</a></span>yesAABBtree()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">function CurveBase::yesAABBtree </td>
+          <td>(</td>
+          <td class="paramtype">in</td>          <td class="paramname"><span class="paramname"><em>self</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Activate the use of AABB three in intersection/collision computations </p>
+
+</div>
+</div>
+<hr/>The documentation for this class was generated from the following file:<ul>
+<li>/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/toolbox/lib/<b>CurveBase.m</b></li>
+</ul>
+</div><!-- contents -->
+<!-- start footer part -->
+<hr class="footer"/><address class="footer"><small>
+Generated by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.12.0
+</small></address>
+</div><!-- doc-content -->
+</body>
+</html>
+</div>
+</section>
+
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p></p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

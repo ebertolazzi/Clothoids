@@ -60,7 +60,7 @@ curvatureTotalVariation() const
 //! Given the clothoid curve \f$ P(s) \f$ compute.
 //!
 //! \f[
-//!    \int_0^L |P''(s)|^2 \mathrm{d}s
+//!    \int_0^L |P''(s)|^2\,\mathrm{d}s
 //! \f]
 //!
 real_type
@@ -71,7 +71,7 @@ integralCurvature2() const
 //! Given the clothoid curve \f$ P(s) \f$ compute.
 //!
 //! \f[
-//!    \int_0^L |P'''(s)|^2 \mathrm{d}s
+//!    \int_0^L |P'''(s)|^2\,\mathrm{d}s
 //! \f]
 //!
 real_type

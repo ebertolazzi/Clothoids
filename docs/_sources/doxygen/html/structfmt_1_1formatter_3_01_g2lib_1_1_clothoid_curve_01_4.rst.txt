@@ -1,0 +1,14 @@
+.. meta::a728123a568596f904bb0d578cfe9952c6c7e0a6e4cf3e6e22101bc2a80a1b5ae579b36a33576637d6cef6aa8ea624862fabf0e45c5ca3ed4f3e891a78872e31
+
+:orphan:
+
+.. title:: Clothoids: fmt::formatter&lt; G2lib::ClothoidCurve &gt; Struct Reference
+
+ClothoidCurve &gt; Struct Reference
+===================================
+
+.. container:: doxygen-content
+
+   
+   .. raw:: html
+     :file: structfmt_1_1formatter_3_01_g2lib_1_1_clothoid_curve_01_4.html

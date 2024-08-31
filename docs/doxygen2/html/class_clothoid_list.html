@@ -1,0 +1,1502 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Clothoids: ClothoidList Class Reference &mdash; Clothoids</title>
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=19f00094" />
+      <link rel="stylesheet" type="text/css" href="../../_static/graphviz.css?v=fd3f3429" />
+      <link rel="stylesheet" type="text/css" href="../../_static/plot_directive.css?v=7f9a90b1" />
+      <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
+      <link rel="stylesheet" type="text/css" href="../../_static/sphinx-design.min.css?v=95c83b7e" />
+      <link rel="stylesheet" type="text/css" href="../../_static/sphinx-data-viewer/jsonview.bundle.css?v=f6ef2277" />
+      <link rel="stylesheet" type="text/css" href="../../_static/sphinx-needs/libs/html/datatables.min.css?v=4b4fd840" />
+      <link rel="stylesheet" type="text/css" href="../../_static/sphinx-needs/common_css/need_style.css?v=678fb11e" />
+      <link rel="stylesheet" type="text/css" href="../../_static/sphinx-needs/common_css/need_core.css?v=f5b60a78" />
+      <link rel="stylesheet" type="text/css" href="../../_static/sphinx-needs/common_css/needstable.css?v=5e1b6797" />
+      <link rel="stylesheet" type="text/css" href="../../_static/sphinx-needs/common_css/need_links.css?v=2150a916" />
+      <link rel="stylesheet" type="text/css" href="../../_static/sphinx-needs/common_css/need_toggle.css?v=5c6620df" />
+      <link rel="stylesheet" type="text/css" href="../../_static/sphinx-needs/modern.css?v=803738c0" />
+      <link rel="stylesheet" type="text/css" href="../../_static/sphinx-rtd-theme-custom.css?v=76d57d84" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../../_static/documentation_options.js?v=60dbed4a"></script>
+        <script src="../../_static/doctools.js?v=9a2dae69"></script>
+        <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+        <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
+        <script src="../../_static/copybutton.js?v=f281be69"></script>
+        <script src="../../_static/design-tabs.js?v=f930bc37"></script>
+        <script src="../../_static/sphinx-data-viewer/jsonview.bundle.js?v=18cd53c5"></script>
+        <script src="../../_static/sphinx-data-viewer/jsonview_loader.js?v=f7ff7e7d"></script>
+        <script src="../../_static/sphinx-needs/libs/html/datatables.min.js?v=8a4aee21"></script>
+        <script src="../../_static/sphinx-needs/libs/html/datatables_loader.js?v=a2cae175"></script>
+        <script src="../../_static/sphinx-needs/libs/html/sphinx_needs_collapse.js?v=dca66431"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            Clothoids
+              <img src="../../_static/logo.png" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                2.0.13
+
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../README.html">Clothoids</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../index_CPP.html">Clothoids C++ interface</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../doxygen/html/namespaces_namespaces.html">Namespaces</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../doxygen/html/namespaces.html">Namespace List</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../doxygen/html/namespacemembers_namespace_members.html">Namespace Members</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../doxygen/html/namespacemembers.html">All</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../doxygen/html/namespacemembers_func.html">Functions</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../doxygen/html/namespacemembers_type.html">Typedefs</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../doxygen/html/annotated_classes.html">Classes</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../doxygen/html/annotated.html">Class List</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../doxygen/html/classes.html">Class Index</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../doxygen/html/hierarchy.html">Class Hierarchy</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../doxygen/html/functions_class_members.html">Class Members</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../doxygen/html/functions_all.html">All</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../doxygen/html/functions_func_functions.html">Functions</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../doxygen/html/functions_type.html">Typedefs</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../doxygen/html/functions_rela.html">Related Symbols</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../doxygen/html/files.html">Files</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../index_MATLAB.html">Clothoids MATLAB interface</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="annotated_classes.html">Classes</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="annotated.html">Class List</a></li>
+<li class="toctree-l3"><a class="reference internal" href="classes.html">Class Index</a></li>
+<li class="toctree-l3"><a class="reference internal" href="hierarchy.html">Class Hierarchy</a></li>
+<li class="toctree-l3"><a class="reference internal" href="functions_class_members.html">Class Members</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="functions.html">All</a></li>
+<li class="toctree-l4"><a class="reference internal" href="functions_func.html">Functions</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="functions_func.html">Functions</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../LICENSE.html">LICENSE</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">Clothoids</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Clothoids: ClothoidList Class Reference</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../_sources/doxygen2/html/class_clothoid_list.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="clothoidlist-class-reference">
+<h1>ClothoidList Class Reference<a class="headerlink" href="#clothoidlist-class-reference" title="Link to this heading"></a></h1>
+<div class="doxygen-content docutils container">
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en-US">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=11"/>
+<meta name="generator" content="Doxygen 1.12.0"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Clothoids: ClothoidList Class Reference</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<script type="text/javascript" src="clipboard.js"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="resize.js"></script>
+<script type="text/javascript">
+window.MathJax = {
+  options: {
+    ignoreHtmlClass: 'tex2jax_ignore',
+    processHtmlClass: 'tex2jax_process'
+  }
+};
+</script>
+<script type="text/javascript" id="MathJax-script" async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+<link href="doxygen-awesome.css" rel="stylesheet" type="text/css"/>
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr id="projectrow">
+  <td id="projectalign">
+   <div id="projectname">Clothoids
+   </div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Generated by Doxygen 1.12.0 -->
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(function() { codefold.init(0); });
+/* @license-end */
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(function() {
+  initMenu('',false,false,'search.php','Search',false);
+});
+/* @license-end */
+</script>
+<div id="main-nav"></div>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(function(){ initResizable(false); });
+/* @license-end */
+</script>
+</div><!-- top -->
+<div id="doc-content">
+<div class="header">
+  <div class="summary">
+<a href="#pub-methods">Public Member Functions</a> &#124;
+<a href="class_clothoid_list-members.html">List of all members</a>  </div>
+  <div class="headertitle"><div class="title">ClothoidList Class Reference</div></div>
+</div><!--header-->
+<div class="contents">
+<div class="dynheader">
+Inheritance diagram for ClothoidList:</div>
+<div class="dyncontent">
+ <div class="center">
+  <img src="class_clothoid_list.png" usemap="#ClothoidList_map" alt=""/>
+  <map id="ClothoidList_map" name="ClothoidList_map">
+<area href="class_curve_base.html" alt="CurveBase" shape="rect" coords="0,56,142,80"/>
+  </map>
+</div></div>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
+Public Member Functions</h2></td></tr>
+<tr class="memitem:a9f9dd13c2646b4694b384590f451e63e" id="r_a9f9dd13c2646b4694b384590f451e63e"><td class="memItemLeft" align="right" valign="top">function&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a9f9dd13c2646b4694b384590f451e63e">ClothoidList</a> ()</td></tr>
+<tr class="separator:a9f9dd13c2646b4694b384590f451e63e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aabf8f4ec32867841c363eca1782beb8a" id="r_aabf8f4ec32867841c363eca1782beb8a"><td class="memItemLeft" align="right" valign="top">function&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aabf8f4ec32867841c363eca1782beb8a">reserve</a> (in self, in N)</td></tr>
+<tr class="separator:aabf8f4ec32867841c363eca1782beb8a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0814dd36d3d54091c84cffc19f118dc2" id="r_a0814dd36d3d54091c84cffc19f118dc2"><td class="memItemLeft" align="right" valign="top">function&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a0814dd36d3d54091c84cffc19f118dc2">save</a> (in self, in fname)</td></tr>
+<tr class="separator:a0814dd36d3d54091c84cffc19f118dc2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a58446348ba25413874473173106e687f" id="r_a58446348ba25413874473173106e687f"><td class="memItemLeft" align="right" valign="top">function&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a58446348ba25413874473173106e687f">load</a> (in self, in varargin)</td></tr>
+<tr class="separator:a58446348ba25413874473173106e687f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a729c5e4b4a2985e48af32d54e597c85a" id="r_a729c5e4b4a2985e48af32d54e597c85a"><td class="memItemLeft" align="right" valign="top">function&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a729c5e4b4a2985e48af32d54e597c85a">push_back</a> (in self, in varargin)</td></tr>
+<tr class="separator:a729c5e4b4a2985e48af32d54e597c85a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abd33319f2c2ad501c9e010934df51f3f" id="r_abd33319f2c2ad501c9e010934df51f3f"><td class="memItemLeft" align="right" valign="top">function&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#abd33319f2c2ad501c9e010934df51f3f">push_back_G1</a> (in self, in varargin)</td></tr>
+<tr class="separator:abd33319f2c2ad501c9e010934df51f3f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aebd52d92fb9db159adffcda7a74ec600" id="r_aebd52d92fb9db159adffcda7a74ec600"><td class="memItemLeft" align="right" valign="top">function&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aebd52d92fb9db159adffcda7a74ec600">get</a> (in self, in k)</td></tr>
+<tr class="separator:aebd52d92fb9db159adffcda7a74ec600"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af0be676b6e44a281c3505144e0c5547d" id="r_af0be676b6e44a281c3505144e0c5547d"><td class="memItemLeft" align="right" valign="top">function&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#af0be676b6e44a281c3505144e0c5547d">append</a> (in self, in lst)</td></tr>
+<tr class="separator:af0be676b6e44a281c3505144e0c5547d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a417264055d0649ece9cf1f9efd67cb04" id="r_a417264055d0649ece9cf1f9efd67cb04"><td class="memItemLeft" align="right" valign="top">function&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a417264055d0649ece9cf1f9efd67cb04">get_STK</a> (in self)</td></tr>
+<tr class="separator:a417264055d0649ece9cf1f9efd67cb04"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac1f7b9bab161e9cdcb52dab6cb84b8d1" id="r_ac1f7b9bab161e9cdcb52dab6cb84b8d1"><td class="memItemLeft" align="right" valign="top">function&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ac1f7b9bab161e9cdcb52dab6cb84b8d1">get_XY</a> (in self)</td></tr>
+<tr class="separator:ac1f7b9bab161e9cdcb52dab6cb84b8d1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a235e471db03c7bebd9bb0eaf5e969f20" id="r_a235e471db03c7bebd9bb0eaf5e969f20"><td class="memItemLeft" align="right" valign="top"><a id="a235e471db03c7bebd9bb0eaf5e969f20" name="a235e471db03c7bebd9bb0eaf5e969f20"></a>
+function&#160;</td><td class="memItemRight" valign="bottom"><b>num_segments</b> (in self)</td></tr>
+<tr class="separator:a235e471db03c7bebd9bb0eaf5e969f20"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8f7654ed05215d88fbe7be611f192e67" id="r_a8f7654ed05215d88fbe7be611f192e67"><td class="memItemLeft" align="right" valign="top">function&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a8f7654ed05215d88fbe7be611f192e67">numSegments</a> (in self)</td></tr>
+<tr class="separator:a8f7654ed05215d88fbe7be611f192e67"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a641dcd43c1007af1414c2d8c2b4ff0a9" id="r_a641dcd43c1007af1414c2d8c2b4ff0a9"><td class="memItemLeft" align="right" valign="top"><a id="a641dcd43c1007af1414c2d8c2b4ff0a9" name="a641dcd43c1007af1414c2d8c2b4ff0a9"></a>
+function&#160;</td><td class="memItemRight" valign="bottom"><b>build_3arcG2</b> (in self, in x0, in y0, in theta0, in kappa0, in)</td></tr>
+<tr class="separator:a641dcd43c1007af1414c2d8c2b4ff0a9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae2712a6b92b7f4a6068145ed325966ec" id="r_ae2712a6b92b7f4a6068145ed325966ec"><td class="memItemLeft" align="right" valign="top"><a id="ae2712a6b92b7f4a6068145ed325966ec" name="ae2712a6b92b7f4a6068145ed325966ec"></a>
+function&#160;</td><td class="memItemRight" valign="bottom"><b>build_3arcG2fixed</b> (in self, in s0, in x0, in y0, in theta0, in kappa0, in)</td></tr>
+<tr class="separator:ae2712a6b92b7f4a6068145ed325966ec"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a369b630d96bab8b8c15f488a4e4c83a6" id="r_a369b630d96bab8b8c15f488a4e4c83a6"><td class="memItemLeft" align="right" valign="top"><a id="a369b630d96bab8b8c15f488a4e4c83a6" name="a369b630d96bab8b8c15f488a4e4c83a6"></a>
+function&#160;</td><td class="memItemRight" valign="bottom"><b>build_2arcG2</b> (in self, in x0, in y0, in theta0, in kappa0, in)</td></tr>
+<tr class="separator:a369b630d96bab8b8c15f488a4e4c83a6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8975b8e6b250d227da456a61e8cffc45" id="r_a8975b8e6b250d227da456a61e8cffc45"><td class="memItemLeft" align="right" valign="top"><a id="a8975b8e6b250d227da456a61e8cffc45" name="a8975b8e6b250d227da456a61e8cffc45"></a>
+function&#160;</td><td class="memItemRight" valign="bottom"><b>build_CLC</b> (in self, in x0, in y0, in theta0, in kappa0, in)</td></tr>
+<tr class="separator:a8975b8e6b250d227da456a61e8cffc45"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae4b358042eab2ffb5d39ba773ea1bcad" id="r_ae4b358042eab2ffb5d39ba773ea1bcad"><td class="memItemLeft" align="right" valign="top">function&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ae4b358042eab2ffb5d39ba773ea1bcad">build_G1</a> (in self, in x, in y, in varargin)</td></tr>
+<tr class="separator:ae4b358042eab2ffb5d39ba773ea1bcad"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a415fd347059e4bc81000441d104c4ea6" id="r_a415fd347059e4bc81000441d104c4ea6"><td class="memItemLeft" align="right" valign="top">function&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a415fd347059e4bc81000441d104c4ea6">build</a> (in self, in x0, in y0, in theta0, in s, in <a class="el" href="class_curve_base.html#af9299e0a4f6ba27785c2ea28f4e2e8cf">kappa</a>)</td></tr>
+<tr class="separator:a415fd347059e4bc81000441d104c4ea6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8869d6f71746b980f928177942fb6362" id="r_a8869d6f71746b980f928177942fb6362"><td class="memItemLeft" align="right" valign="top">function&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a8869d6f71746b980f928177942fb6362">build_theta</a> (in self, in x, in y)</td></tr>
+<tr class="separator:a8869d6f71746b980f928177942fb6362"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a941a550d6c12ba18f6bd94e8209dbaa1" id="r_a941a550d6c12ba18f6bd94e8209dbaa1"><td class="memItemLeft" align="right" valign="top"><a id="a941a550d6c12ba18f6bd94e8209dbaa1" name="a941a550d6c12ba18f6bd94e8209dbaa1"></a>
+function&#160;</td><td class="memItemRight" valign="bottom"><b>build_raw</b> (in self, in x, in y, in abscissa, in <a class="el" href="class_curve_base.html#a2737beff5b4fa9653f7015ffd1cd37a8">theta</a>, in <a class="el" href="class_curve_base.html#af9299e0a4f6ba27785c2ea28f4e2e8cf">kappa</a>)</td></tr>
+<tr class="separator:a941a550d6c12ba18f6bd94e8209dbaa1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6d8e46f76fadea56d6c3114995aff63b" id="r_a6d8e46f76fadea56d6c3114995aff63b"><td class="memItemLeft" align="right" valign="top"><a id="a6d8e46f76fadea56d6c3114995aff63b" name="a6d8e46f76fadea56d6c3114995aff63b"></a>
+function&#160;</td><td class="memItemRight" valign="bottom"><b>make_closed</b> (in self)</td></tr>
+<tr class="separator:a6d8e46f76fadea56d6c3114995aff63b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a13b5c063142bc3b0ba3671a4e91094e2" id="r_a13b5c063142bc3b0ba3671a4e91094e2"><td class="memItemLeft" align="right" valign="top"><a id="a13b5c063142bc3b0ba3671a4e91094e2" name="a13b5c063142bc3b0ba3671a4e91094e2"></a>
+function&#160;</td><td class="memItemRight" valign="bottom"><b>make_open</b> (in self)</td></tr>
+<tr class="separator:a13b5c063142bc3b0ba3671a4e91094e2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7c8abcbb32abcd681bde8592f0d881c8" id="r_a7c8abcbb32abcd681bde8592f0d881c8"><td class="memItemLeft" align="right" valign="top"><a id="a7c8abcbb32abcd681bde8592f0d881c8" name="a7c8abcbb32abcd681bde8592f0d881c8"></a>
+function&#160;</td><td class="memItemRight" valign="bottom"><b>is_closed</b> (in self)</td></tr>
+<tr class="separator:a7c8abcbb32abcd681bde8592f0d881c8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a32688e08bc77dce4de1e0e9d6cd70dcb" id="r_a32688e08bc77dce4de1e0e9d6cd70dcb"><td class="memItemLeft" align="right" valign="top"><a id="a32688e08bc77dce4de1e0e9d6cd70dcb" name="a32688e08bc77dce4de1e0e9d6cd70dcb"></a>
+function&#160;</td><td class="memItemRight" valign="bottom"><b>deltaTheta</b> (in self)</td></tr>
+<tr class="separator:a32688e08bc77dce4de1e0e9d6cd70dcb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:adc13099ac413467ee63e386afcb8aa07" id="r_adc13099ac413467ee63e386afcb8aa07"><td class="memItemLeft" align="right" valign="top"><a id="adc13099ac413467ee63e386afcb8aa07" name="adc13099ac413467ee63e386afcb8aa07"></a>
+function&#160;</td><td class="memItemRight" valign="bottom"><b>deltaKappa</b> (in self)</td></tr>
+<tr class="separator:adc13099ac413467ee63e386afcb8aa07"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad8ba9f4363f33e74295b6102ad068751" id="r_ad8ba9f4363f33e74295b6102ad068751"><td class="memItemLeft" align="right" valign="top"><a id="ad8ba9f4363f33e74295b6102ad068751" name="ad8ba9f4363f33e74295b6102ad068751"></a>
+function&#160;</td><td class="memItemRight" valign="bottom"><b>closest_point_by_sample</b> (in self, in qx, in qy, in ds)</td></tr>
+<tr class="separator:ad8ba9f4363f33e74295b6102ad068751"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab98727c7b6307868591bed6093a7f442" id="r_ab98727c7b6307868591bed6093a7f442"><td class="memItemLeft" align="right" valign="top"><a id="ab98727c7b6307868591bed6093a7f442" name="ab98727c7b6307868591bed6093a7f442"></a>
+function&#160;</td><td class="memItemRight" valign="bottom"><b>closestPointBySample</b> (in self, in qx, in qy, in ds)</td></tr>
+<tr class="separator:ab98727c7b6307868591bed6093a7f442"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae0b7cab57b3d7b8fe4ce39d26351d63a" id="r_ae0b7cab57b3d7b8fe4ce39d26351d63a"><td class="memItemLeft" align="right" valign="top"><a id="ae0b7cab57b3d7b8fe4ce39d26351d63a" name="ae0b7cab57b3d7b8fe4ce39d26351d63a"></a>
+function&#160;</td><td class="memItemRight" valign="bottom"><b>distanceBySample</b> (in self, in qx, in qy, in ds)</td></tr>
+<tr class="separator:ae0b7cab57b3d7b8fe4ce39d26351d63a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae92580f8cdb8f95a08aa3743f8b78023" id="r_ae92580f8cdb8f95a08aa3743f8b78023"><td class="memItemLeft" align="right" valign="top"><a id="ae92580f8cdb8f95a08aa3743f8b78023" name="ae92580f8cdb8f95a08aa3743f8b78023"></a>
+function&#160;</td><td class="memItemRight" valign="bottom"><b>closest_segment</b> (in self, in qx, in qy)</td></tr>
+<tr class="separator:ae92580f8cdb8f95a08aa3743f8b78023"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af30456c3f888f0bba473a5b4bb45846f" id="r_af30456c3f888f0bba473a5b4bb45846f"><td class="memItemLeft" align="right" valign="top"><a id="af30456c3f888f0bba473a5b4bb45846f" name="af30456c3f888f0bba473a5b4bb45846f"></a>
+function&#160;</td><td class="memItemRight" valign="bottom"><b>closestSegment</b> (in self, in qx, in qy)</td></tr>
+<tr class="separator:af30456c3f888f0bba473a5b4bb45846f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2c2ae09acfce3b4b55cd619b3551e917" id="r_a2c2ae09acfce3b4b55cd619b3551e917"><td class="memItemLeft" align="right" valign="top"><a id="a2c2ae09acfce3b4b55cd619b3551e917" name="a2c2ae09acfce3b4b55cd619b3551e917"></a>
+function&#160;</td><td class="memItemRight" valign="bottom"><b>closest_point_in_range</b> (in self, in qx, in qy, in ibegin, in iend, in varargin)</td></tr>
+<tr class="separator:a2c2ae09acfce3b4b55cd619b3551e917"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8fe4b2791b86223fffbe3c60f4eb6f6d" id="r_a8fe4b2791b86223fffbe3c60f4eb6f6d"><td class="memItemLeft" align="right" valign="top">function&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a8fe4b2791b86223fffbe3c60f4eb6f6d">closestPointInRange</a> (in self, in qx, in qy, in ibegin, in iend, in varargin)</td></tr>
+<tr class="separator:a8fe4b2791b86223fffbe3c60f4eb6f6d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8beecbed5525cb68dadebf6c05cbb282" id="r_a8beecbed5525cb68dadebf6c05cbb282"><td class="memItemLeft" align="right" valign="top">function&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a8beecbed5525cb68dadebf6c05cbb282">closest_point_in_s_range</a> (in self, in qx, in qy, in s_begin, in s_end, in varargin)</td></tr>
+<tr class="separator:a8beecbed5525cb68dadebf6c05cbb282"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a310ff5fdf933479ca9a6146df4bfc882" id="r_a310ff5fdf933479ca9a6146df4bfc882"><td class="memItemLeft" align="right" valign="top">function&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a310ff5fdf933479ca9a6146df4bfc882">closestPointInSRange</a> (in self, in qx, in qy, in s_begin, in s_end, in varargin)</td></tr>
+<tr class="separator:a310ff5fdf933479ca9a6146df4bfc882"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a90510227edc266f7dfc38b7434526313" id="r_a90510227edc266f7dfc38b7434526313"><td class="memItemLeft" align="right" valign="top"><a id="a90510227edc266f7dfc38b7434526313" name="a90510227edc266f7dfc38b7434526313"></a>
+function&#160;</td><td class="memItemRight" valign="bottom"><b>s_to_index</b> (in self, in s)</td></tr>
+<tr class="separator:a90510227edc266f7dfc38b7434526313"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0d60e601dc2ea803b53d6d38469bcc32" id="r_a0d60e601dc2ea803b53d6d38469bcc32"><td class="memItemLeft" align="right" valign="top"><a id="a0d60e601dc2ea803b53d6d38469bcc32" name="a0d60e601dc2ea803b53d6d38469bcc32"></a>
+function&#160;</td><td class="memItemRight" valign="bottom"><b>export_table</b> (in self, in filename)</td></tr>
+<tr class="separator:a0d60e601dc2ea803b53d6d38469bcc32"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a70884c6ebae362c201cc4a01ac731a9c" id="r_a70884c6ebae362c201cc4a01ac731a9c"><td class="memItemLeft" align="right" valign="top"><a id="a70884c6ebae362c201cc4a01ac731a9c" name="a70884c6ebae362c201cc4a01ac731a9c"></a>
+function&#160;</td><td class="memItemRight" valign="bottom"><b>export_ruby</b> (in self, in filename)</td></tr>
+<tr class="separator:a70884c6ebae362c201cc4a01ac731a9c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a12c6a11025e04ed6ffe3ed3aed49fcb5" id="r_a12c6a11025e04ed6ffe3ed3aed49fcb5"><td class="memItemLeft" align="right" valign="top"><a id="a12c6a11025e04ed6ffe3ed3aed49fcb5" name="a12c6a11025e04ed6ffe3ed3aed49fcb5"></a>
+function&#160;</td><td class="memItemRight" valign="bottom"><b>info</b> (in self)</td></tr>
+<tr class="separator:a12c6a11025e04ed6ffe3ed3aed49fcb5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aca36fbf13d9de32796b2af8a6a6c776a" id="r_aca36fbf13d9de32796b2af8a6a6c776a"><td class="memItemLeft" align="right" valign="top"><a id="aca36fbf13d9de32796b2af8a6a6c776a" name="aca36fbf13d9de32796b2af8a6a6c776a"></a>
+function&#160;</td><td class="memItemRight" valign="bottom"><b>find_coord1</b> (in self, in x, in y, in varargin)</td></tr>
+<tr class="separator:aca36fbf13d9de32796b2af8a6a6c776a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a599ac679cb3489ea0662809d4877b661" id="r_a599ac679cb3489ea0662809d4877b661"><td class="memItemLeft" align="right" valign="top">function&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a599ac679cb3489ea0662809d4877b661">export</a> (in self)</td></tr>
+<tr class="separator:a599ac679cb3489ea0662809d4877b661"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6a7014381c7fb6247ab71f7ee03e1fb0" id="r_a6a7014381c7fb6247ab71f7ee03e1fb0"><td class="memItemLeft" align="right" valign="top">function&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a6a7014381c7fb6247ab71f7ee03e1fb0">plot</a> (in self, in varargin)</td></tr>
+<tr class="separator:a6a7014381c7fb6247ab71f7ee03e1fb0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a723bc88fa07102fa18c4d32ad03a3f29" id="r_a723bc88fa07102fa18c4d32ad03a3f29"><td class="memItemLeft" align="right" valign="top">function&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a723bc88fa07102fa18c4d32ad03a3f29">plot_offs</a> (in self, in offs, in npts, in varargin)</td></tr>
+<tr class="separator:a723bc88fa07102fa18c4d32ad03a3f29"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac160b1ab185ed2357f3a4e10a4368124" id="r_ac160b1ab185ed2357f3a4e10a4368124"><td class="memItemLeft" align="right" valign="top">function&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ac160b1ab185ed2357f3a4e10a4368124">plot_curvature</a> (in self, in npts, in varargin)</td></tr>
+<tr class="separator:ac160b1ab185ed2357f3a4e10a4368124"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab3733fca14f33632b4f4cd8e28b1e176" id="r_ab3733fca14f33632b4f4cd8e28b1e176"><td class="memItemLeft" align="right" valign="top">function&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ab3733fca14f33632b4f4cd8e28b1e176">plotCurvature</a> (in self, in npts, in varargin)</td></tr>
+<tr class="separator:ab3733fca14f33632b4f4cd8e28b1e176"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a186e486ed0c87cdf924daf9810b6daee" id="r_a186e486ed0c87cdf924daf9810b6daee"><td class="memItemLeft" align="right" valign="top">function&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a186e486ed0c87cdf924daf9810b6daee">plot_angle</a> (in self, in npts, in varargin)</td></tr>
+<tr class="separator:a186e486ed0c87cdf924daf9810b6daee"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a89bd52d16b1cb857b52e634e7be95fe4" id="r_a89bd52d16b1cb857b52e634e7be95fe4"><td class="memItemLeft" align="right" valign="top">function&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a89bd52d16b1cb857b52e634e7be95fe4">plotAngle</a> (in self, in npts, in varargin)</td></tr>
+<tr class="separator:a89bd52d16b1cb857b52e634e7be95fe4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aaefda80875d5a4674f61e32a425a1ab4" id="r_aaefda80875d5a4674f61e32a425a1ab4"><td class="memItemLeft" align="right" valign="top">function&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aaefda80875d5a4674f61e32a425a1ab4">plot_normal</a> (in self, in step, in len)</td></tr>
+<tr class="separator:aaefda80875d5a4674f61e32a425a1ab4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0205e28080b78060880d6030a569f632" id="r_a0205e28080b78060880d6030a569f632"><td class="memItemLeft" align="right" valign="top">function&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a0205e28080b78060880d6030a569f632">plotNormal</a> (in self, in step, in len)</td></tr>
+<tr class="separator:a0205e28080b78060880d6030a569f632"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a30e66a1d18abe347110c8e42200dad7f" id="r_a30e66a1d18abe347110c8e42200dad7f"><td class="memItemLeft" align="right" valign="top">function&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a30e66a1d18abe347110c8e42200dad7f">save_clothoids</a> (in self, in filename)</td></tr>
+<tr class="separator:a30e66a1d18abe347110c8e42200dad7f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa2103f4bb4b0bdd1841f0dd648b0affb" id="r_aa2103f4bb4b0bdd1841f0dd648b0affb"><td class="memItemLeft" align="right" valign="top">function&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aa2103f4bb4b0bdd1841f0dd648b0affb">saveClothoids</a> (in self, in filename)</td></tr>
+<tr class="separator:aa2103f4bb4b0bdd1841f0dd648b0affb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="inherit_header pub_methods_class_curve_base"><td colspan="2" onclick="javascript:dynsection.toggleInherit('pub_methods_class_curve_base')"><img src="closed.png" alt="-"/>&#160;Public Member Functions inherited from <a class="el" href="class_curve_base.html">CurveBase</a></td></tr>
+<tr class="memitem:a614718cf53a44366cd5ecac81f4b1dad inherit pub_methods_class_curve_base" id="r_a614718cf53a44366cd5ecac81f4b1dad"><td class="memItemLeft" align="right" valign="top">
+function&#160;</td><td class="memItemRight" valign="bottom"><b>CurveBase</b> (in mexName, in objectType)</td></tr>
+<tr class="separator:a614718cf53a44366cd5ecac81f4b1dad inherit pub_methods_class_curve_base"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1453250354e19f9d9fe16a0deef75c18 inherit pub_methods_class_curve_base" id="r_a1453250354e19f9d9fe16a0deef75c18"><td class="memItemLeft" align="right" valign="top">function&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_curve_base.html#a1453250354e19f9d9fe16a0deef75c18">obj_handle</a> (in self)</td></tr>
+<tr class="separator:a1453250354e19f9d9fe16a0deef75c18 inherit pub_methods_class_curve_base"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad5d2a5c0f8086f3723a8cff7ff2d75d0 inherit pub_methods_class_curve_base" id="r_ad5d2a5c0f8086f3723a8cff7ff2d75d0"><td class="memItemLeft" align="right" valign="top">
+function&#160;</td><td class="memItemRight" valign="bottom"><b>is_type</b> (in self)</td></tr>
+<tr class="separator:ad5d2a5c0f8086f3723a8cff7ff2d75d0 inherit pub_methods_class_curve_base"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa52f163db1cc07702c33b058de62ccbe inherit pub_methods_class_curve_base" id="r_aa52f163db1cc07702c33b058de62ccbe"><td class="memItemLeft" align="right" valign="top">
+function&#160;</td><td class="memItemRight" valign="bottom"><b>load</b> (in self, in OBJ)</td></tr>
+<tr class="separator:aa52f163db1cc07702c33b058de62ccbe inherit pub_methods_class_curve_base"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afb7d6a660cd3a44e2876b1cc1f976f12 inherit pub_methods_class_curve_base" id="r_afb7d6a660cd3a44e2876b1cc1f976f12"><td class="memItemLeft" align="right" valign="top">function&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_curve_base.html#afb7d6a660cd3a44e2876b1cc1f976f12">bbox</a> (in self, in varargin)</td></tr>
+<tr class="separator:afb7d6a660cd3a44e2876b1cc1f976f12 inherit pub_methods_class_curve_base"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a72fc0cdd9c31f5ffb583146fbe203dcf inherit pub_methods_class_curve_base" id="r_a72fc0cdd9c31f5ffb583146fbe203dcf"><td class="memItemLeft" align="right" valign="top">function&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_curve_base.html#a72fc0cdd9c31f5ffb583146fbe203dcf">translate</a> (in self, in tx, in ty)</td></tr>
+<tr class="separator:a72fc0cdd9c31f5ffb583146fbe203dcf inherit pub_methods_class_curve_base"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a89c01df85b041077157d9bfe5743ea0a inherit pub_methods_class_curve_base" id="r_a89c01df85b041077157d9bfe5743ea0a"><td class="memItemLeft" align="right" valign="top">function&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_curve_base.html#a89c01df85b041077157d9bfe5743ea0a">trim</a> (in self, in smin, in smax)</td></tr>
+<tr class="separator:a89c01df85b041077157d9bfe5743ea0a inherit pub_methods_class_curve_base"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a524a9c870aef837dfd9009a93fdfbf2a inherit pub_methods_class_curve_base" id="r_a524a9c870aef837dfd9009a93fdfbf2a"><td class="memItemLeft" align="right" valign="top">function&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_curve_base.html#a524a9c870aef837dfd9009a93fdfbf2a">rotate</a> (in self, in angle, in cx, in cy)</td></tr>
+<tr class="separator:a524a9c870aef837dfd9009a93fdfbf2a inherit pub_methods_class_curve_base"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abb94c933007695f005928d0dcac14cdf inherit pub_methods_class_curve_base" id="r_abb94c933007695f005928d0dcac14cdf"><td class="memItemLeft" align="right" valign="top">function&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_curve_base.html#abb94c933007695f005928d0dcac14cdf">reverse</a> (in self)</td></tr>
+<tr class="separator:abb94c933007695f005928d0dcac14cdf inherit pub_methods_class_curve_base"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a543e2da6d394c97adf496a2046e7d402 inherit pub_methods_class_curve_base" id="r_a543e2da6d394c97adf496a2046e7d402"><td class="memItemLeft" align="right" valign="top">function&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_curve_base.html#a543e2da6d394c97adf496a2046e7d402">scale</a> (in self, in sc)</td></tr>
+<tr class="separator:a543e2da6d394c97adf496a2046e7d402 inherit pub_methods_class_curve_base"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af4636cee4a04dfe442584b712c06ea3c inherit pub_methods_class_curve_base" id="r_af4636cee4a04dfe442584b712c06ea3c"><td class="memItemLeft" align="right" valign="top">function&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_curve_base.html#af4636cee4a04dfe442584b712c06ea3c">change_origin</a> (in self, in newX0, in newY0)</td></tr>
+<tr class="separator:af4636cee4a04dfe442584b712c06ea3c inherit pub_methods_class_curve_base"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0a0012fd549eb2653f43e2c03839ecec inherit pub_methods_class_curve_base" id="r_a0a0012fd549eb2653f43e2c03839ecec"><td class="memItemLeft" align="right" valign="top">function&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_curve_base.html#a0a0012fd549eb2653f43e2c03839ecec">changeOrigin</a> (in self, in newX0, in newY0)</td></tr>
+<tr class="separator:a0a0012fd549eb2653f43e2c03839ecec inherit pub_methods_class_curve_base"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a288e0542951a0688cf986ab5a77f3909 inherit pub_methods_class_curve_base" id="r_a288e0542951a0688cf986ab5a77f3909"><td class="memItemLeft" align="right" valign="top">function&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_curve_base.html#a288e0542951a0688cf986ab5a77f3909">evaluate</a> (in self, in s, in varargin)</td></tr>
+<tr class="separator:a288e0542951a0688cf986ab5a77f3909 inherit pub_methods_class_curve_base"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ace84ba94906e2f8cb6ccbff57cb40c83 inherit pub_methods_class_curve_base" id="r_ace84ba94906e2f8cb6ccbff57cb40c83"><td class="memItemLeft" align="right" valign="top">function&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_curve_base.html#ace84ba94906e2f8cb6ccbff57cb40c83">eval</a> (in self, in varargin)</td></tr>
+<tr class="separator:ace84ba94906e2f8cb6ccbff57cb40c83 inherit pub_methods_class_curve_base"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a988c5660ecb7806775fe0a8df9213d47 inherit pub_methods_class_curve_base" id="r_a988c5660ecb7806775fe0a8df9213d47"><td class="memItemLeft" align="right" valign="top">function&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_curve_base.html#a988c5660ecb7806775fe0a8df9213d47">eval_D</a> (in self, in varargin)</td></tr>
+<tr class="separator:a988c5660ecb7806775fe0a8df9213d47 inherit pub_methods_class_curve_base"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a09e63f53bc95899d7529a924dd16f427 inherit pub_methods_class_curve_base" id="r_a09e63f53bc95899d7529a924dd16f427"><td class="memItemLeft" align="right" valign="top">function&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_curve_base.html#a09e63f53bc95899d7529a924dd16f427">eval_DD</a> (in self, in varargin)</td></tr>
+<tr class="separator:a09e63f53bc95899d7529a924dd16f427 inherit pub_methods_class_curve_base"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a97c153ccdd0fbd09cb405c6f53ed939e inherit pub_methods_class_curve_base" id="r_a97c153ccdd0fbd09cb405c6f53ed939e"><td class="memItemLeft" align="right" valign="top">function&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_curve_base.html#a97c153ccdd0fbd09cb405c6f53ed939e">eval_DDD</a> (in self, in varargin)</td></tr>
+<tr class="separator:a97c153ccdd0fbd09cb405c6f53ed939e inherit pub_methods_class_curve_base"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2737beff5b4fa9653f7015ffd1cd37a8 inherit pub_methods_class_curve_base" id="r_a2737beff5b4fa9653f7015ffd1cd37a8"><td class="memItemLeft" align="right" valign="top">function&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_curve_base.html#a2737beff5b4fa9653f7015ffd1cd37a8">theta</a> (in self, in s)</td></tr>
+<tr class="separator:a2737beff5b4fa9653f7015ffd1cd37a8 inherit pub_methods_class_curve_base"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a45af03eef0ae38e7f39a2bbe2a53150a inherit pub_methods_class_curve_base" id="r_a45af03eef0ae38e7f39a2bbe2a53150a"><td class="memItemLeft" align="right" valign="top">function&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_curve_base.html#a45af03eef0ae38e7f39a2bbe2a53150a">theta_D</a> (in self, in s)</td></tr>
+<tr class="separator:a45af03eef0ae38e7f39a2bbe2a53150a inherit pub_methods_class_curve_base"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a63b753018b8ccffd2b1c2378770f8a0d inherit pub_methods_class_curve_base" id="r_a63b753018b8ccffd2b1c2378770f8a0d"><td class="memItemLeft" align="right" valign="top">function&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_curve_base.html#a63b753018b8ccffd2b1c2378770f8a0d">theta_DD</a> (in self, in s)</td></tr>
+<tr class="separator:a63b753018b8ccffd2b1c2378770f8a0d inherit pub_methods_class_curve_base"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1543fbc2744e6798776f1bfc92efc891 inherit pub_methods_class_curve_base" id="r_a1543fbc2744e6798776f1bfc92efc891"><td class="memItemLeft" align="right" valign="top">function&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_curve_base.html#a1543fbc2744e6798776f1bfc92efc891">theta_DDD</a> (in self, in s)</td></tr>
+<tr class="separator:a1543fbc2744e6798776f1bfc92efc891 inherit pub_methods_class_curve_base"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af9299e0a4f6ba27785c2ea28f4e2e8cf inherit pub_methods_class_curve_base" id="r_af9299e0a4f6ba27785c2ea28f4e2e8cf"><td class="memItemLeft" align="right" valign="top">function&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_curve_base.html#af9299e0a4f6ba27785c2ea28f4e2e8cf">kappa</a> (in self, in s)</td></tr>
+<tr class="separator:af9299e0a4f6ba27785c2ea28f4e2e8cf inherit pub_methods_class_curve_base"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a85489b8d48a85e621ea3b22506a1e859 inherit pub_methods_class_curve_base" id="r_a85489b8d48a85e621ea3b22506a1e859"><td class="memItemLeft" align="right" valign="top">function&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_curve_base.html#a85489b8d48a85e621ea3b22506a1e859">kappa_D</a> (in self, in s)</td></tr>
+<tr class="separator:a85489b8d48a85e621ea3b22506a1e859 inherit pub_methods_class_curve_base"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acc8104f92805d378e8b2306ba54064b5 inherit pub_methods_class_curve_base" id="r_acc8104f92805d378e8b2306ba54064b5"><td class="memItemLeft" align="right" valign="top">function&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_curve_base.html#acc8104f92805d378e8b2306ba54064b5">kappa_DD</a> (in self, in s)</td></tr>
+<tr class="separator:acc8104f92805d378e8b2306ba54064b5 inherit pub_methods_class_curve_base"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3df1c2fe86bb5b0dbb00f3f936f1dd16 inherit pub_methods_class_curve_base" id="r_a3df1c2fe86bb5b0dbb00f3f936f1dd16"><td class="memItemLeft" align="right" valign="top">function&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_curve_base.html#a3df1c2fe86bb5b0dbb00f3f936f1dd16">xy_begin</a> (in self)</td></tr>
+<tr class="separator:a3df1c2fe86bb5b0dbb00f3f936f1dd16 inherit pub_methods_class_curve_base"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7472254e4d4d33895efb42af712e79ff inherit pub_methods_class_curve_base" id="r_a7472254e4d4d33895efb42af712e79ff"><td class="memItemLeft" align="right" valign="top">function&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_curve_base.html#a7472254e4d4d33895efb42af712e79ff">xyBegin</a> (in self)</td></tr>
+<tr class="separator:a7472254e4d4d33895efb42af712e79ff inherit pub_methods_class_curve_base"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a41800e02380ba67944e355332a6c6e7c inherit pub_methods_class_curve_base" id="r_a41800e02380ba67944e355332a6c6e7c"><td class="memItemLeft" align="right" valign="top">function&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_curve_base.html#a41800e02380ba67944e355332a6c6e7c">xy_end</a> (in self)</td></tr>
+<tr class="separator:a41800e02380ba67944e355332a6c6e7c inherit pub_methods_class_curve_base"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aad64122209f71187d9710b1e03ba9e08 inherit pub_methods_class_curve_base" id="r_aad64122209f71187d9710b1e03ba9e08"><td class="memItemLeft" align="right" valign="top">function&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_curve_base.html#aad64122209f71187d9710b1e03ba9e08">xyEnd</a> (in self)</td></tr>
+<tr class="separator:aad64122209f71187d9710b1e03ba9e08 inherit pub_methods_class_curve_base"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad7e53299494450d82386443d06143cf0 inherit pub_methods_class_curve_base" id="r_ad7e53299494450d82386443d06143cf0"><td class="memItemLeft" align="right" valign="top">function&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_curve_base.html#ad7e53299494450d82386443d06143cf0">x_begin</a> (in self)</td></tr>
+<tr class="separator:ad7e53299494450d82386443d06143cf0 inherit pub_methods_class_curve_base"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af0112d88f91a2ce47de67aade29c7785 inherit pub_methods_class_curve_base" id="r_af0112d88f91a2ce47de67aade29c7785"><td class="memItemLeft" align="right" valign="top">function&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_curve_base.html#af0112d88f91a2ce47de67aade29c7785">xBegin</a> (in self)</td></tr>
+<tr class="separator:af0112d88f91a2ce47de67aade29c7785 inherit pub_methods_class_curve_base"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1d58d7c231a6450f124cfe1ddbbdb271 inherit pub_methods_class_curve_base" id="r_a1d58d7c231a6450f124cfe1ddbbdb271"><td class="memItemLeft" align="right" valign="top">function&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_curve_base.html#a1d58d7c231a6450f124cfe1ddbbdb271">x_end</a> (in self)</td></tr>
+<tr class="separator:a1d58d7c231a6450f124cfe1ddbbdb271 inherit pub_methods_class_curve_base"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a920ba7285e158c3448daccfd2cdc2bcc inherit pub_methods_class_curve_base" id="r_a920ba7285e158c3448daccfd2cdc2bcc"><td class="memItemLeft" align="right" valign="top">function&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_curve_base.html#a920ba7285e158c3448daccfd2cdc2bcc">xEnd</a> (in self)</td></tr>
+<tr class="separator:a920ba7285e158c3448daccfd2cdc2bcc inherit pub_methods_class_curve_base"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a686ac3c3a94f202effdea69f65c0a0f9 inherit pub_methods_class_curve_base" id="r_a686ac3c3a94f202effdea69f65c0a0f9"><td class="memItemLeft" align="right" valign="top">function&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_curve_base.html#a686ac3c3a94f202effdea69f65c0a0f9">y_begin</a> (in self)</td></tr>
+<tr class="separator:a686ac3c3a94f202effdea69f65c0a0f9 inherit pub_methods_class_curve_base"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af30cb9956277fcd8c9beb91c06f667d5 inherit pub_methods_class_curve_base" id="r_af30cb9956277fcd8c9beb91c06f667d5"><td class="memItemLeft" align="right" valign="top">function&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_curve_base.html#af30cb9956277fcd8c9beb91c06f667d5">yBegin</a> (in self)</td></tr>
+<tr class="separator:af30cb9956277fcd8c9beb91c06f667d5 inherit pub_methods_class_curve_base"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a48cb85bde2f451f042e84615316ca535 inherit pub_methods_class_curve_base" id="r_a48cb85bde2f451f042e84615316ca535"><td class="memItemLeft" align="right" valign="top">function&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_curve_base.html#a48cb85bde2f451f042e84615316ca535">y_end</a> (in self)</td></tr>
+<tr class="separator:a48cb85bde2f451f042e84615316ca535 inherit pub_methods_class_curve_base"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae3fab8b50b2af4b2dfd4d7f6770c5df3 inherit pub_methods_class_curve_base" id="r_ae3fab8b50b2af4b2dfd4d7f6770c5df3"><td class="memItemLeft" align="right" valign="top">function&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_curve_base.html#ae3fab8b50b2af4b2dfd4d7f6770c5df3">yEnd</a> (in self)</td></tr>
+<tr class="separator:ae3fab8b50b2af4b2dfd4d7f6770c5df3 inherit pub_methods_class_curve_base"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a28daf669859d3cb467bea34a07d5bb95 inherit pub_methods_class_curve_base" id="r_a28daf669859d3cb467bea34a07d5bb95"><td class="memItemLeft" align="right" valign="top">function&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_curve_base.html#a28daf669859d3cb467bea34a07d5bb95">theta_begin</a> (in self)</td></tr>
+<tr class="separator:a28daf669859d3cb467bea34a07d5bb95 inherit pub_methods_class_curve_base"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2341de8ad257521c910f78577663247c inherit pub_methods_class_curve_base" id="r_a2341de8ad257521c910f78577663247c"><td class="memItemLeft" align="right" valign="top">function&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_curve_base.html#a2341de8ad257521c910f78577663247c">thetaBegin</a> (in self)</td></tr>
+<tr class="separator:a2341de8ad257521c910f78577663247c inherit pub_methods_class_curve_base"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa2729a6c9b2d14b8a01baac788b8f24d inherit pub_methods_class_curve_base" id="r_aa2729a6c9b2d14b8a01baac788b8f24d"><td class="memItemLeft" align="right" valign="top">function&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_curve_base.html#aa2729a6c9b2d14b8a01baac788b8f24d">theta_end</a> (in self)</td></tr>
+<tr class="separator:aa2729a6c9b2d14b8a01baac788b8f24d inherit pub_methods_class_curve_base"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac4868d7d8f46bc8d61b6f31271e63a41 inherit pub_methods_class_curve_base" id="r_ac4868d7d8f46bc8d61b6f31271e63a41"><td class="memItemLeft" align="right" valign="top">function&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_curve_base.html#ac4868d7d8f46bc8d61b6f31271e63a41">thetaEnd</a> (in self)</td></tr>
+<tr class="separator:ac4868d7d8f46bc8d61b6f31271e63a41 inherit pub_methods_class_curve_base"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a099ef478b2316f976c18d57f456e8249 inherit pub_methods_class_curve_base" id="r_a099ef478b2316f976c18d57f456e8249"><td class="memItemLeft" align="right" valign="top">function&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_curve_base.html#a099ef478b2316f976c18d57f456e8249">kappa_begin</a> (in self)</td></tr>
+<tr class="separator:a099ef478b2316f976c18d57f456e8249 inherit pub_methods_class_curve_base"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa5388c8571e8b782af658890c28c9ba7 inherit pub_methods_class_curve_base" id="r_aa5388c8571e8b782af658890c28c9ba7"><td class="memItemLeft" align="right" valign="top">function&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_curve_base.html#aa5388c8571e8b782af658890c28c9ba7">kappaBegin</a> (in self)</td></tr>
+<tr class="separator:aa5388c8571e8b782af658890c28c9ba7 inherit pub_methods_class_curve_base"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a19fb4e9afadb94a5cb00b6e5c9556da4 inherit pub_methods_class_curve_base" id="r_a19fb4e9afadb94a5cb00b6e5c9556da4"><td class="memItemLeft" align="right" valign="top">function&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_curve_base.html#a19fb4e9afadb94a5cb00b6e5c9556da4">kappa_end</a> (in self)</td></tr>
+<tr class="separator:a19fb4e9afadb94a5cb00b6e5c9556da4 inherit pub_methods_class_curve_base"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5e9c99136558125699be44751885c3f0 inherit pub_methods_class_curve_base" id="r_a5e9c99136558125699be44751885c3f0"><td class="memItemLeft" align="right" valign="top">function&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_curve_base.html#a5e9c99136558125699be44751885c3f0">kappaEnd</a> (in self)</td></tr>
+<tr class="separator:a5e9c99136558125699be44751885c3f0 inherit pub_methods_class_curve_base"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a71fe78bbbf98ab12481e4c1224585e15 inherit pub_methods_class_curve_base" id="r_a71fe78bbbf98ab12481e4c1224585e15"><td class="memItemLeft" align="right" valign="top">function&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_curve_base.html#a71fe78bbbf98ab12481e4c1224585e15">length</a> (in self, in varargin)</td></tr>
+<tr class="separator:a71fe78bbbf98ab12481e4c1224585e15 inherit pub_methods_class_curve_base"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a32b0b9a4a2ee5e0e1ffdb8cbda4ba782 inherit pub_methods_class_curve_base" id="r_a32b0b9a4a2ee5e0e1ffdb8cbda4ba782"><td class="memItemLeft" align="right" valign="top">
+function&#160;</td><td class="memItemRight" valign="bottom"><b>points</b> (in self)</td></tr>
+<tr class="separator:a32b0b9a4a2ee5e0e1ffdb8cbda4ba782 inherit pub_methods_class_curve_base"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aaa400df7ce766246d06ae21207a1c626 inherit pub_methods_class_curve_base" id="r_aaa400df7ce766246d06ae21207a1c626"><td class="memItemLeft" align="right" valign="top">function&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_curve_base.html#aaa400df7ce766246d06ae21207a1c626">bbTriangles</a> (in self, in varargin)</td></tr>
+<tr class="separator:aaa400df7ce766246d06ae21207a1c626 inherit pub_methods_class_curve_base"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1c49592ad04bc3605f08cb4d4d4e6cb2 inherit pub_methods_class_curve_base" id="r_a1c49592ad04bc3605f08cb4d4d4e6cb2"><td class="memItemLeft" align="right" valign="top">function&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_curve_base.html#a1c49592ad04bc3605f08cb4d4d4e6cb2">closest_point</a> (in self, in qx, in qy, in varargin)</td></tr>
+<tr class="separator:a1c49592ad04bc3605f08cb4d4d4e6cb2 inherit pub_methods_class_curve_base"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9f9c42653a38cc5b028b7a889eca354e inherit pub_methods_class_curve_base" id="r_a9f9c42653a38cc5b028b7a889eca354e"><td class="memItemLeft" align="right" valign="top">function&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_curve_base.html#a9f9c42653a38cc5b028b7a889eca354e">closestPoint</a> (in self, in qx, in qy, in varargin)</td></tr>
+<tr class="separator:a9f9c42653a38cc5b028b7a889eca354e inherit pub_methods_class_curve_base"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a995541e2da9997cad68133cfd9fd6f76 inherit pub_methods_class_curve_base" id="r_a995541e2da9997cad68133cfd9fd6f76"><td class="memItemLeft" align="right" valign="top">function&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_curve_base.html#a995541e2da9997cad68133cfd9fd6f76">distance</a> (in self, in qx, in qy, in varargin)</td></tr>
+<tr class="separator:a995541e2da9997cad68133cfd9fd6f76 inherit pub_methods_class_curve_base"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3af6ed231aa1e5eb4092833138c92ee9 inherit pub_methods_class_curve_base" id="r_a3af6ed231aa1e5eb4092833138c92ee9"><td class="memItemLeft" align="right" valign="top">function&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_curve_base.html#a3af6ed231aa1e5eb4092833138c92ee9">collision</a> (in self, in OBJ, in varargin)</td></tr>
+<tr class="separator:a3af6ed231aa1e5eb4092833138c92ee9 inherit pub_methods_class_curve_base"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a76563ee1040c154c4b1b14383fed424f inherit pub_methods_class_curve_base" id="r_a76563ee1040c154c4b1b14383fed424f"><td class="memItemLeft" align="right" valign="top">function&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_curve_base.html#a76563ee1040c154c4b1b14383fed424f">intersect</a> (in self, in OBJ, in varargin)</td></tr>
+<tr class="separator:a76563ee1040c154c4b1b14383fed424f inherit pub_methods_class_curve_base"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa0b8d69de7c0df5962c8ba2d22350a9c inherit pub_methods_class_curve_base" id="r_aa0b8d69de7c0df5962c8ba2d22350a9c"><td class="memItemLeft" align="right" valign="top">function&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_curve_base.html#aa0b8d69de7c0df5962c8ba2d22350a9c">info</a> (in self)</td></tr>
+<tr class="separator:aa0b8d69de7c0df5962c8ba2d22350a9c inherit pub_methods_class_curve_base"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aee7315c2b8b883404d7efa74c51b702f inherit pub_methods_class_curve_base" id="r_aee7315c2b8b883404d7efa74c51b702f"><td class="memItemLeft" align="right" valign="top">function&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_curve_base.html#aee7315c2b8b883404d7efa74c51b702f">find_coord</a> (in self, in x, in y)</td></tr>
+<tr class="separator:aee7315c2b8b883404d7efa74c51b702f inherit pub_methods_class_curve_base"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0a189e9b5f75026098c616b855613a71 inherit pub_methods_class_curve_base" id="r_a0a189e9b5f75026098c616b855613a71"><td class="memItemLeft" align="right" valign="top">function&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_curve_base.html#a0a189e9b5f75026098c616b855613a71">yesAABBtree</a> (in self)</td></tr>
+<tr class="separator:a0a189e9b5f75026098c616b855613a71 inherit pub_methods_class_curve_base"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a324d0bd2548f6d56ae58764a98071e12 inherit pub_methods_class_curve_base" id="r_a324d0bd2548f6d56ae58764a98071e12"><td class="memItemLeft" align="right" valign="top">function&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_curve_base.html#a324d0bd2548f6d56ae58764a98071e12">noAABBtree</a> (in self)</td></tr>
+<tr class="separator:a324d0bd2548f6d56ae58764a98071e12 inherit pub_methods_class_curve_base"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aec824865ca16dd58b16b806ddc00f98d inherit pub_methods_class_curve_base" id="r_aec824865ca16dd58b16b806ddc00f98d"><td class="memItemLeft" align="right" valign="top">function&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_curve_base.html#aec824865ca16dd58b16b806ddc00f98d">plot_tbox</a> (in self, in P1, in P2, in P3, in varargin)</td></tr>
+<tr class="separator:aec824865ca16dd58b16b806ddc00f98d inherit pub_methods_class_curve_base"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a424731565309e427755c873a03b39274 inherit pub_methods_class_curve_base" id="r_a424731565309e427755c873a03b39274"><td class="memItemLeft" align="right" valign="top">function&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_curve_base.html#a424731565309e427755c873a03b39274">plotTBox</a> (in self, in P1, in P2, in P3, in varargin)</td></tr>
+<tr class="separator:a424731565309e427755c873a03b39274 inherit pub_methods_class_curve_base"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6377dbc03efaee295d3acca0c955b1ad inherit pub_methods_class_curve_base" id="r_a6377dbc03efaee295d3acca0c955b1ad"><td class="memItemLeft" align="right" valign="top">function&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_curve_base.html#a6377dbc03efaee295d3acca0c955b1ad">plot_bbox</a> (in self, in varargin)</td></tr>
+<tr class="separator:a6377dbc03efaee295d3acca0c955b1ad inherit pub_methods_class_curve_base"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a59acec48078144adab8084fa3813a47b inherit pub_methods_class_curve_base" id="r_a59acec48078144adab8084fa3813a47b"><td class="memItemLeft" align="right" valign="top">function&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_curve_base.html#a59acec48078144adab8084fa3813a47b">plotBBox</a> (in self, in varargin)</td></tr>
+<tr class="separator:a59acec48078144adab8084fa3813a47b inherit pub_methods_class_curve_base"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab6cc5118af06314b2ffe64603a8473fd inherit pub_methods_class_curve_base" id="r_ab6cc5118af06314b2ffe64603a8473fd"><td class="memItemLeft" align="right" valign="top">function&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_curve_base.html#ab6cc5118af06314b2ffe64603a8473fd">plot_triangles</a> (in self, in varargin)</td></tr>
+<tr class="separator:ab6cc5118af06314b2ffe64603a8473fd inherit pub_methods_class_curve_base"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a72b1ff3c010bff3b2d422e6198273c1d inherit pub_methods_class_curve_base" id="r_a72b1ff3c010bff3b2d422e6198273c1d"><td class="memItemLeft" align="right" valign="top">function&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_curve_base.html#a72b1ff3c010bff3b2d422e6198273c1d">plotTriangles</a> (in self, in varargin)</td></tr>
+<tr class="separator:a72b1ff3c010bff3b2d422e6198273c1d inherit pub_methods_class_curve_base"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="inherited" name="inherited"></a>
+Additional Inherited Members</h2></td></tr>
+<tr class="inherit_header pro_methods_class_curve_base"><td colspan="2" onclick="javascript:dynsection.toggleInherit('pro_methods_class_curve_base')"><img src="closed.png" alt="-"/>&#160;Protected Member Functions inherited from <a class="el" href="class_curve_base.html">CurveBase</a></td></tr>
+<tr class="memitem:a4fd99904e45161a25cc38e9afaefc1fc inherit pro_methods_class_curve_base" id="r_a4fd99904e45161a25cc38e9afaefc1fc"><td class="memItemLeft" align="right" valign="top">function&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_curve_base.html#a4fd99904e45161a25cc38e9afaefc1fc">copyElement</a> (in self)</td></tr>
+<tr class="separator:a4fd99904e45161a25cc38e9afaefc1fc inherit pro_methods_class_curve_base"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="inherit_header pro_attribs_class_curve_base"><td colspan="2" onclick="javascript:dynsection.toggleInherit('pro_attribs_class_curve_base')"><img src="closed.png" alt="-"/>&#160;Protected Attributes inherited from <a class="el" href="class_curve_base.html">CurveBase</a></td></tr>
+<tr class="memitem:a51da94c3220ec334e1f21f53fac2529a inherit pro_attribs_class_curve_base" id="r_a51da94c3220ec334e1f21f53fac2529a"><td class="memItemLeft" align="right" valign="top">
+Property&#160;</td><td class="memItemRight" valign="bottom"><b>mexName</b></td></tr>
+<tr class="separator:a51da94c3220ec334e1f21f53fac2529a inherit pro_attribs_class_curve_base"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aaab64ae6da706e2c529c9d74149cd57b inherit pro_attribs_class_curve_base" id="r_aaab64ae6da706e2c529c9d74149cd57b"><td class="memItemLeft" align="right" valign="top">
+Property&#160;</td><td class="memItemRight" valign="bottom"><b>objectHandle</b></td></tr>
+<tr class="separator:aaab64ae6da706e2c529c9d74149cd57b inherit pro_attribs_class_curve_base"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8c7ae0eb68369ccdfc6f6ddb930d04c0 inherit pro_attribs_class_curve_base" id="r_a8c7ae0eb68369ccdfc6f6ddb930d04c0"><td class="memItemLeft" align="right" valign="top">
+Property&#160;</td><td class="memItemRight" valign="bottom"><b>call_delete</b></td></tr>
+<tr class="separator:a8c7ae0eb68369ccdfc6f6ddb930d04c0 inherit pro_attribs_class_curve_base"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a28a41b07a4fdb80b4bd7671e9cd87ebe inherit pro_attribs_class_curve_base" id="r_a28a41b07a4fdb80b4bd7671e9cd87ebe"><td class="memItemLeft" align="right" valign="top">
+Property&#160;</td><td class="memItemRight" valign="bottom"><b>objectType</b></td></tr>
+<tr class="separator:a28a41b07a4fdb80b4bd7671e9cd87ebe inherit pro_attribs_class_curve_base"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
+<a id="a9f9dd13c2646b4694b384590f451e63e" name="a9f9dd13c2646b4694b384590f451e63e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9f9dd13c2646b4694b384590f451e63e">&#9670;&#160;</a></span>ClothoidList()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">function ClothoidList::ClothoidList </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Create a new C++ class instance for the clothoid list object</p>
+<p><b>Usage:</b></p>
+<div class="fragment"><div class="line">ref = ClothoidCurve()</div>
+</div><!-- fragment --><p><b>On output:</b></p>
+<ul>
+<li><code>ref</code>: reference handle to the object instance </li>
+</ul>
+
+</div>
+</div>
+<h2 class="groupheader">Member Function Documentation</h2>
+<a id="af0be676b6e44a281c3505144e0c5547d" name="af0be676b6e44a281c3505144e0c5547d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af0be676b6e44a281c3505144e0c5547d">&#9670;&#160;</a></span>append()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">function ClothoidList::append </td>
+          <td>(</td>
+          <td class="paramtype">in</td>          <td class="paramname"><span class="paramname"><em>self</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">in</td>          <td class="paramname"><span class="paramname"><em>lst</em></span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Append a curve to a clothoid list.</p>
+<div class="fragment"><div class="line">C = LineSegment( ... );</div>
+<div class="line">...</div>
+<div class="line">C = Biarc( ... );</div>
+<div class="line">...</div>
+<div class="line">C = CircleArc( ... );</div>
+<div class="line">% ....</div>
+<div class="line">ref.append(C); % append biarc</div>
+</div><!-- fragment --> 
+</div>
+</div>
+<a id="a415fd347059e4bc81000441d104c4ea6" name="a415fd347059e4bc81000441d104c4ea6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a415fd347059e4bc81000441d104c4ea6">&#9670;&#160;</a></span>build()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">function ClothoidList::build </td>
+          <td>(</td>
+          <td class="paramtype">in</td>          <td class="paramname"><span class="paramname"><em>self</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">in</td>          <td class="paramname"><span class="paramname"><em>x0</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">in</td>          <td class="paramname"><span class="paramname"><em>y0</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">in</td>          <td class="paramname"><span class="paramname"><em>theta0</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">in</td>          <td class="paramname"><span class="paramname"><em>s</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">in</td>          <td class="paramname"><span class="paramname"><em>kappa</em></span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Given a list of curvilinear coordinated and curvatures at nodes build a G2 clothoid list. Initial position and angle must be set to determine a unique clothoid list.</p>
+<div class="fragment"><div class="line">ref.build( x0, y0, theta0, s, kappa );</div>
+</div><!-- fragment --><ul>
+<li><code>x0</code> initial x-coordinates</li>
+<li><code>y0</code> initial y-coordinates at nodes</li>
+<li><code>theta0</code> initial angle</li>
+<li><code>s</code> list of curvilinear coordinates</li>
+<li><code>kappa</code> list of curvatures at nodes </li>
+</ul>
+
+</div>
+</div>
+<a id="ae4b358042eab2ffb5d39ba773ea1bcad" name="ae4b358042eab2ffb5d39ba773ea1bcad"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae4b358042eab2ffb5d39ba773ea1bcad">&#9670;&#160;</a></span>build_G1()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">function ClothoidList::build_G1 </td>
+          <td>(</td>
+          <td class="paramtype">in</td>          <td class="paramname"><span class="paramname"><em>self</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">in</td>          <td class="paramname"><span class="paramname"><em>x</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">in</td>          <td class="paramname"><span class="paramname"><em>y</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">in</td>          <td class="paramname"><span class="paramname"><em>varargin</em></span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Given a list of xy-coordinates at node points build a clothoid list. If third argument (<code>angle</code>) is not present angles are estimated internally.</p>
+<div class="fragment"><div class="line">ref.build_G1( x, y );</div>
+<div class="line">ref.build_G1( x, y, theta );</div>
+</div><!-- fragment --><ul>
+<li><code>x</code> x-coordinates at nodes</li>
+<li><code>y</code> y-coordinates at nodes</li>
+<li><code>theta</code> angle at nodes </li>
+</ul>
+
+</div>
+</div>
+<a id="a8869d6f71746b980f928177942fb6362" name="a8869d6f71746b980f928177942fb6362"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8869d6f71746b980f928177942fb6362">&#9670;&#160;</a></span>build_theta()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">function ClothoidList::build_theta </td>
+          <td>(</td>
+          <td class="paramtype">in</td>          <td class="paramname"><span class="paramname"><em>self</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">in</td>          <td class="paramname"><span class="paramname"><em>x</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">in</td>          <td class="paramname"><span class="paramname"><em>y</em></span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Given a list of xy-coordinates at node points build a guess of angles for the clothoid list.</p>
+<div class="fragment"><div class="line">theta = ref.build_theta( x, y );</div>
+</div><!-- fragment --><ul>
+<li><code>x</code> x-coordinates at nodes</li>
+<li><code>y</code> y-coordinates at nodes </li>
+</ul>
+
+</div>
+</div>
+<a id="a8beecbed5525cb68dadebf6c05cbb282" name="a8beecbed5525cb68dadebf6c05cbb282"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8beecbed5525cb68dadebf6c05cbb282">&#9670;&#160;</a></span>closest_point_in_s_range()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">function ClothoidList::closest_point_in_s_range </td>
+          <td>(</td>
+          <td class="paramtype">in</td>          <td class="paramname"><span class="paramname"><em>self</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">in</td>          <td class="paramname"><span class="paramname"><em>qx</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">in</td>          <td class="paramname"><span class="paramname"><em>qy</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">in</td>          <td class="paramname"><span class="paramname"><em>s_begin</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">in</td>          <td class="paramname"><span class="paramname"><em>s_end</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">in</td>          <td class="paramname"><span class="paramname"><em>varargin</em></span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Find closest point of a Clothoid list given a s-range</p>
+<div class="fragment"><div class="line">[ icurve, x, y, s, t, iflag, dst ] = ...</div>
+<div class="line">   ref.closest_point_in_s_range( qx, qy, s_begin, s_end, varargin );</div>
+<div class="line"> </div>
+<div class="line">[ icurve, x, y, s, t, iflag, dst ] = ...</div>
+<div class="line">   ref.closest_point_in_s_range( qx, qy, s_begin, s_end, varargin, &#39;ISO&#39; );</div>
+<div class="line"> </div>
+<div class="line">[ icurve, x, y, s, t, iflag, dst ] = ...</div>
+<div class="line">   ref.closest_point_in_s_range( qx, qy, s_begin, s_end, varargin, &#39;SAE&#39; );</div>
+<div class="line"> </div>
+<div class="line">res = ref.closest_point_in_s_range( qx, qy, s_begin, s_end, varargin );</div>
+<div class="line">res = ref.closest_point_in_s_range( qx, qy, s_begin, s_end, varargin, &#39;ISO&#39; );</div>
+<div class="line">res = ref.closest_point_in_s_range( qx, qy, s_begin, s_end, varargin, &#39;SAE&#39; );</div>
+<div class="line"> </div>
+<div class="line">%</div>
+<div class="line">% res is a struct with field</div>
+<div class="line">%</div>
+<div class="line">% res.icurve = number of the segment with the projected point</div>
+<div class="line">% res.x      = projected x</div>
+<div class="line">% res.y      = projected y</div>
+<div class="line">% res.s      = curvilinear coordinate of the projection</div>
+<div class="line">% res.t      = normal curvilinear coordinate (&#39;ISO&#39; or &#39;SAE&#39; convenction)</div>
+<div class="line">% res.iflag  = 1 OK -1 projection failed</div>
+<div class="line">% res.dst    = point curve distance</div>
+<div class="line">%</div>
+</div><!-- fragment --> 
+</div>
+</div>
+<a id="a8fe4b2791b86223fffbe3c60f4eb6f6d" name="a8fe4b2791b86223fffbe3c60f4eb6f6d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8fe4b2791b86223fffbe3c60f4eb6f6d">&#9670;&#160;</a></span>closestPointInRange()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">function ClothoidList::closestPointInRange </td>
+          <td>(</td>
+          <td class="paramtype">in</td>          <td class="paramname"><span class="paramname"><em>self</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">in</td>          <td class="paramname"><span class="paramname"><em>qx</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">in</td>          <td class="paramname"><span class="paramname"><em>qy</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">in</td>          <td class="paramname"><span class="paramname"><em>ibegin</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">in</td>          <td class="paramname"><span class="paramname"><em>iend</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">in</td>          <td class="paramname"><span class="paramname"><em>varargin</em></span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="deprecated"><dt><b><a class="el" href="deprecated.html#_deprecated000014">Deprecated</a></b></dt><dd>whill be removed in future version </dd></dl>
+
+</div>
+</div>
+<a id="a310ff5fdf933479ca9a6146df4bfc882" name="a310ff5fdf933479ca9a6146df4bfc882"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a310ff5fdf933479ca9a6146df4bfc882">&#9670;&#160;</a></span>closestPointInSRange()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">function ClothoidList::closestPointInSRange </td>
+          <td>(</td>
+          <td class="paramtype">in</td>          <td class="paramname"><span class="paramname"><em>self</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">in</td>          <td class="paramname"><span class="paramname"><em>qx</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">in</td>          <td class="paramname"><span class="paramname"><em>qy</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">in</td>          <td class="paramname"><span class="paramname"><em>s_begin</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">in</td>          <td class="paramname"><span class="paramname"><em>s_end</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">in</td>          <td class="paramname"><span class="paramname"><em>varargin</em></span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="deprecated"><dt><b><a class="el" href="deprecated.html#_deprecated000015">Deprecated</a></b></dt><dd>whill be removed in future version </dd></dl>
+
+</div>
+</div>
+<a id="a599ac679cb3489ea0662809d4877b661" name="a599ac679cb3489ea0662809d4877b661"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a599ac679cb3489ea0662809d4877b661">&#9670;&#160;</a></span>export()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">function ClothoidList::export </td>
+          <td>(</td>
+          <td class="paramtype">in</td>          <td class="paramname"><span class="paramname"><em>self</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Export list of clothoids</p>
+<p><b>Usage:</b></p>
+<div class="fragment"><div class="line">S = ref.export();</div>
+</div><!-- fragment --><ul>
+<li><code>S.x0</code>: vector of initial point x-coordinate</li>
+<li><code>S.y0</code>: vector of initial point y-coordinate</li>
+<li><code>S.theta0</code>: vector of initial angles</li>
+<li><code>S.kappa0</code>: vector of initial curvatures</li>
+<li><code>S.dkappa</code>: vector of curvature derivative of the segments</li>
+<li><code>S.L</code>: vector of segment length </li>
+</ul>
+
+</div>
+</div>
+<a id="aebd52d92fb9db159adffcda7a74ec600" name="aebd52d92fb9db159adffcda7a74ec600"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aebd52d92fb9db159adffcda7a74ec600">&#9670;&#160;</a></span>get()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">function ClothoidList::get </td>
+          <td>(</td>
+          <td class="paramtype">in</td>          <td class="paramname"><span class="paramname"><em>self</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">in</td>          <td class="paramname"><span class="paramname"><em>k</em></span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Get the clothoid at position <code>k</code>. The clothoid is returned as a clothoid object or the data defining the clothoid.</p>
+<div class="fragment"><div class="line">[ x0, y0, theta0, kappa0, dkappa, L ] = ref.get(k);</div>
+<div class="line">C = ref.get(k);</div>
+</div><!-- fragment --> 
+</div>
+</div>
+<a id="a417264055d0649ece9cf1f9efd67cb04" name="a417264055d0649ece9cf1f9efd67cb04"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a417264055d0649ece9cf1f9efd67cb04">&#9670;&#160;</a></span>get_STK()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">function ClothoidList::get_STK </td>
+          <td>(</td>
+          <td class="paramtype">in</td>          <td class="paramname"><span class="paramname"><em>self</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Return curvilinear coordinates, angle and curvature at node point for the clothoid list</p>
+<div class="fragment"><div class="line">[ s, theta, kappa ] = ref.get_STK();</div>
+</div><!-- fragment --><ul>
+<li><code>s</code> curvilinear coordinates nodes</li>
+<li><code>theta</code> angles at nodes</li>
+<li><code>kappa</code> curvature at nodes </li>
+</ul>
+
+</div>
+</div>
+<a id="ac1f7b9bab161e9cdcb52dab6cb84b8d1" name="ac1f7b9bab161e9cdcb52dab6cb84b8d1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac1f7b9bab161e9cdcb52dab6cb84b8d1">&#9670;&#160;</a></span>get_XY()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">function ClothoidList::get_XY </td>
+          <td>(</td>
+          <td class="paramtype">in</td>          <td class="paramname"><span class="paramname"><em>self</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Return xy-coordinates at node points for the clothoid list</p>
+<div class="fragment"><div class="line">[ x, y ] = ref.get_XY();</div>
+</div><!-- fragment --><ul>
+<li><code>x</code> x-coordinates at nodes</li>
+<li><code>y</code> y-coordinates at nodes </li>
+</ul>
+
+</div>
+</div>
+<a id="a58446348ba25413874473173106e687f" name="a58446348ba25413874473173106e687f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a58446348ba25413874473173106e687f">&#9670;&#160;</a></span>load()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">function ClothoidList::load </td>
+          <td>(</td>
+          <td class="paramtype">in</td>          <td class="paramname"><span class="paramname"><em>self</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">in</td>          <td class="paramname"><span class="paramname"><em>varargin</em></span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Load the clothoid list from a file (check consistency of the readed segments)</p>
+<p><b>Usage:</b></p>
+<div class="fragment"><div class="line">ref.load( filename );</div>
+<div class="line">ref.load( filename, tol );</div>
+</div><!-- fragment --><p><code>filename</code> : file name to be read <code>tol</code> : tolerance used to check consistency </p>
+
+</div>
+</div>
+<a id="a8f7654ed05215d88fbe7be611f192e67" name="a8f7654ed05215d88fbe7be611f192e67"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8f7654ed05215d88fbe7be611f192e67">&#9670;&#160;</a></span>numSegments()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">function ClothoidList::numSegments </td>
+          <td>(</td>
+          <td class="paramtype">in</td>          <td class="paramname"><span class="paramname"><em>self</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="deprecated"><dt><b><a class="el" href="deprecated.html#_deprecated000013">Deprecated</a></b></dt><dd>whill be removed in future version </dd></dl>
+
+</div>
+</div>
+<a id="a6a7014381c7fb6247ab71f7ee03e1fb0" name="a6a7014381c7fb6247ab71f7ee03e1fb0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6a7014381c7fb6247ab71f7ee03e1fb0">&#9670;&#160;</a></span>plot()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">function ClothoidList::plot </td>
+          <td>(</td>
+          <td class="paramtype">in</td>          <td class="paramname"><span class="paramname"><em>self</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">in</td>          <td class="paramname"><span class="paramname"><em>varargin</em></span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Plot the clothoid list</p>
+<p><b>Usage:</b></p>
+<div class="fragment"><div class="line">ref.plot();</div>
+<div class="line">ref.plot( npts );</div>
+<div class="line"> </div>
+<div class="line">fmt1 = {&#39;Color&#39;,&#39;blue&#39;,&#39;Linewidth&#39;,2}; % first arc of the biarc</div>
+<div class="line">fmt2 = {&#39;Color&#39;,&#39;red&#39;,&#39;Linewidth&#39;,2};  % second arc of the biarc</div>
+<div class="line">ref.plot( npts, fmt1, fmt2 );</div>
+</div><!-- fragment --><ul>
+<li><code>npts</code>: number of sampling points for plotting</li>
+<li><code>fmt1</code>: format of the odd clothoids</li>
+<li><code>fmt2</code>: format of the even clothoids </li>
+</ul>
+
+</div>
+</div>
+<a id="a186e486ed0c87cdf924daf9810b6daee" name="a186e486ed0c87cdf924daf9810b6daee"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a186e486ed0c87cdf924daf9810b6daee">&#9670;&#160;</a></span>plot_angle()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">function ClothoidList::plot_angle </td>
+          <td>(</td>
+          <td class="paramtype">in</td>          <td class="paramname"><span class="paramname"><em>self</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">in</td>          <td class="paramname"><span class="paramname"><em>npts</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">in</td>          <td class="paramname"><span class="paramname"><em>varargin</em></span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Plot the angle of the clothoid list</p>
+<p><b>Usage:</b></p>
+<div class="fragment"><div class="line">ref.plotAngle( npts );</div>
+<div class="line"> </div>
+<div class="line">fmt1 = {&#39;Color&#39;,&#39;blue&#39;,&#39;Linewidth&#39;,2};</div>
+<div class="line">fmt2 = {&#39;Color&#39;,&#39;red&#39;,&#39;Linewidth&#39;,2};</div>
+<div class="line">ref.plotAngle( npts, fmt1, fmt2 );</div>
+</div><!-- fragment --><ul>
+<li><code>npts</code>: number of sampling points for plotting</li>
+<li><code>fmt1</code>: format of the first arc</li>
+<li><code>fmt2</code>: format of the second arc </li>
+</ul>
+
+</div>
+</div>
+<a id="ac160b1ab185ed2357f3a4e10a4368124" name="ac160b1ab185ed2357f3a4e10a4368124"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac160b1ab185ed2357f3a4e10a4368124">&#9670;&#160;</a></span>plot_curvature()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">function ClothoidList::plot_curvature </td>
+          <td>(</td>
+          <td class="paramtype">in</td>          <td class="paramname"><span class="paramname"><em>self</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">in</td>          <td class="paramname"><span class="paramname"><em>npts</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">in</td>          <td class="paramname"><span class="paramname"><em>varargin</em></span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Plot the curvature of the clothoid list</p>
+<p><b>Usage:</b></p>
+<div class="fragment"><div class="line">ref.plotCurvature( npts );</div>
+<div class="line"> </div>
+<div class="line">fmt1 = {&#39;Color&#39;,&#39;blue&#39;,&#39;Linewidth&#39;,2};</div>
+<div class="line">fmt2 = {&#39;Color&#39;,&#39;red&#39;,&#39;Linewidth&#39;,2};</div>
+<div class="line">ref.plotCurvature( npts, fmt1, fmt2 );</div>
+</div><!-- fragment --><ul>
+<li><code>npts</code>: number of sampling points for plotting</li>
+<li><code>fmt1</code>: format of the first arc</li>
+<li><code>fmt2</code>: format of the second arc </li>
+</ul>
+
+</div>
+</div>
+<a id="aaefda80875d5a4674f61e32a425a1ab4" name="aaefda80875d5a4674f61e32a425a1ab4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aaefda80875d5a4674f61e32a425a1ab4">&#9670;&#160;</a></span>plot_normal()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">function ClothoidList::plot_normal </td>
+          <td>(</td>
+          <td class="paramtype">in</td>          <td class="paramname"><span class="paramname"><em>self</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">in</td>          <td class="paramname"><span class="paramname"><em>step</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">in</td>          <td class="paramname"><span class="paramname"><em>len</em></span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Plot the normal of the clothoid list</p>
+<p><b>Usage:</b></p>
+<div class="fragment"><div class="line">ref.plotNormal( step, len );</div>
+</div><!-- fragment --><ul>
+<li><code>step</code>: number of sampling normals</li>
+<li><code>len</code>: length of the plotted normal </li>
+</ul>
+
+</div>
+</div>
+<a id="a723bc88fa07102fa18c4d32ad03a3f29" name="a723bc88fa07102fa18c4d32ad03a3f29"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a723bc88fa07102fa18c4d32ad03a3f29">&#9670;&#160;</a></span>plot_offs()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">function ClothoidList::plot_offs </td>
+          <td>(</td>
+          <td class="paramtype">in</td>          <td class="paramname"><span class="paramname"><em>self</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">in</td>          <td class="paramname"><span class="paramname"><em>offs</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">in</td>          <td class="paramname"><span class="paramname"><em>npts</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">in</td>          <td class="paramname"><span class="paramname"><em>varargin</em></span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Plot the clothoid list with offset</p>
+<p><b>Usage:</b></p>
+<div class="fragment"><div class="line">ref.plot_offs( offs, npts );</div>
+<div class="line"> </div>
+<div class="line">fmt1 = {&#39;Color&#39;,&#39;blue&#39;,&#39;Linewidth&#39;,2}; % first arc of the biarc</div>
+<div class="line">fmt2 = {&#39;Color&#39;,&#39;red&#39;,&#39;Linewidth&#39;,2};  % second arc of the biarc</div>
+<div class="line">ref.plot_offs( offs, npts, fmt1, fmt2 );</div>
+</div><!-- fragment --><ul>
+<li><code>npts</code>: number of sampling points for plotting</li>
+<li><code>fmt1</code>: format of the first arc</li>
+<li><code>fmt2</code>: format of the second arc</li>
+<li><code>offs</code>: offset used in the plotting </li>
+</ul>
+
+</div>
+</div>
+<a id="a89bd52d16b1cb857b52e634e7be95fe4" name="a89bd52d16b1cb857b52e634e7be95fe4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a89bd52d16b1cb857b52e634e7be95fe4">&#9670;&#160;</a></span>plotAngle()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">function ClothoidList::plotAngle </td>
+          <td>(</td>
+          <td class="paramtype">in</td>          <td class="paramname"><span class="paramname"><em>self</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">in</td>          <td class="paramname"><span class="paramname"><em>npts</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">in</td>          <td class="paramname"><span class="paramname"><em>varargin</em></span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="deprecated"><dt><b><a class="el" href="deprecated.html#_deprecated000017">Deprecated</a></b></dt><dd>whill be removed in future version </dd></dl>
+
+</div>
+</div>
+<a id="ab3733fca14f33632b4f4cd8e28b1e176" name="ab3733fca14f33632b4f4cd8e28b1e176"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab3733fca14f33632b4f4cd8e28b1e176">&#9670;&#160;</a></span>plotCurvature()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">function ClothoidList::plotCurvature </td>
+          <td>(</td>
+          <td class="paramtype">in</td>          <td class="paramname"><span class="paramname"><em>self</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">in</td>          <td class="paramname"><span class="paramname"><em>npts</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">in</td>          <td class="paramname"><span class="paramname"><em>varargin</em></span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="deprecated"><dt><b><a class="el" href="deprecated.html#_deprecated000016">Deprecated</a></b></dt><dd>whill be removed in future version </dd></dl>
+
+</div>
+</div>
+<a id="a0205e28080b78060880d6030a569f632" name="a0205e28080b78060880d6030a569f632"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0205e28080b78060880d6030a569f632">&#9670;&#160;</a></span>plotNormal()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">function ClothoidList::plotNormal </td>
+          <td>(</td>
+          <td class="paramtype">in</td>          <td class="paramname"><span class="paramname"><em>self</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">in</td>          <td class="paramname"><span class="paramname"><em>step</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">in</td>          <td class="paramname"><span class="paramname"><em>len</em></span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="deprecated"><dt><b><a class="el" href="deprecated.html#_deprecated000018">Deprecated</a></b></dt><dd>whill be removed in future version </dd></dl>
+
+</div>
+</div>
+<a id="a729c5e4b4a2985e48af32d54e597c85a" name="a729c5e4b4a2985e48af32d54e597c85a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a729c5e4b4a2985e48af32d54e597c85a">&#9670;&#160;</a></span>push_back()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">function ClothoidList::push_back </td>
+          <td>(</td>
+          <td class="paramtype">in</td>          <td class="paramname"><span class="paramname"><em>self</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">in</td>          <td class="paramname"><span class="paramname"><em>varargin</em></span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Append a curve to the clothoid list</p>
+<p><b>Usage:</b></p>
+<div class="fragment"><div class="line">ref.push_back( obj ); % mode 1</div>
+<div class="line">ref.push_back( kappa0, dkappa, L ); % mode 2</div>
+<div class="line">ref.push_back( x0, y0, theta0, kappa0, dkappa, L ); % mode 3</div>
+</div><!-- fragment --><p><b>Mode 1</b></p>
+<ul>
+<li><code>obj</code> : curve to be appended can be one of<ul>
+<li><em><a class="el" href="class_line_segment.html">LineSegment</a></em></li>
+<li><em>BiArc</em></li>
+<li><em><a class="el" href="class_biarc_list.html">BiarcList</a></em></li>
+<li><em><a class="el" href="class_circle_arc.html">CircleArc</a></em></li>
+<li><em><a class="el" href="class_clothoid_curve.html">ClothoidCurve</a></em></li>
+<li><em><a class="el" href="class_clothoid_list.html">ClothoidList</a></em></li>
+<li><em><a class="el" href="class_poly_line.html">PolyLine</a></em></li>
+</ul>
+</li>
+</ul>
+<p><b>Mode 2</b></p>
+<ul>
+<li><code>kappa0</code> : initial curvature of the appended clothoid</li>
+<li><code>dkappa</code> : derivative of the curvature of the appended clothoid</li>
+<li><code>L</code> : length of the the appended clothoid</li>
+</ul>
+<p><b>Mode 3</b></p>
+<ul>
+<li><code>x0</code>, <code>y0</code> : initial position of the appended clothoid, the builded clothoid will be translated to the and of the actual clothoid list</li>
+<li><code>theta0</code> : initial curvature of the appended clothoid</li>
+<li><code>kappa0</code> : initial curvature of the appended clothoid</li>
+<li><code>dkappa</code> : derivative of the curvature of the appended clothoid</li>
+<li><code>L</code> : length of the the appended clothoid </li>
+</ul>
+
+</div>
+</div>
+<a id="abd33319f2c2ad501c9e010934df51f3f" name="abd33319f2c2ad501c9e010934df51f3f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#abd33319f2c2ad501c9e010934df51f3f">&#9670;&#160;</a></span>push_back_G1()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">function ClothoidList::push_back_G1 </td>
+          <td>(</td>
+          <td class="paramtype">in</td>          <td class="paramname"><span class="paramname"><em>self</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">in</td>          <td class="paramname"><span class="paramname"><em>varargin</em></span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Append a curve to the clothoid list</p>
+<p><b>Usage:</b></p>
+<div class="fragment"><div class="line">ref.push_back( x1,y1,theta1 ); % mode 1</div>
+<div class="line">ref.push_back( x0,y0,theta0,x1,y1,theta1); % mode 2</div>
+</div><!-- fragment --><p><b>Mode 1</b></p>
+<p>Build a clothoid arc using final point and angle of the clothoid list and</p>
+<ul>
+<li><code>x1</code>, <code>y1</code> : final point</li>
+<li><code>theta1</code> : final angle</li>
+</ul>
+<p>the builded clothoid is appended to the list</p>
+<p><b>Mode 2</b></p>
+<p>Build a clothoid arc using the data</p>
+<ul>
+<li><code>x0</code>, <code>y0</code> : initial point</li>
+<li><code>theta0</code> : initial angle</li>
+<li><code>x1</code>, <code>y1</code> : final point</li>
+<li><code>theta1</code> : final angle</li>
+</ul>
+<p>the builded clothoid is appended to the list </p>
+
+</div>
+</div>
+<a id="aabf8f4ec32867841c363eca1782beb8a" name="aabf8f4ec32867841c363eca1782beb8a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aabf8f4ec32867841c363eca1782beb8a">&#9670;&#160;</a></span>reserve()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">function ClothoidList::reserve </td>
+          <td>(</td>
+          <td class="paramtype">in</td>          <td class="paramname"><span class="paramname"><em>self</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">in</td>          <td class="paramname"><span class="paramname"><em>N</em></span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Reserve memory for <code>N</code> segments</p>
+<p><b>Usage:</b></p>
+<div class="fragment"><div class="line">ref.reserve( N );</div>
+</div><!-- fragment --> 
+</div>
+</div>
+<a id="a0814dd36d3d54091c84cffc19f118dc2" name="a0814dd36d3d54091c84cffc19f118dc2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0814dd36d3d54091c84cffc19f118dc2">&#9670;&#160;</a></span>save()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">function ClothoidList::save </td>
+          <td>(</td>
+          <td class="paramtype">in</td>          <td class="paramname"><span class="paramname"><em>self</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">in</td>          <td class="paramname"><span class="paramname"><em>fname</em></span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Save the clothoid list to a file </p>
+
+</div>
+</div>
+<a id="a30e66a1d18abe347110c8e42200dad7f" name="a30e66a1d18abe347110c8e42200dad7f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a30e66a1d18abe347110c8e42200dad7f">&#9670;&#160;</a></span>save_clothoids()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">function ClothoidList::save_clothoids </td>
+          <td>(</td>
+          <td class="paramtype">in</td>          <td class="paramname"><span class="paramname"><em>self</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">in</td>          <td class="paramname"><span class="paramname"><em>filename</em></span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Save the clothoid list sampled on a file</p>
+<p><b>Usage:</b></p>
+<div class="fragment"><div class="line">ref.saveSampled( filename, ds );</div>
+</div><!-- fragment --><ul>
+<li><code>filename</code>: file name</li>
+<li><code>ds</code>: sample point every <code>ds</code></li>
+</ul>
+<p>the file is of the form .. code-block:: text</p>
+<p>X Y THETA 0 0 1.2 ... ...</p>
+<div class="fragment"><div class="line">        */</div>
+<div class="line"><span class="keyword">public</span>:</div>
+<div class="line">     function save_sampled(in  self,in  filename,in  ds );</div>
+<div class="line"> </div>
+<div class="line"> </div>
+<div class="line"> </div>
+<div class="line"> </div>
+<div class="line"> </div>
+<div class="line"> </div>
+<div class="line"> </div>
+<div class="line"> </div>
+<div class="line"> </div>
+<div class="line"> </div>
+<div class="line"> </div>
+<div class="line"> </div>
+<div class="line"><span class="keyword">public</span>:</div>
+<div class="line">     function saveSampled(in  self,in  filename,in  ds );</div>
+<div class="line"> </div>
+<div class="line"> </div>
+<div class="line"> </div>
+</div><!-- fragment --><p> {matlab}</p>
+<p>ref.saveClothoids( filename, ds );</p>
+<div class="fragment"><div class="line">- `filename`: file name</div>
+<div class="line">- `ds`:       sample point every `ds`</div>
+<div class="line"> </div>
+<div class="line">the file is of the form</div>
+<div class="line">.. code-block:: text</div>
+<div class="line"> </div>
+<div class="line">  x0 y0 theta0 kappa0 dk  L</div>
+<div class="line">  0  0  1.2    0.0    0.1 2</div>
+<div class="line">  ...</div>
+<div class="line">  ...</div>
+</div><!-- fragment --> 
+</div>
+</div>
+<a id="aa2103f4bb4b0bdd1841f0dd648b0affb" name="aa2103f4bb4b0bdd1841f0dd648b0affb"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa2103f4bb4b0bdd1841f0dd648b0affb">&#9670;&#160;</a></span>saveClothoids()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">function ClothoidList::saveClothoids </td>
+          <td>(</td>
+          <td class="paramtype">in</td>          <td class="paramname"><span class="paramname"><em>self</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">in</td>          <td class="paramname"><span class="paramname"><em>filename</em></span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="deprecated"><dt><b><a class="el" href="deprecated.html#_deprecated000019">Deprecated</a></b></dt><dd>whill be removed in future version </dd></dl>
+
+</div>
+</div>
+<hr/>The documentation for this class was generated from the following file:<ul>
+<li>/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/toolbox/lib/<b>ClothoidList.m</b></li>
+</ul>
+</div><!-- contents -->
+<!-- start footer part -->
+<hr class="footer"/><address class="footer"><small>
+Generated by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.12.0
+</small></address>
+</div><!-- doc-content -->
+</body>
+</html>
+</div>
+</section>
+
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p></p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

@@ -39,8 +39,8 @@ namespace G2lib {
     friend class CircleArc;
     friend class PolyLine;
 
-    real_type m_x0{0};     //!< initial x coordinate of the line
-    real_type m_y0{0};     //!< initial y coordinate of the line
+    real_type m_x0{0};     //!< initial \f$x\f$-coordinate of the line
+    real_type m_y0{0};     //!< initial \f$y\f$-coordinate of the line
     real_type m_theta0{0}; //!< angle of the line
 
     real_type m_c0{1};     //!< `cos(theta0)`
@@ -439,10 +439,10 @@ namespace G2lib {
     //!
     //! Compute the point at minimum distance from a point `[x,y]` and the line segment
     //!
-    //! \param[in]  qx  x-coordinate
-    //! \param[in]  qy  y-coordinate
-    //! \param[out] x   x-coordinate of the closest point
-    //! \param[out] y   y-coordinate of the closest point
+    //! \param[in]  qx  \f$x\f$-coordinate
+    //! \param[in]  qy  \f$y\f$-coordinate
+    //! \param[out] x   \f$x\f$-coordinate of the closest point
+    //! \param[out] y   \f$y\f$-coordinate of the closest point
     //! \param[out] s   param of the closest point
     //! \param[out] t   signed distance if projection is orthogonal to segment
     //! \param[out] dst signed distance from the segment
@@ -631,11 +631,11 @@ namespace G2lib {
     paramNURBS( integer & n_knots, integer & n_pnts ) const;
 
     void
-    toNURBS( real_type * knots, real_type Poly[][3] ) const;
+    toNURBS( real_type knots[], real_type Poly[][3] ) const;
 
     virtual
     void
-    toBS( real_type * knots, real_type Poly[][2] ) const;
+    toBS( real_type knots[], real_type Poly[][2] ) const;
 
     friend class ClothoidCurve;
 

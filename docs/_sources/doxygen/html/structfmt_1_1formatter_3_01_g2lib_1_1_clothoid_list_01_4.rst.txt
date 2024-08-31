@@ -1,0 +1,14 @@
+.. meta::5dd1d9357fc9700894e6e566a5359969158651f20ef6d33a8598caee14ed1fe16e6aeada7860102cfd00948d88c51ce6d90264383d7a31a12426b4b626dbd2b2
+
+:orphan:
+
+.. title:: Clothoids: fmt::formatter&lt; G2lib::ClothoidList &gt; Struct Reference
+
+ClothoidList &gt; Struct Reference
+==================================
+
+.. container:: doxygen-content
+
+   
+   .. raw:: html
+     :file: structfmt_1_1formatter_3_01_g2lib_1_1_clothoid_list_01_4.html

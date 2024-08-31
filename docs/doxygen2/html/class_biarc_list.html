@@ -1,0 +1,1014 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Clothoids: BiarcList Class Reference &mdash; Clothoids</title>
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=19f00094" />
+      <link rel="stylesheet" type="text/css" href="../../_static/graphviz.css?v=fd3f3429" />
+      <link rel="stylesheet" type="text/css" href="../../_static/plot_directive.css?v=7f9a90b1" />
+      <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
+      <link rel="stylesheet" type="text/css" href="../../_static/sphinx-design.min.css?v=95c83b7e" />
+      <link rel="stylesheet" type="text/css" href="../../_static/sphinx-data-viewer/jsonview.bundle.css?v=f6ef2277" />
+      <link rel="stylesheet" type="text/css" href="../../_static/sphinx-needs/libs/html/datatables.min.css?v=4b4fd840" />
+      <link rel="stylesheet" type="text/css" href="../../_static/sphinx-needs/common_css/need_style.css?v=678fb11e" />
+      <link rel="stylesheet" type="text/css" href="../../_static/sphinx-needs/common_css/need_core.css?v=f5b60a78" />
+      <link rel="stylesheet" type="text/css" href="../../_static/sphinx-needs/common_css/needstable.css?v=5e1b6797" />
+      <link rel="stylesheet" type="text/css" href="../../_static/sphinx-needs/common_css/need_links.css?v=2150a916" />
+      <link rel="stylesheet" type="text/css" href="../../_static/sphinx-needs/common_css/need_toggle.css?v=5c6620df" />
+      <link rel="stylesheet" type="text/css" href="../../_static/sphinx-needs/modern.css?v=803738c0" />
+      <link rel="stylesheet" type="text/css" href="../../_static/sphinx-rtd-theme-custom.css?v=76d57d84" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../../_static/documentation_options.js?v=60dbed4a"></script>
+        <script src="../../_static/doctools.js?v=9a2dae69"></script>
+        <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+        <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
+        <script src="../../_static/copybutton.js?v=f281be69"></script>
+        <script src="../../_static/design-tabs.js?v=f930bc37"></script>
+        <script src="../../_static/sphinx-data-viewer/jsonview.bundle.js?v=18cd53c5"></script>
+        <script src="../../_static/sphinx-data-viewer/jsonview_loader.js?v=f7ff7e7d"></script>
+        <script src="../../_static/sphinx-needs/libs/html/datatables.min.js?v=8a4aee21"></script>
+        <script src="../../_static/sphinx-needs/libs/html/datatables_loader.js?v=a2cae175"></script>
+        <script src="../../_static/sphinx-needs/libs/html/sphinx_needs_collapse.js?v=dca66431"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            Clothoids
+              <img src="../../_static/logo.png" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                2.0.13
+
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../README.html">Clothoids</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../index_CPP.html">Clothoids C++ interface</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../doxygen/html/namespaces_namespaces.html">Namespaces</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../doxygen/html/namespaces.html">Namespace List</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../doxygen/html/namespacemembers_namespace_members.html">Namespace Members</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../doxygen/html/namespacemembers.html">All</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../doxygen/html/namespacemembers_func.html">Functions</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../doxygen/html/namespacemembers_type.html">Typedefs</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../doxygen/html/annotated_classes.html">Classes</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../doxygen/html/annotated.html">Class List</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../doxygen/html/classes.html">Class Index</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../doxygen/html/hierarchy.html">Class Hierarchy</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../doxygen/html/functions_class_members.html">Class Members</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../doxygen/html/functions_all.html">All</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../doxygen/html/functions_func_functions.html">Functions</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../doxygen/html/functions_type.html">Typedefs</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../doxygen/html/functions_rela.html">Related Symbols</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../doxygen/html/files.html">Files</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../index_MATLAB.html">Clothoids MATLAB interface</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="annotated_classes.html">Classes</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="annotated.html">Class List</a></li>
+<li class="toctree-l3"><a class="reference internal" href="classes.html">Class Index</a></li>
+<li class="toctree-l3"><a class="reference internal" href="hierarchy.html">Class Hierarchy</a></li>
+<li class="toctree-l3"><a class="reference internal" href="functions_class_members.html">Class Members</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="functions.html">All</a></li>
+<li class="toctree-l4"><a class="reference internal" href="functions_func.html">Functions</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="functions_func.html">Functions</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../LICENSE.html">LICENSE</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">Clothoids</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Clothoids: BiarcList Class Reference</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../_sources/doxygen2/html/class_biarc_list.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="biarclist-class-reference">
+<h1>BiarcList Class Reference<a class="headerlink" href="#biarclist-class-reference" title="Link to this heading"></a></h1>
+<div class="doxygen-content docutils container">
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en-US">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=11"/>
+<meta name="generator" content="Doxygen 1.12.0"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Clothoids: BiarcList Class Reference</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<script type="text/javascript" src="clipboard.js"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="resize.js"></script>
+<script type="text/javascript">
+window.MathJax = {
+  options: {
+    ignoreHtmlClass: 'tex2jax_ignore',
+    processHtmlClass: 'tex2jax_process'
+  }
+};
+</script>
+<script type="text/javascript" id="MathJax-script" async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+<link href="doxygen-awesome.css" rel="stylesheet" type="text/css"/>
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr id="projectrow">
+  <td id="projectalign">
+   <div id="projectname">Clothoids
+   </div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Generated by Doxygen 1.12.0 -->
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(function() { codefold.init(0); });
+/* @license-end */
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(function() {
+  initMenu('',false,false,'search.php','Search',false);
+});
+/* @license-end */
+</script>
+<div id="main-nav"></div>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(function(){ initResizable(false); });
+/* @license-end */
+</script>
+</div><!-- top -->
+<div id="doc-content">
+<div class="header">
+  <div class="summary">
+<a href="#pub-methods">Public Member Functions</a> &#124;
+<a href="class_biarc_list-members.html">List of all members</a>  </div>
+  <div class="headertitle"><div class="title">BiarcList Class Reference</div></div>
+</div><!--header-->
+<div class="contents">
+<div class="dynheader">
+Inheritance diagram for BiarcList:</div>
+<div class="dyncontent">
+ <div class="center">
+  <img src="class_biarc_list.png" usemap="#BiarcList_map" alt=""/>
+  <map id="BiarcList_map" name="BiarcList_map">
+<area href="class_curve_base.html" alt="CurveBase" shape="rect" coords="0,56,142,80"/>
+  </map>
+</div></div>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
+Public Member Functions</h2></td></tr>
+<tr class="memitem:aa4f0742fb4b93cbb45d622ab4ac5491f" id="r_aa4f0742fb4b93cbb45d622ab4ac5491f"><td class="memItemLeft" align="right" valign="top">function&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aa4f0742fb4b93cbb45d622ab4ac5491f">BiarcList</a> ()</td></tr>
+<tr class="separator:aa4f0742fb4b93cbb45d622ab4ac5491f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab7de7ca31f952d4f4017cd943a82a020" id="r_ab7de7ca31f952d4f4017cd943a82a020"><td class="memItemLeft" align="right" valign="top">function&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ab7de7ca31f952d4f4017cd943a82a020">reserve</a> (in self, in N)</td></tr>
+<tr class="separator:ab7de7ca31f952d4f4017cd943a82a020"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6e4fa8e39a8273cbdc4a8ab34de6b663" id="r_a6e4fa8e39a8273cbdc4a8ab34de6b663"><td class="memItemLeft" align="right" valign="top">function&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a6e4fa8e39a8273cbdc4a8ab34de6b663">push_back</a> (in self, in varargin)</td></tr>
+<tr class="separator:a6e4fa8e39a8273cbdc4a8ab34de6b663"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a64ebb0723c4823596e74e669c48ad5d1" id="r_a64ebb0723c4823596e74e669c48ad5d1"><td class="memItemLeft" align="right" valign="top">function&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a64ebb0723c4823596e74e669c48ad5d1">get</a> (in self, in k)</td></tr>
+<tr class="separator:a64ebb0723c4823596e74e669c48ad5d1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a63f9f613dd40fec0e794c7ac3b7d3a41" id="r_a63f9f613dd40fec0e794c7ac3b7d3a41"><td class="memItemLeft" align="right" valign="top">function&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a63f9f613dd40fec0e794c7ac3b7d3a41">append</a> (in self, in lst)</td></tr>
+<tr class="separator:a63f9f613dd40fec0e794c7ac3b7d3a41"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a35aab5f0fad398baaad8d1f29c270aa0" id="r_a35aab5f0fad398baaad8d1f29c270aa0"><td class="memItemLeft" align="right" valign="top">function&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a35aab5f0fad398baaad8d1f29c270aa0">get_XY</a> (in self)</td></tr>
+<tr class="separator:a35aab5f0fad398baaad8d1f29c270aa0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a60005999eaeba719ec67a74dd7ee6af5" id="r_a60005999eaeba719ec67a74dd7ee6af5"><td class="memItemLeft" align="right" valign="top">function&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a60005999eaeba719ec67a74dd7ee6af5">num_segments</a> (in self)</td></tr>
+<tr class="separator:a60005999eaeba719ec67a74dd7ee6af5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1b7232bbb1db9b70e120c9b3099c1e52" id="r_a1b7232bbb1db9b70e120c9b3099c1e52"><td class="memItemLeft" align="right" valign="top">function&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a1b7232bbb1db9b70e120c9b3099c1e52">numSegments</a> (in self)</td></tr>
+<tr class="separator:a1b7232bbb1db9b70e120c9b3099c1e52"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7c78200c3421de1d408e240545d1881a" id="r_a7c78200c3421de1d408e240545d1881a"><td class="memItemLeft" align="right" valign="top">function&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a7c78200c3421de1d408e240545d1881a">build_G1</a> (in self, in varargin)</td></tr>
+<tr class="separator:a7c78200c3421de1d408e240545d1881a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9762e4999fafdd6a145bef46b2afc34c" id="r_a9762e4999fafdd6a145bef46b2afc34c"><td class="memItemLeft" align="right" valign="top">function&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a9762e4999fafdd6a145bef46b2afc34c">build_theta</a> (in self, in x, in y)</td></tr>
+<tr class="separator:a9762e4999fafdd6a145bef46b2afc34c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa49d67b6fa0bbc86f36ccd9c032711da" id="r_aa49d67b6fa0bbc86f36ccd9c032711da"><td class="memItemLeft" align="right" valign="top"><a id="aa49d67b6fa0bbc86f36ccd9c032711da" name="aa49d67b6fa0bbc86f36ccd9c032711da"></a>
+function&#160;</td><td class="memItemRight" valign="bottom"><b>info</b> (in self)</td></tr>
+<tr class="separator:aa49d67b6fa0bbc86f36ccd9c032711da"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1b209837c213f1a19f2d2cfeb103fc93" id="r_a1b209837c213f1a19f2d2cfeb103fc93"><td class="memItemLeft" align="right" valign="top">function&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a1b209837c213f1a19f2d2cfeb103fc93">find_coord1</a> (in self, in x, in y)</td></tr>
+<tr class="separator:a1b209837c213f1a19f2d2cfeb103fc93"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac72e07636519a34f67bd64f650d47196" id="r_ac72e07636519a34f67bd64f650d47196"><td class="memItemLeft" align="right" valign="top">function&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ac72e07636519a34f67bd64f650d47196">plot</a> (in self, in varargin)</td></tr>
+<tr class="separator:ac72e07636519a34f67bd64f650d47196"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4c81ca926b263e337928bbefb263d168" id="r_a4c81ca926b263e337928bbefb263d168"><td class="memItemLeft" align="right" valign="top">function&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a4c81ca926b263e337928bbefb263d168">plot_offs</a> (in self, in offs, in npts, in varargin)</td></tr>
+<tr class="separator:a4c81ca926b263e337928bbefb263d168"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3719967f2662a3f2a8e4f51aaba1738c" id="r_a3719967f2662a3f2a8e4f51aaba1738c"><td class="memItemLeft" align="right" valign="top">function&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a3719967f2662a3f2a8e4f51aaba1738c">plot_curvature</a> (in self, in npts, in varargin)</td></tr>
+<tr class="separator:a3719967f2662a3f2a8e4f51aaba1738c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab93c4226914e21d4ae12a182218e6cfe" id="r_ab93c4226914e21d4ae12a182218e6cfe"><td class="memItemLeft" align="right" valign="top">function&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ab93c4226914e21d4ae12a182218e6cfe">plotCurvature</a> (in self, in npts, in varargin)</td></tr>
+<tr class="separator:ab93c4226914e21d4ae12a182218e6cfe"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3960a25bf735238c299d9e32f1f0c6cc" id="r_a3960a25bf735238c299d9e32f1f0c6cc"><td class="memItemLeft" align="right" valign="top">function&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a3960a25bf735238c299d9e32f1f0c6cc">plot_angle</a> (in self, in npts, in varargin)</td></tr>
+<tr class="separator:a3960a25bf735238c299d9e32f1f0c6cc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a047820499d4fa56f278aee63a26e1cec" id="r_a047820499d4fa56f278aee63a26e1cec"><td class="memItemLeft" align="right" valign="top">function&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a047820499d4fa56f278aee63a26e1cec">plotAngle</a> (in self, in npts, in varargin)</td></tr>
+<tr class="separator:a047820499d4fa56f278aee63a26e1cec"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae41db5d788f060b8470430487bffbd82" id="r_ae41db5d788f060b8470430487bffbd82"><td class="memItemLeft" align="right" valign="top">function&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ae41db5d788f060b8470430487bffbd82">plotNormal</a> (in self, in step, in len)</td></tr>
+<tr class="separator:ae41db5d788f060b8470430487bffbd82"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae41db5d788f060b8470430487bffbd82" id="r_ae41db5d788f060b8470430487bffbd82"><td class="memItemLeft" align="right" valign="top">function&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ae41db5d788f060b8470430487bffbd82">plotNormal</a> (in self, in step, in len)</td></tr>
+<tr class="separator:ae41db5d788f060b8470430487bffbd82"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="inherit_header pub_methods_class_curve_base"><td colspan="2" onclick="javascript:dynsection.toggleInherit('pub_methods_class_curve_base')"><img src="closed.png" alt="-"/>&#160;Public Member Functions inherited from <a class="el" href="class_curve_base.html">CurveBase</a></td></tr>
+<tr class="memitem:a614718cf53a44366cd5ecac81f4b1dad inherit pub_methods_class_curve_base" id="r_a614718cf53a44366cd5ecac81f4b1dad"><td class="memItemLeft" align="right" valign="top">
+function&#160;</td><td class="memItemRight" valign="bottom"><b>CurveBase</b> (in mexName, in objectType)</td></tr>
+<tr class="separator:a614718cf53a44366cd5ecac81f4b1dad inherit pub_methods_class_curve_base"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1453250354e19f9d9fe16a0deef75c18 inherit pub_methods_class_curve_base" id="r_a1453250354e19f9d9fe16a0deef75c18"><td class="memItemLeft" align="right" valign="top">function&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_curve_base.html#a1453250354e19f9d9fe16a0deef75c18">obj_handle</a> (in self)</td></tr>
+<tr class="separator:a1453250354e19f9d9fe16a0deef75c18 inherit pub_methods_class_curve_base"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad5d2a5c0f8086f3723a8cff7ff2d75d0 inherit pub_methods_class_curve_base" id="r_ad5d2a5c0f8086f3723a8cff7ff2d75d0"><td class="memItemLeft" align="right" valign="top">
+function&#160;</td><td class="memItemRight" valign="bottom"><b>is_type</b> (in self)</td></tr>
+<tr class="separator:ad5d2a5c0f8086f3723a8cff7ff2d75d0 inherit pub_methods_class_curve_base"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa52f163db1cc07702c33b058de62ccbe inherit pub_methods_class_curve_base" id="r_aa52f163db1cc07702c33b058de62ccbe"><td class="memItemLeft" align="right" valign="top">
+function&#160;</td><td class="memItemRight" valign="bottom"><b>load</b> (in self, in OBJ)</td></tr>
+<tr class="separator:aa52f163db1cc07702c33b058de62ccbe inherit pub_methods_class_curve_base"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afb7d6a660cd3a44e2876b1cc1f976f12 inherit pub_methods_class_curve_base" id="r_afb7d6a660cd3a44e2876b1cc1f976f12"><td class="memItemLeft" align="right" valign="top">function&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_curve_base.html#afb7d6a660cd3a44e2876b1cc1f976f12">bbox</a> (in self, in varargin)</td></tr>
+<tr class="separator:afb7d6a660cd3a44e2876b1cc1f976f12 inherit pub_methods_class_curve_base"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a72fc0cdd9c31f5ffb583146fbe203dcf inherit pub_methods_class_curve_base" id="r_a72fc0cdd9c31f5ffb583146fbe203dcf"><td class="memItemLeft" align="right" valign="top">function&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_curve_base.html#a72fc0cdd9c31f5ffb583146fbe203dcf">translate</a> (in self, in tx, in ty)</td></tr>
+<tr class="separator:a72fc0cdd9c31f5ffb583146fbe203dcf inherit pub_methods_class_curve_base"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a89c01df85b041077157d9bfe5743ea0a inherit pub_methods_class_curve_base" id="r_a89c01df85b041077157d9bfe5743ea0a"><td class="memItemLeft" align="right" valign="top">function&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_curve_base.html#a89c01df85b041077157d9bfe5743ea0a">trim</a> (in self, in smin, in smax)</td></tr>
+<tr class="separator:a89c01df85b041077157d9bfe5743ea0a inherit pub_methods_class_curve_base"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a524a9c870aef837dfd9009a93fdfbf2a inherit pub_methods_class_curve_base" id="r_a524a9c870aef837dfd9009a93fdfbf2a"><td class="memItemLeft" align="right" valign="top">function&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_curve_base.html#a524a9c870aef837dfd9009a93fdfbf2a">rotate</a> (in self, in angle, in cx, in cy)</td></tr>
+<tr class="separator:a524a9c870aef837dfd9009a93fdfbf2a inherit pub_methods_class_curve_base"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abb94c933007695f005928d0dcac14cdf inherit pub_methods_class_curve_base" id="r_abb94c933007695f005928d0dcac14cdf"><td class="memItemLeft" align="right" valign="top">function&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_curve_base.html#abb94c933007695f005928d0dcac14cdf">reverse</a> (in self)</td></tr>
+<tr class="separator:abb94c933007695f005928d0dcac14cdf inherit pub_methods_class_curve_base"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a543e2da6d394c97adf496a2046e7d402 inherit pub_methods_class_curve_base" id="r_a543e2da6d394c97adf496a2046e7d402"><td class="memItemLeft" align="right" valign="top">function&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_curve_base.html#a543e2da6d394c97adf496a2046e7d402">scale</a> (in self, in sc)</td></tr>
+<tr class="separator:a543e2da6d394c97adf496a2046e7d402 inherit pub_methods_class_curve_base"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af4636cee4a04dfe442584b712c06ea3c inherit pub_methods_class_curve_base" id="r_af4636cee4a04dfe442584b712c06ea3c"><td class="memItemLeft" align="right" valign="top">function&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_curve_base.html#af4636cee4a04dfe442584b712c06ea3c">change_origin</a> (in self, in newX0, in newY0)</td></tr>
+<tr class="separator:af4636cee4a04dfe442584b712c06ea3c inherit pub_methods_class_curve_base"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0a0012fd549eb2653f43e2c03839ecec inherit pub_methods_class_curve_base" id="r_a0a0012fd549eb2653f43e2c03839ecec"><td class="memItemLeft" align="right" valign="top">function&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_curve_base.html#a0a0012fd549eb2653f43e2c03839ecec">changeOrigin</a> (in self, in newX0, in newY0)</td></tr>
+<tr class="separator:a0a0012fd549eb2653f43e2c03839ecec inherit pub_methods_class_curve_base"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a288e0542951a0688cf986ab5a77f3909 inherit pub_methods_class_curve_base" id="r_a288e0542951a0688cf986ab5a77f3909"><td class="memItemLeft" align="right" valign="top">function&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_curve_base.html#a288e0542951a0688cf986ab5a77f3909">evaluate</a> (in self, in s, in varargin)</td></tr>
+<tr class="separator:a288e0542951a0688cf986ab5a77f3909 inherit pub_methods_class_curve_base"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ace84ba94906e2f8cb6ccbff57cb40c83 inherit pub_methods_class_curve_base" id="r_ace84ba94906e2f8cb6ccbff57cb40c83"><td class="memItemLeft" align="right" valign="top">function&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_curve_base.html#ace84ba94906e2f8cb6ccbff57cb40c83">eval</a> (in self, in varargin)</td></tr>
+<tr class="separator:ace84ba94906e2f8cb6ccbff57cb40c83 inherit pub_methods_class_curve_base"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a988c5660ecb7806775fe0a8df9213d47 inherit pub_methods_class_curve_base" id="r_a988c5660ecb7806775fe0a8df9213d47"><td class="memItemLeft" align="right" valign="top">function&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_curve_base.html#a988c5660ecb7806775fe0a8df9213d47">eval_D</a> (in self, in varargin)</td></tr>
+<tr class="separator:a988c5660ecb7806775fe0a8df9213d47 inherit pub_methods_class_curve_base"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a09e63f53bc95899d7529a924dd16f427 inherit pub_methods_class_curve_base" id="r_a09e63f53bc95899d7529a924dd16f427"><td class="memItemLeft" align="right" valign="top">function&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_curve_base.html#a09e63f53bc95899d7529a924dd16f427">eval_DD</a> (in self, in varargin)</td></tr>
+<tr class="separator:a09e63f53bc95899d7529a924dd16f427 inherit pub_methods_class_curve_base"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a97c153ccdd0fbd09cb405c6f53ed939e inherit pub_methods_class_curve_base" id="r_a97c153ccdd0fbd09cb405c6f53ed939e"><td class="memItemLeft" align="right" valign="top">function&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_curve_base.html#a97c153ccdd0fbd09cb405c6f53ed939e">eval_DDD</a> (in self, in varargin)</td></tr>
+<tr class="separator:a97c153ccdd0fbd09cb405c6f53ed939e inherit pub_methods_class_curve_base"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2737beff5b4fa9653f7015ffd1cd37a8 inherit pub_methods_class_curve_base" id="r_a2737beff5b4fa9653f7015ffd1cd37a8"><td class="memItemLeft" align="right" valign="top">function&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_curve_base.html#a2737beff5b4fa9653f7015ffd1cd37a8">theta</a> (in self, in s)</td></tr>
+<tr class="separator:a2737beff5b4fa9653f7015ffd1cd37a8 inherit pub_methods_class_curve_base"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a45af03eef0ae38e7f39a2bbe2a53150a inherit pub_methods_class_curve_base" id="r_a45af03eef0ae38e7f39a2bbe2a53150a"><td class="memItemLeft" align="right" valign="top">function&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_curve_base.html#a45af03eef0ae38e7f39a2bbe2a53150a">theta_D</a> (in self, in s)</td></tr>
+<tr class="separator:a45af03eef0ae38e7f39a2bbe2a53150a inherit pub_methods_class_curve_base"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a63b753018b8ccffd2b1c2378770f8a0d inherit pub_methods_class_curve_base" id="r_a63b753018b8ccffd2b1c2378770f8a0d"><td class="memItemLeft" align="right" valign="top">function&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_curve_base.html#a63b753018b8ccffd2b1c2378770f8a0d">theta_DD</a> (in self, in s)</td></tr>
+<tr class="separator:a63b753018b8ccffd2b1c2378770f8a0d inherit pub_methods_class_curve_base"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1543fbc2744e6798776f1bfc92efc891 inherit pub_methods_class_curve_base" id="r_a1543fbc2744e6798776f1bfc92efc891"><td class="memItemLeft" align="right" valign="top">function&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_curve_base.html#a1543fbc2744e6798776f1bfc92efc891">theta_DDD</a> (in self, in s)</td></tr>
+<tr class="separator:a1543fbc2744e6798776f1bfc92efc891 inherit pub_methods_class_curve_base"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af9299e0a4f6ba27785c2ea28f4e2e8cf inherit pub_methods_class_curve_base" id="r_af9299e0a4f6ba27785c2ea28f4e2e8cf"><td class="memItemLeft" align="right" valign="top">function&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_curve_base.html#af9299e0a4f6ba27785c2ea28f4e2e8cf">kappa</a> (in self, in s)</td></tr>
+<tr class="separator:af9299e0a4f6ba27785c2ea28f4e2e8cf inherit pub_methods_class_curve_base"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a85489b8d48a85e621ea3b22506a1e859 inherit pub_methods_class_curve_base" id="r_a85489b8d48a85e621ea3b22506a1e859"><td class="memItemLeft" align="right" valign="top">function&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_curve_base.html#a85489b8d48a85e621ea3b22506a1e859">kappa_D</a> (in self, in s)</td></tr>
+<tr class="separator:a85489b8d48a85e621ea3b22506a1e859 inherit pub_methods_class_curve_base"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acc8104f92805d378e8b2306ba54064b5 inherit pub_methods_class_curve_base" id="r_acc8104f92805d378e8b2306ba54064b5"><td class="memItemLeft" align="right" valign="top">function&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_curve_base.html#acc8104f92805d378e8b2306ba54064b5">kappa_DD</a> (in self, in s)</td></tr>
+<tr class="separator:acc8104f92805d378e8b2306ba54064b5 inherit pub_methods_class_curve_base"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3df1c2fe86bb5b0dbb00f3f936f1dd16 inherit pub_methods_class_curve_base" id="r_a3df1c2fe86bb5b0dbb00f3f936f1dd16"><td class="memItemLeft" align="right" valign="top">function&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_curve_base.html#a3df1c2fe86bb5b0dbb00f3f936f1dd16">xy_begin</a> (in self)</td></tr>
+<tr class="separator:a3df1c2fe86bb5b0dbb00f3f936f1dd16 inherit pub_methods_class_curve_base"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7472254e4d4d33895efb42af712e79ff inherit pub_methods_class_curve_base" id="r_a7472254e4d4d33895efb42af712e79ff"><td class="memItemLeft" align="right" valign="top">function&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_curve_base.html#a7472254e4d4d33895efb42af712e79ff">xyBegin</a> (in self)</td></tr>
+<tr class="separator:a7472254e4d4d33895efb42af712e79ff inherit pub_methods_class_curve_base"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a41800e02380ba67944e355332a6c6e7c inherit pub_methods_class_curve_base" id="r_a41800e02380ba67944e355332a6c6e7c"><td class="memItemLeft" align="right" valign="top">function&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_curve_base.html#a41800e02380ba67944e355332a6c6e7c">xy_end</a> (in self)</td></tr>
+<tr class="separator:a41800e02380ba67944e355332a6c6e7c inherit pub_methods_class_curve_base"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aad64122209f71187d9710b1e03ba9e08 inherit pub_methods_class_curve_base" id="r_aad64122209f71187d9710b1e03ba9e08"><td class="memItemLeft" align="right" valign="top">function&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_curve_base.html#aad64122209f71187d9710b1e03ba9e08">xyEnd</a> (in self)</td></tr>
+<tr class="separator:aad64122209f71187d9710b1e03ba9e08 inherit pub_methods_class_curve_base"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad7e53299494450d82386443d06143cf0 inherit pub_methods_class_curve_base" id="r_ad7e53299494450d82386443d06143cf0"><td class="memItemLeft" align="right" valign="top">function&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_curve_base.html#ad7e53299494450d82386443d06143cf0">x_begin</a> (in self)</td></tr>
+<tr class="separator:ad7e53299494450d82386443d06143cf0 inherit pub_methods_class_curve_base"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af0112d88f91a2ce47de67aade29c7785 inherit pub_methods_class_curve_base" id="r_af0112d88f91a2ce47de67aade29c7785"><td class="memItemLeft" align="right" valign="top">function&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_curve_base.html#af0112d88f91a2ce47de67aade29c7785">xBegin</a> (in self)</td></tr>
+<tr class="separator:af0112d88f91a2ce47de67aade29c7785 inherit pub_methods_class_curve_base"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1d58d7c231a6450f124cfe1ddbbdb271 inherit pub_methods_class_curve_base" id="r_a1d58d7c231a6450f124cfe1ddbbdb271"><td class="memItemLeft" align="right" valign="top">function&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_curve_base.html#a1d58d7c231a6450f124cfe1ddbbdb271">x_end</a> (in self)</td></tr>
+<tr class="separator:a1d58d7c231a6450f124cfe1ddbbdb271 inherit pub_methods_class_curve_base"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a920ba7285e158c3448daccfd2cdc2bcc inherit pub_methods_class_curve_base" id="r_a920ba7285e158c3448daccfd2cdc2bcc"><td class="memItemLeft" align="right" valign="top">function&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_curve_base.html#a920ba7285e158c3448daccfd2cdc2bcc">xEnd</a> (in self)</td></tr>
+<tr class="separator:a920ba7285e158c3448daccfd2cdc2bcc inherit pub_methods_class_curve_base"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a686ac3c3a94f202effdea69f65c0a0f9 inherit pub_methods_class_curve_base" id="r_a686ac3c3a94f202effdea69f65c0a0f9"><td class="memItemLeft" align="right" valign="top">function&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_curve_base.html#a686ac3c3a94f202effdea69f65c0a0f9">y_begin</a> (in self)</td></tr>
+<tr class="separator:a686ac3c3a94f202effdea69f65c0a0f9 inherit pub_methods_class_curve_base"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af30cb9956277fcd8c9beb91c06f667d5 inherit pub_methods_class_curve_base" id="r_af30cb9956277fcd8c9beb91c06f667d5"><td class="memItemLeft" align="right" valign="top">function&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_curve_base.html#af30cb9956277fcd8c9beb91c06f667d5">yBegin</a> (in self)</td></tr>
+<tr class="separator:af30cb9956277fcd8c9beb91c06f667d5 inherit pub_methods_class_curve_base"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a48cb85bde2f451f042e84615316ca535 inherit pub_methods_class_curve_base" id="r_a48cb85bde2f451f042e84615316ca535"><td class="memItemLeft" align="right" valign="top">function&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_curve_base.html#a48cb85bde2f451f042e84615316ca535">y_end</a> (in self)</td></tr>
+<tr class="separator:a48cb85bde2f451f042e84615316ca535 inherit pub_methods_class_curve_base"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae3fab8b50b2af4b2dfd4d7f6770c5df3 inherit pub_methods_class_curve_base" id="r_ae3fab8b50b2af4b2dfd4d7f6770c5df3"><td class="memItemLeft" align="right" valign="top">function&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_curve_base.html#ae3fab8b50b2af4b2dfd4d7f6770c5df3">yEnd</a> (in self)</td></tr>
+<tr class="separator:ae3fab8b50b2af4b2dfd4d7f6770c5df3 inherit pub_methods_class_curve_base"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a28daf669859d3cb467bea34a07d5bb95 inherit pub_methods_class_curve_base" id="r_a28daf669859d3cb467bea34a07d5bb95"><td class="memItemLeft" align="right" valign="top">function&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_curve_base.html#a28daf669859d3cb467bea34a07d5bb95">theta_begin</a> (in self)</td></tr>
+<tr class="separator:a28daf669859d3cb467bea34a07d5bb95 inherit pub_methods_class_curve_base"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2341de8ad257521c910f78577663247c inherit pub_methods_class_curve_base" id="r_a2341de8ad257521c910f78577663247c"><td class="memItemLeft" align="right" valign="top">function&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_curve_base.html#a2341de8ad257521c910f78577663247c">thetaBegin</a> (in self)</td></tr>
+<tr class="separator:a2341de8ad257521c910f78577663247c inherit pub_methods_class_curve_base"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa2729a6c9b2d14b8a01baac788b8f24d inherit pub_methods_class_curve_base" id="r_aa2729a6c9b2d14b8a01baac788b8f24d"><td class="memItemLeft" align="right" valign="top">function&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_curve_base.html#aa2729a6c9b2d14b8a01baac788b8f24d">theta_end</a> (in self)</td></tr>
+<tr class="separator:aa2729a6c9b2d14b8a01baac788b8f24d inherit pub_methods_class_curve_base"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac4868d7d8f46bc8d61b6f31271e63a41 inherit pub_methods_class_curve_base" id="r_ac4868d7d8f46bc8d61b6f31271e63a41"><td class="memItemLeft" align="right" valign="top">function&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_curve_base.html#ac4868d7d8f46bc8d61b6f31271e63a41">thetaEnd</a> (in self)</td></tr>
+<tr class="separator:ac4868d7d8f46bc8d61b6f31271e63a41 inherit pub_methods_class_curve_base"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a099ef478b2316f976c18d57f456e8249 inherit pub_methods_class_curve_base" id="r_a099ef478b2316f976c18d57f456e8249"><td class="memItemLeft" align="right" valign="top">function&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_curve_base.html#a099ef478b2316f976c18d57f456e8249">kappa_begin</a> (in self)</td></tr>
+<tr class="separator:a099ef478b2316f976c18d57f456e8249 inherit pub_methods_class_curve_base"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa5388c8571e8b782af658890c28c9ba7 inherit pub_methods_class_curve_base" id="r_aa5388c8571e8b782af658890c28c9ba7"><td class="memItemLeft" align="right" valign="top">function&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_curve_base.html#aa5388c8571e8b782af658890c28c9ba7">kappaBegin</a> (in self)</td></tr>
+<tr class="separator:aa5388c8571e8b782af658890c28c9ba7 inherit pub_methods_class_curve_base"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a19fb4e9afadb94a5cb00b6e5c9556da4 inherit pub_methods_class_curve_base" id="r_a19fb4e9afadb94a5cb00b6e5c9556da4"><td class="memItemLeft" align="right" valign="top">function&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_curve_base.html#a19fb4e9afadb94a5cb00b6e5c9556da4">kappa_end</a> (in self)</td></tr>
+<tr class="separator:a19fb4e9afadb94a5cb00b6e5c9556da4 inherit pub_methods_class_curve_base"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5e9c99136558125699be44751885c3f0 inherit pub_methods_class_curve_base" id="r_a5e9c99136558125699be44751885c3f0"><td class="memItemLeft" align="right" valign="top">function&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_curve_base.html#a5e9c99136558125699be44751885c3f0">kappaEnd</a> (in self)</td></tr>
+<tr class="separator:a5e9c99136558125699be44751885c3f0 inherit pub_methods_class_curve_base"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a71fe78bbbf98ab12481e4c1224585e15 inherit pub_methods_class_curve_base" id="r_a71fe78bbbf98ab12481e4c1224585e15"><td class="memItemLeft" align="right" valign="top">function&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_curve_base.html#a71fe78bbbf98ab12481e4c1224585e15">length</a> (in self, in varargin)</td></tr>
+<tr class="separator:a71fe78bbbf98ab12481e4c1224585e15 inherit pub_methods_class_curve_base"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a32b0b9a4a2ee5e0e1ffdb8cbda4ba782 inherit pub_methods_class_curve_base" id="r_a32b0b9a4a2ee5e0e1ffdb8cbda4ba782"><td class="memItemLeft" align="right" valign="top">
+function&#160;</td><td class="memItemRight" valign="bottom"><b>points</b> (in self)</td></tr>
+<tr class="separator:a32b0b9a4a2ee5e0e1ffdb8cbda4ba782 inherit pub_methods_class_curve_base"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aaa400df7ce766246d06ae21207a1c626 inherit pub_methods_class_curve_base" id="r_aaa400df7ce766246d06ae21207a1c626"><td class="memItemLeft" align="right" valign="top">function&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_curve_base.html#aaa400df7ce766246d06ae21207a1c626">bbTriangles</a> (in self, in varargin)</td></tr>
+<tr class="separator:aaa400df7ce766246d06ae21207a1c626 inherit pub_methods_class_curve_base"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1c49592ad04bc3605f08cb4d4d4e6cb2 inherit pub_methods_class_curve_base" id="r_a1c49592ad04bc3605f08cb4d4d4e6cb2"><td class="memItemLeft" align="right" valign="top">function&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_curve_base.html#a1c49592ad04bc3605f08cb4d4d4e6cb2">closest_point</a> (in self, in qx, in qy, in varargin)</td></tr>
+<tr class="separator:a1c49592ad04bc3605f08cb4d4d4e6cb2 inherit pub_methods_class_curve_base"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9f9c42653a38cc5b028b7a889eca354e inherit pub_methods_class_curve_base" id="r_a9f9c42653a38cc5b028b7a889eca354e"><td class="memItemLeft" align="right" valign="top">function&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_curve_base.html#a9f9c42653a38cc5b028b7a889eca354e">closestPoint</a> (in self, in qx, in qy, in varargin)</td></tr>
+<tr class="separator:a9f9c42653a38cc5b028b7a889eca354e inherit pub_methods_class_curve_base"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a995541e2da9997cad68133cfd9fd6f76 inherit pub_methods_class_curve_base" id="r_a995541e2da9997cad68133cfd9fd6f76"><td class="memItemLeft" align="right" valign="top">function&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_curve_base.html#a995541e2da9997cad68133cfd9fd6f76">distance</a> (in self, in qx, in qy, in varargin)</td></tr>
+<tr class="separator:a995541e2da9997cad68133cfd9fd6f76 inherit pub_methods_class_curve_base"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3af6ed231aa1e5eb4092833138c92ee9 inherit pub_methods_class_curve_base" id="r_a3af6ed231aa1e5eb4092833138c92ee9"><td class="memItemLeft" align="right" valign="top">function&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_curve_base.html#a3af6ed231aa1e5eb4092833138c92ee9">collision</a> (in self, in OBJ, in varargin)</td></tr>
+<tr class="separator:a3af6ed231aa1e5eb4092833138c92ee9 inherit pub_methods_class_curve_base"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a76563ee1040c154c4b1b14383fed424f inherit pub_methods_class_curve_base" id="r_a76563ee1040c154c4b1b14383fed424f"><td class="memItemLeft" align="right" valign="top">function&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_curve_base.html#a76563ee1040c154c4b1b14383fed424f">intersect</a> (in self, in OBJ, in varargin)</td></tr>
+<tr class="separator:a76563ee1040c154c4b1b14383fed424f inherit pub_methods_class_curve_base"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa0b8d69de7c0df5962c8ba2d22350a9c inherit pub_methods_class_curve_base" id="r_aa0b8d69de7c0df5962c8ba2d22350a9c"><td class="memItemLeft" align="right" valign="top">function&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_curve_base.html#aa0b8d69de7c0df5962c8ba2d22350a9c">info</a> (in self)</td></tr>
+<tr class="separator:aa0b8d69de7c0df5962c8ba2d22350a9c inherit pub_methods_class_curve_base"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aee7315c2b8b883404d7efa74c51b702f inherit pub_methods_class_curve_base" id="r_aee7315c2b8b883404d7efa74c51b702f"><td class="memItemLeft" align="right" valign="top">function&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_curve_base.html#aee7315c2b8b883404d7efa74c51b702f">find_coord</a> (in self, in x, in y)</td></tr>
+<tr class="separator:aee7315c2b8b883404d7efa74c51b702f inherit pub_methods_class_curve_base"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0a189e9b5f75026098c616b855613a71 inherit pub_methods_class_curve_base" id="r_a0a189e9b5f75026098c616b855613a71"><td class="memItemLeft" align="right" valign="top">function&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_curve_base.html#a0a189e9b5f75026098c616b855613a71">yesAABBtree</a> (in self)</td></tr>
+<tr class="separator:a0a189e9b5f75026098c616b855613a71 inherit pub_methods_class_curve_base"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a324d0bd2548f6d56ae58764a98071e12 inherit pub_methods_class_curve_base" id="r_a324d0bd2548f6d56ae58764a98071e12"><td class="memItemLeft" align="right" valign="top">function&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_curve_base.html#a324d0bd2548f6d56ae58764a98071e12">noAABBtree</a> (in self)</td></tr>
+<tr class="separator:a324d0bd2548f6d56ae58764a98071e12 inherit pub_methods_class_curve_base"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aec824865ca16dd58b16b806ddc00f98d inherit pub_methods_class_curve_base" id="r_aec824865ca16dd58b16b806ddc00f98d"><td class="memItemLeft" align="right" valign="top">function&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_curve_base.html#aec824865ca16dd58b16b806ddc00f98d">plot_tbox</a> (in self, in P1, in P2, in P3, in varargin)</td></tr>
+<tr class="separator:aec824865ca16dd58b16b806ddc00f98d inherit pub_methods_class_curve_base"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a424731565309e427755c873a03b39274 inherit pub_methods_class_curve_base" id="r_a424731565309e427755c873a03b39274"><td class="memItemLeft" align="right" valign="top">function&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_curve_base.html#a424731565309e427755c873a03b39274">plotTBox</a> (in self, in P1, in P2, in P3, in varargin)</td></tr>
+<tr class="separator:a424731565309e427755c873a03b39274 inherit pub_methods_class_curve_base"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6377dbc03efaee295d3acca0c955b1ad inherit pub_methods_class_curve_base" id="r_a6377dbc03efaee295d3acca0c955b1ad"><td class="memItemLeft" align="right" valign="top">function&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_curve_base.html#a6377dbc03efaee295d3acca0c955b1ad">plot_bbox</a> (in self, in varargin)</td></tr>
+<tr class="separator:a6377dbc03efaee295d3acca0c955b1ad inherit pub_methods_class_curve_base"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a59acec48078144adab8084fa3813a47b inherit pub_methods_class_curve_base" id="r_a59acec48078144adab8084fa3813a47b"><td class="memItemLeft" align="right" valign="top">function&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_curve_base.html#a59acec48078144adab8084fa3813a47b">plotBBox</a> (in self, in varargin)</td></tr>
+<tr class="separator:a59acec48078144adab8084fa3813a47b inherit pub_methods_class_curve_base"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab6cc5118af06314b2ffe64603a8473fd inherit pub_methods_class_curve_base" id="r_ab6cc5118af06314b2ffe64603a8473fd"><td class="memItemLeft" align="right" valign="top">function&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_curve_base.html#ab6cc5118af06314b2ffe64603a8473fd">plot_triangles</a> (in self, in varargin)</td></tr>
+<tr class="separator:ab6cc5118af06314b2ffe64603a8473fd inherit pub_methods_class_curve_base"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a72b1ff3c010bff3b2d422e6198273c1d inherit pub_methods_class_curve_base" id="r_a72b1ff3c010bff3b2d422e6198273c1d"><td class="memItemLeft" align="right" valign="top">function&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_curve_base.html#a72b1ff3c010bff3b2d422e6198273c1d">plotTriangles</a> (in self, in varargin)</td></tr>
+<tr class="separator:a72b1ff3c010bff3b2d422e6198273c1d inherit pub_methods_class_curve_base"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="inherited" name="inherited"></a>
+Additional Inherited Members</h2></td></tr>
+<tr class="inherit_header pro_methods_class_curve_base"><td colspan="2" onclick="javascript:dynsection.toggleInherit('pro_methods_class_curve_base')"><img src="closed.png" alt="-"/>&#160;Protected Member Functions inherited from <a class="el" href="class_curve_base.html">CurveBase</a></td></tr>
+<tr class="memitem:a4fd99904e45161a25cc38e9afaefc1fc inherit pro_methods_class_curve_base" id="r_a4fd99904e45161a25cc38e9afaefc1fc"><td class="memItemLeft" align="right" valign="top">function&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_curve_base.html#a4fd99904e45161a25cc38e9afaefc1fc">copyElement</a> (in self)</td></tr>
+<tr class="separator:a4fd99904e45161a25cc38e9afaefc1fc inherit pro_methods_class_curve_base"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="inherit_header pro_attribs_class_curve_base"><td colspan="2" onclick="javascript:dynsection.toggleInherit('pro_attribs_class_curve_base')"><img src="closed.png" alt="-"/>&#160;Protected Attributes inherited from <a class="el" href="class_curve_base.html">CurveBase</a></td></tr>
+<tr class="memitem:a51da94c3220ec334e1f21f53fac2529a inherit pro_attribs_class_curve_base" id="r_a51da94c3220ec334e1f21f53fac2529a"><td class="memItemLeft" align="right" valign="top">
+Property&#160;</td><td class="memItemRight" valign="bottom"><b>mexName</b></td></tr>
+<tr class="separator:a51da94c3220ec334e1f21f53fac2529a inherit pro_attribs_class_curve_base"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aaab64ae6da706e2c529c9d74149cd57b inherit pro_attribs_class_curve_base" id="r_aaab64ae6da706e2c529c9d74149cd57b"><td class="memItemLeft" align="right" valign="top">
+Property&#160;</td><td class="memItemRight" valign="bottom"><b>objectHandle</b></td></tr>
+<tr class="separator:aaab64ae6da706e2c529c9d74149cd57b inherit pro_attribs_class_curve_base"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8c7ae0eb68369ccdfc6f6ddb930d04c0 inherit pro_attribs_class_curve_base" id="r_a8c7ae0eb68369ccdfc6f6ddb930d04c0"><td class="memItemLeft" align="right" valign="top">
+Property&#160;</td><td class="memItemRight" valign="bottom"><b>call_delete</b></td></tr>
+<tr class="separator:a8c7ae0eb68369ccdfc6f6ddb930d04c0 inherit pro_attribs_class_curve_base"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a28a41b07a4fdb80b4bd7671e9cd87ebe inherit pro_attribs_class_curve_base" id="r_a28a41b07a4fdb80b4bd7671e9cd87ebe"><td class="memItemLeft" align="right" valign="top">
+Property&#160;</td><td class="memItemRight" valign="bottom"><b>objectType</b></td></tr>
+<tr class="separator:a28a41b07a4fdb80b4bd7671e9cd87ebe inherit pro_attribs_class_curve_base"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
+<a id="aa4f0742fb4b93cbb45d622ab4ac5491f" name="aa4f0742fb4b93cbb45d622ab4ac5491f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa4f0742fb4b93cbb45d622ab4ac5491f">&#9670;&#160;</a></span>BiarcList()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">function BiarcList::BiarcList </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Create a new C++ class instance for the list of biarc object</p>
+<p><b>Usage:</b></p>
+<div class="fragment"><div class="line">self = BiarcList();</div>
+</div><!-- fragment --><p><b>On output:</b></p>
+<ul>
+<li>self: reference handle to the object instance </li>
+</ul>
+
+</div>
+</div>
+<h2 class="groupheader">Member Function Documentation</h2>
+<a id="a63f9f613dd40fec0e794c7ac3b7d3a41" name="a63f9f613dd40fec0e794c7ac3b7d3a41"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a63f9f613dd40fec0e794c7ac3b7d3a41">&#9670;&#160;</a></span>append()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">function BiarcList::append </td>
+          <td>(</td>
+          <td class="paramtype">in</td>          <td class="paramname"><span class="paramname"><em>self</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">in</td>          <td class="paramname"><span class="paramname"><em>lst</em></span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Append a biarc or a biarc list.</p>
+<div class="fragment"><div class="line">ba = Biarc( ... );</div>
+<div class="line">% ....</div>
+<div class="line">ref.append(ba); % append biarc</div>
+<div class="line"> </div>
+<div class="line">blist = BiarcList();</div>
+<div class="line">% ...</div>
+<div class="line">ref.append(blist); % append biarc list</div>
+</div><!-- fragment --> 
+</div>
+</div>
+<a id="a7c78200c3421de1d408e240545d1881a" name="a7c78200c3421de1d408e240545d1881a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7c78200c3421de1d408e240545d1881a">&#9670;&#160;</a></span>build_G1()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">function BiarcList::build_G1 </td>
+          <td>(</td>
+          <td class="paramtype">in</td>          <td class="paramname"><span class="paramname"><em>self</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">in</td>          <td class="paramname"><span class="paramname"><em>varargin</em></span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Build a biarc list given a set of points and if available the angles at the points. If the angles are missing the angle at a node is computed by building the circle passing by 3 consecutive points. The node is the middle point.</p>
+<div class="fragment"><div class="line">ref.build_G1(x,y);</div>
+<div class="line">ref.build_G1(x,y,theta);</div>
+</div><!-- fragment --><ul>
+<li><code>x</code>, <code>y</code>: vectors of <code>x</code> and <code>y</code> coordinates of the nodes</li>
+<li><code>thetas</code>: angles at the nodes </li>
+</ul>
+
+</div>
+</div>
+<a id="a9762e4999fafdd6a145bef46b2afc34c" name="a9762e4999fafdd6a145bef46b2afc34c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9762e4999fafdd6a145bef46b2afc34c">&#9670;&#160;</a></span>build_theta()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">function BiarcList::build_theta </td>
+          <td>(</td>
+          <td class="paramtype">in</td>          <td class="paramname"><span class="paramname"><em>self</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">in</td>          <td class="paramname"><span class="paramname"><em>x</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">in</td>          <td class="paramname"><span class="paramname"><em>y</em></span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Build the angles a the list of nodes. The angle at a node is computed by building the circle passing by 3 consecutive points. The node is the middle point.</p>
+<div class="fragment"><div class="line">thetas = ref.build_theta(x,y);</div>
+</div><!-- fragment --><ul>
+<li><code>x</code>, <code>y</code>: vectors of <code>x</code> and <code>y</code> coordinates of the nodes </li>
+</ul>
+
+</div>
+</div>
+<a id="a1b209837c213f1a19f2d2cfeb103fc93" name="a1b209837c213f1a19f2d2cfeb103fc93"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1b209837c213f1a19f2d2cfeb103fc93">&#9670;&#160;</a></span>find_coord1()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">function BiarcList::find_coord1 </td>
+          <td>(</td>
+          <td class="paramtype">in</td>          <td class="paramname"><span class="paramname"><em>self</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">in</td>          <td class="paramname"><span class="paramname"><em>x</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">in</td>          <td class="paramname"><span class="paramname"><em>y</em></span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Find curvilinear coordinates of inputs points</p>
+<div class="fragment"><div class="line">[ s, t, ipos ] = ref.find_coord1(x,y);</div>
+</div><!-- fragment --><p><b>Input:</b></p>
+<ul>
+<li><code>x</code>, <code>y</code>: vectors of <code>x</code> and <code>y</code> coordinates of the poinst</li>
+</ul>
+<p><b>Output:</b></p>
+<ul>
+<li><code>s</code>, <code>t</code> : curvilinar coordinates of the points</li>
+<li><code>ipos</code> : the segment with point at minimal distance, otherwise -(idx+1) if (x,y) cannot be projected orthogonally on the segment </li>
+</ul>
+
+</div>
+</div>
+<a id="a64ebb0723c4823596e74e669c48ad5d1" name="a64ebb0723c4823596e74e669c48ad5d1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a64ebb0723c4823596e74e669c48ad5d1">&#9670;&#160;</a></span>get()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">function BiarcList::get </td>
+          <td>(</td>
+          <td class="paramtype">in</td>          <td class="paramname"><span class="paramname"><em>self</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">in</td>          <td class="paramname"><span class="paramname"><em>k</em></span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Get the biarc at position <code>k</code>. The biarc is returned as a biarc object or the data defining the biarc.</p>
+<div class="fragment"><div class="line">BA = ref.get(k); % get the biarc object</div>
+<div class="line">[ x0, y0, theta0, x1, y1, theta1 ] = ref.get(k); % get the biarc data</div>
+</div><!-- fragment --> 
+</div>
+</div>
+<a id="a35aab5f0fad398baaad8d1f29c270aa0" name="a35aab5f0fad398baaad8d1f29c270aa0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a35aab5f0fad398baaad8d1f29c270aa0">&#9670;&#160;</a></span>get_XY()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">function BiarcList::get_XY </td>
+          <td>(</td>
+          <td class="paramtype">in</td>          <td class="paramname"><span class="paramname"><em>self</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Return the list of points (initial and final) of the biarcs</p>
+<div class="fragment"><div class="line">[ x, y ] = ref.get_XY();</div>
+</div><!-- fragment --> 
+</div>
+</div>
+<a id="a60005999eaeba719ec67a74dd7ee6af5" name="a60005999eaeba719ec67a74dd7ee6af5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a60005999eaeba719ec67a74dd7ee6af5">&#9670;&#160;</a></span>num_segments()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">function BiarcList::num_segments </td>
+          <td>(</td>
+          <td class="paramtype">in</td>          <td class="paramname"><span class="paramname"><em>self</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Return number of biarc in the list</p>
+<div class="fragment"><div class="line">nseg = ref.num_segments();</div>
+</div><!-- fragment --> 
+</div>
+</div>
+<a id="a1b7232bbb1db9b70e120c9b3099c1e52" name="a1b7232bbb1db9b70e120c9b3099c1e52"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1b7232bbb1db9b70e120c9b3099c1e52">&#9670;&#160;</a></span>numSegments()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">function BiarcList::numSegments </td>
+          <td>(</td>
+          <td class="paramtype">in</td>          <td class="paramname"><span class="paramname"><em>self</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="deprecated"><dt><b><a class="el" href="deprecated.html#_deprecated000001">Deprecated</a></b></dt><dd>whill be removed in future version </dd></dl>
+
+</div>
+</div>
+<a id="ac72e07636519a34f67bd64f650d47196" name="ac72e07636519a34f67bd64f650d47196"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac72e07636519a34f67bd64f650d47196">&#9670;&#160;</a></span>plot()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">function BiarcList::plot </td>
+          <td>(</td>
+          <td class="paramtype">in</td>          <td class="paramname"><span class="paramname"><em>self</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">in</td>          <td class="paramname"><span class="paramname"><em>varargin</em></span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Plot the biarc list</p>
+<p><b>Usage:</b></p>
+<div class="fragment"><div class="line">ref.plot();</div>
+<div class="line">ref.plot( npts );</div>
+<div class="line"> </div>
+<div class="line">fmt1 = {&#39;Color&#39;,&#39;blue&#39;,&#39;Linewidth&#39;,2}; % first arc of the biarc</div>
+<div class="line">fmt2 = {&#39;Color&#39;,&#39;red&#39;,&#39;Linewidth&#39;,2};  % second arc of the biarc</div>
+<div class="line">ref.plot( npts, fmt1, fmt2 );</div>
+</div><!-- fragment --><ul>
+<li><code>npts</code>: number of sampling points for plotting</li>
+<li><code>fmt1</code>: format of the first arc</li>
+<li><code>fmt2</code>: format of the second arc </li>
+</ul>
+
+</div>
+</div>
+<a id="a3960a25bf735238c299d9e32f1f0c6cc" name="a3960a25bf735238c299d9e32f1f0c6cc"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3960a25bf735238c299d9e32f1f0c6cc">&#9670;&#160;</a></span>plot_angle()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">function BiarcList::plot_angle </td>
+          <td>(</td>
+          <td class="paramtype">in</td>          <td class="paramname"><span class="paramname"><em>self</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">in</td>          <td class="paramname"><span class="paramname"><em>npts</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">in</td>          <td class="paramname"><span class="paramname"><em>varargin</em></span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Plot the angle of the biarc list</p>
+<p><b>Usage:</b></p>
+<div class="fragment"><div class="line">ref.plotAngle( npts );</div>
+<div class="line"> </div>
+<div class="line">fmt1 = {&#39;Color&#39;,&#39;blue&#39;,&#39;Linewidth&#39;,2};</div>
+<div class="line">fmt2 = {&#39;Color&#39;,&#39;red&#39;,&#39;Linewidth&#39;,2};</div>
+<div class="line">ref.plotAngle( npts, fmt1, fmt2 );</div>
+</div><!-- fragment --><ul>
+<li><code>npts</code>: number of sampling points for plotting</li>
+<li><code>fmt1</code>: format of the first arc</li>
+<li><code>fmt2</code>: format of the second arc </li>
+</ul>
+
+</div>
+</div>
+<a id="a3719967f2662a3f2a8e4f51aaba1738c" name="a3719967f2662a3f2a8e4f51aaba1738c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3719967f2662a3f2a8e4f51aaba1738c">&#9670;&#160;</a></span>plot_curvature()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">function BiarcList::plot_curvature </td>
+          <td>(</td>
+          <td class="paramtype">in</td>          <td class="paramname"><span class="paramname"><em>self</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">in</td>          <td class="paramname"><span class="paramname"><em>npts</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">in</td>          <td class="paramname"><span class="paramname"><em>varargin</em></span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Plot the curvature of the biarc list</p>
+<p><b>Usage:</b></p>
+<div class="fragment"><div class="line">ref.plotCurvature( npts );</div>
+<div class="line"> </div>
+<div class="line">fmt1 = {&#39;Color&#39;,&#39;blue&#39;,&#39;Linewidth&#39;,2};</div>
+<div class="line">fmt2 = {&#39;Color&#39;,&#39;red&#39;,&#39;Linewidth&#39;,2};</div>
+<div class="line">ref.plotCurvature( npts, fmt1, fmt2 );</div>
+</div><!-- fragment --><ul>
+<li><code>npts</code>: number of sampling points for plotting</li>
+<li><code>fmt1</code>: format of the first arc</li>
+<li><code>fmt2</code>: format of the second arc </li>
+</ul>
+
+</div>
+</div>
+<a id="a4c81ca926b263e337928bbefb263d168" name="a4c81ca926b263e337928bbefb263d168"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4c81ca926b263e337928bbefb263d168">&#9670;&#160;</a></span>plot_offs()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">function BiarcList::plot_offs </td>
+          <td>(</td>
+          <td class="paramtype">in</td>          <td class="paramname"><span class="paramname"><em>self</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">in</td>          <td class="paramname"><span class="paramname"><em>offs</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">in</td>          <td class="paramname"><span class="paramname"><em>npts</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">in</td>          <td class="paramname"><span class="paramname"><em>varargin</em></span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Plot the biarc list with offset</p>
+<p><b>Usage:</b></p>
+<div class="fragment"><div class="line">ref.plot_offs( offs, npts );</div>
+<div class="line"> </div>
+<div class="line">fmt1 = {&#39;Color&#39;,&#39;blue&#39;,&#39;Linewidth&#39;,2}; % first arc of the biarc</div>
+<div class="line">fmt2 = {&#39;Color&#39;,&#39;red&#39;,&#39;Linewidth&#39;,2};  % second arc of the biarc</div>
+<div class="line">ref.plot_offs( offs, npts, fmt1, fmt2 );</div>
+</div><!-- fragment --><ul>
+<li><code>npts</code>: number of sampling points for plotting</li>
+<li><code>fmt1</code>: format of the first arc</li>
+<li><code>fmt2</code>: format of the second arc</li>
+<li><code>offs</code>: offset used in the plotting </li>
+</ul>
+
+</div>
+</div>
+<a id="a047820499d4fa56f278aee63a26e1cec" name="a047820499d4fa56f278aee63a26e1cec"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a047820499d4fa56f278aee63a26e1cec">&#9670;&#160;</a></span>plotAngle()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">function BiarcList::plotAngle </td>
+          <td>(</td>
+          <td class="paramtype">in</td>          <td class="paramname"><span class="paramname"><em>self</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">in</td>          <td class="paramname"><span class="paramname"><em>npts</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">in</td>          <td class="paramname"><span class="paramname"><em>varargin</em></span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="deprecated"><dt><b><a class="el" href="deprecated.html#_deprecated000008">Deprecated</a></b></dt><dd>whill be removed in future version </dd></dl>
+
+</div>
+</div>
+<a id="ab93c4226914e21d4ae12a182218e6cfe" name="ab93c4226914e21d4ae12a182218e6cfe"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab93c4226914e21d4ae12a182218e6cfe">&#9670;&#160;</a></span>plotCurvature()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">function BiarcList::plotCurvature </td>
+          <td>(</td>
+          <td class="paramtype">in</td>          <td class="paramname"><span class="paramname"><em>self</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">in</td>          <td class="paramname"><span class="paramname"><em>npts</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">in</td>          <td class="paramname"><span class="paramname"><em>varargin</em></span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="deprecated"><dt><b><a class="el" href="deprecated.html#_deprecated000007">Deprecated</a></b></dt><dd>whill be removed in future version </dd></dl>
+
+</div>
+</div>
+<a id="ae41db5d788f060b8470430487bffbd82" name="ae41db5d788f060b8470430487bffbd82"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae41db5d788f060b8470430487bffbd82">&#9670;&#160;</a></span>plotNormal() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">function BiarcList::plotNormal </td>
+          <td>(</td>
+          <td class="paramtype">in</td>          <td class="paramname"><span class="paramname"><em>self</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">in</td>          <td class="paramname"><span class="paramname"><em>step</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">in</td>          <td class="paramname"><span class="paramname"><em>len</em></span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Plot the normal of the biarc list</p>
+<p><b>Usage:</b></p>
+<div class="fragment"><div class="line">ref.plotNormal( step, len );</div>
+</div><!-- fragment --><ul>
+<li><code>step</code>: number of sampling normals</li>
+<li><code>len</code>: length of the plotted normal </li>
+</ul>
+
+</div>
+</div>
+<a id="ae41db5d788f060b8470430487bffbd82" name="ae41db5d788f060b8470430487bffbd82"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae41db5d788f060b8470430487bffbd82">&#9670;&#160;</a></span>plotNormal() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">function BiarcList::plotNormal </td>
+          <td>(</td>
+          <td class="paramtype">in</td>          <td class="paramname"><span class="paramname"><em>self</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">in</td>          <td class="paramname"><span class="paramname"><em>step</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">in</td>          <td class="paramname"><span class="paramname"><em>len</em></span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="deprecated"><dt><b><a class="el" href="deprecated.html#_deprecated000011">Deprecated</a></b></dt><dd>whill be removed in future version </dd></dl>
+
+</div>
+</div>
+<a id="a6e4fa8e39a8273cbdc4a8ab34de6b663" name="a6e4fa8e39a8273cbdc4a8ab34de6b663"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6e4fa8e39a8273cbdc4a8ab34de6b663">&#9670;&#160;</a></span>push_back()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">function BiarcList::push_back </td>
+          <td>(</td>
+          <td class="paramtype">in</td>          <td class="paramname"><span class="paramname"><em>self</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">in</td>          <td class="paramname"><span class="paramname"><em>varargin</em></span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Append to the <a class="el" href="class_biarc_list.html">BiarcList</a> another biarc. The biarc is obtained setting the final postion and angle while the initial position and angle are taken from the last biarc on the biarc list. Another possibility is to push a biarc is obtained by passing initial and final positions, initial and final angles.</p>
+<p><b>Usage:</b></p>
+<div class="fragment"><div class="line">ref.push_back(x1,y1,theta1);</div>
+<div class="line">ref.push_back(x0,y0,theta0,x1,y1,theta1);</div>
+</div><!-- fragment --><ul>
+<li><code>x0</code>, <code>y0</code>: initial position of the biarc to be appended</li>
+<li><code>theta0</code> : initial angle of the biarc to be appended</li>
+<li><code>x1</code>, <code>y1</code>: final position of the biarc to be appended</li>
+<li><code>theta1</code> : final angle of the biarc to be appended </li>
+</ul>
+
+</div>
+</div>
+<a id="ab7de7ca31f952d4f4017cd943a82a020" name="ab7de7ca31f952d4f4017cd943a82a020"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab7de7ca31f952d4f4017cd943a82a020">&#9670;&#160;</a></span>reserve()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">function BiarcList::reserve </td>
+          <td>(</td>
+          <td class="paramtype">in</td>          <td class="paramname"><span class="paramname"><em>self</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">in</td>          <td class="paramname"><span class="paramname"><em>N</em></span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Reserve memory for <code>N</code> biarc</p>
+<p><b>Usage:</b></p>
+<div class="fragment"><div class="line">ref.reserve(N);</div>
+</div><!-- fragment --> 
+</div>
+</div>
+<hr/>The documentation for this class was generated from the following file:<ul>
+<li>/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/toolbox/lib/<b>BiarcList.m</b></li>
+</ul>
+</div><!-- contents -->
+<!-- start footer part -->
+<hr class="footer"/><address class="footer"><small>
+Generated by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.12.0
+</small></address>
+</div><!-- doc-content -->
+</body>
+</html>
+</div>
+</section>
+
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p></p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

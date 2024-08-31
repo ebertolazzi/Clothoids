@@ -32,8 +32,8 @@ namespace G2lib {
    | |____/ \__,_|___/\___|\____\__,_|_|    \_/ \___|
   \*/
 
-  using Ipair         = std::pair<real_type,real_type>;
-  using IntersectList = std::vector<Ipair>;
+  using Ipair         = std::pair<real_type,real_type>; //!< Pair of two real number
+  using IntersectList = std::vector<Ipair>;             //!< Vector of pair of two real number
 
   /*\
    |   _       _                          _
@@ -46,21 +46,23 @@ namespace G2lib {
   class BaseCurve;
 
   //!
-  //! Return `true` if the two curves intersect.
+  //! Check curve collision
   //!
   //! \param[in] pC1 first curve
   //! \param[in] pC2 second curve
+  //! \return  `true` if the curves collide
   //!
   bool
   collision( BaseCurve const * pC1, BaseCurve const * pC2 );
 
   //!
-  //! Return `true` the the two curves intersect.
+  //! Check curve collision
   //!
   //! \param[in] pC1     first curve
   //! \param[in] offs_C1 offset of the first curve
   //! \param[in] pC2     second curve
   //! \param[in] offs_C2 offset of the second curve
+  //! \return  `true` if the curves collide
   //!
   bool
   collision_ISO(
@@ -71,12 +73,13 @@ namespace G2lib {
   );
 
   //!
-  //! Return `true` the the two curves intersect.
+  //! Check curve collision
   //!
   //! \param[in] pC1     first curve
   //! \param[in] offs_C1 offset of the first curve
   //! \param[in] pC2     second curve
   //! \param[in] offs_C2 offset of the second curve
+  //! \return  `true` if the curves collide
   //!
   inline
   bool
@@ -90,7 +93,7 @@ namespace G2lib {
   }
 
   //!
-  //! Collect the intersection of the two curve.
+  //! Compute curve intersections
   //!
   //! \param[in]  pC1   first curve
   //! \param[in]  pC2   second curve
@@ -104,7 +107,7 @@ namespace G2lib {
   );
 
   //!
-  //! Collect the intersections of the two curve.
+  //! Compute curve intersections
   //!
   //! \param[in]  pC1     first curve
   //! \param[in]  offs_C1 offset of the first curve
@@ -120,7 +123,7 @@ namespace G2lib {
   );
 
   //!
-  //! Collect the intersections of the two curve.
+  //! Compute curve intersections
   //!
   //! \param[in]  pC1     first curve
   //! \param[in]  offs_C1 offset of the first curve
@@ -147,6 +150,7 @@ namespace G2lib {
   //! \param[in] offs_C1 offset of the first curve
   //! \param[in] pC2     second curve
   //! \param[in] offs_C2 offset of the second curve
+  //! \return  `true` if the curves collides
   //!
   inline
   bool
@@ -315,7 +319,7 @@ namespace G2lib {
     //! \param[out] max_size  maximum admissible size of the covering tirnagles
     //! \param[out] icurve    index of the covering triangles
     //!
-    //! \image html biarc_cover.jpg "Biarc" width=8cm
+    //! @html_image{biarc_cover.png,width=60%}
     //!
     virtual
     void
@@ -394,122 +398,122 @@ namespace G2lib {
     virtual real_type kappa_end() const { return this->kappa(this->length()); }
 
     //!
-    //! Initial x-coordinate.
+    //! Initial \f$x\f$-coordinate.
     //!
     virtual real_type x_begin() const { return this->X(0); }
 
     //!
-    //! Initial y-coordinate.
+    //! Initial \f$y\f$-coordinate.
     //!
     virtual real_type y_begin() const { return this->Y(0); }
 
     //!
-    //! Final x-coordinate.
+    //! Final \f$x\f$-coordinate.
     //!
     virtual real_type x_end() const { return this->X(this->length()); }
 
     //!
-    //! Final y-coordinate.
+    //! Final \f$y\f$-coordinate.
     //!
     virtual real_type y_end() const { return this->Y(this->length()); }
 
     //!
-    //! Initial x-coordinate with offset (ISO standard).
+    //! Initial \f$x\f$-coordinate with offset (ISO standard).
     //!
     virtual real_type x_begin_ISO( real_type offs ) const { return this->X_ISO(0,offs); }
 
     //!
-    //! Initial y-coordinate with offset (ISO standard).
+    //! Initial \f$y\f$-coordinate with offset (ISO standard).
     //!
     virtual real_type y_begin_ISO( real_type offs ) const { return this->Y_ISO(0,offs); }
 
     //!
-    //! Final x-coordinate with offset (ISO standard).
+    //! Final \f$x\f$-coordinate with offset (ISO standard).
     //!
     virtual real_type x_end_ISO( real_type offs ) const { return this->X_ISO(this->length(),offs); }
 
     //!
-    //! Final y-coordinate with offset (ISO standard).
+    //! Final \f$y\f$-coordinate with offset (ISO standard).
     //!
     virtual real_type y_end_ISO( real_type offs ) const { return this->Y_ISO(this->length(),offs); }
 
     //!
-    //! Initial x-coordinate with offset (SAE standard).
+    //! Initial \f$x\f$-coordinate with offset (SAE standard).
     //!
     real_type x_begin_SAE( real_type offs ) const { return this->x_begin_ISO(-offs); }
 
     //!
-    //! Initial y-coordinate with offset (SAE standard).
+    //! Initial \f$y\f$-coordinate with offset (SAE standard).
     //!
     real_type y_begin_SAE( real_type offs ) const { return this->y_begin_ISO(-offs); }
 
     //!
-    //! Final y-coordinate with offset (SAE standard).
+    //! Final \f$y\f$-coordinate with offset (SAE standard).
     //!
     real_type x_end_SAE( real_type offs ) const { return this->x_end_ISO(-offs); }
 
     //!
-    //! Final y-coordinate with offset (ISO standard).
+    //! Final \f$y\f$-coordinate with offset (ISO standard).
     //!
     real_type y_end_SAE( real_type offs ) const { return this->y_end_ISO(-offs); }
 
     //!
-    //! Initial tangent x-coordinate.
+    //! Initial tangent \f$x\f$-coordinate.
     //!
     virtual real_type tx_begin() const { return this->tx(0); }
 
     //!
-    //! Initial tangent y-coordinate.
+    //! Initial tangent \f$y\f$-coordinate.
     //!
     virtual real_type ty_begin() const { return this->ty(0); }
 
     //!
-    //! Final tangent x-coordinate.
+    //! Final tangent \f$x\f$-coordinate.
     //!
     virtual real_type tx_end() const { return this->tx(this->length()); }
 
     //!
-    //! Final tangent y-coordinate.
+    //! Final tangent \f$y\f$-coordinate.
     //!
     virtual real_type ty_end() const { return this->ty(this->length()); }
 
     //!
-    //! Intial normal x-coordinate (ISO).
+    //! Intial normal \f$x\f$-coordinate (ISO).
     //!
     virtual real_type nx_begin_ISO() const { return -this->ty(0); }
 
     //!
-    //! Intial normal y-coordinate (ISO).
+    //! Intial normal \f$y\f$-coordinate (ISO).
     //!
     virtual real_type ny_begin_ISO() const { return this->tx(0); }
 
     //!
-    //! Final normal x-coordinate (ISO).
+    //! Final normal \f$x\f$-coordinate (ISO).
     //!
     virtual real_type nx_end_ISO() const { return -this->ty(this->length()); }
 
     //!
-    //! Final normal y-coordinate (ISO).
+    //! Final normal \f$y\f$-coordinate (ISO).
     //!
     virtual real_type ny_end_ISO() const { return this->tx(this->length()); }
 
     //!
-    //! Intial normal x-coordinate (SAE).
+    //! Intial normal \f$x\f$-coordinate (SAE).
     //!
     real_type nx_begin_SAE() const { return -nx_begin_ISO(); }
 
     //!
-    //! Intial normal y-coordinate (SAE).
+    //! Intial normal \f$y\f$-coordinate (SAE).
     //!
     real_type ny_begin_SAE() const { return -ny_begin_ISO(); }
 
     //!
-    //! Final normal x-coordinate (SAE).
+    //! Final normal \f$x\f$-coordinate (SAE).
     //!
     real_type nx_end_SAE() const { return -nx_end_ISO(); }
 
     //!
-    //! Intial normal y-coordinate (SAE).
+    //! Intial normal \f$y\f$-coordinate (SAE).
     //!
     real_type ny_end_SAE() const { return -ny_end_ISO(); }
 
@@ -522,22 +526,22 @@ namespace G2lib {
     \*/
 
     //!
-    //! Angle at curvilinear coodinate `s`.
+    //! Angle at curvilinear coordinate \f$s\f$.
     //!
     virtual real_type theta( real_type s ) const = 0;
 
     //!
-    //! Angle derivative (curvature) at curvilinear coodinate `s`.
+    //! Angle derivative (curvature) at curvilinear coordinate \f$s\f$.
     //!
     virtual real_type theta_D( real_type s ) const = 0;
 
     //!
-    //! Angle second derivative (devitive of curvature) at curvilinear coodinate `s`.
+    //! Angle second derivative (devitive of curvature) at curvilinear coordinate \f$s\f$.
     //!
     virtual real_type theta_DD( real_type s ) const = 0;
 
     //!
-    //! Angle third derivative at curvilinear coodinate `s`.
+    //! Angle third derivative at curvilinear coordinate \f$s\f$.
     //!
     virtual real_type theta_DDD( real_type s ) const = 0;
 
@@ -551,17 +555,17 @@ namespace G2lib {
     \*/
 
     //!
-    //! Ccurvature at curvilinear coodinate `s`.
+    //! Ccurvature at curvilinear coordinate \f$s\f$.
     //!
     real_type kappa( real_type s ) const { return theta_D(s); }
 
     //!
-    //! Curvature derivative at curvilinear coodinate `s`.
+    //! Curvature derivative at curvilinear coordinate \f$s\f$.
     //!
     real_type kappa_D( real_type s ) const { return theta_DD(s); }
 
     //!
-    //! Curvature second derivative at curvilinear coodinate `s`.
+    //! Curvature second derivative at curvilinear coordinate \f$s\f$.
     //!
     real_type kappa_DD( real_type s ) const { return theta_DDD(s); }
 
@@ -574,130 +578,130 @@ namespace G2lib {
     \*/
 
     //!
-    //! Tangent x-coordinate at curvilinear coodinate `s`.
+    //! Tangent \f$x\f$-coordinate at curvilinear coordinate \f$s\f$.
     //!
     virtual real_type tx( real_type s ) const;
 
     //!
-    //! Tangent y-coordinate at curvilinear coodinate `s`.
+    //! Tangent \f$y\f$-coordinate at curvilinear coordinate \f$s\f$.
     //!
     virtual real_type ty( real_type s ) const;
 
     //!
-    //! Tangent derivative x-coordinate at curvilinear coodinate `s`.
+    //! Tangent derivative \f$x\f$-coordinate at curvilinear coordinate \f$s\f$.
     //!
     virtual real_type tx_D( real_type s ) const;
 
     //!
-    //! Tangent derivative y-coordinate at curvilinear coodinate `s`.
+    //! Tangent derivative \f$y\f$-coordinate at curvilinear coordinate \f$s\f$.
     //!
     virtual real_type ty_D( real_type s ) const;
 
     //!
-    //! Tangent second derivative x-coordinate at curvilinear coodinate `s`.
+    //! Tangent second derivative \f$x\f$-coordinate at curvilinear coordinate \f$s\f$.
     //!
     virtual real_type tx_DD( real_type s ) const;
 
     //!
-    //! Tangent second derivative y-coordinate at curvilinear coodinate `s`.
+    //! Tangent second derivative \f$y\f$-coordinate at curvilinear coordinate \f$s\f$.
     //!
     virtual real_type ty_DD( real_type s ) const;
 
     //!
-    //! Tangent third derivative x-coordinate at curvilinear coodinate `s`.
+    //! Tangent third derivative \f$x\f$-coordinate at curvilinear coordinate \f$s\f$.
     //!
     virtual real_type tx_DDD( real_type s ) const;
 
     //!
-    //! Tangent third derivative y-coordinate at curvilinear coodinate `s`.
+    //! Tangent third derivative \f$y\f$-coordinate at curvilinear coordinate \f$s\f$.
     //!
     virtual real_type ty_DDD( real_type s ) const;
 
     // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
     //!
-    //! Normal x-coordinate at curvilinear coodinate `s` (ISO).
+    //! Normal \f$x\f$-coordinate at curvilinear coordinate \f$s\f$ (ISO).
     //!
     real_type nx_ISO( real_type s ) const { return -ty(s); }
 
     //!
-    //! Normal derivative x-coordinate at curvilinear coodinate `s` (ISO).
+    //! Normal derivative \f$x\f$-coordinate at curvilinear coordinate \f$s\f$ (ISO).
     //!
     real_type nx_ISO_D( real_type s ) const { return -ty_D(s); }
 
     //!
-    //! Normal second derivative x-coordinate at curvilinear coodinate `s` (ISO).
+    //! Normal second derivative \f$x\f$-coordinate at curvilinear coordinate \f$s\f$ (ISO).
     //!
     real_type nx_ISO_DD( real_type s ) const { return -ty_DD(s); }
 
     //!
-    //! Normal third derivative x-coordinate at curvilinear coodinate `s` (ISO).
+    //! Normal third derivative \f$x\f$-coordinate at curvilinear coordinate \f$s\f$ (ISO).
     //!
     real_type nx_ISO_DDD( real_type s ) const { return -ty_DDD(s); }
 
     //!
-    //! Normal y-coordinate at curvilinear coodinate `s` (ISO).
+    //! Normal \f$y\f$-coordinate at curvilinear coordinate \f$s\f$ (ISO).
     //!
     real_type ny_ISO( real_type s ) const { return tx(s); }
 
     //!
-    //! Normal derivative y-coordinate at curvilinear coodinate `s` (ISO).
+    //! Normal derivative \f$y\f$-coordinate at curvilinear coordinate \f$s\f$ (ISO).
     //!
     real_type ny_ISO_D( real_type s ) const { return tx_D(s); }
 
     //!
-    //! Normal second derivative y-coordinate at curvilinear coodinate `s` (ISO).
+    //! Normal second derivative \f$y\f$-coordinate at curvilinear coordinate \f$s\f$ (ISO).
     //!
     real_type ny_ISO_DD( real_type s ) const { return tx_DD(s); }
 
     //!
-    //! Normal third derivative y-coordinate at curvilinear coodinate `s` (ISO).
+    //! Normal third derivative \f$y\f$-coordinate at curvilinear coordinate \f$s\f$ (ISO).
     //!
     real_type ny_ISO_DDD( real_type s ) const { return tx_DDD(s); }
 
     //!
-    //! Normal x-coordinate at curvilinear coodinate `s` (SAE).
+    //! Normal \f$x\f$-coordinate at curvilinear coordinate \f$s\f$ (SAE).
     //!
     real_type nx_SAE( real_type s ) const { return ty(s); }
 
     //!
-    //! Normal derivative x-coordinate at curvilinear coodinate `s` (SAE).
+    //! Normal derivative \f$x\f$-coordinate at curvilinear coordinate \f$s\f$ (SAE).
     //!
     real_type nx_SAE_D( real_type s ) const { return ty_D(s); }
 
     //!
-    //! Normal second derivative x-coordinate at curvilinear coodinate `s` (SAE).
+    //! Normal second derivative \f$x\f$-coordinate at curvilinear coordinate \f$s\f$ (SAE).
     //!
     real_type nx_SAE_DD( real_type s ) const { return ty_DD(s); }
 
     //!
-    //! Normal third derivative x-coordinate at curvilinear coodinate `s` (SAE).
+    //! Normal third derivative \f$x\f$-coordinate at curvilinear coordinate \f$s\f$ (SAE).
     //!
     real_type nx_SAE_DDD( real_type s ) const { return ty_DDD(s); }
 
     //!
-    //! Normal y-coordinate at curvilinear coodinate `s` (ISO)
+    //! Normal \f$y\f$-coordinate at curvilinear coordinate \f$s\f$ (ISO)
     //!
     real_type ny_SAE( real_type s ) const { return -tx(s); }
 
     //!
-    //! Normal derivative y-coordinate at curvilinear coodinate `s` (SAE).
+    //! Normal derivative \f$y\f$-coordinate at curvilinear coordinate \f$s\f$ (SAE).
     //!
     real_type ny_SAE_D( real_type s ) const { return -tx_D(s); }
 
     //!
-    //! Normal second derivative x-coordinate at curvilinear coodinate `s` (SAE).
+    //! Normal second derivative \f$x\f$-coordinate at curvilinear coordinate \f$s\f$ (SAE).
     //!
     real_type ny_SAE_DD ( real_type s ) const { return -tx_DD(s); }
 
     //!
-    //! Normal third derivative y-coordinate at curvilinear coodinate `s` (SAE).
+    //! Normal third derivative \f$y\f$-coordinate at curvilinear coordinate \f$s\f$ (SAE).
     //!
     real_type ny_SAE_DDD( real_type s ) const { return -tx_DDD(s); }
 
     // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 
     //!
-    //! Tangent at curvilinear coodinate `s`.
+    //! Tangent at curvilinear coordinate \f$s\f$.
     //!
     virtual
     void
@@ -707,7 +711,7 @@ namespace G2lib {
     }
 
     //!
-    //! Tangent derivative at curvilinear coodinate `s`.
+    //! Tangent derivative at curvilinear coordinate \f$s\f$.
     //!
     virtual
     void
@@ -717,7 +721,7 @@ namespace G2lib {
     }
 
     //!
-    //! Tangent second derivative at curvilinear coodinate `s`.
+    //! Tangent second derivative at curvilinear coordinate \f$s\f$.
     //!
     virtual
     void
@@ -727,7 +731,7 @@ namespace G2lib {
     }
 
     //!
-    //! Tangent third derivative at curvilinear coodinate `s`.
+    //! Tangent third derivative at curvilinear coordinate \f$s\f$.
     //!
     virtual
     void
@@ -739,56 +743,56 @@ namespace G2lib {
     // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 
     //!
-    //! Normal at curvilinear coodinate `s` (ISO).
+    //! Normal at curvilinear coordinate \f$s\f$ (ISO).
     //!
     void
     nor_ISO( real_type s, real_type & nx, real_type & ny ) const
     { tg( s, ny, nx ); nx = -nx; }
 
     //!
-    //! Normal derivative at curvilinear coodinate `s` (ISO).
+    //! Normal derivative at curvilinear coordinate \f$s\f$ (ISO).
     //!
     void
     nor_ISO_D( real_type s, real_type & nx_D, real_type & ny_D ) const
     { tg_D( s, ny_D, nx_D ); nx_D = -nx_D; }
 
     //!
-    //! Normal second derivative at curvilinear coodinate `s` (ISO).
+    //! Normal second derivative at curvilinear coordinate \f$s\f$ (ISO).
     //!
     void
     nor_ISO_DD( real_type s, real_type & nx_DD, real_type & ny_DD ) const
     { tg_DD( s, ny_DD, nx_DD ); nx_DD = -nx_DD; }
 
     //!
-    //! Normal third derivative at curvilinear coodinate `s` (ISO).
+    //! Normal third derivative at curvilinear coordinate \f$s\f$ (ISO).
     //!
     void
     nor_ISO_DDD( real_type s, real_type & nx_DDD, real_type & ny_DDD ) const
     { tg_DDD( s, ny_DDD, nx_DDD ); nx_DDD = -nx_DDD; }
 
     //!
-    //! Normal at curvilinear coodinate `s` (SAE).
+    //! Normal at curvilinear coordinate \f$s\f$ (SAE).
     //!
     void
     nor_SAE( real_type s, real_type & nx, real_type & ny ) const
     { tg( s, ny, nx ); ny = -ny; }
 
     //!
-    //! Normal derivative at curvilinear coodinate `s` (SAE).
+    //! Normal derivative at curvilinear coordinate \f$s\f$ (SAE).
     //!
     void
     nor_SAE_D( real_type s, real_type & nx_D, real_type & ny_D ) const
     { tg_D( s, ny_D, nx_D ); ny_D = -ny_D; }
 
     //!
-    //! Normal second derivative at curvilinear coodinate `s` (SAE).
+    //! Normal second derivative at curvilinear coordinate \f$s\f$ (SAE).
     //!
     void
     nor_SAE_DD( real_type s, real_type & nx_DD, real_type & ny_DD ) const
     { tg_DD( s, ny_DD, nx_DD ); ny_DD = -ny_DD; }
 
     //!
-    //! Normal third at curvilinear coodinate `s` (SAE).
+    //! Normal third at curvilinear coordinate \f$s\f$ (SAE).
     //!
     void
     nor_SAE_DDD( real_type s, real_type & nx_DDD, real_type & ny_DDD ) const
@@ -797,13 +801,13 @@ namespace G2lib {
     // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 
     //!
-    //! Evaluate curve at curvilinear coordinate `s`.
+    //! Evaluate curve at curvilinear coordinate \f$s\f$.
     //!
     //! \param[in]  s  curvilinear coordinate
     //! \param[out] th angle
     //! \param[out] k  curvature
-    //! \param[out] x  x-coordinate
-    //! \param[out] y  y-coordinate
+    //! \param[out] x  \f$x\f$-coordinate
+    //! \param[out] y  \f$y\f$-coordinate
     //!
     virtual
     void
@@ -820,14 +824,14 @@ namespace G2lib {
     }
 
     //!
-    //! Evaluate curve with offset at curvilinear coordinate `s` (ISO).
+    //! Evaluate curve with offset at curvilinear coordinate \f$s\f$ (ISO).
     //!
     //! \param[in]  s    curvilinear coordinate
     //! \param[in]  offs offset
     //! \param[out] th   angle
     //! \param[out] k    curvature
-    //! \param[out] x    x-coordinate
-    //! \param[out] y    y-coordinate
+    //! \param[out] x    \f$x\f$-coordinate
+    //! \param[out] y    \f$y\f$-coordinate
     //!
     virtual
     void
@@ -846,14 +850,14 @@ namespace G2lib {
     }
 
     //!
-    //! Evaluate curve with offset at curvilinear coordinate `s` (SAE).
+    //! Evaluate curve with offset at curvilinear coordinate \f$s\f$ (SAE).
     //!
     //! \param[in]  s    curvilinear coordinate
     //! \param[in]  offs offset
     //! \param[out] th   angle
     //! \param[out] k    curvature
-    //! \param[out] x    x-coordinate
-    //! \param[out] y    y-coordinate
+    //! \param[out] x    \f$x\f$-coordinate
+    //! \param[out] y    \f$y\f$-coordinate
     //!
     virtual
     void
@@ -874,70 +878,70 @@ namespace G2lib {
     // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 
     //!
-    //! x-coordinate at curvilinear coordinate `s`.
+    //! \f$x\f$-coordinate at curvilinear coordinate \f$s\f$.
     //!
     virtual real_type X( real_type s ) const = 0;
 
     //!
-    //! y-coordinate at curvilinear coordinate `s`.
+    //! \f$y\f$-coordinate at curvilinear coordinate \f$s\f$.
     //!
     virtual real_type Y( real_type s ) const = 0;
 
     //!
-    //! x-coordinate derivative at curvilinear coordinate `s`.
+    //! \f$x\f$-coordinate derivative at curvilinear coordinate \f$s\f$.
     //!
     virtual real_type X_D( real_type s ) const = 0;
 
     //!
-    //! y-coordinate derivative at curvilinear coordinate `s`.
+    //! \f$y\f$-coordinate derivative at curvilinear coordinate \f$s\f$.
     //!
     virtual real_type Y_D( real_type s ) const = 0;
 
     //!
-    //! x-coordinate second derivative at curvilinear coordinate `s`.
+    //! \f$x\f$-coordinate second derivative at curvilinear coordinate \f$s\f$.
     //!
     virtual real_type X_DD( real_type s ) const = 0;
 
     //!
-    //! y-coordinate second derivative at curvilinear coordinate `s`.
+    //! \f$y\f$-coordinate second derivative at curvilinear coordinate \f$s\f$.
     //!
     virtual real_type Y_DD( real_type s ) const = 0;
 
     //!
-    //! x-coordinate third derivative at curvilinear coordinate `s`.
+    //! \f$x\f$-coordinate third derivative at curvilinear coordinate \f$s\f$.
     //!
     virtual real_type X_DDD( real_type s ) const = 0;
 
     //!
-    //! y-coordinate third derivative at curvilinear coordinate `s`.
+    //! \f$y\f$-coordinate third derivative at curvilinear coordinate \f$s\f$.
     //!
     virtual real_type Y_DDD( real_type s ) const = 0;
 
     // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 
     //!
-    //! x and y-coordinate at curvilinear coordinate `s`.
+    //! x and \f$y\f$-coordinate at curvilinear coordinate \f$s\f$.
     //!
     virtual
     void
     eval( real_type s, real_type & x, real_type & y ) const = 0;
 
     //!
-    //! x and y-coordinate derivative at curvilinear coordinate `s`.
+    //! x and \f$y\f$-coordinate derivative at curvilinear coordinate \f$s\f$.
     //!
     virtual
     void
     eval_D( real_type s, real_type & x_D, real_type & y_D ) const = 0;
 
     //!
-    //! x and y-coordinate second derivative at curvilinear coordinate `s`.
+    //! x and \f$y\f$-coordinate second derivative at curvilinear coordinate \f$s\f$.
     //!
     virtual
     void
     eval_DD( real_type s, real_type & x_DD, real_type & y_DD ) const = 0;
 
     //!
-    //! x and y-coordinate third derivative at curvilinear coordinate `s`.
+    //! x and \f$y\f$-coordinate third derivative at curvilinear coordinate \f$s\f$.
     //!
     virtual
     void
@@ -952,82 +956,82 @@ namespace G2lib {
     \*/
 
     //!
-    //! x-coordinate at curvilinear coordinate `s` with offset `offs` (ISO).
+    //! \f$x\f$-coordinate at curvilinear coordinate \f$s\f$ with offset `offs` (ISO).
     //!
     virtual real_type X_ISO( real_type s, real_type offs ) const;
 
     //!
-    //! y-coordinate at curvilinear coordinate `s` with offset `offs` (ISO).
+    //! \f$y\f$-coordinate at curvilinear coordinate \f$s\f$ with offset `offs` (ISO).
     //!
     virtual real_type Y_ISO( real_type s, real_type offs ) const;
 
     //!
-    //! x-coordinate derivative at curvilinear coordinate `s` with offset `offs` (ISO).
+    //! \f$x\f$-coordinate derivative at curvilinear coordinate \f$s\f$ with offset `offs` (ISO).
     //!
     virtual real_type X_ISO_D( real_type s, real_type offs ) const;
 
     //!
-    //! y-coordinate derivative at curvilinear coordinate `s` with offset `offs` (ISO).
+    //! \f$y\f$-coordinate derivative at curvilinear coordinate \f$s\f$ with offset `offs` (ISO).
     //!
     virtual real_type Y_ISO_D( real_type s, real_type offs ) const;
 
     //!
-    //! x-coordinate second derivative at curvilinear coordinate `s` with offset `offs` (ISO).
+    //! \f$x\f$-coordinate second derivative at curvilinear coordinate \f$s\f$ with offset `offs` (ISO).
     //!
     virtual real_type X_ISO_DD( real_type s, real_type offs ) const;
 
     //!
-    //! y-coordinate second derivative at curvilinear coordinate `s` with offset `offs` (ISO).
+    //! \f$y\f$-coordinate second derivative at curvilinear coordinate \f$s\f$ with offset `offs` (ISO).
     //!
     virtual real_type Y_ISO_DD( real_type s, real_type offs ) const;
 
     //!
-    //! x-coordinate third derivative at curvilinear coordinate `s` with offset `offs` (ISO).
+    //! \f$x\f$-coordinate third derivative at curvilinear coordinate \f$s\f$ with offset `offs` (ISO).
     //!
     virtual real_type X_ISO_DDD( real_type s, real_type offs ) const;
 
     //!
-    //! y-coordinate third derivative at curvilinear coordinate `s` with offset `offs` (ISO).
+    //! \f$y\f$-coordinate third derivative at curvilinear coordinate \f$s\f$ with offset `offs` (ISO).
     //!
     virtual real_type Y_ISO_DDD( real_type s, real_type offs ) const;
 
     //!
-    //! x-coordinate at curvilinear coordinate `s` with offset `offs` (SAE).
+    //! \f$x\f$-coordinate at curvilinear coordinate \f$s\f$ with offset `offs` (SAE).
     //!
     real_type X_SAE( real_type s, real_type offs ) const { return this->X_ISO(s,-offs); }
 
     //!
-    //! y-coordinate at curvilinear coordinate `s` with offset `offs` (SAE).
+    //! \f$y\f$-coordinate at curvilinear coordinate \f$s\f$ with offset `offs` (SAE).
     //!
     real_type Y_SAE( real_type s, real_type offs ) const { return this->Y_ISO(s,-offs); }
 
     //!
-    //! x-coordinate derivative at curvilinear coordinate `s` with offset `offs` (SAE).
+    //! \f$x\f$-coordinate derivative at curvilinear coordinate \f$s\f$ with offset `offs` (SAE).
     //!
     real_type X_SAE_D( real_type s, real_type offs ) const { return this->X_ISO_D(s,-offs); }
 
     //!
-    //! y-coordinate derivative at curvilinear coordinate `s` with offset `offs` (SAE).
+    //! \f$y\f$-coordinate derivative at curvilinear coordinate \f$s\f$ with offset `offs` (SAE).
     //!
     real_type Y_SAE_D( real_type s, real_type offs ) const { return this->Y_ISO_D(s,-offs); }
 
     //!
-    //! x-coordinate second derivative at curvilinear coordinate `s` with offset `offs` (SAE).
+    //! \f$x\f$-coordinate second derivative at curvilinear coordinate \f$s\f$ with offset `offs` (SAE).
     //!
     real_type X_SAE_DD( real_type s, real_type offs ) const { return this->X_ISO_DD(s,-offs); }
 
     //!
-    //! y-coordinate second derivative at curvilinear coordinate `s` with offset `offs` (SAE).
+    //! \f$y\f$-coordinate second derivative at curvilinear coordinate \f$s\f$ with offset `offs` (SAE).
     //!
     real_type Y_SAE_DD( real_type s, real_type offs ) const { return this->Y_ISO_DD(s,-offs); }
 
     //!
-    //! x-coordinate third derivative at curvilinear coordinate `s` with offset `offs` (SAE).
+    //! \f$x\f$-coordinate third derivative at curvilinear coordinate \f$s\f$ with offset `offs` (SAE).
     //!
     real_type X_SAE_DDD( real_type s, real_type offs ) const { return this->X_ISO_DDD(s,-offs); }
 
     //!
-    //! y-coordinate third derivative at curvilinear coordinate `s` with offset `offs` (SAE).
+    //! \f$y\f$-coordinate third derivative at curvilinear coordinate \f$s\f$ with offset `offs` (SAE).
     //!
     real_type Y_SAE_DDD( real_type s, real_type offs ) const { return this->Y_ISO_DDD(s,-offs); }
 
@@ -1073,8 +1077,8 @@ namespace G2lib {
     //!
     //! \param[in]  s     parameter on the curve
     //! \param[in]  offs  offset of the curve
-    //! \param[out] x_D   x-coordinate
-    //! \param[out] y_D   y-coordinate
+    //! \param[out] x_D   \f$x\f$-coordinate
+    //! \param[out] y_D   \f$y\f$-coordinate
     //!
     virtual
     void
@@ -1090,8 +1094,8 @@ namespace G2lib {
     //!
     //! \param[in]  s     parameter on the curve
     //! \param[in]  offs  offset of the curve
-    //! \param[out] x_D   x-coordinate first derivative
-    //! \param[out] y_D   y-coordinate first derivative
+    //! \param[out] x_D   \f$x\f$-coordinate first derivative
+    //! \param[out] y_D   \f$y\f$-coordinate first derivative
     //!
     void
     eval_SAE_D(
@@ -1108,8 +1112,8 @@ namespace G2lib {
     //!
     //! \param[in]  s     parameter on the curve
     //! \param[in]  offs  offset of the curve
-    //! \param[out] x_DD  x-coordinate second derivative
-    //! \param[out] y_DD  y-coordinate second derivative
+    //! \param[out] x_DD  \f$x\f$-coordinate second derivative
+    //! \param[out] y_DD  \f$y\f$-coordinate second derivative
     //!
     virtual
     void
@@ -1125,8 +1129,8 @@ namespace G2lib {
     //!
     //! \param[in]  s     parameter on the curve
     //! \param[in]  offs  offset of the curve
-    //! \param[out] x_DD  x-coordinate second derivative
-    //! \param[out] y_DD  y-coordinate second derivative
+    //! \param[out] x_DD  \f$x\f$-coordinate second derivative
+    //! \param[out] y_DD  \f$y\f$-coordinate second derivative
     //!
     void
     eval_SAE_DD(
@@ -1143,8 +1147,8 @@ namespace G2lib {
     //!
     //! \param[in]  s     parameter on the curve
     //! \param[in]  offs  offset of the curve
-    //! \param[out] x_DDD x-coordinate third derivative
-    //! \param[out] y_DDD y-coordinate third derivative
+    //! \param[out] x_DDD \f$x\f$-coordinate third derivative
+    //! \param[out] y_DDD \f$y\f$-coordinate third derivative
     //!
     virtual
     void
@@ -1160,8 +1164,8 @@ namespace G2lib {
     //!
     //! \param[in]  s     parameter on the curve
     //! \param[in]  offs  offset of the curve
-    //! \param[out] x_DDD x-coordinate third derivative
-    //! \param[out] y_DDD y-coordinate third derivative
+    //! \param[out] x_DDD \f$x\f$-coordinate third derivative
+    //! \param[out] y_DDD \f$y\f$-coordinate third derivative
     //!
     void
     eval_SAE_DDD(
@@ -1181,17 +1185,17 @@ namespace G2lib {
      |  \__|_|  \__,_|_| |_|___/_|  \___/|_|  |_| |_| |_|
     \*/
 
-    //! translate curve by \f$ (t_x,t_y) \f$
+    //! translate curve by \f$(t_x,t_y)\f$
     virtual
     void
     translate( real_type tx, real_type ty ) = 0;
 
     //!
-    //! Rotate curve by angle \f$ theta \f$ centered at point  \f$ (c_x,c_y)\f$.
+    //! Rotate curve by angle \f$\theta\f$ centered at point \f$(c_x,c_y)\f$.
     //!
-    //! \param[in] angle angle  \f$ theta \f$
-    //! \param[in] cx    \f$ c_x\f$
-    //! \param[in] cy    \f$ c_y\f$
+    //! \param[in] angle angle \f$\theta\f$
+    //! \param[in] cx    \f$c_x\f$
+    //! \param[in] cy    \f$c_y\f$
     //!
     virtual
     void
@@ -1219,7 +1223,7 @@ namespace G2lib {
     change_origin( real_type newx0, real_type newy0 ) = 0;
 
     //!
-    //! Cut curve at parametrix coordinate `s_begin` and `s_end`.
+    //! Cut curve at parametric coordinate `s_begin` and `s_end`.
     //!
     virtual
     void
@@ -1330,10 +1334,10 @@ namespace G2lib {
     //!
     //! Given a point find closest point on the curve.
     //!
-    //! \param  qx  x-coordinate of the point
-    //! \param  qy  y-coordinate of the point
-    //! \param  x   x-coordinate of the projected point on the curve
-    //! \param  y   y-coordinate of the projected point on the curve
+    //! \param  qx  \f$x\f$-coordinate of the point
+    //! \param  qy  \f$y\f$-coordinate of the point
+    //! \param  x   \f$x\f$-coordinate of the projected point on the curve
+    //! \param  y   \f$y\f$-coordinate of the projected point on the curve
     //! \param  s   parameter on the curve of the projection
     //! \param  t   curvilinear coordinate of the point x,y (if orthogonal projection)
     //! \param  dst distance point projected point
@@ -1356,10 +1360,10 @@ namespace G2lib {
     //!
     //! Given a point find closest point on the curve.
     //!
-    //! \param  qx  x-coordinate of the point
-    //! \param  qy  y-coordinate of the point
-    //! \param  x   x-coordinate of the projected point on the curve
-    //! \param  y   y-coordinate of the projected point on the curve
+    //! \param  qx  \f$x\f$-coordinate of the point
+    //! \param  qy  \f$y\f$-coordinate of the point
+    //! \param  x   \f$x\f$-coordinate of the projected point on the curve
+    //! \param  y   \f$y\f$-coordinate of the projected point on the curve
     //! \param  s   parameter on the curve of the projection
     //! \param  t   curvilinear coordinate of the point x,y (if orthogonal projection)
     //! \param  dst distance point projected point
@@ -1385,11 +1389,11 @@ namespace G2lib {
     //!
     //! Given a point find closest point on the curve.
     //!
-    //! \param  qx   x-coordinate of the point
-    //! \param  qy   y-coordinate of the point
+    //! \param  qx   \f$x\f$-coordinate of the point
+    //! \param  qy   \f$y\f$-coordinate of the point
     //! \param  offs offset of the curve
-    //! \param  x    x-coordinate of the projected point on the curve
-    //! \param  y    y-coordinate of the projected point on the curve
+    //! \param  x    \f$x\f$-coordinate of the projected point on the curve
+    //! \param  y    \f$y\f$-coordinate of the projected point on the curve
     //! \param  s    parameter on the curve of the projection
     //! \param  t    curvilinear coordinate of the point x,y (if orthogonal projection)
     //! \param  dst  distance point projected point
@@ -1413,11 +1417,11 @@ namespace G2lib {
     //!
     //! Given a point find closest point on the curve.
     //!
-    //! \param  qx   x-coordinate of the point
-    //! \param  qy   y-coordinate of the point
+    //! \param  qx   \f$x\f$-coordinate of the point
+    //! \param  qy   \f$y\f$-coordinate of the point
     //! \param  offs offset of the curve
-    //! \param  x    x-coordinate of the projected point on the curve
-    //! \param  y    y-coordinate of the projected point on the curve
+    //! \param  x    \f$x\f$-coordinate of the projected point on the curve
+    //! \param  y    \f$y\f$-coordinate of the projected point on the curve
     //! \param  s    parameter on the curve of the projection
     //! \param  t    curvilinear coordinate of the point x,y (if orthogonal projection)
     //! \param  dst  distance point projected point
@@ -1442,10 +1446,10 @@ namespace G2lib {
     }
 
     //!
-    //! Compute the distance between a point \f$ q=(q_x,q_y) \f$ and the curve.
+    //! Compute the distance between a point \f$q=(q_x,q_y)\f$ and the curve.
     //!
-    //! \param[in] qx component \f$ q_x \f$
-    //! \param[in] qy component \f$ q_y \f$
+    //! \param[in] qx component \f$q_x\f$
+    //! \param[in] qy component \f$q_y\f$
     //! \return the computed distance
     //!
     virtual
@@ -1457,10 +1461,10 @@ namespace G2lib {
     }
 
     //!
-    //! Compute the distance between a point \f$ q=(q_x,q_y) \f$ and the curve with offset (ISO).
+    //! Compute the distance between a point \f$q=(q_x,q_y)\f$ and the curve with offset (ISO).
     //!
-    //! \param[in] qx   component \f$ q_x \f$
-    //! \param[in] qy   component \f$ q_y \f$
+    //! \param[in] qx   component \f$q_x\f$
+    //! \param[in] qy   component \f$q_y\f$
     //! \param[in] offs offset of the curve
     //! \return the computed distance
     //!
@@ -1476,10 +1480,10 @@ namespace G2lib {
     }
 
     //!
-    //! Compute the distance between a point \f$ q=(q_x,q_y) \f$ and the curve with offset (SAE).
+    //! Compute the distance between a point \f$q=(q_x,q_y)\f$ and the curve with offset (SAE).
     //!
-    //! \param[in] qx   component \f$ q_x \f$
-    //! \param[in] qy   component \f$ q_y \f$
+    //! \param[in] qx   component \f$q_x\f$
+    //! \param[in] qy   component \f$q_y\f$
     //! \param[in] offs offset of the curve
     //! \return the computed distance
     //!
@@ -1503,20 +1507,20 @@ namespace G2lib {
     \*/
 
     //!
-    //! Find the curvilinear coordinate of point \f$ P=(x,y) \f$
+    //! Find the curvilinear coordinate of point \f$P=(x,y)\f$
     //! respect to the curve (ISO), i.e.
     //!
     //! \f[
     //!     P = C(s)+N(s)t
     //! \f]
     //!
-    //! where \f$ C(s) \f$ is the curve position respect to the curvilinear coordinates
-    //! and \f$ C(s) \f$ is the normal at the point \f$ C(s) \f$.
+    //! where \f$C(s)\f$ is the curve position respect to the curvilinear coordinates
+    //! and \f$C(s)\f$ is the normal at the point \f$C(s)\f$.
     //!
-    //! \param[in]  x component \f$ x \f$
-    //! \param[in]  y component \f$ y \f$
+    //! \param[in]  x component \f$x\f$
+    //! \param[in]  y component \f$y\f$
     //! \param[out] s curvilinear coordinate
-    //! \param[out] t offset respect to the curve of \f$ (x,y) \f$
+    //! \param[out] t offset respect to the curve of \f$(x,y)\f$
     //! \return true if the coordinate are found
     //!
     bool
@@ -1532,20 +1536,20 @@ namespace G2lib {
     }
 
     //!
-    //! Find the curvilinear coordinate of point \f$ (x,y) \f$
+    //! Find the curvilinear coordinate of point \f$(x,y)\f$
     //! respect to the curve (SAE), i.e.
     //!
     //! \f[
     //!     P = C(s)+N(s)t
     //! \f]
     //!
-    //! where \f$ C(s) \f$ is the curve position respect to the curvilinear coordinates
-    //! and \f$ C(s) \f$ is the normal at the point \f$ C(s) \f$.
+    //! where \f$C(s)\f$ is the curve position respect to the curvilinear coordinates
+    //! and \f$C(s)\f$ is the normal at the point \f$C(s)\f$.
     //!
-    //! \param[in]  x component \f$ x \f$
-    //! \param[in]  y component \f$ y \f$
+    //! \param[in]  x component \f$x\f$
+    //! \param[in]  y component \f$y\f$
     //! \param[out] s curvilinear coordinate
-    //! \param[out] t offset respect to the curve of \f$ (x,y) \f$
+    //! \param[out] t offset respect to the curve of \f$(x,y)\f$
     //! \return true if the coordinate are found
     //!
     bool

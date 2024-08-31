@@ -1,0 +1,37 @@
+name: doxygen-doc
+channels:
+  - conda-forge
+dependencies:
+  - python ==3.12.*
+  - sphinx ==6.2.1
+  - jupytext ==1.16.*
+  - nbsphinx ==0.9.*
+  - myst-parser ==3.*.*
+  - sphinx-copybutton
+  - sphinx-autoapi ==3.3.*
+  - matplotlib
+  # extra
+  - numpy
+  - scipy
+  - sympy
+  - graphviz
+  - imagemagick
+  - beautifulsoup4
+  # PIP
+  - pip
+  - pip:
+    - poetry               #==1.8.*
+    - doxysphinx           # ==3.3.*
+    - sphinx-book-theme    # ==1.1.*
+    - sphinx-rtd-theme     # ==3.*.*
+    - sphinx_design        # ==0.6.*
+    - sphinx_needs         # ==3.*.*
+    - sphinxcontrib.plantuml
+    - sphinxcontrib.doxylink
+    - sphinxcontrib.bibtex
+    - sphinxcontrib-email
+    - sphinxcontrib-doxylink
+    - sphinxcontrib-tikz
+    - sphinxcontrib-video
+    - sphinxcontrib-proof
+    - sphinx-mdinclude

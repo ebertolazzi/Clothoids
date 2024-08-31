@@ -1,0 +1,14 @@
+.. meta::9a2d23b600144708bfaac363d6cd96e99ea722fc28dfb77b743a90d1b556744398feddb195518a2545824f29c9cb6fbedbf551b832702d7549bacf9e298f912c
+
+:orphan:
+
+.. title:: Clothoids: Dubins3p Class Reference
+
+Dubins3p Class Reference
+========================
+
+.. container:: doxygen-content
+
+   
+   .. raw:: html
+     :file: class_dubins3p.html

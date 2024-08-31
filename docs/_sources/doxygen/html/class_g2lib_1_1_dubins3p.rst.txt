@@ -1,0 +1,14 @@
+.. meta::38bf35eb602beaffae1ad600d9f6483b34246bc353eec658d040df9e39f7852ebb5b164d59dda2795e9e78458779abd20e4d3d86032d4d07bbb16c4b21ba7f55
+
+:orphan:
+
+.. title:: Clothoids: G2lib::Dubins3p Class Reference
+
+Dubins3p Class Reference
+========================
+
+.. container:: doxygen-content
+
+   
+   .. raw:: html
+     :file: class_g2lib_1_1_dubins3p.html

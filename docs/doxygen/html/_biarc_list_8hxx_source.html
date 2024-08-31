@@ -1,0 +1,1099 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Clothoids: /Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Clothoids/BiarcList.hxx Source File &mdash; Clothoids</title>
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=19f00094" />
+      <link rel="stylesheet" type="text/css" href="../../_static/graphviz.css?v=fd3f3429" />
+      <link rel="stylesheet" type="text/css" href="../../_static/plot_directive.css?v=7f9a90b1" />
+      <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
+      <link rel="stylesheet" type="text/css" href="../../_static/sphinx-design.min.css?v=95c83b7e" />
+      <link rel="stylesheet" type="text/css" href="../../_static/sphinx-data-viewer/jsonview.bundle.css?v=f6ef2277" />
+      <link rel="stylesheet" type="text/css" href="../../_static/sphinx-needs/libs/html/datatables.min.css?v=4b4fd840" />
+      <link rel="stylesheet" type="text/css" href="../../_static/sphinx-needs/common_css/need_style.css?v=678fb11e" />
+      <link rel="stylesheet" type="text/css" href="../../_static/sphinx-needs/common_css/need_core.css?v=f5b60a78" />
+      <link rel="stylesheet" type="text/css" href="../../_static/sphinx-needs/common_css/needstable.css?v=5e1b6797" />
+      <link rel="stylesheet" type="text/css" href="../../_static/sphinx-needs/common_css/need_links.css?v=2150a916" />
+      <link rel="stylesheet" type="text/css" href="../../_static/sphinx-needs/common_css/need_toggle.css?v=5c6620df" />
+      <link rel="stylesheet" type="text/css" href="../../_static/sphinx-needs/modern.css?v=803738c0" />
+      <link rel="stylesheet" type="text/css" href="../../_static/sphinx-rtd-theme-custom.css?v=76d57d84" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../../_static/documentation_options.js?v=60dbed4a"></script>
+        <script src="../../_static/doctools.js?v=9a2dae69"></script>
+        <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+        <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
+        <script src="../../_static/copybutton.js?v=f281be69"></script>
+        <script src="../../_static/design-tabs.js?v=f930bc37"></script>
+        <script src="../../_static/sphinx-data-viewer/jsonview.bundle.js?v=18cd53c5"></script>
+        <script src="../../_static/sphinx-data-viewer/jsonview_loader.js?v=f7ff7e7d"></script>
+        <script src="../../_static/sphinx-needs/libs/html/datatables.min.js?v=8a4aee21"></script>
+        <script src="../../_static/sphinx-needs/libs/html/datatables_loader.js?v=a2cae175"></script>
+        <script src="../../_static/sphinx-needs/libs/html/sphinx_needs_collapse.js?v=dca66431"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            Clothoids
+              <img src="../../_static/logo.png" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                2.0.13
+
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../README.html">Clothoids</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../index_CPP.html">Clothoids C++ interface</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="namespaces_namespaces.html">Namespaces</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="namespaces.html">Namespace List</a></li>
+<li class="toctree-l3"><a class="reference internal" href="namespacemembers_namespace_members.html">Namespace Members</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="namespacemembers.html">All</a></li>
+<li class="toctree-l4"><a class="reference internal" href="namespacemembers_func.html">Functions</a></li>
+<li class="toctree-l4"><a class="reference internal" href="namespacemembers_type.html">Typedefs</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="annotated_classes.html">Classes</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="annotated.html">Class List</a></li>
+<li class="toctree-l3"><a class="reference internal" href="classes.html">Class Index</a></li>
+<li class="toctree-l3"><a class="reference internal" href="hierarchy.html">Class Hierarchy</a></li>
+<li class="toctree-l3"><a class="reference internal" href="functions_class_members.html">Class Members</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="functions_all.html">All</a></li>
+<li class="toctree-l4"><a class="reference internal" href="functions_func_functions.html">Functions</a></li>
+<li class="toctree-l4"><a class="reference internal" href="functions_type.html">Typedefs</a></li>
+<li class="toctree-l4"><a class="reference internal" href="functions_rela.html">Related Symbols</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="files.html">Files</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../index_MATLAB.html">Clothoids MATLAB interface</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../doxygen2/html/annotated_classes.html">Classes</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../doxygen2/html/annotated.html">Class List</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../doxygen2/html/classes.html">Class Index</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../doxygen2/html/hierarchy.html">Class Hierarchy</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../doxygen2/html/functions_class_members.html">Class Members</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../doxygen2/html/functions.html">All</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../doxygen2/html/functions_func.html">Functions</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../doxygen2/html/functions_func.html">Functions</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../LICENSE.html">LICENSE</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">Clothoids</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Clothoids: /Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Clothoids/BiarcList.hxx Source File</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../_sources/doxygen/html/_biarc_list_8hxx_source.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="users-enrico-ricerca-develop-pins-pins-mechatronix-libsources-submodules-clothoids-src-clothoids-biarclist-hxx-source-file">
+<h1>/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Clothoids/BiarcList.hxx Source File<a class="headerlink" href="#users-enrico-ricerca-develop-pins-pins-mechatronix-libsources-submodules-clothoids-src-clothoids-biarclist-hxx-source-file" title="Link to this heading"></a></h1>
+<div class="doxygen-content docutils container">
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en-US">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=11"/>
+<meta name="generator" content="Doxygen 1.12.0"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Clothoids: /Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Clothoids/BiarcList.hxx Source File</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<script type="text/javascript" src="clipboard.js"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="resize.js"></script>
+<script type="text/javascript">
+window.MathJax = {
+  options: {
+    ignoreHtmlClass: 'tex2jax_ignore',
+    processHtmlClass: 'tex2jax_process'
+  }
+};
+</script>
+<script type="text/javascript" id="MathJax-script" async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+<link href="doxygen-awesome.css" rel="stylesheet" type="text/css"/>
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr id="projectrow">
+  <td id="projectalign">
+   <div id="projectname">Clothoids
+   </div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Generated by Doxygen 1.12.0 -->
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(function() { codefold.init(0); });
+/* @license-end */
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(function() {
+  initMenu('',false,false,'search.php','Search',false);
+});
+/* @license-end */
+</script>
+<div id="main-nav"></div>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(function(){ initResizable(false); });
+/* @license-end */
+</script>
+<div id="nav-path" class="navpath">
+  <ul>
+<li class="navelem"><a class="el" href="dir_68267d1309a1af8e8297ef4c3efbcdba.html">src</a></li><li class="navelem"><a class="el" href="dir_8cd12074276c6cad95ab77d33f11f7e2.html">Clothoids</a></li>  </ul>
+</div>
+</div><!-- top -->
+<div id="doc-content">
+<div class="header">
+  <div class="headertitle"><div class="title">BiarcList.hxx</div></div>
+</div><!--header-->
+<div class="contents">
+<div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno">    1</span><span class="comment">/*--------------------------------------------------------------------------*\</span></div>
+<div class="line"><a id="l00002" name="l00002"></a><span class="lineno">    2</span><span class="comment"> |                                                                          |</span></div>
+<div class="line"><a id="l00003" name="l00003"></a><span class="lineno">    3</span><span class="comment"> |  Copyright (C) 2017                                                      |</span></div>
+<div class="line"><a id="l00004" name="l00004"></a><span class="lineno">    4</span><span class="comment"> |                                                                          |</span></div>
+<div class="line"><a id="l00005" name="l00005"></a><span class="lineno">    5</span><span class="comment"> |         , __                 , __                                        |</span></div>
+<div class="line"><a id="l00006" name="l00006"></a><span class="lineno">    6</span><span class="comment"> |        /|/  \               /|/  \                                       |</span></div>
+<div class="line"><a id="l00007" name="l00007"></a><span class="lineno">    7</span><span class="comment"> |         | __/ _   ,_         | __/ _   ,_                                |</span></div>
+<div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span><span class="comment"> |         |   \|/  /  |  |   | |   \|/  /  |  |   |                        |</span></div>
+<div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span><span class="comment"> |         |(__/|__/   |_/ \_/|/|(__/|__/   |_/ \_/|/                       |</span></div>
+<div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span><span class="comment"> |                           /|                   /|                        |</span></div>
+<div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span><span class="comment"> |                           \|                   \|                        |</span></div>
+<div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span><span class="comment"> |                                                                          |</span></div>
+<div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span><span class="comment"> |      Enrico Bertolazzi                                                   |</span></div>
+<div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span><span class="comment"> |      Dipartimento di Ingegneria Industriale                              |</span></div>
+<div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span><span class="comment"> |      Universita` degli Studi di Trento                                   |</span></div>
+<div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span><span class="comment"> |      email: enrico.bertolazzi@unitn.it                                   |</span></div>
+<div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span><span class="comment"> |                                                                          |</span></div>
+<div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span><span class="comment">\*--------------------------------------------------------------------------*/</span></div>
+<div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span> </div>
+<div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span> </div>
+<div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span><span class="keyword">namespace </span><a class="code hl_namespace" href="namespace_g2lib.html">G2lib</a> {</div>
+<div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span> </div>
+<div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span>  <span class="keyword">using </span>std::vector;</div>
+<div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span> </div>
+<div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span>  <span class="keyword">class </span>ClothoidList;</div>
+<div class="line"><a id="l00029" name="l00029"></a><span class="lineno">   29</span> </div>
+<div class="line"><a id="l00030" name="l00030"></a><span class="lineno">   30</span>  <span class="comment">/*\</span></div>
+<div class="line"><a id="l00031" name="l00031"></a><span class="lineno">   31</span><span class="comment">   |  ____  _                _     _     _</span></div>
+<div class="line"><a id="l00032" name="l00032"></a><span class="lineno">   32</span><span class="comment">   | | __ )(_) __ _ _ __ ___| |   (_)___| |_</span></div>
+<div class="line"><a id="l00033" name="l00033"></a><span class="lineno">   33</span><span class="comment">   | |  _ \| |/ _` | &#39;__/ __| |   | / __| __|</span></div>
+<div class="line"><a id="l00034" name="l00034"></a><span class="lineno">   34</span><span class="comment">   | | |_) | | (_| | | | (__| |___| \__ \ |_</span></div>
+<div class="line"><a id="l00035" name="l00035"></a><span class="lineno">   35</span><span class="comment">   | |____/|_|\__,_|_|  \___|_____|_|___/\__|</span></div>
+<div class="line"><a id="l00036" name="l00036"></a><span class="lineno">   36</span><span class="comment">  \*/</span></div>
+<div class="foldopen" id="foldopen00042" data-start="{" data-end="};">
+<div class="line"><a id="l00042" name="l00042"></a><span class="lineno"><a class="line" href="class_g2lib_1_1_biarc_list.html">   42</a></span>  <span class="keyword">class </span><a class="code hl_class" href="class_g2lib_1_1_biarc_list.html">BiarcList</a> : <span class="keyword">public</span> <a class="code hl_class" href="class_g2lib_1_1_base_curve.html">BaseCurve</a> {</div>
+<div class="line"><a id="l00043" name="l00043"></a><span class="lineno">   43</span> </div>
+<div class="line"><a id="l00044" name="l00044"></a><span class="lineno">   44</span>    <span class="keyword">friend</span> <span class="keyword">class </span><a class="code hl_class" href="class_g2lib_1_1_clothoid_list.html">ClothoidList</a>;</div>
+<div class="line"><a id="l00045" name="l00045"></a><span class="lineno">   45</span> </div>
+<div class="line"><a id="l00046" name="l00046"></a><span class="lineno">   46</span>    vector&lt;real_type&gt; m_s0;</div>
+<div class="line"><a id="l00047" name="l00047"></a><span class="lineno">   47</span>    vector&lt;Biarc&gt;     m_biarc_list;</div>
+<div class="line"><a id="l00048" name="l00048"></a><span class="lineno">   48</span> </div>
+<div class="line"><a id="l00049" name="l00049"></a><span class="lineno">   49</span><span class="preprocessor">    #ifdef CLOTHOIDS_USE_THREADS</span></div>
+<div class="line"><a id="l00050" name="l00050"></a><span class="lineno">   50</span>    <span class="keyword">mutable</span> Utils::BinarySearch&lt;integer&gt; m_last_interval;</div>
+<div class="line"><a id="l00051" name="l00051"></a><span class="lineno">   51</span><span class="preprocessor">    #else</span></div>
+<div class="line"><a id="l00052" name="l00052"></a><span class="lineno">   52</span>    <span class="keyword">mutable</span> <a class="code hl_typedef" href="namespace_g2lib.html#affd533209e1ea0ddab7324812690f0b8">integer</a> m_last_interval{0};</div>
+<div class="line"><a id="l00053" name="l00053"></a><span class="lineno">   53</span><span class="preprocessor">    #endif</span></div>
+<div class="line"><a id="l00054" name="l00054"></a><span class="lineno">   54</span> </div>
+<div class="line"><a id="l00055" name="l00055"></a><span class="lineno">   55</span>    <span class="keyword">mutable</span> <span class="keywordtype">bool</span>               m_aabb_done{<span class="keyword">false</span>};</div>
+<div class="line"><a id="l00056" name="l00056"></a><span class="lineno">   56</span>    <span class="keyword">mutable</span> <a class="code hl_typedef" href="namespace_g2lib.html#a15ab518016103cf0251cd4c759aff627">AABB_TREE</a>          m_aabb_tree;</div>
+<div class="line"><a id="l00057" name="l00057"></a><span class="lineno">   57</span>    <span class="keyword">mutable</span> <a class="code hl_typedef" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a>          m_aabb_offs{<a class="code hl_typedef" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a>(0)};</div>
+<div class="line"><a id="l00058" name="l00058"></a><span class="lineno">   58</span>    <span class="keyword">mutable</span> <a class="code hl_typedef" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a>          m_aabb_max_angle{<a class="code hl_typedef" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a>(0)};</div>
+<div class="line"><a id="l00059" name="l00059"></a><span class="lineno">   59</span>    <span class="keyword">mutable</span> <a class="code hl_typedef" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a>          m_aabb_max_size{<a class="code hl_typedef" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a>(0)};</div>
+<div class="line"><a id="l00060" name="l00060"></a><span class="lineno">   60</span>    <span class="keyword">mutable</span> vector&lt;Triangle2D&gt; m_aabb_triangles;</div>
+<div class="line"><a id="l00061" name="l00061"></a><span class="lineno">   61</span> </div>
+<div class="line"><a id="l00062" name="l00062"></a><span class="lineno">   62</span><span class="preprocessor">    #ifdef CLOTHOIDS_USE_THREADS</span></div>
+<div class="line"><a id="l00063" name="l00063"></a><span class="lineno">   63</span>    <span class="keyword">mutable</span> std::mutex m_aabb_mutex;</div>
+<div class="line"><a id="l00064" name="l00064"></a><span class="lineno">   64</span><span class="preprocessor">    #endif</span></div>
+<div class="line"><a id="l00065" name="l00065"></a><span class="lineno">   65</span> </div>
+<div class="line"><a id="l00066" name="l00066"></a><span class="lineno">   66</span>    <span class="keywordtype">void</span></div>
+<div class="line"><a id="l00067" name="l00067"></a><span class="lineno">   67</span>    reset_last_interval() {</div>
+<div class="line"><a id="l00068" name="l00068"></a><span class="lineno">   68</span><span class="preprocessor">      #ifdef CLOTHOIDS_USE_THREADS</span></div>
+<div class="line"><a id="l00069" name="l00069"></a><span class="lineno">   69</span>      <span class="keywordtype">bool</span> ok;</div>
+<div class="line"><a id="l00070" name="l00070"></a><span class="lineno">   70</span>      <a class="code hl_typedef" href="namespace_g2lib.html#affd533209e1ea0ddab7324812690f0b8">integer</a> &amp; last_interval = *m_last_interval.search( std::this_thread::get_id(), ok );</div>
+<div class="line"><a id="l00071" name="l00071"></a><span class="lineno">   71</span><span class="preprocessor">      #else</span></div>
+<div class="line"><a id="l00072" name="l00072"></a><span class="lineno">   72</span>      <a class="code hl_typedef" href="namespace_g2lib.html#affd533209e1ea0ddab7324812690f0b8">integer</a> &amp; last_interval = m_last_interval;</div>
+<div class="line"><a id="l00073" name="l00073"></a><span class="lineno">   73</span><span class="preprocessor">      #endif</span></div>
+<div class="line"><a id="l00074" name="l00074"></a><span class="lineno">   74</span>      last_interval = 0;</div>
+<div class="line"><a id="l00075" name="l00075"></a><span class="lineno">   75</span>    }</div>
+<div class="line"><a id="l00076" name="l00076"></a><span class="lineno">   76</span> </div>
+<div class="line"><a id="l00077" name="l00077"></a><span class="lineno">   77</span>    <a class="code hl_typedef" href="namespace_g2lib.html#affd533209e1ea0ddab7324812690f0b8">integer</a></div>
+<div class="line"><a id="l00078" name="l00078"></a><span class="lineno">   78</span>    closest_point_internal(</div>
+<div class="line"><a id="l00079" name="l00079"></a><span class="lineno">   79</span>      <a class="code hl_typedef" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a>   qx,</div>
+<div class="line"><a id="l00080" name="l00080"></a><span class="lineno">   80</span>      <a class="code hl_typedef" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a>   qy,</div>
+<div class="line"><a id="l00081" name="l00081"></a><span class="lineno">   81</span>      <a class="code hl_typedef" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a>   offs,</div>
+<div class="line"><a id="l00082" name="l00082"></a><span class="lineno">   82</span>      <a class="code hl_typedef" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> &amp; x,</div>
+<div class="line"><a id="l00083" name="l00083"></a><span class="lineno">   83</span>      <a class="code hl_typedef" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> &amp; y,</div>
+<div class="line"><a id="l00084" name="l00084"></a><span class="lineno">   84</span>      <a class="code hl_typedef" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> &amp; s,</div>
+<div class="line"><a id="l00085" name="l00085"></a><span class="lineno">   85</span>      <a class="code hl_typedef" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> &amp; dst</div>
+<div class="line"><a id="l00086" name="l00086"></a><span class="lineno">   86</span>    ) <span class="keyword">const</span>;</div>
+<div class="line"><a id="l00087" name="l00087"></a><span class="lineno">   87</span> </div>
+<div class="line"><a id="l00088" name="l00088"></a><span class="lineno">   88</span>  <span class="keyword">public</span>:</div>
+<div class="line"><a id="l00089" name="l00089"></a><span class="lineno">   89</span> </div>
+<div class="line"><a id="l00090" name="l00090"></a><span class="lineno">   90</span><span class="preprocessor">    #include &quot;BaseCurve_using.hxx&quot;</span></div>
+<div class="line"><a id="l00091" name="l00091"></a><span class="lineno">   91</span> </div>
+<div class="foldopen" id="foldopen00095" data-start="{" data-end="}">
+<div class="line"><a id="l00095" name="l00095"></a><span class="lineno"><a class="line" href="class_g2lib_1_1_biarc_list.html#affaf8f1de094eee94f5cf7f1f924da86">   95</a></span>    <a class="code hl_function" href="class_g2lib_1_1_biarc_list.html#affaf8f1de094eee94f5cf7f1f924da86">BiarcList</a>( <span class="keywordtype">string</span> <span class="keyword">const</span> &amp; name ) : <a class="code hl_class" href="class_g2lib_1_1_base_curve.html">BaseCurve</a>( name )</div>
+<div class="line"><a id="l00096" name="l00096"></a><span class="lineno">   96</span>    { this-&gt;reset_last_interval(); }</div>
+</div>
+<div class="line"><a id="l00097" name="l00097"></a><span class="lineno">   97</span> </div>
+<div class="line"><a id="l00098" name="l00098"></a><span class="lineno">   98</span>    <a class="code hl_class" href="class_g2lib_1_1_biarc_list.html">~BiarcList</a>()<span class="keyword"> override </span>{</div>
+<div class="line"><a id="l00099" name="l00099"></a><span class="lineno">   99</span>      m_s0.clear();</div>
+<div class="line"><a id="l00100" name="l00100"></a><span class="lineno">  100</span>      m_biarc_list.clear();</div>
+<div class="line"><a id="l00101" name="l00101"></a><span class="lineno">  101</span>      m_aabb_triangles.clear();</div>
+<div class="line"><a id="l00102" name="l00102"></a><span class="lineno">  102</span>    }</div>
+<div class="line"><a id="l00103" name="l00103"></a><span class="lineno">  103</span> </div>
+<div class="line"><a id="l00104" name="l00104"></a><span class="lineno">  104</span>    <span class="keywordtype">void</span> setup( <a class="code hl_typedef" href="namespace_g2lib.html#a2bee1fb11cb401bacb26ad157b301feb">GenericContainer</a> <span class="keyword">const</span> &amp; gc ) <span class="keyword">override</span>;</div>
+<div class="line"><a id="l00105" name="l00105"></a><span class="lineno">  105</span> </div>
+<div class="foldopen" id="foldopen00109" data-start="{" data-end="}">
+<div class="line"><a id="l00109" name="l00109"></a><span class="lineno"><a class="line" href="class_g2lib_1_1_biarc_list.html#ad8643454de24033c99090e3d4f483b0e">  109</a></span>    <a class="code hl_function" href="class_g2lib_1_1_biarc_list.html#ad8643454de24033c99090e3d4f483b0e">BiarcList</a>( <a class="code hl_class" href="class_g2lib_1_1_biarc_list.html">BiarcList</a> <span class="keyword">const</span> &amp; s ) : <a class="code hl_class" href="class_g2lib_1_1_biarc_list.html">BiarcList</a>( s.name() )</div>
+<div class="line"><a id="l00110" name="l00110"></a><span class="lineno">  110</span>    { this-&gt;<a class="code hl_function" href="class_g2lib_1_1_biarc_list.html#aef377761c51f7e9588b73094f072851e">copy</a>(s); }</div>
+</div>
+<div class="line"><a id="l00111" name="l00111"></a><span class="lineno">  111</span> </div>
+<div class="line"><a id="l00115" name="l00115"></a><span class="lineno">  115</span>    <span class="keywordtype">void</span> <a class="code hl_function" href="class_g2lib_1_1_biarc_list.html#a9f5158583ef1deba0f24ce199003fdc8">init</a>();</div>
+<div class="line"><a id="l00116" name="l00116"></a><span class="lineno">  116</span> </div>
+<div class="line"><a id="l00120" name="l00120"></a><span class="lineno">  120</span>    <span class="keywordtype">void</span> <a class="code hl_function" href="class_g2lib_1_1_biarc_list.html#a451e637ca1e1f140be3d2fc93b76a8db">reserve</a>( <a class="code hl_typedef" href="namespace_g2lib.html#affd533209e1ea0ddab7324812690f0b8">integer</a> n );</div>
+<div class="line"><a id="l00121" name="l00121"></a><span class="lineno">  121</span> </div>
+<div class="line"><a id="l00125" name="l00125"></a><span class="lineno">  125</span>    <span class="keywordtype">void</span> <a class="code hl_function" href="class_g2lib_1_1_biarc_list.html#aef377761c51f7e9588b73094f072851e">copy</a>( <a class="code hl_class" href="class_g2lib_1_1_biarc_list.html">BiarcList</a> <span class="keyword">const</span> &amp; L );</div>
+<div class="line"><a id="l00126" name="l00126"></a><span class="lineno">  126</span> </div>
+<div class="line"><a id="l00127" name="l00127"></a><span class="lineno"><a class="line" href="class_g2lib_1_1_biarc_list.html#a087868f805ef1262472f010f4b609682">  127</a></span>    <a class="code hl_typedef" href="namespace_g2lib.html#ac18621126b9485db2bc878d6a1c8b0c9">CurveType</a> <a class="code hl_function" href="class_g2lib_1_1_biarc_list.html#a087868f805ef1262472f010f4b609682">type</a>()<span class="keyword"> const override </span>{ <span class="keywordflow">return</span> CurveType::BIARC_LIST; }</div>
+<div class="line"><a id="l00128" name="l00128"></a><span class="lineno">  128</span> </div>
+<div class="foldopen" id="foldopen00132" data-start="{" data-end="}">
+<div class="line"><a id="l00132" name="l00132"></a><span class="lineno"><a class="line" href="class_g2lib_1_1_biarc_list.html#af751f3d31bdcd998b2f7280690af1c6e">  132</a></span>    <a class="code hl_class" href="class_g2lib_1_1_biarc_list.html">BiarcList</a> <span class="keyword">const</span> &amp; <a class="code hl_function" href="class_g2lib_1_1_biarc_list.html#af751f3d31bdcd998b2f7280690af1c6e">operator = </a>( <a class="code hl_class" href="class_g2lib_1_1_biarc_list.html">BiarcList</a> <span class="keyword">const</span> &amp; s )</div>
+<div class="line"><a id="l00133" name="l00133"></a><span class="lineno">  133</span>    { this-&gt;<a class="code hl_function" href="class_g2lib_1_1_biarc_list.html#aef377761c51f7e9588b73094f072851e">copy</a>(s); <span class="keywordflow">return</span> *<span class="keyword">this</span>; }</div>
+</div>
+<div class="line"><a id="l00134" name="l00134"></a><span class="lineno">  134</span> </div>
+<div class="line"><a id="l00138" name="l00138"></a><span class="lineno">  138</span>    <span class="keyword">explicit</span> <a class="code hl_function" href="class_g2lib_1_1_biarc_list.html#affaf8f1de094eee94f5cf7f1f924da86">BiarcList</a>( <a class="code hl_class" href="class_g2lib_1_1_line_segment.html">LineSegment</a> <span class="keyword">const</span> &amp; LS );</div>
+<div class="line"><a id="l00139" name="l00139"></a><span class="lineno">  139</span> </div>
+<div class="line"><a id="l00143" name="l00143"></a><span class="lineno">  143</span>    <span class="keyword">explicit</span> <a class="code hl_function" href="class_g2lib_1_1_biarc_list.html#affaf8f1de094eee94f5cf7f1f924da86">BiarcList</a>( <a class="code hl_class" href="class_g2lib_1_1_circle_arc.html">CircleArc</a> <span class="keyword">const</span> &amp; C );</div>
+<div class="line"><a id="l00144" name="l00144"></a><span class="lineno">  144</span> </div>
+<div class="line"><a id="l00148" name="l00148"></a><span class="lineno">  148</span>    <span class="keyword">explicit</span> <a class="code hl_function" href="class_g2lib_1_1_biarc_list.html#affaf8f1de094eee94f5cf7f1f924da86">BiarcList</a>( <a class="code hl_class" href="class_g2lib_1_1_biarc.html">Biarc</a> <span class="keyword">const</span> &amp; C );</div>
+<div class="line"><a id="l00149" name="l00149"></a><span class="lineno">  149</span> </div>
+<div class="line"><a id="l00153" name="l00153"></a><span class="lineno">  153</span>    <span class="keyword">explicit</span> <a class="code hl_function" href="class_g2lib_1_1_biarc_list.html#affaf8f1de094eee94f5cf7f1f924da86">BiarcList</a>( <a class="code hl_class" href="class_g2lib_1_1_poly_line.html">PolyLine</a> <span class="keyword">const</span> &amp; pl );</div>
+<div class="line"><a id="l00154" name="l00154"></a><span class="lineno">  154</span> </div>
+<div class="line"><a id="l00158" name="l00158"></a><span class="lineno">  158</span>    <span class="keyword">explicit</span> <a class="code hl_function" href="class_g2lib_1_1_biarc_list.html#affaf8f1de094eee94f5cf7f1f924da86">BiarcList</a>( <a class="code hl_class" href="class_g2lib_1_1_base_curve.html">BaseCurve</a> <span class="keyword">const</span> * pC );</div>
+<div class="line"><a id="l00159" name="l00159"></a><span class="lineno">  159</span> </div>
+<div class="line"><a id="l00160" name="l00160"></a><span class="lineno">  160</span>    <span class="keywordtype">void</span> build( <a class="code hl_class" href="class_g2lib_1_1_line_segment.html">LineSegment</a> <span class="keyword">const</span> &amp; );</div>
+<div class="line"><a id="l00161" name="l00161"></a><span class="lineno">  161</span>    <span class="keywordtype">void</span> build( <a class="code hl_class" href="class_g2lib_1_1_circle_arc.html">CircleArc</a> <span class="keyword">const</span> &amp; );</div>
+<div class="line"><a id="l00162" name="l00162"></a><span class="lineno">  162</span>    <span class="keywordtype">void</span> build( <a class="code hl_class" href="class_g2lib_1_1_clothoid_curve.html">ClothoidCurve</a> <span class="keyword">const</span> &amp; );</div>
+<div class="line"><a id="l00163" name="l00163"></a><span class="lineno">  163</span>    <span class="keywordtype">void</span> build( <a class="code hl_class" href="class_g2lib_1_1_biarc.html">Biarc</a> <span class="keyword">const</span> &amp; );</div>
+<div class="line"><a id="l00164" name="l00164"></a><span class="lineno">  164</span>    <span class="keywordtype">void</span> build( <a class="code hl_class" href="class_g2lib_1_1_biarc_list.html">BiarcList</a> <span class="keyword">const</span> &amp; );</div>
+<div class="line"><a id="l00165" name="l00165"></a><span class="lineno">  165</span>    <span class="keywordtype">void</span> build( <a class="code hl_class" href="class_g2lib_1_1_poly_line.html">PolyLine</a> <span class="keyword">const</span> &amp; );</div>
+<div class="line"><a id="l00166" name="l00166"></a><span class="lineno">  166</span>    <span class="keywordtype">void</span> build( <a class="code hl_class" href="class_g2lib_1_1_clothoid_list.html">ClothoidList</a> <span class="keyword">const</span> &amp; );</div>
+<div class="line"><a id="l00167" name="l00167"></a><span class="lineno">  167</span>    <span class="keywordtype">void</span> build( <a class="code hl_class" href="class_g2lib_1_1_dubins.html">Dubins</a> <span class="keyword">const</span> &amp; );</div>
+<div class="line"><a id="l00168" name="l00168"></a><span class="lineno">  168</span>    <span class="keywordtype">void</span> build( <a class="code hl_class" href="class_g2lib_1_1_dubins3p.html">Dubins3p</a> <span class="keyword">const</span> &amp; );</div>
+<div class="line"><a id="l00169" name="l00169"></a><span class="lineno">  169</span> </div>
+<div class="line"><a id="l00174" name="l00174"></a><span class="lineno">  174</span>    <span class="keywordtype">void</span> <a class="code hl_function" href="class_g2lib_1_1_biarc_list.html#af0c6c499e666553bddb6b7ac8ecc2ee0">push_back</a>( <a class="code hl_class" href="class_g2lib_1_1_line_segment.html">LineSegment</a> <span class="keyword">const</span> &amp; c );</div>
+<div class="line"><a id="l00175" name="l00175"></a><span class="lineno">  175</span> </div>
+<div class="line"><a id="l00180" name="l00180"></a><span class="lineno">  180</span>    <span class="keywordtype">void</span> <a class="code hl_function" href="class_g2lib_1_1_biarc_list.html#af0c6c499e666553bddb6b7ac8ecc2ee0">push_back</a>( <a class="code hl_class" href="class_g2lib_1_1_circle_arc.html">CircleArc</a> <span class="keyword">const</span> &amp; c );</div>
+<div class="line"><a id="l00181" name="l00181"></a><span class="lineno">  181</span> </div>
+<div class="line"><a id="l00185" name="l00185"></a><span class="lineno">  185</span>    <span class="keywordtype">void</span> <a class="code hl_function" href="class_g2lib_1_1_biarc_list.html#af0c6c499e666553bddb6b7ac8ecc2ee0">push_back</a>( <a class="code hl_class" href="class_g2lib_1_1_biarc.html">Biarc</a> <span class="keyword">const</span> &amp; c );</div>
+<div class="line"><a id="l00186" name="l00186"></a><span class="lineno">  186</span> </div>
+<div class="line"><a id="l00191" name="l00191"></a><span class="lineno">  191</span>    <span class="keywordtype">void</span> <a class="code hl_function" href="class_g2lib_1_1_biarc_list.html#af0c6c499e666553bddb6b7ac8ecc2ee0">push_back</a>( <a class="code hl_class" href="class_g2lib_1_1_poly_line.html">PolyLine</a> <span class="keyword">const</span> &amp; c );</div>
+<div class="line"><a id="l00192" name="l00192"></a><span class="lineno">  192</span> </div>
+<div class="line"><a id="l00204" name="l00204"></a><span class="lineno">  204</span>    <span class="keywordtype">void</span> <a class="code hl_function" href="class_g2lib_1_1_biarc_list.html#a623903c78c0659c77e58e38acadf1aed">push_back_G1</a>( <a class="code hl_typedef" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> x1, <a class="code hl_typedef" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> y1, <a class="code hl_typedef" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> theta1 );</div>
+<div class="line"><a id="l00205" name="l00205"></a><span class="lineno">  205</span> </div>
+<div class="line"><a id="l00219" name="l00219"></a><span class="lineno">  219</span>    <span class="keywordtype">void</span></div>
+<div class="line"><a id="l00220" name="l00220"></a><span class="lineno">  220</span>    <a class="code hl_function" href="class_g2lib_1_1_biarc_list.html#a623903c78c0659c77e58e38acadf1aed">push_back_G1</a>(</div>
+<div class="line"><a id="l00221" name="l00221"></a><span class="lineno">  221</span>      <a class="code hl_typedef" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> x0, <a class="code hl_typedef" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> y0, <a class="code hl_typedef" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> theta0,</div>
+<div class="line"><a id="l00222" name="l00222"></a><span class="lineno">  222</span>      <a class="code hl_typedef" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> x1, <a class="code hl_typedef" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> y1, <a class="code hl_typedef" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> theta1</div>
+<div class="line"><a id="l00223" name="l00223"></a><span class="lineno">  223</span>    );</div>
+<div class="line"><a id="l00224" name="l00224"></a><span class="lineno">  224</span> </div>
+<div class="line"><a id="l00232" name="l00232"></a><span class="lineno">  232</span>    <span class="keywordtype">bool</span></div>
+<div class="line"><a id="l00233" name="l00233"></a><span class="lineno">  233</span>    <a class="code hl_function" href="class_g2lib_1_1_biarc_list.html#ae3492301f7880d39da0d508e8237bade">build_G1</a>(</div>
+<div class="line"><a id="l00234" name="l00234"></a><span class="lineno">  234</span>      <a class="code hl_typedef" href="namespace_g2lib.html#affd533209e1ea0ddab7324812690f0b8">integer</a>         n,</div>
+<div class="line"><a id="l00235" name="l00235"></a><span class="lineno">  235</span>      <a class="code hl_typedef" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> <span class="keyword">const</span> x[],</div>
+<div class="line"><a id="l00236" name="l00236"></a><span class="lineno">  236</span>      <a class="code hl_typedef" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> <span class="keyword">const</span> y[]</div>
+<div class="line"><a id="l00237" name="l00237"></a><span class="lineno">  237</span>    );</div>
+<div class="line"><a id="l00238" name="l00238"></a><span class="lineno">  238</span> </div>
+<div class="line"><a id="l00248" name="l00248"></a><span class="lineno">  248</span>    <span class="keywordtype">bool</span></div>
+<div class="line"><a id="l00249" name="l00249"></a><span class="lineno">  249</span>    <a class="code hl_function" href="class_g2lib_1_1_biarc_list.html#ae3492301f7880d39da0d508e8237bade">build_G1</a>(</div>
+<div class="line"><a id="l00250" name="l00250"></a><span class="lineno">  250</span>      <a class="code hl_typedef" href="namespace_g2lib.html#affd533209e1ea0ddab7324812690f0b8">integer</a>         n,</div>
+<div class="line"><a id="l00251" name="l00251"></a><span class="lineno">  251</span>      <a class="code hl_typedef" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> <span class="keyword">const</span> x[],</div>
+<div class="line"><a id="l00252" name="l00252"></a><span class="lineno">  252</span>      <a class="code hl_typedef" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> <span class="keyword">const</span> y[],</div>
+<div class="line"><a id="l00253" name="l00253"></a><span class="lineno">  253</span>      <a class="code hl_typedef" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> <span class="keyword">const</span> <a class="code hl_function" href="class_g2lib_1_1_biarc_list.html#aafa7abd2c8d824c44cae899b3f740ece">theta</a>[]</div>
+<div class="line"><a id="l00254" name="l00254"></a><span class="lineno">  254</span>    );</div>
+<div class="line"><a id="l00255" name="l00255"></a><span class="lineno">  255</span> </div>
+<div class="line"><a id="l00259" name="l00259"></a><span class="lineno">  259</span>    <a class="code hl_class" href="class_g2lib_1_1_biarc.html">Biarc</a> <span class="keyword">const</span> &amp; <a class="code hl_function" href="class_g2lib_1_1_biarc_list.html#a93d442af069d7588ab499dd1bccc8a72">get</a>( <a class="code hl_typedef" href="namespace_g2lib.html#affd533209e1ea0ddab7324812690f0b8">integer</a> idx ) <span class="keyword">const</span>;</div>
+<div class="line"><a id="l00260" name="l00260"></a><span class="lineno">  260</span> </div>
+<div class="line"><a id="l00264" name="l00264"></a><span class="lineno">  264</span>    <a class="code hl_class" href="class_g2lib_1_1_biarc.html">Biarc</a> <span class="keyword">const</span> &amp; <a class="code hl_function" href="class_g2lib_1_1_biarc_list.html#aa74a73e36774f22f0ffedaa3feac1513">get_at_s</a>( <a class="code hl_typedef" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> s ) <span class="keyword">const</span>;</div>
+<div class="line"><a id="l00265" name="l00265"></a><span class="lineno">  265</span> </div>
+<div class="line"><a id="l00269" name="l00269"></a><span class="lineno"><a class="line" href="class_g2lib_1_1_biarc_list.html#af1b960caa0fbc4f67097cc2f6d4f66ed">  269</a></span>    <a class="code hl_typedef" href="namespace_g2lib.html#affd533209e1ea0ddab7324812690f0b8">integer</a> <a class="code hl_function" href="class_g2lib_1_1_biarc_list.html#af1b960caa0fbc4f67097cc2f6d4f66ed">num_segments</a>()<span class="keyword"> const </span>{ <span class="keywordflow">return</span> <a class="code hl_typedef" href="namespace_g2lib.html#affd533209e1ea0ddab7324812690f0b8">integer</a>(m_biarc_list.size()); }</div>
+<div class="line"><a id="l00270" name="l00270"></a><span class="lineno">  270</span> </div>
+<div class="line"><a id="l00275" name="l00275"></a><span class="lineno">  275</span>    <a class="code hl_typedef" href="namespace_g2lib.html#affd533209e1ea0ddab7324812690f0b8">integer</a> <a class="code hl_function" href="class_g2lib_1_1_biarc_list.html#a5580d3ae5a6d440be78816ca96b97dfe">find_at_s</a>( <a class="code hl_typedef" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> &amp; s ) <span class="keyword">const</span>;</div>
+<div class="line"><a id="l00276" name="l00276"></a><span class="lineno">  276</span> </div>
+<div class="line"><a id="l00277" name="l00277"></a><span class="lineno">  277</span>    <span class="comment">// . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .</span></div>
+<div class="line"><a id="l00278" name="l00278"></a><span class="lineno">  278</span> </div>
+<div class="line"><a id="l00279" name="l00279"></a><span class="lineno">  279</span>    <a class="code hl_typedef" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> <a class="code hl_function" href="class_g2lib_1_1_biarc_list.html#afc809fd9fcedf2c73011c1d184a620a0">length</a>() <span class="keyword">const override</span>;</div>
+<div class="line"><a id="l00280" name="l00280"></a><span class="lineno">  280</span>    <a class="code hl_typedef" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> <a class="code hl_function" href="class_g2lib_1_1_biarc_list.html#a3dc9e3c0ecbe33afa631b0dcfa5fb3bc">length_ISO</a>( <a class="code hl_typedef" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> offs ) <span class="keyword">const override</span>;</div>
+<div class="line"><a id="l00281" name="l00281"></a><span class="lineno">  281</span> </div>
+<div class="line"><a id="l00285" name="l00285"></a><span class="lineno">  285</span>    <a class="code hl_typedef" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a></div>
+<div class="line"><a id="l00286" name="l00286"></a><span class="lineno">  286</span>    <a class="code hl_function" href="class_g2lib_1_1_biarc_list.html#a773e8b1ccc264f244301b5b7e867066a">segment_length</a>( <a class="code hl_typedef" href="namespace_g2lib.html#affd533209e1ea0ddab7324812690f0b8">integer</a> nseg ) <span class="keyword">const</span>;</div>
+<div class="line"><a id="l00287" name="l00287"></a><span class="lineno">  287</span> </div>
+<div class="line"><a id="l00291" name="l00291"></a><span class="lineno">  291</span>    <a class="code hl_typedef" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a></div>
+<div class="line"><a id="l00292" name="l00292"></a><span class="lineno">  292</span>    <a class="code hl_function" href="class_g2lib_1_1_biarc_list.html#aa13a3b4252927e45fdb79d94a0e7ecdf">segment_length_ISO</a>( <a class="code hl_typedef" href="namespace_g2lib.html#affd533209e1ea0ddab7324812690f0b8">integer</a> nseg, <a class="code hl_typedef" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> offs ) <span class="keyword">const</span>;</div>
+<div class="line"><a id="l00293" name="l00293"></a><span class="lineno">  293</span> </div>
+<div class="line"><a id="l00294" name="l00294"></a><span class="lineno">  294</span>    <span class="comment">/*\</span></div>
+<div class="line"><a id="l00295" name="l00295"></a><span class="lineno">  295</span><span class="comment">     |  _    _   _____    _                _</span></div>
+<div class="line"><a id="l00296" name="l00296"></a><span class="lineno">  296</span><span class="comment">     | | |__| |_|_   _| _(_)__ _ _ _  __ _| |___</span></div>
+<div class="line"><a id="l00297" name="l00297"></a><span class="lineno">  297</span><span class="comment">     | | &#39;_ \ &#39;_ \| || &#39;_| / _` | &#39; \/ _` | / -_)</span></div>
+<div class="line"><a id="l00298" name="l00298"></a><span class="lineno">  298</span><span class="comment">     | |_.__/_.__/|_||_| |_\__,_|_||_\__, |_\___|</span></div>
+<div class="line"><a id="l00299" name="l00299"></a><span class="lineno">  299</span><span class="comment">     |                               |___/</span></div>
+<div class="line"><a id="l00300" name="l00300"></a><span class="lineno">  300</span><span class="comment">    \*/</span></div>
+<div class="line"><a id="l00301" name="l00301"></a><span class="lineno">  301</span> </div>
+<div class="line"><a id="l00302" name="l00302"></a><span class="lineno">  302</span>    <span class="keywordtype">void</span></div>
+<div class="line"><a id="l00303" name="l00303"></a><span class="lineno">  303</span>    <a class="code hl_function" href="class_g2lib_1_1_biarc_list.html#af19f2a57cef09a5f7b10d428c67faad3">bb_triangles_ISO</a>(</div>
+<div class="line"><a id="l00304" name="l00304"></a><span class="lineno">  304</span>      <a class="code hl_typedef" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a>            offs,</div>
+<div class="line"><a id="l00305" name="l00305"></a><span class="lineno">  305</span>      vector&lt;Triangle2D&gt; &amp; tvec,</div>
+<div class="line"><a id="l00306" name="l00306"></a><span class="lineno">  306</span>      <a class="code hl_typedef" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a>            max_angle = Utils::m_pi/6, <span class="comment">// 30 degree</span></div>
+<div class="line"><a id="l00307" name="l00307"></a><span class="lineno">  307</span>      <a class="code hl_typedef" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a>            max_size  = 1e100,</div>
+<div class="line"><a id="l00308" name="l00308"></a><span class="lineno">  308</span>      <a class="code hl_typedef" href="namespace_g2lib.html#affd533209e1ea0ddab7324812690f0b8">integer</a>              icurve    = 0</div>
+<div class="line"><a id="l00309" name="l00309"></a><span class="lineno">  309</span>    ) <span class="keyword">const override</span>;</div>
+<div class="line"><a id="l00310" name="l00310"></a><span class="lineno">  310</span> </div>
+<div class="line"><a id="l00311" name="l00311"></a><span class="lineno">  311</span>    <span class="keywordtype">void</span></div>
+<div class="line"><a id="l00312" name="l00312"></a><span class="lineno">  312</span>    <a class="code hl_function" href="class_g2lib_1_1_biarc_list.html#ae42cc2640bd4cb8e659e5eb96aac15c9">bb_triangles_SAE</a>(</div>
+<div class="line"><a id="l00313" name="l00313"></a><span class="lineno">  313</span>      <a class="code hl_typedef" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a>            offs,</div>
+<div class="line"><a id="l00314" name="l00314"></a><span class="lineno">  314</span>      vector&lt;Triangle2D&gt; &amp; tvec,</div>
+<div class="line"><a id="l00315" name="l00315"></a><span class="lineno">  315</span>      <a class="code hl_typedef" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a>            max_angle = Utils::m_pi/6, <span class="comment">// 30 degree</span></div>
+<div class="line"><a id="l00316" name="l00316"></a><span class="lineno">  316</span>      <a class="code hl_typedef" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a>            max_size  = 1e100,</div>
+<div class="line"><a id="l00317" name="l00317"></a><span class="lineno">  317</span>      <a class="code hl_typedef" href="namespace_g2lib.html#affd533209e1ea0ddab7324812690f0b8">integer</a>              icurve    = 0</div>
+<div class="line"><a id="l00318" name="l00318"></a><span class="lineno">  318</span>    ) <span class="keyword">const override</span>;</div>
+<div class="line"><a id="l00319" name="l00319"></a><span class="lineno">  319</span> </div>
+<div class="line"><a id="l00320" name="l00320"></a><span class="lineno">  320</span>    <span class="keywordtype">void</span></div>
+<div class="line"><a id="l00321" name="l00321"></a><span class="lineno">  321</span>    <a class="code hl_function" href="class_g2lib_1_1_biarc_list.html#ad87ff3e75fb235eb00edd50411947a99">bb_triangles</a>(</div>
+<div class="line"><a id="l00322" name="l00322"></a><span class="lineno">  322</span>      vector&lt;Triangle2D&gt; &amp; tvec,</div>
+<div class="line"><a id="l00323" name="l00323"></a><span class="lineno">  323</span>      <a class="code hl_typedef" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a>            max_angle = Utils::m_pi/6, <span class="comment">// 30 degree</span></div>
+<div class="line"><a id="l00324" name="l00324"></a><span class="lineno">  324</span>      <a class="code hl_typedef" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a>            max_size  = 1e100,</div>
+<div class="line"><a id="l00325" name="l00325"></a><span class="lineno">  325</span>      <a class="code hl_typedef" href="namespace_g2lib.html#affd533209e1ea0ddab7324812690f0b8">integer</a>              icurve    = 0</div>
+<div class="line"><a id="l00326" name="l00326"></a><span class="lineno">  326</span>    ) <span class="keyword">const override</span>;</div>
+<div class="line"><a id="l00327" name="l00327"></a><span class="lineno">  327</span> </div>
+<div class="line"><a id="l00328" name="l00328"></a><span class="lineno">  328</span><span class="preprocessor">    #ifndef DOXYGEN_SHOULD_SKIP_THIS</span></div>
+<div class="line"><a id="l00336" name="l00336"></a><span class="lineno">  336</span>    <span class="keywordtype">void</span></div>
+<div class="line"><a id="l00337" name="l00337"></a><span class="lineno">  337</span>    build_AABBtree_ISO(</div>
+<div class="line"><a id="l00338" name="l00338"></a><span class="lineno">  338</span>      <a class="code hl_typedef" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> offs,</div>
+<div class="line"><a id="l00339" name="l00339"></a><span class="lineno">  339</span>      <a class="code hl_typedef" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> max_angle = Utils::m_pi/6, <span class="comment">// 30 degree</span></div>
+<div class="line"><a id="l00340" name="l00340"></a><span class="lineno">  340</span>      <a class="code hl_typedef" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> max_size  = 1e100</div>
+<div class="line"><a id="l00341" name="l00341"></a><span class="lineno">  341</span>    ) <span class="keyword">const</span>;</div>
+<div class="line"><a id="l00342" name="l00342"></a><span class="lineno">  342</span> </div>
+<div class="line"><a id="l00350" name="l00350"></a><span class="lineno">  350</span>    <span class="keywordtype">void</span></div>
+<div class="line"><a id="l00351" name="l00351"></a><span class="lineno">  351</span>    build_AABBtree_SAE(</div>
+<div class="line"><a id="l00352" name="l00352"></a><span class="lineno">  352</span>      <a class="code hl_typedef" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> offs,</div>
+<div class="line"><a id="l00353" name="l00353"></a><span class="lineno">  353</span>      <a class="code hl_typedef" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> max_angle = Utils::m_pi/6, <span class="comment">// 30 degree</span></div>
+<div class="line"><a id="l00354" name="l00354"></a><span class="lineno">  354</span>      <a class="code hl_typedef" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> max_size  = 1e100</div>
+<div class="line"><a id="l00355" name="l00355"></a><span class="lineno">  355</span>    )<span class="keyword"> const </span>{</div>
+<div class="line"><a id="l00356" name="l00356"></a><span class="lineno">  356</span>      build_AABBtree_ISO( -offs, max_angle, max_size );</div>
+<div class="line"><a id="l00357" name="l00357"></a><span class="lineno">  357</span>    }</div>
+<div class="line"><a id="l00358" name="l00358"></a><span class="lineno">  358</span><span class="preprocessor">    #endif</span></div>
+<div class="line"><a id="l00359" name="l00359"></a><span class="lineno">  359</span> </div>
+<div class="line"><a id="l00360" name="l00360"></a><span class="lineno">  360</span>    <span class="comment">/*\</span></div>
+<div class="line"><a id="l00361" name="l00361"></a><span class="lineno">  361</span><span class="comment">     |   _     _</span></div>
+<div class="line"><a id="l00362" name="l00362"></a><span class="lineno">  362</span><span class="comment">     |  | |__ | |__   _____  __</span></div>
+<div class="line"><a id="l00363" name="l00363"></a><span class="lineno">  363</span><span class="comment">     |  | &#39;_ \| &#39;_ \ / _ \ \/ /</span></div>
+<div class="line"><a id="l00364" name="l00364"></a><span class="lineno">  364</span><span class="comment">     |  | |_) | |_) | (_) &gt;  &lt;</span></div>
+<div class="line"><a id="l00365" name="l00365"></a><span class="lineno">  365</span><span class="comment">     |  |_.__/|_.__/ \___/_/\_\</span></div>
+<div class="line"><a id="l00366" name="l00366"></a><span class="lineno">  366</span><span class="comment">    \*/</span></div>
+<div class="line"><a id="l00367" name="l00367"></a><span class="lineno">  367</span> </div>
+<div class="line"><a id="l00368" name="l00368"></a><span class="lineno">  368</span>    <span class="keywordtype">void</span></div>
+<div class="foldopen" id="foldopen00369" data-start="{" data-end="}">
+<div class="line"><a id="l00369" name="l00369"></a><span class="lineno"><a class="line" href="class_g2lib_1_1_biarc_list.html#ac5d9f4ef1a05dd6de4c9bef50e16a0bf">  369</a></span>    <a class="code hl_function" href="class_g2lib_1_1_biarc_list.html#ac5d9f4ef1a05dd6de4c9bef50e16a0bf">bbox</a>(</div>
+<div class="line"><a id="l00370" name="l00370"></a><span class="lineno">  370</span>      <a class="code hl_typedef" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> &amp; xmin,</div>
+<div class="line"><a id="l00371" name="l00371"></a><span class="lineno">  371</span>      <a class="code hl_typedef" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> &amp; ymin,</div>
+<div class="line"><a id="l00372" name="l00372"></a><span class="lineno">  372</span>      <a class="code hl_typedef" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> &amp; xmax,</div>
+<div class="line"><a id="l00373" name="l00373"></a><span class="lineno">  373</span>      <a class="code hl_typedef" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> &amp; ymax</div>
+<div class="line"><a id="l00374" name="l00374"></a><span class="lineno">  374</span>    )<span class="keyword"> const override </span>{</div>
+<div class="line"><a id="l00375" name="l00375"></a><span class="lineno">  375</span>      <a class="code hl_function" href="class_g2lib_1_1_biarc_list.html#aff2387de63730dcd8d83fd719402f2ce">bbox_ISO</a>( 0, xmin, ymin, xmax, ymax );</div>
+<div class="line"><a id="l00376" name="l00376"></a><span class="lineno">  376</span>    }</div>
+</div>
+<div class="line"><a id="l00377" name="l00377"></a><span class="lineno">  377</span> </div>
+<div class="line"><a id="l00378" name="l00378"></a><span class="lineno">  378</span>    <span class="keywordtype">void</span></div>
+<div class="line"><a id="l00379" name="l00379"></a><span class="lineno">  379</span>    <a class="code hl_function" href="class_g2lib_1_1_biarc_list.html#aff2387de63730dcd8d83fd719402f2ce">bbox_ISO</a>(</div>
+<div class="line"><a id="l00380" name="l00380"></a><span class="lineno">  380</span>      <a class="code hl_typedef" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a>   offs,</div>
+<div class="line"><a id="l00381" name="l00381"></a><span class="lineno">  381</span>      <a class="code hl_typedef" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> &amp; xmin,</div>
+<div class="line"><a id="l00382" name="l00382"></a><span class="lineno">  382</span>      <a class="code hl_typedef" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> &amp; ymin,</div>
+<div class="line"><a id="l00383" name="l00383"></a><span class="lineno">  383</span>      <a class="code hl_typedef" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> &amp; xmax,</div>
+<div class="line"><a id="l00384" name="l00384"></a><span class="lineno">  384</span>      <a class="code hl_typedef" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> &amp; ymax</div>
+<div class="line"><a id="l00385" name="l00385"></a><span class="lineno">  385</span>    ) <span class="keyword">const override</span>;</div>
+<div class="line"><a id="l00386" name="l00386"></a><span class="lineno">  386</span> </div>
+<div class="line"><a id="l00387" name="l00387"></a><span class="lineno">  387</span>    <span class="comment">/*\</span></div>
+<div class="line"><a id="l00388" name="l00388"></a><span class="lineno">  388</span><span class="comment">     |   ____             _          _______           _</span></div>
+<div class="line"><a id="l00389" name="l00389"></a><span class="lineno">  389</span><span class="comment">     |  | __ )  ___  __ _(_)_ __    / / ____|_ __   __| |</span></div>
+<div class="line"><a id="l00390" name="l00390"></a><span class="lineno">  390</span><span class="comment">     |  |  _ \ / _ \/ _` | | &#39;_ \  / /|  _| | &#39;_ \ / _` |</span></div>
+<div class="line"><a id="l00391" name="l00391"></a><span class="lineno">  391</span><span class="comment">     |  | |_) |  __/ (_| | | | | |/ / | |___| | | | (_| |</span></div>
+<div class="line"><a id="l00392" name="l00392"></a><span class="lineno">  392</span><span class="comment">     |  |____/ \___|\__, |_|_| |_/_/  |_____|_| |_|\__,_|</span></div>
+<div class="line"><a id="l00393" name="l00393"></a><span class="lineno">  393</span><span class="comment">     |              |___/</span></div>
+<div class="line"><a id="l00394" name="l00394"></a><span class="lineno">  394</span><span class="comment">    \*/</span></div>
+<div class="line"><a id="l00395" name="l00395"></a><span class="lineno">  395</span> </div>
+<div class="line"><a id="l00396" name="l00396"></a><span class="lineno">  396</span>    <a class="code hl_typedef" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a></div>
+<div class="foldopen" id="foldopen00397" data-start="{" data-end="}">
+<div class="line"><a id="l00397" name="l00397"></a><span class="lineno"><a class="line" href="class_g2lib_1_1_biarc_list.html#ab33ff4fb7f193754f241d68c53549ec2">  397</a></span>    <a class="code hl_function" href="class_g2lib_1_1_biarc_list.html#ab33ff4fb7f193754f241d68c53549ec2">theta_begin</a>()<span class="keyword"> const override</span></div>
+<div class="line"><a id="l00398" name="l00398"></a><span class="lineno">  398</span><span class="keyword">    </span>{ <span class="keywordflow">return</span> m_biarc_list.front().theta_begin(); }</div>
+</div>
+<div class="line"><a id="l00399" name="l00399"></a><span class="lineno">  399</span> </div>
+<div class="line"><a id="l00400" name="l00400"></a><span class="lineno">  400</span>    <a class="code hl_typedef" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a></div>
+<div class="foldopen" id="foldopen00401" data-start="{" data-end="}">
+<div class="line"><a id="l00401" name="l00401"></a><span class="lineno"><a class="line" href="class_g2lib_1_1_biarc_list.html#a7319b3ce63f1f4925540fa4c8a49002a">  401</a></span>    <a class="code hl_function" href="class_g2lib_1_1_biarc_list.html#a7319b3ce63f1f4925540fa4c8a49002a">theta_end</a>()<span class="keyword"> const override</span></div>
+<div class="line"><a id="l00402" name="l00402"></a><span class="lineno">  402</span><span class="keyword">    </span>{ <span class="keywordflow">return</span> m_biarc_list.back().theta_end(); }</div>
+</div>
+<div class="line"><a id="l00403" name="l00403"></a><span class="lineno">  403</span> </div>
+<div class="line"><a id="l00404" name="l00404"></a><span class="lineno">  404</span>    <a class="code hl_typedef" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a></div>
+<div class="foldopen" id="foldopen00405" data-start="{" data-end="}">
+<div class="line"><a id="l00405" name="l00405"></a><span class="lineno"><a class="line" href="class_g2lib_1_1_biarc_list.html#ab009fd65e71ef8092aa53cf0725201a9">  405</a></span>    <a class="code hl_function" href="class_g2lib_1_1_biarc_list.html#ab009fd65e71ef8092aa53cf0725201a9">x_begin</a>()<span class="keyword"> const override</span></div>
+<div class="line"><a id="l00406" name="l00406"></a><span class="lineno">  406</span><span class="keyword">    </span>{ <span class="keywordflow">return</span> m_biarc_list.front().x_begin(); }</div>
+</div>
+<div class="line"><a id="l00407" name="l00407"></a><span class="lineno">  407</span> </div>
+<div class="line"><a id="l00408" name="l00408"></a><span class="lineno">  408</span>    <a class="code hl_typedef" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a></div>
+<div class="foldopen" id="foldopen00409" data-start="{" data-end="}">
+<div class="line"><a id="l00409" name="l00409"></a><span class="lineno"><a class="line" href="class_g2lib_1_1_biarc_list.html#a3ba71e8382458d06e3eb188bd5dfaa71">  409</a></span>    <a class="code hl_function" href="class_g2lib_1_1_biarc_list.html#a3ba71e8382458d06e3eb188bd5dfaa71">y_begin</a>()<span class="keyword"> const override</span></div>
+<div class="line"><a id="l00410" name="l00410"></a><span class="lineno">  410</span><span class="keyword">    </span>{ <span class="keywordflow">return</span> m_biarc_list.front().y_begin(); }</div>
+</div>
+<div class="line"><a id="l00411" name="l00411"></a><span class="lineno">  411</span> </div>
+<div class="line"><a id="l00412" name="l00412"></a><span class="lineno">  412</span>    <a class="code hl_typedef" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a></div>
+<div class="foldopen" id="foldopen00413" data-start="{" data-end="}">
+<div class="line"><a id="l00413" name="l00413"></a><span class="lineno"><a class="line" href="class_g2lib_1_1_biarc_list.html#a8ceee5971871de1e84a801a1958722ee">  413</a></span>    <a class="code hl_function" href="class_g2lib_1_1_biarc_list.html#a8ceee5971871de1e84a801a1958722ee">x_end</a>()<span class="keyword"> const override</span></div>
+<div class="line"><a id="l00414" name="l00414"></a><span class="lineno">  414</span><span class="keyword">    </span>{ <span class="keywordflow">return</span> m_biarc_list.back().x_end(); }</div>
+</div>
+<div class="line"><a id="l00415" name="l00415"></a><span class="lineno">  415</span> </div>
+<div class="line"><a id="l00416" name="l00416"></a><span class="lineno">  416</span>    <a class="code hl_typedef" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a></div>
+<div class="foldopen" id="foldopen00417" data-start="{" data-end="}">
+<div class="line"><a id="l00417" name="l00417"></a><span class="lineno"><a class="line" href="class_g2lib_1_1_biarc_list.html#ad4675e24f6c9f47926e52a55b635514a">  417</a></span>    <a class="code hl_function" href="class_g2lib_1_1_biarc_list.html#ad4675e24f6c9f47926e52a55b635514a">y_end</a>()<span class="keyword"> const override</span></div>
+<div class="line"><a id="l00418" name="l00418"></a><span class="lineno">  418</span><span class="keyword">    </span>{ <span class="keywordflow">return</span> m_biarc_list.back().y_end(); }</div>
+</div>
+<div class="line"><a id="l00419" name="l00419"></a><span class="lineno">  419</span> </div>
+<div class="line"><a id="l00420" name="l00420"></a><span class="lineno">  420</span>    <a class="code hl_typedef" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a></div>
+<div class="foldopen" id="foldopen00421" data-start="{" data-end="}">
+<div class="line"><a id="l00421" name="l00421"></a><span class="lineno"><a class="line" href="class_g2lib_1_1_biarc_list.html#ab633c410b3b73bb34f234df81d85a061">  421</a></span>    <a class="code hl_function" href="class_g2lib_1_1_biarc_list.html#ab633c410b3b73bb34f234df81d85a061">x_begin_ISO</a>( <a class="code hl_typedef" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> offs )<span class="keyword"> const override</span></div>
+<div class="line"><a id="l00422" name="l00422"></a><span class="lineno">  422</span><span class="keyword">    </span>{ <span class="keywordflow">return</span> m_biarc_list.front().x_begin_ISO( offs ); }</div>
+</div>
+<div class="line"><a id="l00423" name="l00423"></a><span class="lineno">  423</span> </div>
+<div class="line"><a id="l00424" name="l00424"></a><span class="lineno">  424</span>    <a class="code hl_typedef" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a></div>
+<div class="foldopen" id="foldopen00425" data-start="{" data-end="}">
+<div class="line"><a id="l00425" name="l00425"></a><span class="lineno"><a class="line" href="class_g2lib_1_1_biarc_list.html#a9bde458d7d677778fd4a02d144c7021f">  425</a></span>    <a class="code hl_function" href="class_g2lib_1_1_biarc_list.html#a9bde458d7d677778fd4a02d144c7021f">y_begin_ISO</a>( <a class="code hl_typedef" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> offs )<span class="keyword"> const override</span></div>
+<div class="line"><a id="l00426" name="l00426"></a><span class="lineno">  426</span><span class="keyword">    </span>{ <span class="keywordflow">return</span> m_biarc_list.front().y_begin_ISO( offs ); }</div>
+</div>
+<div class="line"><a id="l00427" name="l00427"></a><span class="lineno">  427</span> </div>
+<div class="line"><a id="l00428" name="l00428"></a><span class="lineno">  428</span>    <a class="code hl_typedef" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a></div>
+<div class="foldopen" id="foldopen00429" data-start="{" data-end="}">
+<div class="line"><a id="l00429" name="l00429"></a><span class="lineno"><a class="line" href="class_g2lib_1_1_biarc_list.html#a434e35f1925e71fdefdd27261a208ed5">  429</a></span>    <a class="code hl_function" href="class_g2lib_1_1_biarc_list.html#a434e35f1925e71fdefdd27261a208ed5">x_end_ISO</a>( <a class="code hl_typedef" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> offs )<span class="keyword"> const override</span></div>
+<div class="line"><a id="l00430" name="l00430"></a><span class="lineno">  430</span><span class="keyword">    </span>{ <span class="keywordflow">return</span> m_biarc_list.back().x_end_ISO( offs ); }</div>
+</div>
+<div class="line"><a id="l00431" name="l00431"></a><span class="lineno">  431</span> </div>
+<div class="line"><a id="l00432" name="l00432"></a><span class="lineno">  432</span>    <a class="code hl_typedef" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a></div>
+<div class="foldopen" id="foldopen00433" data-start="{" data-end="}">
+<div class="line"><a id="l00433" name="l00433"></a><span class="lineno"><a class="line" href="class_g2lib_1_1_biarc_list.html#ae641e03ec0c08cbf23f0d5bad76f237e">  433</a></span>    <a class="code hl_function" href="class_g2lib_1_1_biarc_list.html#ae641e03ec0c08cbf23f0d5bad76f237e">y_end_ISO</a>( <a class="code hl_typedef" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> offs )<span class="keyword"> const override</span></div>
+<div class="line"><a id="l00434" name="l00434"></a><span class="lineno">  434</span><span class="keyword">    </span>{ <span class="keywordflow">return</span> m_biarc_list.back().y_end_ISO( offs ); }</div>
+</div>
+<div class="line"><a id="l00435" name="l00435"></a><span class="lineno">  435</span> </div>
+<div class="line"><a id="l00436" name="l00436"></a><span class="lineno">  436</span>    <a class="code hl_typedef" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a></div>
+<div class="foldopen" id="foldopen00437" data-start="{" data-end="}">
+<div class="line"><a id="l00437" name="l00437"></a><span class="lineno"><a class="line" href="class_g2lib_1_1_biarc_list.html#a75aa58c07c27451e425fc82c428bd649">  437</a></span>    <a class="code hl_function" href="class_g2lib_1_1_biarc_list.html#a75aa58c07c27451e425fc82c428bd649">tx_begin</a>()<span class="keyword"> const override</span></div>
+<div class="line"><a id="l00438" name="l00438"></a><span class="lineno">  438</span><span class="keyword">    </span>{ <span class="keywordflow">return</span> m_biarc_list.front().tx_begin(); }</div>
+</div>
+<div class="line"><a id="l00439" name="l00439"></a><span class="lineno">  439</span> </div>
+<div class="line"><a id="l00440" name="l00440"></a><span class="lineno">  440</span>    <a class="code hl_typedef" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a></div>
+<div class="foldopen" id="foldopen00441" data-start="{" data-end="}">
+<div class="line"><a id="l00441" name="l00441"></a><span class="lineno"><a class="line" href="class_g2lib_1_1_biarc_list.html#a0d329e32fab8c77507c2b44f32dc301c">  441</a></span>    <a class="code hl_function" href="class_g2lib_1_1_biarc_list.html#a0d329e32fab8c77507c2b44f32dc301c">ty_begin</a>()<span class="keyword"> const override</span></div>
+<div class="line"><a id="l00442" name="l00442"></a><span class="lineno">  442</span><span class="keyword">    </span>{ <span class="keywordflow">return</span> m_biarc_list.front().ty_begin(); }</div>
+</div>
+<div class="line"><a id="l00443" name="l00443"></a><span class="lineno">  443</span> </div>
+<div class="line"><a id="l00444" name="l00444"></a><span class="lineno">  444</span>    <a class="code hl_typedef" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a></div>
+<div class="foldopen" id="foldopen00445" data-start="{" data-end="}">
+<div class="line"><a id="l00445" name="l00445"></a><span class="lineno"><a class="line" href="class_g2lib_1_1_biarc_list.html#aba5a24b31666c1507e6a9226995e7600">  445</a></span>    <a class="code hl_function" href="class_g2lib_1_1_biarc_list.html#aba5a24b31666c1507e6a9226995e7600">tx_end</a>()<span class="keyword"> const override</span></div>
+<div class="line"><a id="l00446" name="l00446"></a><span class="lineno">  446</span><span class="keyword">    </span>{ <span class="keywordflow">return</span> m_biarc_list.back().tx_end(); }</div>
+</div>
+<div class="line"><a id="l00447" name="l00447"></a><span class="lineno">  447</span> </div>
+<div class="line"><a id="l00448" name="l00448"></a><span class="lineno">  448</span>    <a class="code hl_typedef" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a></div>
+<div class="foldopen" id="foldopen00449" data-start="{" data-end="}">
+<div class="line"><a id="l00449" name="l00449"></a><span class="lineno"><a class="line" href="class_g2lib_1_1_biarc_list.html#ad70781841d356b71d60c7f047d09647d">  449</a></span>    <a class="code hl_function" href="class_g2lib_1_1_biarc_list.html#ad70781841d356b71d60c7f047d09647d">ty_end</a>()<span class="keyword"> const override</span></div>
+<div class="line"><a id="l00450" name="l00450"></a><span class="lineno">  450</span><span class="keyword">    </span>{ <span class="keywordflow">return</span> m_biarc_list.back().ty_end(); }</div>
+</div>
+<div class="line"><a id="l00451" name="l00451"></a><span class="lineno">  451</span> </div>
+<div class="line"><a id="l00452" name="l00452"></a><span class="lineno">  452</span>    <a class="code hl_typedef" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a></div>
+<div class="foldopen" id="foldopen00453" data-start="{" data-end="}">
+<div class="line"><a id="l00453" name="l00453"></a><span class="lineno"><a class="line" href="class_g2lib_1_1_biarc_list.html#a050b34b38235cf545766319fcf54df6b">  453</a></span>    <a class="code hl_function" href="class_g2lib_1_1_biarc_list.html#a050b34b38235cf545766319fcf54df6b">nx_begin_ISO</a>()<span class="keyword"> const override</span></div>
+<div class="line"><a id="l00454" name="l00454"></a><span class="lineno">  454</span><span class="keyword">    </span>{ <span class="keywordflow">return</span> m_biarc_list.front().nx_begin_ISO(); }</div>
+</div>
+<div class="line"><a id="l00455" name="l00455"></a><span class="lineno">  455</span> </div>
+<div class="line"><a id="l00456" name="l00456"></a><span class="lineno">  456</span>    <a class="code hl_typedef" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a></div>
+<div class="foldopen" id="foldopen00457" data-start="{" data-end="}">
+<div class="line"><a id="l00457" name="l00457"></a><span class="lineno"><a class="line" href="class_g2lib_1_1_biarc_list.html#a4321423d074831a590fc31634a61573e">  457</a></span>    <a class="code hl_function" href="class_g2lib_1_1_biarc_list.html#a4321423d074831a590fc31634a61573e">ny_begin_ISO</a>()<span class="keyword"> const override</span></div>
+<div class="line"><a id="l00458" name="l00458"></a><span class="lineno">  458</span><span class="keyword">    </span>{ <span class="keywordflow">return</span> m_biarc_list.front().ny_begin_ISO(); }</div>
+</div>
+<div class="line"><a id="l00459" name="l00459"></a><span class="lineno">  459</span> </div>
+<div class="line"><a id="l00460" name="l00460"></a><span class="lineno">  460</span>    <a class="code hl_typedef" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a></div>
+<div class="foldopen" id="foldopen00461" data-start="{" data-end="}">
+<div class="line"><a id="l00461" name="l00461"></a><span class="lineno"><a class="line" href="class_g2lib_1_1_biarc_list.html#a971fa947ca09d991cd01b1414229882d">  461</a></span>    <a class="code hl_function" href="class_g2lib_1_1_biarc_list.html#a971fa947ca09d991cd01b1414229882d">nx_end_ISO</a>()<span class="keyword"> const override</span></div>
+<div class="line"><a id="l00462" name="l00462"></a><span class="lineno">  462</span><span class="keyword">    </span>{ <span class="keywordflow">return</span> m_biarc_list.back().nx_end_ISO(); }</div>
+</div>
+<div class="line"><a id="l00463" name="l00463"></a><span class="lineno">  463</span> </div>
+<div class="line"><a id="l00464" name="l00464"></a><span class="lineno">  464</span>    <a class="code hl_typedef" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a></div>
+<div class="foldopen" id="foldopen00465" data-start="{" data-end="}">
+<div class="line"><a id="l00465" name="l00465"></a><span class="lineno"><a class="line" href="class_g2lib_1_1_biarc_list.html#a2420ee7c45b7d17e5f673a722f18f84b">  465</a></span>    <a class="code hl_function" href="class_g2lib_1_1_biarc_list.html#a2420ee7c45b7d17e5f673a722f18f84b">ny_end_ISO</a>()<span class="keyword"> const override</span></div>
+<div class="line"><a id="l00466" name="l00466"></a><span class="lineno">  466</span><span class="keyword">    </span>{ <span class="keywordflow">return</span> m_biarc_list.back().ny_end_ISO(); }</div>
+</div>
+<div class="line"><a id="l00467" name="l00467"></a><span class="lineno">  467</span> </div>
+<div class="line"><a id="l00468" name="l00468"></a><span class="lineno">  468</span>    <span class="comment">/*\</span></div>
+<div class="line"><a id="l00469" name="l00469"></a><span class="lineno">  469</span><span class="comment">     |  _   _          _</span></div>
+<div class="line"><a id="l00470" name="l00470"></a><span class="lineno">  470</span><span class="comment">     | | |_| |__   ___| |_ __ _</span></div>
+<div class="line"><a id="l00471" name="l00471"></a><span class="lineno">  471</span><span class="comment">     | | __| &#39;_ \ / _ \ __/ _` |</span></div>
+<div class="line"><a id="l00472" name="l00472"></a><span class="lineno">  472</span><span class="comment">     | | |_| | | |  __/ || (_| |</span></div>
+<div class="line"><a id="l00473" name="l00473"></a><span class="lineno">  473</span><span class="comment">     |  \__|_| |_|\___|\__\__,_|</span></div>
+<div class="line"><a id="l00474" name="l00474"></a><span class="lineno">  474</span><span class="comment">    \*/</span></div>
+<div class="line"><a id="l00475" name="l00475"></a><span class="lineno">  475</span> </div>
+<div class="line"><a id="l00476" name="l00476"></a><span class="lineno">  476</span>    <a class="code hl_typedef" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> <a class="code hl_function" href="class_g2lib_1_1_biarc_list.html#aafa7abd2c8d824c44cae899b3f740ece">theta</a>    ( <a class="code hl_typedef" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> ) <span class="keyword">const override</span>;</div>
+<div class="line"><a id="l00477" name="l00477"></a><span class="lineno">  477</span>    <a class="code hl_typedef" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> <a class="code hl_function" href="class_g2lib_1_1_biarc_list.html#acfe691d9413f5c6778741c8ecdbf3c13">theta_D</a>  ( <a class="code hl_typedef" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> ) <span class="keyword">const override</span>;</div>
+<div class="line"><a id="l00478" name="l00478"></a><span class="lineno">  478</span>    <a class="code hl_typedef" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> <a class="code hl_function" href="class_g2lib_1_1_biarc_list.html#aba6c6d98d73aab902a4d5c30140bf8b2">theta_DD</a> ( <a class="code hl_typedef" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> ) <span class="keyword">const override</span>;</div>
+<div class="line"><a id="l00479" name="l00479"></a><span class="lineno">  479</span>    <a class="code hl_typedef" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> <a class="code hl_function" href="class_g2lib_1_1_biarc_list.html#a412305da375e4503d33d69729762a654">theta_DDD</a>( <a class="code hl_typedef" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> ) <span class="keyword">const override</span>;</div>
+<div class="line"><a id="l00480" name="l00480"></a><span class="lineno">  480</span> </div>
+<div class="line"><a id="l00481" name="l00481"></a><span class="lineno">  481</span>    <span class="comment">/*\</span></div>
+<div class="line"><a id="l00482" name="l00482"></a><span class="lineno">  482</span><span class="comment">     |  _____                   _   _   _</span></div>
+<div class="line"><a id="l00483" name="l00483"></a><span class="lineno">  483</span><span class="comment">     | |_   _|   __ _ _ __   __| | | \ | |</span></div>
+<div class="line"><a id="l00484" name="l00484"></a><span class="lineno">  484</span><span class="comment">     |   | |    / _` | &#39;_ \ / _` | |  \| |</span></div>
+<div class="line"><a id="l00485" name="l00485"></a><span class="lineno">  485</span><span class="comment">     |   | |   | (_| | | | | (_| | | |\  |</span></div>
+<div class="line"><a id="l00486" name="l00486"></a><span class="lineno">  486</span><span class="comment">     |   |_|    \__,_|_| |_|\__,_| |_| \_|</span></div>
+<div class="line"><a id="l00487" name="l00487"></a><span class="lineno">  487</span><span class="comment">    \*/</span></div>
+<div class="line"><a id="l00488" name="l00488"></a><span class="lineno">  488</span> </div>
+<div class="line"><a id="l00489" name="l00489"></a><span class="lineno">  489</span>    <a class="code hl_typedef" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> <a class="code hl_function" href="class_g2lib_1_1_biarc_list.html#a85d37d463b27270624141880ae469989">tx</a>    ( <a class="code hl_typedef" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> ) <span class="keyword">const override</span>;</div>
+<div class="line"><a id="l00490" name="l00490"></a><span class="lineno">  490</span>    <a class="code hl_typedef" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> <a class="code hl_function" href="class_g2lib_1_1_biarc_list.html#a9acfcdb09b5b21fa6fa1b71cb9ecea34">ty</a>    ( <a class="code hl_typedef" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> ) <span class="keyword">const override</span>;</div>
+<div class="line"><a id="l00491" name="l00491"></a><span class="lineno">  491</span>    <a class="code hl_typedef" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> <a class="code hl_function" href="class_g2lib_1_1_biarc_list.html#a9f7e5e40b5ede227d4efc30fecd454b0">tx_D</a>  ( <a class="code hl_typedef" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> ) <span class="keyword">const override</span>;</div>
+<div class="line"><a id="l00492" name="l00492"></a><span class="lineno">  492</span>    <a class="code hl_typedef" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> <a class="code hl_function" href="class_g2lib_1_1_biarc_list.html#a9eba036a57cc0fae54ed4da7966426e3">ty_D</a>  ( <a class="code hl_typedef" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> ) <span class="keyword">const override</span>;</div>
+<div class="line"><a id="l00493" name="l00493"></a><span class="lineno">  493</span>    <a class="code hl_typedef" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> <a class="code hl_function" href="class_g2lib_1_1_biarc_list.html#aaee5cd11fbe4830f7ba18064c3e456b6">tx_DD</a> ( <a class="code hl_typedef" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> ) <span class="keyword">const override</span>;</div>
+<div class="line"><a id="l00494" name="l00494"></a><span class="lineno">  494</span>    <a class="code hl_typedef" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> <a class="code hl_function" href="class_g2lib_1_1_biarc_list.html#a1e8fd201d8d8b6a4d3f2a2756c053664">ty_DD</a> ( <a class="code hl_typedef" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> ) <span class="keyword">const override</span>;</div>
+<div class="line"><a id="l00495" name="l00495"></a><span class="lineno">  495</span>    <a class="code hl_typedef" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> <a class="code hl_function" href="class_g2lib_1_1_biarc_list.html#a016e8c3e50fe0434a2f2312e0119fe1c">tx_DDD</a>( <a class="code hl_typedef" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> ) <span class="keyword">const override</span>;</div>
+<div class="line"><a id="l00496" name="l00496"></a><span class="lineno">  496</span>    <a class="code hl_typedef" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> <a class="code hl_function" href="class_g2lib_1_1_biarc_list.html#a125dfba0b4abb86e6b1bed5c0e279397">ty_DDD</a>( <a class="code hl_typedef" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> ) <span class="keyword">const override</span>;</div>
+<div class="line"><a id="l00497" name="l00497"></a><span class="lineno">  497</span> </div>
+<div class="line"><a id="l00498" name="l00498"></a><span class="lineno">  498</span>    <span class="comment">// . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .</span></div>
+<div class="line"><a id="l00499" name="l00499"></a><span class="lineno">  499</span> </div>
+<div class="line"><a id="l00500" name="l00500"></a><span class="lineno">  500</span>    <span class="keywordtype">void</span></div>
+<div class="line"><a id="l00501" name="l00501"></a><span class="lineno">  501</span>    <a class="code hl_function" href="class_g2lib_1_1_biarc_list.html#a7add0aa10dc852e9c98cbfc913a09c40">tg</a>(</div>
+<div class="line"><a id="l00502" name="l00502"></a><span class="lineno">  502</span>      <a class="code hl_typedef" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a>   s,</div>
+<div class="line"><a id="l00503" name="l00503"></a><span class="lineno">  503</span>      <a class="code hl_typedef" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> &amp; tg_x,</div>
+<div class="line"><a id="l00504" name="l00504"></a><span class="lineno">  504</span>      <a class="code hl_typedef" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> &amp; tg_y</div>
+<div class="line"><a id="l00505" name="l00505"></a><span class="lineno">  505</span>    ) <span class="keyword">const override</span>;</div>
+<div class="line"><a id="l00506" name="l00506"></a><span class="lineno">  506</span> </div>
+<div class="line"><a id="l00507" name="l00507"></a><span class="lineno">  507</span>    <span class="keywordtype">void</span></div>
+<div class="line"><a id="l00508" name="l00508"></a><span class="lineno">  508</span>    <a class="code hl_function" href="class_g2lib_1_1_biarc_list.html#a297d3d170457b21947b58b829e489e56">tg_D</a>(</div>
+<div class="line"><a id="l00509" name="l00509"></a><span class="lineno">  509</span>      <a class="code hl_typedef" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a>   s,</div>
+<div class="line"><a id="l00510" name="l00510"></a><span class="lineno">  510</span>      <a class="code hl_typedef" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> &amp; tg_x_D,</div>
+<div class="line"><a id="l00511" name="l00511"></a><span class="lineno">  511</span>      <a class="code hl_typedef" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> &amp; tg_y_D</div>
+<div class="line"><a id="l00512" name="l00512"></a><span class="lineno">  512</span>    ) <span class="keyword">const override</span>;</div>
+<div class="line"><a id="l00513" name="l00513"></a><span class="lineno">  513</span> </div>
+<div class="line"><a id="l00514" name="l00514"></a><span class="lineno">  514</span>    <span class="keywordtype">void</span></div>
+<div class="line"><a id="l00515" name="l00515"></a><span class="lineno">  515</span>    <a class="code hl_function" href="class_g2lib_1_1_biarc_list.html#a71b715dfc757eabf9ffcae2bf6f4a8f0">tg_DD</a>(</div>
+<div class="line"><a id="l00516" name="l00516"></a><span class="lineno">  516</span>      <a class="code hl_typedef" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a>   s,</div>
+<div class="line"><a id="l00517" name="l00517"></a><span class="lineno">  517</span>      <a class="code hl_typedef" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> &amp; tg_x_DD,</div>
+<div class="line"><a id="l00518" name="l00518"></a><span class="lineno">  518</span>      <a class="code hl_typedef" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> &amp; tg_y_DD</div>
+<div class="line"><a id="l00519" name="l00519"></a><span class="lineno">  519</span>    ) <span class="keyword">const override</span>;</div>
+<div class="line"><a id="l00520" name="l00520"></a><span class="lineno">  520</span> </div>
+<div class="line"><a id="l00521" name="l00521"></a><span class="lineno">  521</span>    <span class="keywordtype">void</span></div>
+<div class="line"><a id="l00522" name="l00522"></a><span class="lineno">  522</span>    <a class="code hl_function" href="class_g2lib_1_1_biarc_list.html#a310df1d2bdc2b3ea15d863cf92f6239e">tg_DDD</a>(</div>
+<div class="line"><a id="l00523" name="l00523"></a><span class="lineno">  523</span>      <a class="code hl_typedef" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a>   s,</div>
+<div class="line"><a id="l00524" name="l00524"></a><span class="lineno">  524</span>      <a class="code hl_typedef" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> &amp; tg_x_DDD,</div>
+<div class="line"><a id="l00525" name="l00525"></a><span class="lineno">  525</span>      <a class="code hl_typedef" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> &amp; tg_y_DDD</div>
+<div class="line"><a id="l00526" name="l00526"></a><span class="lineno">  526</span>    ) <span class="keyword">const override</span>;</div>
+<div class="line"><a id="l00527" name="l00527"></a><span class="lineno">  527</span> </div>
+<div class="line"><a id="l00528" name="l00528"></a><span class="lineno">  528</span>    <span class="comment">// . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .</span></div>
+<div class="line"><a id="l00529" name="l00529"></a><span class="lineno">  529</span> </div>
+<div class="line"><a id="l00530" name="l00530"></a><span class="lineno">  530</span>    <span class="keywordtype">void</span></div>
+<div class="line"><a id="l00531" name="l00531"></a><span class="lineno">  531</span>    <a class="code hl_function" href="class_g2lib_1_1_biarc_list.html#a81efbd975260e0d35bb6c2be659e3013">evaluate</a>(</div>
+<div class="line"><a id="l00532" name="l00532"></a><span class="lineno">  532</span>      <a class="code hl_typedef" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a>   s,</div>
+<div class="line"><a id="l00533" name="l00533"></a><span class="lineno">  533</span>      <a class="code hl_typedef" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> &amp; th,</div>
+<div class="line"><a id="l00534" name="l00534"></a><span class="lineno">  534</span>      <a class="code hl_typedef" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> &amp; k,</div>
+<div class="line"><a id="l00535" name="l00535"></a><span class="lineno">  535</span>      <a class="code hl_typedef" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> &amp; x,</div>
+<div class="line"><a id="l00536" name="l00536"></a><span class="lineno">  536</span>      <a class="code hl_typedef" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> &amp; y</div>
+<div class="line"><a id="l00537" name="l00537"></a><span class="lineno">  537</span>    ) <span class="keyword">const override</span>;</div>
+<div class="line"><a id="l00538" name="l00538"></a><span class="lineno">  538</span> </div>
+<div class="line"><a id="l00539" name="l00539"></a><span class="lineno">  539</span>    <span class="comment">// . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .</span></div>
+<div class="line"><a id="l00540" name="l00540"></a><span class="lineno">  540</span> </div>
+<div class="line"><a id="l00541" name="l00541"></a><span class="lineno">  541</span>    <span class="keywordtype">void</span></div>
+<div class="line"><a id="l00542" name="l00542"></a><span class="lineno">  542</span>    <a class="code hl_function" href="class_g2lib_1_1_biarc_list.html#a04cbf17d92789c45da4b6b8cfd4c5f42">evaluate_ISO</a>(</div>
+<div class="line"><a id="l00543" name="l00543"></a><span class="lineno">  543</span>      <a class="code hl_typedef" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a>   s,</div>
+<div class="line"><a id="l00544" name="l00544"></a><span class="lineno">  544</span>      <a class="code hl_typedef" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a>   offs,</div>
+<div class="line"><a id="l00545" name="l00545"></a><span class="lineno">  545</span>      <a class="code hl_typedef" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> &amp; th,</div>
+<div class="line"><a id="l00546" name="l00546"></a><span class="lineno">  546</span>      <a class="code hl_typedef" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> &amp; k,</div>
+<div class="line"><a id="l00547" name="l00547"></a><span class="lineno">  547</span>      <a class="code hl_typedef" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> &amp; x,</div>
+<div class="line"><a id="l00548" name="l00548"></a><span class="lineno">  548</span>      <a class="code hl_typedef" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> &amp; y</div>
+<div class="line"><a id="l00549" name="l00549"></a><span class="lineno">  549</span>    ) <span class="keyword">const override</span>;</div>
+<div class="line"><a id="l00550" name="l00550"></a><span class="lineno">  550</span> </div>
+<div class="line"><a id="l00551" name="l00551"></a><span class="lineno">  551</span>    <span class="comment">// . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .</span></div>
+<div class="line"><a id="l00552" name="l00552"></a><span class="lineno">  552</span> </div>
+<div class="line"><a id="l00553" name="l00553"></a><span class="lineno">  553</span>    <a class="code hl_typedef" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> <a class="code hl_function" href="class_g2lib_1_1_biarc_list.html#a968bc8a7c606d93b1c1be39f5b92dac0">X</a>    ( <a class="code hl_typedef" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> ) <span class="keyword">const override</span>;</div>
+<div class="line"><a id="l00554" name="l00554"></a><span class="lineno">  554</span>    <a class="code hl_typedef" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> <a class="code hl_function" href="class_g2lib_1_1_biarc_list.html#a5acefa2628e1865404a81000c708c7f2">Y</a>    ( <a class="code hl_typedef" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> ) <span class="keyword">const override</span>;</div>
+<div class="line"><a id="l00555" name="l00555"></a><span class="lineno">  555</span>    <a class="code hl_typedef" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> <a class="code hl_function" href="class_g2lib_1_1_biarc_list.html#a3e31db23afe087e62b63846dd3379693">X_D</a>  ( <a class="code hl_typedef" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> ) <span class="keyword">const override</span>;</div>
+<div class="line"><a id="l00556" name="l00556"></a><span class="lineno">  556</span>    <a class="code hl_typedef" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> <a class="code hl_function" href="class_g2lib_1_1_biarc_list.html#aaf64a7f9509295ea92691930f2600b92">Y_D</a>  ( <a class="code hl_typedef" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> ) <span class="keyword">const override</span>;</div>
+<div class="line"><a id="l00557" name="l00557"></a><span class="lineno">  557</span>    <a class="code hl_typedef" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> <a class="code hl_function" href="class_g2lib_1_1_biarc_list.html#a41771f9a65cd42f7bad054624a03d3b3">X_DD</a> ( <a class="code hl_typedef" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> ) <span class="keyword">const override</span>;</div>
+<div class="line"><a id="l00558" name="l00558"></a><span class="lineno">  558</span>    <a class="code hl_typedef" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> <a class="code hl_function" href="class_g2lib_1_1_biarc_list.html#aef1567234fdc3aaa85f5d75c567100d4">Y_DD</a> ( <a class="code hl_typedef" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> ) <span class="keyword">const override</span>;</div>
+<div class="line"><a id="l00559" name="l00559"></a><span class="lineno">  559</span>    <a class="code hl_typedef" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> <a class="code hl_function" href="class_g2lib_1_1_biarc_list.html#a7005a817e8a0045f0143d07f21182b25">X_DDD</a>( <a class="code hl_typedef" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> ) <span class="keyword">const override</span>;</div>
+<div class="line"><a id="l00560" name="l00560"></a><span class="lineno">  560</span>    <a class="code hl_typedef" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> <a class="code hl_function" href="class_g2lib_1_1_biarc_list.html#a888861cb3554707230ab84751f475aaf">Y_DDD</a>( <a class="code hl_typedef" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> ) <span class="keyword">const override</span>;</div>
+<div class="line"><a id="l00561" name="l00561"></a><span class="lineno">  561</span> </div>
+<div class="line"><a id="l00562" name="l00562"></a><span class="lineno">  562</span>    <span class="comment">// . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .</span></div>
+<div class="line"><a id="l00563" name="l00563"></a><span class="lineno">  563</span> </div>
+<div class="line"><a id="l00564" name="l00564"></a><span class="lineno">  564</span>    <span class="keywordtype">void</span></div>
+<div class="line"><a id="l00565" name="l00565"></a><span class="lineno">  565</span>    <a class="code hl_function" href="class_g2lib_1_1_biarc_list.html#a575a6737a2b3d07b2c2157b14e5b4376">eval</a>(</div>
+<div class="line"><a id="l00566" name="l00566"></a><span class="lineno">  566</span>      <a class="code hl_typedef" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a>   s,</div>
+<div class="line"><a id="l00567" name="l00567"></a><span class="lineno">  567</span>      <a class="code hl_typedef" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> &amp; x,</div>
+<div class="line"><a id="l00568" name="l00568"></a><span class="lineno">  568</span>      <a class="code hl_typedef" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> &amp; y</div>
+<div class="line"><a id="l00569" name="l00569"></a><span class="lineno">  569</span>    ) <span class="keyword">const override</span>;</div>
+<div class="line"><a id="l00570" name="l00570"></a><span class="lineno">  570</span> </div>
+<div class="line"><a id="l00571" name="l00571"></a><span class="lineno">  571</span>    <span class="keywordtype">void</span></div>
+<div class="line"><a id="l00572" name="l00572"></a><span class="lineno">  572</span>    <a class="code hl_function" href="class_g2lib_1_1_biarc_list.html#a23e67966e10979375ed40add72f5ddc0">eval_D</a>(</div>
+<div class="line"><a id="l00573" name="l00573"></a><span class="lineno">  573</span>      <a class="code hl_typedef" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a>   s,</div>
+<div class="line"><a id="l00574" name="l00574"></a><span class="lineno">  574</span>      <a class="code hl_typedef" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> &amp; x_D,</div>
+<div class="line"><a id="l00575" name="l00575"></a><span class="lineno">  575</span>      <a class="code hl_typedef" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> &amp; y_D</div>
+<div class="line"><a id="l00576" name="l00576"></a><span class="lineno">  576</span>    ) <span class="keyword">const override</span>;</div>
+<div class="line"><a id="l00577" name="l00577"></a><span class="lineno">  577</span> </div>
+<div class="line"><a id="l00578" name="l00578"></a><span class="lineno">  578</span>    <span class="keywordtype">void</span></div>
+<div class="line"><a id="l00579" name="l00579"></a><span class="lineno">  579</span>    <a class="code hl_function" href="class_g2lib_1_1_biarc_list.html#afc3c0fdf05e2beb27b3777f5a744094b">eval_DD</a>(</div>
+<div class="line"><a id="l00580" name="l00580"></a><span class="lineno">  580</span>      <a class="code hl_typedef" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a>   s,</div>
+<div class="line"><a id="l00581" name="l00581"></a><span class="lineno">  581</span>      <a class="code hl_typedef" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> &amp; x_DD,</div>
+<div class="line"><a id="l00582" name="l00582"></a><span class="lineno">  582</span>      <a class="code hl_typedef" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> &amp; y_DD</div>
+<div class="line"><a id="l00583" name="l00583"></a><span class="lineno">  583</span>    ) <span class="keyword">const override</span>;</div>
+<div class="line"><a id="l00584" name="l00584"></a><span class="lineno">  584</span> </div>
+<div class="line"><a id="l00585" name="l00585"></a><span class="lineno">  585</span>    <span class="keywordtype">void</span></div>
+<div class="line"><a id="l00586" name="l00586"></a><span class="lineno">  586</span>    <a class="code hl_function" href="class_g2lib_1_1_biarc_list.html#a5712023b0a7dc0be99bd36d787138a05">eval_DDD</a>(</div>
+<div class="line"><a id="l00587" name="l00587"></a><span class="lineno">  587</span>      <a class="code hl_typedef" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a>   s,</div>
+<div class="line"><a id="l00588" name="l00588"></a><span class="lineno">  588</span>      <a class="code hl_typedef" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> &amp; x_DDD,</div>
+<div class="line"><a id="l00589" name="l00589"></a><span class="lineno">  589</span>      <a class="code hl_typedef" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> &amp; y_DDD</div>
+<div class="line"><a id="l00590" name="l00590"></a><span class="lineno">  590</span>    ) <span class="keyword">const override</span>;</div>
+<div class="line"><a id="l00591" name="l00591"></a><span class="lineno">  591</span> </div>
+<div class="line"><a id="l00592" name="l00592"></a><span class="lineno">  592</span>    <span class="comment">/*\</span></div>
+<div class="line"><a id="l00593" name="l00593"></a><span class="lineno">  593</span><span class="comment">     |         __  __          _</span></div>
+<div class="line"><a id="l00594" name="l00594"></a><span class="lineno">  594</span><span class="comment">     |   ___  / _|/ _|___  ___| |_</span></div>
+<div class="line"><a id="l00595" name="l00595"></a><span class="lineno">  595</span><span class="comment">     |  / _ \| |_| |_/ __|/ _ \ __|</span></div>
+<div class="line"><a id="l00596" name="l00596"></a><span class="lineno">  596</span><span class="comment">     | | (_) |  _|  _\__ \  __/ |_</span></div>
+<div class="line"><a id="l00597" name="l00597"></a><span class="lineno">  597</span><span class="comment">     |  \___/|_| |_| |___/\___|\__|</span></div>
+<div class="line"><a id="l00598" name="l00598"></a><span class="lineno">  598</span><span class="comment">    \*/</span></div>
+<div class="line"><a id="l00599" name="l00599"></a><span class="lineno">  599</span> </div>
+<div class="line"><a id="l00600" name="l00600"></a><span class="lineno">  600</span>    <a class="code hl_typedef" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> <a class="code hl_function" href="class_g2lib_1_1_biarc_list.html#a8e2d4dd1063e2250eac31a94db2e15ab">X_ISO</a>    ( <a class="code hl_typedef" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> s, <a class="code hl_typedef" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> offs ) <span class="keyword">const override</span>;</div>
+<div class="line"><a id="l00601" name="l00601"></a><span class="lineno">  601</span>    <a class="code hl_typedef" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> <a class="code hl_function" href="class_g2lib_1_1_biarc_list.html#a1c15b7f07ba2763dccdde6be9fbff195">Y_ISO</a>    ( <a class="code hl_typedef" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> s, <a class="code hl_typedef" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> offs ) <span class="keyword">const override</span>;</div>
+<div class="line"><a id="l00602" name="l00602"></a><span class="lineno">  602</span>    <a class="code hl_typedef" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> <a class="code hl_function" href="class_g2lib_1_1_biarc_list.html#a65780152e32f660bedef28916009734d">X_ISO_D</a>  ( <a class="code hl_typedef" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> s, <a class="code hl_typedef" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> offs ) <span class="keyword">const override</span>;</div>
+<div class="line"><a id="l00603" name="l00603"></a><span class="lineno">  603</span>    <a class="code hl_typedef" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> <a class="code hl_function" href="class_g2lib_1_1_biarc_list.html#af8f51315355aa4aa338acecd6ec4ac98">Y_ISO_D</a>  ( <a class="code hl_typedef" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> s, <a class="code hl_typedef" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> offs ) <span class="keyword">const override</span>;</div>
+<div class="line"><a id="l00604" name="l00604"></a><span class="lineno">  604</span>    <a class="code hl_typedef" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> <a class="code hl_function" href="class_g2lib_1_1_biarc_list.html#a1dbf6471530c58214e4202d8f009701f">X_ISO_DD</a> ( <a class="code hl_typedef" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> s, <a class="code hl_typedef" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> offs ) <span class="keyword">const override</span>;</div>
+<div class="line"><a id="l00605" name="l00605"></a><span class="lineno">  605</span>    <a class="code hl_typedef" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> <a class="code hl_function" href="class_g2lib_1_1_biarc_list.html#afde0c9db5fda362410dbf1803a0a84ea">Y_ISO_DD</a> ( <a class="code hl_typedef" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> s, <a class="code hl_typedef" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> offs ) <span class="keyword">const override</span>;</div>
+<div class="line"><a id="l00606" name="l00606"></a><span class="lineno">  606</span>    <a class="code hl_typedef" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> <a class="code hl_function" href="class_g2lib_1_1_biarc_list.html#af6f0004d6f05d332a32f98aae26b88d3">X_ISO_DDD</a>( <a class="code hl_typedef" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> s, <a class="code hl_typedef" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> offs ) <span class="keyword">const override</span>;</div>
+<div class="line"><a id="l00607" name="l00607"></a><span class="lineno">  607</span>    <a class="code hl_typedef" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> <a class="code hl_function" href="class_g2lib_1_1_biarc_list.html#adbe2d9ae7346ce3ef73c9bf388f98ae4">Y_ISO_DDD</a>( <a class="code hl_typedef" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> s, <a class="code hl_typedef" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> offs ) <span class="keyword">const override</span>;</div>
+<div class="line"><a id="l00608" name="l00608"></a><span class="lineno">  608</span> </div>
+<div class="line"><a id="l00609" name="l00609"></a><span class="lineno">  609</span>    <span class="comment">// . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .</span></div>
+<div class="line"><a id="l00610" name="l00610"></a><span class="lineno">  610</span> </div>
+<div class="line"><a id="l00611" name="l00611"></a><span class="lineno">  611</span>    <span class="keywordtype">void</span></div>
+<div class="line"><a id="l00612" name="l00612"></a><span class="lineno">  612</span>    <a class="code hl_function" href="class_g2lib_1_1_biarc_list.html#a53648d4495fcc33094ecd5b127f79cec">eval_ISO</a>(</div>
+<div class="line"><a id="l00613" name="l00613"></a><span class="lineno">  613</span>      <a class="code hl_typedef" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a>   s,</div>
+<div class="line"><a id="l00614" name="l00614"></a><span class="lineno">  614</span>      <a class="code hl_typedef" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a>   offs,</div>
+<div class="line"><a id="l00615" name="l00615"></a><span class="lineno">  615</span>      <a class="code hl_typedef" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> &amp; x,</div>
+<div class="line"><a id="l00616" name="l00616"></a><span class="lineno">  616</span>      <a class="code hl_typedef" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> &amp; y</div>
+<div class="line"><a id="l00617" name="l00617"></a><span class="lineno">  617</span>    ) <span class="keyword">const override</span>;</div>
+<div class="line"><a id="l00618" name="l00618"></a><span class="lineno">  618</span> </div>
+<div class="line"><a id="l00619" name="l00619"></a><span class="lineno">  619</span>    <span class="keywordtype">void</span></div>
+<div class="line"><a id="l00620" name="l00620"></a><span class="lineno">  620</span>    <a class="code hl_function" href="class_g2lib_1_1_biarc_list.html#a3fcea93d91b0a00b39fe13d8fc87903b">eval_ISO_D</a>(</div>
+<div class="line"><a id="l00621" name="l00621"></a><span class="lineno">  621</span>      <a class="code hl_typedef" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a>   s,</div>
+<div class="line"><a id="l00622" name="l00622"></a><span class="lineno">  622</span>      <a class="code hl_typedef" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a>   offs,</div>
+<div class="line"><a id="l00623" name="l00623"></a><span class="lineno">  623</span>      <a class="code hl_typedef" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> &amp; x_D,</div>
+<div class="line"><a id="l00624" name="l00624"></a><span class="lineno">  624</span>      <a class="code hl_typedef" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> &amp; y_D</div>
+<div class="line"><a id="l00625" name="l00625"></a><span class="lineno">  625</span>    ) <span class="keyword">const override</span>;</div>
+<div class="line"><a id="l00626" name="l00626"></a><span class="lineno">  626</span> </div>
+<div class="line"><a id="l00627" name="l00627"></a><span class="lineno">  627</span>    <span class="keywordtype">void</span></div>
+<div class="line"><a id="l00628" name="l00628"></a><span class="lineno">  628</span>    <a class="code hl_function" href="class_g2lib_1_1_biarc_list.html#adb942888c9e1c697e00f607d0c93787e">eval_ISO_DD</a>(</div>
+<div class="line"><a id="l00629" name="l00629"></a><span class="lineno">  629</span>      <a class="code hl_typedef" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a>   s,</div>
+<div class="line"><a id="l00630" name="l00630"></a><span class="lineno">  630</span>      <a class="code hl_typedef" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a>   offs,</div>
+<div class="line"><a id="l00631" name="l00631"></a><span class="lineno">  631</span>      <a class="code hl_typedef" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> &amp; x_DD,</div>
+<div class="line"><a id="l00632" name="l00632"></a><span class="lineno">  632</span>      <a class="code hl_typedef" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> &amp; y_DD</div>
+<div class="line"><a id="l00633" name="l00633"></a><span class="lineno">  633</span>    ) <span class="keyword">const override</span>;</div>
+<div class="line"><a id="l00634" name="l00634"></a><span class="lineno">  634</span> </div>
+<div class="line"><a id="l00635" name="l00635"></a><span class="lineno">  635</span>    <span class="keywordtype">void</span></div>
+<div class="line"><a id="l00636" name="l00636"></a><span class="lineno">  636</span>    <a class="code hl_function" href="class_g2lib_1_1_biarc_list.html#a81ce66bc3961697c10ec1db4e580bca0">eval_ISO_DDD</a>(</div>
+<div class="line"><a id="l00637" name="l00637"></a><span class="lineno">  637</span>      <a class="code hl_typedef" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a>   s,</div>
+<div class="line"><a id="l00638" name="l00638"></a><span class="lineno">  638</span>      <a class="code hl_typedef" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a>   offs,</div>
+<div class="line"><a id="l00639" name="l00639"></a><span class="lineno">  639</span>      <a class="code hl_typedef" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> &amp; x_DDD,</div>
+<div class="line"><a id="l00640" name="l00640"></a><span class="lineno">  640</span>      <a class="code hl_typedef" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> &amp; y_DDD</div>
+<div class="line"><a id="l00641" name="l00641"></a><span class="lineno">  641</span>    ) <span class="keyword">const override</span>;</div>
+<div class="line"><a id="l00642" name="l00642"></a><span class="lineno">  642</span> </div>
+<div class="line"><a id="l00643" name="l00643"></a><span class="lineno">  643</span>    <span class="comment">/*\</span></div>
+<div class="line"><a id="l00644" name="l00644"></a><span class="lineno">  644</span><span class="comment">     |  _                        __</span></div>
+<div class="line"><a id="l00645" name="l00645"></a><span class="lineno">  645</span><span class="comment">     | | |_ _ __ __ _ _ __  ___ / _| ___  _ __ _ __ ___</span></div>
+<div class="line"><a id="l00646" name="l00646"></a><span class="lineno">  646</span><span class="comment">     | | __| &#39;__/ _` | &#39;_ \/ __| |_ / _ \| &#39;__| &#39;_ ` _ \</span></div>
+<div class="line"><a id="l00647" name="l00647"></a><span class="lineno">  647</span><span class="comment">     | | |_| | | (_| | | | \__ \  _| (_) | |  | | | | | |</span></div>
+<div class="line"><a id="l00648" name="l00648"></a><span class="lineno">  648</span><span class="comment">     |  \__|_|  \__,_|_| |_|___/_|  \___/|_|  |_| |_| |_|</span></div>
+<div class="line"><a id="l00649" name="l00649"></a><span class="lineno">  649</span><span class="comment">    \*/</span></div>
+<div class="line"><a id="l00650" name="l00650"></a><span class="lineno">  650</span> </div>
+<div class="line"><a id="l00651" name="l00651"></a><span class="lineno">  651</span>    <span class="keywordtype">void</span> <a class="code hl_function" href="class_g2lib_1_1_biarc_list.html#a143bbd7ff757119dc2c58ea37e1bdcc9">translate</a>( <a class="code hl_typedef" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> <a class="code hl_function" href="class_g2lib_1_1_biarc_list.html#a85d37d463b27270624141880ae469989">tx</a>, <a class="code hl_typedef" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> <a class="code hl_function" href="class_g2lib_1_1_biarc_list.html#a9acfcdb09b5b21fa6fa1b71cb9ecea34">ty</a> ) <span class="keyword">override</span>;</div>
+<div class="line"><a id="l00652" name="l00652"></a><span class="lineno">  652</span>    <span class="keywordtype">void</span> <a class="code hl_function" href="class_g2lib_1_1_biarc_list.html#ab100ce8ea837fa45d5fc667fd234001e">rotate</a>( <a class="code hl_typedef" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> angle, <a class="code hl_typedef" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> cx, <a class="code hl_typedef" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> cy ) <span class="keyword">override</span>;</div>
+<div class="line"><a id="l00653" name="l00653"></a><span class="lineno">  653</span>    <span class="keywordtype">void</span> <a class="code hl_function" href="class_g2lib_1_1_biarc_list.html#a9a4819baf7349d3466e2130c4ff4ca1f">scale</a>( <a class="code hl_typedef" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> sc ) <span class="keyword">override</span>;</div>
+<div class="line"><a id="l00654" name="l00654"></a><span class="lineno">  654</span>    <span class="keywordtype">void</span> <a class="code hl_function" href="class_g2lib_1_1_biarc_list.html#a5c371e464ccbdbd4a2d7b98c6598041d">reverse</a>() <span class="keyword">override</span>;</div>
+<div class="line"><a id="l00655" name="l00655"></a><span class="lineno">  655</span>    <span class="keywordtype">void</span> <a class="code hl_function" href="class_g2lib_1_1_biarc_list.html#a88e79fc760f55b77111309af9d510067">change_origin</a>( <a class="code hl_typedef" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> newx0, <a class="code hl_typedef" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> newy0 ) <span class="keyword">override</span>;</div>
+<div class="line"><a id="l00656" name="l00656"></a><span class="lineno">  656</span>    <span class="keywordtype">void</span> <a class="code hl_function" href="class_g2lib_1_1_biarc_list.html#a0fed431653780bb1bbe271944c16227d">trim</a>( <a class="code hl_typedef" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> s_begin, <a class="code hl_typedef" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> s_end ) <span class="keyword">override</span>;</div>
+<div class="line"><a id="l00657" name="l00657"></a><span class="lineno">  657</span> </div>
+<div class="line"><a id="l00658" name="l00658"></a><span class="lineno">  658</span>    <span class="comment">/*\</span></div>
+<div class="line"><a id="l00659" name="l00659"></a><span class="lineno">  659</span><span class="comment">     |      _ _     _</span></div>
+<div class="line"><a id="l00660" name="l00660"></a><span class="lineno">  660</span><span class="comment">     |   __| (_)___| |_ __ _ _ __   ___ ___</span></div>
+<div class="line"><a id="l00661" name="l00661"></a><span class="lineno">  661</span><span class="comment">     |  / _` | / __| __/ _` | &#39;_ \ / __/ _ \</span></div>
+<div class="line"><a id="l00662" name="l00662"></a><span class="lineno">  662</span><span class="comment">     | | (_| | \__ \ || (_| | | | | (_|  __/</span></div>
+<div class="line"><a id="l00663" name="l00663"></a><span class="lineno">  663</span><span class="comment">     |  \__,_|_|___/\__\__,_|_| |_|\___\___|</span></div>
+<div class="line"><a id="l00664" name="l00664"></a><span class="lineno">  664</span><span class="comment">    \*/</span></div>
+<div class="line"><a id="l00665" name="l00665"></a><span class="lineno">  665</span> </div>
+<div class="line"><a id="l00666" name="l00666"></a><span class="lineno">  666</span>    <a class="code hl_typedef" href="namespace_g2lib.html#affd533209e1ea0ddab7324812690f0b8">integer</a></div>
+<div class="line"><a id="l00667" name="l00667"></a><span class="lineno">  667</span>    <a class="code hl_function" href="class_g2lib_1_1_biarc_list.html#ab9b8e71ecf7b47ee07fb8b546d808232">closest_point_ISO</a>(</div>
+<div class="line"><a id="l00668" name="l00668"></a><span class="lineno">  668</span>      <a class="code hl_typedef" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a>   qx,</div>
+<div class="line"><a id="l00669" name="l00669"></a><span class="lineno">  669</span>      <a class="code hl_typedef" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a>   qy,</div>
+<div class="line"><a id="l00670" name="l00670"></a><span class="lineno">  670</span>      <a class="code hl_typedef" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> &amp; x,</div>
+<div class="line"><a id="l00671" name="l00671"></a><span class="lineno">  671</span>      <a class="code hl_typedef" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> &amp; y,</div>
+<div class="line"><a id="l00672" name="l00672"></a><span class="lineno">  672</span>      <a class="code hl_typedef" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> &amp; s,</div>
+<div class="line"><a id="l00673" name="l00673"></a><span class="lineno">  673</span>      <a class="code hl_typedef" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> &amp; t,</div>
+<div class="line"><a id="l00674" name="l00674"></a><span class="lineno">  674</span>      <a class="code hl_typedef" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> &amp; dst</div>
+<div class="line"><a id="l00675" name="l00675"></a><span class="lineno">  675</span>    ) <span class="keyword">const override</span>;</div>
+<div class="line"><a id="l00676" name="l00676"></a><span class="lineno">  676</span> </div>
+<div class="line"><a id="l00677" name="l00677"></a><span class="lineno">  677</span>    <a class="code hl_typedef" href="namespace_g2lib.html#affd533209e1ea0ddab7324812690f0b8">integer</a> <span class="comment">// true if projection is unique and orthogonal</span></div>
+<div class="line"><a id="l00678" name="l00678"></a><span class="lineno">  678</span>    <a class="code hl_function" href="class_g2lib_1_1_biarc_list.html#ab9b8e71ecf7b47ee07fb8b546d808232">closest_point_ISO</a>(</div>
+<div class="line"><a id="l00679" name="l00679"></a><span class="lineno">  679</span>      <a class="code hl_typedef" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a>   qx,</div>
+<div class="line"><a id="l00680" name="l00680"></a><span class="lineno">  680</span>      <a class="code hl_typedef" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a>   qy,</div>
+<div class="line"><a id="l00681" name="l00681"></a><span class="lineno">  681</span>      <a class="code hl_typedef" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a>   offs,</div>
+<div class="line"><a id="l00682" name="l00682"></a><span class="lineno">  682</span>      <a class="code hl_typedef" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> &amp; x,</div>
+<div class="line"><a id="l00683" name="l00683"></a><span class="lineno">  683</span>      <a class="code hl_typedef" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> &amp; y,</div>
+<div class="line"><a id="l00684" name="l00684"></a><span class="lineno">  684</span>      <a class="code hl_typedef" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> &amp; s,</div>
+<div class="line"><a id="l00685" name="l00685"></a><span class="lineno">  685</span>      <a class="code hl_typedef" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> &amp; t,</div>
+<div class="line"><a id="l00686" name="l00686"></a><span class="lineno">  686</span>      <a class="code hl_typedef" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> &amp; dst</div>
+<div class="line"><a id="l00687" name="l00687"></a><span class="lineno">  687</span>    ) <span class="keyword">const override</span>;</div>
+<div class="line"><a id="l00688" name="l00688"></a><span class="lineno">  688</span> </div>
+<div class="line"><a id="l00689" name="l00689"></a><span class="lineno">  689</span>    <span class="keywordtype">string</span> info() <span class="keyword">const</span>;</div>
+<div class="line"><a id="l00690" name="l00690"></a><span class="lineno">  690</span> </div>
+<div class="line"><a id="l00691" name="l00691"></a><span class="lineno">  691</span>    <span class="keywordtype">void</span></div>
+<div class="foldopen" id="foldopen00692" data-start="{" data-end="}">
+<div class="line"><a id="l00692" name="l00692"></a><span class="lineno"><a class="line" href="class_g2lib_1_1_biarc_list.html#af9af516295e8f83134e1d7358cd98a48">  692</a></span>    <a class="code hl_function" href="class_g2lib_1_1_biarc_list.html#af9af516295e8f83134e1d7358cd98a48">info</a>( <a class="code hl_typedef" href="namespace_g2lib.html#a3beb82d20ee75367fbcf9cf79d908ed7">ostream_type</a> &amp; stream )<span class="keyword"> const override</span></div>
+<div class="line"><a id="l00693" name="l00693"></a><span class="lineno">  693</span><span class="keyword">    </span>{ stream &lt;&lt; this-&gt;info(); }</div>
+</div>
+<div class="line"><a id="l00694" name="l00694"></a><span class="lineno">  694</span> </div>
+<div class="line"><a id="l00695" name="l00695"></a><span class="lineno">  695</span>    <span class="keyword">friend</span></div>
+<div class="line"><a id="l00696" name="l00696"></a><span class="lineno">  696</span>    <a class="code hl_typedef" href="namespace_g2lib.html#a3beb82d20ee75367fbcf9cf79d908ed7">ostream_type</a> &amp;</div>
+<div class="line"><a id="l00697" name="l00697"></a><span class="lineno">  697</span>    <a class="code hl_friend" href="class_g2lib_1_1_biarc_list.html#a707a90cf5e06b020272c378b24f8fd38">operator &lt;&lt; </a>( <a class="code hl_typedef" href="namespace_g2lib.html#a3beb82d20ee75367fbcf9cf79d908ed7">ostream_type</a> &amp; stream, <a class="code hl_class" href="class_g2lib_1_1_biarc_list.html">BiarcList</a> <span class="keyword">const</span> &amp; CL );</div>
+<div class="line"><a id="l00698" name="l00698"></a><span class="lineno">  698</span> </div>
+<div class="line"><a id="l00706" name="l00706"></a><span class="lineno">  706</span>    <span class="keywordtype">void</span></div>
+<div class="line"><a id="l00707" name="l00707"></a><span class="lineno">  707</span>    <a class="code hl_function" href="class_g2lib_1_1_biarc_list.html#a326c8a37612ce8469bef2d6da271fda3">get_STK</a>(</div>
+<div class="line"><a id="l00708" name="l00708"></a><span class="lineno">  708</span>      <a class="code hl_typedef" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> s[],</div>
+<div class="line"><a id="l00709" name="l00709"></a><span class="lineno">  709</span>      <a class="code hl_typedef" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> <a class="code hl_function" href="class_g2lib_1_1_biarc_list.html#aafa7abd2c8d824c44cae899b3f740ece">theta</a>[],</div>
+<div class="line"><a id="l00710" name="l00710"></a><span class="lineno">  710</span>      <a class="code hl_typedef" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> <a class="code hl_function" href="class_g2lib_1_1_base_curve.html#a41f205653319adf3cac7a1aa103ee410">kappa</a>[]</div>
+<div class="line"><a id="l00711" name="l00711"></a><span class="lineno">  711</span>    ) <span class="keyword">const</span>;</div>
+<div class="line"><a id="l00712" name="l00712"></a><span class="lineno">  712</span> </div>
+<div class="line"><a id="l00719" name="l00719"></a><span class="lineno">  719</span>    <span class="keywordtype">void</span></div>
+<div class="line"><a id="l00720" name="l00720"></a><span class="lineno">  720</span>    <a class="code hl_function" href="class_g2lib_1_1_biarc_list.html#abd1eb2f3b54a65a92fd44239666d434c">get_XY</a>( <a class="code hl_typedef" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> x[], <a class="code hl_typedef" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> y[] ) <span class="keyword">const</span>;</div>
+<div class="line"><a id="l00721" name="l00721"></a><span class="lineno">  721</span> </div>
+<div class="line"><a id="l00732" name="l00732"></a><span class="lineno">  732</span>    <a class="code hl_typedef" href="namespace_g2lib.html#affd533209e1ea0ddab7324812690f0b8">integer</a></div>
+<div class="line"><a id="l00733" name="l00733"></a><span class="lineno">  733</span>    <a class="code hl_function" href="class_g2lib_1_1_biarc_list.html#a6db962853db7ddb63743dcca8e18afdd">findST1</a>(</div>
+<div class="line"><a id="l00734" name="l00734"></a><span class="lineno">  734</span>      <a class="code hl_typedef" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a>   x,</div>
+<div class="line"><a id="l00735" name="l00735"></a><span class="lineno">  735</span>      <a class="code hl_typedef" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a>   y,</div>
+<div class="line"><a id="l00736" name="l00736"></a><span class="lineno">  736</span>      <a class="code hl_typedef" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> &amp; s,</div>
+<div class="line"><a id="l00737" name="l00737"></a><span class="lineno">  737</span>      <a class="code hl_typedef" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> &amp; t</div>
+<div class="line"><a id="l00738" name="l00738"></a><span class="lineno">  738</span>    ) <span class="keyword">const</span>;</div>
+<div class="line"><a id="l00739" name="l00739"></a><span class="lineno">  739</span> </div>
+<div class="line"><a id="l00752" name="l00752"></a><span class="lineno">  752</span>    <a class="code hl_typedef" href="namespace_g2lib.html#affd533209e1ea0ddab7324812690f0b8">integer</a></div>
+<div class="line"><a id="l00753" name="l00753"></a><span class="lineno">  753</span>    <a class="code hl_function" href="class_g2lib_1_1_biarc_list.html#a6db962853db7ddb63743dcca8e18afdd">findST1</a>(</div>
+<div class="line"><a id="l00754" name="l00754"></a><span class="lineno">  754</span>      <a class="code hl_typedef" href="namespace_g2lib.html#affd533209e1ea0ddab7324812690f0b8">integer</a>     ibegin,</div>
+<div class="line"><a id="l00755" name="l00755"></a><span class="lineno">  755</span>      <a class="code hl_typedef" href="namespace_g2lib.html#affd533209e1ea0ddab7324812690f0b8">integer</a>     iend,</div>
+<div class="line"><a id="l00756" name="l00756"></a><span class="lineno">  756</span>      <a class="code hl_typedef" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a>   x,</div>
+<div class="line"><a id="l00757" name="l00757"></a><span class="lineno">  757</span>      <a class="code hl_typedef" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a>   y,</div>
+<div class="line"><a id="l00758" name="l00758"></a><span class="lineno">  758</span>      <a class="code hl_typedef" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> &amp; s,</div>
+<div class="line"><a id="l00759" name="l00759"></a><span class="lineno">  759</span>      <a class="code hl_typedef" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> &amp; t</div>
+<div class="line"><a id="l00760" name="l00760"></a><span class="lineno">  760</span>    ) <span class="keyword">const</span>;</div>
+<div class="line"><a id="l00761" name="l00761"></a><span class="lineno">  761</span> </div>
+<div class="line"><a id="l00762" name="l00762"></a><span class="lineno">  762</span>    <span class="comment">/*\</span></div>
+<div class="line"><a id="l00763" name="l00763"></a><span class="lineno">  763</span><span class="comment">     |             _ _ _     _</span></div>
+<div class="line"><a id="l00764" name="l00764"></a><span class="lineno">  764</span><span class="comment">     |    ___ ___ | | (_)___(_) ___  _ __</span></div>
+<div class="line"><a id="l00765" name="l00765"></a><span class="lineno">  765</span><span class="comment">     |   / __/ _ \| | | / __| |/ _ \| &#39;_ \</span></div>
+<div class="line"><a id="l00766" name="l00766"></a><span class="lineno">  766</span><span class="comment">     |  | (_| (_) | | | \__ \ | (_) | | | |</span></div>
+<div class="line"><a id="l00767" name="l00767"></a><span class="lineno">  767</span><span class="comment">     |   \___\___/|_|_|_|___/_|\___/|_| |_|</span></div>
+<div class="line"><a id="l00768" name="l00768"></a><span class="lineno">  768</span><span class="comment">    \*/</span></div>
+<div class="line"><a id="l00769" name="l00769"></a><span class="lineno">  769</span> </div>
+<div class="line"><a id="l00773" name="l00773"></a><span class="lineno">  773</span>    <span class="keywordtype">bool</span></div>
+<div class="foldopen" id="foldopen00774" data-start="{" data-end="}">
+<div class="line"><a id="l00774" name="l00774"></a><span class="lineno"><a class="line" href="class_g2lib_1_1_biarc_list.html#a71b5b34235222e5a32d5b45adc9464bd">  774</a></span>    <a class="code hl_function" href="class_g2lib_1_1_biarc_list.html#a71b5b34235222e5a32d5b45adc9464bd">collision</a>( <a class="code hl_class" href="class_g2lib_1_1_biarc_list.html">BiarcList</a> <span class="keyword">const</span> &amp; BL )<span class="keyword"> const </span>{</div>
+<div class="line"><a id="l00775" name="l00775"></a><span class="lineno">  775</span>      <span class="keywordflow">return</span> <a class="code hl_function" href="class_g2lib_1_1_biarc_list.html#a90d953a7cff03136745d12af93991021">collision_ISO</a>( 0, BL, 0 );</div>
+<div class="line"><a id="l00776" name="l00776"></a><span class="lineno">  776</span>    }</div>
+</div>
+<div class="line"><a id="l00777" name="l00777"></a><span class="lineno">  777</span> </div>
+<div class="line"><a id="l00785" name="l00785"></a><span class="lineno">  785</span>    <span class="keywordtype">bool</span></div>
+<div class="line"><a id="l00786" name="l00786"></a><span class="lineno">  786</span>    <a class="code hl_function" href="class_g2lib_1_1_biarc_list.html#a90d953a7cff03136745d12af93991021">collision_ISO</a>(</div>
+<div class="line"><a id="l00787" name="l00787"></a><span class="lineno">  787</span>      <a class="code hl_typedef" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a>         offs,</div>
+<div class="line"><a id="l00788" name="l00788"></a><span class="lineno">  788</span>      <a class="code hl_class" href="class_g2lib_1_1_biarc_list.html">BiarcList</a> <span class="keyword">const</span> &amp; BL,</div>
+<div class="line"><a id="l00789" name="l00789"></a><span class="lineno">  789</span>      <a class="code hl_typedef" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a>         offs_C</div>
+<div class="line"><a id="l00790" name="l00790"></a><span class="lineno">  790</span>    ) <span class="keyword">const</span>;</div>
+<div class="line"><a id="l00791" name="l00791"></a><span class="lineno">  791</span> </div>
+<div class="line"><a id="l00792" name="l00792"></a><span class="lineno">  792</span>    <span class="keywordtype">bool</span></div>
+<div class="line"><a id="l00793" name="l00793"></a><span class="lineno">  793</span>    <a class="code hl_function" href="class_g2lib_1_1_biarc_list.html#a71b5b34235222e5a32d5b45adc9464bd">collision</a>( <a class="code hl_class" href="class_g2lib_1_1_base_curve.html">BaseCurve</a> <span class="keyword">const</span> * pC ) <span class="keyword">const override</span>;</div>
+<div class="line"><a id="l00794" name="l00794"></a><span class="lineno">  794</span> </div>
+<div class="line"><a id="l00795" name="l00795"></a><span class="lineno">  795</span>    <span class="keywordtype">bool</span></div>
+<div class="line"><a id="l00796" name="l00796"></a><span class="lineno">  796</span>    <a class="code hl_function" href="class_g2lib_1_1_biarc_list.html#a90d953a7cff03136745d12af93991021">collision_ISO</a>(</div>
+<div class="line"><a id="l00797" name="l00797"></a><span class="lineno">  797</span>      <a class="code hl_typedef" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a>         offs,</div>
+<div class="line"><a id="l00798" name="l00798"></a><span class="lineno">  798</span>      <a class="code hl_class" href="class_g2lib_1_1_base_curve.html">BaseCurve</a> <span class="keyword">const</span> * pC,</div>
+<div class="line"><a id="l00799" name="l00799"></a><span class="lineno">  799</span>      <a class="code hl_typedef" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a>         offs_C</div>
+<div class="line"><a id="l00800" name="l00800"></a><span class="lineno">  800</span>    ) <span class="keyword">const override</span>;</div>
+<div class="line"><a id="l00801" name="l00801"></a><span class="lineno">  801</span> </div>
+<div class="line"><a id="l00802" name="l00802"></a><span class="lineno">  802</span>    <span class="comment">/*\</span></div>
+<div class="line"><a id="l00803" name="l00803"></a><span class="lineno">  803</span><span class="comment">     |   _       _                          _</span></div>
+<div class="line"><a id="l00804" name="l00804"></a><span class="lineno">  804</span><span class="comment">     |  (_)_ __ | |_ ___ _ __ ___  ___  ___| |_</span></div>
+<div class="line"><a id="l00805" name="l00805"></a><span class="lineno">  805</span><span class="comment">     |  | | &#39;_ \| __/ _ \ &#39;__/ __|/ _ \/ __| __|</span></div>
+<div class="line"><a id="l00806" name="l00806"></a><span class="lineno">  806</span><span class="comment">     |  | | | | | ||  __/ |  \__ \  __/ (__| |_</span></div>
+<div class="line"><a id="l00807" name="l00807"></a><span class="lineno">  807</span><span class="comment">     |  |_|_| |_|\__\___|_|  |___/\___|\___|\__|</span></div>
+<div class="line"><a id="l00808" name="l00808"></a><span class="lineno">  808</span><span class="comment">    \*/</span></div>
+<div class="line"><a id="l00809" name="l00809"></a><span class="lineno">  809</span> </div>
+<div class="line"><a id="l00816" name="l00816"></a><span class="lineno">  816</span>    <span class="keywordtype">void</span></div>
+<div class="foldopen" id="foldopen00817" data-start="{" data-end="}">
+<div class="line"><a id="l00817" name="l00817"></a><span class="lineno"><a class="line" href="class_g2lib_1_1_biarc_list.html#a96a20306840db4f4b9c2673f8dc53cbd">  817</a></span>    <a class="code hl_function" href="class_g2lib_1_1_biarc_list.html#a96a20306840db4f4b9c2673f8dc53cbd">intersect</a>(</div>
+<div class="line"><a id="l00818" name="l00818"></a><span class="lineno">  818</span>      <a class="code hl_class" href="class_g2lib_1_1_biarc_list.html">BiarcList</a> <span class="keyword">const</span> &amp; BL,</div>
+<div class="line"><a id="l00819" name="l00819"></a><span class="lineno">  819</span>      <a class="code hl_typedef" href="namespace_g2lib.html#a511fce3368282f6ef2984bf1b7480375">IntersectList</a>   &amp; ilist</div>
+<div class="line"><a id="l00820" name="l00820"></a><span class="lineno">  820</span>    )<span class="keyword"> const </span>{</div>
+<div class="line"><a id="l00821" name="l00821"></a><span class="lineno">  821</span>      this-&gt;<a class="code hl_function" href="class_g2lib_1_1_biarc_list.html#a91063705c46a6decbd16ca1a1ec8df59">intersect_ISO</a>( 0, BL, 0, ilist );</div>
+<div class="line"><a id="l00822" name="l00822"></a><span class="lineno">  822</span>    }</div>
+</div>
+<div class="line"><a id="l00823" name="l00823"></a><span class="lineno">  823</span> </div>
+<div class="line"><a id="l00832" name="l00832"></a><span class="lineno">  832</span>    <span class="keywordtype">void</span></div>
+<div class="line"><a id="l00833" name="l00833"></a><span class="lineno">  833</span>    <a class="code hl_function" href="class_g2lib_1_1_biarc_list.html#a91063705c46a6decbd16ca1a1ec8df59">intersect_ISO</a>(</div>
+<div class="line"><a id="l00834" name="l00834"></a><span class="lineno">  834</span>      <a class="code hl_typedef" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a>         offs,</div>
+<div class="line"><a id="l00835" name="l00835"></a><span class="lineno">  835</span>      <a class="code hl_class" href="class_g2lib_1_1_biarc_list.html">BiarcList</a> <span class="keyword">const</span> &amp; BL,</div>
+<div class="line"><a id="l00836" name="l00836"></a><span class="lineno">  836</span>      <a class="code hl_typedef" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a>         offs_obj,</div>
+<div class="line"><a id="l00837" name="l00837"></a><span class="lineno">  837</span>      <a class="code hl_typedef" href="namespace_g2lib.html#a511fce3368282f6ef2984bf1b7480375">IntersectList</a>   &amp; ilist</div>
+<div class="line"><a id="l00838" name="l00838"></a><span class="lineno">  838</span>    ) <span class="keyword">const</span>;</div>
+<div class="line"><a id="l00839" name="l00839"></a><span class="lineno">  839</span> </div>
+<div class="line"><a id="l00840" name="l00840"></a><span class="lineno">  840</span>    <span class="keywordtype">void</span></div>
+<div class="line"><a id="l00841" name="l00841"></a><span class="lineno">  841</span>    <a class="code hl_function" href="class_g2lib_1_1_biarc_list.html#a96a20306840db4f4b9c2673f8dc53cbd">intersect</a>(</div>
+<div class="line"><a id="l00842" name="l00842"></a><span class="lineno">  842</span>      <a class="code hl_class" href="class_g2lib_1_1_base_curve.html">BaseCurve</a> <span class="keyword">const</span> * pC,</div>
+<div class="line"><a id="l00843" name="l00843"></a><span class="lineno">  843</span>      <a class="code hl_typedef" href="namespace_g2lib.html#a511fce3368282f6ef2984bf1b7480375">IntersectList</a>   &amp; ilist</div>
+<div class="line"><a id="l00844" name="l00844"></a><span class="lineno">  844</span>    ) <span class="keyword">const override</span>;</div>
+<div class="line"><a id="l00845" name="l00845"></a><span class="lineno">  845</span> </div>
+<div class="line"><a id="l00846" name="l00846"></a><span class="lineno">  846</span>    <span class="keywordtype">void</span></div>
+<div class="line"><a id="l00847" name="l00847"></a><span class="lineno">  847</span>    <a class="code hl_function" href="class_g2lib_1_1_biarc_list.html#a91063705c46a6decbd16ca1a1ec8df59">intersect_ISO</a>(</div>
+<div class="line"><a id="l00848" name="l00848"></a><span class="lineno">  848</span>      <a class="code hl_typedef" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a>         offs,</div>
+<div class="line"><a id="l00849" name="l00849"></a><span class="lineno">  849</span>      <a class="code hl_class" href="class_g2lib_1_1_base_curve.html">BaseCurve</a> <span class="keyword">const</span> * pC,</div>
+<div class="line"><a id="l00850" name="l00850"></a><span class="lineno">  850</span>      <a class="code hl_typedef" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a>         offs_LS,</div>
+<div class="line"><a id="l00851" name="l00851"></a><span class="lineno">  851</span>      <a class="code hl_typedef" href="namespace_g2lib.html#a511fce3368282f6ef2984bf1b7480375">IntersectList</a>   &amp; ilist</div>
+<div class="line"><a id="l00852" name="l00852"></a><span class="lineno">  852</span>    ) <span class="keyword">const override</span>;</div>
+<div class="line"><a id="l00853" name="l00853"></a><span class="lineno">  853</span> </div>
+<div class="line"><a id="l00854" name="l00854"></a><span class="lineno">  854</span><span class="preprocessor">#ifdef CLOTHOIDS_BACK_COMPATIBILITY</span></div>
+<div class="line"><a id="l00855" name="l00855"></a><span class="lineno">  855</span><span class="preprocessor">#include &quot;BiarcList_compatibility.hxx&quot;</span></div>
+<div class="line"><a id="l00856" name="l00856"></a><span class="lineno">  856</span><span class="preprocessor">#endif</span></div>
+<div class="line"><a id="l00857" name="l00857"></a><span class="lineno">  857</span> </div>
+<div class="line"><a id="l00858" name="l00858"></a><span class="lineno">  858</span>  };</div>
+</div>
+<div class="line"><a id="l00859" name="l00859"></a><span class="lineno">  859</span> </div>
+<div class="line"><a id="l00860" name="l00860"></a><span class="lineno">  860</span>}</div>
+<div class="line"><a id="l00861" name="l00861"></a><span class="lineno">  861</span> </div>
+<div class="ttc" id="aclass_g2lib_1_1_base_curve_html"><div class="ttname"><a href="class_g2lib_1_1_base_curve.html">G2lib::BaseCurve</a></div><div class="ttdef"><b>Definition</b> BaseCurve.hxx:192</div></div>
+<div class="ttc" id="aclass_g2lib_1_1_base_curve_html_a41f205653319adf3cac7a1aa103ee410"><div class="ttname"><a href="class_g2lib_1_1_base_curve.html#a41f205653319adf3cac7a1aa103ee410">G2lib::BaseCurve::kappa</a></div><div class="ttdeci">real_type kappa(real_type s) const</div><div class="ttdef"><b>Definition</b> BaseCurve.hxx:560</div></div>
+<div class="ttc" id="aclass_g2lib_1_1_biarc_html"><div class="ttname"><a href="class_g2lib_1_1_biarc.html">G2lib::Biarc</a></div><div class="ttdef"><b>Definition</b> Biarc.hxx:39</div></div>
+<div class="ttc" id="aclass_g2lib_1_1_biarc_list_html"><div class="ttname"><a href="class_g2lib_1_1_biarc_list.html">G2lib::BiarcList</a></div><div class="ttdef"><b>Definition</b> BiarcList.hxx:42</div></div>
+<div class="ttc" id="aclass_g2lib_1_1_biarc_list_html_a016e8c3e50fe0434a2f2312e0119fe1c"><div class="ttname"><a href="class_g2lib_1_1_biarc_list.html#a016e8c3e50fe0434a2f2312e0119fe1c">G2lib::BiarcList::tx_DDD</a></div><div class="ttdeci">real_type tx_DDD(real_type) const override</div><div class="ttdef"><b>Definition</b> BiarcList.cc:621</div></div>
+<div class="ttc" id="aclass_g2lib_1_1_biarc_list_html_a04cbf17d92789c45da4b6b8cfd4c5f42"><div class="ttname"><a href="class_g2lib_1_1_biarc_list.html#a04cbf17d92789c45da4b6b8cfd4c5f42">G2lib::BiarcList::evaluate_ISO</a></div><div class="ttdeci">void evaluate_ISO(real_type s, real_type offs, real_type &amp;th, real_type &amp;k, real_type &amp;x, real_type &amp;y) const override</div><div class="ttdef"><b>Definition</b> BiarcList.cc:706</div></div>
+<div class="ttc" id="aclass_g2lib_1_1_biarc_list_html_a050b34b38235cf545766319fcf54df6b"><div class="ttname"><a href="class_g2lib_1_1_biarc_list.html#a050b34b38235cf545766319fcf54df6b">G2lib::BiarcList::nx_begin_ISO</a></div><div class="ttdeci">real_type nx_begin_ISO() const override</div><div class="ttdef"><b>Definition</b> BiarcList.hxx:453</div></div>
+<div class="ttc" id="aclass_g2lib_1_1_biarc_list_html_a087868f805ef1262472f010f4b609682"><div class="ttname"><a href="class_g2lib_1_1_biarc_list.html#a087868f805ef1262472f010f4b609682">G2lib::BiarcList::type</a></div><div class="ttdeci">CurveType type() const override</div><div class="ttdef"><b>Definition</b> BiarcList.hxx:127</div></div>
+<div class="ttc" id="aclass_g2lib_1_1_biarc_list_html_a0d329e32fab8c77507c2b44f32dc301c"><div class="ttname"><a href="class_g2lib_1_1_biarc_list.html#a0d329e32fab8c77507c2b44f32dc301c">G2lib::BiarcList::ty_begin</a></div><div class="ttdeci">real_type ty_begin() const override</div><div class="ttdef"><b>Definition</b> BiarcList.hxx:441</div></div>
+<div class="ttc" id="aclass_g2lib_1_1_biarc_list_html_a0fed431653780bb1bbe271944c16227d"><div class="ttname"><a href="class_g2lib_1_1_biarc_list.html#a0fed431653780bb1bbe271944c16227d">G2lib::BiarcList::trim</a></div><div class="ttdeci">void trim(real_type s_begin, real_type s_end) override</div><div class="ttdef"><b>Definition</b> BiarcList.cc:1049</div></div>
+<div class="ttc" id="aclass_g2lib_1_1_biarc_list_html_a125dfba0b4abb86e6b1bed5c0e279397"><div class="ttname"><a href="class_g2lib_1_1_biarc_list.html#a125dfba0b4abb86e6b1bed5c0e279397">G2lib::BiarcList::ty_DDD</a></div><div class="ttdeci">real_type ty_DDD(real_type) const override</div><div class="ttdef"><b>Definition</b> BiarcList.cc:630</div></div>
+<div class="ttc" id="aclass_g2lib_1_1_biarc_list_html_a143bbd7ff757119dc2c58ea37e1bdcc9"><div class="ttname"><a href="class_g2lib_1_1_biarc_list.html#a143bbd7ff757119dc2c58ea37e1bdcc9">G2lib::BiarcList::translate</a></div><div class="ttdeci">void translate(real_type tx, real_type ty) override</div><div class="ttdoc">translate curve by</div><div class="ttdef"><b>Definition</b> BiarcList.cc:986</div></div>
+<div class="ttc" id="aclass_g2lib_1_1_biarc_list_html_a1c15b7f07ba2763dccdde6be9fbff195"><div class="ttname"><a href="class_g2lib_1_1_biarc_list.html#a1c15b7f07ba2763dccdde6be9fbff195">G2lib::BiarcList::Y_ISO</a></div><div class="ttdeci">real_type Y_ISO(real_type s, real_type offs) const override</div><div class="ttdef"><b>Definition</b> BiarcList.cc:861</div></div>
+<div class="ttc" id="aclass_g2lib_1_1_biarc_list_html_a1dbf6471530c58214e4202d8f009701f"><div class="ttname"><a href="class_g2lib_1_1_biarc_list.html#a1dbf6471530c58214e4202d8f009701f">G2lib::BiarcList::X_ISO_DD</a></div><div class="ttdeci">real_type X_ISO_DD(real_type s, real_type offs) const override</div><div class="ttdef"><b>Definition</b> BiarcList.cc:888</div></div>
+<div class="ttc" id="aclass_g2lib_1_1_biarc_list_html_a1e8fd201d8d8b6a4d3f2a2756c053664"><div class="ttname"><a href="class_g2lib_1_1_biarc_list.html#a1e8fd201d8d8b6a4d3f2a2756c053664">G2lib::BiarcList::ty_DD</a></div><div class="ttdeci">real_type ty_DD(real_type) const override</div><div class="ttdef"><b>Definition</b> BiarcList.cc:612</div></div>
+<div class="ttc" id="aclass_g2lib_1_1_biarc_list_html_a23e67966e10979375ed40add72f5ddc0"><div class="ttname"><a href="class_g2lib_1_1_biarc_list.html#a23e67966e10979375ed40add72f5ddc0">G2lib::BiarcList::eval_D</a></div><div class="ttdeci">void eval_D(real_type s, real_type &amp;x_D, real_type &amp;y_D) const override</div><div class="ttdef"><b>Definition</b> BiarcList.cc:807</div></div>
+<div class="ttc" id="aclass_g2lib_1_1_biarc_list_html_a2420ee7c45b7d17e5f673a722f18f84b"><div class="ttname"><a href="class_g2lib_1_1_biarc_list.html#a2420ee7c45b7d17e5f673a722f18f84b">G2lib::BiarcList::ny_end_ISO</a></div><div class="ttdeci">real_type ny_end_ISO() const override</div><div class="ttdef"><b>Definition</b> BiarcList.hxx:465</div></div>
+<div class="ttc" id="aclass_g2lib_1_1_biarc_list_html_a297d3d170457b21947b58b829e489e56"><div class="ttname"><a href="class_g2lib_1_1_biarc_list.html#a297d3d170457b21947b58b829e489e56">G2lib::BiarcList::tg_D</a></div><div class="ttdeci">void tg_D(real_type s, real_type &amp;tg_x_D, real_type &amp;tg_y_D) const override</div><div class="ttdef"><b>Definition</b> BiarcList.cc:652</div></div>
+<div class="ttc" id="aclass_g2lib_1_1_biarc_list_html_a310df1d2bdc2b3ea15d863cf92f6239e"><div class="ttname"><a href="class_g2lib_1_1_biarc_list.html#a310df1d2bdc2b3ea15d863cf92f6239e">G2lib::BiarcList::tg_DDD</a></div><div class="ttdeci">void tg_DDD(real_type s, real_type &amp;tg_x_DDD, real_type &amp;tg_y_DDD) const override</div><div class="ttdef"><b>Definition</b> BiarcList.cc:678</div></div>
+<div class="ttc" id="aclass_g2lib_1_1_biarc_list_html_a326c8a37612ce8469bef2d6da271fda3"><div class="ttname"><a href="class_g2lib_1_1_biarc_list.html#a326c8a37612ce8469bef2d6da271fda3">G2lib::BiarcList::get_STK</a></div><div class="ttdeci">void get_STK(real_type s[], real_type theta[], real_type kappa[]) const</div><div class="ttdef"><b>Definition</b> BiarcList.cc:1444</div></div>
+<div class="ttc" id="aclass_g2lib_1_1_biarc_list_html_a3ba71e8382458d06e3eb188bd5dfaa71"><div class="ttname"><a href="class_g2lib_1_1_biarc_list.html#a3ba71e8382458d06e3eb188bd5dfaa71">G2lib::BiarcList::y_begin</a></div><div class="ttdeci">real_type y_begin() const override</div><div class="ttdef"><b>Definition</b> BiarcList.hxx:409</div></div>
+<div class="ttc" id="aclass_g2lib_1_1_biarc_list_html_a3dc9e3c0ecbe33afa631b0dcfa5fb3bc"><div class="ttname"><a href="class_g2lib_1_1_biarc_list.html#a3dc9e3c0ecbe33afa631b0dcfa5fb3bc">G2lib::BiarcList::length_ISO</a></div><div class="ttdeci">real_type length_ISO(real_type offs) const override</div><div class="ttdef"><b>Definition</b> BiarcList.cc:414</div></div>
+<div class="ttc" id="aclass_g2lib_1_1_biarc_list_html_a3e31db23afe087e62b63846dd3379693"><div class="ttname"><a href="class_g2lib_1_1_biarc_list.html#a3e31db23afe087e62b63846dd3379693">G2lib::BiarcList::X_D</a></div><div class="ttdeci">real_type X_D(real_type) const override</div><div class="ttdef"><b>Definition</b> BiarcList.cc:740</div></div>
+<div class="ttc" id="aclass_g2lib_1_1_biarc_list_html_a3fcea93d91b0a00b39fe13d8fc87903b"><div class="ttname"><a href="class_g2lib_1_1_biarc_list.html#a3fcea93d91b0a00b39fe13d8fc87903b">G2lib::BiarcList::eval_ISO_D</a></div><div class="ttdeci">void eval_ISO_D(real_type s, real_type offs, real_type &amp;x_D, real_type &amp;y_D) const override</div><div class="ttdef"><b>Definition</b> BiarcList.cc:938</div></div>
+<div class="ttc" id="aclass_g2lib_1_1_biarc_list_html_a412305da375e4503d33d69729762a654"><div class="ttname"><a href="class_g2lib_1_1_biarc_list.html#a412305da375e4503d33d69729762a654">G2lib::BiarcList::theta_DDD</a></div><div class="ttdeci">real_type theta_DDD(real_type) const override</div><div class="ttdef"><b>Definition</b> BiarcList.cc:552</div></div>
+<div class="ttc" id="aclass_g2lib_1_1_biarc_list_html_a41771f9a65cd42f7bad054624a03d3b3"><div class="ttname"><a href="class_g2lib_1_1_biarc_list.html#a41771f9a65cd42f7bad054624a03d3b3">G2lib::BiarcList::X_DD</a></div><div class="ttdeci">real_type X_DD(real_type) const override</div><div class="ttdef"><b>Definition</b> BiarcList.cc:758</div></div>
+<div class="ttc" id="aclass_g2lib_1_1_biarc_list_html_a4321423d074831a590fc31634a61573e"><div class="ttname"><a href="class_g2lib_1_1_biarc_list.html#a4321423d074831a590fc31634a61573e">G2lib::BiarcList::ny_begin_ISO</a></div><div class="ttdeci">real_type ny_begin_ISO() const override</div><div class="ttdef"><b>Definition</b> BiarcList.hxx:457</div></div>
+<div class="ttc" id="aclass_g2lib_1_1_biarc_list_html_a434e35f1925e71fdefdd27261a208ed5"><div class="ttname"><a href="class_g2lib_1_1_biarc_list.html#a434e35f1925e71fdefdd27261a208ed5">G2lib::BiarcList::x_end_ISO</a></div><div class="ttdeci">real_type x_end_ISO(real_type offs) const override</div><div class="ttdef"><b>Definition</b> BiarcList.hxx:429</div></div>
+<div class="ttc" id="aclass_g2lib_1_1_biarc_list_html_a451e637ca1e1f140be3d2fc93b76a8db"><div class="ttname"><a href="class_g2lib_1_1_biarc_list.html#a451e637ca1e1f140be3d2fc93b76a8db">G2lib::BiarcList::reserve</a></div><div class="ttdeci">void reserve(integer n)</div><div class="ttdef"><b>Definition</b> BiarcList.cc:236</div></div>
+<div class="ttc" id="aclass_g2lib_1_1_biarc_list_html_a53648d4495fcc33094ecd5b127f79cec"><div class="ttname"><a href="class_g2lib_1_1_biarc_list.html#a53648d4495fcc33094ecd5b127f79cec">G2lib::BiarcList::eval_ISO</a></div><div class="ttdeci">void eval_ISO(real_type s, real_type offs, real_type &amp;x, real_type &amp;y) const override</div><div class="ttdef"><b>Definition</b> BiarcList.cc:924</div></div>
+<div class="ttc" id="aclass_g2lib_1_1_biarc_list_html_a5580d3ae5a6d440be78816ca96b97dfe"><div class="ttname"><a href="class_g2lib_1_1_biarc_list.html#a5580d3ae5a6d440be78816ca96b97dfe">G2lib::BiarcList::find_at_s</a></div><div class="ttdeci">integer find_at_s(real_type &amp;s) const</div><div class="ttdef"><b>Definition</b> BiarcList.cc:219</div></div>
+<div class="ttc" id="aclass_g2lib_1_1_biarc_list_html_a5712023b0a7dc0be99bd36d787138a05"><div class="ttname"><a href="class_g2lib_1_1_biarc_list.html#a5712023b0a7dc0be99bd36d787138a05">G2lib::BiarcList::eval_DDD</a></div><div class="ttdeci">void eval_DDD(real_type s, real_type &amp;x_DDD, real_type &amp;y_DDD) const override</div><div class="ttdef"><b>Definition</b> BiarcList.cc:833</div></div>
+<div class="ttc" id="aclass_g2lib_1_1_biarc_list_html_a575a6737a2b3d07b2c2157b14e5b4376"><div class="ttname"><a href="class_g2lib_1_1_biarc_list.html#a575a6737a2b3d07b2c2157b14e5b4376">G2lib::BiarcList::eval</a></div><div class="ttdeci">void eval(real_type s, real_type &amp;x, real_type &amp;y) const override</div><div class="ttdef"><b>Definition</b> BiarcList.cc:794</div></div>
+<div class="ttc" id="aclass_g2lib_1_1_biarc_list_html_a5acefa2628e1865404a81000c708c7f2"><div class="ttname"><a href="class_g2lib_1_1_biarc_list.html#a5acefa2628e1865404a81000c708c7f2">G2lib::BiarcList::Y</a></div><div class="ttdeci">real_type Y(real_type) const override</div><div class="ttdef"><b>Definition</b> BiarcList.cc:731</div></div>
+<div class="ttc" id="aclass_g2lib_1_1_biarc_list_html_a5c371e464ccbdbd4a2d7b98c6598041d"><div class="ttname"><a href="class_g2lib_1_1_biarc_list.html#a5c371e464ccbdbd4a2d7b98c6598041d">G2lib::BiarcList::reverse</a></div><div class="ttdeci">void reverse() override</div><div class="ttdef"><b>Definition</b> BiarcList.cc:1017</div></div>
+<div class="ttc" id="aclass_g2lib_1_1_biarc_list_html_a623903c78c0659c77e58e38acadf1aed"><div class="ttname"><a href="class_g2lib_1_1_biarc_list.html#a623903c78c0659c77e58e38acadf1aed">G2lib::BiarcList::push_back_G1</a></div><div class="ttdeci">void push_back_G1(real_type x1, real_type y1, real_type theta1)</div><div class="ttdef"><b>Definition</b> BiarcList.cc:301</div></div>
+<div class="ttc" id="aclass_g2lib_1_1_biarc_list_html_a65780152e32f660bedef28916009734d"><div class="ttname"><a href="class_g2lib_1_1_biarc_list.html#a65780152e32f660bedef28916009734d">G2lib::BiarcList::X_ISO_D</a></div><div class="ttdeci">real_type X_ISO_D(real_type s, real_type offs) const override</div><div class="ttdef"><b>Definition</b> BiarcList.cc:870</div></div>
+<div class="ttc" id="aclass_g2lib_1_1_biarc_list_html_a6db962853db7ddb63743dcca8e18afdd"><div class="ttname"><a href="class_g2lib_1_1_biarc_list.html#a6db962853db7ddb63743dcca8e18afdd">G2lib::BiarcList::findST1</a></div><div class="ttdeci">integer findST1(real_type x, real_type y, real_type &amp;s, real_type &amp;t) const</div><div class="ttdef"><b>Definition</b> BiarcList.cc:1485</div></div>
+<div class="ttc" id="aclass_g2lib_1_1_biarc_list_html_a7005a817e8a0045f0143d07f21182b25"><div class="ttname"><a href="class_g2lib_1_1_biarc_list.html#a7005a817e8a0045f0143d07f21182b25">G2lib::BiarcList::X_DDD</a></div><div class="ttdeci">real_type X_DDD(real_type) const override</div><div class="ttdef"><b>Definition</b> BiarcList.cc:776</div></div>
+<div class="ttc" id="aclass_g2lib_1_1_biarc_list_html_a707a90cf5e06b020272c378b24f8fd38"><div class="ttname"><a href="class_g2lib_1_1_biarc_list.html#a707a90cf5e06b020272c378b24f8fd38">G2lib::BiarcList::operator&lt;&lt;</a></div><div class="ttdeci">friend ostream_type &amp; operator&lt;&lt;(ostream_type &amp;stream, BiarcList const &amp;CL)</div><div class="ttdef"><b>Definition</b> BiarcList.cc:1578</div></div>
+<div class="ttc" id="aclass_g2lib_1_1_biarc_list_html_a71b5b34235222e5a32d5b45adc9464bd"><div class="ttname"><a href="class_g2lib_1_1_biarc_list.html#a71b5b34235222e5a32d5b45adc9464bd">G2lib::BiarcList::collision</a></div><div class="ttdeci">bool collision(BiarcList const &amp;BL) const</div><div class="ttdef"><b>Definition</b> BiarcList.hxx:774</div></div>
+<div class="ttc" id="aclass_g2lib_1_1_biarc_list_html_a71b715dfc757eabf9ffcae2bf6f4a8f0"><div class="ttname"><a href="class_g2lib_1_1_biarc_list.html#a71b715dfc757eabf9ffcae2bf6f4a8f0">G2lib::BiarcList::tg_DD</a></div><div class="ttdeci">void tg_DD(real_type s, real_type &amp;tg_x_DD, real_type &amp;tg_y_DD) const override</div><div class="ttdef"><b>Definition</b> BiarcList.cc:665</div></div>
+<div class="ttc" id="aclass_g2lib_1_1_biarc_list_html_a7319b3ce63f1f4925540fa4c8a49002a"><div class="ttname"><a href="class_g2lib_1_1_biarc_list.html#a7319b3ce63f1f4925540fa4c8a49002a">G2lib::BiarcList::theta_end</a></div><div class="ttdeci">real_type theta_end() const override</div><div class="ttdef"><b>Definition</b> BiarcList.hxx:401</div></div>
+<div class="ttc" id="aclass_g2lib_1_1_biarc_list_html_a75aa58c07c27451e425fc82c428bd649"><div class="ttname"><a href="class_g2lib_1_1_biarc_list.html#a75aa58c07c27451e425fc82c428bd649">G2lib::BiarcList::tx_begin</a></div><div class="ttdeci">real_type tx_begin() const override</div><div class="ttdef"><b>Definition</b> BiarcList.hxx:437</div></div>
+<div class="ttc" id="aclass_g2lib_1_1_biarc_list_html_a773e8b1ccc264f244301b5b7e867066a"><div class="ttname"><a href="class_g2lib_1_1_biarc_list.html#a773e8b1ccc264f244301b5b7e867066a">G2lib::BiarcList::segment_length</a></div><div class="ttdeci">real_type segment_length(integer nseg) const</div><div class="ttdef"><b>Definition</b> BiarcList.cc:421</div></div>
+<div class="ttc" id="aclass_g2lib_1_1_biarc_list_html_a7add0aa10dc852e9c98cbfc913a09c40"><div class="ttname"><a href="class_g2lib_1_1_biarc_list.html#a7add0aa10dc852e9c98cbfc913a09c40">G2lib::BiarcList::tg</a></div><div class="ttdeci">void tg(real_type s, real_type &amp;tg_x, real_type &amp;tg_y) const override</div><div class="ttdef"><b>Definition</b> BiarcList.cc:639</div></div>
+<div class="ttc" id="aclass_g2lib_1_1_biarc_list_html_a81ce66bc3961697c10ec1db4e580bca0"><div class="ttname"><a href="class_g2lib_1_1_biarc_list.html#a81ce66bc3961697c10ec1db4e580bca0">G2lib::BiarcList::eval_ISO_DDD</a></div><div class="ttdeci">void eval_ISO_DDD(real_type s, real_type offs, real_type &amp;x_DDD, real_type &amp;y_DDD) const override</div><div class="ttdef"><b>Definition</b> BiarcList.cc:966</div></div>
+<div class="ttc" id="aclass_g2lib_1_1_biarc_list_html_a81efbd975260e0d35bb6c2be659e3013"><div class="ttname"><a href="class_g2lib_1_1_biarc_list.html#a81efbd975260e0d35bb6c2be659e3013">G2lib::BiarcList::evaluate</a></div><div class="ttdeci">void evaluate(real_type s, real_type &amp;th, real_type &amp;k, real_type &amp;x, real_type &amp;y) const override</div><div class="ttdef"><b>Definition</b> BiarcList.cc:691</div></div>
+<div class="ttc" id="aclass_g2lib_1_1_biarc_list_html_a85d37d463b27270624141880ae469989"><div class="ttname"><a href="class_g2lib_1_1_biarc_list.html#a85d37d463b27270624141880ae469989">G2lib::BiarcList::tx</a></div><div class="ttdeci">real_type tx(real_type) const override</div><div class="ttdef"><b>Definition</b> BiarcList.cc:567</div></div>
+<div class="ttc" id="aclass_g2lib_1_1_biarc_list_html_a888861cb3554707230ab84751f475aaf"><div class="ttname"><a href="class_g2lib_1_1_biarc_list.html#a888861cb3554707230ab84751f475aaf">G2lib::BiarcList::Y_DDD</a></div><div class="ttdeci">real_type Y_DDD(real_type) const override</div><div class="ttdef"><b>Definition</b> BiarcList.cc:785</div></div>
+<div class="ttc" id="aclass_g2lib_1_1_biarc_list_html_a88e79fc760f55b77111309af9d510067"><div class="ttname"><a href="class_g2lib_1_1_biarc_list.html#a88e79fc760f55b77111309af9d510067">G2lib::BiarcList::change_origin</a></div><div class="ttdeci">void change_origin(real_type newx0, real_type newy0) override</div><div class="ttdef"><b>Definition</b> BiarcList.cc:1038</div></div>
+<div class="ttc" id="aclass_g2lib_1_1_biarc_list_html_a8ceee5971871de1e84a801a1958722ee"><div class="ttname"><a href="class_g2lib_1_1_biarc_list.html#a8ceee5971871de1e84a801a1958722ee">G2lib::BiarcList::x_end</a></div><div class="ttdeci">real_type x_end() const override</div><div class="ttdef"><b>Definition</b> BiarcList.hxx:413</div></div>
+<div class="ttc" id="aclass_g2lib_1_1_biarc_list_html_a8e2d4dd1063e2250eac31a94db2e15ab"><div class="ttname"><a href="class_g2lib_1_1_biarc_list.html#a8e2d4dd1063e2250eac31a94db2e15ab">G2lib::BiarcList::X_ISO</a></div><div class="ttdeci">real_type X_ISO(real_type s, real_type offs) const override</div><div class="ttdef"><b>Definition</b> BiarcList.cc:852</div></div>
+<div class="ttc" id="aclass_g2lib_1_1_biarc_list_html_a90d953a7cff03136745d12af93991021"><div class="ttname"><a href="class_g2lib_1_1_biarc_list.html#a90d953a7cff03136745d12af93991021">G2lib::BiarcList::collision_ISO</a></div><div class="ttdeci">bool collision_ISO(real_type offs, BiarcList const &amp;BL, real_type offs_C) const</div><div class="ttdef"><b>Definition</b> BiarcList.cc:1173</div></div>
+<div class="ttc" id="aclass_g2lib_1_1_biarc_list_html_a91063705c46a6decbd16ca1a1ec8df59"><div class="ttname"><a href="class_g2lib_1_1_biarc_list.html#a91063705c46a6decbd16ca1a1ec8df59">G2lib::BiarcList::intersect_ISO</a></div><div class="ttdeci">void intersect_ISO(real_type offs, BiarcList const &amp;BL, real_type offs_obj, IntersectList &amp;ilist) const</div><div class="ttdef"><b>Definition</b> BiarcList.cc:1216</div></div>
+<div class="ttc" id="aclass_g2lib_1_1_biarc_list_html_a93d442af069d7588ab499dd1bccc8a72"><div class="ttname"><a href="class_g2lib_1_1_biarc_list.html#a93d442af069d7588ab499dd1bccc8a72">G2lib::BiarcList::get</a></div><div class="ttdeci">Biarc const &amp; get(integer idx) const</div><div class="ttdef"><b>Definition</b> BiarcList.cc:379</div></div>
+<div class="ttc" id="aclass_g2lib_1_1_biarc_list_html_a968bc8a7c606d93b1c1be39f5b92dac0"><div class="ttname"><a href="class_g2lib_1_1_biarc_list.html#a968bc8a7c606d93b1c1be39f5b92dac0">G2lib::BiarcList::X</a></div><div class="ttdeci">real_type X(real_type) const override</div><div class="ttdef"><b>Definition</b> BiarcList.cc:722</div></div>
+<div class="ttc" id="aclass_g2lib_1_1_biarc_list_html_a96a20306840db4f4b9c2673f8dc53cbd"><div class="ttname"><a href="class_g2lib_1_1_biarc_list.html#a96a20306840db4f4b9c2673f8dc53cbd">G2lib::BiarcList::intersect</a></div><div class="ttdeci">void intersect(BiarcList const &amp;BL, IntersectList &amp;ilist) const</div><div class="ttdef"><b>Definition</b> BiarcList.hxx:817</div></div>
+<div class="ttc" id="aclass_g2lib_1_1_biarc_list_html_a971fa947ca09d991cd01b1414229882d"><div class="ttname"><a href="class_g2lib_1_1_biarc_list.html#a971fa947ca09d991cd01b1414229882d">G2lib::BiarcList::nx_end_ISO</a></div><div class="ttdeci">real_type nx_end_ISO() const override</div><div class="ttdef"><b>Definition</b> BiarcList.hxx:461</div></div>
+<div class="ttc" id="aclass_g2lib_1_1_biarc_list_html_a9a4819baf7349d3466e2130c4ff4ca1f"><div class="ttname"><a href="class_g2lib_1_1_biarc_list.html#a9a4819baf7349d3466e2130c4ff4ca1f">G2lib::BiarcList::scale</a></div><div class="ttdeci">void scale(real_type sc) override</div><div class="ttdef"><b>Definition</b> BiarcList.cc:1000</div></div>
+<div class="ttc" id="aclass_g2lib_1_1_biarc_list_html_a9acfcdb09b5b21fa6fa1b71cb9ecea34"><div class="ttname"><a href="class_g2lib_1_1_biarc_list.html#a9acfcdb09b5b21fa6fa1b71cb9ecea34">G2lib::BiarcList::ty</a></div><div class="ttdeci">real_type ty(real_type) const override</div><div class="ttdef"><b>Definition</b> BiarcList.cc:576</div></div>
+<div class="ttc" id="aclass_g2lib_1_1_biarc_list_html_a9bde458d7d677778fd4a02d144c7021f"><div class="ttname"><a href="class_g2lib_1_1_biarc_list.html#a9bde458d7d677778fd4a02d144c7021f">G2lib::BiarcList::y_begin_ISO</a></div><div class="ttdeci">real_type y_begin_ISO(real_type offs) const override</div><div class="ttdef"><b>Definition</b> BiarcList.hxx:425</div></div>
+<div class="ttc" id="aclass_g2lib_1_1_biarc_list_html_a9eba036a57cc0fae54ed4da7966426e3"><div class="ttname"><a href="class_g2lib_1_1_biarc_list.html#a9eba036a57cc0fae54ed4da7966426e3">G2lib::BiarcList::ty_D</a></div><div class="ttdeci">real_type ty_D(real_type) const override</div><div class="ttdef"><b>Definition</b> BiarcList.cc:594</div></div>
+<div class="ttc" id="aclass_g2lib_1_1_biarc_list_html_a9f5158583ef1deba0f24ce199003fdc8"><div class="ttname"><a href="class_g2lib_1_1_biarc_list.html#a9f5158583ef1deba0f24ce199003fdc8">G2lib::BiarcList::init</a></div><div class="ttdeci">void init()</div><div class="ttdef"><b>Definition</b> BiarcList.cc:195</div></div>
+<div class="ttc" id="aclass_g2lib_1_1_biarc_list_html_a9f7e5e40b5ede227d4efc30fecd454b0"><div class="ttname"><a href="class_g2lib_1_1_biarc_list.html#a9f7e5e40b5ede227d4efc30fecd454b0">G2lib::BiarcList::tx_D</a></div><div class="ttdeci">real_type tx_D(real_type) const override</div><div class="ttdef"><b>Definition</b> BiarcList.cc:585</div></div>
+<div class="ttc" id="aclass_g2lib_1_1_biarc_list_html_aa13a3b4252927e45fdb79d94a0e7ecdf"><div class="ttname"><a href="class_g2lib_1_1_biarc_list.html#aa13a3b4252927e45fdb79d94a0e7ecdf">G2lib::BiarcList::segment_length_ISO</a></div><div class="ttdeci">real_type segment_length_ISO(integer nseg, real_type offs) const</div><div class="ttdef"><b>Definition</b> BiarcList.cc:427</div></div>
+<div class="ttc" id="aclass_g2lib_1_1_biarc_list_html_aa74a73e36774f22f0ffedaa3feac1513"><div class="ttname"><a href="class_g2lib_1_1_biarc_list.html#aa74a73e36774f22f0ffedaa3feac1513">G2lib::BiarcList::get_at_s</a></div><div class="ttdeci">Biarc const &amp; get_at_s(real_type s) const</div><div class="ttdef"><b>Definition</b> BiarcList.cc:396</div></div>
+<div class="ttc" id="aclass_g2lib_1_1_biarc_list_html_aaee5cd11fbe4830f7ba18064c3e456b6"><div class="ttname"><a href="class_g2lib_1_1_biarc_list.html#aaee5cd11fbe4830f7ba18064c3e456b6">G2lib::BiarcList::tx_DD</a></div><div class="ttdeci">real_type tx_DD(real_type) const override</div><div class="ttdef"><b>Definition</b> BiarcList.cc:603</div></div>
+<div class="ttc" id="aclass_g2lib_1_1_biarc_list_html_aaf64a7f9509295ea92691930f2600b92"><div class="ttname"><a href="class_g2lib_1_1_biarc_list.html#aaf64a7f9509295ea92691930f2600b92">G2lib::BiarcList::Y_D</a></div><div class="ttdeci">real_type Y_D(real_type) const override</div><div class="ttdef"><b>Definition</b> BiarcList.cc:749</div></div>
+<div class="ttc" id="aclass_g2lib_1_1_biarc_list_html_aafa7abd2c8d824c44cae899b3f740ece"><div class="ttname"><a href="class_g2lib_1_1_biarc_list.html#aafa7abd2c8d824c44cae899b3f740ece">G2lib::BiarcList::theta</a></div><div class="ttdeci">real_type theta(real_type) const override</div><div class="ttdef"><b>Definition</b> BiarcList.cc:525</div></div>
+<div class="ttc" id="aclass_g2lib_1_1_biarc_list_html_ab009fd65e71ef8092aa53cf0725201a9"><div class="ttname"><a href="class_g2lib_1_1_biarc_list.html#ab009fd65e71ef8092aa53cf0725201a9">G2lib::BiarcList::x_begin</a></div><div class="ttdeci">real_type x_begin() const override</div><div class="ttdef"><b>Definition</b> BiarcList.hxx:405</div></div>
+<div class="ttc" id="aclass_g2lib_1_1_biarc_list_html_ab100ce8ea837fa45d5fc667fd234001e"><div class="ttname"><a href="class_g2lib_1_1_biarc_list.html#ab100ce8ea837fa45d5fc667fd234001e">G2lib::BiarcList::rotate</a></div><div class="ttdeci">void rotate(real_type angle, real_type cx, real_type cy) override</div><div class="ttdef"><b>Definition</b> BiarcList.cc:993</div></div>
+<div class="ttc" id="aclass_g2lib_1_1_biarc_list_html_ab33ff4fb7f193754f241d68c53549ec2"><div class="ttname"><a href="class_g2lib_1_1_biarc_list.html#ab33ff4fb7f193754f241d68c53549ec2">G2lib::BiarcList::theta_begin</a></div><div class="ttdeci">real_type theta_begin() const override</div><div class="ttdef"><b>Definition</b> BiarcList.hxx:397</div></div>
+<div class="ttc" id="aclass_g2lib_1_1_biarc_list_html_ab633c410b3b73bb34f234df81d85a061"><div class="ttname"><a href="class_g2lib_1_1_biarc_list.html#ab633c410b3b73bb34f234df81d85a061">G2lib::BiarcList::x_begin_ISO</a></div><div class="ttdeci">real_type x_begin_ISO(real_type offs) const override</div><div class="ttdef"><b>Definition</b> BiarcList.hxx:421</div></div>
+<div class="ttc" id="aclass_g2lib_1_1_biarc_list_html_ab9b8e71ecf7b47ee07fb8b546d808232"><div class="ttname"><a href="class_g2lib_1_1_biarc_list.html#ab9b8e71ecf7b47ee07fb8b546d808232">G2lib::BiarcList::closest_point_ISO</a></div><div class="ttdeci">integer closest_point_ISO(real_type qx, real_type qy, real_type &amp;x, real_type &amp;y, real_type &amp;s, real_type &amp;t, real_type &amp;dst) const override</div><div class="ttdef"><b>Definition</b> BiarcList.cc:1426</div></div>
+<div class="ttc" id="aclass_g2lib_1_1_biarc_list_html_aba5a24b31666c1507e6a9226995e7600"><div class="ttname"><a href="class_g2lib_1_1_biarc_list.html#aba5a24b31666c1507e6a9226995e7600">G2lib::BiarcList::tx_end</a></div><div class="ttdeci">real_type tx_end() const override</div><div class="ttdef"><b>Definition</b> BiarcList.hxx:445</div></div>
+<div class="ttc" id="aclass_g2lib_1_1_biarc_list_html_aba6c6d98d73aab902a4d5c30140bf8b2"><div class="ttname"><a href="class_g2lib_1_1_biarc_list.html#aba6c6d98d73aab902a4d5c30140bf8b2">G2lib::BiarcList::theta_DD</a></div><div class="ttdeci">real_type theta_DD(real_type) const override</div><div class="ttdef"><b>Definition</b> BiarcList.cc:543</div></div>
+<div class="ttc" id="aclass_g2lib_1_1_biarc_list_html_abd1eb2f3b54a65a92fd44239666d434c"><div class="ttname"><a href="class_g2lib_1_1_biarc_list.html#abd1eb2f3b54a65a92fd44239666d434c">G2lib::BiarcList::get_XY</a></div><div class="ttdeci">void get_XY(real_type x[], real_type y[]) const</div><div class="ttdef"><b>Definition</b> BiarcList.cc:1469</div></div>
+<div class="ttc" id="aclass_g2lib_1_1_biarc_list_html_ac5d9f4ef1a05dd6de4c9bef50e16a0bf"><div class="ttname"><a href="class_g2lib_1_1_biarc_list.html#ac5d9f4ef1a05dd6de4c9bef50e16a0bf">G2lib::BiarcList::bbox</a></div><div class="ttdeci">void bbox(real_type &amp;xmin, real_type &amp;ymin, real_type &amp;xmax, real_type &amp;ymax) const override</div><div class="ttdef"><b>Definition</b> BiarcList.hxx:369</div></div>
+<div class="ttc" id="aclass_g2lib_1_1_biarc_list_html_acfe691d9413f5c6778741c8ecdbf3c13"><div class="ttname"><a href="class_g2lib_1_1_biarc_list.html#acfe691d9413f5c6778741c8ecdbf3c13">G2lib::BiarcList::theta_D</a></div><div class="ttdeci">real_type theta_D(real_type) const override</div><div class="ttdef"><b>Definition</b> BiarcList.cc:534</div></div>
+<div class="ttc" id="aclass_g2lib_1_1_biarc_list_html_ad4675e24f6c9f47926e52a55b635514a"><div class="ttname"><a href="class_g2lib_1_1_biarc_list.html#ad4675e24f6c9f47926e52a55b635514a">G2lib::BiarcList::y_end</a></div><div class="ttdeci">real_type y_end() const override</div><div class="ttdef"><b>Definition</b> BiarcList.hxx:417</div></div>
+<div class="ttc" id="aclass_g2lib_1_1_biarc_list_html_ad70781841d356b71d60c7f047d09647d"><div class="ttname"><a href="class_g2lib_1_1_biarc_list.html#ad70781841d356b71d60c7f047d09647d">G2lib::BiarcList::ty_end</a></div><div class="ttdeci">real_type ty_end() const override</div><div class="ttdef"><b>Definition</b> BiarcList.hxx:449</div></div>
+<div class="ttc" id="aclass_g2lib_1_1_biarc_list_html_ad8643454de24033c99090e3d4f483b0e"><div class="ttname"><a href="class_g2lib_1_1_biarc_list.html#ad8643454de24033c99090e3d4f483b0e">G2lib::BiarcList::BiarcList</a></div><div class="ttdeci">BiarcList(BiarcList const &amp;s)</div><div class="ttdef"><b>Definition</b> BiarcList.hxx:109</div></div>
+<div class="ttc" id="aclass_g2lib_1_1_biarc_list_html_ad87ff3e75fb235eb00edd50411947a99"><div class="ttname"><a href="class_g2lib_1_1_biarc_list.html#ad87ff3e75fb235eb00edd50411947a99">G2lib::BiarcList::bb_triangles</a></div><div class="ttdeci">void bb_triangles(vector&lt; Triangle2D &gt; &amp;tvec, real_type max_angle=Utils::m_pi/6, real_type max_size=1e100, integer icurve=0) const override</div><div class="ttdef"><b>Definition</b> BiarcList.cc:441</div></div>
+<div class="ttc" id="aclass_g2lib_1_1_biarc_list_html_adb942888c9e1c697e00f607d0c93787e"><div class="ttname"><a href="class_g2lib_1_1_biarc_list.html#adb942888c9e1c697e00f607d0c93787e">G2lib::BiarcList::eval_ISO_DD</a></div><div class="ttdeci">void eval_ISO_DD(real_type s, real_type offs, real_type &amp;x_DD, real_type &amp;y_DD) const override</div><div class="ttdef"><b>Definition</b> BiarcList.cc:952</div></div>
+<div class="ttc" id="aclass_g2lib_1_1_biarc_list_html_adbe2d9ae7346ce3ef73c9bf388f98ae4"><div class="ttname"><a href="class_g2lib_1_1_biarc_list.html#adbe2d9ae7346ce3ef73c9bf388f98ae4">G2lib::BiarcList::Y_ISO_DDD</a></div><div class="ttdeci">real_type Y_ISO_DDD(real_type s, real_type offs) const override</div><div class="ttdef"><b>Definition</b> BiarcList.cc:915</div></div>
+<div class="ttc" id="aclass_g2lib_1_1_biarc_list_html_ae3492301f7880d39da0d508e8237bade"><div class="ttname"><a href="class_g2lib_1_1_biarc_list.html#ae3492301f7880d39da0d508e8237bade">G2lib::BiarcList::build_G1</a></div><div class="ttdeci">bool build_G1(integer n, real_type const x[], real_type const y[])</div><div class="ttdef"><b>Definition</b> BiarcList.cc:357</div></div>
+<div class="ttc" id="aclass_g2lib_1_1_biarc_list_html_ae42cc2640bd4cb8e659e5eb96aac15c9"><div class="ttname"><a href="class_g2lib_1_1_biarc_list.html#ae42cc2640bd4cb8e659e5eb96aac15c9">G2lib::BiarcList::bb_triangles_SAE</a></div><div class="ttdeci">void bb_triangles_SAE(real_type offs, vector&lt; Triangle2D &gt; &amp;tvec, real_type max_angle=Utils::m_pi/6, real_type max_size=1e100, integer icurve=0) const override</div><div class="ttdef"><b>Definition</b> BiarcList.cc:466</div></div>
+<div class="ttc" id="aclass_g2lib_1_1_biarc_list_html_ae641e03ec0c08cbf23f0d5bad76f237e"><div class="ttname"><a href="class_g2lib_1_1_biarc_list.html#ae641e03ec0c08cbf23f0d5bad76f237e">G2lib::BiarcList::y_end_ISO</a></div><div class="ttdeci">real_type y_end_ISO(real_type offs) const override</div><div class="ttdef"><b>Definition</b> BiarcList.hxx:433</div></div>
+<div class="ttc" id="aclass_g2lib_1_1_biarc_list_html_aef1567234fdc3aaa85f5d75c567100d4"><div class="ttname"><a href="class_g2lib_1_1_biarc_list.html#aef1567234fdc3aaa85f5d75c567100d4">G2lib::BiarcList::Y_DD</a></div><div class="ttdeci">real_type Y_DD(real_type) const override</div><div class="ttdef"><b>Definition</b> BiarcList.cc:767</div></div>
+<div class="ttc" id="aclass_g2lib_1_1_biarc_list_html_aef377761c51f7e9588b73094f072851e"><div class="ttname"><a href="class_g2lib_1_1_biarc_list.html#aef377761c51f7e9588b73094f072851e">G2lib::BiarcList::copy</a></div><div class="ttdeci">void copy(BiarcList const &amp;L)</div><div class="ttdef"><b>Definition</b> BiarcList.cc:206</div></div>
+<div class="ttc" id="aclass_g2lib_1_1_biarc_list_html_af0c6c499e666553bddb6b7ac8ecc2ee0"><div class="ttname"><a href="class_g2lib_1_1_biarc_list.html#af0c6c499e666553bddb6b7ac8ecc2ee0">G2lib::BiarcList::push_back</a></div><div class="ttdeci">void push_back(LineSegment const &amp;c)</div><div class="ttdef"><b>Definition</b> BiarcList.cc:244</div></div>
+<div class="ttc" id="aclass_g2lib_1_1_biarc_list_html_af19f2a57cef09a5f7b10d428c67faad3"><div class="ttname"><a href="class_g2lib_1_1_biarc_list.html#af19f2a57cef09a5f7b10d428c67faad3">G2lib::BiarcList::bb_triangles_ISO</a></div><div class="ttdeci">void bb_triangles_ISO(real_type offs, vector&lt; Triangle2D &gt; &amp;tvec, real_type max_angle=Utils::m_pi/6, real_type max_size=1e100, integer icurve=0) const override</div><div class="ttdef"><b>Definition</b> BiarcList.cc:453</div></div>
+<div class="ttc" id="aclass_g2lib_1_1_biarc_list_html_af1b960caa0fbc4f67097cc2f6d4f66ed"><div class="ttname"><a href="class_g2lib_1_1_biarc_list.html#af1b960caa0fbc4f67097cc2f6d4f66ed">G2lib::BiarcList::num_segments</a></div><div class="ttdeci">integer num_segments() const</div><div class="ttdef"><b>Definition</b> BiarcList.hxx:269</div></div>
+<div class="ttc" id="aclass_g2lib_1_1_biarc_list_html_af6f0004d6f05d332a32f98aae26b88d3"><div class="ttname"><a href="class_g2lib_1_1_biarc_list.html#af6f0004d6f05d332a32f98aae26b88d3">G2lib::BiarcList::X_ISO_DDD</a></div><div class="ttdeci">real_type X_ISO_DDD(real_type s, real_type offs) const override</div><div class="ttdef"><b>Definition</b> BiarcList.cc:906</div></div>
+<div class="ttc" id="aclass_g2lib_1_1_biarc_list_html_af751f3d31bdcd998b2f7280690af1c6e"><div class="ttname"><a href="class_g2lib_1_1_biarc_list.html#af751f3d31bdcd998b2f7280690af1c6e">G2lib::BiarcList::operator=</a></div><div class="ttdeci">BiarcList const &amp; operator=(BiarcList const &amp;s)</div><div class="ttdef"><b>Definition</b> BiarcList.hxx:132</div></div>
+<div class="ttc" id="aclass_g2lib_1_1_biarc_list_html_af8f51315355aa4aa338acecd6ec4ac98"><div class="ttname"><a href="class_g2lib_1_1_biarc_list.html#af8f51315355aa4aa338acecd6ec4ac98">G2lib::BiarcList::Y_ISO_D</a></div><div class="ttdeci">real_type Y_ISO_D(real_type s, real_type offs) const override</div><div class="ttdef"><b>Definition</b> BiarcList.cc:879</div></div>
+<div class="ttc" id="aclass_g2lib_1_1_biarc_list_html_af9af516295e8f83134e1d7358cd98a48"><div class="ttname"><a href="class_g2lib_1_1_biarc_list.html#af9af516295e8f83134e1d7358cd98a48">G2lib::BiarcList::info</a></div><div class="ttdeci">void info(ostream_type &amp;stream) const override</div><div class="ttdef"><b>Definition</b> BiarcList.hxx:692</div></div>
+<div class="ttc" id="aclass_g2lib_1_1_biarc_list_html_afc3c0fdf05e2beb27b3777f5a744094b"><div class="ttname"><a href="class_g2lib_1_1_biarc_list.html#afc3c0fdf05e2beb27b3777f5a744094b">G2lib::BiarcList::eval_DD</a></div><div class="ttdeci">void eval_DD(real_type s, real_type &amp;x_DD, real_type &amp;y_DD) const override</div><div class="ttdef"><b>Definition</b> BiarcList.cc:820</div></div>
+<div class="ttc" id="aclass_g2lib_1_1_biarc_list_html_afc809fd9fcedf2c73011c1d184a620a0"><div class="ttname"><a href="class_g2lib_1_1_biarc_list.html#afc809fd9fcedf2c73011c1d184a620a0">G2lib::BiarcList::length</a></div><div class="ttdeci">real_type length() const override</div><div class="ttdef"><b>Definition</b> BiarcList.cc:409</div></div>
+<div class="ttc" id="aclass_g2lib_1_1_biarc_list_html_afde0c9db5fda362410dbf1803a0a84ea"><div class="ttname"><a href="class_g2lib_1_1_biarc_list.html#afde0c9db5fda362410dbf1803a0a84ea">G2lib::BiarcList::Y_ISO_DD</a></div><div class="ttdeci">real_type Y_ISO_DD(real_type s, real_type offs) const override</div><div class="ttdef"><b>Definition</b> BiarcList.cc:897</div></div>
+<div class="ttc" id="aclass_g2lib_1_1_biarc_list_html_aff2387de63730dcd8d83fd719402f2ce"><div class="ttname"><a href="class_g2lib_1_1_biarc_list.html#aff2387de63730dcd8d83fd719402f2ce">G2lib::BiarcList::bbox_ISO</a></div><div class="ttdeci">void bbox_ISO(real_type offs, real_type &amp;xmin, real_type &amp;ymin, real_type &amp;xmax, real_type &amp;ymax) const override</div><div class="ttdef"><b>Definition</b> BiarcList.cc:487</div></div>
+<div class="ttc" id="aclass_g2lib_1_1_biarc_list_html_affaf8f1de094eee94f5cf7f1f924da86"><div class="ttname"><a href="class_g2lib_1_1_biarc_list.html#affaf8f1de094eee94f5cf7f1f924da86">G2lib::BiarcList::BiarcList</a></div><div class="ttdeci">BiarcList(string const &amp;name)</div><div class="ttdef"><b>Definition</b> BiarcList.hxx:95</div></div>
+<div class="ttc" id="aclass_g2lib_1_1_circle_arc_html"><div class="ttname"><a href="class_g2lib_1_1_circle_arc.html">G2lib::CircleArc</a></div><div class="ttdef"><b>Definition</b> Circle.hxx:37</div></div>
+<div class="ttc" id="aclass_g2lib_1_1_clothoid_curve_html"><div class="ttname"><a href="class_g2lib_1_1_clothoid_curve.html">G2lib::ClothoidCurve</a></div><div class="ttdef"><b>Definition</b> Clothoid.hxx:48</div></div>
+<div class="ttc" id="aclass_g2lib_1_1_clothoid_list_html"><div class="ttname"><a href="class_g2lib_1_1_clothoid_list.html">G2lib::ClothoidList</a></div><div class="ttdef"><b>Definition</b> ClothoidList.hxx:861</div></div>
+<div class="ttc" id="aclass_g2lib_1_1_dubins3p_html"><div class="ttname"><a href="class_g2lib_1_1_dubins3p.html">G2lib::Dubins3p</a></div><div class="ttdef"><b>Definition</b> Dubins3p.hxx:78</div></div>
+<div class="ttc" id="aclass_g2lib_1_1_dubins_html"><div class="ttname"><a href="class_g2lib_1_1_dubins.html">G2lib::Dubins</a></div><div class="ttdef"><b>Definition</b> Dubins.hxx:74</div></div>
+<div class="ttc" id="aclass_g2lib_1_1_line_segment_html"><div class="ttname"><a href="class_g2lib_1_1_line_segment.html">G2lib::LineSegment</a></div><div class="ttdef"><b>Definition</b> Line.hxx:37</div></div>
+<div class="ttc" id="aclass_g2lib_1_1_poly_line_html"><div class="ttname"><a href="class_g2lib_1_1_poly_line.html">G2lib::PolyLine</a></div><div class="ttdoc">Class to manage a collection of straight segment.</div><div class="ttdef"><b>Definition</b> PolyLine.hxx:42</div></div>
+<div class="ttc" id="anamespace_g2lib_html"><div class="ttname"><a href="namespace_g2lib.html">G2lib</a></div><div class="ttdef"><b>Definition</b> BBox.cc:42</div></div>
+<div class="ttc" id="anamespace_g2lib_html_a15ab518016103cf0251cd4c759aff627"><div class="ttname"><a href="namespace_g2lib.html#a15ab518016103cf0251cd4c759aff627">G2lib::AABB_TREE</a></div><div class="ttdeci">Utils::AABBtree&lt; real_type &gt; AABB_TREE</div><div class="ttdoc">AABB tree type</div><div class="ttdef"><b>Definition</b> Clothoids.hh:81</div></div>
+<div class="ttc" id="anamespace_g2lib_html_a2bee1fb11cb401bacb26ad157b301feb"><div class="ttname"><a href="namespace_g2lib.html#a2bee1fb11cb401bacb26ad157b301feb">G2lib::GenericContainer</a></div><div class="ttdeci">GC_namespace::GenericContainer GenericContainer</div><div class="ttdoc">Generic container object.</div><div class="ttdef"><b>Definition</b> Clothoids.hh:84</div></div>
+<div class="ttc" id="anamespace_g2lib_html_a3beb82d20ee75367fbcf9cf79d908ed7"><div class="ttname"><a href="namespace_g2lib.html#a3beb82d20ee75367fbcf9cf79d908ed7">G2lib::ostream_type</a></div><div class="ttdeci">std::basic_ostream&lt; char &gt; ostream_type</div><div class="ttdoc">output streaming</div><div class="ttdef"><b>Definition</b> Clothoids.hh:78</div></div>
+<div class="ttc" id="anamespace_g2lib_html_a511fce3368282f6ef2984bf1b7480375"><div class="ttname"><a href="namespace_g2lib.html#a511fce3368282f6ef2984bf1b7480375">G2lib::IntersectList</a></div><div class="ttdeci">std::vector&lt; Ipair &gt; IntersectList</div><div class="ttdoc">Vector of pair of two real number.</div><div class="ttdef"><b>Definition</b> BaseCurve.hxx:36</div></div>
+<div class="ttc" id="anamespace_g2lib_html_ac18621126b9485db2bc878d6a1c8b0c9"><div class="ttname"><a href="namespace_g2lib.html#ac18621126b9485db2bc878d6a1c8b0c9">G2lib::CurveType</a></div><div class="ttdeci">enum class CurveType :integer { LINE, POLYLINE, CIRCLE, BIARC, BIARC_LIST, CLOTHOID, CLOTHOID_LIST, DUBINS, DUBINS3P } CurveType</div><div class="ttdef"><b>Definition</b> Clothoids.hh:89</div></div>
+<div class="ttc" id="anamespace_g2lib_html_ae423292c032f3d4aa336b13bf317cac9"><div class="ttname"><a href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">G2lib::real_type</a></div><div class="ttdeci">double real_type</div><div class="ttdoc">real type number</div><div class="ttdef"><b>Definition</b> Clothoids.hh:79</div></div>
+<div class="ttc" id="anamespace_g2lib_html_affd533209e1ea0ddab7324812690f0b8"><div class="ttname"><a href="namespace_g2lib.html#affd533209e1ea0ddab7324812690f0b8">G2lib::integer</a></div><div class="ttdeci">int integer</div><div class="ttdoc">integer type number</div><div class="ttdef"><b>Definition</b> Clothoids.hh:80</div></div>
+</div><!-- fragment --></div><!-- contents -->
+<!-- start footer part -->
+<hr class="footer"/><address class="footer"><small>
+Generated by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.12.0
+</small></address>
+</div><!-- doc-content -->
+</body>
+</html>
+</div>
+</section>
+
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p></p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

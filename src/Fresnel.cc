@@ -179,9 +179,9 @@ namespace G2lib {
   //!   email: sivakanth.telasula@gmail.com,
   //!   date: August 11, 2005
   //!
-  //! \param[in]  y Argument of \f$ C(y) \f$ and \f$ S(y) \f$
-  //! \param[out] C \f$ C(x) \f$
-  //! \param[out] S \f$ S(x) \f$
+  //! \param[in]  y Argument of \f$C(y)\f$ and \f$S(y)\f$
+  //! \param[out] C \f$C(x)\f$
+  //! \param[out] S \f$S(x)\f$
   //!
   void
   FresnelCS( real_type y, real_type & C, real_type & S ) {
@@ -322,10 +322,10 @@ namespace G2lib {
 
   void
   FresnelCS(
-    integer     nk,
-    real_type   t,
-    real_type * C,
-    real_type * S
+    integer   nk,
+    real_type t,
+    real_type C[],
+    real_type S[]
   ) {
     FresnelCS(t,C[0],S[0]);
     if ( nk > 1 ) {
@@ -377,11 +377,11 @@ namespace G2lib {
   static
   void
   evalXYaLarge(
-    integer     nk,
-    real_type   a,
-    real_type   b,
-    real_type * X,
-    real_type * Y
+    integer   nk,
+    real_type a,
+    real_type b,
+    real_type X[],
+    real_type Y[]
   ) {
 
     UTILS_ASSERT(
@@ -450,10 +450,10 @@ namespace G2lib {
   static
   void
   evalXYazero(
-    integer     nk,
-    real_type   b,
-    real_type * X,
-    real_type * Y
+    integer   nk,
+    real_type b,
+    real_type X[],
+    real_type Y[]
   ) {
     real_type sb = sin(b);
     real_type cb = cos(b);
@@ -533,12 +533,12 @@ namespace G2lib {
   static
   void
   evalXYaSmall(
-    integer     nk,
-    real_type   a,
-    real_type   b,
-    integer     p,
-    real_type * X,
-    real_type * Y
+    integer   nk,
+    real_type a,
+    real_type b,
+    integer   p,
+    real_type X[],
+    real_type Y[]
   ) {
 
     integer   nkk{nk + 4*p + 2}; // max 45
@@ -599,12 +599,12 @@ namespace G2lib {
 
   void
   GeneralizedFresnelCS(
-    integer     nk,
-    real_type   a,
-    real_type   b,
-    real_type   c,
-    real_type * intC,
-    real_type * intS
+    integer   nk,
+    real_type a,
+    real_type b,
+    real_type c,
+    real_type intC[],
+    real_type intS[]
   ) {
     UTILS_ASSERT( nk > 0 && nk < 4, "nk = {} must be in 1..3\n", nk );
 

@@ -35,9 +35,9 @@ namespace G2lib {
    | |____/|_|\__,_|_|  \___|_____|_|___/\__|
   \*/
   //!
-  //! Class to manage a list of biarc Curve (not necessarily G2 or G1 connected)
+  //! Class to manage a list of biarc Curve (not necessarily \f$ G^2 \f$ or \f$ G^1 \f$ connected)
   //!
-  //! \image html biarc_list.jpg "Biarc" width=8cm
+  //! @html_image{biarc_list.png,width=60%}
   //!
   class BiarcList : public BaseCurve {
 
@@ -192,28 +192,28 @@ namespace G2lib {
 
     //!
     //! Construct a biarc passing from the points
-    //! \f$ (x_0,y_0) \f$ to the point  \f$ (x_1,y_1) \f$
+    //! \f$ (x_0,y_0) \f$ to the point \f$ (x_1,y_1) \f$
     //! with initial angle \f$ \theta_0 \f$ and final angle \f$ \theta_1 \f$
     //! and append the biarc to the tail of biarc list.
     //! The initial point and angle is taken from the tail of the biarc list.
     //!
-    //! \param[in] x1      \f$ x_1 \f$
-    //! \param[in] y1      \f$ y_1 \f$
+    //! \param[in] x1      \f$ x_1      \f$
+    //! \param[in] y1      \f$ y_1      \f$
     //! \param[in] theta1  \f$ \theta_1 \f$
     //!
     void push_back_G1( real_type x1, real_type y1, real_type theta1 );
 
     //!
     //! Construct a biarc passing from the points
-    //! \f$ (x_0,y_0) \f$ to the point  \f$ (x_1,y_1) \f$
+    //! \f$ (x_0,y_0) \f$ to the point \f$ (x_1,y_1) \f$
     //! with initial angle \f$ \theta_0 \f$ and final angle \f$ \theta_1 \f$
     //! and append the biarc to the tail of biarc list.
     //!
-    //! \param[in] x0      \f$ x_0 \f$
-    //! \param[in] y0      \f$ y_0 \f$
+    //! \param[in] x0      \f$ x_0      \f$
+    //! \param[in] y0      \f$ y_0      \f$
     //! \param[in] theta0  \f$ \theta_0 \f$
-    //! \param[in] x1      \f$ x_1 \f$
-    //! \param[in] y1      \f$ y_1 \f$
+    //! \param[in] x1      \f$ x_1      \f$
+    //! \param[in] y1      \f$ y_1      \f$
     //! \param[in] theta1  \f$ \theta_1 \f$
     //!
     void
@@ -226,8 +226,8 @@ namespace G2lib {
     //! Construct a biarc list passing to the points \f$ (x_i,y_i) \f$.
     //!
     //! \param[in] n number of points
-    //! \param[in] x x-coordinates
-    //! \param[in] y y-coordinates
+    //! \param[in] x \f$x\f$-coordinates
+    //! \param[in] y \f$y\f$-coordinates
     //!
     bool
     build_G1(
@@ -241,8 +241,8 @@ namespace G2lib {
     //! with angles  \f$ \theta_i \f$.
     //!
     //! \param[in] n     number of points
-    //! \param[in] x     x-coordinates
-    //! \param[in] y     y-coordinates
+    //! \param[in] x     \f$x\f$-coordinates
+    //! \param[in] y     \f$y\f$-coordinates
     //! \param[in] theta angles at nodes
     //!
     bool
@@ -259,7 +259,7 @@ namespace G2lib {
     Biarc const & get( integer idx ) const;
 
     //!
-    //! Get the biarc that contain the curvilinear coordinate `s`.
+    //! Get the biarc that contain the curvilinear coordinate \f$s\f$.
     //!
     Biarc const & get_at_s( real_type s ) const;
 
@@ -270,7 +270,7 @@ namespace G2lib {
 
     //!
     //! Get the of the biarc that contain
-    //! the curvilinear coordinate `s`.
+    //! the curvilinear coordinate \f$s\f$.
     //!
     integer find_at_s( real_type & s ) const;
 
@@ -692,7 +692,6 @@ namespace G2lib {
     info( ostream_type & stream ) const override
     { stream << this->info(); }
 
-    //! pretty print the BiarcList list
     friend
     ostream_type &
     operator << ( ostream_type & stream, BiarcList const & CL );
@@ -706,29 +705,29 @@ namespace G2lib {
     //!
     void
     get_STK(
-      real_type * s,
-      real_type * theta,
-      real_type * kappa
+      real_type s[],
+      real_type theta[],
+      real_type kappa[]
     ) const;
 
     //!
     //! Return the biarc XY nodes
     //!
-    //! \param[out] x x-nodes
-    //! \param[out] y y-nodes
+    //! \param[out] x \f$ x \f$-nodes
+    //! \param[out] y \f$ y \f$-nodes
     //!
     void
-    get_XY( real_type * x, real_type * y ) const;
+    get_XY( real_type x[], real_type y[] ) const;
 
     //!
     //! Find parametric coordinate.
     //!
-    //! \param  x    x-coordinate point
-    //! \param  y    y-coordinate point
+    //! \param  x    \f$x\f$-coordinate point
+    //! \param  y    \f$y\f$-coordinate point
     //! \param  s    value \f$ s \f$
     //! \param  t    value \f$ t \f$
     //! \return idx  the segment with point at minimal distance, otherwise
-    //!              -(idx+1) if (x,y) cannot be projected orthogonally on the segment
+    //!              `-(idx+1)` if \f$(x,y)\f$ cannot be projected orthogonally on the segment
     //!
     integer
     findST1(
@@ -743,12 +742,12 @@ namespace G2lib {
     //!
     //! \param  ibegin initial segment to compute the distance
     //! \param  iend   final segment to compute the distance
-    //! \param  x      x-coordinate point
-    //! \param  y      y-coordinate point
+    //! \param  x      \f$x\f$-coordinate point
+    //! \param  y      \f$y\f$-coordinate point
     //! \param  s      value \f$ s \f$
     //! \param  t      value \f$ t \f$
     //! \return idx    the segment with point at minimal distance, otherwise
-    //!                -(idx+1) if (x,y) cannot be projected orthogonally on the segment
+    //!                `-(idx+1)` if \f$(x,y)\f$ cannot be projected orthogonally on the segment
     //!
     integer
     findST1(

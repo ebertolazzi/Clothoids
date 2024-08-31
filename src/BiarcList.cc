@@ -1442,9 +1442,9 @@ namespace G2lib {
 
   void
   BiarcList::get_STK(
-    real_type * s,
-    real_type * theta,
-    real_type * kappa
+    real_type s[],
+    real_type theta[],
+    real_type kappa[]
   ) const {
     vector<Biarc>::const_iterator ic = m_biarc_list.begin();
     integer   k{0};
@@ -1466,7 +1466,7 @@ namespace G2lib {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   void
-  BiarcList::get_XY( real_type * x, real_type * y ) const {
+  BiarcList::get_XY( real_type x[], real_type y[] ) const {
     vector<Biarc>::const_iterator ic = m_biarc_list.begin();
     integer k{0};
     while ( ic != m_biarc_list.end() ) {
@@ -1567,7 +1567,13 @@ namespace G2lib {
   { return fmt::format( "BiarcList\n{}\n", *this ); }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
+  //!
+  //!  Print on strem the `BiarcList` object
+  //!
+  //!  \param stream the output stream
+  //!  \param CL     an instance of `BiarcList` object
+  //!  \return the output stream
+  //!
   ostream_type &
   operator << ( ostream_type & stream, BiarcList const & CL ) {
     for ( auto const & b : CL.m_biarc_list )

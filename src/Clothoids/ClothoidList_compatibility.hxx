@@ -43,7 +43,7 @@ real_type ny_End_ISO()   const { return this->ny_end_ISO(); }
 //! \param[out] kappa curvature
 //!
 void
-getSK( real_type * s, real_type * kappa ) const
+getSK( real_type s[], real_type kappa[] ) const
 { this->get_SK( s, kappa ); }
 
 //!
@@ -68,9 +68,9 @@ getSK(
 //!
 void
 getSTK(
-  real_type * s,
-  real_type * theta,
-  real_type * kappa
+  real_type s[],
+  real_type theta[],
+  real_type kappa[]
 ) const
 { this->get_STK( s, theta, kappa ); }
 
@@ -92,19 +92,19 @@ getSTK(
 //!
 //! Return the points of the clothoid list at breakpoints
 //!
-//! \param[out] x x-coordinates
-//! \param[out] y y-coordinates
+//! \param[out] x \f$x\f$-coordinates
+//! \param[out] y \f$y\f$-coordinates
 //!
 void
-getXY( real_type * x, real_type * y ) const
+getXY( real_type x[], real_type y[] ) const
 { this->get_XY( x, y ); }
 
 void
-getDeltaTheta( real_type * delta_theta ) const
+getDeltaTheta( real_type delta_theta[] ) const
 { this->get_delta_theta( delta_theta ); }
 
 void
-getDeltaKappa( real_type * deltaKappa ) const
+getDeltaKappa( real_type deltaKappa[] ) const
 { this->get_delta_kappa( deltaKappa ); }
 
 void

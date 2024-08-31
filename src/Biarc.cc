@@ -1002,7 +1002,13 @@ namespace G2lib {
   { return fmt::format( "BiArc\n{}\n", *this ); }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
+  //!
+  //!  Print on strem the `Biarc` object
+  //!
+  //!  \param stream the output stream
+  //!  \param bi     an instance of `Biarc` object
+  //!  \return the output stream
+  //!
   ostream_type &
   operator << ( ostream_type & stream, Biarc const & bi ) {
     stream

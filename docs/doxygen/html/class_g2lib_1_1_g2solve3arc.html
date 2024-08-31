@@ -1,0 +1,1653 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Clothoids: G2lib::G2solve3arc Class Reference &mdash; Clothoids</title>
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=19f00094" />
+      <link rel="stylesheet" type="text/css" href="../../_static/graphviz.css?v=fd3f3429" />
+      <link rel="stylesheet" type="text/css" href="../../_static/plot_directive.css?v=7f9a90b1" />
+      <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
+      <link rel="stylesheet" type="text/css" href="../../_static/sphinx-design.min.css?v=95c83b7e" />
+      <link rel="stylesheet" type="text/css" href="../../_static/sphinx-data-viewer/jsonview.bundle.css?v=f6ef2277" />
+      <link rel="stylesheet" type="text/css" href="../../_static/sphinx-needs/libs/html/datatables.min.css?v=4b4fd840" />
+      <link rel="stylesheet" type="text/css" href="../../_static/sphinx-needs/common_css/need_style.css?v=678fb11e" />
+      <link rel="stylesheet" type="text/css" href="../../_static/sphinx-needs/common_css/need_core.css?v=f5b60a78" />
+      <link rel="stylesheet" type="text/css" href="../../_static/sphinx-needs/common_css/needstable.css?v=5e1b6797" />
+      <link rel="stylesheet" type="text/css" href="../../_static/sphinx-needs/common_css/need_links.css?v=2150a916" />
+      <link rel="stylesheet" type="text/css" href="../../_static/sphinx-needs/common_css/need_toggle.css?v=5c6620df" />
+      <link rel="stylesheet" type="text/css" href="../../_static/sphinx-needs/modern.css?v=803738c0" />
+      <link rel="stylesheet" type="text/css" href="../../_static/sphinx-rtd-theme-custom.css?v=76d57d84" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../../_static/documentation_options.js?v=60dbed4a"></script>
+        <script src="../../_static/doctools.js?v=9a2dae69"></script>
+        <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+        <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
+        <script src="../../_static/copybutton.js?v=f281be69"></script>
+        <script src="../../_static/design-tabs.js?v=f930bc37"></script>
+        <script src="../../_static/sphinx-data-viewer/jsonview.bundle.js?v=18cd53c5"></script>
+        <script src="../../_static/sphinx-data-viewer/jsonview_loader.js?v=f7ff7e7d"></script>
+        <script src="../../_static/sphinx-needs/libs/html/datatables.min.js?v=8a4aee21"></script>
+        <script src="../../_static/sphinx-needs/libs/html/datatables_loader.js?v=a2cae175"></script>
+        <script src="../../_static/sphinx-needs/libs/html/sphinx_needs_collapse.js?v=dca66431"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            Clothoids
+              <img src="../../_static/logo.png" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                2.0.13
+
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../README.html">Clothoids</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../index_CPP.html">Clothoids C++ interface</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="namespaces_namespaces.html">Namespaces</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="namespaces.html">Namespace List</a></li>
+<li class="toctree-l3"><a class="reference internal" href="namespacemembers_namespace_members.html">Namespace Members</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="namespacemembers.html">All</a></li>
+<li class="toctree-l4"><a class="reference internal" href="namespacemembers_func.html">Functions</a></li>
+<li class="toctree-l4"><a class="reference internal" href="namespacemembers_type.html">Typedefs</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="annotated_classes.html">Classes</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="annotated.html">Class List</a></li>
+<li class="toctree-l3"><a class="reference internal" href="classes.html">Class Index</a></li>
+<li class="toctree-l3"><a class="reference internal" href="hierarchy.html">Class Hierarchy</a></li>
+<li class="toctree-l3"><a class="reference internal" href="functions_class_members.html">Class Members</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="functions_all.html">All</a></li>
+<li class="toctree-l4"><a class="reference internal" href="functions_func_functions.html">Functions</a></li>
+<li class="toctree-l4"><a class="reference internal" href="functions_type.html">Typedefs</a></li>
+<li class="toctree-l4"><a class="reference internal" href="functions_rela.html">Related Symbols</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="files.html">Files</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../index_MATLAB.html">Clothoids MATLAB interface</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../doxygen2/html/annotated_classes.html">Classes</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../doxygen2/html/annotated.html">Class List</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../doxygen2/html/classes.html">Class Index</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../doxygen2/html/hierarchy.html">Class Hierarchy</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../doxygen2/html/functions_class_members.html">Class Members</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../doxygen2/html/functions.html">All</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../doxygen2/html/functions_func.html">Functions</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../doxygen2/html/functions_func.html">Functions</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../LICENSE.html">LICENSE</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">Clothoids</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Clothoids: G2lib::G2solve3arc Class Reference</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../_sources/doxygen/html/class_g2lib_1_1_g2solve3arc.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="g2solve3arc-class-reference">
+<h1>G2solve3arc Class Reference<a class="headerlink" href="#g2solve3arc-class-reference" title="Link to this heading"></a></h1>
+<div class="doxygen-content docutils container">
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en-US">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=11"/>
+<meta name="generator" content="Doxygen 1.12.0"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Clothoids: G2lib::G2solve3arc Class Reference</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<script type="text/javascript" src="clipboard.js"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="resize.js"></script>
+<script type="text/javascript">
+window.MathJax = {
+  options: {
+    ignoreHtmlClass: 'tex2jax_ignore',
+    processHtmlClass: 'tex2jax_process'
+  }
+};
+</script>
+<script type="text/javascript" id="MathJax-script" async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+<link href="doxygen-awesome.css" rel="stylesheet" type="text/css"/>
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr id="projectrow">
+  <td id="projectalign">
+   <div id="projectname">Clothoids
+   </div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Generated by Doxygen 1.12.0 -->
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(function() { codefold.init(0); });
+/* @license-end */
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(function() {
+  initMenu('',false,false,'search.php','Search',false);
+});
+/* @license-end */
+</script>
+<div id="main-nav"></div>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(function(){ initResizable(false); });
+/* @license-end */
+</script>
+<div id="nav-path" class="navpath">
+  <ul>
+<li class="navelem"><a class="el" href="namespace_g2lib.html">G2lib</a></li><li class="navelem"><a class="el" href="class_g2lib_1_1_g2solve3arc.html">G2solve3arc</a></li>  </ul>
+</div>
+</div><!-- top -->
+<div id="doc-content">
+<div class="header">
+  <div class="summary">
+<a href="#pub-methods">Public Member Functions</a> &#124;
+<a href="#friends">Friends</a> &#124;
+<a href="class_g2lib_1_1_g2solve3arc-members.html">List of all members</a>  </div>
+  <div class="headertitle"><div class="title">G2lib::G2solve3arc Class Reference</div></div>
+</div><!--header-->
+<div class="contents">
+
+<p><code>#include &lt;<a class="el" href="_clothoid_list_8hxx_source.html">ClothoidList.hxx</a>&gt;</code></p>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
+Public Member Functions</h2></td></tr>
+<tr class="memitem:a22f239d1924f6a88587f2002f58eaf1b" id="r_a22f239d1924f6a88587f2002f58eaf1b"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a22f239d1924f6a88587f2002f58eaf1b">set_tolerance</a> (<a class="el" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> tol)</td></tr>
+<tr class="separator:a22f239d1924f6a88587f2002f58eaf1b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6457f5b6683d0c7f899035fe286f92e5" id="r_a6457f5b6683d0c7f899035fe286f92e5"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a6457f5b6683d0c7f899035fe286f92e5">set_max_iter</a> (<a class="el" href="namespace_g2lib.html#affd533209e1ea0ddab7324812690f0b8">integer</a> miter)</td></tr>
+<tr class="separator:a6457f5b6683d0c7f899035fe286f92e5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a43cbe9c1211e489d995f3013aaa60872" id="r_a43cbe9c1211e489d995f3013aaa60872"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a43cbe9c1211e489d995f3013aaa60872">build</a> (<a class="el" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> x0, <a class="el" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> y0, <a class="el" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> theta0, <a class="el" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> kappa0, <a class="el" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> x1, <a class="el" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> y1, <a class="el" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> theta1, <a class="el" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> kappa1, <a class="el" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> Dmax=0, <a class="el" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> dmax=0)</td></tr>
+<tr class="separator:a43cbe9c1211e489d995f3013aaa60872"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a601b8a5d0f81385c909f10e1d2b6cc40" id="r_a601b8a5d0f81385c909f10e1d2b6cc40"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a601b8a5d0f81385c909f10e1d2b6cc40">build_fixed_length</a> (<a class="el" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> s0, <a class="el" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> x0, <a class="el" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> y0, <a class="el" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> theta0, <a class="el" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> kappa0, <a class="el" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> s1, <a class="el" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> x1, <a class="el" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> y1, <a class="el" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> theta1, <a class="el" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> kappa1)</td></tr>
+<tr class="separator:a601b8a5d0f81385c909f10e1d2b6cc40"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abcaa574303da98cf7adbf7c30bd4c647" id="r_abcaa574303da98cf7adbf7c30bd4c647"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_g2lib_1_1_clothoid_curve.html">ClothoidCurve</a> const &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#abcaa574303da98cf7adbf7c30bd4c647">S0</a> () const</td></tr>
+<tr class="separator:abcaa574303da98cf7adbf7c30bd4c647"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a38ee5b99ee62ab9a4e5afadc6445e27b" id="r_a38ee5b99ee62ab9a4e5afadc6445e27b"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_g2lib_1_1_clothoid_curve.html">ClothoidCurve</a> const &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a38ee5b99ee62ab9a4e5afadc6445e27b">S1</a> () const</td></tr>
+<tr class="separator:a38ee5b99ee62ab9a4e5afadc6445e27b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4bcd91ad0431a348e44d371042ca2dea" id="r_a4bcd91ad0431a348e44d371042ca2dea"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_g2lib_1_1_clothoid_curve.html">ClothoidCurve</a> const &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a4bcd91ad0431a348e44d371042ca2dea">SM</a> () const</td></tr>
+<tr class="separator:a4bcd91ad0431a348e44d371042ca2dea"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aecfef1df1ab4ffee8ed8bc7ffccae37a" id="r_aecfef1df1ab4ffee8ed8bc7ffccae37a"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aecfef1df1ab4ffee8ed8bc7ffccae37a">total_length</a> () const</td></tr>
+<tr class="separator:aecfef1df1ab4ffee8ed8bc7ffccae37a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a31e69eea4869495a73d90026aaccb0f1" id="r_a31e69eea4869495a73d90026aaccb0f1"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a31e69eea4869495a73d90026aaccb0f1">theta_total_variation</a> () const</td></tr>
+<tr class="separator:a31e69eea4869495a73d90026aaccb0f1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a286fb126ca8d9d24bf65ab3493bd10ee" id="r_a286fb126ca8d9d24bf65ab3493bd10ee"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a286fb126ca8d9d24bf65ab3493bd10ee">curvature_total_variation</a> () const</td></tr>
+<tr class="separator:a286fb126ca8d9d24bf65ab3493bd10ee"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a87d52198b112112e5cb7798405847cf5" id="r_a87d52198b112112e5cb7798405847cf5"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a87d52198b112112e5cb7798405847cf5">integral_curvature2</a> () const</td></tr>
+<tr class="separator:a87d52198b112112e5cb7798405847cf5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5444f3262616f4eed9e17a3cd320fbfd" id="r_a5444f3262616f4eed9e17a3cd320fbfd"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a5444f3262616f4eed9e17a3cd320fbfd">integral_jerk2</a> () const</td></tr>
+<tr class="separator:a5444f3262616f4eed9e17a3cd320fbfd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac7d85146d895e740fc63d23fd4da0e98" id="r_ac7d85146d895e740fc63d23fd4da0e98"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ac7d85146d895e740fc63d23fd4da0e98">integral_snap2</a> () const</td></tr>
+<tr class="separator:ac7d85146d895e740fc63d23fd4da0e98"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a93c3cf1c90ee47d57e041bd190b2ba25" id="r_a93c3cf1c90ee47d57e041bd190b2ba25"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a93c3cf1c90ee47d57e041bd190b2ba25">theta_min_max</a> (<a class="el" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> &amp;thMin, <a class="el" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> &amp;thMax) const</td></tr>
+<tr class="separator:a93c3cf1c90ee47d57e041bd190b2ba25"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8eda07b239e3520a7c478c833057dc16" id="r_a8eda07b239e3520a7c478c833057dc16"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a8eda07b239e3520a7c478c833057dc16">delta_theta</a> () const</td></tr>
+<tr class="separator:a8eda07b239e3520a7c478c833057dc16"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4b732ecd5e1f5e4ce9eedf4e3a362feb" id="r_a4b732ecd5e1f5e4ce9eedf4e3a362feb"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a4b732ecd5e1f5e4ce9eedf4e3a362feb">curvature_min_max</a> (<a class="el" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> &amp;kMin, <a class="el" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> &amp;kMax) const</td></tr>
+<tr class="separator:a4b732ecd5e1f5e4ce9eedf4e3a362feb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa88a7c8f1e0f17c94520d37702e2f4ff" id="r_aa88a7c8f1e0f17c94520d37702e2f4ff"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aa88a7c8f1e0f17c94520d37702e2f4ff">theta</a> (<a class="el" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> s) const</td></tr>
+<tr class="separator:aa88a7c8f1e0f17c94520d37702e2f4ff"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af14619058799ed10619b242c6f81e42c" id="r_af14619058799ed10619b242c6f81e42c"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#af14619058799ed10619b242c6f81e42c">theta_D</a> (<a class="el" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> s) const</td></tr>
+<tr class="separator:af14619058799ed10619b242c6f81e42c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af78faf667efc8e8e32e39e9f6a8744e5" id="r_af78faf667efc8e8e32e39e9f6a8744e5"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#af78faf667efc8e8e32e39e9f6a8744e5">theta_DD</a> (<a class="el" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> s) const</td></tr>
+<tr class="separator:af78faf667efc8e8e32e39e9f6a8744e5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa828d4a8f22fb064ca542db282342c05" id="r_aa828d4a8f22fb064ca542db282342c05"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aa828d4a8f22fb064ca542db282342c05">theta_DDD</a> (<a class="el" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> s) const</td></tr>
+<tr class="separator:aa828d4a8f22fb064ca542db282342c05"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2f6da8479c22bc26905312c93d1984ba" id="r_a2f6da8479c22bc26905312c93d1984ba"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a2f6da8479c22bc26905312c93d1984ba">X</a> (<a class="el" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> s) const</td></tr>
+<tr class="separator:a2f6da8479c22bc26905312c93d1984ba"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a43da3fe986f4af4a7d85b40081954dcd" id="r_a43da3fe986f4af4a7d85b40081954dcd"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a43da3fe986f4af4a7d85b40081954dcd">Y</a> (<a class="el" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> s) const</td></tr>
+<tr class="separator:a43da3fe986f4af4a7d85b40081954dcd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9b370cf1eb7b17db12e15e3745ccc685" id="r_a9b370cf1eb7b17db12e15e3745ccc685"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a9b370cf1eb7b17db12e15e3745ccc685">x_begin</a> () const</td></tr>
+<tr class="separator:a9b370cf1eb7b17db12e15e3745ccc685"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3fa45ed9b27638f5aabd8341dfbf5085" id="r_a3fa45ed9b27638f5aabd8341dfbf5085"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a3fa45ed9b27638f5aabd8341dfbf5085">y_begin</a> () const</td></tr>
+<tr class="separator:a3fa45ed9b27638f5aabd8341dfbf5085"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab92856d312113bd8d9b5ec050cad902a" id="r_ab92856d312113bd8d9b5ec050cad902a"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ab92856d312113bd8d9b5ec050cad902a">kappa_begin</a> () const</td></tr>
+<tr class="separator:ab92856d312113bd8d9b5ec050cad902a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a263ac07abce228b77ae2fc77259223af" id="r_a263ac07abce228b77ae2fc77259223af"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a263ac07abce228b77ae2fc77259223af">theta_begin</a> () const</td></tr>
+<tr class="separator:a263ac07abce228b77ae2fc77259223af"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a033e50f16380014b9b70768b7617b880" id="r_a033e50f16380014b9b70768b7617b880"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a033e50f16380014b9b70768b7617b880">x_end</a> () const</td></tr>
+<tr class="separator:a033e50f16380014b9b70768b7617b880"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a932877630738149d1bedb76bda4114cc" id="r_a932877630738149d1bedb76bda4114cc"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a932877630738149d1bedb76bda4114cc">y_end</a> () const</td></tr>
+<tr class="separator:a932877630738149d1bedb76bda4114cc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5ca2c8523e14e3068a83a4869e025d4c" id="r_a5ca2c8523e14e3068a83a4869e025d4c"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a5ca2c8523e14e3068a83a4869e025d4c">kappa_end</a> () const</td></tr>
+<tr class="separator:a5ca2c8523e14e3068a83a4869e025d4c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac0c136ec38aeca44829ee51956bfe90a" id="r_ac0c136ec38aeca44829ee51956bfe90a"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ac0c136ec38aeca44829ee51956bfe90a">theta_end</a> () const</td></tr>
+<tr class="separator:ac0c136ec38aeca44829ee51956bfe90a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a91a6f596e2e61dcb6bf389eb676dbea7" id="r_a91a6f596e2e61dcb6bf389eb676dbea7"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a91a6f596e2e61dcb6bf389eb676dbea7">eval</a> (<a class="el" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> s, <a class="el" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> &amp;<a class="el" href="#aa88a7c8f1e0f17c94520d37702e2f4ff">theta</a>, <a class="el" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> &amp;kappa, <a class="el" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> &amp;x, <a class="el" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> &amp;y) const</td></tr>
+<tr class="separator:a91a6f596e2e61dcb6bf389eb676dbea7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a545b9a5630c34ae9f6b27f107d8f116d" id="r_a545b9a5630c34ae9f6b27f107d8f116d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a545b9a5630c34ae9f6b27f107d8f116d">eval</a> (<a class="el" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> s, <a class="el" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> &amp;x, <a class="el" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> &amp;y) const</td></tr>
+<tr class="separator:a545b9a5630c34ae9f6b27f107d8f116d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9df8fb48e41f63b0fc7111da8190be85" id="r_a9df8fb48e41f63b0fc7111da8190be85"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a9df8fb48e41f63b0fc7111da8190be85">eval_D</a> (<a class="el" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> s, <a class="el" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> &amp;x_D, <a class="el" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> &amp;y_D) const</td></tr>
+<tr class="separator:a9df8fb48e41f63b0fc7111da8190be85"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3173c746a1026ebabe9bcb9be379755e" id="r_a3173c746a1026ebabe9bcb9be379755e"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a3173c746a1026ebabe9bcb9be379755e">eval_DD</a> (<a class="el" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> s, <a class="el" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> &amp;x_DD, <a class="el" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> &amp;y_DD) const</td></tr>
+<tr class="separator:a3173c746a1026ebabe9bcb9be379755e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5ba695ce5ce75bfc10cf994069a69c0d" id="r_a5ba695ce5ce75bfc10cf994069a69c0d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a5ba695ce5ce75bfc10cf994069a69c0d">eval_DDD</a> (<a class="el" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> s, <a class="el" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> &amp;x_DDD, <a class="el" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> &amp;y_DDD) const</td></tr>
+<tr class="separator:a5ba695ce5ce75bfc10cf994069a69c0d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9d2d1d91f80544c83262860b21e3847d" id="r_a9d2d1d91f80544c83262860b21e3847d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a9d2d1d91f80544c83262860b21e3847d">eval_ISO</a> (<a class="el" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> s, <a class="el" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> offs, <a class="el" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> &amp;x, <a class="el" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> &amp;y) const</td></tr>
+<tr class="separator:a9d2d1d91f80544c83262860b21e3847d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2dcc810b0107898ce835e169f5bdcba9" id="r_a2dcc810b0107898ce835e169f5bdcba9"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a2dcc810b0107898ce835e169f5bdcba9">eval_ISO_D</a> (<a class="el" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> s, <a class="el" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> offs, <a class="el" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> &amp;x_D, <a class="el" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> &amp;y_D) const</td></tr>
+<tr class="separator:a2dcc810b0107898ce835e169f5bdcba9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0b0254bea33ccea476aed8d5de024fc3" id="r_a0b0254bea33ccea476aed8d5de024fc3"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a0b0254bea33ccea476aed8d5de024fc3">eval_ISO_DD</a> (<a class="el" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> s, <a class="el" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> offs, <a class="el" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> &amp;x_DD, <a class="el" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> &amp;y_DD) const</td></tr>
+<tr class="separator:a0b0254bea33ccea476aed8d5de024fc3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a46259ad727904a611d6e5c84df61da8a" id="r_a46259ad727904a611d6e5c84df61da8a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a46259ad727904a611d6e5c84df61da8a">eval_ISO_DDD</a> (<a class="el" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> s, <a class="el" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> offs, <a class="el" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> &amp;x_DDD, <a class="el" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> &amp;y_DDD) const</td></tr>
+<tr class="separator:a46259ad727904a611d6e5c84df61da8a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1b277d082fc14ca5fd2251b0f10a407c" id="r_a1b277d082fc14ca5fd2251b0f10a407c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a1b277d082fc14ca5fd2251b0f10a407c">rotate</a> (<a class="el" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> angle, <a class="el" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> cx, <a class="el" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> cy)</td></tr>
+<tr class="separator:a1b277d082fc14ca5fd2251b0f10a407c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a04c75a4ceb73f23cb1d7c55f0b65363d" id="r_a04c75a4ceb73f23cb1d7c55f0b65363d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a04c75a4ceb73f23cb1d7c55f0b65363d">translate</a> (<a class="el" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> tx, <a class="el" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> ty)</td></tr>
+<tr class="separator:a04c75a4ceb73f23cb1d7c55f0b65363d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7b616b7448a72665c358dff83a142e8a" id="r_a7b616b7448a72665c358dff83a142e8a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a7b616b7448a72665c358dff83a142e8a">reverse</a> ()</td></tr>
+<tr class="separator:a7b616b7448a72665c358dff83a142e8a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abc928c951e9246babe4c340483c5cdf0" id="r_abc928c951e9246babe4c340483c5cdf0"><td class="memItemLeft" align="right" valign="top"><a id="abc928c951e9246babe4c340483c5cdf0" name="abc928c951e9246babe4c340483c5cdf0"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>save</b> (<a class="el" href="namespace_g2lib.html#a3beb82d20ee75367fbcf9cf79d908ed7">ostream_type</a> &amp;stream) const</td></tr>
+<tr class="memdesc:abc928c951e9246babe4c340483c5cdf0"><td class="mdescLeft">&#160;</td><td class="mdescRight">save clothoid list of a file stream <br /></td></tr>
+<tr class="separator:abc928c951e9246babe4c340483c5cdf0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="friends" name="friends"></a>
+Friends</h2></td></tr>
+<tr class="memitem:a470660b667ef8bd2b0f1a41b4d17f54a" id="r_a470660b667ef8bd2b0f1a41b4d17f54a"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespace_g2lib.html#a3beb82d20ee75367fbcf9cf79d908ed7">ostream_type</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a470660b667ef8bd2b0f1a41b4d17f54a">operator&lt;&lt;</a> (<a class="el" href="namespace_g2lib.html#a3beb82d20ee75367fbcf9cf79d908ed7">ostream_type</a> &amp;stream, <a class="el" href="class_g2lib_1_1_clothoid_curve.html">ClothoidCurve</a> const &amp;c)</td></tr>
+<tr class="separator:a470660b667ef8bd2b0f1a41b4d17f54a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><p>Construct a piecewise clothoids \( G(s) \) composed by 3 clothoid and one line segment that solve the \( G^2 \) problem</p>
+<p><b>match</b></p>
+<p class="formulaDsp">
+\[
+\begin{array}{ll}
+\textrm{endpoints:}\quad&amp;
+\left\{
+\begin{array}{r@{~}c@{~}l}
+  G(0) &amp;=&amp; \mathbf{p}_0 \\[0.5em]
+  G(L) &amp;=&amp; \mathbf{p}_1
+\end{array}
+\right.
+\\[1em]
+\textrm{angles:}\quad&amp;
+\left\{
+\begin{array}{r@{~}c@{~}l}
+  \theta(0) &amp;=&amp; \theta_0 \\[0.5em]
+  \theta(L) &amp;=&amp; \theta_1
+\end{array}
+\right.
+\\[1em]
+\textrm{curvature:}\quad&amp;
+\left\{
+\begin{array}{r@{~}c@{~}l}
+  \kappa(0) &amp;=&amp; \kappa_0 \\[0.5em]
+  \kappa(L) &amp;=&amp; \kappa_1
+\end{array}
+\right.
+\end{array}
+\]
+</p>
+<p><b>Reference</b></p>
+<p>The solution algorithm is described in</p>
+<ul>
+<li><b>E.Bertolazzi, M.Frego</b>, On the \( G^2 \) Hermite Interpolation Problem with clothoids Journal of Computational and Applied Mathematics, vol 341, pp. 99-116, 2018</li>
+</ul>
+<div class="image">
+<img src="G2problem3arc.png" alt="" width="60%"/>
+<div class="caption">
+' </div></div>
+ </div><h2 class="groupheader">Member Function Documentation</h2>
+<a id="a43cbe9c1211e489d995f3013aaa60872" name="a43cbe9c1211e489d995f3013aaa60872"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a43cbe9c1211e489d995f3013aaa60872">&#9670;&#160;</a></span>build()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int G2lib::G2solve3arc::build </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a></td>          <td class="paramname"><span class="paramname"><em>x0</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a></td>          <td class="paramname"><span class="paramname"><em>y0</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a></td>          <td class="paramname"><span class="paramname"><em>theta0</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a></td>          <td class="paramname"><span class="paramname"><em>kappa0</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a></td>          <td class="paramname"><span class="paramname"><em>x1</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a></td>          <td class="paramname"><span class="paramname"><em>y1</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a></td>          <td class="paramname"><span class="paramname"><em>theta1</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a></td>          <td class="paramname"><span class="paramname"><em>kappa1</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a></td>          <td class="paramname"><span class="paramname"><em>Dmax</em></span><span class="paramdefsep"> = </span><span class="paramdefval">0</span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a></td>          <td class="paramname"><span class="paramname"><em>dmax</em></span><span class="paramdefsep"> = </span><span class="paramdefval">0</span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Compute the 3 arc clothoid spline that fit the data</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">x0</td><td>initial <code>x</code> position </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">y0</td><td>initial <code>y</code> position </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">theta0</td><td>initial angle </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">kappa0</td><td>initial curvature </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">x1</td><td>final <code>x</code> position </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">y1</td><td>final <code>y</code> position </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">theta1</td><td>final angle </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">kappa1</td><td>final curvature </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">Dmax</td><td>rough desidered maximum angle variation, if 0 computed automatically </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">dmax</td><td>rough desidered maximum angle divergence from guess, if 0 computed automatically </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>number of iteration, -1 if fails </dd></dl>
+
+</div>
+</div>
+<a id="a601b8a5d0f81385c909f10e1d2b6cc40" name="a601b8a5d0f81385c909f10e1d2b6cc40"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a601b8a5d0f81385c909f10e1d2b6cc40">&#9670;&#160;</a></span>build_fixed_length()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int G2lib::G2solve3arc::build_fixed_length </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a></td>          <td class="paramname"><span class="paramname"><em>s0</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a></td>          <td class="paramname"><span class="paramname"><em>x0</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a></td>          <td class="paramname"><span class="paramname"><em>y0</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a></td>          <td class="paramname"><span class="paramname"><em>theta0</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a></td>          <td class="paramname"><span class="paramname"><em>kappa0</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a></td>          <td class="paramname"><span class="paramname"><em>s1</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a></td>          <td class="paramname"><span class="paramname"><em>x1</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a></td>          <td class="paramname"><span class="paramname"><em>y1</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a></td>          <td class="paramname"><span class="paramname"><em>theta1</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a></td>          <td class="paramname"><span class="paramname"><em>kappa1</em></span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Compute the 3 arc clothoid spline that fit the data</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">s0</td><td>length of the first segment </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">x0</td><td>initial <code>x</code> position </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">y0</td><td>initial <code>y</code> position </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">theta0</td><td>initial angle </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">kappa0</td><td>initial curvature </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">s1</td><td>length of the last segment </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">x1</td><td>final <code>x</code> position </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">y1</td><td>final <code>y</code> position </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">theta1</td><td>final angle </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">kappa1</td><td>final curvature </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>number of iteration, -1 if fails </dd></dl>
+
+</div>
+</div>
+<a id="a4b732ecd5e1f5e4ce9eedf4e3a362feb" name="a4b732ecd5e1f5e4ce9eedf4e3a362feb"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4b732ecd5e1f5e4ce9eedf4e3a362feb">&#9670;&#160;</a></span>curvature_min_max()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> G2lib::G2solve3arc::curvature_min_max </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>kMin</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>kMax</em></span>&#160;) const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[out]</td><td class="paramname">kMin</td><td>minimum curvature in the 3 arc \( G^2 \) fitting curve </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">kMax</td><td>maximum curvature in the 3 arc \( G^2 \) fitting curve </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>the difference of <code>kMax</code> and <code>kMin</code> </dd></dl>
+
+</div>
+</div>
+<a id="a286fb126ca8d9d24bf65ab3493bd10ee" name="a286fb126ca8d9d24bf65ab3493bd10ee"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a286fb126ca8d9d24bf65ab3493bd10ee">&#9670;&#160;</a></span>curvature_total_variation()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> G2lib::G2solve3arc::curvature_total_variation </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<dl class="section return"><dt>Returns</dt><dd>get the total curvature variation of the 3 arc \( G^2 \) fitting </dd></dl>
+
+</div>
+</div>
+<a id="a8eda07b239e3520a7c478c833057dc16" name="a8eda07b239e3520a7c478c833057dc16"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8eda07b239e3520a7c478c833057dc16">&#9670;&#160;</a></span>delta_theta()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> G2lib::G2solve3arc::delta_theta </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Return the difference of maximum-minimum angle in the 3 arc \( G^2 \) fitting curve </p>
+
+</div>
+</div>
+<a id="a91a6f596e2e61dcb6bf389eb676dbea7" name="a91a6f596e2e61dcb6bf389eb676dbea7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a91a6f596e2e61dcb6bf389eb676dbea7">&#9670;&#160;</a></span>eval() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void G2lib::G2solve3arc::eval </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a></td>          <td class="paramname"><span class="paramname"><em>s</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>theta</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>kappa</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>x</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>y</em></span>&#160;) const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Compute parameters of 3 arc clothoid at curvilinear coordinate \(s\)</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">s</td><td>curvilinear coordinate of where curve is computed </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">theta</td><td>the curve angle </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">kappa</td><td>the curve curvature </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">x</td><td>the curve \(x\)-coordinate </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">y</td><td>the curve \(y\)-coordinate </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a545b9a5630c34ae9f6b27f107d8f116d" name="a545b9a5630c34ae9f6b27f107d8f116d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a545b9a5630c34ae9f6b27f107d8f116d">&#9670;&#160;</a></span>eval() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void G2lib::G2solve3arc::eval </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a></td>          <td class="paramname"><span class="paramname"><em>s</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>x</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>y</em></span>&#160;) const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>x and \(y\)-coordinate at curvilinear coordinate \(s\) </p>
+
+</div>
+</div>
+<a id="a9df8fb48e41f63b0fc7111da8190be85" name="a9df8fb48e41f63b0fc7111da8190be85"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9df8fb48e41f63b0fc7111da8190be85">&#9670;&#160;</a></span>eval_D()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void G2lib::G2solve3arc::eval_D </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a></td>          <td class="paramname"><span class="paramname"><em>s</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>x_D</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>y_D</em></span>&#160;) const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>x and \(y\)-coordinate derivative at curvilinear coordinate \(s\) </p>
+
+</div>
+</div>
+<a id="a3173c746a1026ebabe9bcb9be379755e" name="a3173c746a1026ebabe9bcb9be379755e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3173c746a1026ebabe9bcb9be379755e">&#9670;&#160;</a></span>eval_DD()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void G2lib::G2solve3arc::eval_DD </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a></td>          <td class="paramname"><span class="paramname"><em>s</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>x_DD</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>y_DD</em></span>&#160;) const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>x and \(y\)-coordinate second derivative at curvilinear coordinate \(s\) </p>
+
+</div>
+</div>
+<a id="a5ba695ce5ce75bfc10cf994069a69c0d" name="a5ba695ce5ce75bfc10cf994069a69c0d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5ba695ce5ce75bfc10cf994069a69c0d">&#9670;&#160;</a></span>eval_DDD()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void G2lib::G2solve3arc::eval_DDD </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a></td>          <td class="paramname"><span class="paramname"><em>s</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>x_DDD</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>y_DDD</em></span>&#160;) const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>x and \(y\)-coordinate third derivative at curvilinear coordinate \(s\) </p>
+
+</div>
+</div>
+<a id="a9d2d1d91f80544c83262860b21e3847d" name="a9d2d1d91f80544c83262860b21e3847d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9d2d1d91f80544c83262860b21e3847d">&#9670;&#160;</a></span>eval_ISO()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void G2lib::G2solve3arc::eval_ISO </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a></td>          <td class="paramname"><span class="paramname"><em>s</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a></td>          <td class="paramname"><span class="paramname"><em>offs</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>x</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>y</em></span>&#160;) const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>x and \(y\)-coordinate at curvilinear coordinate \(s\) with offset </p>
+
+</div>
+</div>
+<a id="a2dcc810b0107898ce835e169f5bdcba9" name="a2dcc810b0107898ce835e169f5bdcba9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2dcc810b0107898ce835e169f5bdcba9">&#9670;&#160;</a></span>eval_ISO_D()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void G2lib::G2solve3arc::eval_ISO_D </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a></td>          <td class="paramname"><span class="paramname"><em>s</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a></td>          <td class="paramname"><span class="paramname"><em>offs</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>x_D</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>y_D</em></span>&#160;) const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>x and \(y\)-coordinate derivative at curvilinear coordinate \(s\) with offset </p>
+
+</div>
+</div>
+<a id="a0b0254bea33ccea476aed8d5de024fc3" name="a0b0254bea33ccea476aed8d5de024fc3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0b0254bea33ccea476aed8d5de024fc3">&#9670;&#160;</a></span>eval_ISO_DD()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void G2lib::G2solve3arc::eval_ISO_DD </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a></td>          <td class="paramname"><span class="paramname"><em>s</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a></td>          <td class="paramname"><span class="paramname"><em>offs</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>x_DD</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>y_DD</em></span>&#160;) const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>x and \(y\)-coordinate second derivative at curvilinear coordinate \(s\) with offset </p>
+
+</div>
+</div>
+<a id="a46259ad727904a611d6e5c84df61da8a" name="a46259ad727904a611d6e5c84df61da8a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a46259ad727904a611d6e5c84df61da8a">&#9670;&#160;</a></span>eval_ISO_DDD()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void G2lib::G2solve3arc::eval_ISO_DDD </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a></td>          <td class="paramname"><span class="paramname"><em>s</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a></td>          <td class="paramname"><span class="paramname"><em>offs</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>x_DDD</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>y_DDD</em></span>&#160;) const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>x and \(y\)-coordinate third derivative at curvilinear coordinate \(s\) with offset </p>
+
+</div>
+</div>
+<a id="a87d52198b112112e5cb7798405847cf5" name="a87d52198b112112e5cb7798405847cf5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a87d52198b112112e5cb7798405847cf5">&#9670;&#160;</a></span>integral_curvature2()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> G2lib::G2solve3arc::integral_curvature2 </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<dl class="section return"><dt>Returns</dt><dd>get the integral of the curvature squared of the 3 arc \( G^2 \) fitting </dd></dl>
+
+</div>
+</div>
+<a id="a5444f3262616f4eed9e17a3cd320fbfd" name="a5444f3262616f4eed9e17a3cd320fbfd"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5444f3262616f4eed9e17a3cd320fbfd">&#9670;&#160;</a></span>integral_jerk2()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> G2lib::G2solve3arc::integral_jerk2 </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<dl class="section return"><dt>Returns</dt><dd>get the integral of the jerk squared of the 3 arc \( G^2 \) fitting </dd></dl>
+
+</div>
+</div>
+<a id="ac7d85146d895e740fc63d23fd4da0e98" name="ac7d85146d895e740fc63d23fd4da0e98"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac7d85146d895e740fc63d23fd4da0e98">&#9670;&#160;</a></span>integral_snap2()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> G2lib::G2solve3arc::integral_snap2 </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<dl class="section return"><dt>Returns</dt><dd>get the integral of the snap squared of the 3 arc \( G^2 \) fitting </dd></dl>
+
+</div>
+</div>
+<a id="ab92856d312113bd8d9b5ec050cad902a" name="ab92856d312113bd8d9b5ec050cad902a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab92856d312113bd8d9b5ec050cad902a">&#9670;&#160;</a></span>kappa_begin()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> G2lib::G2solve3arc::kappa_begin </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Return initial curvature of the 3 arc clothoid </p>
+
+</div>
+</div>
+<a id="a5ca2c8523e14e3068a83a4869e025d4c" name="a5ca2c8523e14e3068a83a4869e025d4c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5ca2c8523e14e3068a83a4869e025d4c">&#9670;&#160;</a></span>kappa_end()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> G2lib::G2solve3arc::kappa_end </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Return final curvature of the 3 arc clothoid </p>
+
+</div>
+</div>
+<a id="a7b616b7448a72665c358dff83a142e8a" name="a7b616b7448a72665c358dff83a142e8a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7b616b7448a72665c358dff83a142e8a">&#9670;&#160;</a></span>reverse()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void G2lib::G2solve3arc::reverse </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Reverse curve parameterization </p>
+
+</div>
+</div>
+<a id="a1b277d082fc14ca5fd2251b0f10a407c" name="a1b277d082fc14ca5fd2251b0f10a407c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1b277d082fc14ca5fd2251b0f10a407c">&#9670;&#160;</a></span>rotate()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void G2lib::G2solve3arc::rotate </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a></td>          <td class="paramname"><span class="paramname"><em>angle</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a></td>          <td class="paramname"><span class="paramname"><em>cx</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a></td>          <td class="paramname"><span class="paramname"><em>cy</em></span>&#160;)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Rotate curve by angle \( \theta \) centered at point \( (c_x,c_y) \)</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">angle</td><td>angle \( \theta \) </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">cx</td><td>\( c_x \) </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">cy</td><td>\( c_y \) </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="abcaa574303da98cf7adbf7c30bd4c647" name="abcaa574303da98cf7adbf7c30bd4c647"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#abcaa574303da98cf7adbf7c30bd4c647">&#9670;&#160;</a></span>S0()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="class_g2lib_1_1_clothoid_curve.html">ClothoidCurve</a> const  &amp; G2lib::G2solve3arc::S0 </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<dl class="section return"><dt>Returns</dt><dd>get the first clothoid for the 3 arc \( G^2 \) fitting </dd></dl>
+
+</div>
+</div>
+<a id="a38ee5b99ee62ab9a4e5afadc6445e27b" name="a38ee5b99ee62ab9a4e5afadc6445e27b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a38ee5b99ee62ab9a4e5afadc6445e27b">&#9670;&#160;</a></span>S1()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="class_g2lib_1_1_clothoid_curve.html">ClothoidCurve</a> const  &amp; G2lib::G2solve3arc::S1 </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<dl class="section return"><dt>Returns</dt><dd>get the last clothoid for the 3 arc \( G^2 \) fitting </dd></dl>
+
+</div>
+</div>
+<a id="a6457f5b6683d0c7f899035fe286f92e5" name="a6457f5b6683d0c7f899035fe286f92e5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6457f5b6683d0c7f899035fe286f92e5">&#9670;&#160;</a></span>set_max_iter()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void G2lib::G2solve3arc::set_max_iter </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="namespace_g2lib.html#affd533209e1ea0ddab7324812690f0b8">integer</a></td>          <td class="paramname"><span class="paramname"><em>miter</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Fix maximum number of iteration for the \( G^2 \) problem </p>
+
+</div>
+</div>
+<a id="a22f239d1924f6a88587f2002f58eaf1b" name="a22f239d1924f6a88587f2002f58eaf1b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a22f239d1924f6a88587f2002f58eaf1b">&#9670;&#160;</a></span>set_tolerance()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void G2lib::G2solve3arc::set_tolerance </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a></td>          <td class="paramname"><span class="paramname"><em>tol</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Fix tolerance for the \( G^2 \) problem </p>
+
+</div>
+</div>
+<a id="a4bcd91ad0431a348e44d371042ca2dea" name="a4bcd91ad0431a348e44d371042ca2dea"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4bcd91ad0431a348e44d371042ca2dea">&#9670;&#160;</a></span>SM()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="class_g2lib_1_1_clothoid_curve.html">ClothoidCurve</a> const  &amp; G2lib::G2solve3arc::SM </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<dl class="section return"><dt>Returns</dt><dd>get the middle clothoid for the 3 arc \( G^2 \) fitting </dd></dl>
+
+</div>
+</div>
+<a id="aa88a7c8f1e0f17c94520d37702e2f4ff" name="aa88a7c8f1e0f17c94520d37702e2f4ff"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa88a7c8f1e0f17c94520d37702e2f4ff">&#9670;&#160;</a></span>theta()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> G2lib::G2solve3arc::theta </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a></td>          <td class="paramname"><span class="paramname"><em>s</em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Return angle as a function of curvilinear coordinate </p>
+
+</div>
+</div>
+<a id="a263ac07abce228b77ae2fc77259223af" name="a263ac07abce228b77ae2fc77259223af"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a263ac07abce228b77ae2fc77259223af">&#9670;&#160;</a></span>theta_begin()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> G2lib::G2solve3arc::theta_begin </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Return initial angle of the 3 arc clothoid </p>
+
+</div>
+</div>
+<a id="af14619058799ed10619b242c6f81e42c" name="af14619058799ed10619b242c6f81e42c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af14619058799ed10619b242c6f81e42c">&#9670;&#160;</a></span>theta_D()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> G2lib::G2solve3arc::theta_D </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a></td>          <td class="paramname"><span class="paramname"><em>s</em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Return angle derivative (curvature) as a function of curvilinear coordinate </p>
+
+</div>
+</div>
+<a id="af78faf667efc8e8e32e39e9f6a8744e5" name="af78faf667efc8e8e32e39e9f6a8744e5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af78faf667efc8e8e32e39e9f6a8744e5">&#9670;&#160;</a></span>theta_DD()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> G2lib::G2solve3arc::theta_DD </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a></td>          <td class="paramname"><span class="paramname"><em>s</em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Return angle second derivative (curvature derivative) as a function of curvilinear coordinate </p>
+
+</div>
+</div>
+<a id="aa828d4a8f22fb064ca542db282342c05" name="aa828d4a8f22fb064ca542db282342c05"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa828d4a8f22fb064ca542db282342c05">&#9670;&#160;</a></span>theta_DDD()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> G2lib::G2solve3arc::theta_DDD </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a></td>          <td class="paramname"><span class="paramname"><em>s</em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Return angle third derivative as a function of curvilinear coordinate </p>
+
+</div>
+</div>
+<a id="ac0c136ec38aeca44829ee51956bfe90a" name="ac0c136ec38aeca44829ee51956bfe90a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac0c136ec38aeca44829ee51956bfe90a">&#9670;&#160;</a></span>theta_end()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> G2lib::G2solve3arc::theta_end </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Return final angle of the 3 arc clothoid </p>
+
+</div>
+</div>
+<a id="a93c3cf1c90ee47d57e041bd190b2ba25" name="a93c3cf1c90ee47d57e041bd190b2ba25"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a93c3cf1c90ee47d57e041bd190b2ba25">&#9670;&#160;</a></span>theta_min_max()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> G2lib::G2solve3arc::theta_min_max </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>thMin</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>thMax</em></span>&#160;) const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[out]</td><td class="paramname">thMin</td><td>minimum angle in the 3 arc \( G^2 \) fitting curve </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">thMax</td><td>maximum angle in the 3 arc \( G^2 \) fitting curve </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>the difference of <code>thMax</code> and <code>thMin</code> </dd></dl>
+
+</div>
+</div>
+<a id="a31e69eea4869495a73d90026aaccb0f1" name="a31e69eea4869495a73d90026aaccb0f1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a31e69eea4869495a73d90026aaccb0f1">&#9670;&#160;</a></span>theta_total_variation()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> G2lib::G2solve3arc::theta_total_variation </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<dl class="section return"><dt>Returns</dt><dd>get the total angle variation of the 3 arc \( G^2 \) fitting </dd></dl>
+
+</div>
+</div>
+<a id="aecfef1df1ab4ffee8ed8bc7ffccae37a" name="aecfef1df1ab4ffee8ed8bc7ffccae37a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aecfef1df1ab4ffee8ed8bc7ffccae37a">&#9670;&#160;</a></span>total_length()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> G2lib::G2solve3arc::total_length </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<dl class="section return"><dt>Returns</dt><dd>get the length of the 3 arc \( G^2 \) fitting </dd></dl>
+
+</div>
+</div>
+<a id="a04c75a4ceb73f23cb1d7c55f0b65363d" name="a04c75a4ceb73f23cb1d7c55f0b65363d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a04c75a4ceb73f23cb1d7c55f0b65363d">&#9670;&#160;</a></span>translate()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void G2lib::G2solve3arc::translate </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a></td>          <td class="paramname"><span class="paramname"><em>tx</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a></td>          <td class="paramname"><span class="paramname"><em>ty</em></span>&#160;)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Translate curve by \( (t_x,t_y) \) </p>
+
+</div>
+</div>
+<a id="a2f6da8479c22bc26905312c93d1984ba" name="a2f6da8479c22bc26905312c93d1984ba"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2f6da8479c22bc26905312c93d1984ba">&#9670;&#160;</a></span>X()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> G2lib::G2solve3arc::X </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a></td>          <td class="paramname"><span class="paramname"><em>s</em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Return \(x\)-coordinate of the arc clothoid as a function of curvilinear coordinate </p>
+
+</div>
+</div>
+<a id="a9b370cf1eb7b17db12e15e3745ccc685" name="a9b370cf1eb7b17db12e15e3745ccc685"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9b370cf1eb7b17db12e15e3745ccc685">&#9670;&#160;</a></span>x_begin()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> G2lib::G2solve3arc::x_begin </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Return initial \(x\)-coordinate of the 3 arc clothoid </p>
+
+</div>
+</div>
+<a id="a033e50f16380014b9b70768b7617b880" name="a033e50f16380014b9b70768b7617b880"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a033e50f16380014b9b70768b7617b880">&#9670;&#160;</a></span>x_end()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> G2lib::G2solve3arc::x_end </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Return final \(x\)-coordinate of the 3 arc clothoid </p>
+
+</div>
+</div>
+<a id="a43da3fe986f4af4a7d85b40081954dcd" name="a43da3fe986f4af4a7d85b40081954dcd"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a43da3fe986f4af4a7d85b40081954dcd">&#9670;&#160;</a></span>Y()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> G2lib::G2solve3arc::Y </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a></td>          <td class="paramname"><span class="paramname"><em>s</em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Return \(y\)-coordinate of the arc clothoid as a function of curvilinear coordinate </p>
+
+</div>
+</div>
+<a id="a3fa45ed9b27638f5aabd8341dfbf5085" name="a3fa45ed9b27638f5aabd8341dfbf5085"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3fa45ed9b27638f5aabd8341dfbf5085">&#9670;&#160;</a></span>y_begin()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> G2lib::G2solve3arc::y_begin </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Return initial \(y\)-coordinate of the 3 arc clothoid </p>
+
+</div>
+</div>
+<a id="a932877630738149d1bedb76bda4114cc" name="a932877630738149d1bedb76bda4114cc"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a932877630738149d1bedb76bda4114cc">&#9670;&#160;</a></span>y_end()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> G2lib::G2solve3arc::y_end </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Return final \(y\)-coordinate of the 3 arc clothoid </p>
+
+</div>
+</div>
+<h2 class="groupheader">Friends And Related Symbol Documentation</h2>
+<a id="a470660b667ef8bd2b0f1a41b4d17f54a" name="a470660b667ef8bd2b0f1a41b4d17f54a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a470660b667ef8bd2b0f1a41b4d17f54a">&#9670;&#160;</a></span>operator&lt;&lt;</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="namespace_g2lib.html#a3beb82d20ee75367fbcf9cf79d908ed7">ostream_type</a> &amp; operator&lt;&lt; </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="namespace_g2lib.html#a3beb82d20ee75367fbcf9cf79d908ed7">ostream_type</a> &amp;</td>          <td class="paramname"><span class="paramname"><em>stream</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="class_g2lib_1_1_clothoid_curve.html">ClothoidCurve</a> const &amp;</td>          <td class="paramname"><span class="paramname"><em>c</em></span>&#160;)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">friend</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Print on strem the <code><a class="el" href="class_g2lib_1_1_clothoid_curve.html">ClothoidCurve</a></code> object</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">stream</td><td>the output stream </td></tr>
+    <tr><td class="paramname">c</td><td>an instance of <code><a class="el" href="class_g2lib_1_1_clothoid_curve.html">ClothoidCurve</a></code> object </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>the output stream </dd></dl>
+
+</div>
+</div>
+<hr/>The documentation for this class was generated from the following files:<ul>
+<li>/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Clothoids/<a class="el" href="_clothoid_list_8hxx_source.html">ClothoidList.hxx</a></li>
+<li>/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/<b>ClothoidG2.cc</b></li>
+<li>/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/<b>ClothoidList.cc</b></li>
+</ul>
+</div><!-- contents -->
+<!-- start footer part -->
+<hr class="footer"/><address class="footer"><small>
+Generated by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.12.0
+</small></address>
+</div><!-- doc-content -->
+</body>
+</html>
+</div>
+</section>
+
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p></p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

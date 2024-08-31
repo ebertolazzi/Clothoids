@@ -1,0 +1,23 @@
+.. meta::cb962dcf21429ca4c7e274f9c4d4007274deda2cf0f5e26068a0765cec8cfa4804348d9b57664f775e6a44764a32457bbbaa39bcb0203e49b33c20b2388d9eb3
+
+:orphan:
+
+.. title:: Clothoids: Main Page
+
+Clothoids
+=========
+
+.. toctree::
+   :caption: Main Page
+   :maxdepth: 2
+   :hidden:
+
+   Namespaces <namespaces_namespaces>
+   Classes <annotated_classes>
+   Files <files>
+
+.. container:: doxygen-content
+
+   
+   .. raw:: html
+     :file: index.html

@@ -1,0 +1,14 @@
+.. meta::f2d3420fea05caf36a84fb456ffef95dd5e6da853f64b5a05387b74b0ee1a85103f3d34db28306c71daa6b43cea52485c0f46ca2844af0d6b093812c622e6bcb
+
+:orphan:
+
+.. title:: Clothoids: /Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Clothoids/Biarc.hxx Source File
+
+/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Clothoids/Biarc.hxx Source File
+=======================================================================================================================
+
+.. container:: doxygen-content
+
+   
+   .. raw:: html
+     :file: _biarc_8hxx_source.html

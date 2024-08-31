@@ -6,12 +6,11 @@ classdef ClothoidList < CurveBase
     %>
     %> **Usage:**
     %>
-    %> \rst
-    %> .. code-block:: matlab
+    %> ```{matlab}
     %>
     %>    ref = ClothoidCurve()
     %>
-    %> \endrst
+    %> ```
     %>
     %> **On output:**
     %>
@@ -26,12 +25,11 @@ classdef ClothoidList < CurveBase
     %>
     %> **Usage:**
     %>
-    %> \rst
-    %> .. code-block:: matlab
+    %> ```{matlab}
     %>
     %>    ref.reserve( N );
     %>
-    %> \endrst
+    %> ```
     %>
     function reserve( self, N )
       ClothoidListMexWrapper( 'reserve', self.objectHandle, N );
@@ -49,13 +47,12 @@ classdef ClothoidList < CurveBase
     %>
     %> **Usage:**
     %>
-    %> \rst
-    %> .. code-block:: matlab
+    %> ```{matlab}
     %>
     %>    ref.load( filename );
     %>    ref.load( filename, tol );
     %>
-    %> \endrst
+    %> ```
     %>
     %> `filename` : file name to be read
     %> `tol`      : tolerance used to check consistency
@@ -69,14 +66,13 @@ classdef ClothoidList < CurveBase
     %>
     %> **Usage:**
     %>
-    %> \rst
-    %> .. code-block:: matlab
+    %> ```{matlab}
     %>
     %>    ref.push_back( obj ); % mode 1
     %>    ref.push_back( kappa0, dkappa, L ); % mode 2
     %>    ref.push_back( x0, y0, theta0, kappa0, dkappa, L ); % mode 3
     %>
-    %> \endrst
+    %> ```
     %>
     %> **Mode 1**
     %>
@@ -120,13 +116,12 @@ classdef ClothoidList < CurveBase
     %>
     %> **Usage:**
     %>
-    %> \rst
-    %> .. code-block:: matlab
+    %> ```{matlab}
     %>
     %>    ref.push_back( x1,y1,theta1 ); % mode 1
     %>    ref.push_back( x0,y0,theta0,x1,y1,theta1); % mode 2
     %>
-    %> \endrst
+    %> ```
     %>
     %> **Mode 1**
     %>
@@ -157,12 +152,11 @@ classdef ClothoidList < CurveBase
     %> The clothoid is returned as a clothoid object or the data
     %> defining the clothoid.
     %>
-    %> \rst
-    %> .. code-block:: matlab
+    %> ```{matlab}
     %>
     %>   [ x0, y0, theta0, kappa0, dkappa, L ] = ref.get(k);
     %>   C = ref.get(k);
-    %> \endrst
+    %> ```
     %>
     function varargout = get( self, k )
       [ x0, y0, theta0, k0, dk, L ] = ClothoidListMexWrapper( 'get', self.objectHandle, k );
@@ -182,8 +176,7 @@ classdef ClothoidList < CurveBase
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     %> Append a curve to a clothoid list.
     %>
-    %> \rst
-    %> .. code-block:: matlab
+    %> ```{matlab}
     %>
     %>   C = LineSegment( ... );
     %>   ...
@@ -192,7 +185,7 @@ classdef ClothoidList < CurveBase
     %>   C = CircleArc( ... );
     %>   % ....
     %>   ref.append(C); % append biarc
-    %> \endrst
+    %> ```
     %>
     function append( self, lst )
       ClothoidListMexWrapper( 'push_back', self.objectHandle, lst.is_type(), lst.obj_handle() );
@@ -202,13 +195,12 @@ classdef ClothoidList < CurveBase
     %> Return curvilinear coordinates, angle and curvature
     %> at node point for the clothoid list
     %>
-    %> \rst
     %>
-    %> .. code-block:: matlab
+    %> ```{matlab}
     %>
     %>  [ s, theta, kappa ] = ref.get_STK();
     %>
-    %> \endrst
+    %> ```
     %>
     %> - `s`     curvilinear coordinates nodes
     %> - `theta` angles at nodes
@@ -221,13 +213,12 @@ classdef ClothoidList < CurveBase
     %>
     %> Return xy-coordinates at node points for the clothoid list
     %>
-    %> \rst
     %>
-    %> .. code-block:: matlab
+    %> ```{matlab}
     %>
     %>  [ x, y ] = ref.get_XY();
     %>
-    %> \endrst
+    %> ```
     %>
     %> - `x` x-coordinates at nodes
     %> - `y` y-coordinates at nodes
@@ -242,6 +233,9 @@ classdef ClothoidList < CurveBase
       N = ClothoidListMexWrapper( 'num_segments', self.objectHandle );
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    %>
+    %> \deprecated  whill be removed in future version
+    %>
     function N = numSegments( self )
       N = self.num_segments();
     end
@@ -287,14 +281,13 @@ classdef ClothoidList < CurveBase
     %> Given a list of xy-coordinates at node points build a clothoid list.
     %> If third argument (`angle`) is not present angles are estimated internally.
     %>
-    %> \rst
     %>
-    %> .. code-block:: matlab
+    %> ```{matlab}
     %>
     %>  ref.build_G1( x, y );
     %>  ref.build_G1( x, y, theta );
     %>
-    %> \endrst
+    %> ```
     %>
     %> - `x` x-coordinates at nodes
     %> - `y` y-coordinates at nodes
@@ -311,13 +304,12 @@ classdef ClothoidList < CurveBase
     %> at nodes build a G2 clothoid list.
     %> Initial position and angle must be set to determine a unique clothoid list.
     %>
-    %> \rst
     %>
-    %> .. code-block:: matlab
+    %> ```{matlab}
     %>
     %>  ref.build( x0, y0, theta0, s, kappa );
     %>
-    %> \endrst
+    %> ```
     %>
     %> - `x0`     initial x-coordinates
     %> - `y0`     initial y-coordinates at nodes
@@ -335,13 +327,12 @@ classdef ClothoidList < CurveBase
     %> Given a list of xy-coordinates at node points build a guess of angles
     %> for the clothoid list.
     %>
-    %> \rst
     %>
-    %> .. code-block:: matlab
+    %> ```{matlab}
     %>
     %>  theta = ref.build_theta( x, y );
     %>
-    %> \endrst
+    %> ```
     %>
     %> - `x` x-coordinates at nodes
     %> - `y` y-coordinates at nodes
@@ -411,6 +402,9 @@ classdef ClothoidList < CurveBase
       );
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    %>
+    %> \deprecated  whill be removed in future version
+    %>
     function varargout = closestPointInRange( self, qx, qy, ibegin, iend, varargin )
       [ varargout{1:nargout} ] = self.closest_point_in_range( ...
         qx, qy, ibegin, iend, varargin{:} ...
@@ -420,9 +414,8 @@ classdef ClothoidList < CurveBase
     %>
     %> Find closest point of a Clothoid list given a s-range
     %>
-    %> \rst
     %>
-    %> .. code-block:: matlab
+    %> ```{matlab}
     %>
     %>  [ icurve, x, y, s, t, iflag, dst ] = ...
     %>     ref.closest_point_in_s_range( qx, qy, s_begin, s_end, varargin );
@@ -449,7 +442,7 @@ classdef ClothoidList < CurveBase
     %>  % res.dst    = point curve distance
     %>  %
     %>
-    %> \endrst
+    %> ```
     %>
     function varargout = closest_point_in_s_range( self, qx, qy, s_begin, s_end, varargin )
       [ varargout{1:nargout} ] = ClothoidListMexWrapper( ...
@@ -457,6 +450,9 @@ classdef ClothoidList < CurveBase
       );
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    %>
+    %> \deprecated  whill be removed in future version
+    %>
     function varargout = closestPointInSRange( self, qx, qy, s_begin, s_end, varargin )
       [ varargout{1:nargout} ] = self.closest_point_in_s_range( ...
         qx, qy, s_begin, s_end, varargin{:} ...
@@ -489,12 +485,11 @@ classdef ClothoidList < CurveBase
     %>
     %> **Usage:**
     %>
-    %> \rst
-    %> .. code-block:: matlab
+    %> ```{matlab}
     %>
     %>    S = ref.export();
     %>
-    %> \endrst
+    %> ```
     %>
     %> - `S.x0`:     vector of initial point x-coordinate
     %> - `S.y0`:     vector of initial point y-coordinate
@@ -526,8 +521,7 @@ classdef ClothoidList < CurveBase
     %>
     %> **Usage:**
     %>
-    %> \rst
-    %> .. code-block:: matlab
+    %> ```{matlab}
     %>
     %>   ref.plot();
     %>   ref.plot( npts );
@@ -536,7 +530,7 @@ classdef ClothoidList < CurveBase
     %>   fmt2 = {'Color','red','Linewidth',2};  % second arc of the biarc
     %>   ref.plot( npts, fmt1, fmt2 );
     %>
-    %> \endrst
+    %> ```
     %>
     %> - `npts`: number of sampling points for plotting
     %> - `fmt1`: format of the odd clothoids
@@ -573,8 +567,7 @@ classdef ClothoidList < CurveBase
     %>
     %> **Usage:**
     %>
-    %> \rst
-    %> .. code-block:: matlab
+    %> ```{matlab}
     %>
     %>   ref.plot_offs( offs, npts );
     %>
@@ -582,7 +575,7 @@ classdef ClothoidList < CurveBase
     %>   fmt2 = {'Color','red','Linewidth',2};  % second arc of the biarc
     %>   ref.plot_offs( offs, npts, fmt1, fmt2 );
     %>
-    %> \endrst
+    %> ```
     %>
     %> - `npts`: number of sampling points for plotting
     %> - `fmt1`: format of the first arc
@@ -615,8 +608,7 @@ classdef ClothoidList < CurveBase
     %>
     %> **Usage:**
     %>
-    %> \rst
-    %> .. code-block:: matlab
+    %> ```{matlab}
     %>
     %>   ref.plotCurvature( npts );
     %>
@@ -624,7 +616,7 @@ classdef ClothoidList < CurveBase
     %>   fmt2 = {'Color','red','Linewidth',2};
     %>   ref.plotCurvature( npts, fmt1, fmt2 );
     %>
-    %> \endrst
+    %> ```
     %>
     %> - `npts`: number of sampling points for plotting
     %> - `fmt1`: format of the first arc
@@ -656,6 +648,9 @@ classdef ClothoidList < CurveBase
       end
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    %>
+    %> \deprecated  whill be removed in future version
+    %>
     function plotCurvature( self, npts, varargin )
       self.plot_curvature( npts, varargin{:} );
     end
@@ -664,8 +659,7 @@ classdef ClothoidList < CurveBase
     %>
     %> **Usage:**
     %>
-    %> \rst
-    %> .. code-block:: matlab
+    %> ```{matlab}
     %>
     %>   ref.plotAngle( npts );
     %>
@@ -673,7 +667,7 @@ classdef ClothoidList < CurveBase
     %>   fmt2 = {'Color','red','Linewidth',2};
     %>   ref.plotAngle( npts, fmt1, fmt2 );
     %>
-    %> \endrst
+    %> ```
     %>
     %> - `npts`: number of sampling points for plotting
     %> - `fmt1`: format of the first arc
@@ -705,6 +699,9 @@ classdef ClothoidList < CurveBase
       end
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    %>
+    %> \deprecated  whill be removed in future version
+    %>
     function plotAngle( self, npts, varargin )
       self.plot_angle( npts, varargin{:} );
     end
@@ -713,12 +710,11 @@ classdef ClothoidList < CurveBase
     %>
     %> **Usage:**
     %>
-    %> \rst
-    %> .. code-block:: matlab
+    %> ```{matlab}
     %>
     %>   ref.plotNormal( step, len );
     %>
-    %> \endrst
+    %> ```
     %>
     %> - `step`: number of sampling normals
     %> - `len`:  length of the plotted normal
@@ -730,6 +726,9 @@ classdef ClothoidList < CurveBase
       end
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    %>
+    %> \deprecated  whill be removed in future version
+    %>
     function plotNormal( self, step, len )
       self.plot_normal( step, len );
     end
@@ -738,18 +737,16 @@ classdef ClothoidList < CurveBase
     %>
     %> **Usage:**
     %>
-    %> \rst
-    %> .. code-block:: matlab
+    %> ```{matlab}
     %>
     %>   ref.saveSampled( filename, ds );
     %>
-    %> \endrst
+    %> ```
     %>
     %> - `filename`: file name
     %> - `ds`:       sample point every `ds`
     %>
     %> the file is of the form
-    %> \rst
     %> .. code-block:: text
     %>
     %>   X Y THETA
@@ -757,7 +754,7 @@ classdef ClothoidList < CurveBase
     %>   ...
     %>   ...
     %>
-    %> \endrst
+    %> ```
     %>
     function save_sampled( self, filename, ds )
       fd = fopen( filename, 'w' );
@@ -772,6 +769,9 @@ classdef ClothoidList < CurveBase
       fclose(fd);
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    %>
+    %> \deprecated  whill be removed in future version
+    %>
     function saveSampled( self, filename, ds )
       self.save_sampled( filename, ds );
     end
@@ -780,18 +780,16 @@ classdef ClothoidList < CurveBase
     %>
     %> **Usage:**
     %>
-    %> \rst
-    %> .. code-block:: matlab
+    %> ```{matlab}
     %>
     %>   ref.saveClothoids( filename, ds );
     %>
-    %> \endrst
+    %> ```
     %>
     %> - `filename`: file name
     %> - `ds`:       sample point every `ds`
     %>
     %> the file is of the form
-    %> \rst
     %> .. code-block:: text
     %>
     %>   x0 y0 theta0 kappa0 dk  L
@@ -799,7 +797,7 @@ classdef ClothoidList < CurveBase
     %>   ...
     %>   ...
     %>
-    %> \endrst
+    %> ```
     %>
     function save_clothoids( self, filename )
       fd = fopen( filename, 'w' );
@@ -812,6 +810,9 @@ classdef ClothoidList < CurveBase
       fclose(fd);
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    %>
+    %> \deprecated  whill be removed in future version
+    %>
     function saveClothoids( self, filename )
       self.save_clothoids( filename );
     end

@@ -1,0 +1,545 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Clothoids: /Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Clothoids/G2lib.hxx Source File &mdash; Clothoids</title>
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=19f00094" />
+      <link rel="stylesheet" type="text/css" href="../../_static/graphviz.css?v=fd3f3429" />
+      <link rel="stylesheet" type="text/css" href="../../_static/plot_directive.css?v=7f9a90b1" />
+      <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
+      <link rel="stylesheet" type="text/css" href="../../_static/sphinx-design.min.css?v=95c83b7e" />
+      <link rel="stylesheet" type="text/css" href="../../_static/sphinx-data-viewer/jsonview.bundle.css?v=f6ef2277" />
+      <link rel="stylesheet" type="text/css" href="../../_static/sphinx-needs/libs/html/datatables.min.css?v=4b4fd840" />
+      <link rel="stylesheet" type="text/css" href="../../_static/sphinx-needs/common_css/need_style.css?v=678fb11e" />
+      <link rel="stylesheet" type="text/css" href="../../_static/sphinx-needs/common_css/need_core.css?v=f5b60a78" />
+      <link rel="stylesheet" type="text/css" href="../../_static/sphinx-needs/common_css/needstable.css?v=5e1b6797" />
+      <link rel="stylesheet" type="text/css" href="../../_static/sphinx-needs/common_css/need_links.css?v=2150a916" />
+      <link rel="stylesheet" type="text/css" href="../../_static/sphinx-needs/common_css/need_toggle.css?v=5c6620df" />
+      <link rel="stylesheet" type="text/css" href="../../_static/sphinx-needs/modern.css?v=803738c0" />
+      <link rel="stylesheet" type="text/css" href="../../_static/sphinx-rtd-theme-custom.css?v=76d57d84" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../../_static/documentation_options.js?v=60dbed4a"></script>
+        <script src="../../_static/doctools.js?v=9a2dae69"></script>
+        <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+        <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
+        <script src="../../_static/copybutton.js?v=f281be69"></script>
+        <script src="../../_static/design-tabs.js?v=f930bc37"></script>
+        <script src="../../_static/sphinx-data-viewer/jsonview.bundle.js?v=18cd53c5"></script>
+        <script src="../../_static/sphinx-data-viewer/jsonview_loader.js?v=f7ff7e7d"></script>
+        <script src="../../_static/sphinx-needs/libs/html/datatables.min.js?v=8a4aee21"></script>
+        <script src="../../_static/sphinx-needs/libs/html/datatables_loader.js?v=a2cae175"></script>
+        <script src="../../_static/sphinx-needs/libs/html/sphinx_needs_collapse.js?v=dca66431"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            Clothoids
+              <img src="../../_static/logo.png" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                2.0.13
+
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../README.html">Clothoids</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../index_CPP.html">Clothoids C++ interface</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="namespaces_namespaces.html">Namespaces</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="namespaces.html">Namespace List</a></li>
+<li class="toctree-l3"><a class="reference internal" href="namespacemembers_namespace_members.html">Namespace Members</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="namespacemembers.html">All</a></li>
+<li class="toctree-l4"><a class="reference internal" href="namespacemembers_func.html">Functions</a></li>
+<li class="toctree-l4"><a class="reference internal" href="namespacemembers_type.html">Typedefs</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="annotated_classes.html">Classes</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="annotated.html">Class List</a></li>
+<li class="toctree-l3"><a class="reference internal" href="classes.html">Class Index</a></li>
+<li class="toctree-l3"><a class="reference internal" href="hierarchy.html">Class Hierarchy</a></li>
+<li class="toctree-l3"><a class="reference internal" href="functions_class_members.html">Class Members</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="functions_all.html">All</a></li>
+<li class="toctree-l4"><a class="reference internal" href="functions_func_functions.html">Functions</a></li>
+<li class="toctree-l4"><a class="reference internal" href="functions_type.html">Typedefs</a></li>
+<li class="toctree-l4"><a class="reference internal" href="functions_rela.html">Related Symbols</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="files.html">Files</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../index_MATLAB.html">Clothoids MATLAB interface</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../doxygen2/html/annotated_classes.html">Classes</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../doxygen2/html/annotated.html">Class List</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../doxygen2/html/classes.html">Class Index</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../doxygen2/html/hierarchy.html">Class Hierarchy</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../doxygen2/html/functions_class_members.html">Class Members</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../doxygen2/html/functions.html">All</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../doxygen2/html/functions_func.html">Functions</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../doxygen2/html/functions_func.html">Functions</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../LICENSE.html">LICENSE</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">Clothoids</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Clothoids: /Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Clothoids/G2lib.hxx Source File</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../_sources/doxygen/html/_g2lib_8hxx_source.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="users-enrico-ricerca-develop-pins-pins-mechatronix-libsources-submodules-clothoids-src-clothoids-g2lib-hxx-source-file">
+<h1>/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Clothoids/G2lib.hxx Source File<a class="headerlink" href="#users-enrico-ricerca-develop-pins-pins-mechatronix-libsources-submodules-clothoids-src-clothoids-g2lib-hxx-source-file" title="Link to this heading"></a></h1>
+<div class="doxygen-content docutils container">
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en-US">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=11"/>
+<meta name="generator" content="Doxygen 1.12.0"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Clothoids: /Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Clothoids/G2lib.hxx Source File</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<script type="text/javascript" src="clipboard.js"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="resize.js"></script>
+<script type="text/javascript">
+window.MathJax = {
+  options: {
+    ignoreHtmlClass: 'tex2jax_ignore',
+    processHtmlClass: 'tex2jax_process'
+  }
+};
+</script>
+<script type="text/javascript" id="MathJax-script" async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+<link href="doxygen-awesome.css" rel="stylesheet" type="text/css"/>
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr id="projectrow">
+  <td id="projectalign">
+   <div id="projectname">Clothoids
+   </div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Generated by Doxygen 1.12.0 -->
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(function() { codefold.init(0); });
+/* @license-end */
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(function() {
+  initMenu('',false,false,'search.php','Search',false);
+});
+/* @license-end */
+</script>
+<div id="main-nav"></div>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(function(){ initResizable(false); });
+/* @license-end */
+</script>
+<div id="nav-path" class="navpath">
+  <ul>
+<li class="navelem"><a class="el" href="dir_68267d1309a1af8e8297ef4c3efbcdba.html">src</a></li><li class="navelem"><a class="el" href="dir_8cd12074276c6cad95ab77d33f11f7e2.html">Clothoids</a></li>  </ul>
+</div>
+</div><!-- top -->
+<div id="doc-content">
+<div class="header">
+  <div class="headertitle"><div class="title">G2lib.hxx</div></div>
+</div><!--header-->
+<div class="contents">
+<div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno">    1</span><span class="comment">/*--------------------------------------------------------------------------*\</span></div>
+<div class="line"><a id="l00002" name="l00002"></a><span class="lineno">    2</span><span class="comment"> |                                                                          |</span></div>
+<div class="line"><a id="l00003" name="l00003"></a><span class="lineno">    3</span><span class="comment"> |  Copyright (C) 2017                                                      |</span></div>
+<div class="line"><a id="l00004" name="l00004"></a><span class="lineno">    4</span><span class="comment"> |                                                                          |</span></div>
+<div class="line"><a id="l00005" name="l00005"></a><span class="lineno">    5</span><span class="comment"> |         , __                 , __                                        |</span></div>
+<div class="line"><a id="l00006" name="l00006"></a><span class="lineno">    6</span><span class="comment"> |        /|/  \               /|/  \                                       |</span></div>
+<div class="line"><a id="l00007" name="l00007"></a><span class="lineno">    7</span><span class="comment"> |         | __/ _   ,_         | __/ _   ,_                                |</span></div>
+<div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span><span class="comment"> |         |   \|/  /  |  |   | |   \|/  /  |  |   |                        |</span></div>
+<div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span><span class="comment"> |         |(__/|__/   |_/ \_/|/|(__/|__/   |_/ \_/|/                       |</span></div>
+<div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span><span class="comment"> |                           /|                   /|                        |</span></div>
+<div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span><span class="comment"> |                           \|                   \|                        |</span></div>
+<div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span><span class="comment"> |                                                                          |</span></div>
+<div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span><span class="comment"> |      Enrico Bertolazzi                                                   |</span></div>
+<div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span><span class="comment"> |      Dipartimento di Ingegneria Industriale                              |</span></div>
+<div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span><span class="comment"> |      Universita` degli Studi di Trento                                   |</span></div>
+<div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span><span class="comment"> |      email: enrico.bertolazzi@unitn.it                                   |</span></div>
+<div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span><span class="comment"> |                                                                          |</span></div>
+<div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span><span class="comment">\*--------------------------------------------------------------------------*/</span></div>
+<div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span> </div>
+<div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span> </div>
+<div class="line"><a id="l00029" name="l00029"></a><span class="lineno">   29</span><span class="keyword">namespace </span><a class="code hl_namespace" href="namespace_g2lib.html">G2lib</a> {</div>
+<div class="line"><a id="l00030" name="l00030"></a><span class="lineno">   30</span> </div>
+<div class="line"><a id="l00031" name="l00031"></a><span class="lineno">   31</span><span class="preprocessor">  #ifndef DOXYGEN_SHOULD_SKIP_THIS</span></div>
+<div class="line"><a id="l00032" name="l00032"></a><span class="lineno">   32</span> </div>
+<div class="line"><a id="l00033" name="l00033"></a><span class="lineno">   33</span>  <span class="keyword">extern</span> <a class="code hl_typedef" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> <span class="keyword">const</span> m_1_sqrt_pi;  </div>
+<div class="line"><a id="l00034" name="l00034"></a><span class="lineno">   34</span>  <span class="keyword">extern</span> <a class="code hl_typedef" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> <span class="keyword">const</span> machepsi;     </div>
+<div class="line"><a id="l00035" name="l00035"></a><span class="lineno">   35</span>  <span class="keyword">extern</span> <a class="code hl_typedef" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> <span class="keyword">const</span> machepsi10;   </div>
+<div class="line"><a id="l00036" name="l00036"></a><span class="lineno">   36</span>  <span class="keyword">extern</span> <a class="code hl_typedef" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> <span class="keyword">const</span> machepsi100;  </div>
+<div class="line"><a id="l00037" name="l00037"></a><span class="lineno">   37</span>  <span class="keyword">extern</span> <a class="code hl_typedef" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> <span class="keyword">const</span> machepsi1000; </div>
+<div class="line"><a id="l00038" name="l00038"></a><span class="lineno">   38</span>  <span class="keyword">extern</span> <a class="code hl_typedef" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> <span class="keyword">const</span> sqrtMachepsi; </div>
+<div class="line"><a id="l00039" name="l00039"></a><span class="lineno">   39</span>  <span class="keyword">extern</span> <span class="keywordtype">bool</span>            intersect_with_AABBtree;</div>
+<div class="line"><a id="l00040" name="l00040"></a><span class="lineno">   40</span> </div>
+<div class="line"><a id="l00041" name="l00041"></a><span class="lineno">   41</span>  <span class="keyword">extern</span> <a class="code hl_typedef" href="namespace_g2lib.html#affd533209e1ea0ddab7324812690f0b8">integer</a> <span class="keyword">const</span>  G2LIB_AABB_CUT;</div>
+<div class="line"><a id="l00042" name="l00042"></a><span class="lineno">   42</span>  <span class="keyword">extern</span> <a class="code hl_typedef" href="namespace_g2lib.html#affd533209e1ea0ddab7324812690f0b8">integer</a> <span class="keyword">const</span>  G2LIB_AABB_MIN_NODES;</div>
+<div class="line"><a id="l00043" name="l00043"></a><span class="lineno">   43</span> </div>
+<div class="line"><a id="l00044" name="l00044"></a><span class="lineno">   44</span>  <span class="comment">// for CLOTHOIDS_BACK_COMPATIBILITY</span></div>
+<div class="line"><a id="l00045" name="l00045"></a><span class="lineno">   45</span>  <span class="keyword">extern</span> <span class="keywordtype">bool</span> use_ISO;</div>
+<div class="line"><a id="l00046" name="l00046"></a><span class="lineno">   46</span> </div>
+<div class="line"><a id="l00047" name="l00047"></a><span class="lineno">   47</span><span class="preprocessor">  #endif</span></div>
+<div class="line"><a id="l00048" name="l00048"></a><span class="lineno">   48</span> </div>
+<div class="line"><a id="l00049" name="l00049"></a><span class="lineno">   49</span><span class="preprocessor">  #ifdef CLOTHOIDS_BACK_COMPATIBILITY</span></div>
+<div class="line"><a id="l00050" name="l00050"></a><span class="lineno">   50</span> </div>
+<div class="line"><a id="l00051" name="l00051"></a><span class="lineno">   51</span>  <span class="keyword">static</span></div>
+<div class="line"><a id="l00052" name="l00052"></a><span class="lineno">   52</span>  <span class="keyword">inline</span></div>
+<div class="line"><a id="l00053" name="l00053"></a><span class="lineno">   53</span>  <span class="keywordtype">void</span></div>
+<div class="line"><a id="l00054" name="l00054"></a><span class="lineno">   54</span>  lib_use_ISO()</div>
+<div class="line"><a id="l00055" name="l00055"></a><span class="lineno">   55</span>  { use_ISO = <span class="keyword">true</span>; }</div>
+<div class="line"><a id="l00056" name="l00056"></a><span class="lineno">   56</span> </div>
+<div class="line"><a id="l00057" name="l00057"></a><span class="lineno">   57</span>  <span class="keyword">static</span></div>
+<div class="line"><a id="l00058" name="l00058"></a><span class="lineno">   58</span>  <span class="keyword">inline</span></div>
+<div class="line"><a id="l00059" name="l00059"></a><span class="lineno">   59</span>  <span class="keywordtype">void</span></div>
+<div class="line"><a id="l00060" name="l00060"></a><span class="lineno">   60</span>  lib_use_SAE()</div>
+<div class="line"><a id="l00061" name="l00061"></a><span class="lineno">   61</span>  { use_ISO = <span class="keyword">false</span>; }</div>
+<div class="line"><a id="l00062" name="l00062"></a><span class="lineno">   62</span> </div>
+<div class="line"><a id="l00063" name="l00063"></a><span class="lineno">   63</span><span class="preprocessor">  #endif</span></div>
+<div class="line"><a id="l00064" name="l00064"></a><span class="lineno">   64</span> </div>
+<div class="line"><a id="l00068" name="l00068"></a><span class="lineno">   68</span>  <span class="keyword">static</span></div>
+<div class="line"><a id="l00069" name="l00069"></a><span class="lineno">   69</span>  <span class="keyword">inline</span></div>
+<div class="line"><a id="l00070" name="l00070"></a><span class="lineno">   70</span>  <span class="keywordtype">void</span></div>
+<div class="line"><a id="l00071" name="l00071"></a><span class="lineno">   71</span>  noAABBtree()</div>
+<div class="line"><a id="l00072" name="l00072"></a><span class="lineno">   72</span>  { intersect_with_AABBtree = <span class="keyword">false</span>; }</div>
+<div class="line"><a id="l00073" name="l00073"></a><span class="lineno">   73</span> </div>
+<div class="line"><a id="l00077" name="l00077"></a><span class="lineno">   77</span>  <span class="keyword">static</span></div>
+<div class="line"><a id="l00078" name="l00078"></a><span class="lineno">   78</span>  <span class="keyword">inline</span></div>
+<div class="line"><a id="l00079" name="l00079"></a><span class="lineno">   79</span>  <span class="keywordtype">void</span></div>
+<div class="line"><a id="l00080" name="l00080"></a><span class="lineno">   80</span>  yesAABBtree()</div>
+<div class="line"><a id="l00081" name="l00081"></a><span class="lineno">   81</span>  { intersect_with_AABBtree = <span class="keyword">true</span>; }</div>
+<div class="line"><a id="l00082" name="l00082"></a><span class="lineno">   82</span> </div>
+<div class="line"><a id="l00083" name="l00083"></a><span class="lineno">   83</span>  <span class="comment">/*</span></div>
+<div class="line"><a id="l00084" name="l00084"></a><span class="lineno">   84</span><span class="comment">   * sin(x)/x</span></div>
+<div class="line"><a id="l00085" name="l00085"></a><span class="lineno">   85</span><span class="comment">   */</span></div>
+<div class="line"><a id="l00086" name="l00086"></a><span class="lineno">   86</span>  <a class="code hl_typedef" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> <a class="code hl_function" href="namespace_g2lib.html#a081bc3efca6442933577b14d6f3c2a06">Sinc</a>( <a class="code hl_typedef" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> x );     </div>
+<div class="line"><a id="l00087" name="l00087"></a><span class="lineno">   87</span>  <a class="code hl_typedef" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> <a class="code hl_function" href="namespace_g2lib.html#a70d38da7135fe9aa83b9e0d0e6ee7979">Sinc_D</a>( <a class="code hl_typedef" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> x );   </div>
+<div class="line"><a id="l00088" name="l00088"></a><span class="lineno">   88</span>  <a class="code hl_typedef" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> <a class="code hl_function" href="namespace_g2lib.html#a069d980b307edd06a1e9401e1a7bd5b4">Sinc_DD</a>( <a class="code hl_typedef" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> x );  </div>
+<div class="line"><a id="l00089" name="l00089"></a><span class="lineno">   89</span>  <a class="code hl_typedef" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> <a class="code hl_function" href="namespace_g2lib.html#a698f23b0a8d2f0dd431c908ba7bce967">Sinc_DDD</a>( <a class="code hl_typedef" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> x ); </div>
+<div class="line"><a id="l00090" name="l00090"></a><span class="lineno">   90</span> </div>
+<div class="line"><a id="l00091" name="l00091"></a><span class="lineno">   91</span>  <span class="comment">/*</span></div>
+<div class="line"><a id="l00092" name="l00092"></a><span class="lineno">   92</span><span class="comment">   * (1-cos(x))/x</span></div>
+<div class="line"><a id="l00093" name="l00093"></a><span class="lineno">   93</span><span class="comment">   */</span></div>
+<div class="line"><a id="l00094" name="l00094"></a><span class="lineno">   94</span>  <a class="code hl_typedef" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> <a class="code hl_function" href="namespace_g2lib.html#ab3e73bcf98a8efc2749f2ad05a3fdc51">Cosc</a>( <a class="code hl_typedef" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> x );     </div>
+<div class="line"><a id="l00095" name="l00095"></a><span class="lineno">   95</span>  <a class="code hl_typedef" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> <a class="code hl_function" href="namespace_g2lib.html#a6a3e8c7ad85655c555cb6dc3825774c6">Cosc_D</a>( <a class="code hl_typedef" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> x );   </div>
+<div class="line"><a id="l00096" name="l00096"></a><span class="lineno">   96</span>  <a class="code hl_typedef" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> <a class="code hl_function" href="namespace_g2lib.html#ac10d1d52ae3cd16ef20171553d117b5b">Cosc_DD</a>( <a class="code hl_typedef" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> x );  </div>
+<div class="line"><a id="l00097" name="l00097"></a><span class="lineno">   97</span>  <a class="code hl_typedef" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> <a class="code hl_function" href="namespace_g2lib.html#ae6868bffc32e5a0425f93e65c41bc6de">Cosc_DDD</a>( <a class="code hl_typedef" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> x ); </div>
+<div class="line"><a id="l00098" name="l00098"></a><span class="lineno">   98</span> </div>
+<div class="line"><a id="l00099" name="l00099"></a><span class="lineno">   99</span>  <span class="comment">/*</span></div>
+<div class="line"><a id="l00100" name="l00100"></a><span class="lineno">  100</span><span class="comment">   * atan(x)/x</span></div>
+<div class="line"><a id="l00101" name="l00101"></a><span class="lineno">  101</span><span class="comment">   */</span></div>
+<div class="line"><a id="l00102" name="l00102"></a><span class="lineno">  102</span>  <a class="code hl_typedef" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> <a class="code hl_function" href="namespace_g2lib.html#ac0bbd1b03ec89b9ed1874b35849a82e7">Atanc</a>( <a class="code hl_typedef" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> x );     </div>
+<div class="line"><a id="l00103" name="l00103"></a><span class="lineno">  103</span>  <a class="code hl_typedef" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> <a class="code hl_function" href="namespace_g2lib.html#a634e4fa7089193123ec9146bd8e05d2b">Atanc_D</a>( <a class="code hl_typedef" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> x );   </div>
+<div class="line"><a id="l00104" name="l00104"></a><span class="lineno">  104</span>  <a class="code hl_typedef" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> <a class="code hl_function" href="namespace_g2lib.html#ab4c21b2f3f1a20a134429dfeb129c423">Atanc_DD</a>( <a class="code hl_typedef" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> x );  </div>
+<div class="line"><a id="l00105" name="l00105"></a><span class="lineno">  105</span>  <a class="code hl_typedef" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> <a class="code hl_function" href="namespace_g2lib.html#a448a0b9a486f6b9b16d74d80d133b10d">Atanc_DDD</a>( <a class="code hl_typedef" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> x ); </div>
+<div class="line"><a id="l00106" name="l00106"></a><span class="lineno">  106</span> </div>
+<div class="line"><a id="l00110" name="l00110"></a><span class="lineno">  110</span>  <span class="keywordtype">void</span> <a class="code hl_function" href="namespace_g2lib.html#aeed539405134d26c4315fd644d5fa2ca">rangeSymm</a>( <a class="code hl_typedef" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> &amp; ang );</div>
+<div class="line"><a id="l00111" name="l00111"></a><span class="lineno">  111</span> </div>
+<div class="line"><a id="l00112" name="l00112"></a><span class="lineno">  112</span>  <span class="comment">// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -</span></div>
+<div class="line"><a id="l00116" name="l00116"></a><span class="lineno">  116</span>  <span class="keyword">inline</span></div>
+<div class="line"><a id="l00117" name="l00117"></a><span class="lineno">  117</span>  <span class="keywordtype">void</span></div>
+<div class="foldopen" id="foldopen00118" data-start="{" data-end="}">
+<div class="line"><a id="l00118" name="l00118"></a><span class="lineno"><a class="line" href="namespace_g2lib.html#adcb636fc9381075c0ce6750a07f15a41">  118</a></span>  <a class="code hl_function" href="namespace_g2lib.html#adcb636fc9381075c0ce6750a07f15a41">minmax3</a>(</div>
+<div class="line"><a id="l00119" name="l00119"></a><span class="lineno">  119</span>    <a class="code hl_typedef" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a>   a,</div>
+<div class="line"><a id="l00120" name="l00120"></a><span class="lineno">  120</span>    <a class="code hl_typedef" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a>   b,</div>
+<div class="line"><a id="l00121" name="l00121"></a><span class="lineno">  121</span>    <a class="code hl_typedef" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a>   c,</div>
+<div class="line"><a id="l00122" name="l00122"></a><span class="lineno">  122</span>    <a class="code hl_typedef" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> &amp; vmin,</div>
+<div class="line"><a id="l00123" name="l00123"></a><span class="lineno">  123</span>    <a class="code hl_typedef" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> &amp; vmax</div>
+<div class="line"><a id="l00124" name="l00124"></a><span class="lineno">  124</span>  ) {</div>
+<div class="line"><a id="l00125" name="l00125"></a><span class="lineno">  125</span>    vmin = vmax = a;</div>
+<div class="line"><a id="l00126" name="l00126"></a><span class="lineno">  126</span>    <span class="keywordflow">if</span> ( b &lt; vmin ) vmin = b;</div>
+<div class="line"><a id="l00127" name="l00127"></a><span class="lineno">  127</span>    <span class="keywordflow">else</span>            vmax = b;</div>
+<div class="line"><a id="l00128" name="l00128"></a><span class="lineno">  128</span>    <span class="keywordflow">if</span>      ( c &lt; vmin ) vmin = c;</div>
+<div class="line"><a id="l00129" name="l00129"></a><span class="lineno">  129</span>    <span class="keywordflow">else</span> <span class="keywordflow">if</span> ( c &gt; vmax ) vmax = c;</div>
+<div class="line"><a id="l00130" name="l00130"></a><span class="lineno">  130</span>  }</div>
+</div>
+<div class="line"><a id="l00131" name="l00131"></a><span class="lineno">  131</span> </div>
+<div class="line"><a id="l00132" name="l00132"></a><span class="lineno">  132</span>  <span class="comment">// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -</span></div>
+<div class="line"><a id="l00148" name="l00148"></a><span class="lineno">  148</span> </div>
+<div class="line"><a id="l00149" name="l00149"></a><span class="lineno">  149</span>  <a class="code hl_typedef" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a></div>
+<div class="line"><a id="l00150" name="l00150"></a><span class="lineno"><a class="line" href="namespace_g2lib.html#acf4b8b1e2907ced4f4097f9dc5e301c3">  150</a></span>  <a class="code hl_function" href="namespace_g2lib.html#acf4b8b1e2907ced4f4097f9dc5e301c3">projectPointOnCircleArc</a>(</div>
+<div class="line"><a id="l00151" name="l00151"></a><span class="lineno">  151</span>    <a class="code hl_typedef" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> x0,</div>
+<div class="line"><a id="l00152" name="l00152"></a><span class="lineno">  152</span>    <a class="code hl_typedef" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> y0,</div>
+<div class="line"><a id="l00153" name="l00153"></a><span class="lineno">  153</span>    <a class="code hl_typedef" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> c0,</div>
+<div class="line"><a id="l00154" name="l00154"></a><span class="lineno">  154</span>    <a class="code hl_typedef" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> s0,</div>
+<div class="line"><a id="l00155" name="l00155"></a><span class="lineno">  155</span>    <a class="code hl_typedef" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> k,</div>
+<div class="line"><a id="l00156" name="l00156"></a><span class="lineno">  156</span>    <a class="code hl_typedef" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> L,</div>
+<div class="line"><a id="l00157" name="l00157"></a><span class="lineno">  157</span>    <a class="code hl_typedef" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> qx,</div>
+<div class="line"><a id="l00158" name="l00158"></a><span class="lineno">  158</span>    <a class="code hl_typedef" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> qy</div>
+<div class="line"><a id="l00159" name="l00159"></a><span class="lineno">  159</span>  );</div>
+<div class="line"><a id="l00160" name="l00160"></a><span class="lineno">  160</span> </div>
+<div class="line"><a id="l00161" name="l00161"></a><span class="lineno">  161</span>  <span class="comment">// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -</span></div>
+<div class="line"><a id="l00162" name="l00162"></a><span class="lineno">  162</span> </div>
+<div class="line"><a id="l00176" name="l00176"></a><span class="lineno">  176</span> </div>
+<div class="line"><a id="l00177" name="l00177"></a><span class="lineno">  177</span>  <a class="code hl_typedef" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a></div>
+<div class="line"><a id="l00178" name="l00178"></a><span class="lineno"><a class="line" href="namespace_g2lib.html#a8829b54b63a6e1880f15ccdfe57c2ecb">  178</a></span>  <a class="code hl_function" href="namespace_g2lib.html#a8829b54b63a6e1880f15ccdfe57c2ecb">projectPointOnCircle</a>(</div>
+<div class="line"><a id="l00179" name="l00179"></a><span class="lineno">  179</span>    <a class="code hl_typedef" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> x0,</div>
+<div class="line"><a id="l00180" name="l00180"></a><span class="lineno">  180</span>    <a class="code hl_typedef" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> y0,</div>
+<div class="line"><a id="l00181" name="l00181"></a><span class="lineno">  181</span>    <a class="code hl_typedef" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> theta0,</div>
+<div class="line"><a id="l00182" name="l00182"></a><span class="lineno">  182</span>    <a class="code hl_typedef" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> k,</div>
+<div class="line"><a id="l00183" name="l00183"></a><span class="lineno">  183</span>    <a class="code hl_typedef" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> qx,</div>
+<div class="line"><a id="l00184" name="l00184"></a><span class="lineno">  184</span>    <a class="code hl_typedef" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> qy</div>
+<div class="line"><a id="l00185" name="l00185"></a><span class="lineno">  185</span>  );</div>
+<div class="line"><a id="l00186" name="l00186"></a><span class="lineno">  186</span> </div>
+<div class="line"><a id="l00187" name="l00187"></a><span class="lineno">  187</span>  <span class="comment">// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -</span></div>
+<div class="line"><a id="l00202" name="l00202"></a><span class="lineno">  202</span>  <span class="keyword">inline</span></div>
+<div class="line"><a id="l00203" name="l00203"></a><span class="lineno">  203</span>  <span class="keywordtype">bool</span></div>
+<div class="foldopen" id="foldopen00204" data-start="{" data-end="}">
+<div class="line"><a id="l00204" name="l00204"></a><span class="lineno"><a class="line" href="namespace_g2lib.html#a787008f61e79e40319f40bdc503f3136">  204</a></span>  <a class="code hl_function" href="namespace_g2lib.html#a787008f61e79e40319f40bdc503f3136">pointInsideCircle</a>(</div>
+<div class="line"><a id="l00205" name="l00205"></a><span class="lineno">  205</span>    <a class="code hl_typedef" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> x0,</div>
+<div class="line"><a id="l00206" name="l00206"></a><span class="lineno">  206</span>    <a class="code hl_typedef" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> y0,</div>
+<div class="line"><a id="l00207" name="l00207"></a><span class="lineno">  207</span>    <a class="code hl_typedef" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> c0,</div>
+<div class="line"><a id="l00208" name="l00208"></a><span class="lineno">  208</span>    <a class="code hl_typedef" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> s0,</div>
+<div class="line"><a id="l00209" name="l00209"></a><span class="lineno">  209</span>    <a class="code hl_typedef" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> k,</div>
+<div class="line"><a id="l00210" name="l00210"></a><span class="lineno">  210</span>    <a class="code hl_typedef" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> qx,</div>
+<div class="line"><a id="l00211" name="l00211"></a><span class="lineno">  211</span>    <a class="code hl_typedef" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> qy</div>
+<div class="line"><a id="l00212" name="l00212"></a><span class="lineno">  212</span>  ) {</div>
+<div class="line"><a id="l00213" name="l00213"></a><span class="lineno">  213</span>    <a class="code hl_typedef" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> cx  = x0 - s0/k;</div>
+<div class="line"><a id="l00214" name="l00214"></a><span class="lineno">  214</span>    <a class="code hl_typedef" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> cy  = y0 + c0/k;</div>
+<div class="line"><a id="l00215" name="l00215"></a><span class="lineno">  215</span>    <a class="code hl_typedef" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> dst = hypot( qx - cx, qy - cy );</div>
+<div class="line"><a id="l00216" name="l00216"></a><span class="lineno">  216</span>    <span class="keywordflow">return</span> dst*k &lt;= 1;</div>
+<div class="line"><a id="l00217" name="l00217"></a><span class="lineno">  217</span>  }</div>
+</div>
+<div class="line"><a id="l00218" name="l00218"></a><span class="lineno">  218</span> </div>
+<div class="line"><a id="l00219" name="l00219"></a><span class="lineno">  219</span>  <span class="comment">// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -</span></div>
+<div class="line"><a id="l00220" name="l00220"></a><span class="lineno">  220</span> </div>
+<div class="line"><a id="l00221" name="l00221"></a><span class="lineno">  221</span>  <a class="code hl_typedef" href="namespace_g2lib.html#affd533209e1ea0ddab7324812690f0b8">integer</a></div>
+<div class="line"><a id="l00222" name="l00222"></a><span class="lineno">  222</span>  <a class="code hl_function" href="namespace_g2lib.html#acc7909dc5a149d8e0dae4803bde69181">solveLinearQuadratic</a>(</div>
+<div class="line"><a id="l00223" name="l00223"></a><span class="lineno">  223</span>    <a class="code hl_typedef" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> A,</div>
+<div class="line"><a id="l00224" name="l00224"></a><span class="lineno">  224</span>    <a class="code hl_typedef" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> B,</div>
+<div class="line"><a id="l00225" name="l00225"></a><span class="lineno">  225</span>    <a class="code hl_typedef" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> C,</div>
+<div class="line"><a id="l00226" name="l00226"></a><span class="lineno">  226</span>    <a class="code hl_typedef" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> a,</div>
+<div class="line"><a id="l00227" name="l00227"></a><span class="lineno">  227</span>    <a class="code hl_typedef" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> b,</div>
+<div class="line"><a id="l00228" name="l00228"></a><span class="lineno">  228</span>    <a class="code hl_typedef" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> c,</div>
+<div class="line"><a id="l00229" name="l00229"></a><span class="lineno">  229</span>    <a class="code hl_typedef" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> x[],</div>
+<div class="line"><a id="l00230" name="l00230"></a><span class="lineno">  230</span>    <a class="code hl_typedef" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> y[]</div>
+<div class="line"><a id="l00231" name="l00231"></a><span class="lineno">  231</span>  );</div>
+<div class="line"><a id="l00232" name="l00232"></a><span class="lineno">  232</span> </div>
+<div class="line"><a id="l00233" name="l00233"></a><span class="lineno">  233</span>  <span class="comment">// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -</span></div>
+<div class="line"><a id="l00234" name="l00234"></a><span class="lineno">  234</span> </div>
+<div class="line"><a id="l00235" name="l00235"></a><span class="lineno">  235</span>  <a class="code hl_typedef" href="namespace_g2lib.html#affd533209e1ea0ddab7324812690f0b8">integer</a></div>
+<div class="line"><a id="l00236" name="l00236"></a><span class="lineno">  236</span>  <a class="code hl_function" href="namespace_g2lib.html#a855ee5c1c9df026c584b075c06e912a7">solveLinearQuadratic2</a>(</div>
+<div class="line"><a id="l00237" name="l00237"></a><span class="lineno">  237</span>    <a class="code hl_typedef" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> A,</div>
+<div class="line"><a id="l00238" name="l00238"></a><span class="lineno">  238</span>    <a class="code hl_typedef" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> B,</div>
+<div class="line"><a id="l00239" name="l00239"></a><span class="lineno">  239</span>    <a class="code hl_typedef" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> C,</div>
+<div class="line"><a id="l00240" name="l00240"></a><span class="lineno">  240</span>    <a class="code hl_typedef" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> x[],</div>
+<div class="line"><a id="l00241" name="l00241"></a><span class="lineno">  241</span>    <a class="code hl_typedef" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> y[]</div>
+<div class="line"><a id="l00242" name="l00242"></a><span class="lineno">  242</span>  );</div>
+<div class="line"><a id="l00243" name="l00243"></a><span class="lineno">  243</span> </div>
+<div class="line"><a id="l00244" name="l00244"></a><span class="lineno">  244</span>  <span class="comment">// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -</span></div>
+<div class="line"><a id="l00245" name="l00245"></a><span class="lineno">  245</span> </div>
+<div class="line"><a id="l00246" name="l00246"></a><span class="lineno">  246</span>  <a class="code hl_typedef" href="namespace_g2lib.html#affd533209e1ea0ddab7324812690f0b8">integer</a></div>
+<div class="line"><a id="l00247" name="l00247"></a><span class="lineno">  247</span>  <a class="code hl_function" href="namespace_g2lib.html#a15914a4c8282b0bbb83be49894cc19b1">intersectCircleCircle</a>(</div>
+<div class="line"><a id="l00248" name="l00248"></a><span class="lineno">  248</span>    <a class="code hl_typedef" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> x1,</div>
+<div class="line"><a id="l00249" name="l00249"></a><span class="lineno">  249</span>    <a class="code hl_typedef" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> y1,</div>
+<div class="line"><a id="l00250" name="l00250"></a><span class="lineno">  250</span>    <a class="code hl_typedef" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> theta1,</div>
+<div class="line"><a id="l00251" name="l00251"></a><span class="lineno">  251</span>    <a class="code hl_typedef" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> kappa1,</div>
+<div class="line"><a id="l00252" name="l00252"></a><span class="lineno">  252</span>    <a class="code hl_typedef" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> x2,</div>
+<div class="line"><a id="l00253" name="l00253"></a><span class="lineno">  253</span>    <a class="code hl_typedef" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> y2,</div>
+<div class="line"><a id="l00254" name="l00254"></a><span class="lineno">  254</span>    <a class="code hl_typedef" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> theta2,</div>
+<div class="line"><a id="l00255" name="l00255"></a><span class="lineno">  255</span>    <a class="code hl_typedef" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> kappa2,</div>
+<div class="line"><a id="l00256" name="l00256"></a><span class="lineno">  256</span>    <a class="code hl_typedef" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> s1[],</div>
+<div class="line"><a id="l00257" name="l00257"></a><span class="lineno">  257</span>    <a class="code hl_typedef" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> s2[]</div>
+<div class="line"><a id="l00258" name="l00258"></a><span class="lineno">  258</span>  );</div>
+<div class="line"><a id="l00259" name="l00259"></a><span class="lineno">  259</span> </div>
+<div class="line"><a id="l00260" name="l00260"></a><span class="lineno">  260</span>  <span class="comment">/*\</span></div>
+<div class="line"><a id="l00261" name="l00261"></a><span class="lineno">  261</span><span class="comment">   |   ____        _           ____       ____</span></div>
+<div class="line"><a id="l00262" name="l00262"></a><span class="lineno">  262</span><span class="comment">   |  / ___|  ___ | |_   _____|___ \__  _|___ \</span></div>
+<div class="line"><a id="l00263" name="l00263"></a><span class="lineno">  263</span><span class="comment">   |  \___ \ / _ \| \ \ / / _ \ __) \ \/ / __) |</span></div>
+<div class="line"><a id="l00264" name="l00264"></a><span class="lineno">  264</span><span class="comment">   |   ___) | (_) | |\ V /  __// __/ &gt;  &lt; / __/</span></div>
+<div class="line"><a id="l00265" name="l00265"></a><span class="lineno">  265</span><span class="comment">   |  |____/ \___/|_| \_/ \___|_____/_/\_\_____|</span></div>
+<div class="line"><a id="l00266" name="l00266"></a><span class="lineno">  266</span><span class="comment">  \*/</span></div>
+<div class="foldopen" id="foldopen00271" data-start="{" data-end="};">
+<div class="line"><a id="l00271" name="l00271"></a><span class="lineno"><a class="line" href="class_g2lib_1_1_solve2x2.html">  271</a></span>  <span class="keyword">class </span><a class="code hl_class" href="class_g2lib_1_1_solve2x2.html">Solve2x2</a> {</div>
+<div class="line"><a id="l00272" name="l00272"></a><span class="lineno">  272</span>    <a class="code hl_typedef" href="namespace_g2lib.html#affd533209e1ea0ddab7324812690f0b8">integer</a>   i[2], j[2];</div>
+<div class="line"><a id="l00273" name="l00273"></a><span class="lineno">  273</span>    <a class="code hl_typedef" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> LU[2][2];</div>
+<div class="line"><a id="l00274" name="l00274"></a><span class="lineno">  274</span>    <a class="code hl_typedef" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> epsi;</div>
+<div class="line"><a id="l00275" name="l00275"></a><span class="lineno">  275</span>    <span class="keywordtype">bool</span>      singular;</div>
+<div class="line"><a id="l00276" name="l00276"></a><span class="lineno">  276</span> </div>
+<div class="line"><a id="l00277" name="l00277"></a><span class="lineno">  277</span>  <span class="keyword">public</span>:</div>
+<div class="line"><a id="l00278" name="l00278"></a><span class="lineno">  278</span> </div>
+<div class="line"><a id="l00279" name="l00279"></a><span class="lineno">  279</span>    <a class="code hl_class" href="class_g2lib_1_1_solve2x2.html">Solve2x2</a>() : epsi(1e-10) {}</div>
+<div class="line"><a id="l00280" name="l00280"></a><span class="lineno">  280</span>    <span class="keywordtype">bool</span> <a class="code hl_function" href="class_g2lib_1_1_solve2x2.html#a9fa1ea29a6bce4e0d47b0723c65ae7a7">factorize</a>( <a class="code hl_typedef" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> A[2][2] );</div>
+<div class="line"><a id="l00281" name="l00281"></a><span class="lineno">  281</span>    <span class="keywordtype">bool</span> solve( <a class="code hl_typedef" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> <span class="keyword">const</span> b[2], <a class="code hl_typedef" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> x[2] ) <span class="keyword">const</span>;</div>
+<div class="line"><a id="l00282" name="l00282"></a><span class="lineno">  282</span>  };</div>
+</div>
+<div class="line"><a id="l00283" name="l00283"></a><span class="lineno">  283</span> </div>
+<div class="line"><a id="l00307" name="l00307"></a><span class="lineno">  307</span>  <a class="code hl_typedef" href="namespace_g2lib.html#affd533209e1ea0ddab7324812690f0b8">integer</a></div>
+<div class="line"><a id="l00308" name="l00308"></a><span class="lineno"><a class="line" href="namespace_g2lib.html#ad3c5023a04f337642bc61cb95c51915f">  308</a></span>  <a class="code hl_function" href="namespace_g2lib.html#ad3c5023a04f337642bc61cb95c51915f">is_counter_clockwise</a>(</div>
+<div class="line"><a id="l00309" name="l00309"></a><span class="lineno">  309</span>    <a class="code hl_typedef" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> <span class="keyword">const</span> P1[],</div>
+<div class="line"><a id="l00310" name="l00310"></a><span class="lineno">  310</span>    <a class="code hl_typedef" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> <span class="keyword">const</span> P2[],</div>
+<div class="line"><a id="l00311" name="l00311"></a><span class="lineno">  311</span>    <a class="code hl_typedef" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> <span class="keyword">const</span> P3[]</div>
+<div class="line"><a id="l00312" name="l00312"></a><span class="lineno">  312</span>  );</div>
+<div class="line"><a id="l00313" name="l00313"></a><span class="lineno">  313</span> </div>
+<div class="line"><a id="l00326" name="l00326"></a><span class="lineno">  326</span> </div>
+<div class="line"><a id="l00327" name="l00327"></a><span class="lineno">  327</span>  <a class="code hl_typedef" href="namespace_g2lib.html#affd533209e1ea0ddab7324812690f0b8">integer</a></div>
+<div class="line"><a id="l00328" name="l00328"></a><span class="lineno"><a class="line" href="namespace_g2lib.html#a8d51c016d161587c62d437f0658347bf">  328</a></span>  <a class="code hl_function" href="namespace_g2lib.html#a8d51c016d161587c62d437f0658347bf">is_point_in_triangle</a>(</div>
+<div class="line"><a id="l00329" name="l00329"></a><span class="lineno">  329</span>    <a class="code hl_typedef" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> <span class="keyword">const</span> point[],</div>
+<div class="line"><a id="l00330" name="l00330"></a><span class="lineno">  330</span>    <a class="code hl_typedef" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> <span class="keyword">const</span> P1[],</div>
+<div class="line"><a id="l00331" name="l00331"></a><span class="lineno">  331</span>    <a class="code hl_typedef" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> <span class="keyword">const</span> P2[],</div>
+<div class="line"><a id="l00332" name="l00332"></a><span class="lineno">  332</span>    <a class="code hl_typedef" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> <span class="keyword">const</span> P3[]</div>
+<div class="line"><a id="l00333" name="l00333"></a><span class="lineno">  333</span>  );</div>
+<div class="line"><a id="l00334" name="l00334"></a><span class="lineno">  334</span> </div>
+<div class="line"><a id="l00335" name="l00335"></a><span class="lineno">  335</span>  <span class="comment">// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -</span></div>
+<div class="line"><a id="l00336" name="l00336"></a><span class="lineno">  336</span>  <span class="comment">/*\</span></div>
+<div class="line"><a id="l00337" name="l00337"></a><span class="lineno">  337</span><span class="comment">   |  __  ____   __  _          _____ _          _</span></div>
+<div class="line"><a id="l00338" name="l00338"></a><span class="lineno">  338</span><span class="comment">   |  \ \/ /\ \ / / | |_ ___   |_   _| |__   ___| |_ __ _</span></div>
+<div class="line"><a id="l00339" name="l00339"></a><span class="lineno">  339</span><span class="comment">   |   \  /  \ V /  | __/ _ \    | | | &#39;_ \ / _ \ __/ _` |</span></div>
+<div class="line"><a id="l00340" name="l00340"></a><span class="lineno">  340</span><span class="comment">   |   /  \   | |   | || (_) |   | | | | | |  __/ || (_| |</span></div>
+<div class="line"><a id="l00341" name="l00341"></a><span class="lineno">  341</span><span class="comment">   |  /_/\_\  |_|    \__\___/    |_| |_| |_|\___|\__\__,_|</span></div>
+<div class="line"><a id="l00342" name="l00342"></a><span class="lineno">  342</span><span class="comment">  \*/</span></div>
+<div class="line"><a id="l00343" name="l00343"></a><span class="lineno">  343</span>  <span class="keywordtype">void</span></div>
+<div class="line"><a id="l00344" name="l00344"></a><span class="lineno">  344</span>  <a class="code hl_function" href="namespace_g2lib.html#a0b57f7d3aaa6fabd7365d0243916093c">xy_to_guess_angle</a>(</div>
+<div class="line"><a id="l00345" name="l00345"></a><span class="lineno">  345</span>    <a class="code hl_typedef" href="namespace_g2lib.html#affd533209e1ea0ddab7324812690f0b8">integer</a>         npts,</div>
+<div class="line"><a id="l00346" name="l00346"></a><span class="lineno">  346</span>    <a class="code hl_typedef" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> <span class="keyword">const</span> x[],</div>
+<div class="line"><a id="l00347" name="l00347"></a><span class="lineno">  347</span>    <a class="code hl_typedef" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a> <span class="keyword">const</span> y[],</div>
+<div class="line"><a id="l00348" name="l00348"></a><span class="lineno">  348</span>    <a class="code hl_typedef" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a>       theta[],</div>
+<div class="line"><a id="l00349" name="l00349"></a><span class="lineno">  349</span>    <a class="code hl_typedef" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a>       theta_min[],</div>
+<div class="line"><a id="l00350" name="l00350"></a><span class="lineno">  350</span>    <a class="code hl_typedef" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a>       theta_max[],</div>
+<div class="line"><a id="l00351" name="l00351"></a><span class="lineno">  351</span>    <a class="code hl_typedef" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a>       omega[],</div>
+<div class="line"><a id="l00352" name="l00352"></a><span class="lineno">  352</span>    <a class="code hl_typedef" href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">real_type</a>       len[]</div>
+<div class="line"><a id="l00353" name="l00353"></a><span class="lineno">  353</span>  );</div>
+<div class="line"><a id="l00354" name="l00354"></a><span class="lineno">  354</span> </div>
+<div class="line"><a id="l00355" name="l00355"></a><span class="lineno">  355</span>}</div>
+<div class="line"><a id="l00356" name="l00356"></a><span class="lineno">  356</span> </div>
+<div class="ttc" id="aclass_g2lib_1_1_solve2x2_html"><div class="ttname"><a href="class_g2lib_1_1_solve2x2.html">G2lib::Solve2x2</a></div><div class="ttdef"><b>Definition</b> G2lib.hxx:271</div></div>
+<div class="ttc" id="aclass_g2lib_1_1_solve2x2_html_a9fa1ea29a6bce4e0d47b0723c65ae7a7"><div class="ttname"><a href="class_g2lib_1_1_solve2x2.html#a9fa1ea29a6bce4e0d47b0723c65ae7a7">G2lib::Solve2x2::factorize</a></div><div class="ttdeci">bool factorize(real_type A[2][2])</div><div class="ttdef"><b>Definition</b> G2lib.cc:570</div></div>
+<div class="ttc" id="anamespace_g2lib_html"><div class="ttname"><a href="namespace_g2lib.html">G2lib</a></div><div class="ttdef"><b>Definition</b> BBox.cc:42</div></div>
+<div class="ttc" id="anamespace_g2lib_html_a069d980b307edd06a1e9401e1a7bd5b4"><div class="ttname"><a href="namespace_g2lib.html#a069d980b307edd06a1e9401e1a7bd5b4">G2lib::Sinc_DD</a></div><div class="ttdeci">real_type Sinc_DD(real_type x)</div><div class="ttdef"><b>Definition</b> G2lib.cc:93</div></div>
+<div class="ttc" id="anamespace_g2lib_html_a081bc3efca6442933577b14d6f3c2a06"><div class="ttname"><a href="namespace_g2lib.html#a081bc3efca6442933577b14d6f3c2a06">G2lib::Sinc</a></div><div class="ttdeci">real_type Sinc(real_type x)</div><div class="ttdef"><b>Definition</b> G2lib.cc:76</div></div>
+<div class="ttc" id="anamespace_g2lib_html_a0b57f7d3aaa6fabd7365d0243916093c"><div class="ttname"><a href="namespace_g2lib.html#a0b57f7d3aaa6fabd7365d0243916093c">G2lib::xy_to_guess_angle</a></div><div class="ttdeci">void xy_to_guess_angle(integer npts, real_type const x[], real_type const y[], real_type theta[], real_type theta_min[], real_type theta_max[], real_type omega[], real_type len[])</div><div class="ttdef"><b>Definition</b> G2lib.cc:495</div></div>
+<div class="ttc" id="anamespace_g2lib_html_a15914a4c8282b0bbb83be49894cc19b1"><div class="ttname"><a href="namespace_g2lib.html#a15914a4c8282b0bbb83be49894cc19b1">G2lib::intersectCircleCircle</a></div><div class="ttdeci">integer intersectCircleCircle(real_type x1, real_type y1, real_type theta1, real_type kappa1, real_type x2, real_type y2, real_type theta2, real_type kappa2, real_type s1[], real_type s2[])</div><div class="ttdef"><b>Definition</b> G2lib.cc:409</div></div>
+<div class="ttc" id="anamespace_g2lib_html_a448a0b9a486f6b9b16d74d80d133b10d"><div class="ttname"><a href="namespace_g2lib.html#a448a0b9a486f6b9b16d74d80d133b10d">G2lib::Atanc_DDD</a></div><div class="ttdeci">real_type Atanc_DDD(real_type x)</div><div class="ttdef"><b>Definition</b> G2lib.cc:185</div></div>
+<div class="ttc" id="anamespace_g2lib_html_a634e4fa7089193123ec9146bd8e05d2b"><div class="ttname"><a href="namespace_g2lib.html#a634e4fa7089193123ec9146bd8e05d2b">G2lib::Atanc_D</a></div><div class="ttdeci">real_type Atanc_D(real_type x)</div><div class="ttdef"><b>Definition</b> G2lib.cc:165</div></div>
+<div class="ttc" id="anamespace_g2lib_html_a698f23b0a8d2f0dd431c908ba7bce967"><div class="ttname"><a href="namespace_g2lib.html#a698f23b0a8d2f0dd431c908ba7bce967">G2lib::Sinc_DDD</a></div><div class="ttdeci">real_type Sinc_DDD(real_type x)</div><div class="ttdef"><b>Definition</b> G2lib.cc:100</div></div>
+<div class="ttc" id="anamespace_g2lib_html_a6a3e8c7ad85655c555cb6dc3825774c6"><div class="ttname"><a href="namespace_g2lib.html#a6a3e8c7ad85655c555cb6dc3825774c6">G2lib::Cosc_D</a></div><div class="ttdeci">real_type Cosc_D(real_type x)</div><div class="ttdef"><b>Definition</b> G2lib.cc:122</div></div>
+<div class="ttc" id="anamespace_g2lib_html_a70d38da7135fe9aa83b9e0d0e6ee7979"><div class="ttname"><a href="namespace_g2lib.html#a70d38da7135fe9aa83b9e0d0e6ee7979">G2lib::Sinc_D</a></div><div class="ttdeci">real_type Sinc_D(real_type x)</div><div class="ttdef"><b>Definition</b> G2lib.cc:86</div></div>
+<div class="ttc" id="anamespace_g2lib_html_a787008f61e79e40319f40bdc503f3136"><div class="ttname"><a href="namespace_g2lib.html#a787008f61e79e40319f40bdc503f3136">G2lib::pointInsideCircle</a></div><div class="ttdeci">bool pointInsideCircle(real_type x0, real_type y0, real_type c0, real_type s0, real_type k, real_type qx, real_type qy)</div><div class="ttdef"><b>Definition</b> G2lib.hxx:204</div></div>
+<div class="ttc" id="anamespace_g2lib_html_a855ee5c1c9df026c584b075c06e912a7"><div class="ttname"><a href="namespace_g2lib.html#a855ee5c1c9df026c584b075c06e912a7">G2lib::solveLinearQuadratic2</a></div><div class="ttdeci">integer solveLinearQuadratic2(real_type A, real_type B, real_type C, real_type x[], real_type y[])</div><div class="ttdef"><b>Definition</b> G2lib.cc:288</div></div>
+<div class="ttc" id="anamespace_g2lib_html_a8829b54b63a6e1880f15ccdfe57c2ecb"><div class="ttname"><a href="namespace_g2lib.html#a8829b54b63a6e1880f15ccdfe57c2ecb">G2lib::projectPointOnCircle</a></div><div class="ttdeci">real_type projectPointOnCircle(real_type x0, real_type y0, real_type theta0, real_type k, real_type qx, real_type qy)</div></div>
+<div class="ttc" id="anamespace_g2lib_html_a8d51c016d161587c62d437f0658347bf"><div class="ttname"><a href="namespace_g2lib.html#a8d51c016d161587c62d437f0658347bf">G2lib::is_point_in_triangle</a></div><div class="ttdeci">integer is_point_in_triangle(real_type const point[], real_type const P1[], real_type const P2[], real_type const P3[])</div></div>
+<div class="ttc" id="anamespace_g2lib_html_ab3e73bcf98a8efc2749f2ad05a3fdc51"><div class="ttname"><a href="namespace_g2lib.html#ab3e73bcf98a8efc2749f2ad05a3fdc51">G2lib::Cosc</a></div><div class="ttdeci">real_type Cosc(real_type x)</div><div class="ttdef"><b>Definition</b> G2lib.cc:112</div></div>
+<div class="ttc" id="anamespace_g2lib_html_ab4c21b2f3f1a20a134429dfeb129c423"><div class="ttname"><a href="namespace_g2lib.html#ab4c21b2f3f1a20a134429dfeb129c423">G2lib::Atanc_DD</a></div><div class="ttdeci">real_type Atanc_DD(real_type x)</div><div class="ttdef"><b>Definition</b> G2lib.cc:175</div></div>
+<div class="ttc" id="anamespace_g2lib_html_ac0bbd1b03ec89b9ed1874b35849a82e7"><div class="ttname"><a href="namespace_g2lib.html#ac0bbd1b03ec89b9ed1874b35849a82e7">G2lib::Atanc</a></div><div class="ttdeci">real_type Atanc(real_type x)</div><div class="ttdef"><b>Definition</b> G2lib.cc:155</div></div>
+<div class="ttc" id="anamespace_g2lib_html_ac10d1d52ae3cd16ef20171553d117b5b"><div class="ttname"><a href="namespace_g2lib.html#ac10d1d52ae3cd16ef20171553d117b5b">G2lib::Cosc_DD</a></div><div class="ttdeci">real_type Cosc_DD(real_type x)</div><div class="ttdef"><b>Definition</b> G2lib.cc:132</div></div>
+<div class="ttc" id="anamespace_g2lib_html_acc7909dc5a149d8e0dae4803bde69181"><div class="ttname"><a href="namespace_g2lib.html#acc7909dc5a149d8e0dae4803bde69181">G2lib::solveLinearQuadratic</a></div><div class="ttdeci">integer solveLinearQuadratic(real_type A, real_type B, real_type C, real_type a, real_type b, real_type c, real_type x[], real_type y[])</div><div class="ttdef"><b>Definition</b> G2lib.cc:230</div></div>
+<div class="ttc" id="anamespace_g2lib_html_acf4b8b1e2907ced4f4097f9dc5e301c3"><div class="ttname"><a href="namespace_g2lib.html#acf4b8b1e2907ced4f4097f9dc5e301c3">G2lib::projectPointOnCircleArc</a></div><div class="ttdeci">real_type projectPointOnCircleArc(real_type x0, real_type y0, real_type c0, real_type s0, real_type k, real_type L, real_type qx, real_type qy)</div></div>
+<div class="ttc" id="anamespace_g2lib_html_ad3c5023a04f337642bc61cb95c51915f"><div class="ttname"><a href="namespace_g2lib.html#ad3c5023a04f337642bc61cb95c51915f">G2lib::is_counter_clockwise</a></div><div class="ttdeci">integer is_counter_clockwise(real_type const P1[], real_type const P2[], real_type const P3[])</div></div>
+<div class="ttc" id="anamespace_g2lib_html_adcb636fc9381075c0ce6750a07f15a41"><div class="ttname"><a href="namespace_g2lib.html#adcb636fc9381075c0ce6750a07f15a41">G2lib::minmax3</a></div><div class="ttdeci">void minmax3(real_type a, real_type b, real_type c, real_type &amp;vmin, real_type &amp;vmax)</div><div class="ttdef"><b>Definition</b> G2lib.hxx:118</div></div>
+<div class="ttc" id="anamespace_g2lib_html_ae423292c032f3d4aa336b13bf317cac9"><div class="ttname"><a href="namespace_g2lib.html#ae423292c032f3d4aa336b13bf317cac9">G2lib::real_type</a></div><div class="ttdeci">double real_type</div><div class="ttdoc">real type number</div><div class="ttdef"><b>Definition</b> Clothoids.hh:79</div></div>
+<div class="ttc" id="anamespace_g2lib_html_ae6868bffc32e5a0425f93e65c41bc6de"><div class="ttname"><a href="namespace_g2lib.html#ae6868bffc32e5a0425f93e65c41bc6de">G2lib::Cosc_DDD</a></div><div class="ttdeci">real_type Cosc_DDD(real_type x)</div><div class="ttdef"><b>Definition</b> G2lib.cc:141</div></div>
+<div class="ttc" id="anamespace_g2lib_html_aeed539405134d26c4315fd644d5fa2ca"><div class="ttname"><a href="namespace_g2lib.html#aeed539405134d26c4315fd644d5fa2ca">G2lib::rangeSymm</a></div><div class="ttdeci">void rangeSymm(real_type &amp;ang)</div><div class="ttdef"><b>Definition</b> G2lib.cc:59</div></div>
+<div class="ttc" id="anamespace_g2lib_html_affd533209e1ea0ddab7324812690f0b8"><div class="ttname"><a href="namespace_g2lib.html#affd533209e1ea0ddab7324812690f0b8">G2lib::integer</a></div><div class="ttdeci">int integer</div><div class="ttdoc">integer type number</div><div class="ttdef"><b>Definition</b> Clothoids.hh:80</div></div>
+</div><!-- fragment --></div><!-- contents -->
+<!-- start footer part -->
+<hr class="footer"/><address class="footer"><small>
+Generated by&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.12.0
+</small></address>
+</div><!-- doc-content -->
+</body>
+</html>
+</div>
+</section>
+
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p></p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

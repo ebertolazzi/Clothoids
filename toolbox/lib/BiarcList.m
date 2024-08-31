@@ -6,12 +6,11 @@ classdef BiarcList < CurveBase
     %>
     %> **Usage:**
     %>
-    %> \rst
-    %> .. code-block:: matlab
+    %> ```{matlab}
     %>
     %>   self = BiarcList();
     %>
-    %> \endrst
+    %> ```
     %>
     %> **On output:**
     %>
@@ -26,12 +25,11 @@ classdef BiarcList < CurveBase
     %>
     %> **Usage:**
     %>
-    %> \rst
-    %> .. code-block:: matlab
+    %> ```{matlab}
     %>
     %>   ref.reserve(N);
     %>
-    %> \endrst
+    %> ```
     %>
     %>
     function reserve( self, N )
@@ -47,12 +45,11 @@ classdef BiarcList < CurveBase
     %>
     %> **Usage:**
     %>
-    %> \rst
-    %> .. code-block:: matlab
+    %> ```{matlab}
     %>
     %>   ref.push_back(x1,y1,theta1);
     %>   ref.push_back(x0,y0,theta0,x1,y1,theta1);
-    %> \endrst
+    %> ```
     %>
     %> - `x0`, `y0`: initial position of the biarc to be appended
     %> - `theta0`  : initial angle of the biarc to be appended
@@ -67,12 +64,11 @@ classdef BiarcList < CurveBase
     %> The biarc is returned as a biarc object or the data
     %> defining the biarc.
     %>
-    %> \rst
-    %> .. code-block:: matlab
+    %> ```{matlab}
     %>
     %>   BA = ref.get(k); % get the biarc object
     %>   [ x0, y0, theta0, x1, y1, theta1 ] = ref.get(k); % get the biarc data
-    %> \endrst
+    %> ```
     %>
     function varargout = get( self, k )
       [ x0, y0, theta0, x1, y1, theta1 ] = BiarcListMexWrapper( 'get', self.objectHandle, k );
@@ -92,8 +88,7 @@ classdef BiarcList < CurveBase
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     %> Append a biarc or a biarc list.
     %>
-    %> \rst
-    %> .. code-block:: matlab
+    %> ```{matlab}
     %>
     %>   ba = Biarc( ... );
     %>   % ....
@@ -102,7 +97,7 @@ classdef BiarcList < CurveBase
     %>   blist = BiarcList();
     %>   % ...
     %>   ref.append(blist); % append biarc list
-    %> \endrst
+    %> ```
     %>
     function append( self, lst )
       if strcmp(lst.is_type(),'BiarcList')
@@ -120,11 +115,10 @@ classdef BiarcList < CurveBase
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     %> Return the list of points (initial and final) of the biarcs
     %>
-    %> \rst
-    %> .. code-block:: matlab
+    %> ```{matlab}
     %>
     %>   [ x, y ] = ref.get_XY();
-    %> \endrst
+    %> ```
     %>
     function [ x, y ] = get_XY( self )
       [ x, y ] = BiarcListMexWrapper( 'get_XY', self.objectHandle );
@@ -132,16 +126,18 @@ classdef BiarcList < CurveBase
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     %> Return number of biarc in the list
     %>
-    %> \rst
-    %> .. code-block:: matlab
+    %> ```{matlab}
     %>
     %>   nseg = ref.num_segments();
-    %> \endrst
+    %> ```
     %>
     function N = num_segments( self )
       N = BiarcListMexWrapper( 'num_segments', self.objectHandle );
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    %>
+    %> \deprecated  whill be removed in future version
+    %>
     function N = numSegments( self )
       N = self.num_segments();
     end
@@ -151,12 +147,11 @@ classdef BiarcList < CurveBase
     %> at a node is computed by building the circle passing by 3
     %> consecutive points. The node is the middle point.
     %>
-    %> \rst
-    %> .. code-block:: matlab
+    %> ```{matlab}
     %>
     %>   ref.build_G1(x,y);
     %>   ref.build_G1(x,y,theta);
-    %> \endrst
+    %> ```
     %>
     %> - `x`, `y`: vectors of `x` and `y` coordinates of the nodes
     %> - `thetas`: angles at the nodes
@@ -169,11 +164,10 @@ classdef BiarcList < CurveBase
     %> The angle at a node is computed by building the circle passing by 3
     %> consecutive points. The node is the middle point.
     %>
-    %> \rst
-    %> .. code-block:: matlab
+    %> ```{matlab}
     %>
     %>   thetas = ref.build_theta(x,y);
-    %> \endrst
+    %> ```
     %>
     %> - `x`, `y`: vectors of `x` and `y` coordinates of the nodes
     %>
@@ -188,11 +182,10 @@ classdef BiarcList < CurveBase
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     %> Find curvilinear coordinates of inputs points
     %>
-    %> \rst
-    %> .. code-block:: matlab
+    %> ```{matlab}
     %>
     %>   [ s, t, ipos ] = ref.find_coord1(x,y);
-    %> \endrst
+    %> ```
     %>
     %> **Input:**
     %>
@@ -212,8 +205,7 @@ classdef BiarcList < CurveBase
     %>
     %> **Usage:**
     %>
-    %> \rst
-    %> .. code-block:: matlab
+    %> ```{matlab}
     %>
     %>   ref.plot();
     %>   ref.plot( npts );
@@ -222,7 +214,7 @@ classdef BiarcList < CurveBase
     %>   fmt2 = {'Color','red','Linewidth',2};  % second arc of the biarc
     %>   ref.plot( npts, fmt1, fmt2 );
     %>
-    %> \endrst
+    %> ```
     %>
     %> - `npts`: number of sampling points for plotting
     %> - `fmt1`: format of the first arc
@@ -255,8 +247,7 @@ classdef BiarcList < CurveBase
     %>
     %> **Usage:**
     %>
-    %> \rst
-    %> .. code-block:: matlab
+    %> ```{matlab}
     %>
     %>   ref.plot_offs( offs, npts );
     %>
@@ -264,7 +255,7 @@ classdef BiarcList < CurveBase
     %>   fmt2 = {'Color','red','Linewidth',2};  % second arc of the biarc
     %>   ref.plot_offs( offs, npts, fmt1, fmt2 );
     %>
-    %> \endrst
+    %> ```
     %>
     %> - `npts`: number of sampling points for plotting
     %> - `fmt1`: format of the first arc
@@ -293,8 +284,7 @@ classdef BiarcList < CurveBase
     %>
     %> **Usage:**
     %>
-    %> \rst
-    %> .. code-block:: matlab
+    %> ```{matlab}
     %>
     %>   ref.plotCurvature( npts );
     %>
@@ -302,13 +292,13 @@ classdef BiarcList < CurveBase
     %>   fmt2 = {'Color','red','Linewidth',2};
     %>   ref.plotCurvature( npts, fmt1, fmt2 );
     %>
-    %> \endrst
+    %> ```
     %>
     %> - `npts`: number of sampling points for plotting
     %> - `fmt1`: format of the first arc
     %> - `fmt2`: format of the second arc
     %>
-    function plotCurvature( self, npts, varargin )
+    function plot_curvature( self, npts, varargin )
       if nargin > 2
         fmt1 = varargin{1};
       else
@@ -334,12 +324,18 @@ classdef BiarcList < CurveBase
       end
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    %>
+    %> \deprecated  whill be removed in future version
+    %>
+    function plotCurvature( self, npts, varargin )
+      self.plot_curvature( npts, varargin{:} );
+    end
+    % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     %> Plot the angle of the biarc list
     %>
     %> **Usage:**
     %>
-    %> \rst
-    %> .. code-block:: matlab
+    %> ```{matlab}
     %>
     %>   ref.plotAngle( npts );
     %>
@@ -347,13 +343,13 @@ classdef BiarcList < CurveBase
     %>   fmt2 = {'Color','red','Linewidth',2};
     %>   ref.plotAngle( npts, fmt1, fmt2 );
     %>
-    %> \endrst
+    %> ```
     %>
     %> - `npts`: number of sampling points for plotting
     %> - `fmt1`: format of the first arc
     %> - `fmt2`: format of the second arc
     %>
-    function plotAngle( self, npts, varargin )
+    function plot_angle( self, npts, varargin )
       if nargin > 2
         fmt1 = varargin{1};
       else
@@ -379,16 +375,22 @@ classdef BiarcList < CurveBase
       end
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    %>
+    %> \deprecated  whill be removed in future version
+    %>
+    function plotAngle( self, npts, varargin )
+      self.plot_angle( npts, varargin{:} );
+    end
+    % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     %> Plot the normal of the biarc list
     %>
     %> **Usage:**
     %>
-    %> \rst
-    %> .. code-block:: matlab
+    %> ```{matlab}
     %>
     %>   ref.plotNormal( step, len );
     %>
-    %> \endrst
+    %> ```
     %>
     %> - `step`: number of sampling normals
     %> - `len`:  length of the plotted normal
@@ -396,26 +398,31 @@ classdef BiarcList < CurveBase
     function plotNormal( self, step, len )
       for k=1:self.num_segments()
         C = self.get(k);
-        C.plotNormal( step, len );
+        C.plot_normal( step, len );
       end
+    end
+    % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    %>
+    %> \deprecated  whill be removed in future version
+    %>
+    function plotNormal( self, step, len )
+      self.plot_normal( step, len );
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     %> Save the biarc list sampled on a file
     %>
     %> **Usage:**
     %>
-    %> \rst
-    %> .. code-block:: matlab
+    %> ```{matlab}
     %>
     %>   ref.save( filename, ds );
     %>
-    %> \endrst
+    %> ```
     %>
     %> - `filename`: file name
     %> - `ds`:       sample point every `ds`
     %>
     %> the file is of the form
-    %> \rst
     %> .. code-block:: text
     %>
     %>   X Y THETA
@@ -423,7 +430,7 @@ classdef BiarcList < CurveBase
     %>   ...
     %>   ...
     %>
-    %> \endrst
+    %> ```
     %>
     function save( self, filename, ds )
       fd = fopen( filename, 'w' );

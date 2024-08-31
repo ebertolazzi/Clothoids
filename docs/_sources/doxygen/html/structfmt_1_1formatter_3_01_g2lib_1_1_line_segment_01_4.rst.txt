@@ -1,0 +1,14 @@
+.. meta::7184d6261d2a22cefefff764c25f52d61fe62d048cfc63f967a455c3a0bba11f16080b4d252f0e6f4e6300471a366ab5a5b1834a202d0fc448f98f07ef3c7011
+
+:orphan:
+
+.. title:: Clothoids: fmt::formatter&lt; G2lib::LineSegment &gt; Struct Reference
+
+LineSegment &gt; Struct Reference
+=================================
+
+.. container:: doxygen-content
+
+   
+   .. raw:: html
+     :file: structfmt_1_1formatter_3_01_g2lib_1_1_line_segment_01_4.html

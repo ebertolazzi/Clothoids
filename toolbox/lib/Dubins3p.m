@@ -14,12 +14,11 @@
     %>
     %> **Usage**
     %>
-    %> \rst
-    %> .. code-block:: matlab
+    %> ```{matlab}
     %>
     %>   B = A.copy();
     %>
-    %> \endrst
+    %> ```
     %>
     %> where `A` is the curve object to be copied.
     %>
@@ -35,15 +34,14 @@
     %>
     %> **Usage:**
     %>
-    %> \rst
-    %> .. code-block:: matlab
+    %> ```{matlab}
     %>
     %>   self = Biarc();
     %>   self = Biarc( x0, y0, theta0, x1, y1, theta1 );
     %>
-    %> \endrst
+    %> ```
     %>
-    %> **Optinal Arguments:**
+    %> **Optional Arguments:**
     %>
     %> - `x0`, `y0`: coordinate of initial point
     %> - `theta0`    : orientation of the clothoid at initial point
@@ -69,12 +67,11 @@
     %>
     %> **Usage:**
     %>
-    %> \rst
-    %> .. code-block:: matlab
+    %> ```{matlab}
     %>
     %>   ref.build_G1( x0, y0, theta0, x1, y1, theta1 );
     %>
-    %> \endrst
+    %> ```
     %>
     %> **On input:**
     %>
@@ -143,8 +140,7 @@
     %>
     %> **Usage:**
     %>
-    %> \rst
-    %> .. code-block:: matlab
+    %> ```{matlab}
     %>
     %>   ref.plot( npts );
     %>
@@ -152,7 +148,7 @@
     %>   fmt2 = {'Color','red','Linewidth',2};
     %>   ref.plot( npts, fmt1, fmt2 );
     %>
-    %> \endrst
+    %> ```
     %>
     %> - `npts`: number of sampling points for plotting
     %> - `fmt1`: format of the first arc

@@ -1240,7 +1240,13 @@ namespace G2lib {
   { return fmt::format( "Clothoid\n{}\n", *this ); }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
+  //!
+  //!  Print on strem the `ClothoidCurve` object
+  //!
+  //!  \param stream the output stream
+  //!  \param c      an instance of `ClothoidCurve` object
+  //!  \return the output stream
+  //!
   ostream_type &
   operator << ( ostream_type & stream, ClothoidCurve const & c ) {
     fmt::print( stream,

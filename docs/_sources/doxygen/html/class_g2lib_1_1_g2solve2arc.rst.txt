@@ -1,0 +1,14 @@
+.. meta::c57c3c87d3347f3cd6582bdcab0be716b36052177f59f4e7649f576362d15c6bb361bb2ca55fce57e60540e4d8ce21ea0dc4820f162f056201d9db34c7f9eacb
+
+:orphan:
+
+.. title:: Clothoids: G2lib::G2solve2arc Class Reference
+
+G2solve2arc Class Reference
+===========================
+
+.. container:: doxygen-content
+
+   
+   .. raw:: html
+     :file: class_g2lib_1_1_g2solve2arc.html

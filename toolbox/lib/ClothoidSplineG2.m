@@ -21,7 +21,7 @@
 %>      :width: 80%
 %>      :align: center
 %>
-%> \endrst
+%> ```
 %>
 classdef ClothoidSplineG2 < matlab.mixin.Copyable
   %% MATLAB class wrapper for the underlying C++ class

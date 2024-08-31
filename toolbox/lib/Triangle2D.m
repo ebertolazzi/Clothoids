@@ -11,14 +11,13 @@ classdef Triangle2D < matlab.mixin.Copyable
     %>
     %> **Usage:**
     %>
-    %> \rst
-    %> .. code-block:: matlab
+    %> ```{matlab}
     %>
     %>    ref = Triangle2D();
     %>    ref = Triangle2D( x0, y0, x1, y1, x2, y2 );
     %>    ref = Triangle2D( p0, p1, p2 );
     %>
-    %> \endrst
+    %> ```
     %>
     %> **On output:**
     %>
@@ -70,12 +69,11 @@ classdef Triangle2D < matlab.mixin.Copyable
     %>
     %> **Usage:**
     %>
-    %> \rst
-    %> .. code-block:: matlab
+    %> ```{matlab}
     %>
     %>    ref.rotate(angle, cx, cy)
     %>
-    %> \endrst
+    %> ```
     %>
     %> **On input:**
     %>

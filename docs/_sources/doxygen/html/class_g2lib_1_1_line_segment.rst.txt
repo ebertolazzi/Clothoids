@@ -1,0 +1,14 @@
+.. meta::8613aa37e1837e87ae901939f8a8bf06cafa014bc362b6ce79e304fb20860b6eb75e5a9cb54ea7a4343eaf492639ef60c6b30eb72c7b782f67d80ec6b1271eee
+
+:orphan:
+
+.. title:: Clothoids: G2lib::LineSegment Class Reference
+
+LineSegment Class Reference
+===========================
+
+.. container:: doxygen-content
+
+   
+   .. raw:: html
+     :file: class_g2lib_1_1_line_segment.html

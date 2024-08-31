@@ -104,6 +104,34 @@ namespace G2lib {
     m_solution_type = DB.m_solution_type;
   }
 
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+  //!
+  //! Given two points
+  //!
+  //! \f[ (x_0,y_0),\qquad (x_3,y_3) \f]
+  //!
+  //! two angles
+  //!
+  //! \f[ \theta_0,\qquad \theta_1 \f]
+  //!
+  //! and a maximum of curvature \f$ \kappa_{\max} \f$
+  //!
+  //! compute the solution of the Dubins problem
+  //!
+  //! \param[in]  x0     coordinate \f$ x_0 \f$
+  //! \param[in]  y0     coordinate \f$ y_0 \f$
+  //! \param[in]  theta0 angle \f$ \theta_0 \f$
+  //! \param[in]  x3     coordinate \f$ x_3 \f$
+  //! \param[in]  y3     coordinate \f$ y_3 \f$
+  //! \param[in]  theta3 angle \f$ \theta_3 \f$
+  //! \param[in]  k_max  max curvature \f$ \kappa_{\max} \f$
+  //! \param[out] type   solution type
+  //! \param[out] L1     length of first arc
+  //! \param[out] L2     length of second arc
+  //! \param[out] L3     length of third arc
+  //! \param[out] grad   gradient of the solution respect to initial and final angle
+  //! \return `true` if a solution is found
+  //!
   bool
   Dubins_build(
     real_type    x0,
@@ -1103,7 +1131,13 @@ return m_C2.FUN(s)
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
+  //!
+  //!  Print on strem the `Dubins` object
+  //!
+  //!  \param stream the output stream
+  //!  \param bi     an instance of `Dubins` object
+  //!  \return the output stream
+  //!
   ostream_type &
   operator << ( ostream_type & stream, Dubins const & bi ) {
     stream

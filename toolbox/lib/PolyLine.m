@@ -6,12 +6,11 @@ classdef PolyLine < CurveBase
     %> 
     %> **Usage:**
     %>
-    %> \rst
-    %> .. code-block:: matlab
+    %> ```{matlab}
     %>
     %>    ref = PolyLine()
     %>
-    %> \endrst
+    %> ```
     %>
     %> **On output:**
     %>
@@ -27,12 +26,11 @@ classdef PolyLine < CurveBase
     %> 
     %> **Usage:**
     %>
-    %> \rst
-    %> .. code-block:: matlab
+    %> ```{matlab}
     %>
     %>    ref.build( x, y );
     %>
-    %> \endrst
+    %> ```
     %>
     %> - `x`:  vector of x-coordinates of the points
     %> - `y`:  vector of y-coordinates of the points
@@ -53,12 +51,11 @@ classdef PolyLine < CurveBase
     %> 
     %> **Usage:**
     %>
-    %> \rst
-    %> .. code-block:: matlab
+    %> ```{matlab}
     %>
     %>    ref.approx( obj, tol );
     %>
-    %> \endrst
+    %> ```
     %>
     %> - `obj`:  object storing the curve
     %> - `tol`:  tolerance admitted
@@ -87,8 +84,7 @@ classdef PolyLine < CurveBase
     %>
     %> **Usage:**
     %>
-    %> \rst
-    %> .. code-block:: matlab
+    %> ```{matlab}
     %>
     %>   ref.plot();
     %>
@@ -96,7 +92,7 @@ classdef PolyLine < CurveBase
     %>   fmt2 = {'Color','red','Linewidth',2};  % second arc of the biarc
     %>   ref.plot( fmt1, fmt2 );
     %> 
-    %> \endrst
+    %> ```
     %>
     %> - `fmt1`: format of the odd segment
     %> - `fmt2`: format of the even segment

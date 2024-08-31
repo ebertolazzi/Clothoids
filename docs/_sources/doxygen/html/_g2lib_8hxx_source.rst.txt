@@ -1,0 +1,14 @@
+.. meta::baa33ef29d37221d6f36bbe9de9ee7ed274ef0f6fdb0fb4533efccdb8290f13d891e99f1d4f1111f121ccff5a2421f4644a85d5df64a60bf9f1f6fd4e7682dc2
+
+:orphan:
+
+.. title:: Clothoids: /Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Clothoids/G2lib.hxx Source File
+
+/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Clothoids/G2lib.hxx Source File
+=======================================================================================================================
+
+.. container:: doxygen-content
+
+   
+   .. raw:: html
+     :file: _g2lib_8hxx_source.html

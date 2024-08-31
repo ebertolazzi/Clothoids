@@ -19,7 +19,6 @@
 
 #include "Clothoids.hh"
 #include "Clothoids_fmt.hh"
-
 #include "PolynomialRoots.hh"
 
 #include <algorithm>
@@ -41,8 +40,8 @@ namespace G2lib {
   using std::asin;
   using std::acos;
 
+  #ifndef DOXYGEN_SHOULD_SKIP_THIS
   real_type const m_1_sqrt_pi{0.564189583547756286948079451561}; // 1/sqrt(pi)
-
   real_type const machepsi{Utils::machine_eps<real_type>()};
   real_type const machepsi10{10*machepsi};
   real_type const machepsi100{100*machepsi};
@@ -54,6 +53,7 @@ namespace G2lib {
 
   // for CLOTHOIDS_BACK_COMPATIBILITY
   bool use_ISO{true};
+  #endif
 
   void
   rangeSymm( real_type & ang ) {
@@ -206,16 +206,36 @@ namespace G2lib {
   }
   #endif
 
+  //!
+  //! Solve the nonlinear system
+  //!
+  //! \f[
+  //!    A x + B y = C
+  //! \f]
+  //! \f[
+  //!   a x^2 + b y^2 = c
+  //! \f]
+  //!
+  //! \param[in]  A first parameter of the linear equation
+  //! \param[in]  B second parameter of the linear equation
+  //! \param[in]  C third parameter of the linear equation
+  //! \param[in]  a first parameter of the quadratic equation
+  //! \param[in]  b second parameter of the quadratic equation
+  //! \param[in]  c third parameter of the quadratic equation
+  //! \param[out] x \f$x\f$-coordinates of the solutions
+  //! \param[out] y \f$y\f$-coordinates of the solutions
+  //! \return the number of solution 0, 1 or 2
+  //!
   integer
   solveLinearQuadratic(
-    real_type   A,
-    real_type   B,
-    real_type   C,
-    real_type   a,
-    real_type   b,
-    real_type   c,
-    real_type * x,
-    real_type * y
+    real_type A,
+    real_type B,
+    real_type C,
+    real_type a,
+    real_type b,
+    real_type c,
+    real_type x[],
+    real_type y[]
   ) {
     real_type m1 = maxabs3(A,B,C);
     real_type m2 = maxabs3(a,b,c);
@@ -247,14 +267,30 @@ namespace G2lib {
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
+  //!
+  //! Solve the nonlinear system
+  //!
+  //! \f[
+  //!   A x + B y = C
+  //! \f]
+  //! \f[
+  //!   x^2 + y^2 = 1
+  //! \f]
+  //!
+  //! \param[in]  A first parameter of the linear equation
+  //! \param[in]  B second parameter of the linear equation
+  //! \param[in]  C third parameter of the linear equation
+  //! \param[out] x \f$ x \f$-coordinates of the solutions
+  //! \param[out] y \f$ y \f$-coordinates of the solutions
+  //! \return the number of solution 0, 1 or 2
+  //!
   integer
   solveLinearQuadratic2(
-    real_type   A,
-    real_type   B,
-    real_type   C,
-    real_type * x,
-    real_type * y
+    real_type A,
+    real_type B,
+    real_type C,
+    real_type x[],
+    real_type y[]
   ) {
     real_type m = maxabs3(A,B,C);
     A /= m; B /= m; C /= m;
@@ -324,7 +360,9 @@ namespace G2lib {
   //!
   //! Solve the problem
   //!
-  //! \f[ \frac{\sin(kx)}{k} = y, \qquad \frac{1-\cos(kx)}{k} = x \f]
+  //! \f[
+  //!   \frac{\sin(kx)}{k} = y, \qquad \frac{1-\cos(kx)}{k} = x
+  //! \f]
   //!
   //! smoothly for any k (zero too)
   //!
@@ -344,18 +382,41 @@ namespace G2lib {
 
   #endif
 
+  //!
+  //! Intersect the parametric arc
+  //!
+  //! \f[ x = x_1+\frac{\sin(\kappa_1 s+\theta_1)-sin(\theta_1)}{\kappa_1} \f]
+  //! \f[ y = y_1+\frac{\cos(\theta_1)-\cos(\kappa_1 s+\theta_1)}{\kappa_1} \f]
+  //!
+  //! with the parametric arc
+  //! \f[ x = x_2+\frac{\sin(\kappa_2 s+\theta_2)-sin(\theta_2)}{\kappa_2} \f]
+  //! \f[ y = y_2+\frac{\cos(\theta_2)-\cos(\kappa_2 s+\theta_2)}{\kappa_2} \f]
+  //!
+  //! \param[in]  x1     x-origin of the first arc
+  //! \param[in]  y1     y-origin of the first arc
+  //! \param[in]  theta1 initial angle of the first arc
+  //! \param[in]  kappa1 curvature of the first arc
+  //! \param[in]  x2     x-origin of the second arc
+  //! \param[in]  y2     y-origin of the second arc
+  //! \param[in]  theta2 initial angle of the second arc
+  //! \param[in]  kappa2 curvature of the second arc
+  //! \param[out] s1     parameter2 of intersection for the first circle arc
+  //! \param[out] s2     parameter2 of intersection for the second circle arc
+  //!
+  //! \return the number of solution 0, 1 or 2
+  //!
   integer
   intersectCircleCircle(
-    real_type   x1,
-    real_type   y1,
-    real_type   theta1,
-    real_type   kappa1,
-    real_type   x2,
-    real_type   y2,
-    real_type   theta2,
-    real_type   kappa2,
-    real_type * s1,
-    real_type * s2
+    real_type x1,
+    real_type y1,
+    real_type theta1,
+    real_type kappa1,
+    real_type x2,
+    real_type y2,
+    real_type theta2,
+    real_type kappa2,
+    real_type s1[],
+    real_type s2[]
   ) {
     real_type dx    = x2 - x1;
     real_type dy    = y2 - y1;
@@ -415,6 +476,21 @@ namespace G2lib {
    |  /_/\_\  |_|    \__\___/    |_| |_| |_|\___|\__\__,_|
   \*/
 
+  //!
+  //! Given a list of \f$ n \f$ points \f$ (x_i,y_i) \f$ compute
+  //! the guess angles for the \f$ G^2 \f$ curve construction.
+  //!
+  //! \param[in]  npts      \f$n\f$
+  //! \param[in]  x         \f$x\f$-coordinates of the points
+  //! \param[in]  y         \f$y\f$-coordinates of the points
+  //! \param[out] theta     guess angles
+  //! \param[out] theta_min minimum angles at each nodes
+  //! \param[out] theta_max maximum angles at each nodes
+  //! \param[out] omega     angles of two consecutive points, with accumulated \f$ 2\pi \f$ angle rotation
+  //! \param[out] len       distance between two consecutive poijts
+  //!
+  //! @html_image{node_angles.png,width=60%}
+  //!
   void
   xy_to_guess_angle(
     integer         npts,
@@ -484,6 +560,12 @@ namespace G2lib {
    |  |____/ \___/|_| \_/ \___|_____/_/\_\_____|
   \*/
 
+  //!
+  //! factorize matrix \f$ A \f$
+  //!
+  //! \param A 2 by 2 matrix \f$ A \f$ to be factorized
+  //! \return `false` if factorization fails
+  //!
   bool
   Solve2x2::factorize( real_type A[2][2] ) {
     // full pivoting
@@ -515,6 +597,15 @@ namespace G2lib {
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
+  //!
+  //! Solve the linear system \f$ Ax=b \f$ with
+  //! \f$ A \f$ stored amd facted with a previous call
+  //! of method ``factorize``.
+  //!
+  //! \param[in]  b the r.h.s. of \f$ Ax=b \f$
+  //! \param[out] x the solution of \f$ Ax=b \f$
+  //! \return `true` if solution is found
+  //!
   bool
   Solve2x2::solve( real_type const b[2], real_type x[2] ) const {
     if ( singular ) {
@@ -604,6 +695,7 @@ namespace G2lib {
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
 
   real_type
   projectPointOnCircle(

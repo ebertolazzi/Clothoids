@@ -1,0 +1,14 @@
+.. meta::25bc26df8fd362520c1023df5c249163566b12abfddd996ad8ccf97893a676b20af9f7fe72c57107ff6759de6a0d5300fc5d4883482a861c5b65545d830e4d6a
+
+:orphan:
+
+.. title:: Clothoids: G2lib::Triangle2D Class Reference
+
+Triangle2D Class Reference
+==========================
+
+.. container:: doxygen-content
+
+   
+   .. raw:: html
+     :file: class_g2lib_1_1_triangle2_d.html

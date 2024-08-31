@@ -1,0 +1,14 @@
+.. meta::0fbf30834429f3cb552b982662bcdf1766f192f6a39347483fae3480e357074cbb900acd8c76b0c19bea671f9bdadc20b8b1559eb49ad1ad589133b3313b05c1
+
+:orphan:
+
+.. title:: Clothoids: /Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Clothoids/Dubins3p.hxx Source File
+
+/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Clothoids/Dubins3p.hxx Source File
+==========================================================================================================================
+
+.. container:: doxygen-content
+
+   
+   .. raw:: html
+     :file: _dubins3p_8hxx_source.html

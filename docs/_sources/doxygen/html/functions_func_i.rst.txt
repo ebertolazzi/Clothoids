@@ -1,0 +1,14 @@
+.. meta::4331f56ada5356f7204e990cc94528963905626161357fbf124cd8e487f8e6958abcedb5184c653f4c1dea9b51a9c4c798f92473769316104206739b67b9a45e
+
+:orphan:
+
+.. title:: Clothoids: Class Members - Functions
+
+Class Members - Functions
+=========================
+
+.. container:: doxygen-content
+
+   
+   .. raw:: html
+     :file: functions_func_i.html

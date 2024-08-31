@@ -677,7 +677,13 @@ return m_Dubins1.FUN(s)
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
+  //!
+  //!  Print on strem the `Dubins3p` object
+  //!
+  //!  \param stream the output stream
+  //!  \param bi     an instance of `Dubins3p` object
+  //!  \return the output stream
+  //!
   ostream_type &
   operator << ( ostream_type & stream, Dubins3p const & bi ) {
     stream

@@ -1,0 +1,40 @@
+@INCLUDE = Doxyfile
+
+PROJECT_NAME           = "Clothoids"
+INPUT                  = ../toolbox/lib
+RECURSIVE              = YES
+IMAGE_PATH             = images
+USE_MATHJAX            = YES
+MATHJAX_VERSION        = MathJax_3
+SEARCHENGINE           = NO   # deactivate search engine (as sphinx has it's own search)
+SOURCE_BROWSER         = NO
+INLINE_SOURCES         = NO
+REFERENCES_LINK_SOURCE = NO
+NUM_PROC_THREADS       = 0
+
+EXTENSION_MAPPING      = .m=C++
+FILE_PATTERNS          = *.m
+FILTER_PATTERNS        = *.m=./m2cpp.pl
+INCLUDE_FILE_PATTERNS  =
+
+OUTPUT_DIRECTORY       = doxygen2
+GENERATE_TAGFILE       = doxygen2/html/tagfile.xml  # generate a tag file
+                              # this could be stored anywhere, however we recommend to put it into the
+                              # documentation output folder which is the value of the OUTPUT_DIRECTORY variable
+                              # + the value of the HTML_OUTPUT variable (your have to expand it for yourself
+                              # because doxygen has no mechanism to reference config settings that were defined
+                              # beforehand.
+                              # The tagfile is also needed for the doxylink extension
+
+PREDEFINED = DOXYGEN_SHOULD_SKIP_THIS
+
+#DOT_IMAGE_FORMAT       = svg  # generates nicer svg images
+#DOT_TRANSPARENT        = YES  # generate transparent images
+#INTERACTIVE_SVG        = YES  # to be able to scroll and zoom into big images
+
+# if you want to use aliases instead of markdown fences for commenting (see syntax guide) you have to add
+# something like this (which doesn't hurt either):
+#ALIASES               = html_image{2}="\htmlonly<div class='image'><img src='\1' \2/></div>\endhtmlonly"
+ALIASES               = html_image{2}="\image html \1' \2"
+HTML_EXTRA_STYLESHEET = doxygen-awesome.css
+HTML_OUTPUT           = html

@@ -1,0 +1,14 @@
+.. meta::3b95aeeb0fbaef6fbc38b5f306d6b13d4748ffbf49e39879a1fc2324f28a800d0912f792e6ea0650e8089059e0068bc50d9ac93573a0009cf1a92a30fc51a4e7
+
+:orphan:
+
+.. title:: Clothoids: LineSegment Class Reference
+
+LineSegment Class Reference
+===========================
+
+.. container:: doxygen-content
+
+   
+   .. raw:: html
+     :file: class_line_segment.html

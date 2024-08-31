@@ -45,7 +45,7 @@ namespace G2lib {
 
   #ifndef DOXYGEN_SHOULD_SKIP_THIS
 
-  using Ppair = pair<CurveType,CurveType>;
+  using Ppair = pair<CurveType,CurveType>; //!< Pair of curve type
 
   static map<Ppair,CurveType> const promote_map = {
 

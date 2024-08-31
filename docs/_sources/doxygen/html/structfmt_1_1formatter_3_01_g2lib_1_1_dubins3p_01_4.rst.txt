@@ -1,0 +1,14 @@
+.. meta::390abfc11d16b6a21674f1188ecde42c466de1d7b1600c0a822cb3d79064062c5bbc913e165693ab912cf972f0554dd5c68d9dfe6a308d85135ec9b8751b9aa9
+
+:orphan:
+
+.. title:: Clothoids: fmt::formatter&lt; G2lib::Dubins3p &gt; Struct Reference
+
+Dubins3p &gt; Struct Reference
+==============================
+
+.. container:: doxygen-content
+
+   
+   .. raw:: html
+     :file: structfmt_1_1formatter_3_01_g2lib_1_1_dubins3p_01_4.html

@@ -1,0 +1,14 @@
+.. meta::e5a6cc597e7bfce82d9468aab743cc38f0a7906dca8be4a9787dcb387760cee933fc6ca88ec7668a81022b3bbc1f9468ed1d9127d7473224d61f4b047256c860
+
+:orphan:
+
+.. title:: Clothoids: /Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Clothoids/PolyLine.hxx Source File
+
+/Users/enrico/Ricerca/develop/PINS/pins-mechatronix/LibSources/submodules/Clothoids/src/Clothoids/PolyLine.hxx Source File
+==========================================================================================================================
+
+.. container:: doxygen-content
+
+   
+   .. raw:: html
+     :file: _poly_line_8hxx_source.html
