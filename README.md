@@ -4,13 +4,13 @@
 
 A clothoid is a curve $(x(s),y(x))$ is described by the parametric equations:
 
-- $$
+$$
   x(s)=\int_0^s \cos\left(\frac{1}{2}\kappa'\tau^2+\kappa_0\tau+\vartheta_0\right)\,\mathrm{d}\tau
-  $$
+$$
 
-- $$
+$$
   y(s)=\int_0^s \sin\left(\frac{1}{2}\kappa'\tau^2+\kappa_0\tau+\vartheta_0\right)\,\mathrm{d}\tau
-  $$
+$$
 
 when $\kappa'=0$ the clothoids reduce to a circle arc and when $\kappa'=\kappa_0=0$ the clothoids reduce to a straight segment.
 
