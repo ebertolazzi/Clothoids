@@ -865,7 +865,8 @@ namespace G2lib {
     vector<ClothoidCurve> m_clothoid_list;
 
     #ifdef CLOTHOIDS_USE_THREADS
-    mutable Utils::BinarySearch<integer> m_last_interval;
+    mutable std::mutex                                         m_last_interval_mutex;
+    mutable std::map<std::thread::id,std::shared_ptr<integer>> m_last_interval;
     #else
     mutable integer m_last_interval{0};
     #endif
@@ -884,8 +885,11 @@ namespace G2lib {
     void
     reset_last_interval() {
       #ifdef CLOTHOIDS_USE_THREADS
-      bool ok;
-      integer & last_interval = *m_last_interval.search( std::this_thread::get_id(), ok );
+      std::unique_lock<std::mutex> lock(m_last_interval_mutex);
+      auto id = std::this_thread::get_id();
+      auto it = m_last_interval.find(id);
+      if ( it == m_last_interval.end() ) it = m_last_interval.insert( {id,std::make_shared<integer>()} ).first;
+      integer & last_interval{ *it->second.get() };
       #else
       integer & last_interval = m_last_interval;
       #endif

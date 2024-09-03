@@ -157,8 +157,15 @@ namespace G2lib {
   integer
   PolyLine::find_at_s( real_type & s ) const {
     #ifdef CLOTHOIDS_USE_THREADS
-    bool ok;
-    integer & last_interval = *m_last_interval.search( std::this_thread::get_id(), ok );
+    std::unique_lock<std::mutex> lock(m_last_interval_mutex);
+    auto id = std::this_thread::get_id();
+    auto it = m_last_interval.find(id);
+    if ( it == m_last_interval.end() ) {
+      it = m_last_interval.insert( {id,std::make_shared<integer>()} ).first;
+      *it->second.get() = 0;
+    }
+    integer & last_interval{ *it->second.get() };
+    lock.unlock();
     #else
     integer & last_interval = m_last_interval;
     #endif
@@ -175,7 +182,6 @@ namespace G2lib {
   PolyLine::init() {
     m_s0.clear();
     m_polyline_list.clear();
-    this->reset_last_interval();
     m_aabb_done = false;
     this->reset_last_interval();
   }

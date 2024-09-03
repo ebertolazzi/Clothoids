@@ -1521,7 +1521,7 @@ namespace G2lib {
     real_type Kmin  = kappa_fun( th0, thmax );
     real_type Kmax  = kappa_fun( th0, thmin );
     bool ok;
-    real_type th = theta_guess( th0, max(min(k0,Kmax),Kmin), ok );
+    real_type th{ theta_guess( th0, max(min(k0,Kmax),Kmin), ok ) };
     if ( ok ) {
       for ( integer iter = 0; iter < 20; ++iter ) {
         real_type LL, L_D[2], k_D[2], dk_D[2];
