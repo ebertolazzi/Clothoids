@@ -26,5 +26,5 @@ if ARGV.size() > 0 && ARGV[0] == "--last" then
   system('git submodule foreach --recursive git pull')
 end
 
-system('ruby submodules/Utils/setup.rb')
+system('ruby submodules/UtilsLite/setup.rb')
 system('ruby submodules/quarticRootsFlocke/setup.rb')
