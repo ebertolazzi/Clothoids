@@ -4,10 +4,10 @@
 #include <random>
 #include <string>
 #include <iomanip>
-#include <Eigen/Dense>
 
 #include "Clothoids.hh"
 #include "Clothoids_fmt.hh"
+#include "Utils_eigen.hh"
 
 #include <thread>
 

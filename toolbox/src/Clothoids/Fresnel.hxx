@@ -45,8 +45,11 @@ namespace G2lib {
   //!
   //! Compute Fresnel integrals and its derivatives
   //!
-  //! \f[ C(x) = \int_0^x \cos\left(\frac{\pi}{2}t^2\right) dt, \qquad
-  //!     S(x) = \int_0^x \sin\left(\frac{\pi}{2}t^2\right) dt \f]
+  //! \f[
+  //!   C(x) = \int_0^x \cos\left(\frac{\pi}{2}t^2\right) \mathrm{d}t, \qquad
+  //!   S(x) = \int_0^x \sin\left(\frac{\pi}{2}t^2\right) \mathrm{d}t
+  //! \f]
+  //!
   //! \param nk maximum order of the derivative
   //! \param x  the input abscissa
   //! \param S  S[0]=\f$ S(x) \f$, S[1]=\f$ S'(x) \f$, S[2]=\f$ S''(x) \f$
@@ -64,8 +67,8 @@ namespace G2lib {
   //! Compute the Fresnel integrals
   //!
   //! \f[
-  //!   \int_0^1 t^k \cos\left(a\frac{t^2}{2} + b t + c\right) dt,\qquad
-  //!   \int_0^1 t^k \sin\left(a\frac{t^2}{2} + b t + c\right) dt
+  //!   \int_0^1 t^k \cos\left(a\frac{t^2}{2} + b t + c\right)\,\mathrm{d}t,\qquad
+  //!   \int_0^1 t^k \sin\left(a\frac{t^2}{2} + b t + c\right)\,\mathrm{d}t
   //! \f]
   //!
   //! \param nk   number of momentae to compute
@@ -89,9 +92,10 @@ namespace G2lib {
   //! Compute the Fresnel integrals
   //!
   //! \f[
-  //!   \int_0^1 t^k \cos\left(a\frac{t^2}{2} + b t + c\right) dt,\qquad
-  //!   \int_0^1 t^k \sin\left(a\frac{t^2}{2} + b t + c\right) dt
+  //!   \int_0^1 t^k \cos\left(a\frac{t^2}{2} + b t + c\right)\,\mathrm{d}t,\qquad
+  //!   \int_0^1 t^k \sin\left(a\frac{t^2}{2} + b t + c\right)\,\mathrm{d}t
   //! \f]
+  //!
   //! \param a      parameter \f$ a \f$
   //! \param b      parameter \f$ b \f$
   //! \param c      parameter \f$ c \f$
@@ -117,8 +121,8 @@ namespace G2lib {
   class ClothoidData {
   public:
 
-    real_type m_x0{0};     //!< initial x coordinate of the clothoid
-    real_type m_y0{0};     //!< initial y coordinate of the clothoid
+    real_type m_x0{0};     //!< initial \f$x\f$-coordinate of the clothoid
+    real_type m_y0{0};     //!< initial \f$y\f$-coordinate of the clothoid
     real_type m_theta0{0}; //!< initial angle of the clothoid
     real_type m_kappa0{0}; //!< initial curvature
     real_type m_dk{0};     //!< curvature derivative
@@ -132,7 +136,7 @@ namespace G2lib {
     real_type deltaTheta( real_type s ) const { return delta_theta( s ); }
 
     //!
-    //! Return angle at curvilinear coordinate `s`
+    //! Return angle at curvilinear coordinate \f$s\f$
     //!
     real_type
     theta( real_type s ) const
@@ -143,7 +147,7 @@ namespace G2lib {
     real_type theta_DDD( real_type   ) const { return 0; }
 
     //!
-    //! Return curvature at curvilinear coordinate `s`
+    //! Return curvature at curvilinear coordinate \f$s\f$
     //!
     real_type kappa    ( real_type s ) const { return m_kappa0 + s*m_dk; }
     real_type kappa_D  ( real_type   ) const { return m_dk; }

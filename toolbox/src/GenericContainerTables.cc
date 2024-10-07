@@ -31,7 +31,7 @@ namespace GC_namespace {
   using namespace std;
 
   void
-  writeTable(
+  write_table(
     vec_string_type const & headers,
     vector_type     const & data,
     ostream_type          & stream,
@@ -55,7 +55,7 @@ namespace GC_namespace {
   }
 
   void
-  writeTable(
+  write_table(
     vec_string_type const & headers,
     mat_real_type   const & data,
     ostream_type          & stream,
@@ -79,7 +79,7 @@ namespace GC_namespace {
   }
 
   void
-  writeTableFormatted(
+  write_table_formatted(
     vec_string_type const & headers,
     vector_type     const & data,
     ostream_type          & stream
@@ -117,7 +117,7 @@ namespace GC_namespace {
   }
 
   void
-  writeTableFormatted(
+  write_table_formatted(
     vec_string_type const & headers,
     mat_real_type   const & data,
     ostream_type          & stream

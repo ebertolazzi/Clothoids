@@ -35,20 +35,15 @@
 //!
 //! **References**
 //!
-//! \rst
+//! - **N.Flocke**
+//!   Algorithm 954: An Accurate and Efficient Cubic and Quartic
+//!   Equation Solver for Physical Applications
+//!   ACM TOMS, vol 41, n.4, 2015
 //!
-//! -  | **N.Flocke**
-//!    | Algorithm 954: An Accurate and Efficient Cubic and Quartic
-//!    | Equation Solver for Physical Applications
-//!    | ACM TOMS, vol 41, n.4, 2015
-//!
-//! -  | **M.A. Jenkins and J.F.Traub**
-//!    | A Three-Stage Algorithm for Real Polynomials Using Quadratic
-//!      Iteration
-//!    | SIAM Journal on Numerical Analysis
-//!    | Vol. 7, No.4 (Dec., 1970), pp.545-566
-//!
-//! \endrst
+//! - **M.A. Jenkins and J.F.Traub**
+//!   A Three-Stage Algorithm for Real Polynomials Using Quadratic Iteration
+//!   SIAM Journal on Numerical Analysis
+//!   Vol. 7, No.4 (Dec., 1970), pp.545-566
 //!
 namespace PolynomialRoots {
 
@@ -133,10 +128,7 @@ namespace PolynomialRoots {
   //!
   //! **Constructor**
   //!
-  //! \rst
-  //!
-  //! .. code-block:: cpp
-  //!
+  //! ```{cpp}
   //!   double a = 1;
   //!   double b = 2;
   //!   double c = 3;
@@ -144,27 +136,19 @@ namespace PolynomialRoots {
   //!
   //!   Quadratic q;
   //!   q.setup(a,b,c); // build an solve `a x^2 + b x + c = 0`
-  //!
-  //! \endrst
+  //! ```
   //!
   //! **Get kind of solution**
   //!
-  //! \rst
-  //!
-  //! .. code-block:: cpp
-  //!
+  //! ```{cpp}
   //!   int  nroots            = q.num_roots();
   //!   bool has_complex_root  = q.complex_root();
   //!   bool has_a_double_root = q.double_root();
-  //!
-  //! \endrst
+  //! ```
   //!
   //! **Get real roots**
   //!
-  //! \rst
-  //!
-  //! .. code-block:: cpp
-  //!
+  //! ```{cpp}
   //!   double r_min = 0;
   //!   double r_max = 2;
   //!   double r[2];
@@ -174,15 +158,11 @@ namespace PolynomialRoots {
   //!   nroots = p.getNegativeRoots( r );
   //!   nroots = p.getRootsInRange( r_min, r_max, r );
   //!   nroots = p.getRootsInOpenRange( r_min, r_max, r );
-  //!
-  //! \endrst
+  //! ```
   //!
   //! **Get roots**
   //!
-  //! \rst
-  //!
-  //! .. code-block:: cpp
-  //!
+  //! ```{cpp}
   //!   double r0 = p.real_root0();
   //!   double r1 = p.real_root1();
   //!   complex_type r0 = p.root0();
@@ -194,32 +174,23 @@ namespace PolynomialRoots {
   //!   p.getRoot0( r );
   //!   p.getRoot1( re, im );
   //!   p.getRoot1( r );
-  //!
-  //! \endrst
+  //! ```
   //!
   //! **Evaluate polynomial**
   //!
-  //! \rst
-  //!
-  //! .. code-block:: cpp
-  //!
+  //! ```{cpp}
   //!   {double or complex} v, x;
   //!   v = p.eval( x );
   //!
   //!   p.eval( x, p, dp );
-  //!
-  //! \endrst
+  //! ```
   //!
   //! **Information**
   //!
-  //! \rst
-  //!
-  //! .. code-block:: cpp
-  //!
+  //! ```{cpp}
   //!   p.info( cout );
   //!   bool ok = p.check( cout );
-  //!
-  //! \endrst
+  //! ```
   //!
   class Quadratic {
     real_type ABC[3];
@@ -506,100 +477,75 @@ namespace PolynomialRoots {
   //!
   //! **Constructor**
   //!
-  //! \rst
+  //! ```{cpp}
+  //!   double a = 1;
+  //!   double b = 2;
+  //!   double c = 3;
+  //!   double d = 3;
+  //!   Cubic p(a,b,c,d); // build an solve a x^3 + b x^2 + c x + d = 0
   //!
-  //! .. code-block:: cpp
-  //!
-  //!      double a = 1;
-  //!      double b = 2;
-  //!      double c = 3;
-  //!      double d = 3;
-  //!      Cubic p(a,b,c,d); // build an solve ``a x^3 + b x^2 + c x + d = 0``
-  //!
-  //!
-  //!      Cubic p;
-  //!      p.setup(a,b,c,d); // build an solve ``a x^3 + b x^2 + c x + d = 0``
-  //!
-  //! \endrst
+  //!   Cubic p;
+  //!   p.setup(a,b,c,d); // build an solve a x^3 + b x^2 + c x + d = 0
+  //! ```
   //!
   //! **Get kind of solution**
   //!
-  //! \rst
-  //!
-  //! .. code-block:: cpp
-  //!
-  //!      int  nroots = p.num_roots();
-  //!      bool has_complex_root  = p.complex_root();
-  //!      bool has_a_double_root = p.double_root();
-  //!      bool has_a_triple_root = p.triple_root();
-  //!
-  //! \endrst
+  //! ```{cpp}
+  //!   int  nroots = p.num_roots();
+  //!   bool has_complex_root  = p.complex_root();
+  //!   bool has_a_double_root = p.double_root();
+  //!   bool has_a_triple_root = p.triple_root();
+  //! ```
   //!
   //! **Get real roots**
   //!
-  //! \rst
-  //!
-  //! .. code-block:: cpp
-  //!
-  //!      double r_min = 0;
-  //!      double r_max = 2;
-  //!      double r[3];
-  //!      int nroots;
-  //!      nroots = p.getRealRoots( r );
-  //!      nroots = p.getPositiveRoots( r );
-  //!      nroots = p.getNegativeRoots( r );
-  //!      nroots = p.getRootsInRange( r_min, r_max, r );
-  //!      nroots = p.getRootsInOpenRange( r_min, r_max, r );
-  //!
-  //! \endrst
+  //! ```{cpp}
+  //!   double r_min = 0;
+  //!   double r_max = 2;
+  //!   double r[3];
+  //!   int nroots;
+  //!   nroots = p.getRealRoots( r );
+  //!   nroots = p.getPositiveRoots( r );
+  //!   nroots = p.getNegativeRoots( r );
+  //!   nroots = p.getRootsInRange( r_min, r_max, r );
+  //!   nroots = p.getRootsInOpenRange( r_min, r_max, r );
+  //! ```
   //!
   //! **Get roots**
   //!
-  //! \rst
+  //! ```{cpp}
+  //!   double r0 = p.real_root0();
+  //!   double r1 = p.real_root1();
+  //!   double r2 = p.real_root2();
+  //!   complex_type r0 = p.root0();
+  //!   complex_type r1 = p.root1();
+  //!   complex_type r2 = p.root2();
   //!
-  //! .. code-block:: cpp
-  //!
-  //!      double r0 = p.real_root0();
-  //!      double r1 = p.real_root1();
-  //!      double r2 = p.real_root2();
-  //!      complex_type r0 = p.root0();
-  //!      complex_type r1 = p.root1();
-  //!      complex_type r2 = p.root2();
-  //!
-  //!      complex_type r;
-  //!      double re, im;
-  //!      p.getRoot0( re, im );
-  //!      p.getRoot0( r );
-  //!      p.getRoot1( re, im );
-  //!      p.getRoot1( r );
-  //!      p.getRoot2( re, im );
-  //!      p.getRoot2( r );
-  //!
-  //! \endrst
+  //!   complex_type r;
+  //!   double re, im;
+  //!   p.getRoot0( re, im );
+  //!   p.getRoot0( r );
+  //!   p.getRoot1( re, im );
+  //!   p.getRoot1( r );
+  //!   p.getRoot2( re, im );
+  //!   p.getRoot2( r );
+  //! ```
   //!
   //! **Evaluate polynomial**
   //!
-  //! \rst
+  //! ```{cpp}
+  //!   {double or complex} v, x;
+  //!   v = p.eval( x );
   //!
-  //! .. code-block:: cpp
-  //!
-  //!      {double or complex} v, x;
-  //!      v = p.eval( x );
-  //!
-  //!      p.eval( x, p, dp );
-  //!
-  //! \endrst
+  //!   p.eval( x, p, dp );
+  //! ```
   //!
   //! **Information**
   //!
-  //! \rst
-  //!
-  //! .. code-block:: cpp
-  //!
-  //!      p.info( cout );
-  //!      bool ok = p.check( cout );
-  //!
-  //! \endrst
+  //! ```{cpp}
+  //!   p.info( cout );
+  //!   bool ok = p.check( cout );
+  //! ```
   //!
   class Cubic {
     real_type ABCD[4];
@@ -614,7 +560,20 @@ namespace PolynomialRoots {
 
   public:
 
+    //!
+    //! Build an empty instance of Cubic polynomial solver
+    //!
     Cubic() {}
+
+    //!
+    //! Build the instance of the calss and compute the roots of cubic polynomial
+    //! \f$ a x^3 + b x^2 + c x + d \f$
+    //!
+    //! \param[in] a coefficient of \f$ x^3 \f$
+    //! \param[in] b coefficient of \f$ x^2 \f$
+    //! \param[in] c coefficient of \f$ x   \f$
+    //! \param[in] d coefficient of \f$ x^0 \f$
+    //!
     Cubic( real_type a, real_type b, real_type c, real_type d ) {
       using std::isfinite;
       real_type & A = ABCD[0];
@@ -909,110 +868,85 @@ namespace PolynomialRoots {
    |  | |_| | |_| | (_| | |  | |_| | (__
    |   \__\_\\__,_|\__,_|_|   \__|_|\___|
    |
-   |  A * x^3 + B * x^2 + C * x + D
+   |  A * x^4 + B * x^3 + C * x^2 + D * x + E
   \*/
   //! Quartic polynomial class
   //!
   //! **Constructor**
   //!
-  //! \rst
+  //! ```{cpp}
+  //!   double a = 1;
+  //!   double b = 2;
+  //!   double c = 3;
+  //!   double d = 3;
+  //!   double e = 3;
+  //!   Quartic p(a,b,c,d,e); // build an solve a x^4 + b x^3 + c x^2 + d x + e = 0
   //!
-  //! .. code-block:: cpp
-  //!
-  //!      double a = 1;
-  //!      double b = 2;
-  //!      double c = 3;
-  //!      double d = 3;
-  //!      double e = 3;
-  //!      Quartic p(a,b,c,d,e); // build an solve ``a x^4 + b x^3 + c x^2 + d x + e = 0``
-  //!
-  //!
-  //!      Quartic p;
-  //!      p.setup(a,b,c,d,e); // build an solve ``a x^4 + b x^3 + c x^2 + d x + e = 0``
-  //!
-  //! \endrst
+  //!   Quartic p;
+  //!   p.setup(a,b,c,d,e); // build an solve a x^4 + b x^3 + c x^2 + d x + e = 0
+  //! ```
   //!
   //! **Get kind of solution**
   //!
-  //! \rst
-  //!
-  //! .. code-block:: cpp
-  //!
-  //!      int nroots = p.num_roots();
-  //!      int nroots = p.num_real_roots();
-  //!      int nroots = p.num_complex_root();
-  //!
-  //! \endrst
+  //! ```{cpp}
+  //!   int nroots = p.num_roots();
+  //!   int nroots = p.num_real_roots();
+  //!   int nroots = p.num_complex_root();
+  //! ```
   //!
   //! **Get real roots**
   //!
-  //! \rst
-  //!
-  //! .. code-block:: cpp
-  //!
-  //!      double r_min = 0;
-  //!      double r_max = 2;
-  //!      double r[4];
-  //!      int nroots;
-  //!      nroots = p.getRealRoots( r );
-  //!      nroots = p.getPositiveRoots( r );
-  //!      nroots = p.getNegativeRoots( r );
-  //!      nroots = p.getRootsInRange( r_min, r_max, r );
-  //!      nroots = p.getRootsInOpenRange( r_min, r_max, r );
-  //!
-  //! \endrst
+  //! ```{cpp}
+  //!   double r_min = 0;
+  //!   double r_max = 2;
+  //!   double r[4];
+  //!   int nroots;
+  //!   nroots = p.getRealRoots( r );
+  //!   nroots = p.getPositiveRoots( r );
+  //!   nroots = p.getNegativeRoots( r );
+  //!   nroots = p.getRootsInRange( r_min, r_max, r );
+  //!   nroots = p.getRootsInOpenRange( r_min, r_max, r );
+  //! ```
   //!
   //! **Get roots**
   //!
-  //! \rst
+  //! ```{cpp}
+  //!   double r0 = p.real_root0();
+  //!   double r1 = p.real_root1();
+  //!   double r2 = p.real_root2();
+  //!   double r3 = p.real_root3();
+  //!   complex_type r0 = p.root0();
+  //!   complex_type r1 = p.root1();
+  //!   complex_type r2 = p.root2();
+  //!   complex_type r3 = p.root3();
   //!
-  //! .. code-block:: cpp
-  //!
-  //!      double r0 = p.real_root0();
-  //!      double r1 = p.real_root1();
-  //!      double r2 = p.real_root2();
-  //!      double r3 = p.real_root3();
-  //!      complex_type r0 = p.root0();
-  //!      complex_type r1 = p.root1();
-  //!      complex_type r2 = p.root2();
-  //!      complex_type r3 = p.root3();
-  //!
-  //!      complex_type r;
-  //!      double re, im;
-  //!      p.getRoot0( re, im );
-  //!      p.getRoot0( r );
-  //!      p.getRoot1( re, im );
-  //!      p.getRoot1( r );
-  //!      p.getRoot2( re, im );
-  //!      p.getRoot2( r );
-  //!      p.getRoot3( re, im );
-  //!      p.getRoot3( r );
-  //!
-  //! \endrst
+  //!   complex_type r;
+  //!   double re, im;
+  //!   p.getRoot0( re, im );
+  //!   p.getRoot0( r );
+  //!   p.getRoot1( re, im );
+  //!   p.getRoot1( r );
+  //!   p.getRoot2( re, im );
+  //!   p.getRoot2( r );
+  //!   p.getRoot3( re, im );
+  //!   p.getRoot3( r );
+  //! ```
   //!
   //! **Evaluate polynomial**
   //!
-  //! \rst
+  //! ```{cpp}
+  //!   {double or complex} v, x;
+  //!   v = p.eval( x );
   //!
-  //! .. code-block:: cpp
-  //!
-  //!      {double or complex} v, x;
-  //!      v = p.eval( x );
-  //!
-  //!      p.eval( x, p, dp );
-  //!
-  //! \endrst
+  //!   p.eval( x, p, dp );
+  //! ```
   //!
   //! **Information**
   //!
-  //! \rst
-  //!
-  //! .. code-block:: cpp
-  //!
-  //!      p.info( cout );
-  //!      bool ok = p.check( cout );
-  //!
-  //! \endrst
+  //! ```{cpp}
+  //!   p.info( cout );
+  //!   bool ok = p.check( cout );
+  //! ```
   //!
   class Quartic {
     real_type ABCDE[5];

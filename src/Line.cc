@@ -151,13 +151,13 @@ namespace G2lib {
   };
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  //! Given three colinear points \f$ p \f$, \f$ q \f$, \f$ r \f$, 
+  //! Given three colinear points \f$ p \f$, \f$ q \f$, \f$ r \f$,
   //! the function checks if point \f$ q \f$ lies on line segment \f$ \overline{pr} \f$.
   //!
   //! \param[in] p    first point \f$ p \f$
   //! \param[in] q    point \f$ q \f$ to be checked
   //! \param[in] r    second point \f$ r \f$
-  //! \param[in] epsi tolerance 
+  //! \param[in] epsi tolerance
   //! \return `true` if \f$ q \f$ is on segment \f$ \overline{pr} \f$
   //!
   static
@@ -193,7 +193,7 @@ namespace G2lib {
   //! \param[in] p    first point \f$ p \f$
   //! \param[in] q    second point \f$ q \f$
   //! \param[in] r    third point \f$ r \f$
-  //! \param[in] epsi tolerance 
+  //! \param[in] epsi tolerance
   //! \return the orientation
   static
   integer
@@ -429,7 +429,7 @@ namespace G2lib {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   void
-  LineSegment::toBS( real_type knots[], real_type Poly[2][2] ) const {
+  LineSegment::toBS( real_type knots[], real_type Poly[][2] ) const {
     knots[0] = knots[1] = 0;
     knots[2] = knots[3] = 1;
     Poly[0][0] = m_x0;

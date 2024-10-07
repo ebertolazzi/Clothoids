@@ -17,12 +17,14 @@
  |                                                                          |
 \*--------------------------------------------------------------------------*/
 
-///
-/// file: ThreadUtils.cc
-///
+//
+// file: ThreadUtils.cc
+//
 
 #include "Utils.hh"
 #include "Utils_fmt.hh"
+
+#ifndef DOXYGEN_SHOULD_SKIP_THIS
 
 namespace Utils {
 
@@ -111,6 +113,8 @@ namespace Utils {
 
 }
 
-///
-/// eof: ThreadUtils.cc
-///
+#endif
+
+//
+// eof: ThreadUtils.cc
+//

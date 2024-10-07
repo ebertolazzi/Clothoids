@@ -4,10 +4,10 @@
 #include <random>
 #include <string>
 #include <iomanip>
-#include <Eigen/Dense>
 
 #include "Clothoids.hh"
 #include "Clothoids_fmt.hh"
+#include "Utils_eigen.hh"
 
 #include <thread>
 
@@ -107,9 +107,9 @@ main() {
   for ( int i{0}; i < numpts; ++i) {
 
     G2lib::real_type ss{ G2lib::real_type(i)/G2lib::real_type(numpts) };
-    // if (i % PRINT_EVERY == 0)  std::cout << "completed " << ( (double) i ) / ((double) numpts) << " \%, " << "i = " << i << std::endl;
+    // if (i % PRINT_EVERY == 0)  std::cout << "completed " << ( (double) i ) / ((double) numpts) << " %, " << "i = " << i << std::endl;
     if (i % PRINT_EVERY == 0)
-      fmt::print("completed {:>5.3f} \%, i = {}\n", 100*ss, i);
+      fmt::print("completed {:>5.3f} %, i = {}\n", 100*ss, i);
 
     dataTable(i, 0) = xi;  // Pi_x
     dataTable(i, 1) = yi;  // Pi_y

@@ -31,9 +31,25 @@ namespace G2lib {
    |  |____/ \__,_|_.__/|_|_| |_|___/
   \*/
 
+  //!
+  //! Type of Dubins solution
+  //!
+  //! - LSL left-stright-left solution
+  //! - RSR right-stright-right solution
+  //! - LSR left-stright-right solution
+  //! - RSL right-stright-left solution
+  //! - LRL left-right-left solution
+  //! - RLR right-left-right solution
+  //!
   using DubinsType = enum class DubinsType : integer
   { LSL, RSR, LSR, RSL, LRL, RLR, DUBINS_ERROR };
 
+  //!
+  //! Convert Dubins type solution to an integer.
+  //!
+  //! \param d type of curve
+  //! \return a number from `0` to `5`
+  //!
   integer to_integer( DubinsType d );
 
   bool
@@ -85,11 +101,11 @@ namespace G2lib {
     //!
     //! Construct a Dubins solution
     //!
-    //! \param[in] x0     initial position x-coordinate
-    //! \param[in] y0     initial position y-coordinate
+    //! \param[in] x0     initial position \f$x\f$-coordinate
+    //! \param[in] y0     initial position \f$y\f$-coordinate
     //! \param[in] theta0 initial angle
-    //! \param[in] x1     final position x-coordinate
-    //! \param[in] y1     final position y-coordinate
+    //! \param[in] x1     final position \f$x\f$-coordinate
+    //! \param[in] y1     final position \f$y\f$-coordinate
     //! \param[in] theta1 final angle
     //! \param[in] k_max  max curvature
     //! \param[in] name   name of the Dubins object
@@ -125,11 +141,11 @@ namespace G2lib {
     //!
     //! Construct a Dubins solution
     //!
-    //! \param[in] x0     initial position x-coordinate
-    //! \param[in] y0     initial position y-coordinate
+    //! \param[in] x0     initial position \f$x\f$-coordinate
+    //! \param[in] y0     initial position \f$y\f$-coordinate
     //! \param[in] theta0 initial angle
-    //! \param[in] x1     final position x-coordinate
-    //! \param[in] y1     final position y-coordinate
+    //! \param[in] x1     final position \f$x\f$-coordinate
+    //! \param[in] y1     final position \f$y\f$-coordinate
     //! \param[in] theta1 final angle
     //! \param[in] k_max  max curvature
     //!
@@ -147,10 +163,10 @@ namespace G2lib {
     //!
     //! Construct a Dubins solution
     //!
-    //! \param[in]  x0     initial position x-coordinate
-    //! \param[in]  y0     initial position y-coordinate
-    //! \param[in]  x1     final position x-coordinate
-    //! \param[in]  y1     final position y-coordinate
+    //! \param[in]  x0     initial position \f$x\f$-coordinate
+    //! \param[in]  y0     initial position \f$y\f$-coordinate
+    //! \param[in]  x1     final position \f$x\f$-coordinate
+    //! \param[in]  y1     final position \f$y\f$-coordinate
     //! \param[in]  theta1 final angle
     //! \param[in]  k_max  max curvature
     //! \param[out] angles range points
@@ -170,11 +186,11 @@ namespace G2lib {
     //!
     //! Construct a Dubins solution
     //!
-    //! \param[in]  x0     initial position x-coordinate
-    //! \param[in]  y0     initial position y-coordinate
+    //! \param[in]  x0     initial position \f$x\f$-coordinate
+    //! \param[in]  y0     initial position \f$y\f$-coordinate
     //! \param[in]  theta0 initial angle
-    //! \param[in]  x1     final position x-coordinate
-    //! \param[in]  y1     final position y-coordinate
+    //! \param[in]  x1     final position \f$x\f$-coordinate
+    //! \param[in]  y1     final position \f$y\f$-coordinate
     //! \param[in]  k_max  max curvature
     //! \param[out] angles range points
     //! \return     number of range points
@@ -606,9 +622,6 @@ namespace G2lib {
     info( ostream_type & stream ) const override
     { stream << this->info(); }
 
-    //!
-    //! Pretty print of Dubins class.
-    //!
     friend
     ostream_type &
     operator << ( ostream_type & stream, Dubins const & bi );
@@ -618,6 +631,10 @@ namespace G2lib {
     friend class Dubins3p;
   };
 
+  //!
+  //! \param[in] n Dubins type solution
+  //! \return  the string with the name of the solution
+  //!
   inline
   string
   to_string( DubinsType n ) {

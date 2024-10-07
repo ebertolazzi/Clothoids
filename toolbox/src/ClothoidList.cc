@@ -253,8 +253,15 @@ namespace G2lib {
   integer
   ClothoidList::find_at_s( real_type & s ) const {
     #ifdef CLOTHOIDS_USE_THREADS
-    bool ok;
-    integer & last_interval = *m_last_interval.search( std::this_thread::get_id(), ok );
+    std::unique_lock<std::mutex> lock(m_last_interval_mutex);
+    auto id = std::this_thread::get_id();
+    auto it = m_last_interval.find(id);
+    if ( it == m_last_interval.end() ) {
+      it = m_last_interval.insert( {id,std::make_shared<integer>()} ).first;
+      *it->second.get() = 0;
+    }
+    integer & last_interval{ *it->second.get() };
+    lock.unlock();
     #else
     integer & last_interval = m_last_interval;
     #endif
@@ -286,7 +293,6 @@ namespace G2lib {
   ClothoidList::init() {
     m_s0.clear();
     m_clothoid_list.clear();
-    this->reset_last_interval();
     m_aabb_done = false;
     m_aabb_triangles.clear();
     this->reset_last_interval();
@@ -2216,7 +2222,7 @@ namespace G2lib {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   void
-  ClothoidList::get_SK( real_type * s, real_type * kappa ) const {
+  ClothoidList::get_SK( real_type s[], real_type kappa[] ) const {
     vector<ClothoidCurve>::const_iterator ic = m_clothoid_list.begin();
     integer   k{0};
     real_type ss{0};
@@ -2239,9 +2245,9 @@ namespace G2lib {
 
   void
   ClothoidList::get_STK(
-    real_type * s,
-    real_type * theta,
-    real_type * kappa
+    real_type s[],
+    real_type theta[],
+    real_type kappa[]
   ) const {
     vector<ClothoidCurve>::const_iterator ic = m_clothoid_list.begin();
     integer   k{0};
@@ -2263,7 +2269,7 @@ namespace G2lib {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   void
-  ClothoidList::get_XY( real_type * x, real_type * y ) const {
+  ClothoidList::get_XY( real_type x[], real_type y[] ) const {
     vector<ClothoidCurve>::const_iterator ic = m_clothoid_list.begin();
     integer k{0};
     while ( ic != m_clothoid_list.end() ) {
@@ -2279,7 +2285,7 @@ namespace G2lib {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   void
-  ClothoidList::get_delta_theta( real_type * delta_theta ) const {
+  ClothoidList::get_delta_theta( real_type delta_theta[] ) const {
     vector<ClothoidCurve>::const_iterator ic = m_clothoid_list.begin();
     integer k{0};
     for ( ++ic; ic != m_clothoid_list.end(); ++ic, ++k ) {
@@ -2293,7 +2299,7 @@ namespace G2lib {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   void
-  ClothoidList::get_delta_kappa( real_type * deltaKappa ) const {
+  ClothoidList::get_delta_kappa( real_type deltaKappa[] ) const {
     vector<ClothoidCurve>::const_iterator ic = m_clothoid_list.begin();
     integer k{0};
     for ( ++ic; ic != m_clothoid_list.end(); ++ic, ++k  )
@@ -2417,7 +2423,13 @@ namespace G2lib {
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
+  //!
+  //!  Print on strem the `ClothoidList` object
+  //!
+  //!  \param stream the output stream
+  //!  \param CL     an instance of `ClothoidList` object
+  //!  \return the output stream
+  //!
   ostream_type &
   operator << ( ostream_type & stream, ClothoidList const & CL ) {
     for ( auto const & C : CL.m_clothoid_list )

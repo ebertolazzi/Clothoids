@@ -1212,9 +1212,9 @@ namespace G2lib {
 
   void
   ClothoidSplineG2::guess(
-    real_type * theta_guess,
-    real_type * theta_min,
-    real_type * theta_max
+    real_type theta_guess[],
+    real_type theta_min[],
+    real_type theta_max[]
   ) const {
     size_t nn = size_t( m_npts );
     Utils::Malloc<real_type> mem( "ClothoidSplineG2::guess" );
@@ -1541,8 +1541,8 @@ namespace G2lib {
 
   bool
   ClothoidSplineG2::jacobian_pattern(
-    integer * ii,
-    integer * jj
+    integer ii[],
+    integer jj[]
   ) const {
     ClothoidCurve cc{"ClothoidSplineG2::jacobian_pattern temporary cc"};
     integer ne  = m_npts - 1;
@@ -1579,8 +1579,8 @@ namespace G2lib {
 
   bool
   ClothoidSplineG2::jacobian_pattern_matlab(
-    real_type * ii,
-    real_type * jj
+    real_type ii[],
+    real_type jj[]
   ) const {
     ClothoidCurve cc{"ClothoidSplineG2::jacobian_pattern_matlab temporary cc"};
     integer ne  = m_npts - 1;
@@ -1667,7 +1667,13 @@ namespace G2lib {
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
+  //!
+  //!  Print on strem the `ClothoidSplineG2` object
+  //!
+  //!  \param stream the output stream
+  //!  \param c     an instance of `ClothoidSplineG2` object
+  //!  \return the output stream
+  //!
   ostream_type &
   operator << ( ostream_type & stream, ClothoidSplineG2 const & c ) {
     fmt::print( stream,

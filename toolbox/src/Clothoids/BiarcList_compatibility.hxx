@@ -23,17 +23,17 @@
 
 void
 getSTK(
-  real_type * s,
-  real_type * theta,
-  real_type * kappa
+  real_type s[],
+  real_type theta[],
+  real_type kappa[]
 ) const
 { this->get_STK( s, theta, kappa ); }
 
 //!
 //! Return the biarc XY nodes
 //!
-//! \param[out] x x-nodes
-//! \param[out] y y-nodes
+//! \param[out] x \f$x\f$-nodes
+//! \param[out] y \f$y\f$-nodes
 //
 void
 getXY( real_type x[], real_type y[] ) const

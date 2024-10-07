@@ -39,13 +39,17 @@
 
 #include <cstdint>
 
+//!
+//! Namespace containing all the functions and classes
+//! for the computation of polynomial roots
+//!
 namespace PolynomialRoots {
 
-  using real_type    = double;
-  using integer      = int;
-  using complex_type = std::complex<real_type>;
-  using ostream_type = std::basic_ostream<char>;
-  using istream_type = std::basic_istream<char>;
+  using real_type    = double;                    //!< real type numbers
+  using integer      = int;                       //!< integer type numbers
+  using complex_type = std::complex<real_type>;   //!< complex type numbers
+  using ostream_type = std::basic_ostream<char>;  //!< outoput stream type
+  using istream_type = std::basic_istream<char>;  //!< input stream type
 
   #ifndef DOXYGEN_SHOULD_SKIP_THIS
 

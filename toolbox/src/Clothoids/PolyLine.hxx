@@ -49,7 +49,8 @@ namespace G2lib {
     real_type           m_ye;
 
     #ifdef CLOTHOIDS_USE_THREADS
-    mutable Utils::BinarySearch<integer> m_last_interval;
+    mutable std::mutex                                         m_last_interval_mutex;
+    mutable std::map<std::thread::id,std::shared_ptr<integer>> m_last_interval;
     #else
     mutable integer m_last_interval{0};
     #endif
@@ -64,8 +65,11 @@ namespace G2lib {
     void
     reset_last_interval() {
       #ifdef CLOTHOIDS_USE_THREADS
-      bool ok;
-      integer & last_interval = *m_last_interval.search( std::this_thread::get_id(), ok );
+      std::unique_lock<std::mutex> lock(m_last_interval_mutex);
+      auto id = std::this_thread::get_id();
+      auto it = m_last_interval.find(id);
+      if ( it == m_last_interval.end() ) it = m_last_interval.insert( {id,std::make_shared<integer>()} ).first;
+      integer & last_interval{ *it->second.get() };
       #else
       integer & last_interval = m_last_interval;
       #endif
@@ -386,10 +390,10 @@ namespace G2lib {
     //!
     //! Compute the point at minimum distance from a point `[x,y]` and the line segment
     //!
-    //! \param[in]  x   x-coordinate
-    //! \param[in]  y   y-coordinate
-    //! \param[out] X   x-coordinate of the closest point
-    //! \param[out] Y   y-coordinate of the closest point
+    //! \param[in]  x   \f$x\f$-coordinate
+    //! \param[in]  y   \f$y\f$-coordinate
+    //! \param[out] X   \f$x\f$-coordinate of the closest point
+    //! \param[out] Y   \f$y\f$-coordinate of the closest point
     //! \param[out] S   s-param of the closest point
     //! \param[out] T   t-param of the closest point
     //! \param[out] DST the distance point-segment

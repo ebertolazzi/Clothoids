@@ -17,12 +17,31 @@
  |                                                                          |
 \*--------------------------------------------------------------------------*/
 
+//
+// file: Token.cc
+//
+
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
 
 #include "Utils.hh"
 
 namespace Utils {
-
+  //!
+  //! \brief Retrieves the next token from the input string.
+  //!
+  //! This method scans the input string, starting from the current offset, and
+  //! identifies the next substring that is not a delimiter. It updates the offset
+  //! for the next call to ensure that the subsequent token is correctly located.
+  //!
+  //! A token is defined as a sequence of characters that is not contained in the
+  //! specified set of delimiters. If no tokens are found, the method will return
+  //! false. Otherwise, it will extract the token and return true.
+  //!
+  //! \return true if a token was found; false if there are no more tokens in the string.
+  //!
+  //! \note After calling this method, the extracted token can be accessed via
+  //!       the member variable `m_token`.
+  //!
   bool
   Tokenizer::next_token() {
     size_t i = m_string.find_first_not_of( m_delimiters, m_offset );
@@ -40,6 +59,22 @@ namespace Utils {
     return true;
   }
 
+  //!
+  //! \brief Splits a string into tokens based on specified delimiters.
+  //!
+  //! This function takes an input string and separates it into substrings (tokens)
+  //! based on the specified delimiter string. The tokens are stored in the
+  //! provided vector.
+  //!
+  //! \param str The input string to be split into tokens.
+  //! \param sep A string containing the delimiter characters.
+  //! \param arr A reference to a vector where the resulting tokens will be stored.
+  //!
+  //! This function uses the `Tokenizer` class to parse the input string and
+  //! retrieve tokens until there are no more tokens left.
+  //!
+  //! \note The resulting tokens will be stored in the order they appear in the input string.
+  //!
   void
   split_string(
     string const   & str,
@@ -54,7 +89,7 @@ namespace Utils {
 
 #endif
 
-///
-/// eof: Token.cc
-///
+//
+// eof: Token.cc
+//
 

@@ -13,7 +13,7 @@
  |      Enrico Bertolazzi                                                   |
  |      Dipartimento di Ingegneria Industriale                              |
  |      Universita` degli Studi di Trento                                   |
- |      email: enrico.bertolazzi@unitn.it                                   |
+ |      email: enrico.bertolazzi\unitn.it                                   |
  |                                                                          |
 \*--------------------------------------------------------------------------*/
 
@@ -31,16 +31,6 @@
 
 namespace Utils {
 
-  /*
-  // minimize norm(y - x,2)^2 + lambda * sum(abs(diff( x )))
-  //
-  // Laurent Condat.
-  // A Direct Algorithm for 1D Total Variation Denoising.
-  // IEEE Signal Processing Letters,
-  // Institute of Electrical and Electronics Engineers, 2013, 20 (11), pp.1054-1057.
-  // <10.1109/LSP.2013.2278339>. <hal-00675043v4>
-  // https://hal.science/hal-00675043v4
-  */
   template <typename Real>
   void
   TVD<Real>::denoise(

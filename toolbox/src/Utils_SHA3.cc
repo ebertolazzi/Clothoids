@@ -8,7 +8,7 @@ using std::string;
 #define ROT_L( X, Y ) (( X << Y ) | ( X >> (64 - Y) ))
 #define ROUNDS 24
 
-/// For converting binary output to hexidecimal for printing
+//! For converting binary output to hexidecimal for printing
 static char const * hexLookup = "0123456789abcdef";
 
 static uint64_t const roundConstants[] = {
@@ -48,8 +48,7 @@ namespace Utils {
     m_reset();
   }
 
-  ////////// Ingesting Data //////////
-
+  // Ingesting Data
   void
   SHA3::hash( int const b ) {
     m_buffer_location[0] = static_cast<uint8_t>(b);
@@ -88,7 +87,7 @@ namespace Utils {
     }
   }
 
-  ////////// Expelling Data //////////
+  // Expelling Data
 
   void
   SHA3::digest( uint8_t * d ){
@@ -128,7 +127,7 @@ namespace Utils {
     return hex;
   }
 
-  ////////// Internals //////////
+  // Internals
 
   void
   SHA3::m_reset() {
@@ -261,7 +260,7 @@ namespace Utils {
     }
   }
 
-  ////////// Debugging Functions //////////
+  // Debugging Functions
 
   void
   SHA3::m_print_message_buffer( ostream_type & stream ) const {

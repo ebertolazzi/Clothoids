@@ -22,12 +22,15 @@
 ///
 
 //!
-//! Clothoid computations routine
+//! Clothoid computations routine namespace
+//!
+//! @html_image{Art_Figure_1.png,width=60%}
 //!
 namespace G2lib {
 
-  extern real_type const m_1_sqrt_pi;  //!< \f$ 1/\sqrt{\pi} \f$
+  #ifndef DOXYGEN_SHOULD_SKIP_THIS
 
+  extern real_type const m_1_sqrt_pi;  //!< \f$ 1/\sqrt{\pi} \f$
   extern real_type const machepsi;     //!< machine espilon \f$ \varepsilon \f$
   extern real_type const machepsi10;   //!< \f$ 10\varepsilon \f$
   extern real_type const machepsi100;  //!< \f$ 100\varepsilon \f$
@@ -40,6 +43,8 @@ namespace G2lib {
 
   // for CLOTHOIDS_BACK_COMPATIBILITY
   extern bool use_ISO;
+
+  #endif
 
   #ifdef CLOTHOIDS_BACK_COMPATIBILITY
 
@@ -129,18 +134,18 @@ namespace G2lib {
   //! Project point `(qx,qy)` to the circle arc passing from `(x0,y0)`
   //! with tangent direction `(c0,s0)` curvature `k` length `L`
   //!
-  //! \param[in] x0 x-starting point of circle arc
-  //! \param[in] y0 y-starting point of circle arc
+  //! \param[in] x0 \f$ x \f$-starting point of circle arc
+  //! \param[in] y0 \f$ y \f$-starting point of circle arc
   //! \param[in] c0 \f$ \cos \theta_0 \f$
   //! \param[in] s0 \f$ \sin \theta_0 \f$
   //! \param[in] k  curvature
   //! \param[in] L  arc length
-  //! \param[in] qx x-point to be projected
-  //! \param[in] qy y-point to be projected
+  //! \param[in] qx \f$ x \f$-point to be projected
+  //! \param[in] qy \f$ y \f$-point to be projected
   //!
   //! \return distance point circle
   //!
-  //!
+
   real_type
   projectPointOnCircleArc(
     real_type x0,
@@ -154,6 +159,7 @@ namespace G2lib {
   );
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
   //!
   //! Project point `(qx,qy)` to the circle passing from `(x0,y0)`
   //! with tangent direction `(c0,s0)` and curvature `k`
@@ -167,6 +173,7 @@ namespace G2lib {
   //!
   //! \return distance point circle
   //!
+
   real_type
   projectPointOnCircle(
     real_type x0,
@@ -182,13 +189,13 @@ namespace G2lib {
   //! Check if point `(qx,qy)` is inside the circle passing from `(x0,y0)`
   //! with tangent direction `(c0,s0)` and curvature `k`
   //!
-  //! \param[in] x0 starting x-coordinate of the circle arc
-  //! \param[in] y0 starting y-coordinate of the circle arc
+  //! \param[in] x0 starting \f$x\f$-coordinate of the circle arc
+  //! \param[in] y0 starting \f$y\f$-coordinate of the circle arc
   //! \param[in] c0 \f$ \cos \theta \f$
   //! \param[in] s0 \f$ \sin \theta \f$
   //! \param[in] k  Curvature of the circle
-  //! \param[in] qx x-coordinate point to check
-  //! \param[in] qy y-coordinate point to check
+  //! \param[in] qx \f$ x \f$-coordinate point to check
+  //! \param[in] qy \f$ y \f$-coordinate point to check
   //!
   //! \return true if point is inside
   //!
@@ -209,91 +216,45 @@ namespace G2lib {
     return dst*k <= 1;
   }
 
-  //!
-  //! Solve the nonlinear system
-  //!
-  //! \f[ A x + B y = C \f]
-  //! \f[ a x^2 + b y^2 = c \f]
-  //!
-  //! \param[in]  A first parameter of the linear equation
-  //! \param[in]  B second parameter of the linear equation
-  //! \param[in]  C third parameter of the linear equation
-  //! \param[in]  a first parameter of the quadratic equation
-  //! \param[in]  b second parameter of the quadratic equation
-  //! \param[in]  c third parameter of the quadratic equation
-  //! \param[out] x x-coordinates of the solutions
-  //! \param[out] y y-coordinates of the solutions
-  //! \return the number of solution 0, 1 or 2
-  //!
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
   integer
   solveLinearQuadratic(
-    real_type   A,
-    real_type   B,
-    real_type   C,
-    real_type   a,
-    real_type   b,
-    real_type   c,
-    real_type * x,
-    real_type * y
+    real_type A,
+    real_type B,
+    real_type C,
+    real_type a,
+    real_type b,
+    real_type c,
+    real_type x[],
+    real_type y[]
   );
 
-  //!
-  //! Solve the nonlinear system
-  //!
-  //! \f[ A x + B y = C \f]
-  //! \f[ x^2 + y^2 = 1 \f]
-  //!
-  //! \param[in]  A first parameter of the linear equation
-  //! \param[in]  B second parameter of the linear equation
-  //! \param[in]  C third parameter of the linear equation
-  //! \param[out] x x-coordinates of the solutions
-  //! \param[out] y y-coordinates of the solutions
-  //! \return the number of solution 0, 1 or 2
-  //!
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
   integer
   solveLinearQuadratic2(
-    real_type   A,
-    real_type   B,
-    real_type   C,
-    real_type * x,
-    real_type * y
+    real_type A,
+    real_type B,
+    real_type C,
+    real_type x[],
+    real_type y[]
   );
 
-  //!
-  //! Intersect the parametric arc
-  //!
-  //! \f[ x = x_1+\frac{\sin(\kappa_1 s+\theta_1)-sin(\theta_1)}{\kappa_1} \f]
-  //! \f[ y = y_1+\frac{\cos(\theta_1)-\cos(\kappa_1 s+\theta_1)}{\kappa_1} \f]
-  //!
-  //! with the parametric arc
-  //! \f[ x = x_2+\frac{\sin(\kappa_2 s+\theta_2)-sin(\theta_2)}{\kappa_2} \f]
-  //! \f[ y = y_2+\frac{\cos(\theta_2)-\cos(\kappa_2 s+\theta_2)}{\kappa_2} \f]
-  //!
-  //! \param[in]  x1     x-origin of the first arc
-  //! \param[in]  y1     y-origin of the first arc
-  //! \param[in]  theta1 initial angle of the first arc
-  //! \param[in]  kappa1 curvature of the first arc
-  //! \param[in]  x2     x-origin of the second arc
-  //! \param[in]  y2     y-origin of the second arc
-  //! \param[in]  theta2 initial angle of the second arc
-  //! \param[in]  kappa2 curvature of the second arc
-  //! \param[out] s1     parameter2 of intersection for the first circle arc
-  //! \param[out] s2     parameter2 of intersection for the second circle arc
-  //!
-  //! \return the number of solution 0, 1 or 2
-  //!
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
   integer
   intersectCircleCircle(
-    real_type   x1,
-    real_type   y1,
-    real_type   theta1,
-    real_type   kappa1,
-    real_type   x2,
-    real_type   y2,
-    real_type   theta2,
-    real_type   kappa2,
-    real_type * s1,
-    real_type * s2
+    real_type x1,
+    real_type y1,
+    real_type theta1,
+    real_type kappa1,
+    real_type x2,
+    real_type y2,
+    real_type theta2,
+    real_type kappa2,
+    real_type s1[],
+    real_type s2[]
   );
 
   /*\
@@ -316,43 +277,29 @@ namespace G2lib {
   public:
 
     Solve2x2() : epsi(1e-10) {}
-    //!
-    //! factorize matrix \f$ A \f$ , return false if factorization fails
-    //!
     bool factorize( real_type A[2][2] );
-
-    //!
-    //! Solve the linear system \f$ Ax=b \f$ with
-    //! \f$ A \f$ stored amd facted with a previous call
-    //! of method ``factorize``.
-    //!
-    //! \param[in]  b the rhs of \f$ Ax=b \f$
-    //! \param[out] x the solution of \f$ Ax=b \f$
-    //! \return true if solution found
-    //!
-    //!
     bool solve( real_type const b[2], real_type x[2] ) const;
   };
 
   //!
-  //! Return the orientation of a triangle
+  //!  Return the orientation of a triangle
   //!
-  //! \param[in] P1 first point of the triangle
-  //! \param[in] P2 second point of the triangle
-  //! \param[in] P3 third point of the triangle
-  //! \return sign of rotation
+  //!  \param[in] P1 first point of the triangle
+  //!  \param[in] P2 second point of the triangle
+  //!  \param[in] P3 third point of the triangle
+  //!  \return sign of rotation
   //!
   //!  return +1 = CounterClockwise
   //!  return -1 = Clockwise
   //!  return  0 = flat
   //!
-  //!  CounterClockwise:
+  //!  - CounterClockwise:
   //!    the path P1->P2->P3 turns Counter-Clockwise, i.e.,
   //!    the point P3 is located "on the left" of the line P1-P2.
-  //!  Clockwise:
+  //!  - Clockwise:
   //!    the path turns Clockwise, i.e.,
   //!    the point P3 lies "on the right" of the line P1-P2.
-  //!  flat:
+  //!  - flat:
   //!    the point P3 is located on the line segment [P1 P2].
   //!
   //!  Algorithm from FileExchage geom2d adapated from Sedgewick's book.
@@ -367,18 +314,19 @@ namespace G2lib {
   //!
   //! Check if a point is inside a triangle
   //!
-  //! \param[in] pt point to check if is inside the triangle
-  //! \param[in] P1 first point of the triangle
-  //! \param[in] P2 second point of the triangle
-  //! \param[in] P3 third point of the triangle
+  //! \param[in] point point to check if is inside the triangle
+  //! \param[in] P1    first point of the triangle
+  //! \param[in] P2    second point of the triangle
+  //! \param[in] P3    third point of the triangle
   //! \return {0,+1,-1}
   //!         return +1 = Inside
   //!         return -1 = Outsize
   //!         return  0 = on border
   //!
+
   integer
   is_point_in_triangle(
-    real_type const pt[],
+    real_type const point[],
     real_type const P1[],
     real_type const P2[],
     real_type const P3[]
@@ -392,32 +340,16 @@ namespace G2lib {
    |   /  \   | |   | || (_) |   | | | | | |  __/ || (_| |
    |  /_/\_\  |_|    \__\___/    |_| |_| |_|\___|\__\__,_|
   \*/
-
-  //!
-  //! Given a list of \f$ n \f$ points \f$ (x_i,y_i) \f$ compute
-  //! the guess angles for the \f$ G^2 \f$ curve construction.
-  //!
-  //! \param[in]  npts      \f$ n \f$
-  //! \param[in]  x         x-coordinates of the points
-  //! \param[in]  y         y-coordinates of the points
-  //! \param[out] theta     guess angles
-  //! \param[out] theta_min minimum angles at each nodes
-  //! \param[out] theta_max maximum angles at each nodes
-  //! \param[out] omega     angles of two consecutive points, with accumulated \f$ 2\pi \f$ angle rotation
-  //! \param[out] len       distance between two consecutive poijts
-  //!
-  //! \image html node_angles.jpg width=8cm
-  //!
   void
   xy_to_guess_angle(
-    integer           npts,
-    real_type const * x,
-    real_type const * y,
-    real_type       * theta,
-    real_type       * theta_min,
-    real_type       * theta_max,
-    real_type       * omega,
-    real_type       * len
+    integer         npts,
+    real_type const x[],
+    real_type const y[],
+    real_type       theta[],
+    real_type       theta_min[],
+    real_type       theta_max[],
+    real_type       omega[],
+    real_type       len[]
   );
 
 }

@@ -305,7 +305,13 @@ namespace G2lib {
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
+  //!
+  //!  Print on strem the `Triangle2D` object
+  //!
+  //!  \param stream the output stream
+  //!  \param t      an instance of `Triangle2D` object
+  //!  \return the output stream
+  //!
   ostream_type &
   operator << ( ostream_type & stream, Triangle2D const & t ) {
     fmt::print( stream,
