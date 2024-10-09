@@ -19,6 +19,7 @@
 
 #include "Clothoids.hh"
 #include "Clothoids_fmt.hh"
+#include "Utils_Algo748.hh"
 
 #include <cfloat>
 #include <limits>
@@ -652,6 +653,60 @@ namespace G2lib {
       this->push_back(c);
     }
     return true;
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  bool
+  ClothoidList::smooth_quasi_G2(
+    integer     max_iter,
+    real_type   epsi,
+    real_type & max_dK
+  ) {
+
+    integer n{integer(m_clothoid_list.size())};
+
+    ClothoidCurve CL("smooth_quasi_G2-left"), CR("smooth_quasi_G2-right");
+
+    auto do_smooth = []( ClothoidCurve * CL, ClothoidCurve * CR ) -> real_type {
+      real_type theta0 = CL->theta_begin();
+      real_type x0     = CL->x_begin();
+      real_type y0     = CL->y_begin();
+      real_type theta1 = CL->theta_end();
+      real_type x1     = CL->x_end();
+      real_type y1     = CL->y_end();
+      real_type theta2 = CR->theta_end();
+      real_type x2     = CR->x_end();
+      real_type y2     = CR->y_end();
+      real_type dK     = CL->kappa_end()-CR->kappa_begin();
+      auto fun = [CL,CR,x0,y0,theta0,x1,y1,x2,y2,theta2]( real_type theta ) {
+        CL->build_G1( x0, y0, theta0, x1, y1, theta  );
+        CR->build_G1( x1, y1, theta,  x2, y2, theta2 );
+        return CL->kappa_end()-CR->kappa_begin();
+      };
+      Utils::Algo748<real_type> solver;
+      real_type theta = solver.eval2( theta1-Utils::m_pi/20,theta1+Utils::m_pi/20,-Utils::m_pi/2,Utils::m_pi/2,fun);
+      fun(theta);
+      return std::abs(dK);
+    };
+
+    for ( integer iter{0}; iter < max_iter; ++iter ) {
+      max_dK = 0;
+      for ( integer i{1}; i < n; i +=2 ) {
+        real_type dK = do_smooth( &m_clothoid_list[i-1], &m_clothoid_list[i] );
+        if ( dK > max_dK ) max_dK = dK;
+      }
+      for ( integer i{2}; i < n; i +=2 ) {
+        real_type dK = do_smooth( &m_clothoid_list[i-1], &m_clothoid_list[i] );
+        if ( dK > max_dK ) max_dK = dK;
+      }
+      if ( m_curve_is_closed ) {
+        real_type dK = do_smooth( &m_clothoid_list.front(), &m_clothoid_list.back() );
+        if ( dK > max_dK ) max_dK = dK;
+      }
+      if ( max_dK < epsi ) break;
+    }
+    return max_dK < epsi;
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

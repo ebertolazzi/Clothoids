@@ -1240,6 +1240,40 @@ namespace G2lib {
     );
 
     //!
+    //! \brief Smooths a G1 spline of clothoids to minimize jumps in curvature.
+    //!
+    //! This function applies a smoothing algorithm to reduce discontinuities
+    //! in curvature, enhancing the overall continuity and visual quality of the spline.
+    //! The smoothing process iterates up to a specified maximum number of iterations.
+    //!
+    //! \param max_iter Maximum number of iterations for the smoothing process.
+    //!                 This parameter controls how many times the smoothing
+    //!                 algorithm will attempt to refine the spline.
+    //! \param epsi     Tolerance for the smoothing process. It determines the
+    //!                 threshold below which curvature adjustments are considered
+    //!                 negligible and thus terminates the algorithm.
+    //! \param max_dK   Reference to a variable that will hold the maximum change
+    //!                 in curvature observed during the smoothing process. This
+    //!                 output can be used to assess the effectiveness of the
+    //!                 smoothing operation.
+    //!
+    //! \return Returns true if the smoothing was successful; otherwise, false.
+    //!
+    //! \note This function assumes that the input spline is already in a G1
+    //!       state and is defined using clothoids. Ensure that the input parameters
+    //!       are properly initialized before calling this function.
+    //!
+    //! \note If curve is closed and cyclic algorithm try to reduce the jump in curvature
+    //!       between first and last point.
+    //!
+    bool
+    smooth_quasi_G2(
+      integer     max_iter,
+      real_type   epsi,
+      real_type & max_dK
+    );
+
+    //!
     //! Build clothoid list with \f$ G^2 \f$ continuity.
     //! The vector `s` contains the breakpoints of the curve.
     //! Between two breakpoint the curvature change linearly (is a clothoid)

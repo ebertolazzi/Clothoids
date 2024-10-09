@@ -333,6 +333,33 @@ namespace G2lib {
     #undef CMD
   }
 
+
+  // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+  static
+  void
+  do_smooth_quasi_G2(
+    int nlhs, mxArray       *plhs[],
+    int nrhs, mxArray const *prhs[]
+  ) {
+
+    #define CMD "ClothoidListMexWrapper('smooth_quasi_G2', OBJ, max_iter, epsi ): "
+
+    UTILS_MEX_ASSERT( nlhs == 2, CMD "expected 2 output, nlhs = {}\n", nlhs );
+    UTILS_MEX_ASSERT( nrhs == 4, CMD "expected 4 input, nrhs = {}\n", nrhs );
+
+    ClothoidList * ptr = Utils::mex_convert_mx_to_ptr<ClothoidList>(arg_in_1);
+    integer   max_iter = Utils::mex_get_int64( arg_in_2, CMD "Error in reading `max_iter`" );
+    real_type epsi     = Utils::mex_get_scalar_value( arg_in_3, CMD "Error in reading `epsi`" );
+
+    real_type max_dK;
+    bool ok = ptr->smooth_quasi_G2( max_iter, epsi, max_dK );
+
+    Utils::mex_set_scalar_bool( arg_out_0, ok );
+    Utils::mex_set_scalar_value( arg_out_1, max_dK );
+    #undef CMD
+  }
+
   // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 
   static
@@ -1153,6 +1180,7 @@ namespace G2lib {
     {"get_STK",do_get_STK},
     {"get_XY",do_get_XY},
     {"build_G1",do_build_G1},
+    {"smooth_quasi_G2",do_smooth_quasi_G2},
     {"build_raw",do_build_raw},
     {"build_3arcG2",do_build_3arcG2},
     {"build_2arcG2",do_build_2arcG2},

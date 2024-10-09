@@ -481,6 +481,10 @@ classdef ClothoidList < CurveBase
       );
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    function [ ok, max_dK ] = smooth_quasi_G2( self, max_iter, epsi )
+      [ ok, max_dK ] = ClothoidListMexWrapper( 'smooth_quasi_G2', self.objectHandle, max_iter, epsi );
+    end
+    % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     %> Export list of clothoids
     %>
     %> **Usage:**

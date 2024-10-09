@@ -23,6 +23,7 @@
 #include <map>
 #include <string>
 #include <cstring>
+#include <vector>
 #include <cstdint>
 #include <typeinfo>
 
@@ -450,6 +451,77 @@ namespace Utils {
   }
 
   // -----------------------------------------------------------------------------
+  //!
+  //!  \brief Creates a sparse matrix in MATLAB format.
+  //!
+  //!  This function creates a sparse matrix using MATLAB's internal data structures.
+  //!  The inputs are arrays representing the row indices, column indices, and values
+  //!  of the non-zero elements of the sparse matrix.
+  //!
+  //!  \tparam R      Type of the values in the sparse matrix.
+  //!  \tparam I      Type of the row and column indices.
+  //!  \param  nnz    Number of non-zero elements in the sparse matrix.
+  //!  \param  nrows  Number of rows in the sparse matrix.
+  //!  \param  ncols  Number of columns in the sparse matrix.
+  //!  \param  i_rows Array of row indices (0-based).
+  //!  \param  j_cols Array of column indices (0-based).
+  //!  \param  vals   Array of non-zero values.
+  //!  \return int    Status code of the MATLAB function call.
+  //!
+  template <typename R, typename I>
+  inline
+  int
+  mex_create_sparse_matrix(
+    size_t    nnz,
+    size_t    nrows,
+    size_t    ncols,
+    I         i_rows[],
+    I         j_cols[],
+    R         vals[],
+    mxArray * arg_out[]
+  ) {
+    mxArray *args[5]; // Array of arguments to be passed to MATLAB's sparse function.
+
+    // Create MATLAB matrices to store row indices, column indices, and values.
+    double *Irow = mex_create_matrix_value(args[0], 1, nnz);
+    double *Jcol = mex_create_matrix_value(args[1], 1, nnz);
+    double *VALS = mex_create_matrix_value(args[2], 1, nnz);
+
+    // Set the number of rows and columns in the sparse matrix.
+    mex_set_scalar_value(args[3], nrows);
+    mex_set_scalar_value(args[4], ncols);
+
+    // Convert the row and column indices to 1-based indexing for MATLAB.
+    std::transform(i_rows, i_rows + nnz, Irow, [](I val) -> double { return double(val + 1); });
+    std::transform(j_cols, j_cols + nnz, Jcol, [](I val) -> double { return double(val + 1); });
+
+    // Copy the values of the non-zero elements into the MATLAB array.
+    std::copy_n(vals, nnz, VALS);
+
+    // Call the MATLAB function 'sparse' to create the sparse matrix.
+    return mexCallMATLAB(1, arg_out, 5, args, "sparse");
+  }
+
+
+  //!
+  //! \brief Creates a MATLAB cell array and fills it with a vector of C++ strings.
+  //!
+  //! \param arg Reference to the mxArray pointer that will hold the MATLAB cell array.
+  //! \param str_vec Vector of C++ strings to be inserted into the cell array.
+  //!
+
+  inline
+  void
+  mex_create_string_cell_array( mxArray * & arg, std::vector<std::string> const & str_vec ) {
+    // Crea un cell array MATLAB con lo stesso numero di elementi del vettore di stringhe
+    arg = mxCreateCellMatrix(str_vec.size(), 1);
+
+    // Riempie il cell array con le stringhe C++
+    for ( size_t i{0}; i < str_vec.size(); ++i ) {
+      mxArray *str = mxCreateString(str_vec[i].c_str()); // Crea una stringa MATLAB dalla stringa C++
+      mxSetCell(arg, i, str); // Imposta la stringa nella posizione corretta del cell array
+    }
+  }
 
   /*
   Class Handle by Oliver Woodford
