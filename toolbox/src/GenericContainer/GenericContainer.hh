@@ -2497,6 +2497,76 @@ namespace GC_namespace {
 
 
 
+    //!
+    //! \name Access to matrix type data and convert.
+    //!
+    ///@{
+
+    //!
+    //! Copy internal data to a matrix of integers
+    //!
+    //! \param[out] m     Matrix to store the data
+    //! \param[in]  where Position added to the error message
+    //!
+    //! \code
+    //! mat_int_type int_matrix;
+    //! GenericoContainer container;
+    //! container.copyto_mat_int(int_matrix, "In function example_call");
+    //! // Use int_matrix...
+    //! \endcode
+    //!
+    void copyto_mat_int( mat_int_type & m, char const where[] = "" ) const;
+
+    //!
+    //! Copy internal data to a matrix of long integers
+    //!
+    //! \param[out] m     Matrix to store the data
+    //! \param[in]  where Position added to the error message
+    //!
+    //! \code
+    //! mat_long_type long_mat;
+    //! GenericoContainer container;
+    //! container.copyto_mat_long(long_mat, "In function example_call");
+    //! // Use long_mat...
+    //! \endcode
+    //!
+    void copyto_mat_long( mat_long_type & m, char const where[] = "" ) const;
+
+    //!
+    //! Copy internal data to a matrix of `real_type`
+    //!
+    //! \param[out] m     Matrix to store the data
+    //! \param[in]  where Position added to the error message
+    //!
+    //! \code
+    //! mat_real_type real_mat;
+    //! GenericoContainer container;
+    //! container.copyto_mat_real(real_mat, "In function example_call");
+    //! // Use real_mat...
+    //! \endcode
+    //!
+    void copyto_mat_real( mat_real_type & m, char const where[] = "" ) const;
+
+    //!
+    //! Copy internal data to a matrix of `complex_type`
+    //!
+    //! \param[out] m     Matrix to store the data
+    //! \param[in]  where Position added to the error message
+    //!
+    //! \code
+    //! vec_complex_type complex_mat;
+    //! GenericoContainer container;
+    //! container.copyto_vec_complex(complex_mat, "In function example_call");
+    //! // Use complex_mat...
+    //! \endcode
+    //!
+    void copyto_mat_complex( mat_complex_type & m, char const where[] = "" ) const;
+
+    ///@}
+
+
+
+
 
 
     //!
@@ -4315,6 +4385,11 @@ namespace GC_namespace {
   ) {
     write_table_formatted( headers, data, stream );
   }
+
+  //!
+  //! Utrility to write sctring escaping non printable
+  //!
+  void string_escape( ostream_type & stream, string const & s );
 
 }
 

@@ -117,8 +117,9 @@ namespace GC_namespace {
     GenericContainer const & gc,
     string                 & DATA
   ) {
-    ostringstream stream(DATA);
+    ostringstream stream;
     gc.to_yaml( stream );
+    DATA = stream.str();
   }
 
   //!

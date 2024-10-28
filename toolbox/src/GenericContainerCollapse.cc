@@ -54,13 +54,16 @@ namespace GC_namespace {
       case GC_type::VECTOR: {
         // posso collassare solo i vettori
         vector_type & v{*m_data.v};
+        if ( v.empty() ) break; // empty vector nothing to do
         TypeAllowed max_sub_type{GC_type::NOTYPE};
         bool can_collapse{true};
+        bool all_string{true};
         int_type last_nelem{-1};
         for ( auto & vi : v ) {
           vi.collapse();
           // get type
           TypeAllowed ti{vi.get_type()};
+          if ( ti != GC_type::STRING ) all_string = false;
           if ( max_sub_type < ti ) max_sub_type = ti;
           int_type ne = int_type(vi.get_num_elements());
           if ( last_nelem >= 0 && can_collapse ) {
@@ -69,63 +72,72 @@ namespace GC_namespace {
           last_nelem = ne;
         }
         if ( !can_collapse ) break;
-        switch ( max_sub_type ) {
-          case GC_type::BOOL: {
-            vec_bool_type tmp; tmp.reserve(v.size());
-            for ( auto & vi : v ) tmp.push_back( vi.get_bool() );
-            *this = tmp; // sovrascrive
-            break;
-          }
-          case GC_type::INTEGER: { vec_int_type tmp;     this->copyto_vec_int(tmp);     *this = tmp; break; }
-          case GC_type::LONG:    { vec_long_type tmp;    this->copyto_vec_long(tmp);    *this = tmp; break; }
-          case GC_type::REAL:    { vec_real_type tmp;    this->copyto_vec_real(tmp);    *this = tmp; break; }
-          case GC_type::COMPLEX: { vec_complex_type tmp; this->copyto_vec_complex(tmp); *this = tmp; break; }
-          case GC_type::VEC_INTEGER: {
-            unsigned NR{unsigned(last_nelem)};
-            unsigned NC{unsigned(v.size())};
-            mat_int_type M(NR,NC);
-            for ( unsigned j{0}; j < NC; ++j ) {
-              vec_int_type C; v[j].copyto_vec_int(C);
-              for ( unsigned i{0}; i < NR; ++i ) M(i,j) = C[i];
-            }
-            *this = M;
-            break;
-          }
-          case GC_type::VEC_LONG: {
-            unsigned NR{unsigned(last_nelem)};
-            unsigned NC{unsigned(v.size())};
-            mat_long_type M(NR,NC);
-            for ( unsigned j{0}; j < NC; ++j ) {
-              vec_long_type C; v[j].copyto_vec_long(C);
-              for ( unsigned i{0}; i < NR; ++i ) M(i,j) = C[i];
-            }
-            *this = M;
-            break;
-          }
-          case GC_type::VEC_REAL: {
-            unsigned NR{unsigned(last_nelem)};
-            unsigned NC{unsigned(v.size())};
-            mat_real_type M(NR,NC);
-            for ( unsigned j{0}; j < NC; ++j ) {
-              vec_real_type C; v[j].copyto_vec_real(C);
-              for ( unsigned i{0}; i < NR; ++i ) M(i,j) = C[i];
-            }
-            *this = M;
-            break;
-          }
-          case GC_type::VEC_COMPLEX: {
-            unsigned NR{unsigned(last_nelem)};
-            unsigned NC{unsigned(v.size())};
-            mat_complex_type M(NR,NC);
-            for ( unsigned j{0}; j < NC; ++j ) {
-              vec_complex_type C; v[j].copyto_vec_complex(C);
-              for ( unsigned i{0}; i < NR; ++i ) M(i,j) = C[i];
-            }
-            *this = M;
-            break;
-          }
-          default:
+        if ( all_string ) {
+          vec_string_type tmp;
+          tmp.reserve( v.size() );
+          for ( auto & vi : v )
+            tmp.emplace_back(vi.get_string("GenericContainer::collapse()"));
+          *this = tmp;
           break;
+        } else {
+          switch ( max_sub_type ) {
+            case GC_type::BOOL: {
+              vec_bool_type tmp; tmp.reserve(v.size());
+              for ( auto & vi : v ) tmp.push_back( vi.get_bool() );
+              *this = tmp; // sovrascrive
+              break;
+            }
+            case GC_type::INTEGER: { vec_int_type tmp;     this->copyto_vec_int(tmp);     *this = tmp; break; }
+            case GC_type::LONG:    { vec_long_type tmp;    this->copyto_vec_long(tmp);    *this = tmp; break; }
+            case GC_type::REAL:    { vec_real_type tmp;    this->copyto_vec_real(tmp);    *this = tmp; break; }
+            case GC_type::COMPLEX: { vec_complex_type tmp; this->copyto_vec_complex(tmp); *this = tmp; break; }
+            case GC_type::VEC_INTEGER: {
+              unsigned NR{unsigned(last_nelem)};
+              unsigned NC{unsigned(v.size())};
+              mat_int_type M(NR,NC);
+              for ( unsigned j{0}; j < NC; ++j ) {
+                vec_int_type C; v[j].copyto_vec_int(C);
+                for ( unsigned i{0}; i < NR; ++i ) M(i,j) = C[i];
+              }
+              *this = M;
+              break;
+            }
+            case GC_type::VEC_LONG: {
+              unsigned NR{unsigned(last_nelem)};
+              unsigned NC{unsigned(v.size())};
+              mat_long_type M(NR,NC);
+              for ( unsigned j{0}; j < NC; ++j ) {
+                vec_long_type C; v[j].copyto_vec_long(C);
+                for ( unsigned i{0}; i < NR; ++i ) M(i,j) = C[i];
+              }
+              *this = M;
+              break;
+            }
+            case GC_type::VEC_REAL: {
+              unsigned NR{unsigned(last_nelem)};
+              unsigned NC{unsigned(v.size())};
+              mat_real_type M(NR,NC);
+              for ( unsigned j{0}; j < NC; ++j ) {
+                vec_real_type C; v[j].copyto_vec_real(C);
+                for ( unsigned i{0}; i < NR; ++i ) M(i,j) = C[i];
+              }
+              *this = M;
+              break;
+            }
+            case GC_type::VEC_COMPLEX: {
+              unsigned NR{unsigned(last_nelem)};
+              unsigned NC{unsigned(v.size())};
+              mat_complex_type M(NR,NC);
+              for ( unsigned j{0}; j < NC; ++j ) {
+                vec_complex_type C; v[j].copyto_vec_complex(C);
+                for ( unsigned i{0}; i < NR; ++i ) M(i,j) = C[i];
+              }
+              *this = M;
+              break;
+            }
+            default:
+            break;
+          }
         }
         break;
       }

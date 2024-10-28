@@ -91,8 +91,8 @@ namespace GC_namespace {
     if ( ncol == 0 ) return;
 
     // calcolo lunghezza massima stringhe headers
-    unsigned ml = 0;
-    vec_string_type::const_iterator is = headers.begin();
+    unsigned ml{0};
+    vec_string_type::const_iterator is{ headers.begin() };
     for (; is != headers.end(); ++is )
       if ( ml < is->length() ) ml = unsigned(is->length());
     // taglio a lunghezza min/max
@@ -145,9 +145,9 @@ namespace GC_namespace {
       stream << " " << std::setw(int(ml)) << is->c_str();
     stream << '\n' << line << '\n';
 
-    for ( unsigned row = 0; row < nrow; ++row ) {
+    for ( unsigned row{0}; row < nrow; ++row ) {
       stream << std::setw(int(ml)) << data(row,0);
-      for ( unsigned icol = 1; icol < ncol; ++icol )
+      for ( unsigned icol{1}; icol < ncol; ++icol )
         stream << " " << std::setw(int(ml)) << data(row,icol);
       stream << '\n';
     }
