@@ -17,9 +17,9 @@
  |                                                                          |
 \*--------------------------------------------------------------------------*/
 
-//
-// file: Utils_mex.hh
-//
+///
+/// file: Utils_mex.hh
+///
 #pragma once
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
@@ -62,6 +62,6 @@
 
 #endif
 
-//
-// eof: Utils_mex.hh
-//
+///
+/// eof: Utils_mex.hh
+///

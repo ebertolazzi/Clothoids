@@ -17,10 +17,6 @@
  |                                                                          |
 \*--------------------------------------------------------------------------*/
 
-//
-// file: Trace.cc
-//
-
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
 
 #include "Utils.hh"
@@ -193,7 +189,7 @@ namespace Utils {
 
 #endif
 
-//
-// eof: Trace.cc
-//
+///
+/// eof: Trace.cc
+///
 

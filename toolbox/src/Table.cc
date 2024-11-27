@@ -41,9 +41,9 @@
 \*/
 
 
-//
-// file: Table.cc
-//
+///
+/// file: Table.cc
+///
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
 
@@ -439,6 +439,6 @@ namespace Utils {
 
 #endif
 
-//
-// eof: Table.cc
-//
+///
+/// eof: Table.cc
+///

@@ -17,16 +17,11 @@
  |                                                                          |
 \*--------------------------------------------------------------------------*/
 
-//
-// file: ThreadUtils.hxx
-//
+///
+/// file: ThreadUtils.hxx
+///
 
 namespace Utils {
-
-  /*!
-   * \addtogroup THREAD
-   * @{
-   */
 
   #ifdef UTILS_OS_WINDOWS
     #define UTILS_SEMAPHORE Utils::WinSemaphore
@@ -643,10 +638,8 @@ namespace Utils {
   auto at_scope_exit(Function const & fun) -> at_scope_exit_impl<Function const &>
   { return at_scope_exit_impl<Function const &>(fun); }
 
-  /*! @} */
-
 }
 
-//
-// eof: ThreadUtils.hxx
-//
+///
+/// eof: ThreadUtils.hxx
+///

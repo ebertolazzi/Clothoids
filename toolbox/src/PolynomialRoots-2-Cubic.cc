@@ -50,12 +50,12 @@ namespace PolynomialRoots {
   integer
   Cubic::get_real_roots( real_type r[] ) const {
     integer nr{0};
-    if ( cplx ) {
-      if ( nrts > 2 ) r[nr++] = r2;
+    if ( m_cplx ) {
+      if ( m_nrts > 2 ) r[nr++] = m_r2;
     } else {
-      if ( nrts > 0 ) r[nr++] = r0;
-      if ( nrts > 1 ) r[nr++] = r1;
-      if ( nrts > 2 ) r[nr++] = r2;
+      if ( m_nrts > 0 ) r[nr++] = m_r0;
+      if ( m_nrts > 1 ) r[nr++] = m_r1;
+      if ( m_nrts > 2 ) r[nr++] = m_r2;
     }
     return nr;
   }
@@ -63,12 +63,12 @@ namespace PolynomialRoots {
   integer
   Cubic::get_positive_roots( real_type r[] ) const {
     integer nr{0};
-    if ( cplx ) {
-      if ( nrts > 2 && r2 > 0  ) r[nr++] = r2;
+    if ( m_cplx ) {
+      if ( m_nrts > 2 && m_r2 > 0  ) r[nr++] = m_r2;
     } else {
-      if ( nrts > 0 && r0 > 0 ) r[nr++] = r0;
-      if ( nrts > 1 && r1 > 0 ) r[nr++] = r1;
-      if ( nrts > 2 && r2 > 0 ) r[nr++] = r2;
+      if ( m_nrts > 0 && m_r0 > 0 ) r[nr++] = m_r0;
+      if ( m_nrts > 1 && m_r1 > 0 ) r[nr++] = m_r1;
+      if ( m_nrts > 2 && m_r2 > 0 ) r[nr++] = m_r2;
     }
     return nr;
   }
@@ -76,12 +76,12 @@ namespace PolynomialRoots {
   integer
   Cubic::get_negative_roots( real_type r[] ) const {
     integer nr{0};
-    if ( cplx ) {
-      if ( nrts > 2 && r2 < 0  ) r[nr++] = r2;
+    if ( m_cplx ) {
+      if ( m_nrts > 2 && m_r2 < 0  ) r[nr++] = m_r2;
     } else {
-      if ( nrts > 0 && r0 < 0 ) r[nr++] = r0;
-      if ( nrts > 1 && r1 < 0 ) r[nr++] = r1;
-      if ( nrts > 2 && r2 < 0 ) r[nr++] = r2;
+      if ( m_nrts > 0 && m_r0 < 0 ) r[nr++] = m_r0;
+      if ( m_nrts > 1 && m_r1 < 0 ) r[nr++] = m_r1;
+      if ( m_nrts > 2 && m_r2 < 0 ) r[nr++] = m_r2;
     }
     return nr;
   }
@@ -89,12 +89,12 @@ namespace PolynomialRoots {
   integer
   Cubic::get_roots_in_range( real_type a, real_type b, real_type r[] ) const {
     integer nr{0};
-    if ( cplx ) {
-      if ( nrts > 2 && r2 >= a && r2 <= b ) r[nr++] = r2;
+    if ( m_cplx ) {
+      if ( m_nrts > 2 && m_r2 >= a && m_r2 <= b ) r[nr++] = m_r2;
     } else {
-      if ( nrts > 0 && r0 >= a && r0 <= b ) r[nr++] = r0;
-      if ( nrts > 1 && r1 >= a && r1 <= b ) r[nr++] = r1;
-      if ( nrts > 2 && r2 >= a && r2 <= b ) r[nr++] = r2;
+      if ( m_nrts > 0 && m_r0 >= a && m_r0 <= b ) r[nr++] = m_r0;
+      if ( m_nrts > 1 && m_r1 >= a && m_r1 <= b ) r[nr++] = m_r1;
+      if ( m_nrts > 2 && m_r2 >= a && m_r2 <= b ) r[nr++] = m_r2;
     }
     return nr;
   }
@@ -102,12 +102,12 @@ namespace PolynomialRoots {
   integer
   Cubic::get_roots_in_open_range( real_type a, real_type b, real_type r[] ) const {
     integer nr{0};
-    if ( cplx ) {
-      if ( nrts > 2 && r2 > a && r2 < b ) r[nr++] = r2;
+    if ( m_cplx ) {
+      if ( m_nrts > 2 && m_r2 > a && m_r2 < b ) r[nr++] = m_r2;
     } else {
-      if ( nrts > 0 && r0 > a && r0 < b ) r[nr++] = r0;
-      if ( nrts > 1 && r1 > a && r1 < b ) r[nr++] = r1;
-      if ( nrts > 2 && r2 > a && r2 < b ) r[nr++] = r2;
+      if ( m_nrts > 0 && m_r0 > a && m_r0 < b ) r[nr++] = m_r0;
+      if ( m_nrts > 1 && m_r1 > a && m_r1 < b ) r[nr++] = m_r1;
+      if ( m_nrts > 2 && m_r2 > a && m_r2 < b ) r[nr++] = m_r2;
     }
     return nr;
   }
@@ -308,33 +308,33 @@ namespace PolynomialRoots {
 
   void
   Cubic::find_roots() {
-    real_type const & A{ ABCD[0] };
-    real_type const & B{ ABCD[1] };
-    real_type const & C{ ABCD[2] };
-    real_type const & D{ ABCD[3] };
-    nrts = iter = 0;
-    cplx = dblx = trpx = false;
+    real_type const & A{ m_ABCD[0] };
+    real_type const & B{ m_ABCD[1] };
+    real_type const & C{ m_ABCD[2] };
+    real_type const & D{ m_ABCD[3] };
+    m_nrts = m_iter = 0;
+    m_cplx = m_dblx = m_trpx = false;
     // special cases
     if ( isZero(A) ) {
       Quadratic qsolve( B, C, D );
-      nrts = qsolve.num_roots();
-      cplx = qsolve.complex_root();
-      dblx = qsolve.double_root();
-      r0   = qsolve.real_root0();
-      r1   = qsolve.real_root1();
+      m_nrts = qsolve.num_roots();
+      m_cplx = qsolve.complex_root();
+      m_dblx = qsolve.double_root();
+      m_r0   = qsolve.real_root0();
+      m_r1   = qsolve.real_root1();
       return;
     }
     if ( isZero(D) ) {
       Quadratic qsolve( A, B, C );
-      nrts = qsolve.num_roots()+1;
-      cplx = qsolve.complex_root();
-      r0   = qsolve.real_root0();
-      r1   = qsolve.real_root1();
-      r2   = 0;
-      if ( !cplx ) { // reorder
-        if ( r2 < r1 ) std::swap( r1, r2 );
-        if ( r1 < r0 ) std::swap( r0, r1 );
-        if ( r2 < r1 ) std::swap( r1, r2 );
+      m_nrts = qsolve.num_roots()+1;
+      m_cplx = qsolve.complex_root();
+      m_r0   = qsolve.real_root0();
+      m_r1   = qsolve.real_root1();
+      m_r2   = 0;
+      if ( !m_cplx ) { // reorder
+        if ( m_r2 < m_r1 ) std::swap( m_r1, m_r2 );
+        if ( m_r1 < m_r0 ) std::swap( m_r0, m_r1 );
+        if ( m_r2 < m_r1 ) std::swap( m_r1, m_r2 );
       }
       return;
     }
@@ -402,27 +402,27 @@ namespace PolynomialRoots {
       case 2: iclass = a[2] > 0 ? 6 : 5; break;
     }
     bool use_shifted = false;
-    trpx = false;
+    m_trpx = false;
     switch ( iclass ) {
-    case 1: r2 = guess1(a); break;
-    case 2: r2 = guess2(a); break;
-    case 3: r2 = guess3(a); break;
-    case 4: r2 = guess4(a); break;
+    case 1: m_r2 = guess1(a); break;
+    case 2: m_r2 = guess2(a); break;
+    case 3: m_r2 = guess3(a); break;
+    case 4: m_r2 = guess4(a); break;
     case 5:
-      r0   = a[1]-third;
-      r1   = a[0]+one27th;
-      trpx = std::abs(r0) <= machepsi && std::abs(r1) <= machepsi; // check for triple root
-      if ( trpx ) { r0 = r1 = r2 = third * scale; nrts = 3; return; }
-      use_shifted = std::abs(r0) <= 0.01 && std::abs(r1) <= 0.01;
-      r2 = guess5(a);
+      m_r0   = a[1]-third;
+      m_r1   = a[0]+one27th;
+      m_trpx = std::abs(m_r0) <= machepsi && std::abs(m_r1) <= machepsi; // check for triple root
+      if ( m_trpx ) { m_r0 = m_r1 = m_r2 = third * scale; m_nrts = 3; return; }
+      use_shifted = std::abs(m_r0) <= 0.01 && std::abs(m_r1) <= 0.01;
+      m_r2 = guess5(a);
       break;
     case 6:
-      r0   = a[1]-third;
-      r1   = a[0]-one27th;
-      trpx = std::abs(r0) <= machepsi && std::abs(r1) <= machepsi; // check for triple root
-      if ( trpx ) { r0 = r1 = r2 = -third * scale; nrts = 3; return; }
-      use_shifted = std::abs(r0) <= 0.01 && std::abs(r1) <= 0.01;
-      r2 = guess6(a);
+      m_r0   = a[1]-third;
+      m_r1   = a[0]-one27th;
+      m_trpx = std::abs(m_r0) <= machepsi && std::abs(m_r1) <= machepsi; // check for triple root
+      if ( m_trpx ) { m_r0 = m_r1 = m_r2 = -third * scale; m_nrts = 3; return; }
+      use_shifted = std::abs(m_r0) <= 0.01 && std::abs(m_r1) <= 0.01;
+      m_r2 = guess6(a);
       break;
     }
 
@@ -432,29 +432,29 @@ namespace PolynomialRoots {
     || (_-</ _ \ \ V / -_)
     || /__/\___/_|\_/\___|
     */
-    iter = 0;
+    m_iter = 0;
     if ( use_shifted ) {
       if ( iclass == 5 ) {
         // a[2] == -1
         // y^3 + (a[1]-1/3)* y + (a[0]+a[1]/3-2/27), x = y+1/3
-        r2 -= third; // shift guess
-        iter = NewtonBisection( 0, r0, a[0]+a[1]/3-two27th, r2 );
-        r2 += third; // unshift solution
+        m_r2 -= third; // shift guess
+        m_iter = NewtonBisection( 0, m_r0, a[0]+a[1]/3-two27th, m_r2 );
+        m_r2 += third; // unshift solution
       } else {
         // a[2] == 1
         // y^3 + (a[1]-1/3)* y + (a[0]-a[1]/3+2/27), x = y+1/3
-        r2 += third; // shift guess
-        r1 -= a[1]/3-one27th;
+        m_r2 += third; // shift guess
+        m_r1 -= a[1]/3-one27th;
         //if ( std::abs(r3) < machepsi ) r3 = 0;
-        iter = NewtonBisection( 0, r0, a[0]-a[1]/3+two27th, r2 );
-        r2 -= third; // unshift solution
+        m_iter = NewtonBisection( 0, m_r0, a[0]-a[1]/3+two27th, m_r2 );
+        m_r2 -= third; // unshift solution
       }
     } else {
-      iter = NewtonBisection( a[2], a[1], a[0], r2 );
+      m_iter = NewtonBisection( a[2], a[1], a[0], m_r2 );
     }
 
     // scale root
-    r2 *= scale;
+    m_r2 *= scale;
 
     /*
     // deflate
@@ -486,60 +486,60 @@ namespace PolynomialRoots {
     //  |         |  |    | = |    |
     //  \ -r2  0  /  \ b1 /   \ cc /
     */
-    real_type b0 = -cc/r2;
-    real_type b1 = std::abs(r2) < 1 ? aa+r2 : -(cc/r2+bb)/r2;
+    real_type b0 = -cc/m_r2;
+    real_type b1 = std::abs(m_r2) < 1 ? aa+m_r2 : -(cc/m_r2+bb)/m_r2;
 
     // solve quadratic polynomial
     Quadratic qsolve( 1.0, b1, b0 );
-    nrts = qsolve.num_roots()+1;
-    cplx = qsolve.complex_root();
-    dblx = qsolve.double_root();
-    r0   = qsolve.real_root0();
-    r1   = qsolve.real_root1();
+    m_nrts = qsolve.num_roots()+1;
+    m_cplx = qsolve.complex_root();
+    m_dblx = qsolve.double_root();
+    m_r0   = qsolve.real_root0();
+    m_r1   = qsolve.real_root1();
 
-    if ( !cplx ) { // if real roots sort it!
-      if ( r1 > r2 ) std::swap(r1,r2);
-      if ( r0 > r1 ) std::swap(r0,r1);
-      if ( r1 > r2 ) std::swap(r1,r2);
+    if ( !m_cplx ) { // if real roots sort it!
+      if ( m_r1 > m_r2 ) std::swap(m_r1,m_r2);
+      if ( m_r0 > m_r1 ) std::swap(m_r0,m_r1);
+      if ( m_r1 > m_r2 ) std::swap(m_r1,m_r2);
     }
 
   }
 
   void
   Cubic::info( ostream_type & s ) const {
-    real_type const & A{ ABCD[0] };
-    real_type const & B{ ABCD[1] };
-    real_type const & C{ ABCD[2] };
-    real_type const & D{ ABCD[3] };
+    real_type const & A{ m_ABCD[0] };
+    real_type const & B{ m_ABCD[1] };
+    real_type const & C{ m_ABCD[2] };
+    real_type const & D{ m_ABCD[3] };
     s << "\npoly a=" << A << " b=" << B << " c=" << C << " d=" << D
-      << "\nn. roots = " << nrts
-      << "\ncomplex  = " << (cplx?"YES":"NO")
-      << "\ntriple   = " << (trpx?"YES":"NO")
-      << "\ndouble   = " << (dblx?"YES":"NO");
-    if ( cplx ) {
-      s << "\nx0 = (" << r0 << "," <<  r1 << ')'
-        << "\nx1 = (" << r0 << "," << -r1 << ')';
-      if ( nrts > 2 ) s << "\nx3 = " << r2;
+      << "\nn. roots = " << m_nrts
+      << "\ncomplex  = " << (m_cplx?"YES":"NO")
+      << "\ntriple   = " << (m_trpx?"YES":"NO")
+      << "\ndouble   = " << (m_dblx?"YES":"NO");
+    if ( m_cplx ) {
+      s << "\nx0 = (" << m_r0 << "," <<  m_r1 << ')'
+        << "\nx1 = (" << m_r0 << "," << -m_r1 << ')';
+      if ( m_nrts > 2 ) s << "\nx3 = " << m_r2;
     } else {
-      if ( nrts > 0 ) s << "\nx0 = " << r0;
-      if ( nrts > 1 ) s << "\nx1 = " << r1;
-      if ( nrts > 2 ) s << "\nx2 = " << r2;
+      if ( m_nrts > 0 ) s << "\nx0 = " << m_r0;
+      if ( m_nrts > 1 ) s << "\nx1 = " << m_r1;
+      if ( m_nrts > 2 ) s << "\nx2 = " << m_r2;
     }
     s << '\n';
   }
 
   bool
   Cubic::check( ostream_type & s ) const {
-    real_type const & A{ ABCD[0] };
-    real_type const & B{ ABCD[1] };
-    real_type const & C{ ABCD[2] };
-    real_type const & D{ ABCD[3] };
+    real_type const & A{ m_ABCD[0] };
+    real_type const & B{ m_ABCD[1] };
+    real_type const & C{ m_ABCD[2] };
+    real_type const & D{ m_ABCD[3] };
     bool ok{ true };
     real_type epsi{ 10 * ( std::abs(A) +
                            std::abs(B) +
                            std::abs(C) +
                            std::abs(D) ) * machepsi };
-    if ( cplx ) {
+    if ( m_cplx ) {
       real_type z0{ std::abs(eval( root0() )) };
       real_type z1{ std::abs(eval( root1() )) };
       real_type z2{ std::abs(eval( root2() )) };
@@ -550,19 +550,19 @@ namespace PolynomialRoots {
         << "\np(real_part(r2)) = " << zr
         << '\n';
       ok = z0 < epsi && z1 < epsi && z2 < epsi;
-    } else if ( nrts == 1 ) {
+    } else if ( m_nrts == 1 ) {
       real_type z0 = eval( real_root0() );
       s << "p(r0) = " << z0  << '\n';
       ok = std::abs(z0) < epsi;
-    } else if ( nrts == 2 ) {
+    } else if ( m_nrts == 2 ) {
       real_type z0 = std::abs(eval( root0() ));
       real_type z1 = std::abs(eval( root1() ));
       s << "p(r0) = " << z0
         << "\np(r1) = " << z1
         << '\n';
       ok = std::abs(z0) < epsi && std::abs(z1) < epsi;
-    } else if ( nrts == 3 ) {
-      if ( cplx ) {
+    } else if ( m_nrts == 3 ) {
+      if ( m_cplx ) {
         complex_type z0{eval( root0() )};
         complex_type z1{eval( root1() )};
         complex_type z2{eval( root2() )};

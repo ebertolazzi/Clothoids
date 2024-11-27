@@ -32,6 +32,7 @@ message( STATUS "PROJECT_NAME    = ${PROJECT_NAME}" )
 if ( (UNIX OR LINUX) AND NOT APPLE )
   set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -static-libstdc++ -static-libgcc -Wl,--no-undefined")
   set(CMAKE_SHARED_LINKER_FLAGS "${CMAKE_SHARED_LINKER_FLAGS} -static-libstdc++ -static-libgcc -Wl,--no-undefined")
+  add_compile_options(-fPIC)
 endif()
 
 include(./cmake_utils/CMakeLists-cflags.txt)

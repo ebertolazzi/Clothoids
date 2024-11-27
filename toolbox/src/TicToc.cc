@@ -18,13 +18,11 @@
  |                                                                          |
 \*--------------------------------------------------------------------------*/
 
-//
-// file: TicToc.cc
-//
+///
+/// file: TicToc.cc
+///
 
 #include "Utils.hh"
-
-#ifndef DOXYGEN_SHOULD_SKIP_THIS
 
 #ifdef UTILS_OS_WINDOWS
 
@@ -124,8 +122,6 @@ namespace Utils {
 
 #endif
 
-#endif
-
-//
-// eof: TicToc.cc
-//
+///
+/// eof: TicToc.cc
+///

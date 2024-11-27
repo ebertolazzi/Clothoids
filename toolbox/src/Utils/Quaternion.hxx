@@ -17,9 +17,9 @@
  |                                                                          |
 \*--------------------------------------------------------------------------*/
 
-//
-// file: Quaternion.hxx
-//
+///
+/// file: Quaternion.hxx
+///
 
 namespace Utils {
 
@@ -28,31 +28,25 @@ namespace Utils {
   #endif
 
   //!
-  //! \brief Implement some operationn on quaternion
+  //! **Quaternion class**
   //!
-  //! **Quaternion Class**
+  //! A quaternion is a quadruplet (A,B,C,D) of real numbers,
+  //! which may be written as
   //!
-  //! Represents a quaternion, which is a mathematical entity that extends
-  //! complex numbers. A quaternion is defined as a quadruplet \f$ (A, B, C, D) \f$
-  //! of real numbers, often represented as:
+  //! \f[ Q = A + B \mathbf{i} + C\mathbf{j} + D\mathbf{k} \f]
   //!
-  //! \f[ Q = A + B \mathbf{i} + C \mathbf{j} + D \mathbf{k} \f]
-  //!
-  //! Quaternions are widely used in 3D computer graphics and robotics for
-  //! representing rotations and orientations due to their efficiency and
-  //! ability to avoid gimbal lock.
   //!
   //! **Reference:**
   //!
-  //! - James Foley, Andries van Dam, Steven Feiner, John Hughes,
-  //!   *Computer Graphics: Principles and Practice, Second Edition*,
-  //!   Addison Wesley, 1990.
+  //! - | James Foley, Andries van Dam, Steven Feiner, John Hughes,
+  //!   | Computer Graphics, Principles and Practice, Second Edition,
+  //!   | Addison Wesley, 1990.
   //!
   template <typename T>
   class Quaternion {
   public:
     //!
-    //! Type definition for the real number type of the quaternion.
+    //! Type quaternion of coordinate.
     //!
     using real_type = T;
 
@@ -62,19 +56,14 @@ namespace Utils {
   public:
 
     //!
-    //! Default constructor that initializes a null quaternion.
+    //! Build null quaternion.
     //!
     Quaternion() {
       m_Q[0] = m_Q[1] = m_Q[2] = m_Q[3] = 0;
     }
 
     //!
-    //! Constructs a quaternion with specified components.
-    //!
-    //! \param A The scalar part of the quaternion.
-    //! \param B The coefficient for \f$ \mathbf{i} \f$.
-    //! \param C The coefficient for \f$ \mathbf{j} \f$.
-    //! \param D The coefficient for \f$ \mathbf{k} \f$.
+    //! Build quaternion \f$ A + B \mathbf{i} + C \mathbf{j} + D \mathbf{k} \f$.
     //!
     Quaternion(
       real_type A,
@@ -89,12 +78,7 @@ namespace Utils {
     }
 
     //!
-    //! Sets the components of the quaternion to the specified values.
-    //!
-    //! \param A The scalar part of the quaternion.
-    //! \param B The coefficient for \f$ \mathbf{i} \f$.
-    //! \param C The coefficient for \f$ \mathbf{j} \f$.
-    //! \param D The coefficient for \f$ \mathbf{k} \f$.
+    //! Build quaternion \f$ A + B \mathbf{i} + C \mathbf{j} + D \mathbf{k} \f$.
     //!
     void
     setup(
@@ -110,9 +94,7 @@ namespace Utils {
     }
 
     //!
-    //! Prints the quaternion to the specified output stream.
-    //!
-    //! \param os The output stream where the quaternion will be printed.
+    //! Print a quaternion to stream.
     //!
     void
     print( ostream_type & os) const {
@@ -124,20 +106,17 @@ namespace Utils {
     }
 
     //!
-    //! Accesses the \f$i\f$-th component of the quaternion.
-    //!
-    //! \param i Index of the quaternion component (0 for A, 1 for B, etc.).
-    //! \return The value of the specified component.
+    //! Return `i`-th coordinate of the quaternion
     //!
     real_type
     operator [] (int i) const { return m_Q[i]; }
 
     //!
-    //! Conjugates the quaternion:
+    //! Conjugates a quaternion
     //!
     //! \f[ Q = A + B \mathbf{i} + C \mathbf{j} + D \mathbf{k} \f]
     //!
-    //! The conjugate of \f$ Q \f$ is given by:
+    //! The conjugate of \f$ Q \f$ is
     //!
     //! \f[ \overline{Q} = A - B \mathbf{i} - C \mathbf{j} - D \mathbf{k} \f]
     //!
@@ -145,12 +124,8 @@ namespace Utils {
     conj() { m_Q[1] = -m_Q[1]; m_Q[2] = -m_Q[2]; m_Q[3] = -m_Q[3]; }
 
     //!
-    //! Inverts the quaternion:
-    //!
-    //! \f[ Q = A + B \mathbf{i} + C \mathbf{j} + D \mathbf{k} \f]
-    //!
-    //! The inverse of \f$ Q \f$ is calculated as:
-    //!
+    //! Invert a quaternion \f$ Q = A + B \mathbf{i} + C \mathbf{j} + D \mathbf{k} \f$.
+    //! The inverse of of \f$ Q \f$ is
     //! \f[
     //!   Q^{-1} = \dfrac{ A - B \mathbf{i} - C \mathbf{j} - D \mathbf{k}}
     //!                  { A^2 + B^2 + C^2 + D^2 }
@@ -163,13 +138,8 @@ namespace Utils {
     }
 
     //!
-    //! Computes the norm of the quaternion.
-    //!
-    //! The norm of \f$ Q \f$ is defined as:
-    //!
-    //! \f[ \text{norm}(Q) = \sqrt{A^2 + B^2 + C^2 + D^2} \f]
-    //!
-    //! \return The computed norm of the quaternion.
+    //! Computes the norm of a quaternion.
+    //! The norm of \f$ Q \f$ is \f$ \sqrt{A^2+B^2+C^2+D^2} \f$.
     //!
     real_type
     norm() const {
@@ -177,16 +147,14 @@ namespace Utils {
     }
 
     //!
-    //! Applies a quaternion rotation to a 3D vector.
+    //! Applies a quaternion rotation to a vector in 3D.
     //!
-    //! If \f$ Q \f$ is a unit quaternion representing a rotation of
-    //! ANGLE radians about the vector AXIS, the result \f$ W \f$ of the
-    //! rotation on the vector \f$ V \f$ can be computed as:
+    //! If \f$ Q \f$ is a unit quaternion that encodes a rotation of ANGLE
+    //! radians about the vector AXIS, then for an arbitrary real
+    //! vector \f$ V \f$, the result \f$ W \f$ of the rotation on \f$ V \f$
+    //! can be written as:
     //!
-    //! \f$ W = Q * V * \overline{Q} \f$
-    //!
-    //! \param v The input vector to be rotated.
-    //! \param w The output vector that will hold the result.
+    //! \f$ W = Q * V * Conj(Q) \f$
     //!
     void
     rotate( real_type const v[3], real_type w[3] ) const {
@@ -210,7 +178,7 @@ namespace Utils {
     //!
     //! Converts a rotation from quaternion to axis format in 3D.
     //!
-    //! A rotation quaternion Q has the form:
+    //!  A rotation quaternion Q has the form:
     //!
     //! \f[ Q = A + B \mathbf{i} + C \mathbf{j} + D \mathbf{k} \f]
     //!
@@ -224,9 +192,6 @@ namespace Utils {
     //! Rotation multiplication and inversion can be carried out using
     //! this format and the usual rules for quaternion multiplication
     //! and inversion.
-    //!
-    //! \param axis An array that will be populated with the axis of rotation.
-    //! \return The angle of rotation in radians.
     //!
     real_type
     to_axis( real_type axis[3] ) const {
@@ -244,9 +209,7 @@ namespace Utils {
     }
 
     //!
-    //! Converts the quaternion to a 3x3 rotation matrix.
-    //!
-    //! \param mat A 3x3 array that will hold the resulting rotation matrix.
+    //! Converts a rotation from quaternion to rotation matrix.
     //!
     void
     to_matrix( real_type mat[3][3] ) const {
@@ -273,24 +236,12 @@ namespace Utils {
   //!
   //! Multiplies two quaternions.
   //!
-  //! The multiplication of two quaternions is defined as follows:
+  //! To multiply two quaternions, use the relationships:
   //!
-  //! \f[
-  //! \mathbf{i} * \mathbf{j} = -\mathbf{j} * \mathbf{i} = \mathbf{k}
-  //! \f]
-  //! \f[
-  //! \mathbf{j} * \mathbf{k} = -\mathbf{k} * \mathbf{j} = \mathbf{i}
-  //! \f]
-  //! \f[
-  //! \mathbf{k} * \mathbf{i} = -\mathbf{i} * \mathbf{k} = \mathbf{j}
-  //! \f]
-  //! \f[
-  //! \mathbf{i} * \mathbf{i} =  \mathbf{j} * \mathbf{j} = \mathbf{k} * \mathbf{k} = -1
-  //! \f]
-  //!
-  //! \param a The first quaternion.
-  //! \param b The second quaternion.
-  //! \return The result of multiplying quaternions \f$ a \f$ and \f$ b \f$.
+  //! \f[ \mathbf{i} * \mathbf{j} = -\mathbf{j} * \mathbf{i} = \mathbf{k} \f]
+  //! \f[ \mathbf{j} * \mathbf{k} = -\mathbf{k} * \mathbf{j} = \mathbf{i} \f]
+  //! \f[ \mathbf{k} * \mathbf{i} = -\mathbf{i} * \mathbf{k} = \mathbf{j} \f]
+  //! \f[ \mathbf{i} * \mathbf{i} =  \mathbf{j} * \mathbf{j} = \mathbf{k} * \mathbf{k} = -1 \f]
   //!
   template <typename T>
   inline
@@ -302,13 +253,6 @@ namespace Utils {
                           a[0] * b[3] + a[1] * b[2] - a[2] * b[1] + a[3] * b[0] );
   }
 
-  //!
-  //! Overloads the output stream operator for quaternions.
-  //!
-  //! \param os The output stream.
-  //! \param Q The quaternion to output.
-  //! \return The output stream with the quaternion printed.
-  //!
   template <typename T>
   inline
   ostream_type& operator << ( ostream_type & os,  Quaternion<T> const & Q ) {
@@ -317,6 +261,6 @@ namespace Utils {
   }
 }
 
-//
-// eof: Quaternion.hxx
-//
+///
+/// eof: Quaternion.hxx
+///

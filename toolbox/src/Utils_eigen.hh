@@ -17,9 +17,9 @@
  |                                                                          |
 \*--------------------------------------------------------------------------*/
 
-//
-// file: Utils_eigen.hh
-//
+///
+/// file: Utils_eigen.hh
+///
 #pragma once
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
@@ -58,8 +58,6 @@
 #include "Eigen/Dense"
 #include <type_traits>
 
-#ifndef DOXYGEN_SHOULD_SKIP_THIS
-
 namespace fmt {
   template <typename TYPE, int ROW, int COL>
   struct formatter<Eigen::Matrix<TYPE,ROW,COL>> : ostream_formatter {};
@@ -78,8 +76,6 @@ namespace fmt {
 
 #endif
 
-#endif
-
-//
-// eof: Utils_eigen.hh
-//
+///
+/// eof: Utils_eigen.hh
+///

@@ -193,11 +193,11 @@ namespace PolynomialRoots {
   //! ```
   //!
   class Quadratic {
-    real_type ABC[3];
-    real_type r0, r1;
-    integer   nrts{0};
-    bool      cplx{false};
-    bool      dblx{false};
+    real_type m_ABC[3]{0,0,0};
+    real_type m_r0{0}, m_r1{0};
+    integer   m_nrts{0};
+    bool      m_cplx{false};
+    bool      m_dblx{false};
 
     void find_roots();
 
@@ -215,12 +215,11 @@ namespace PolynomialRoots {
     //! \param[in] b coefficient of \f$ x \f$
     //! \param[in] c coefficient of \f$ x^0 \f$
     //!
-    Quadratic( real_type a, real_type b, real_type c )
-    : nrts(0), cplx(false), dblx(false) {
+    Quadratic( real_type a, real_type b, real_type c ) {
       using std::isfinite;
-      real_type & A = ABC[0];
-      real_type & B = ABC[1];
-      real_type & C = ABC[2];
+      real_type & A{ m_ABC[0] };
+      real_type & B{ m_ABC[1] };
+      real_type & C{ m_ABC[2] };
       A = a; B = b; C = c;
       // find roots only on finite values
       if ( isfinite(a) && isfinite(b) && isfinite(c) ) {
@@ -239,9 +238,9 @@ namespace PolynomialRoots {
     //!
     void
     setup( real_type a, real_type b, real_type c ) {
-      real_type & A = ABC[0];
-      real_type & B = ABC[1];
-      real_type & C = ABC[2];
+      real_type & A = m_ABC[0];
+      real_type & B = m_ABC[1];
+      real_type & C = m_ABC[2];
       A = a; B = b; C = c;
       find_roots();
     }
@@ -256,26 +255,26 @@ namespace PolynomialRoots {
     //!
     //! \return number of computed roots
     //!
-    integer num_roots() const { return nrts; }
+    integer num_roots() const { return m_nrts; }
 
     //! alias of `num_roots`
-    integer numRoots() const { return nrts; }
+    integer numRoots() const { return m_nrts; }
 
     //!
     //! true if roots are complex conjugated
     //!
-    bool complex_root() const { return cplx; }
+    bool complex_root() const { return m_cplx; }
 
     //! alias of `complex_root`
-    bool complexRoot() const { return cplx; }
+    bool complexRoot() const { return m_cplx; }
 
     //!
     //! true if \f$ p(x) = a x^2 + b x + c = (x-r)^2 \f$
     //!
-    bool double_root() const { return dblx; }
+    bool double_root() const { return m_dblx; }
 
     //! alias of `double_root`
-    bool doubleRoot() const { return dblx; }
+    bool doubleRoot() const { return m_dblx; }
 
     //!
     //! Get the real roots
@@ -343,22 +342,22 @@ namespace PolynomialRoots {
     //!
     //! The first real root
     //!
-    real_type real_root0() const { return r0; }
+    real_type real_root0() const { return m_r0; }
 
     //!
     //! The second real root
     //!
-    real_type real_root1() const { return r1; }
+    real_type real_root1() const { return m_r1; }
 
     //!
     //! The first complex root
     //!
-    complex_type root0() const { return cplx ? complex_type(r0,r1) : complex_type(r0,0); }
+    complex_type root0() const { return m_cplx ? complex_type(m_r0,m_r1) : complex_type(m_r0,0); }
 
     //!
     //! The second complex root
     //!
-    complex_type root1() const { return cplx ? complex_type(r0,-r1) : complex_type(r1,0); }
+    complex_type root1() const { return m_cplx ? complex_type(m_r0,-m_r1) : complex_type(m_r1,0); }
 
     //!
     //! Get the first root (complex or real)
@@ -368,8 +367,8 @@ namespace PolynomialRoots {
     //!
     void
     get_root0( real_type & re, real_type & im ) const {
-      if ( cplx ) { re = r0; im = r1; }
-      else        { re = r0; im = 0;  }
+      if ( m_cplx ) { re = m_r0; im = m_r1; }
+      else          { re = m_r0; im = 0;    }
     }
 
     //! alias of `get_root0`
@@ -384,7 +383,7 @@ namespace PolynomialRoots {
     //!
     void
     get_root0( complex_type & r ) const
-    { r = cplx ? complex_type(r0,r1) : complex_type(r0,0); }
+    { r = m_cplx ? complex_type(m_r0,m_r1) : complex_type(m_r0,0); }
 
     //! alias of `get_root0`
     void getRoot0( complex_type & r ) const { return get_root0( r ); }
@@ -397,8 +396,8 @@ namespace PolynomialRoots {
     //!
     void
     get_root1( real_type & re, real_type & im ) const {
-      if ( cplx ) { re = r0; im = -r1; }
-      else        { re = r1; im = 0;   }
+      if ( m_cplx ) { re = m_r0; im = -m_r1; }
+      else          { re = m_r1; im = 0;     }
     }
 
     //! alias of `get_root1`
@@ -413,7 +412,7 @@ namespace PolynomialRoots {
     //!
     void
     get_root1( complex_type & r ) const
-    { r = cplx ? complex_type(r0,-r1) : complex_type(r1,0); }
+    { r = m_cplx ? complex_type(m_r0,-m_r1) : complex_type(m_r1,0); }
 
     //! alias of `get_root1`
     void getRoot1( complex_type & r ) const { return get_root1( r ); }
@@ -426,7 +425,7 @@ namespace PolynomialRoots {
     //!
     real_type
     eval( real_type x ) const
-    { return evalPoly( ABC, 2, x ); }
+    { return evalPoly( m_ABC, 2, x ); }
 
     //!
     //! Evalute the quadratic polynomial
@@ -436,7 +435,7 @@ namespace PolynomialRoots {
     //!
     complex_type
     eval( complex_type x ) const
-    { return evalPolyC( ABC, 2, x ); }
+    { return evalPolyC( m_ABC, 2, x ); }
 
     //!
     //! Evaluate the polynomial with its derivative
@@ -447,7 +446,7 @@ namespace PolynomialRoots {
     //!
     void
     eval( real_type x, real_type & p, real_type & dp ) const {
-      evalPolyDPoly( ABC, 2, x, p, dp );
+      evalPolyDPoly( m_ABC, 2, x, p, dp );
     }
 
     //!
@@ -548,13 +547,13 @@ namespace PolynomialRoots {
   //! ```
   //!
   class Cubic {
-    real_type ABCD[4];
-    real_type r0, r1, r2;
-    integer   nrts{0};
-    integer   iter{0};
-    bool      cplx{false}; // complex root
-    bool      dblx{false}; // double root
-    bool      trpx{false}; // triple root
+    real_type m_ABCD[4]{0,0,0,0};
+    real_type m_r0{0}, m_r1{0}, m_r2{0};
+    integer   m_nrts{0};
+    integer   m_iter{0};
+    bool      m_cplx{false}; // complex root
+    bool      m_dblx{false}; // double root
+    bool      m_trpx{false}; // triple root
 
     void find_roots();
 
@@ -576,10 +575,10 @@ namespace PolynomialRoots {
     //!
     Cubic( real_type a, real_type b, real_type c, real_type d ) {
       using std::isfinite;
-      real_type & A = ABCD[0];
-      real_type & B = ABCD[1];
-      real_type & C = ABCD[2];
-      real_type & D = ABCD[3];
+      real_type & A = m_ABCD[0];
+      real_type & B = m_ABCD[1];
+      real_type & C = m_ABCD[2];
+      real_type & D = m_ABCD[3];
       A = a; B = b; C = c; D = d;
       // find roots only on finite values
       if ( isfinite(a) && isfinite(b) && isfinite(c) && isfinite(d) ) {
@@ -599,15 +598,15 @@ namespace PolynomialRoots {
     void
     setup( real_type a, real_type b, real_type c, real_type d ) {
       using std::isfinite;
-      real_type & A = ABCD[0];
-      real_type & B = ABCD[1];
-      real_type & C = ABCD[2];
-      real_type & D = ABCD[3];
-      nrts = 0;
-      iter = 0;
-      cplx = false; // complex root
-      dblx = false; // double root
-      trpx = false; // triple root
+      real_type & A{m_ABCD[0]};
+      real_type & B{m_ABCD[1]};
+      real_type & C{m_ABCD[2]};
+      real_type & D{m_ABCD[3]};
+      m_nrts = 0;
+      m_iter = 0;
+      m_cplx = false; // complex root
+      m_dblx = false; // double root
+      m_trpx = false; // triple root
       A = a; B = b; C = c; D = d;
       if ( isfinite(a) && isfinite(b) && isfinite(c) && isfinite(d) ) {
         find_roots();
@@ -617,34 +616,34 @@ namespace PolynomialRoots {
     //!
     //! Number of found roots.
     //!
-    integer num_roots() const { return nrts; }
+    integer num_roots() const { return m_nrts; }
 
     //! alias of `num_roots`
-    integer numRoots() const { return nrts; }
+    integer numRoots() const { return m_nrts; }
 
     //!
     //! Has complex roots?
     //!
-    bool complex_root() const { return cplx; }
+    bool complex_root() const { return m_cplx; }
 
     //! alias of `complex_root`
-    bool complexRoot() const { return cplx; }
+    bool complexRoot() const { return m_cplx; }
 
     //!
     //! Has a double root?
     //!
-    bool double_root() const { return dblx; }
+    bool double_root() const { return m_dblx; }
 
     //! alias of `double_root`
-    bool doubleRoot() const { return dblx; }
+    bool doubleRoot() const { return m_dblx; }
 
     //!
     //! Has a triple root?
     //!
-    bool triple_root() const { return trpx; }
+    bool triple_root() const { return m_trpx; }
 
     //! alias of `triple_root`
-    bool tripleRoot() const { return trpx; }
+    bool tripleRoot() const { return m_trpx; }
 
     //!
     //! Get the real roots.
@@ -718,46 +717,46 @@ namespace PolynomialRoots {
     //!
     //! First real root.
     //!
-    real_type real_root0() const { return r0; }
+    real_type real_root0() const { return m_r0; }
 
     //!
     //! Second real root.
     //!
-    real_type real_root1() const { return r1; }
+    real_type real_root1() const { return m_r1; }
 
     //!
     //! Third real root.
     //!
-    real_type real_root2() const { return r2; }
+    real_type real_root2() const { return m_r2; }
 
     //!
     //! First complex or real root.
     //!
     complex_type
     root0() const
-    { return cplx ? complex_type(r0,r1) : complex_type(r0,0); }
+    { return m_cplx ? complex_type(m_r0,m_r1) : complex_type(m_r0,0); }
 
     //!
     //! Second complex or real root.
     //!
     complex_type
     root1() const
-    { return cplx ? complex_type(r0,-r1) : complex_type(r1,0); }
+    { return m_cplx ? complex_type(m_r0,-m_r1) : complex_type(m_r1,0); }
 
     //!
     //! Third complex or real root.
     //!
     complex_type
     root2() const
-    { return complex_type(r2,0); }
+    { return complex_type(m_r2,0); }
 
     //!
     //! First complex or real root.
     //!
     void
     get_root0( real_type & re, real_type & im ) const {
-      if ( cplx ) { re = r0; im = r1; }
-      else        { re = r0; im = 0;  }
+      if ( m_cplx ) { re = m_r0; im = m_r1; }
+      else          { re = m_r0; im = 0;    }
     }
 
     //! alias of `get_root0`
@@ -768,7 +767,7 @@ namespace PolynomialRoots {
     //!
     void
     get_root0( complex_type & r ) const
-    { r = cplx ? complex_type(r0,r1) : complex_type(r0,0); }
+    { r = m_cplx ? complex_type(m_r0,m_r1) : complex_type(m_r0,0); }
 
     //! alias of `get_root0`
     void getRoot0( complex_type & r ) const { get_root0( r ); }
@@ -778,8 +777,8 @@ namespace PolynomialRoots {
     //!
     void
     get_root1( real_type & re, real_type & im ) const {
-      if ( cplx ) { re = r0; im = -r1; }
-      else        { re = r1; im = 0;   }
+      if ( m_cplx ) { re = m_r0; im = -m_r1; }
+      else          { re = m_r1; im = 0;     }
     }
 
     //! alias of `get_root1`
@@ -790,7 +789,7 @@ namespace PolynomialRoots {
     //!
     void
     get_root1( complex_type & r ) const
-    { r = cplx ? complex_type(r0,-r1) : complex_type(r1,0); }
+    { r = m_cplx ? complex_type(m_r0,-m_r1) : complex_type(m_r1,0); }
 
     //! alias of `get_root1`
     void getRoot1( complex_type & r ) const { get_root1( r ); }
@@ -800,7 +799,7 @@ namespace PolynomialRoots {
     //!
     void
     get_root2( real_type & re, real_type & im ) const
-    { re = r2; im = 0; }
+    { re = m_r2; im = 0; }
 
     //! alias of `get_root2`
     void getRoot2( real_type & re, real_type & im ) const { get_root2( re, im ); }
@@ -810,7 +809,7 @@ namespace PolynomialRoots {
     //!
     void
     get_root2( complex_type & r ) const
-    { r = complex_type(r2,0); }
+    { r = complex_type(m_r2,0); }
 
     //! alias of `get_root2`
     void getRoot2( complex_type & r ) const { get_root2( r ); }
@@ -823,7 +822,7 @@ namespace PolynomialRoots {
     //!
     real_type
     eval( real_type x ) const
-    { return evalPoly( ABCD, 3, x ); }
+    { return evalPoly( m_ABCD, 3, x ); }
 
     //!
     //! Evalute the cubic polynomial.
@@ -833,7 +832,7 @@ namespace PolynomialRoots {
     //!
     complex_type
     eval( complex_type x ) const
-    { return evalPolyC( ABCD, 3, x ); }
+    { return evalPolyC( m_ABCD, 3, x ); }
 
     //!
     //! Evalute the polynomial with its derivative.
@@ -844,7 +843,7 @@ namespace PolynomialRoots {
     //!
     void
     eval( real_type x, real_type & p, real_type & dp ) const {
-      evalPolyDPoly( ABCD, 3, x, p, dp );
+      evalPolyDPoly( m_ABCD, 3, x, p, dp );
     }
 
     //!
@@ -949,16 +948,16 @@ namespace PolynomialRoots {
   //! ```
   //!
   class Quartic {
-    real_type ABCDE[5];
-    real_type r0, r1, r2, r3;
-    integer   iter{0}, nreal{0}, ncplx{0};
+    real_type m_ABCDE[5]{0,0,0,0,0};
+    real_type m_r0{0}, m_r1{0}, m_r2{0},m_r3{0};
+    integer   m_iter{0}, m_nreal{0}, m_ncplx{0};
 
     void find_roots();
 
-    bool cplx0() const { return ncplx > 0; }
-    bool cplx1() const { return ncplx > 0; }
-    bool cplx2() const { return ncplx > 2; }
-    bool cplx3() const { return ncplx > 2; }
+    bool cplx0() const { return m_ncplx > 0; }
+    bool cplx1() const { return m_ncplx > 0; }
+    bool cplx2() const { return m_ncplx > 2; }
+    bool cplx3() const { return m_ncplx > 2; }
 
   public:
 
@@ -971,11 +970,11 @@ namespace PolynomialRoots {
       real_type e
     ) {
       using std::isfinite;
-      real_type & A = ABCDE[0];
-      real_type & B = ABCDE[1];
-      real_type & C = ABCDE[2];
-      real_type & D = ABCDE[3];
-      real_type & E = ABCDE[4];
+      real_type & A{m_ABCDE[0]};
+      real_type & B{m_ABCDE[1]};
+      real_type & C{m_ABCDE[2]};
+      real_type & D{m_ABCDE[3]};
+      real_type & E{m_ABCDE[4]};
       A = a; B = b; C = c; D = d; E = e;
       // find roots only on finite values
       if ( isfinite(a) && isfinite(b) && isfinite(c) && isfinite(d) && isfinite(e) ) {
@@ -1002,15 +1001,15 @@ namespace PolynomialRoots {
       real_type e
     ) {
       using std::isfinite;
-      real_type & A = ABCDE[0];
-      real_type & B = ABCDE[1];
-      real_type & C = ABCDE[2];
-      real_type & D = ABCDE[3];
-      real_type & E = ABCDE[4];
+      real_type & A{m_ABCDE[0]};
+      real_type & B{m_ABCDE[1]};
+      real_type & C{m_ABCDE[2]};
+      real_type & D{m_ABCDE[3]};
+      real_type & E{m_ABCDE[4]};
       A = a; B = b; C = c; D = d; E = e;
-      iter  = 0;
-      nreal = 0;
-      ncplx = 0;
+      m_iter  = 0;
+      m_nreal = 0;
+      m_ncplx = 0;
       // find roots only on finite values
       if ( isfinite(a) && isfinite(b) && isfinite(c) && isfinite(d) && isfinite(e) ) {
         find_roots();
@@ -1020,26 +1019,26 @@ namespace PolynomialRoots {
     //!
     //! Number of roots found.
     //!
-    integer num_roots() const { return nreal+ncplx; }
+    integer num_roots() const { return m_nreal+m_ncplx; }
 
     //! alias of `num_roots`
-    integer numRoots() const { return nreal+ncplx; }
+    integer numRoots() const { return m_nreal+m_ncplx; }
 
     //!
     //! Number of real roots.
     //!
-    integer num_real_roots() const { return nreal; }
+    integer num_real_roots() const { return m_nreal; }
 
     //! alias of `num_real_roots`
-    integer numRealRoots() const { return nreal; }
+    integer numRealRoots() const { return m_nreal; }
 
     //!
     //! Number of complex roots
     //!
-    integer num_complex_roots() const { return ncplx; }
+    integer num_complex_roots() const { return m_ncplx; }
 
     //! alias of `num_complex_root`
-    integer numComplexRoots() const { return ncplx; }
+    integer numComplexRoots() const { return m_ncplx; }
 
     //!
     //! Get the real roots.
@@ -1103,58 +1102,58 @@ namespace PolynomialRoots {
     //!
     //! First real root.
     //!
-    real_type real_root0() const { return r0; }
+    real_type real_root0() const { return m_r0; }
 
     //!
     //! Second real root.
     //!
-    real_type real_root1() const { return r1; }
+    real_type real_root1() const { return m_r1; }
 
     //!
     //! Third real root.
     //!
-    real_type real_root2() const { return r2; }
+    real_type real_root2() const { return m_r2; }
 
     //!
     //! Fourth real root.
     //!
-    real_type real_root3() const { return r3; }
+    real_type real_root3() const { return m_r3; }
 
     //!
     //! First real or complex root.
     //!
     complex_type
     root0() const
-    { return cplx0() ? complex_type(r0,r1) : complex_type(r0,0); }
+    { return cplx0() ? complex_type(m_r0,m_r1) : complex_type(m_r0,0); }
 
     //!
     //! Second real or complex root.
     //!
     complex_type
     root1() const
-    { return cplx1() ? complex_type(r0,-r1) : complex_type(r1,0); }
+    { return cplx1() ? complex_type(m_r0,-m_r1) : complex_type(m_r1,0); }
 
     //!
     //! Third real or complex root.
     //!
     complex_type
     root2() const
-    { return cplx2() ? complex_type(r2,r3) : complex_type(r2,0); }
+    { return cplx2() ? complex_type(m_r2,m_r3) : complex_type(m_r2,0); }
 
     //!
     //! 4th real or complex root.
     //!
     complex_type
     root3() const
-    { return cplx3() ? complex_type(r2,-r3) : complex_type(r3,0); }
+    { return cplx3() ? complex_type(m_r2,-m_r3) : complex_type(m_r3,0); }
 
     //!
     //! First real or complex root.
     //!
     void
     get_root0( real_type & re, real_type & im ) const {
-      if ( cplx0() ) { re = r0; im = r1; }
-      else           { re = r0; im = 0;  }
+      if ( cplx0() ) { re = m_r0; im = m_r1; }
+      else           { re = m_r0; im = 0;    }
     }
 
     //! alias of `get_root0`
@@ -1165,8 +1164,8 @@ namespace PolynomialRoots {
     //!
     void
     get_root0( complex_type & r ) const {
-      if ( cplx0() ) r = complex_type(r0,r1);
-      else           r = complex_type(r0,0);
+      if ( cplx0() ) r = complex_type(m_r0,m_r1);
+      else           r = complex_type(m_r0,0);
     }
 
     //! alias of `get_root0`
@@ -1177,8 +1176,8 @@ namespace PolynomialRoots {
     //!
     void
     get_root1( real_type & re, real_type & im ) const {
-      if ( cplx1() ) { re = r0; im = -r1; }
-      else           { re = r1; im = 0;   }
+      if ( cplx1() ) { re = m_r0; im = -m_r1; }
+      else           { re = m_r1; im = 0;     }
     }
 
     //! alias of `get_root1`
@@ -1189,8 +1188,8 @@ namespace PolynomialRoots {
     //!
     void
     get_root1( complex_type & r ) const {
-      if ( cplx1() ) r = complex_type(r0,-r1);
-      else           r = complex_type(r1,0);
+      if ( cplx1() ) r = complex_type(m_r0,-m_r1);
+      else           r = complex_type(m_r1,0);
     }
 
     //! alias of `get_root1`
@@ -1201,8 +1200,8 @@ namespace PolynomialRoots {
     //!
     void
     get_root2( real_type & re, real_type & im ) const {
-      if ( cplx2() ) { re = r2; im = r3; }
-      else           { re = r2; im = 0;  }
+      if ( cplx2() ) { re = m_r2; im = m_r3; }
+      else           { re = m_r2; im = 0;    }
     }
 
     //! alias of `get_root2`
@@ -1213,8 +1212,8 @@ namespace PolynomialRoots {
     //!
     void
     get_root2( complex_type & r ) const {
-      if ( cplx2() ) r = complex_type(r2,r3);
-      else           r = complex_type(r2,0);
+      if ( cplx2() ) r = complex_type(m_r2,m_r3);
+      else           r = complex_type(m_r2,0);
     }
 
     //! alias of `get_root2`
@@ -1225,8 +1224,8 @@ namespace PolynomialRoots {
     //!
     void
     get_root3( real_type & re, real_type & im ) const {
-      if ( cplx3() ) { re = r2; im = -r3; }
-      else           { re = r3; im = 0;   }
+      if ( cplx3() ) { re = m_r2; im = -m_r3; }
+      else           { re = m_r3; im = 0;     }
     }
 
     //! alias of `get_root3`
@@ -1237,8 +1236,8 @@ namespace PolynomialRoots {
     //!
     void
     get_root3( complex_type & r ) const {
-      if ( cplx3() ) r = complex_type(r2,-r3);
-      else           r = complex_type(r3,0);
+      if ( cplx3() ) r = complex_type(m_r2,-m_r3);
+      else           r = complex_type(m_r3,0);
     }
 
     //! alias of `get_root3`
@@ -1252,7 +1251,7 @@ namespace PolynomialRoots {
     //!
     real_type
     eval( real_type x ) const
-    { return evalPoly( ABCDE, 4, x ); }
+    { return evalPoly( m_ABCDE, 4, x ); }
 
     //!
     //! Evalute the quartic polynomial.
@@ -1262,7 +1261,7 @@ namespace PolynomialRoots {
     //!
     complex_type
     eval( complex_type x ) const
-    { return evalPolyC( ABCDE, 4, x ); }
+    { return evalPolyC( m_ABCDE, 4, x ); }
 
     //!
     //! Evalute the polynomial with its derivative.
@@ -1273,7 +1272,7 @@ namespace PolynomialRoots {
     //!
     void
     eval( real_type x, real_type & p, real_type & dp ) const {
-      evalPolyDPoly( ABCDE, 4, x, p, dp );
+      evalPolyDPoly( m_ABCDE, 4, x, p, dp );
     }
 
     //!

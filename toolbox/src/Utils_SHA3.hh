@@ -11,19 +11,14 @@
 
 namespace Utils {
 
-  //!
-  //! \brief SHA-3 winning hash algorithm Keccak
-  //!
-  //! This class implements the SHA-3 hashing algorithm, based on the Keccak
-  //! design. It provides methods to compute the hash of strings and returns
-  //! the hash digest in hexadecimal format.
-  //!
-  //! \author Christopher Bentivenga
-  //! \author Frederick Christie
-  //! \author Michael Kitson
-  //!
-  //! Ported to C++ by Enrico Bertolazzi
-  //!
+  /// SHA-3 winning hash algorithm Keccak
+  ///
+  /// @author: Christopher Bentivenga
+  /// @author: Frederick Christie
+  /// @author: Michael Kitson
+  ///
+  /// Porting in C++ by Enrico Bertolazzi
+  ///
   class SHA3 {
 
     using uint8_t      = std::uint8_t;
@@ -50,76 +45,31 @@ namespace Utils {
 
   public:
 
-    //!
-    //! \brief Constructor for the SHA3 class
-    //!
-    //! Initializes the SHA3 hashing algorithm with the specified digest size.
-    //!
-    //! \param digest_size The size of the desired hash output in bytes (e.g., 224, 256, 384, or 512).
-    //!
-    SHA3( int digest_size );
+    using keccakLane_t = uint64_t;
 
-    //! \brief Destructor for the SHA3 class.
+    SHA3( int digest_size );
     ~SHA3() { }
 
-    //!
-    //! \brief Adds an entire string to the message.
-    //!
-    //! This method appends the given string to the internal message buffer
-    //! for hashing. It processes the string as a sequence of bytes.
-    //!
-    //! \param str The null-terminated string of bytes to add to the hash.
-    //!
+    /// Adds an entire string to the message
+    ///
+    /// @param  str  The string of bytes to add
     void hash_string( char const * str );
 
-    //!
-    //! \brief Adds an entire hexadecimal string to the message.
-    //!
-    //! This method appends the given hexadecimal string to the internal
-    //! message buffer. Each pair of hex digits is converted to a byte.
-    //!
-    //! \param str The null-terminated hexadecimal string of bytes to add to the hash.
-    //!
+    /// Adds an entire hexidecimal string to the message
+    ///
+    /// @param  str  The hex string of bytes to add
     void hash_hex_string( char const * str );
 
-    //!
-    //! \brief Returns a representation of the digest as a hexadecimal string.
-    //!
-    //! This method finalizes the hashing process and returns the resulting
-    //! hash digest as a hexadecimal string. The caller takes ownership
-    //! of the returned string.
-    //!
-    //! \return The hexadecimal string representation of the hash digest.
-    //!
+    /// Returns a representation of the digest as a hexidecimal string
+    ///
+    /// @return The hex string, ownership of which is given to the caller
     string digest_in_hex();
 
-
-    //!
-    //! \brief Returns the size of the hash digest.
-    //!
-    //! This method returns the size of the hash output in bytes.
-    //!
-    //! \return The size of the digest in bytes.
-    //!
+    // Overridden functions from HashFunction
     int digest_size() const { return m_digest_size; }
 
-    //!
-    //! \brief Hash a specified number of bytes.
-    //!
-    //! This method processes the provided byte input to update the hash state.
-    //!
-    //! \param b The number of bytes to hash.
-    //!
     void hash( const int b );
 
-    //!
-    //! \brief Retrieve the digest and store it in the provided byte array.
-    //!
-    //! This method finalizes the hashing process and stores the resulting
-    //! hash digest in the provided byte array.
-    //!
-    //! \param d Pointer to the byte array where the digest will be stored.
-    //!
     void digest( uint8_t * d );
   };
 }

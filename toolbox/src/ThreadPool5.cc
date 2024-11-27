@@ -18,11 +18,9 @@
  |                                                                          |
 \*--------------------------------------------------------------------------*/
 
-//
-// file: ThreadPool5.cc
-//
-
-#ifndef DOXYGEN_SHOULD_SKIP_THIS
+///
+/// file: ThreadPool5.cc
+///
 
 #include "Utils.hh"
 #include "Utils_fmt.hh"
@@ -162,8 +160,6 @@ namespace Utils {
 
 }
 
-#endif
-
-//
-// eof: ThreadPool5.cc
-//
+///
+/// eof: ThreadPool5.cc
+///

@@ -23,7 +23,6 @@
 #include <map>
 #include <string>
 #include <cstring>
-#include <vector>
 #include <cstdint>
 #include <typeinfo>
 
@@ -80,29 +79,15 @@
 // -----------------------------------------------------------------------------
 
 namespace Utils {
-  /*!
-   * \addtogroup Mex
-   * @{
-   */
 
-  //!
-  //! \brief Sends an error message to MATLAB.
-  //!
-  //! \param msg The error message to display.
-  //!
+  static
   inline
   void
   mex_error_message( std::string msg ) {
     mexErrMsgTxt( msg.c_str() );
   }
 
-  //!
-  //! \brief Checks if the input argument is a scalar.
-  //!
-  //! \param arg The mxArray input argument.
-  //! \param msg The error message to display if not scalar.
-  //! \return True if arg is a scalar, false otherwise.
-  //!
+  static
   inline
   bool
   mex_is_scalar( mxArray const * arg, char const msg[] ) {
@@ -112,26 +97,14 @@ namespace Utils {
     return dims[0] == 1 && dims[1] == 1;
   }
 
-  //!
-  //! \brief Checks if the input argument is a scalar (overloaded).
-  //!
-  //! \param arg The mxArray input argument.
-  //! \param msg The error message to display if not scalar.
-  //! \return True if arg is a scalar, false otherwise.
-  //!
+  static
   inline
   bool
   mex_is_scalar( mxArray const * arg, std::string msg ) {
     return mex_is_scalar( arg, msg.c_str() );
   }
 
-  //!
-  //! \brief Gets the scalar value from the input argument.
-  //!
-  //! \param arg The mxArray input argument.
-  //! \param msg The error message to display if not scalar.
-  //! \return The scalar value.
-  //!
+  static
   inline
   double
   mex_get_scalar_value( mxArray const * arg, char const msg[] ) {
@@ -146,26 +119,14 @@ namespace Utils {
     return mxGetScalar(arg);
   }
 
-  //!
-  //! \brief Gets the scalar value from the input argument (overloaded).
-  //!
-  //! \param arg The mxArray input argument.
-  //! \param msg The error message to display if not scalar.
-  //! \return The scalar value.
-  //!
+  static
   inline
   double
   mex_get_scalar_value( mxArray const * arg, std::string msg ) {
     return mex_get_scalar_value( arg, msg.c_str() );
   }
 
-  //!
-  //! \brief Gets a boolean value from the input argument.
-  //!
-  //! \param arg The mxArray input argument.
-  //! \param msg The error message to display if not a logical scalar.
-  //! \return The boolean value.
-  //!
+  static
   inline
   bool
   mex_get_bool( mxArray const * arg, char const msg[] ) {
@@ -173,26 +134,14 @@ namespace Utils {
     return mxIsLogicalScalarTrue(arg);
   }
 
-  //!
-  //! \brief Gets a boolean value from the input argument (overloaded).
-  //!
-  //! \param arg The mxArray input argument.
-  //! \param msg The error message to display if not a logical scalar.
-  //! \return The boolean value.
-  //!
+  static
   inline
   bool
   mex_get_bool( mxArray const * arg, std::string msg ) {
     return mex_get_bool( arg, msg.c_str() );
   }
 
-  //!
-  //! \brief Gets a 64-bit integer value from the input argument.
-  //!
-  //! \param arg The mxArray input argument.
-  //! \param msg The error message to display if not a valid scalar.
-  //! \return The 64-bit integer value.
-  //!
+  static
   inline
   int64_t
   mex_get_int64( mxArray const * arg, char const msg[] ) {
@@ -235,27 +184,14 @@ namespace Utils {
     return res;
   }
 
-  //!
-  //! \brief Gets a 64-bit integer value from the input argument (overloaded).
-  //!
-  //! \param arg The mxArray input argument.
-  //! \param msg The error message to display if not a valid scalar.
-  //! \return The 64-bit integer value.
-  //!
+  static
   inline
   int64_t
   mex_get_int64( mxArray const * arg, string msg ) {
     return mex_get_int64( arg, msg.c_str() );
   }
 
-  //!
-  //! \brief Gets a pointer to a vector from the input argument.
-  //!
-  //! \param arg The mxArray input argument.
-  //! \param sz The size of the vector (output).
-  //! \param msg The error message to display if not a valid vector.
-  //! \return Pointer to the vector data.
-  //!
+  static
   inline
   double const *
   mex_vector_pointer(
@@ -275,14 +211,7 @@ namespace Utils {
     return mxGetPr(arg);
   }
 
-  //!
-  //! \brief Gets a pointer to a vector from the input argument (overloaded).
-  //!
-  //! \param arg The mxArray input argument.
-  //! \param sz The size of the vector (output).
-  //! \param msg The error message to display if not a valid vector.
-  //! \return Pointer to the vector data.
-  //!
+  static
   inline
   double const *
   mex_vector_pointer(
@@ -293,15 +222,7 @@ namespace Utils {
     return mex_vector_pointer( arg, sz, msg.c_str() );
   }
 
-  //!
-  //! \brief Gets a pointer to a matrix from the input argument.
-  //!
-  //! \param arg The mxArray input argument.
-  //! \param nr The number of rows (output).
-  //! \param nc The number of columns (output).
-  //! \param msg The error message to display if not a valid matrix.
-  //! \return Pointer to the matrix data.
-  //!
+  static
   inline
   double const *
   mex_matrix_pointer(
@@ -318,15 +239,7 @@ namespace Utils {
     return mxGetPr(arg);
   }
 
-  //!
-  //! \brief Gets a pointer to a matrix from the input argument (overloaded).
-  //!
-  //! \param arg The mxArray input argument.
-  //! \param nr The number of rows (output).
-  //! \param nc The number of columns (output).
-  //! \param msg The error message to display if not a valid matrix.
-  //! \return Pointer to the matrix data.
-  //!
+  static
   inline
   double const *
   mex_matrix_pointer(
@@ -340,12 +253,7 @@ namespace Utils {
 
   // -----------------------------------------------------------------------------
 
-  //!
-  //! \brief Sets a scalar value in the output argument.
-  //!
-  //! \param arg Reference to the mxArray output argument.
-  //! \param value The scalar value to set.
-  //!
+  static
   inline
   void
   mex_set_scalar_value( mxArray * & arg, double value ) {
@@ -353,12 +261,7 @@ namespace Utils {
     *mxGetPr(arg) = value;
   }
 
-  //!
-  //! \brief Sets a scalar integer value in the output argument.
-  //!
-  //! \param arg Reference to the mxArray output argument.
-  //! \param value The integer value to set.
-  //!
+  static
   inline
   void
   mex_set_scalar_int32( mxArray * & arg, int32_t value ) {
@@ -366,12 +269,7 @@ namespace Utils {
     *static_cast<int32_t*>(mxGetData(arg)) = value;
   }
 
-  //!
-  //! \brief Sets a scalar 64-bit integer value in the output argument.
-  //!
-  //! \param arg Reference to the mxArray output argument.
-  //! \param value The 64-bit integer value to set.
-  //!
+  static
   inline
   void
   mex_set_scalar_int64( mxArray * & arg, int64_t value ) {
@@ -379,30 +277,14 @@ namespace Utils {
     *static_cast<int64_t*>(mxGetData(arg)) = value;
   }
 
-  //!
-  //! \brief Sets a boolean value in the output argument.
-  //!
-  //! \param arg Reference to the mxArray output argument.
-  //! \param value The boolean value to set.
-  //!
+  static
   inline
   void
   mex_set_scalar_bool( mxArray * & arg, bool value ) {
     arg = mxCreateLogicalScalar( value );
   }
 
-  //!
-  //! \brief Creates a numeric matrix of type int32 and returns a pointer to its data.
-  //!
-  //! This function allocates memory for a matrix of specified size (nrow x ncol) and
-  //! initializes it as an int32 numeric matrix. The created matrix is assigned to the
-  //! output argument `arg`, and a pointer to the data is returned.
-  //!
-  //! \param arg Reference to the mxArray pointer that will hold the created matrix.
-  //! \param nrow Number of rows in the matrix.
-  //! \param ncol Number of columns in the matrix.
-  //! \return Pointer to the data of the created int32 matrix.
-  //!
+  static
   inline
   int32_t *
   mex_create_matrix_int32( mxArray * & arg, mwSize nrow, mwSize ncol ) {
@@ -410,19 +292,7 @@ namespace Utils {
     return static_cast<int32_t*>(mxGetData(arg));
   }
 
-
-  //!
-  //! \brief Creates a numeric matrix of type int64 and returns a pointer to its data.
-  //!
-  //! This function allocates memory for a matrix of specified size (nrow x ncol) and
-  //! initializes it as an int64 numeric matrix. The created matrix is assigned to the
-  //! output argument `arg`, and a pointer to the data is returned.
-  //!
-  //! \param arg Reference to the mxArray pointer that will hold the created matrix.
-  //! \param nrow Number of rows in the matrix.
-  //! \param ncol Number of columns in the matrix.
-  //! \return Pointer to the data of the created int64 matrix.
-  //!
+  static
   inline
   int64_t *
   mex_create_matrix_int64( mxArray * & arg, mwSize nrow, mwSize ncol ) {
@@ -430,19 +300,7 @@ namespace Utils {
     return static_cast<int64_t*>(mxGetData(arg));
   }
 
-
-  //!
-  //! \brief Creates a numeric matrix of type double and returns a pointer to its data.
-  //!
-  //! This function allocates memory for a matrix of specified size (nrow x ncol) and
-  //! initializes it as a double numeric matrix. The created matrix is assigned to the
-  //! output argument `arg`, and a pointer to the data is returned.
-  //!
-  //! \param arg Reference to the mxArray pointer that will hold the created matrix.
-  //! \param nrow Number of rows in the matrix.
-  //! \param ncol Number of columns in the matrix.
-  //! \return Pointer to the data of the created double matrix.
-  //!
+  static
   inline
   double *
   mex_create_matrix_value( mxArray * & arg, mwSize nrow, mwSize ncol ) {
@@ -451,77 +309,6 @@ namespace Utils {
   }
 
   // -----------------------------------------------------------------------------
-  //!
-  //!  \brief Creates a sparse matrix in MATLAB format.
-  //!
-  //!  This function creates a sparse matrix using MATLAB's internal data structures.
-  //!  The inputs are arrays representing the row indices, column indices, and values
-  //!  of the non-zero elements of the sparse matrix.
-  //!
-  //!  \tparam R      Type of the values in the sparse matrix.
-  //!  \tparam I      Type of the row and column indices.
-  //!  \param  nnz    Number of non-zero elements in the sparse matrix.
-  //!  \param  nrows  Number of rows in the sparse matrix.
-  //!  \param  ncols  Number of columns in the sparse matrix.
-  //!  \param  i_rows Array of row indices (0-based).
-  //!  \param  j_cols Array of column indices (0-based).
-  //!  \param  vals   Array of non-zero values.
-  //!  \return int    Status code of the MATLAB function call.
-  //!
-  template <typename R, typename I>
-  inline
-  int
-  mex_create_sparse_matrix(
-    size_t    nnz,
-    size_t    nrows,
-    size_t    ncols,
-    I         i_rows[],
-    I         j_cols[],
-    R         vals[],
-    mxArray * arg_out[]
-  ) {
-    mxArray *args[5]; // Array of arguments to be passed to MATLAB's sparse function.
-
-    // Create MATLAB matrices to store row indices, column indices, and values.
-    double *Irow = mex_create_matrix_value(args[0], 1, nnz);
-    double *Jcol = mex_create_matrix_value(args[1], 1, nnz);
-    double *VALS = mex_create_matrix_value(args[2], 1, nnz);
-
-    // Set the number of rows and columns in the sparse matrix.
-    mex_set_scalar_value(args[3], nrows);
-    mex_set_scalar_value(args[4], ncols);
-
-    // Convert the row and column indices to 1-based indexing for MATLAB.
-    std::transform(i_rows, i_rows + nnz, Irow, [](I val) -> double { return double(val + 1); });
-    std::transform(j_cols, j_cols + nnz, Jcol, [](I val) -> double { return double(val + 1); });
-
-    // Copy the values of the non-zero elements into the MATLAB array.
-    std::copy_n(vals, nnz, VALS);
-
-    // Call the MATLAB function 'sparse' to create the sparse matrix.
-    return mexCallMATLAB(1, arg_out, 5, args, "sparse");
-  }
-
-
-  //!
-  //! \brief Creates a MATLAB cell array and fills it with a vector of C++ strings.
-  //!
-  //! \param arg Reference to the mxArray pointer that will hold the MATLAB cell array.
-  //! \param str_vec Vector of C++ strings to be inserted into the cell array.
-  //!
-
-  inline
-  void
-  mex_create_string_cell_array( mxArray * & arg, std::vector<std::string> const & str_vec ) {
-    // Crea un cell array MATLAB con lo stesso numero di elementi del vettore di stringhe
-    arg = mxCreateCellMatrix(str_vec.size(), 1);
-
-    // Riempie il cell array con le stringhe C++
-    for ( size_t i{0}; i < str_vec.size(); ++i ) {
-      mxArray *str = mxCreateString(str_vec[i].c_str()); // Crea una stringa MATLAB dalla stringa C++
-      mxSetCell(arg, i, str); // Imposta la stringa nella posizione corretta del cell array
-    }
-  }
 
   /*
   Class Handle by Oliver Woodford
@@ -529,83 +316,33 @@ namespace Utils {
   https://it.mathworks.com/matlabcentral/fileexchange/38964-example-matlab-class-wrapper-for-a-c++-class
   */
 
-  //!
-  //! \brief A class template that manages a C++ object for use with MATLAB.
-  //!
-  //! This class template is designed to wrap a C++ class pointer for
-  //! integration with MATLAB. It manages the memory of the object and provides
-  //! a mechanism for checking the validity of the handle.
-  //!
-  //! \tparam base The type of the C++ class being wrapped.
-  //!
   template <typename base>
   class mex_class_handle {
-    uint32_t    m_signature{CLASS_HANDLE_SIGNATURE}; //!< Signature to verify handle validity.
-    base *      m_ptr{nullptr};                      //!< Pointer to the C++ object.
-    std::string m_name;                              //!< Name of the class type.
+    uint32_t    m_signature{CLASS_HANDLE_SIGNATURE};
+    base *      m_ptr{nullptr};
+    std::string m_name;
 
   public:
 
-    //!
-    //! \brief Deleted copy assignment operator.
-    //!
-    //! This operator is deleted to prevent copying of the handle.
-    //!
     mex_class_handle<base> const & operator = ( mex_class_handle<base> const & ) = delete;
-
-    //!
-    //! \brief Deleted default constructor.
-    //!
-    //! This constructor is deleted to prevent creating an uninitialized handle.
-    //!
     mex_class_handle() = delete;
 
-    //!
-    //! \brief Constructor that initializes the handle with a pointer to a C++ object.
-    //!
-    //! \param ptr Pointer to the C++ object being managed.
-    //!
     explicit
     mex_class_handle( base * ptr )
     : m_ptr(ptr)
     , m_name(typeid(base).name())
     {}
 
-    //!
-    //! \brief Destructor that cleans up the managed object.
-    //!
     ~mex_class_handle()
     { m_signature = 0; delete m_ptr; m_ptr = nullptr; }
 
-    //!
-    //! \brief Checks if the handle is valid.
-    //!
-    //! The handle is considered valid if the signature matches and the type name is correct.
-    //!
-    //! \return true if the handle is valid, false otherwise.
-    //!
     bool is_valid()
     { return ((m_signature == CLASS_HANDLE_SIGNATURE) &&
               !strcmp(m_name.c_str(), typeid(base).name())); }
 
-    //!
-    //! \brief Retrieves the pointer to the managed C++ object.
-    //!
-    //! \return Pointer to the managed object.
-    //!
     base * ptr() { return m_ptr; }
   };
 
-  //!
-  //! \brief Converts a pointer to a mex_class_handle into a MATLAB mxArray.
-  //!
-  //! This function locks the MATLAB environment and creates a MATLAB
-  //! numeric array that holds a pointer to a new mex_class_handle.
-  //!
-  //! \tparam base The type of the C++ class being wrapped.
-  //! \param ptr Pointer to the C++ object to be wrapped.
-  //! \return A pointer to a MATLAB mxArray containing the handle.
-  //!
   template <typename base>
   inline
   mxArray *
@@ -618,17 +355,6 @@ namespace Utils {
     return out;
   }
 
-  //!
-  //! \brief Converts a MATLAB mxArray back to a mex_class_handle pointer.
-  //!
-  //! This function retrieves the handle from a MATLAB mxArray, checking
-  //! that it is a valid uint64 scalar.
-  //!
-  //! \tparam base The type of the C++ class being wrapped.
-  //! \param in The mxArray containing the handle.
-  //! \return Pointer to the mex_class_handle.
-  //! \throws std::runtime_error if the input is not a valid uint64 scalar.
-  //!
   template <typename base>
   inline
   mex_class_handle<base> *
@@ -645,16 +371,6 @@ namespace Utils {
     return ptr;
   }
 
-  //!
-  //! \brief Converts a MATLAB mxArray to a pointer of the wrapped C++ object.
-  //!
-  //! This function first converts the mxArray to a mex_class_handle pointer
-  //! and then retrieves the managed C++ object pointer.
-  //!
-  //! \tparam base The type of the C++ class being wrapped.
-  //! \param in The mxArray containing the handle.
-  //! \return Pointer to the managed C++ object.
-  //!
   template <typename base>
   inline
   base *
@@ -662,15 +378,6 @@ namespace Utils {
     return mex_convert_mx_to_handle_ptr<base>(in)->ptr();
   }
 
-  //!
-  //! \brief Destroys the object wrapped by the mex_class_handle.
-  //!
-  //! This function deletes the handle and its managed object and
-  //! sets the mxArray reference to nullptr.
-  //!
-  //! \tparam base The type of the C++ class being wrapped.
-  //! \param in Reference to the mxArray containing the handle.
-  //!
   template <typename base>
   inline
   void
@@ -680,10 +387,8 @@ namespace Utils {
     mexUnlock();
   }
 
-  /*! @} */
-
 }
 
-//
-// eof: mex_utils.hxx
-//
+///
+/// eof: mex_utils.hxx
+///

@@ -17,9 +17,9 @@
  |                                                                          |
 \*--------------------------------------------------------------------------*/
 
-//
-// file: Console.cc
-//
+///
+/// file: Console.cc
+///
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
 
@@ -330,6 +330,6 @@ namespace Utils {
 
 #endif
 
-//
-// eof: Console.cc
-//
+///
+/// eof: Console.cc
+///

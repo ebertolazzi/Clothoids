@@ -17,16 +17,11 @@
  |                                                                          |
 \*--------------------------------------------------------------------------*/
 
-//
-// eof: ThreadPoolBase.hxx
-//
+///
+/// eof: ThreadPoolBase.hxx
+///
 
 namespace Utils {
-
-  /*!
-   * \addtogroup THREAD
-   * @{
-   */
 
   /*\
    |   _____ _                    _ ___          _ ___
@@ -146,11 +141,8 @@ namespace Utils {
       ~Queue() = default;
     };
   }
-
-  /*! @} */
-
 }
 
-//
-// eof: ThreadPoolBase.hxx
-//
+///
+/// eof: ThreadPoolBase.hxx
+///

@@ -13,9 +13,6 @@
  |      email: enrico.bertolazzi@unitn.it                                   |
  |                                                                          |
 \*--------------------------------------------------------------------------*/
-
-#ifndef DOXYGEN_SHOULD_SKIP_THIS
-
 /*
   Original code by Thomas Nagler
 
@@ -996,5 +993,3 @@ namespace quickpool {
   }
 
 } // end namespace quickpool
-
-#endif

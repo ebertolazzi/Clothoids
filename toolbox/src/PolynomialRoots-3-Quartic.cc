@@ -47,50 +47,50 @@ namespace PolynomialRoots {
   integer
   Quartic::get_real_roots( real_type r[] ) const {
     integer nr = 0;
-    if ( !cplx0() ) r[nr++] = r0;
-    if ( !cplx1() ) r[nr++] = r1;
-    if ( !cplx2() ) r[nr++] = r2;
-    if ( !cplx3() ) r[nr++] = r3;
+    if ( !cplx0() ) r[nr++] = m_r0;
+    if ( !cplx1() ) r[nr++] = m_r1;
+    if ( !cplx2() ) r[nr++] = m_r2;
+    if ( !cplx3() ) r[nr++] = m_r3;
     return nr;
   }
 
   integer
   Quartic::get_positive_roots( real_type r[] ) const {
     integer nr = 0;
-    if ( !cplx0() && r0 > 0 ) r[nr++] = r0;
-    if ( !cplx1() && r1 > 0 ) r[nr++] = r1;
-    if ( !cplx2() && r2 > 0 ) r[nr++] = r2;
-    if ( !cplx3() && r3 > 0 ) r[nr++] = r3;
+    if ( !cplx0() && m_r0 > 0 ) r[nr++] = m_r0;
+    if ( !cplx1() && m_r1 > 0 ) r[nr++] = m_r1;
+    if ( !cplx2() && m_r2 > 0 ) r[nr++] = m_r2;
+    if ( !cplx3() && m_r3 > 0 ) r[nr++] = m_r3;
     return nr;
   }
 
   integer
   Quartic::get_negative_roots( real_type r[] ) const {
     integer nr = 0;
-    if ( !cplx0() && r0 < 0 ) r[nr++] = r0;
-    if ( !cplx1() && r1 < 0 ) r[nr++] = r1;
-    if ( !cplx2() && r2 < 0 ) r[nr++] = r2;
-    if ( !cplx3() && r3 < 0 ) r[nr++] = r3;
+    if ( !cplx0() && m_r0 < 0 ) r[nr++] = m_r0;
+    if ( !cplx1() && m_r1 < 0 ) r[nr++] = m_r1;
+    if ( !cplx2() && m_r2 < 0 ) r[nr++] = m_r2;
+    if ( !cplx3() && m_r3 < 0 ) r[nr++] = m_r3;
     return nr;
   }
 
   integer
   Quartic::get_roots_in_range( real_type a, real_type b, real_type r[] ) const {
     integer nr = 0;
-    if ( !cplx0() && r0 >= a && r0 <= b ) r[nr++] = r0;
-    if ( !cplx1() && r1 >= a && r1 <= b ) r[nr++] = r1;
-    if ( !cplx2() && r2 >= a && r2 <= b ) r[nr++] = r2;
-    if ( !cplx3() && r3 >= a && r3 <= b ) r[nr++] = r3;
+    if ( !cplx0() && m_r0 >= a && m_r0 <= b ) r[nr++] = m_r0;
+    if ( !cplx1() && m_r1 >= a && m_r1 <= b ) r[nr++] = m_r1;
+    if ( !cplx2() && m_r2 >= a && m_r2 <= b ) r[nr++] = m_r2;
+    if ( !cplx3() && m_r3 >= a && m_r3 <= b ) r[nr++] = m_r3;
     return nr;
   }
 
   integer
   Quartic::get_roots_in_open_range( real_type a, real_type b, real_type r[] ) const {
     integer nr = 0;
-    if ( !cplx0() && r0 > a && r0 < b ) r[nr++] = r0;
-    if ( !cplx1() && r1 > a && r1 < b ) r[nr++] = r1;
-    if ( !cplx2() && r2 > a && r2 < b ) r[nr++] = r2;
-    if ( !cplx3() && r3 > a && r3 < b ) r[nr++] = r3;
+    if ( !cplx0() && m_r0 > a && m_r0 < b ) r[nr++] = m_r0;
+    if ( !cplx1() && m_r1 > a && m_r1 < b ) r[nr++] = m_r1;
+    if ( !cplx2() && m_r2 > a && m_r2 < b ) r[nr++] = m_r2;
+    if ( !cplx3() && m_r3 > a && m_r3 < b ) r[nr++] = m_r3;
     return nr;
   }
 
@@ -393,41 +393,41 @@ namespace PolynomialRoots {
 
   void
   Quartic::find_roots() {
-    real_type const & A = ABCDE[0];
-    real_type const & B = ABCDE[1];
-    real_type const & C = ABCDE[2];
-    real_type const & D = ABCDE[3];
-    real_type const & E = ABCDE[4];
+    real_type const & A{m_ABCDE[0]};
+    real_type const & B{m_ABCDE[1]};
+    real_type const & C{m_ABCDE[2]};
+    real_type const & D{m_ABCDE[3]};
+    real_type const & E{m_ABCDE[4]};
 
-    iter = nreal = ncplx = 0;
+    m_iter = m_nreal = m_ncplx = 0;
 
     // special cases
     if ( isZero(A) ) {
       Cubic csolve( B, C, D, E );
-      nreal = csolve.num_roots();
-      switch ( nreal ) {
-        case 3: r2 = csolve.real_root2();
-        case 2: r1 = csolve.real_root1();
-        case 1: r0 = csolve.real_root0();
+      m_nreal = csolve.num_roots();
+      switch ( m_nreal ) {
+        case 3: m_r2 = csolve.real_root2();
+        case 2: m_r1 = csolve.real_root1();
+        case 1: m_r0 = csolve.real_root0();
       }
-      if ( csolve.complex_root() ) { ncplx = 2; nreal -= 2; }
+      if ( csolve.complex_root() ) { m_ncplx = 2; m_nreal -= 2; }
       return;
     }
     if ( isZero(E) ) {
       Cubic csolve( A, B, C, D );
-      nreal = csolve.num_roots();
-      r0 = r1 = r2 = r3 = 0;
-      switch ( nreal ) {
-        case 3: r2 = csolve.real_root2();
-        case 2: r1 = csolve.real_root1();
-        case 1: r0 = csolve.real_root0();
+      m_nreal = csolve.num_roots();
+      m_r0 = m_r1 = m_r2 = m_r3 = 0;
+      switch ( m_nreal ) {
+        case 3: m_r2 = csolve.real_root2();
+        case 2: m_r1 = csolve.real_root1();
+        case 1: m_r0 = csolve.real_root0();
       }
-      ++nreal;
-      if ( csolve.complex_root() ) { ncplx = 2; nreal -= 2; }
-      if ( nreal == 4 ) { // caso regolare, 4 radici reali maintain order
-        if ( r3 < r2 ) std::swap(r2,r3);
-        if ( r2 < r1 ) std::swap(r1,r2);
-        if ( r1 < r0 ) std::swap(r0,r1);
+      ++m_nreal;
+      if ( csolve.complex_root() ) { m_ncplx = 2; m_nreal -= 2; }
+      if ( m_nreal == 4 ) { // caso regolare, 4 radici reali maintain order
+        if ( m_r3 < m_r2 ) std::swap(m_r2,m_r3);
+        if ( m_r2 < m_r1 ) std::swap(m_r1,m_r2);
+        if ( m_r1 < m_r0 ) std::swap(m_r0,m_r1);
       }
       return;
     }
@@ -438,31 +438,31 @@ namespace PolynomialRoots {
       real_type y = qsolve.real_root1() ;
       if ( qsolve.complex_root() ) {
         // complex conjugate pair biquadratic roots x +/- iy.
-        ncplx = 4;
+        m_ncplx = 4;
         x /= 2; // re
         y /= 2; // im
         real_type z = hypot(x,y);
         y = std::sqrt(z - x);
         x = std::sqrt(z + x);
-        r0 = -x;
-        r1 = y;
-        r2 = x;
-        r3 = y;
+        m_r0 = -x;
+        m_r1 = y;
+        m_r2 = x;
+        m_r3 = y;
       } else {
         // real roots of quadratic are ordered x <= y
         if ( x >= 0 ) { // y >= 0
-          nreal = 4;
+          m_nreal = 4;
           x = std::sqrt(x); y = std::sqrt(y);
-          r0 = -y; r1 = -x; r2 =  x; r3 =  y;
+          m_r0 = -y; m_r1 = -x; m_r2 =  x; m_r3 =  y;
         } else if ( y >= 0 ) { // x < 0 && y >= 0
-          nreal = ncplx = 2;
+          m_nreal = m_ncplx = 2;
           x = std::sqrt(-x); y = std::sqrt(y);
-          r0 =  0; r1 = x; // (real,imaginary)
-          r2 = -y; r3 = y;
+          m_r0 =  0; m_r1 = x; // (real,imaginary)
+          m_r2 = -y; m_r3 = y;
         } else { // x < 0 && y < 0
-          ncplx = 4;
+          m_ncplx = 4;
           x = std::sqrt(-x); y = std::sqrt(-y);
-          r0 = 0; r1 = x; r2 = 0; r3 = y; // 2 x (real,imaginary)
+          m_r0 = 0; m_r1 = x; m_r2 = 0; m_r3 = y; // 2 x (real,imaginary)
         }
       }
       return;
@@ -538,30 +538,30 @@ namespace PolynomialRoots {
       real_type Qs = evalMonicQuartic( s, q3, q2, q1, q0 );
       real_type Qu = evalMonicQuartic( u, q3, q2, q1, q0 );
       bool q0pos = q0 > 0;
-      nreal = 1;
+      m_nreal = 1;
       if ( Qs < 0 && Qu < 0 ) {
         if ( Qs < Qu ) {
-          r3 = 2;
-          if ( q0pos && s < 0 ) r3 = 0;
+          m_r3 = 2;
+          if ( q0pos && s < 0 ) m_r3 = 0;
         } else {
-          r3 = -2;
-          if ( q0pos && u > 0 ) r3 = 0;
+          m_r3 = -2;
+          if ( q0pos && u > 0 ) m_r3 = 0;
         }
       } else if ( Qs < 0 ) {
         if ( 4*s < -q3 ) {
-          r3 = -2;
-          if ( q0pos && s > 0 ) r3 = 0;
+          m_r3 = -2;
+          if ( q0pos && s > 0 ) m_r3 = 0;
         } else {
-          r3 = 2;
-          if ( q0pos && s < 0 ) r3 = 0;
+          m_r3 = 2;
+          if ( q0pos && s < 0 ) m_r3 = 0;
         }
       } else if ( Qu < 0 ) {
         if ( 4*u < -q3 ) {
-          r3 = -2;
-          if ( q0pos && u > 0 ) r3 = 0;
+          m_r3 = -2;
+          if ( q0pos && u > 0 ) m_r3 = 0;
         } else {
-          r3 = 2;
-          if ( q0pos && u < 0 ) r3 = 0;
+          m_r3 = 2;
+          if ( q0pos && u < 0 ) m_r3 = 0;
         }
       } else {
         // check for astrological combination when s or u are root of the quartic
@@ -576,11 +576,11 @@ namespace PolynomialRoots {
         else                   nreal = 0;
         */
         if ( isZero(Qs) ) {
-          must_refine_r3 = false; r3 = s;
+          must_refine_r3 = false; m_r3 = s;
         } else if ( isZero(Qu) ) {
-          must_refine_r3 = false; r3 = u;
+          must_refine_r3 = false; m_r3 = u;
         } else {
-          nreal = 0;
+          m_nreal = 0;
         }
       }
     } else {
@@ -588,8 +588,8 @@ namespace PolynomialRoots {
       real_type Qs = evalMonicQuartic( s, q3, q2, q1, q0 );
       if ( Qs <= 0 ) {
         real_type tmp = q0 >= 0 ? 0 : 2;
-        r3 = u > 0 ? -tmp : -2;
-        nreal = 1;
+        m_r3 = u > 0 ? -tmp : -2;
+        m_nreal = 1;
       }
     }
 
@@ -605,10 +605,10 @@ namespace PolynomialRoots {
     ..  and further location of the root is done using bisection starting with the
     ..  oscillation brackets.
     */
-    if ( nreal > 0 ) {
+    if ( m_nreal > 0 ) {
       if ( must_refine_r3 )
-        iter += zeroQuarticByNewtonBisection( q3, q2, q1, q0, r3 );
-      r3 *= scale;
+        m_iter += zeroQuarticByNewtonBisection( q3, q2, q1, q0, m_r3 );
+      m_r3 *= scale;
 
       /*
       ..  Find remaining roots -> reduce to cubic. The reduction to a cubic polynomial
@@ -617,20 +617,20 @@ namespace PolynomialRoots {
       ..  deflation is being performed on the original quartic again to avoid enhanced
       ..  propagation of root errors.
       */
-      deflateQuarticPolynomial( A, B, C, D, E, r3, q2, q1, q0 );
+      deflateQuarticPolynomial( A, B, C, D, E, m_r3, q2, q1, q0 );
 
       Cubic csolve( A, q2, q1, q0 );
-      r0 = csolve.real_root0();
-      r1 = csolve.real_root1();
-      r2 = csolve.real_root2();
+      m_r0 = csolve.real_root0();
+      m_r1 = csolve.real_root1();
+      m_r2 = csolve.real_root2();
       if ( csolve.complex_root() ) {
-        nreal = ncplx = 2;
-        if ( r2 > r3 ) std::swap( r2, r3 );
+        m_nreal = m_ncplx = 2;
+        if ( m_r2 > m_r3 ) std::swap( m_r2, m_r3 );
       } else {
-        nreal = 4;
-        if ( r2 > r3 ) std::swap( r2, r3 );
-        if ( r1 > r2 ) std::swap( r1, r2 );
-        if ( r0 > r1 ) std::swap( r0, r1 );
+        m_nreal = 4;
+        if ( m_r2 > m_r3 ) std::swap( m_r2, m_r3 );
+        if ( m_r1 > m_r2 ) std::swap( m_r1, m_r2 );
+        if ( m_r0 > m_r1 ) std::swap( m_r0, m_r1 );
       }
     } else {
       /*
@@ -655,7 +655,7 @@ namespace PolynomialRoots {
       real_type a, b, c, d;
       if ( iterate ) {
         real_type x = q3 >= 0 ? 2 : -2; // initial root -> target = smaller mag root
-        iter += zeroHexicByNewtonBisection( q3, q2, q1, q0, x );
+        m_iter += zeroHexicByNewtonBisection( q3, q2, q1, q0, x );
 
         a = x*scale;   // 1st real component -> a
         b = -A3/2 - a; // 2nd real component -> b
@@ -706,83 +706,83 @@ namespace PolynomialRoots {
         d = x < 0 ? 0 : std::sqrt(x);     // large magnitude imaginary component
       }
 
-      ncplx = 4;
-      if      (a > b) { r0 = a; r1 = c; r2 = b; r3 = d; }
-      else if (a < b) { r0 = b; r1 = d; r2 = a; r3 = c; }
-      else            { r0 = a; r1 = c; r2 = a; r3 = d; }
+      m_ncplx = 4;
+      if      (a > b) { m_r0 = a; m_r1 = c; m_r2 = b; m_r3 = d; }
+      else if (a < b) { m_r0 = b; m_r1 = d; m_r2 = a; m_r3 = c; }
+      else            { m_r0 = a; m_r1 = c; m_r2 = a; m_r3 = d; }
     }
   }
 
   void
   Quartic::info( ostream_type & s ) const {
-    real_type const & A = ABCDE[0];
-    real_type const & B = ABCDE[1];
-    real_type const & C = ABCDE[2];
-    real_type const & D = ABCDE[3];
-    real_type const & E = ABCDE[4];
+    real_type const & A{m_ABCDE[0]};
+    real_type const & B{m_ABCDE[1]};
+    real_type const & C{m_ABCDE[2]};
+    real_type const & D{m_ABCDE[3]};
+    real_type const & E{m_ABCDE[4]};
 
     s << "\npoly a=" << A << " b=" << B << " c=" << C << " d=" << D << " e=" << E
-      << "\nn. complex = " << ncplx
-      << "\nn. real    = " << nreal;
-    if ( ncplx > 0 ) {
-      s << "\nx0 = (" << r0 << "," <<  r1 << ')'
-        << "\nx1 = (" << r0 << "," << -r1 << ')';
+      << "\nn. complex = " << m_ncplx
+      << "\nn. real    = " << m_nreal;
+    if ( m_ncplx > 0 ) {
+      s << "\nx0 = (" << m_r0 << "," <<  m_r1 << ')'
+        << "\nx1 = (" << m_r0 << "," << -m_r1 << ')';
     } else {
-      if ( nreal > 0 ) s << "\nx0 = " << r0;
-      if ( nreal > 1 ) s << "\nx1 = " << r1;
+      if ( m_nreal > 0 ) s << "\nx0 = " << m_r0;
+      if ( m_nreal > 1 ) s << "\nx1 = " << m_r1;
     }
-    if ( ncplx > 2 ) {
-      s << "\nx2 = (" << r2 << "," <<  r3 << ')'
-        << "\nx3 = (" << r2 << "," << -r3 << ')';
+    if ( m_ncplx > 2 ) {
+      s << "\nx2 = (" << m_r2 << "," <<  m_r3 << ')'
+        << "\nx3 = (" << m_r2 << "," << -m_r3 << ')';
     } else {
-      if ( nreal > 2 || (ncplx > 0 && nreal > 0) ) s << "\nx2 = " << r2;
-      if ( nreal > 3 || (ncplx > 0 && nreal > 1) ) s << "\nx3 = " << r3;
+      if ( m_nreal > 2 || (m_ncplx > 0 && m_nreal > 0) ) s << "\nx2 = " << m_r2;
+      if ( m_nreal > 3 || (m_ncplx > 0 && m_nreal > 1) ) s << "\nx3 = " << m_r3;
     }
     s << '\n';
   }
 
   bool
   Quartic::check( ostream_type & s ) const {
-    real_type const & A = ABCDE[0];
-    real_type const & B = ABCDE[1];
-    real_type const & C = ABCDE[2];
-    real_type const & D = ABCDE[3];
-    real_type const & E = ABCDE[4];
-    bool ok = true;
+    real_type const & A{m_ABCDE[0]};
+    real_type const & B{m_ABCDE[1]};
+    real_type const & C{m_ABCDE[2]};
+    real_type const & D{m_ABCDE[3]};
+    real_type const & E{m_ABCDE[4]};
+    bool ok{true};
     real_type epsi = 1000 * ( ( std::abs(A) +
                                 std::abs(B) +
                                 std::abs(C) +
                                 std::abs(D) +
                                 std::abs(E) )*machepsi) ;
-    if ( ncplx > 0 ) {
+    if ( m_ncplx > 0 ) {
       real_type z0 = std::abs(eval( root0() ));
       real_type z1 = std::abs(eval( root1() ));
       s << "|p(r0)| = " << z0 << "\n|p(r1)| = " << z1 << '\n';
       ok = ok && std::abs(z0) < epsi && std::abs(z1) < epsi;
     } else {
-      if ( nreal > 0 ) {
+      if ( m_nreal > 0 ) {
         real_type z0 = eval( real_root0() );
         s << "p(r0) = " << z0 << '\n';
         ok = ok && std::abs(z0) < epsi;
       }
-      if ( nreal > 1 ) {
+      if ( m_nreal > 1 ) {
         real_type z1 = eval( real_root1() );
         s << "p(r1) = " << z1 << '\n';
         ok = ok && std::abs(z1) < epsi;
       }
     }
-    if ( ncplx > 2 ) {
+    if ( m_ncplx > 2 ) {
       real_type z2 = std::abs(eval( root2() ));
       real_type z3 = std::abs(eval( root3() ));
       s << "|p(r2)| = " << z2 << "\n|p(r3)| = " << z3 << '\n';
       ok = ok && std::abs(z2) < epsi && std::abs(z3) < epsi;
     } else {
-      if ( nreal > 2 || (ncplx > 0 && nreal > 0)  ) {
+      if ( m_nreal > 2 || (m_ncplx > 0 && m_nreal > 0)  ) {
         real_type z2 = eval( real_root2() );
         s << "p(r2) = " << z2 << '\n';
         ok = ok && std::abs(z2) < epsi;
       }
-      if ( nreal > 3 || (ncplx > 0 && nreal > 1)  ) {
+      if ( m_nreal > 3 || (m_ncplx > 0 && m_nreal > 1)  ) {
         real_type z3 = eval( real_root3() );
         s << "p(r3) = " << z3 << '\n';
         ok = ok && std::abs(z3) < epsi;
