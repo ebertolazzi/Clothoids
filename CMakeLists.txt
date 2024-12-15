@@ -32,7 +32,7 @@ project(
 )
 
 if (APPLE)
-  set( CMAKE_OSX_DEPLOYMENT_TARGET "13.3" )
+  #set( CMAKE_OSX_DEPLOYMENT_TARGET "13.3" )
   execute_process( COMMAND uname -m COMMAND tr -d '\n' OUTPUT_VARIABLE ARCHITECTURE )
   set( CMAKE_OSX_ARCHITECTURES ${ARCHITECTURE} )
 endif()
