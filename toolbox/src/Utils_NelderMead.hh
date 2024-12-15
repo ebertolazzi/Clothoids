@@ -17,9 +17,9 @@
  |                                                                          |
 \*--------------------------------------------------------------------------*/
 
-///
-/// file: Utils_NelderMead.hh
-///
+//
+// file: Utils_NelderMead.hh
+//
 
 #pragma once
 
@@ -37,19 +37,30 @@
 #include "Utils_eigen.hh"
 
 namespace Utils {
+  /*!
+   * \addtogroup Minimize
+   * @{
+   */
 
-  /*
-  //
-  //  J.A.Nelder and R.Mead
-  //  Computer Journal, vol. 7, pp. 308-313, 1965.
-  //
-  //  L.A.Yarbro and S.N.Deming
-  //  Analytica Chimica Acta, vol. 73, pp. 391-398, 1974.
-  //
-  //  S.L.S.Jacoby, J.S.Kowalik and J.T.Pizzo
-  //  Iterative Methods for Nonlinear Optimization Problems
-  //  (Englewood Cliffs, NJ: Prentice-Hall), 1972
-  */
+  //!
+  //!  \class NelderMead
+  //!  \brief Implements the Nelder-Mead optimization algorithm for nonlinear optimization problems.
+  //!
+  //!  The Nelder-Mead algorithm is a widely used simplex-based method for minimizing an objective function
+  //!  in multiple dimensions. It is especially useful for problems where derivative information is not readily
+  //!  available or when the objective function is noisy.
+  //!
+  //!  \tparam Real The numeric type used for calculations, typically `float` or `double`.
+  //!
+  //!  \details
+  //!  This implementation of the Nelder-Mead algorithm is based on several foundational works:
+  //!
+  //!  - J.A. Nelder and R. Mead, "A Simplex Method for Function Minimization," _Computer Journal_, vol. 7, pp. 308-313, 1965.
+  //!  - L.A. Yarbro and S.N. Deming, "Optimization by the Simplex Method," _Analytica Chimica Acta_, vol. 73, pp. 391-398, 1974.
+  //!  - S.L.S. Jacoby, J.S. Kowalik, and J.T. Pizzo, _Iterative Methods for Nonlinear Optimization Problems_ (Englewood Cliffs, NJ: Prentice-Hall), 1972.
+  //!
+  //!  \note The Nelder-Mead algorithm does not require derivatives, making it suitable for non-smooth or noisy functions.
+  //!
   template <typename Real>
   class NelderMead {
   public:
@@ -167,6 +178,11 @@ namespace Utils {
 
   public:
 
+    //!
+    //! \brief Constructor that initializes the NelderMead instance with a specific name.
+    //!
+    //! \param name The name to be assigned to this instance of the Nelder-Mead optimizer.
+    //!
     explicit
     NelderMead( string const & name )
     : m_name(name)
@@ -174,40 +190,129 @@ namespace Utils {
     {}
 
     //!
-    //! Get the name of the class.
+    //! \brief Get the name of the class.
+    //!
+    //! \return A string representing the name of the Nelder-Mead optimizer instance.
     //!
     string const & name(void) const { return m_name; }
 
+    //!
+    //! \brief Setup the optimizer with the function and console interface.
+    //!
+    //! \param dim     The dimensionality of the optimization problem.
+    //! \param fun     A reference to the function to be minimized.
+    //! \param console A pointer to the console for output logging during optimization.
+    //!
     void setup( integer dim, NMFunc & fun, Console const * console );
 
+    //!
+    //! \brief Change the console output interface.
+    //!
+    //! \param console A pointer to the new console object for logging.
+    //!
     void change_console( Console const * console ) { m_console = console; }
 
+    //!
+    //! \brief Set the verbosity level for logging during the optimization process.
+    //!
+    //! \param level The verbosity level (higher values produce more detailed output).
+    //!
     void set_verbose( integer level ) { m_verbose = level; }
+
+    //!
+    //! \brief Set the tolerance for stopping criteria in the optimization process.
+    //!
+    //! \param tol The tolerance value, typically a small positive number (e.g., 1e-6).
+    //!
     void set_tolerance( Real tol );
+
+    //!
+    //! \brief Set the maximum number of iterations allowed in the optimization process.
+    //!
+    //! \param mit The maximum number of iterations to be performed.
+    //!
     void set_max_iterations( integer mit );
+
+    //!
+    //! \brief Set the maximum number of function evaluations allowed in the optimization process.
+    //!
+    //! \param mfev The maximum number of function evaluations.
+    //!
     void set_max_fun_evaluation( integer mfev );
 
+    //!
+    //! \brief Display a message with information about the current tolerance level.
+    //!
+    //! \param tol The tolerance level for which a message should be displayed.
+    //!
     void message( Real tol ) const;
 
+    //!
+    //! \brief Provide information about the current state of the Nelder-Mead optimization.
+    //!
+    //! \return A string with detailed information about the current state of the optimizer.
+    //!
     string info() const;
+
+    //!
+    //! \brief Print detailed information about the current state of the Nelder-Mead optimizer.
+    //!
+    //! \param stream The output stream where the information will be printed.
+    //!
     void print_info( ostream_type & stream ) const { stream << info(); }
+
     //void explore();
+
+    //!
+    //! \brief Perform the search step of the optimization process.
+    //!
+    //! \return True if the search was successful; otherwise, false.
+    //!
     bool search();
+
+    //!
+    //! \brief Run the optimization process starting from an initial guess and step size.
+    //!
+    //! \param x_sol An array containing the initial guess for the solution.
+    //! \param h     The initial step size for the simplex search.
+    //!
+    //! \return True if the optimization converged successfully; otherwise, false.
+    //!
     bool run( Real const x_sol[], Real h );
 
+    //!
+    //! \brief Get the solution found by the Nelder-Mead algorithm after the last run.
+    //!
+    //! \param x An array to store the solution values (the optimizer writes the solution here).
+    //! \return The function value at the solution point.
+    //!
     Real
     get_last_solution( Real x[] ) const {
       std::copy_n( m_p.col(m_low).data(), m_dim, x );
       return m_f.coeff(m_low);
     }
 
+    //!
+    //! \brief Get the best function value found during the optimization process.
+    //!
+    //! \return The best (lowest) function value found.
+    //!
     Real get_better_value() const { return m_f.coeff(m_low); }
+
+    //!
+    //! \brief Get the worst function value encountered during the optimization process.
+    //!
+    //! \return The worst (highest) function value found.
+    //!
     Real get_worst_value() const { return m_f.coeff(m_high); }
   };
+
+  /*! @} */
+
 }
 
 #endif
 
-///
-/// eof: Utils_NelderMead.hh
-///
+//
+// eof: Utils_NelderMead.hh
+//

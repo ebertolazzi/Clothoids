@@ -17,9 +17,9 @@
  |                                                                          |
 \*--------------------------------------------------------------------------*/
 
-///
-/// eof: Table.hxx
-///
+//
+// eof: Table.hxx
+//
 
 /*\
 
@@ -54,8 +54,20 @@ namespace Utils {
 
     using integer = int;
 
+    //!
+    //! \brief Enum class defining alignment types for table cells.
+    //!
+    //! Provides options for aligning content inside table cells to the LEFT,
+    //! RIGHT, or CENTER.
+    //!
     using Alignment = enum class Table_align : integer { LEFT, RIGHT, CENTER };
 
+    //!
+    //! \brief Defines the style and structure of table borders, padding, and alignment.
+    //!
+    //! The `Style` class configures visual properties of the table, including border
+    //! characters (for all edges and dividers), cell padding, and alignment of text.
+    //!
     class Style {
     private:
 
@@ -89,6 +101,9 @@ namespace Utils {
 
     public:
 
+      //!
+      //! \brief Default constructor initializing the table style with default borders.
+      //!
       Style() = default;
 
       char border_top() const { return m_border_top; }
@@ -149,6 +164,12 @@ namespace Utils {
       void    width( integer width ) { m_Width = width; }
     };
 
+    //!
+    //! \brief Represents a cell in a table with alignment, content, and optional column span.
+    //!
+    //! The `Cell` class manages the content of a single cell in the table. It allows
+    //! specification of alignment, column span, and other properties.
+    //!
     class Cell {
     private:
       Table *     m_Table    = nullptr;
@@ -159,8 +180,18 @@ namespace Utils {
 
     public:
 
+      //!
+      //! \brief Default constructor for an empty cell.
+      //!
       Cell() = default;
 
+      //!
+      //! \brief Constructs a cell with a value and optional column span.
+      //!
+      //! \param table Pointer to the table containing the cell.
+      //! \param val The string value to be displayed in the cell.
+      //! \param col_span The number of columns the cell should span.
+      //!
       explicit
       Cell(
         Table*              table,
@@ -188,6 +219,12 @@ namespace Utils {
       std::string render( integer line, integer col ) const;
     };
 
+    //!
+    //! \brief Represents a row in a table consisting of multiple cells.
+    //!
+    //! The `Row` class manages a collection of cells that form a single row in the table.
+    //! Each cell in the row can be accessed, modified, and rendered individually.
+    //!
     class Row {
     protected:
       using vecCell = std::vector<Cell>;
@@ -198,8 +235,17 @@ namespace Utils {
 
     public:
 
+      //!
+      //! \brief Default constructor for an empty row.
+      //!
       Row() = default;
 
+      //!
+      //! \brief Constructs a row with a set of initial cell values.
+      //!
+      //! \param table Pointer to the table containing the row.
+      //! \param cells A vector of strings representing initial cell values.
+      //!
       explicit
       Row(
         Table *        table,
@@ -226,6 +272,13 @@ namespace Utils {
       std::string render() const;
     };
 
+   //!
+   //! \brief The main class for creating and managing a table.
+   //!
+   //! The `Table` class represents a 2D table structure that supports rows, cells,
+   //! and table styles. It provides methods for rendering, alignment, and other
+   //! table-related operations.
+   //!
     class Table {
     public:
       using vecRow    = std::vector<Row>;
@@ -241,9 +294,17 @@ namespace Utils {
       vecRow      m_Rows;
 
     public:
-
+      //!
+      //! \brief Default constructor for an empty table.
+      //!
       Table() = default;
 
+      //!
+      //! \brief Constructs a table with a given style and initial rows.
+      //!
+      //! \param style The style object to customize the table's borders and alignment.
+      //! \param rows A 2D vector of strings representing the table's content.
+      //!
       explicit
       Table(
         Style     const & style,
@@ -309,18 +370,24 @@ namespace Utils {
   }
 }
 
+//!
+//! \brief Stream insertion operator for rendering a table row to an output stream.
+//!
 inline
 Utils::ostream_type&
 operator << ( Utils::ostream_type& stream, Utils::Table::Row const & row ) {
   return stream << row.render();
 }
 
+//!
+//! \brief Stream insertion operator for rendering a table to an output stream.
+//!
 inline
 Utils::ostream_type&
 operator << ( Utils::ostream_type& stream, Utils::Table::Table const & table ) {
   return stream << table.render();
 }
 
-///
-/// eof: Table.hxx
-///
+//
+// eof: Table.hxx
+//

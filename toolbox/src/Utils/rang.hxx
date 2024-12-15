@@ -209,6 +209,6 @@ namespace rang {
 
 }  // namespace rang
 
-///
-/// eof: rang.hxx
-///
+//
+// eof: rang.hxx
+//

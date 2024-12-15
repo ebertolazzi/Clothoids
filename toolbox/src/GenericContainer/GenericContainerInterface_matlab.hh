@@ -3,6 +3,11 @@
   See file license.txt
 \****************************************************************************/
 
+#pragma once
+
+#ifndef GENERIC_CONTAINER_INTERFACE_MATLAB_HH
+#define GENERIC_CONTAINER_INTERFACE_MATLAB_HH
+
 #ifndef GENERIC_CONTAINER_HH
   #include "GenericContainer.hh"
 #endif
@@ -120,3 +125,5 @@ namespace GC_namespace {
   void to_mxArray( mat_complex_type const & val, mxArray * & mx );
 
 }
+
+#endif
