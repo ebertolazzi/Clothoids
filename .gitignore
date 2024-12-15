@@ -44,6 +44,7 @@ toolbox/cmake-build-debug
 toolbox/src_mex/.idea
 toolbox/src/.idea
 toolbox/build
+toolbox/bin
 .idea
 cmake-build-debug
 toolbox/CMakeFiles

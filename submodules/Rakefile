@@ -1,0 +1,68 @@
+require "rake"
+
+task :default => [:install_osx]
+
+task :copy_submodules, [:arg] do |t, args|
+  args.with_defaults(:arg => "osx")
+  FileUtils.mkdir_p "../lib3rd/"
+  FileUtils.mkdir_p "../lib3rd/lib/"
+  FileUtils.mkdir_p "../lib3rd/dll/"
+  FileUtils.mkdir_p "../lib3rd/bin/"
+  tmp = '_' + args.arg
+  FileUtils.cp_r "./UtilsLite/lib/include/Utils/.", "../lib3rd/include"
+  FileUtils.cp_r "./UtilsLite/lib/.", "../lib3rd"
+  ["quarticRootsFlocke","GenericContainer"].each do |base|
+    FileUtils.cp_r "./#{base}/lib/.", "../lib3rd/"
+  end
+end
+
+task :build_common, [:arg] do |t, args|
+  args.with_defaults(:arg => "osx")
+  FileUtils.cd "UtilsLite"
+  sh "rake clean_#{args.arg}"
+  sh "rake build_#{args.arg}"
+  FileUtils.cd "../quarticRootsFlocke"
+  sh "rake clean_#{args.arg}"
+  sh "rake build_#{args.arg}"
+  FileUtils.cd "../GenericContainer"
+  sh "rake clean_#{args.arg}"
+  sh "rake build_#{args.arg}"
+  FileUtils.cd ".."
+  Rake::Task[:copy_submodules].invoke(args.arg)
+end
+
+desc "build for OSX"
+task :build_osx do
+  Rake::Task[:build_common].invoke("osx")
+end
+
+desc "build for LINUX"
+task :build_linux do
+  Rake::Task[:build_common].invoke("linux")
+end
+
+desc "build for MINGW"
+task :build_mingw do
+  Rake::Task[:build_common].invoke("mingw")
+end
+
+desc "build for Visual Studio"
+task :build_win do
+  Rake::Task[:build_common].invoke("win")
+end
+
+task :clean_common, [:arg] do |t, args|
+  args.with_defaults(:arg => "osx")
+  FileUtils.cd "UtilsLite"
+  sh "rake clean_#{args.arg}"
+  FileUtils.cd "../quarticRootsFlocke"
+  sh "rake clean_#{args.arg}"
+  FileUtils.cd "../GenericContainer"
+  sh "rake clean_#{args.arg}"
+  FileUtils.cd ".."
+end
+
+task :clean_osx   => :clean_common do end
+task :clean_linux => :clean_common do end
+task :clean_mingw => :clean_common do end
+task :clean_win   => :clean_common do end
