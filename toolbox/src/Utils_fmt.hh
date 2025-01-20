@@ -17,9 +17,9 @@
  |                                                                          |
 \*--------------------------------------------------------------------------*/
 
-///
-/// file: Utils_fmt.hh
-///
+//
+// file: Utils_fmt.hh
+//
 
 #pragma once
 
@@ -35,10 +35,6 @@
 #include "Utils/fmt/color.h"
 #include "Utils/fmt/std.h"
 #endif
-
-///
-/// file: Trace.hxx
-///
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
 
@@ -95,8 +91,37 @@ namespace Utils {
 
   using std::runtime_error;
 
+  //!
+  //! \brief Custom runtime error class for handling runtime exceptions.
+  //!
+  //! This class extends the standard `std::runtime_error` to include additional
+  //! context information, specifically the file name and line number where the
+  //! error occurred. It provides constructors that accept a reason for the error
+  //! and formats the error message accordingly.
+  //!
+  //! **Usage**
+  //!
+  //! \code
+  //! try {
+  //!     throw Runtime_Error("An error occurred", __FILE__, __LINE__);
+  //! } catch (const Runtime_Error& e) {
+  //!     std::cerr << e.what();
+  //! }
+  //! \endcode
+
   class Runtime_Error : public runtime_error {
   public:
+    //!
+    //! \brief Constructs a Runtime_Error instance with a given reason.
+    //!
+    //! This constructor initializes the error with a specified reason,
+    //! the file where the error occurred, and the line number. It formats
+    //! the error message accordingly.
+    //!
+    //! \param reason A string that describes the reason for the error.
+    //! \param file The name of the file where the error occurred.
+    //! \param line The line number in the file where the error occurred.
+    //!
     explicit
     Runtime_Error(
       std::string const & reason,
@@ -106,6 +131,17 @@ namespace Utils {
     : std::runtime_error( fmt::format( "\n{}\nOn File:{}:{}\n", reason, file, line ) )
     { }
 
+    //!
+    //! \brief Constructs a Runtime_Error instance with a given reason.
+    //!
+    //! This constructor initializes the error with a specified reason,
+    //! the file where the error occurred, and the line number. It formats
+    //! the error message accordingly.
+    //!
+    //! \param reason A C-style string that describes the reason for the error.
+    //! \param file The name of the file where the error occurred.
+    //! \param line The line number in the file where the error occurred.
+    //!
     explicit
     Runtime_Error(
       char const * reason,
@@ -115,6 +151,15 @@ namespace Utils {
     : std::runtime_error( fmt::format( "\n{}\nOn File:{}:{}\n", reason, file, line ) )
     { }
 
+    //!
+    //! \brief Returns a C-style string describing the error.
+    //!
+    //! This method overrides the `what()` method from `std::runtime_error`
+    //! to provide a more detailed error message, including the reason for
+    //! the error, the file name, and the line number.
+    //!
+    //! \return A C-style string representing the error message.
+    //!
     char const * what() const noexcept override;
   };
 
@@ -122,6 +167,6 @@ namespace Utils {
 
 #endif
 
-///
-/// EOF: Utils_fmt.hh
-///
+//
+// EOF: Utils_fmt.hh
+//

@@ -17,11 +17,16 @@
  |                                                                          |
 \*--------------------------------------------------------------------------*/
 
-///
-/// file: ThreadUtils.hxx
-///
+//
+// file: ThreadUtils.hxx
+//
 
 namespace Utils {
+
+  /*!
+   * \addtogroup THREAD
+   * @{
+   */
 
   #ifdef UTILS_OS_WINDOWS
     #define UTILS_SEMAPHORE Utils::WinSemaphore
@@ -347,9 +352,8 @@ namespace Utils {
     //!
     void
     green() noexcept {
-      m_mutex.lock();
+      std::unique_lock<std::mutex> lock( m_mutex );
       m_is_red = false;
-      m_mutex.unlock();
       if      ( m_waiting_green > 1 ) m_cv_green.notify_all();
       else if ( m_waiting_green > 0 ) m_cv_green.notify_one();
     }
@@ -359,9 +363,8 @@ namespace Utils {
     //!
     void
     red() noexcept {
-      m_mutex.lock();
+      std::unique_lock<std::mutex> lock( m_mutex );
       m_is_red = true;
-      m_mutex.unlock();
       if      ( m_waiting_red > 1 ) m_cv_red.notify_all();
       else if ( m_waiting_red > 0 ) m_cv_red.notify_one();
     }
@@ -371,11 +374,10 @@ namespace Utils {
     //!
     void
     wait() noexcept {
-      m_mutex.lock();
+      std::unique_lock<std::mutex> lock( m_mutex );
       ++m_waiting_green;
-      m_cv_green.wait( m_mutex, [&]()->bool { return !m_is_red; } );
+      while ( m_is_red ) m_cv_green.wait( m_mutex );
       --m_waiting_green;
-      m_mutex.unlock();
     }
 
     //!
@@ -383,11 +385,10 @@ namespace Utils {
     //!
     void
     wait_red() noexcept {
-      m_mutex.lock();
+      std::unique_lock<std::mutex> lock( m_mutex );
       ++m_waiting_red;
-      m_cv_red.wait( m_mutex, [&]()->bool { return m_is_red; } );
+      while ( !m_is_red ) m_cv_red.wait( m_mutex );
       --m_waiting_red;
-      m_mutex.unlock();
     }
 
   };
@@ -638,8 +639,10 @@ namespace Utils {
   auto at_scope_exit(Function const & fun) -> at_scope_exit_impl<Function const &>
   { return at_scope_exit_impl<Function const &>(fun); }
 
+  /*! @} */
+
 }
 
-///
-/// eof: ThreadUtils.hxx
-///
+//
+// eof: ThreadUtils.hxx
+//

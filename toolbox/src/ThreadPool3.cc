@@ -18,9 +18,11 @@
  |                                                                          |
 \*--------------------------------------------------------------------------*/
 
-///
-/// file: ThreadPool3.cc
-///
+//
+// file: ThreadPool3.cc
+//
+
+#ifndef DOXYGEN_SHOULD_SKIP_THIS
 
 #include "Utils.hh"
 #include "Utils_fmt.hh"
@@ -28,12 +30,7 @@
 namespace Utils {
 
   ThreadPool3::ThreadPool3( unsigned thread_count, unsigned queue_capacity )
-  : m_done(false)
-  , m_running_task(0)
-  , m_running_thread(0)
-  , m_work_queue( queue_capacity == 0 ? std::max( 10 * (thread_count+1), unsigned(4096) ) : queue_capacity )
-  , m_push_waiting(0)
-  , m_pop_waiting(0)
+  : m_work_queue( queue_capacity == 0 ? std::max( 10 * (thread_count+1), unsigned(4096) ) : queue_capacity )
   {
     create_workers( thread_count );
   }
@@ -44,16 +41,18 @@ namespace Utils {
 
   void
   ThreadPool3::push_task( TaskData * task ) {
-    m_queue_push_mutex.lock();
-    ++m_push_waiting;
-    m_queue_push_cv.wait( m_queue_push_mutex, [&]()->bool { return !m_work_queue.is_full(); } );
-    //-----------------
-    m_queue_spin.lock();
-    m_work_queue.push( task );
-    --m_push_waiting;
-    m_queue_spin.unlock();
-    //-----------------
-    m_queue_push_mutex.unlock();
+    {
+      std::unique_lock<std::mutex> lock( m_queue_push_mutex );
+      ++m_push_waiting;
+      while ( m_work_queue.is_full() ) m_queue_push_cv.wait( m_queue_push_mutex );
+      //-----------------
+      m_queue_spin.lock();
+      m_work_queue.push( task );
+      --m_push_waiting;
+      m_queue_spin.unlock();
+      //-----------------
+    }
+
     // push done
     if ( m_pop_waiting > 0 ) m_queue_pop_cv.notify_one();
     if ( m_push_waiting > 0 ) {
@@ -65,17 +64,21 @@ namespace Utils {
 
   tp::Queue::TaskData *
   ThreadPool3::pop_task() {
-    m_queue_pop_mutex.lock();
-    ++m_pop_waiting;
-    m_queue_pop_cv.wait( m_queue_pop_mutex, [&]()->bool { return !m_work_queue.empty(); } );
-    //-----------------
-    m_queue_spin.lock();
-    TaskData * task = m_work_queue.pop();
-    --m_pop_waiting;
-    m_queue_spin.unlock();
-    ++m_running_task; // must be incremented in the locked part
-    //-----------------
-    m_queue_pop_mutex.unlock();
+    TaskData * task{ nullptr };
+    {
+      std::unique_lock<std::mutex> lock( m_queue_pop_mutex );
+      ++m_pop_waiting;
+      m_queue_pop_cv.wait( m_queue_pop_mutex, [&]()->bool { return !m_work_queue.empty(); } );
+      //-----------------
+      m_queue_spin.lock();
+      task = m_work_queue.pop();
+      --m_pop_waiting;
+      m_queue_spin.unlock();
+      ++m_running_task; // must be incremented in the locked part
+      //-----------------
+    }
+    
+    
     if ( m_push_waiting > 0 ) m_queue_push_cv.notify_one();
     if ( m_pop_waiting  > 0 ) {
       m_queue_spin.lock();
@@ -168,11 +171,12 @@ namespace Utils {
     unsigned nw = unsigned(m_pop_ms.size());
     for ( unsigned i = 0; i < nw; ++i ) {
       unsigned njob = m_n_job[i];
+      double rjob{1000.0/(njob>0?njob:1)};
       fmt::print( s,
         "Worker {:2}, #job = {:4}, [job {:10}, POP {:10}]\n",
         i, njob,
-        fmt::format( "{:.3} mus", 1000*m_job_ms[i]/njob ),
-        fmt::format( "{:.3} mus", 1000*m_pop_ms[i]/njob )
+        fmt::format( "{:.3} mus", rjob*m_job_ms[i] ),
+        fmt::format( "{:.3} mus", rjob*m_pop_ms[i] )
       );
     }
     fmt::print( s, "PUSH {:10.6} ms\n\n", m_push_ms );
@@ -180,6 +184,8 @@ namespace Utils {
 
 }
 
-///
-/// eof: ThreadPool3.cc
-///
+#endif
+
+//
+// eof: ThreadPool3.cc
+//

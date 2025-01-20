@@ -17,9 +17,9 @@
  |                                                                          |
 \*--------------------------------------------------------------------------*/
 
-///
-/// file: Utils.hh
-///
+//
+// file: Utils.hh
+//
 #pragma once
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
@@ -74,6 +74,6 @@
 
 #endif
 
-///
-/// eof: Utils.hh
-///
+//
+// eof: Utils.hh
+//

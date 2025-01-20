@@ -32,8 +32,6 @@
 
 namespace Utils {
 
-  using std::isfinite;
-
   /*\
   :|:      _    _           _____ _  _    ___
   :|:     / \  | | __ _  __|___  | || |  ( _ )
@@ -74,7 +72,7 @@ namespace Utils {
   template <typename Real>
   void
   Algo748<Real>::set_tolerance( Real B ) {
-    Real eps{ 2*Utils::machine_eps<Real>() };
+    Real eps{ 2*machine_eps<Real>() };
     m_tolerance = eps + 2*abs(B)*eps;
   }
 
@@ -113,14 +111,26 @@ namespace Utils {
       else if ( m_c >= m_b-tol ) m_c = m_b - tol;
     }
 
+    UTILS_ASSERT(
+      is_finite(m_c),
+      "Algo748<Real>::bracketing(), unexpected\n"
+      "c={} at [a,b] = [{},{}]\n", m_c, m_a, m_b
+    );
+
     m_fc = this->evaluate( m_c );
 
-    // If f(c)=0, then set a=c and return.
+    UTILS_ASSERT(
+      is_finite(m_fc),
+      "Algo748<Real>::bracketing(), unexpected f(c={}) = {}\n",
+      m_c, m_fc
+    );
+
+    // If f(c)=0, then set a=b=c and return.
     // This will terminate the procedure.
 
     if ( m_fc == 0 ) {
-      m_a = m_c; m_fa = 0;
-      m_d = 0;   m_fd = 0;
+      m_a  = m_b  = m_c;
+      m_fa = m_fb = m_d = m_fd = 0;
       return true;
     } else {
       // If f(c) is not zero, then determine the new enclosing interval.
@@ -168,6 +178,21 @@ namespace Utils {
     Real tol{ Real(0.7)*m_tolerance };
     if ( c <= m_a+tol || c >= m_b-tol ) c = (m_a+m_b)/2;
 
+    UTILS_ASSERT(
+      is_finite(c),
+      "Algo748<Real>::pzero(), compute NaN or Inf at\n"
+      "a={} f(a)={}\n"
+      "b={} f(b)={}\n"
+      "c={} f(c)={}\n"
+      "d={} f(d)={}\n"
+      "e={} f(e)={}\n",
+      m_a, m_fa,
+      m_b, m_fb,
+      m_c, m_fc,
+      m_d, m_fd,
+      m_e, m_fe
+    );
+
     // CALCULATE THE OUTPUT C.
     return c;
   }
@@ -175,33 +200,60 @@ namespace Utils {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   template <typename Real>
-  Real
-  Algo748<Real>::newton_quadratic( Integer niter ) {
+  bool
+  Algo748<Real>::newton_quadratic( Integer niter, Real & c ) {
     // Uses `niter` newton steps to approximate the zero in (a,b) of the
     // quadratic polynomial interpolating f(x) at a, b, and d.
     // Safeguard is used to avoid overflow.
+
+    UTILS_ASSERT(
+      m_a < m_b && m_a != m_d && m_b != m_d,
+      "Algo748::newton_quadratic() bad data\n"
+      "a={} f(a)={}\n"
+      "b={} f(b)={}\n"
+      "d={} f(d)={}\n",
+      m_a, m_fa,
+      m_b, m_fb,
+      m_d, m_fd
+    );
 
     Real A0{ m_fa };
     Real A1{ (m_fb-m_fa)/(m_b-m_a) };
     Real A2{ ((m_fd-m_fb)/(m_d-m_b)-A1)/(m_d-m_a) };
 
+    UTILS_ASSERT(
+      is_finite(A0) && is_finite(A1) && is_finite(A2),
+      "Algo748<Real>::newton_quadratic(), compute NaN or Inf at\n"
+      "a={} f(a)={}\n"
+      "b={} f(b)={}\n"
+      "d={} f(d)={}\n"
+      "A0={}\n"
+      "A1={}\n"
+      "A2={}\n",
+      m_a, m_fa,
+      m_b, m_fb,
+      m_d, m_fd,
+      A0, A1, A2
+    );
+
     // Safeguard to avoid overflow.
-    if ( A2 == 0 ) return m_a-A0/A1;
+    if ( A2 == 0 ) {
+      c = m_a-A0/A1;
+    } else {
+      // Determine the starting point of newton steps.
+      c = A2*m_fa > 0 ? m_a : m_b;
 
-    // Determine the starting point of newton steps.
-    Real c{ A2*m_fa > 0 ? m_a : m_b };
-
-    // Start the safeguarded newton steps.
-    bool ok{ true };
-    for ( Integer i=0; i < niter && ok ; ++i ) {
-      Real PC  = A0+(A1+A2*(c-m_b))*(c-m_a);
-      Real PDC = A1+A2*((2*c)-(m_a+m_b));
-      ok = PDC != 0;
-      if ( ok ) c -= PC/PDC;
+      // Start the safeguarded newton steps.
+      bool ok{ true };
+      for ( Integer i{0}; i < niter && ok; ++i ) {
+        Real PC  = A0+(A1+A2*(c-m_b))*(c-m_a);
+        Real PDC = A1+A2*((2*c)-(m_a+m_b));
+        ok = PDC != 0;
+        if ( ok ) c -= PC/PDC;
+      }
     }
 
-    if ( ok ) return c;
-    else      return m_a-A0/A1;
+    return is_finite(c) && c > m_a && c < m_b;
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -233,10 +285,10 @@ namespace Utils {
 
     // try to enlarge interval
     while ( m_fa*m_fb > 0 ) {
-      if ( Utils::is_finite(m_fa) && m_a > amin ) {
+      if ( is_finite(m_fa) && m_a > amin ) {
         m_a -= m_b - m_a;
         m_fa = this->evaluate(m_a);
-      } else if ( Utils::is_finite(m_fb) && m_b < bmax ) {
+      } else if ( is_finite(m_fb) && m_b < bmax ) {
         m_b += m_b - m_a;
         m_fb = this->evaluate(m_b);
       } else {
@@ -248,27 +300,42 @@ namespace Utils {
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
+  /*!
+
+    Finds either an exact solution or an approximate solution
+    of the equation \f$ f(x)=0 \f$ in the interval \f$ [a,b] \f$.
+
+    1. The first iteration is simply a secant step.
+
+    2. Starting with the second iteration, three steps are taken in each iteration.
+
+       a. First two steps are either quadratic interpolation or cubic inverse interpolation.
+
+       b. The third step is a double-size secant step.
+
+    If the diameter of the enclosing interval obtained after
+    those three steps is larger than \f$ (b-a)/2 \f$,
+    then an additional bisection step will be taken.
+
+
+  */
+
   template <typename Real>
   Real
   Algo748<Real>::eval() {
+  
+    UTILS_ASSERT(
+      !is_NaN( m_fa ) && !is_NaN( m_fb ),
+      "Algo748::eval() bad initial interval\n"
+      "a = {}, fa = {}\n"
+      "b = {}, fb = {}\n",
+      m_a, m_fa,
+      m_b, m_fb
+    );
 
     // check for trivial solution
     m_converged = m_fa == 0; if ( m_converged ) return m_a;
     m_converged = m_fb == 0; if ( m_converged ) return m_b;
-
-    // Finds either an exact solution or an approximate solution
-    // of the equation f(x)=0 in the interval [a,b].
-    //
-    // At the beginning of each iteration, the current enclosing interval
-    // is recorded as [a0,b0].
-    // The first iteration is simply a secant step.
-    // Starting with the second iteration, three steps are taken in each iteration.
-    // First two steps are either quadratic interpolation
-    // or cubic inverse interpolation.
-    // The third step is a double-size secant step.
-    // If the diameter of the enclosing interval obtained after
-    // those three steps is larger than 0.5*(b0-a0),
-    // then an additional bisection step will be taken.
 
     m_e  = NaN<Real>();
     m_fe = NaN<Real>(); // Dumb values
@@ -276,18 +343,38 @@ namespace Utils {
     //
     // While f(left) or f(right) are infinite perform bisection
     //
-    while ( !( isfinite(m_fa) && isfinite(m_fb) ) ) {
+    while ( !( is_finite(m_fa) && is_finite(m_fb) ) ) {
+
       ++m_iteration_count;
+
       m_c  = (m_a+m_b)/2;
       m_fc = this->evaluate(m_c);
+
+      UTILS_ASSERT(
+       !is_NaN( m_fc ),
+       "Algo748::eval()\n"
+       "c = {}, fc = {}\n",
+       m_c, m_fc
+      );
+
       m_converged = m_fc == 0;
       if ( m_converged ) return m_c;
       if ( m_fa*m_fc < 0 ) {
         // --> [a,c]
         m_b = m_c; m_fb = m_fc;
-      } else {
+      } else if ( m_fb*m_fc < 0 ) {
         // --> [c,b]
         m_a = m_c; m_fa = m_fc;
+      } else {
+        UTILS_ERROR(
+          "Algo748::eval() cannot determine if to choose left or right segment\n"
+          "a={} fa={}\n"
+          "b={} fb={}\n"
+          "c={} fc={}\n",
+          m_a, m_fa,
+          m_c, m_fb,
+          m_a, m_fc
+        );
       }
       m_converged = (m_b-m_a) <= m_tolerance;
       if ( abs(m_fb) <= abs(m_fa) ) {
@@ -299,13 +386,15 @@ namespace Utils {
       }
     }
     {
-      Real ba { m_b  - m_a       };
+      using std::abs;
+      using std::min;
+      using std::max;
+      Real ba { m_b - m_a };
       Real R  { ba/(m_fb - m_fa) };
       m_c = abs(m_fb) < abs(m_fa) ? m_b+m_fb*R : m_a-m_fa*R;
       // impedisce m_c troppo vicino ad m_a o m_b
-      Real delta = m_interval_shink*ba, amin, bmax;
-      if      ( m_c < (amin=m_a+delta) ) m_c = amin;
-      else if ( m_c > (bmax=m_b-delta) ) m_c = bmax;
+      Real delta{m_interval_shink*ba};
+      m_c = max(min(m_c,m_b-delta),m_a+delta);
     }
     //
     // Call "bracketing" to get a shrinked enclosing interval as
@@ -355,7 +444,9 @@ namespace Utils {
         m_c = this->pzero();
         do_newton_quadratic = (m_c-m_a)*(m_c-m_b) >= 0;
       }
-      if ( do_newton_quadratic ) m_c = this->newton_quadratic(2);
+      if ( do_newton_quadratic ) {
+        if ( !this->newton_quadratic(2,m_c) ) m_c = m_a + (m_b-m_a)/2;
+      }
 
       m_e  = m_d;
       m_fe = m_fd;
@@ -373,7 +464,9 @@ namespace Utils {
         m_c = this->pzero();
         do_newton_quadratic = (m_c-m_a)*(m_c-m_b) >= 0;
       }
-      if ( do_newton_quadratic ) m_c = this->newton_quadratic(3);
+      if ( do_newton_quadratic ) {
+        if ( !this->newton_quadratic(3,m_c) ) m_c = m_a + (m_b-m_a)/2;
+      }
 
       //
       // Call subroutine "bracketing" to get a shrinked enclosing interval as

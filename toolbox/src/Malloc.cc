@@ -16,6 +16,9 @@
  |      email: enrico.bertolazzi@unitn.it                                   |
  |                                                                          |
 \*--------------------------------------------------------------------------*/
+//
+// file: Malloc.cc
+//
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
 
@@ -273,6 +276,6 @@ namespace Utils {
 
 #endif
 
-///
-/// eof: Malloc.cc
-///
+//
+// eof: Malloc.cc
+//

@@ -17,9 +17,9 @@
  |                                                                          |
 \*--------------------------------------------------------------------------*/
 
-///
-/// file: Utils_zeros.hh
-///
+//
+// file: Utils_zeros.hh
+//
 
 #pragma once
 
@@ -39,6 +39,11 @@ namespace Utils {
   using std::pow;
   using std::abs;
 
+  /*!
+   * \addtogroup Zeros
+   * @{
+   */
+
   /*
   //   __________ ____   ___  ____
   //  |__  / ____|  _ \ / _ \/ ___|
@@ -46,35 +51,175 @@ namespace Utils {
   //   / /_| |___|  _ <| |_| |___) |
   //  /____|_____|_| \_\\___/|____/
   */
+  //!
+  //! \ingroup Zeros
+  //! \class Zeros_base_fun
+  //! \brief Abstract base class for defining mathematical functions used in root-finding algorithms.
+  //!
+  //! This class serves as a base interface for user-defined functions that can be evaluated
+  //! and differentiated. It allows for the implementation of various numerical methods to
+  //! find the roots of the equation \f$ f(x) = 0 \f$. Users must inherit from this class and
+  //! implement the virtual methods to define their specific functions.
+  //!
+  //! The class provides methods to evaluate the function itself as well as its first,
+  //! second, and third derivatives, which are essential for many root-finding algorithms
+  //! such as Newton-Raphson and Halley methods.
+  //!
+  //! **Template Parameter:**
+  //! - `Real`: A numeric type representing the data type of the function's input and output,
+  //!   such as `float`, `double`, etc.
+  //!
+  //! **Usage Example:**
+  //! To create a custom function, derive from this class and implement the required methods.
+  //! Here is an example for the function \f$ f(x) = x^2 - 2 \f$:
+  //!
+  //! \code{cpp}
+  //! class Fun1 : public Zeros_base_fun<double> {
+  //! public:
+  //!     double eval(double x) const override { return x*x - 2; }
+  //!     double eval_D(double x) const override { return 2*x; }
+  //!     double eval_DD(double x) const override { return 2; }
+  //!     double eval_DDD(double x) const override { return 0; }
+  //! };
+  //! \endcode
 
-  //!
-  //! Class function for `Zeros` class
-  //!
   template <typename Real>
   class Zeros_base_fun {
   public:
-    virtual Real eval    ( Real ) const = 0;
-    virtual Real eval_D  ( Real ) const = 0;
-    virtual Real eval_DD ( Real ) const = 0;
-    virtual Real eval_DDD( Real ) const = 0;
+
+    //!
+    //! Evaluate the function \f$ f(x) \f$
+    //!
+    //! \param[in] x the point to evaluate \f$ f(x) \f$
+    //! \return the value of \f$ f(x) \f$
+    //!
+    virtual Real eval( Real x ) const = 0;
+
+    //!
+    //! Evaluate the first derivative of \f$ f(x) \f$
+    //!
+    //! \param[in] x the point to evaluate \f$ f'(x) \f$
+    //! \return the value of \f$ f'(x) \f$
+    //!
+    virtual Real eval_D( Real x ) const = 0;
+
+    //!
+    //! Evaluate the second derivative of \f$ f(x) \f$
+    //!
+    //! \param[in] x the point to evaluate \f$ f''(x) \f$
+    //! \return the value of \f$ f''(x) \f$
+    //!
+    virtual Real eval_DD( Real x ) const = 0;
+
+    //!
+    //! Evaluate the third derivative of \f$ f(x) \f$
+    //!
+    //! \param[in] x the point to evaluate \f$ f'''(x) \f$
+    //! \return the value of \f$ f'''(x) \f$
+    //!
+    virtual Real eval_DDD( Real x ) const = 0;
+
+    //!
+    //! Evaluate the function \f$ f(x) \f$
+    //!
+    //! This operator allows for a more intuitive usage of the function object,
+    //! enabling the evaluation of the function using the call operator.
+    //!
+    //! \param[in] x the point to evaluate \f$ f(x) \f$
+    //! \return the value of \f$ f(x) \f$
+    //!
     Real operator () ( Real x ) const { return this->eval(x); }
-    Real D           ( Real x ) const { return this->eval_D(x); }
-    Real DD          ( Real x ) const { return this->eval_DD(x); }
-    Real DDD         ( Real x ) const { return this->eval_DDD(x); }
+
+    //!
+    //! Evaluate the first derivative of \f$ f(x) \f$
+    //!
+    //! This operator provides a convenient way to evaluate the first derivative
+    //! using the call operator.
+    //!
+    //! \param[in] x the point to evaluate \f$ f'(x) \f$
+    //! \return the value of \f$ f'(x) \f$
+    //!
+    Real D( Real x ) const { return this->eval_D(x); }
+
+    //!
+    //! Evaluate the second derivative of \f$ f(x) \f$
+    //!
+    //! This operator allows for an easy evaluation of the second derivative
+    //! using the call operator.
+    //!
+    //! \param[in] x the point to evaluate \f$ f''(x) \f$
+    //! \return the value of \f$ f''(x) \f$
+    //!
+    Real DD( Real x ) const { return this->eval_DD(x); }
+
+    //!
+    //! Evaluate the third derivative of \f$ f(x) \f$
+    //!
+    //! This operator enables straightforward evaluation of the third derivative
+    //! using the call operator.
+    //!
+    //! \param[in] x the point to evaluate \f$ f'''(x) \f$
+    //! \return the value of \f$ f'''(x) \f$
+    //!
+    Real DDD( Real x ) const { return this->eval_DDD(x); }
   };
 
   //!
-  //! Implementation of:
+  //! \class Zeros
+  //! \brief Class for solving the equation \f$ f(x) = 0 \f$ using various numerical methods.
   //!
-  //! - Newton
+  //! This class implements multiple solvers to find the roots of a given function. The available methods include:
   //!
+  //! - **Newton-Raphson Method**: A widely used iterative method for finding successively better approximations to the roots of a real-valued function.
+  //!   [Learn more](https://en.wikipedia.org/wiki/Newton%27s_method).
+  //! - **Chebyshev Method**: A higher-order root-finding method that offers faster convergence compared to the Newton-Raphson method.
+  //! - **Halley Method**: An iterative method that is a generalization of the Newton-Raphson method and provides faster convergence.
+  //!   [Learn more](https://en.wikipedia.org/wiki/Halley%27s_method).
+  //! - **Methods by Juan Luis Varona**: A series of methods developed for enhanced convergence properties:
+  //!   - Order 4 method
+  //!   - Order 8 method
+  //!   - Order 16 method
+  //!   - Order 32 method
+  //!
+  //! For a detailed exploration of these methods, refer to the paper:
+  //! - *An Optimal Thirty-Second-Order Iterative Method for Solving Nonlinear Equations and a Conjecture*,
+  //!   **Juan Luis Varona**, Qualitative Theory of Dynamical Systems (2022).
+  //!   [Link to the paper](https://link.springer.com/article/10.1007/s12346-022-00572-3).
+  //!
+  //! \note This class is designed to work with user-defined functions that extend from `Utils::Zeros_base_fun`.
+  //!
+  //! **Usage Example**
+  //!
+  //! To use this class, first wrap your function in a derived class. For instance, for the function \f$ f(x) = x^2 - 2 \f$, you can define:
+  //!
+  //! \code{cpp}
+  //! class Fun1 : public Utils::Zeros_base_fun<real_type> {
+  //! public:
+  //!     real_type eval(real_type x) const override { return x*x - 2; }
+  //!     real_type eval_D(real_type x) const override { return 2*x; }
+  //!     real_type eval_DD(real_type x) const override { return 2; }
+  //!     real_type eval_DDD(real_type x) const override { return 0; }
+  //! };
+  //! \endcode
+  //!
+  //! Next, instantiate the function and the solver. Then, call the desired method to find the root:
+  //!
+  //! \code{cpp}
+  //! Zeros<real_type> solver;
+  //! Fun1 f;
+  //! real_type x_guess = 1.0;  // Initial guess
+  //! real_type x_solution = solver.solve_Newton(x_guess, f);
+  //! \endcode
+  //!
+  //! If the method converges, `x_solution` will contain the computed solution.
+
   template <typename Real>
   class Zeros {
 
     using Integer = int;
 
-    Integer m_max_fun_evaluation{200}; // max number of function evaluations
-    Integer m_max_iteration{100};       // max number of iterations
+    Integer m_max_fun_evaluation{200};  //< max number of function evaluations
+    Integer m_max_iteration{100};       //< max number of iterations
     Real    m_tolerance{pow(machine_eps<Real>(),Real(2./3.))};
     bool    m_converged{false};
 
@@ -124,22 +269,99 @@ namespace Utils {
     Zeros() = default;
     ~Zeros() = default;
 
+    //!
+    //! Fix the maximum number of iteration.
+    //!
+    //! \param mit the maximum number of iteration
+    //!
     void set_max_iterations( Integer mit );
+    //!
+    //! Fix the maximum number of evaluation.
+    //!
+    //! \param mfev the maximum number of evaluation of \f$ f(x) \f$
+    //!
     void set_max_fun_evaluation( Integer mfev );
+    //!
+    //! Fix the requested tolerance for ieration stop.
+    //! Stop when \f$ |f(x)| < \epsilon \f$
+    //!
+    //! \param tol the requested tolerance
+    //!
     void set_tolerance( Real tol );
 
+    //!
+    //! Find the zero of a function wrapped in the class `Zeros_base_fun<Real>`
+    //! starting from guess value `x_guess`
+    //!
+    //! \param x_guess starting value for iterative method
+    //! \param fun     the pointer to base class `Zeros_base_fun<Real>` wrapping the user function
+    //!
     Real solve_Newton( Real x_guess, Zeros_base_fun<Real> * fun );
+    //!
+    //! Find the zero of a function wrapped in the class `Zeros_base_fun<Real>`
+    //! starting from guess value `x_guess`.
+    //!
+    //! \param x_guess starting value for iterative method
+    //! \param fun     the pointer to base class `Zeros_base_fun<Real>` wrapping the user function
+    //!
     Real solve_Chebyshev( Real x_guess, Zeros_base_fun<Real> * fun );
+    //!
+    //! Find the zero of a function wrapped in the class `Zeros_base_fun<Real>`
+    //! starting from guess value `x_guess`
+    //!
+    //! \param x_guess starting value for iterative method
+    //! \param fun     the pointer to base class `Zeros_base_fun<Real>` wrapping the user function
+    //!
     Real solve_Halley( Real x_guess, Zeros_base_fun<Real> * fun );
+    //!
+    //! Find the zero of a function wrapped in the class `Zeros_base_fun<Real>`
+    //! starting from guess value `x_guess`
+    //!
+    //! \param x_guess starting value for iterative method
+    //! \param fun     the pointer to base class `Zeros_base_fun<Real>` wrapping the user function
+    //!
     Real solve_Order4( Real x_guess, Zeros_base_fun<Real> * fun );
+    //!
+    //! Find the zero of a function wrapped in the class `Zeros_base_fun<Real>`
+    //! starting from guess value `x_guess`
+    //!
+    //! \param x_guess starting value for iterative method
+    //! \param fun     the pointer to base class `Zeros_base_fun<Real>` wrapping the user function
+    //!
     Real solve_Order8( Real x_guess, Zeros_base_fun<Real> * fun );
+    //!
+    //! Find the zero of a function wrapped in the class `Zeros_base_fun<Real>`
+    //! starting from guess value `x_guess`
+    //!
+    //! \param x_guess starting value for iterative method
+    //! \param fun     the pointer to base class `Zeros_base_fun<Real>` wrapping the user function
+    //!
     Real solve_Order16( Real x_guess, Zeros_base_fun<Real> * fun );
+    //!
+    //! Find the zero of a function wrapped in the class `Zeros_base_fun<Real>`
+    //! starting from guess value `x_guess`
+    //!
+    //! \param x_guess starting value for iterative method
+    //! \param fun     the pointer to base class `Zeros_base_fun<Real>` wrapping the user function
+    //!
     Real solve_Order32( Real x_guess, Zeros_base_fun<Real> * fun );
 
-    Integer used_iter()    const { return m_iteration_count; }
+    //!
+    //! \return the number of iterations used in the last computation
+    //!
+    Integer used_iter() const { return m_iteration_count; }
+    //!
+    //! \return the number of evaluation used in the last computation
+    //!
     Integer num_fun_eval() const { return m_fun_evaluation_count; }
-    Real    tolerance()    const { return m_tolerance; }
-    bool    converged()    const { return m_converged; }
+    //!
+    //! \return the tolerance set for computation
+    //!
+    Real tolerance() const { return m_tolerance; }
+    //!
+    //! \return true if the last computation was successfull
+    //!
+    bool converged() const { return m_converged; }
 
   };
 
@@ -152,6 +374,6 @@ namespace Utils {
 
 #endif
 
-///
-/// EOF: Utils_zeros.hh
-///
+//
+// eof: Utils_zeros.hh
+//

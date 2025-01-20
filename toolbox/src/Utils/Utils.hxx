@@ -17,9 +17,9 @@
  |                                                                          |
 \*--------------------------------------------------------------------------*/
 
-///
-/// file: Utils.hxx
-///
+//
+// file: Utils.hxx
+//
 
 // select computer architecture
 #if defined(__APPLE__) && defined(__MACH__)
@@ -100,6 +100,7 @@
 
 #include <string>
 #include <vector>
+#include <list>
 #include <map>
 #include <limits>
 
@@ -377,6 +378,6 @@ namespace Utils {
 
 }
 
-///
-/// eof: Utils.hxx
-///
+//
+// eof: Utils.hxx
+//

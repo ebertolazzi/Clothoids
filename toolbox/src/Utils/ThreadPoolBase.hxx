@@ -17,11 +17,16 @@
  |                                                                          |
 \*--------------------------------------------------------------------------*/
 
-///
-/// eof: ThreadPoolBase.hxx
-///
+//
+// eof: ThreadPoolBase.hxx
+//
 
 namespace Utils {
+
+  /*!
+   * \addtogroup THREAD
+   * @{
+   */
 
   /*\
    |   _____ _                    _ ___          _ ___
@@ -89,9 +94,12 @@ namespace Utils {
 
     private:
 
+      mutable std::mutex     m_mutex;
       std::vector<TaskData*> m_queue_data;
 
-      unsigned m_size, m_capacity, m_push_ptr, m_pop_ptr;
+      unsigned m_size, m_capacity;
+      unsigned m_push_ptr{0};
+      unsigned m_pop_ptr{0};
 
     public:
 
@@ -105,34 +113,54 @@ namespace Utils {
       : m_queue_data( std::size_t( capacity+1 ) )
       , m_size( capacity+1 )
       , m_capacity( capacity )
-      , m_push_ptr( 0 )
-      , m_pop_ptr( 0 )
       { }
 
       void
       push( TaskData * task ) {
+        std::lock_guard<std::mutex> lock(m_mutex);
         m_queue_data[m_push_ptr] = task;
         if ( ++m_push_ptr == m_size ) m_push_ptr = 0;
       }
 
       TaskData *
       pop() {
-        unsigned ipos = m_pop_ptr;
+        std::lock_guard<std::mutex> lock(m_mutex);
+        unsigned ipos{m_pop_ptr};
         if ( ++m_pop_ptr == m_size ) m_pop_ptr = 0;
         return m_queue_data[ipos];
       }
 
-      unsigned size()     const { return ((m_push_ptr + m_size) - m_pop_ptr) % m_size; }
-      bool     empty()    const { return m_push_ptr == m_pop_ptr; }
-      bool     is_full()  const { return this->size() >= m_capacity; }
+      unsigned
+      size() const {
+        std::lock_guard<std::mutex> lock(m_mutex);
+        return ((m_push_ptr + m_size) - m_pop_ptr) % m_size;
+      }
+
+      bool
+      empty() const {
+        std::lock_guard<std::mutex> lock(m_mutex);
+        return m_push_ptr == m_pop_ptr;
+      }
+      
+      bool is_full() const {
+        std::lock_guard<std::mutex> lock(m_mutex);
+        unsigned sz = ((m_push_ptr + m_size) - m_pop_ptr) % m_size;
+        return sz >= m_capacity;
+      }
+
       unsigned capacity() const { return m_capacity; }
 
       //! clear queue and delete tasks
-      void clear() { while( !empty() ) delete pop(); }
+      void
+      clear() {
+        std::lock_guard<std::mutex> lock(m_mutex);
+        while( m_push_ptr != m_pop_ptr ) delete pop();
+      }
 
       void
       resize( unsigned capacity ) {
-        this->clear();
+        std::lock_guard<std::mutex> lock(m_mutex);
+        while( m_push_ptr != m_pop_ptr ) delete pop();
         m_size     = capacity+1;
         m_capacity = capacity;
         m_queue_data.resize( m_size );
@@ -141,8 +169,11 @@ namespace Utils {
       ~Queue() = default;
     };
   }
+
+  /*! @} */
+
 }
 
-///
-/// eof: ThreadPoolBase.hxx
-///
+//
+// eof: ThreadPoolBase.hxx
+//
