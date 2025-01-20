@@ -17,9 +17,9 @@
  |                                                                          |
 \*--------------------------------------------------------------------------*/
 
-///
-/// file: Utils_AABB_tree.cc
-///
+//
+// file: Utils_AABB_tree.cc
+//
 
 #include "Utils_AABB_tree.hh"
 #include "Utils_fmt.hh"
@@ -1213,6 +1213,6 @@ namespace Utils {
 
 }
 
-///
-/// eof: Utils_AABB_tree.cc
-///
+//
+// eof: Utils_AABB_tree.cc
+//

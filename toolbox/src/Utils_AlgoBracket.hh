@@ -1,6 +1,6 @@
 /*--------------------------------------------------------------------------*\
  |                                                                          |
- |  Copyright (C) 2022                                                      |
+ |  Copyright (C) 2025                                                      |
  |                                                                          |
  |         , __                 , __                                        |
  |        /|/  \               /|/  \                                       |
@@ -18,13 +18,13 @@
 \*--------------------------------------------------------------------------*/
 
 //
-// file: Utils_Algo748.hh
+// file: Utils_AlgoBracket.hh
 //
 
 #pragma once
 
-#ifndef UTILS_ALGO748_dot_HH
-#define UTILS_ALGO748_dot_HH
+#ifndef UTILS_ALGO_BRACKET_dot_HH
+#define UTILS_ALGO_BRACKET_dot_HH
 
 #include <iostream>
 #include <sstream>
@@ -38,6 +38,7 @@ namespace Utils {
 
   using std::pow;
   using std::abs;
+  using std::sqrt;
 
   /*!
    * \addtogroup Zeros
@@ -46,17 +47,17 @@ namespace Utils {
 
 
   /*
-  //      _    _           _____ _  _    ___
-  //     / \  | | __ _  __|___  | || |  ( _ )
-  //    / _ \ | |/ _` |/ _ \ / /| || |_ / _ \
-  //   / ___ \| | (_| | (_) / / |__   _| (_) |
-  //  /_/   \_\_|\__, |\___/_/     |_|  \___/
-  //             |___/
+  //   ____                 _        _
+  //  | __ ) _ __ __ _  ___| | _____| |_
+  //  |  _ \| '__/ _` |/ __| |/ / _ \ __|
+  //  | |_) | | | (_| | (__|   <  __/ |_
+  //  |____/|_|  \__,_|\___|_|\_\___|\__|
+  //
   */
 
   //!
-  //! \class Algo748_base_fun
-  //! \brief Abstract base class for defining mathematical functions used in the zero search algorithm.
+  //! \class Bracket_base_fun
+  //! \brief Abstract base class for defining mathematical functions used in the Bracket search algorithm.
   //!
   //! This class serves as a base interface for user-defined functions that can be evaluated.
   //! It allows for the implementation the numerical method to
@@ -72,14 +73,14 @@ namespace Utils {
   //! Here is an example for the function \f$ f(x) = x^2 - 2 \f$:
   //!
   //! \code{cpp}
-  //! class Fun1 : public Algo748_base_fun<double> {
+  //! class Fun1 : public Bracket_base_fun<double> {
   //! public:
   //!     double eval(double x) const override { return x*x - 2; }
   //! };
   //! \endcode
   //!
   template <typename Real>
-  class Algo748_base_fun {
+  class Bracket_base_fun {
   public:
     //!
     //! Evaluate the function \f$ f(x) \f$
@@ -99,29 +100,30 @@ namespace Utils {
 
   #ifndef DOXYGEN_SHOULD_SKIP_THIS
   template <typename Real, typename PFUN>
-  class Algo748_fun : public Algo748_base_fun<Real> {
+  class Bracket_fun : public Bracket_base_fun<Real> {
     PFUN m_fun;
   public:
-    explicit Algo748_fun( PFUN pfun ) : m_fun(pfun) {}
+    explicit Bracket_fun( PFUN pfun ) : m_fun(pfun) {}
     Real eval( Real x ) const override { return m_fun(x); };
   };
   #endif
 
   //!
-  //!  \class Algo748
+  //!  \class AlgoBracket
   //!  \brief Class for solving \f$ f(x)=0 \f$ without the usew of derivative
   //!
   //!  \note The used algorithm is described in:
-  //!        **G. E. Alefeld, Florian A Potra, Yixun Shi**,
-  //!        *Algorithm 748: enclosing zeros of continuous functions*,
-  //!        ACM Transactions on Mathematical Software, vol 21, N.3, 1995
+  //!        **I.F.D. Oliveira, R.H.C. Takahashi**,
+  //!        *An Enhancement of the Bisection Method Average Performance Preserving Minmax Optimality*,
+  //!        ACM Transactions on Mathematical Software, vol 47, N.1, 2020
   //!
   //!  ## Usage simple example:
   //!
-  //!  To use this class, first wrap your function in a derived class. For instance, for the function \f$ f(x) = x^2 - 2 \f$, you can define:
+  //!  To use this class, first wrap your function in a derived class.
+  //!  For instance, for the function \f$ f(x) = x^2 - 2 \f$, you can define:
   //!
   //!  \code{cpp}
-  //!  class Fun1 : public Algo748_base_fun<double> {
+  //!  class Fun1 : public Bracket_base_fun<double> {
   //!  public:
   //!    double eval(double x) const override { return x*x - 2; }
   //!  };
@@ -130,7 +132,7 @@ namespace Utils {
   //!  Next, instantiate the function and the solver. Then, call the desired method to find the root:
   //!
   //!  \code{cpp}
-  //!  Algo748<real_type> solver;
+  //!  AlgoBracket<real_type> solver;
   //!  Fun1 f;
   //!  real_type a=-1,b=2;
   //!  real_type x_solution = solver.eval2(a,b,f);
@@ -145,10 +147,10 @@ namespace Utils {
   //!
   //!  ### Step 1: including headers
   //!
-  //!  To use the `Algo748` class, include the necessary headers:
+  //!  To use the `Bracket` class, include the necessary headers:
   //!
   //!  \code{cpp}
-  //!  #include "Utils_Algo748.hh"
+  //!  #include "Utils_Bracket.hh"
   //!  #include "Utils_fmt.hh" // For formatted output
   //!  \endcode
   //!
@@ -168,7 +170,7 @@ namespace Utils {
   //!
   //!  ### Step 3: Creating solver instance
   //!
-  //!  Create an instance of the `Algo748` class to solve your function. The
+  //!  Create an instance of the `Bracket` class to solve your function. The
   //!  class provides methods to evaluate functions and find roots.
   //!
   //!  ### Step 4: Calling the solver
@@ -181,7 +183,7 @@ namespace Utils {
   //!  int
   //!  main() {
   //!    // Create an instance of the solver
-  //!    Algo748<real_type> solver;
+  //!    AlgoBracket<real_type> solver;
   //!
   //!    // Define the interval [a, b]
   //!    real_type a = 0.0; // lower bound
@@ -207,7 +209,7 @@ namespace Utils {
   //!  int
   //!  main() {
   //!    // Create an instance of the solver
-  //!    Algo748<real_type> solver;
+  //!    AlgoBracket<real_type> solver;
   //!
   //!    // Define the interval [a, b]
   //!    real_type a = 0.0; // lower bound
@@ -239,7 +241,7 @@ namespace Utils {
   //!  int
   //!  main() {
   //!    // Create an instance of the solver
-  //!    Algo748<real_type> solver;
+  //!    AlgoBracket<real_type> solver;
   //!
   //!    // Define the interval [a, b]
   //!    real_type a = 0.0;
@@ -269,23 +271,22 @@ namespace Utils {
   //!  \endcode
   //!
   template <typename Real>
-  class Algo748 {
+  class AlgoBracket {
+  
+    using Method = enum class Method : unsigned {
+      BISECTION=0, ILLINOIS, CHANDRUPATLA, BRENT, RIDDER, MODIFIED_AB
+    };
 
     using Integer = int;
 
-    Real m_mu{Real(0.5)};
-    Real m_tolerance{pow(machine_eps<Real>(),Real(2./3.))};
-    Real m_interval_shink{Real(0.025)};
+    Real m_tolerance{ pow(machine_eps<Real>(),Real(2./3.)) };
+    bool m_converged{ false };
 
-    bool m_converged{false};
+    Real   m_a{0}, m_fa{0};
+    Real   m_b{0}, m_fb{0};
+    Method m_select{Method::CHANDRUPATLA};
 
-    Real m_a{0}, m_fa{0};
-    Real m_b{0}, m_fb{0};
-    Real m_c{0}, m_fc{0};
-    Real m_d{0}, m_fd{0};
-    Real m_e{0}, m_fe{0};
-
-    Algo748_base_fun<Real> * m_function{nullptr};
+    Bracket_base_fun<Real> * m_function{nullptr};
 
     Integer m_max_fun_evaluation{1000}; // max number of function evaluations
     Integer m_max_iteration{200};       // max number of iterations
@@ -293,48 +294,48 @@ namespace Utils {
     mutable Integer m_iteration_count{0};    // explore iteration counter
     mutable Integer m_fun_evaluation_count{0};
 
-    bool bracketing();
     void set_tolerance( Real tol );
-    Real pzero();
-    bool newton_quadratic( Integer niter, Real & c );
     Real evaluate( Real x ) { ++m_fun_evaluation_count; return m_function->eval(x); };
-    bool all_different( Real a, Real b, Real c, Real d ) const;
 
     Real eval();
     Real eval( Real a, Real b );
     Real eval( Real a, Real b, Real amin, Real bmax );
 
+    Real p_zero2( Real d, Real fd ) const;
+    Real invp_zero2( Real d, Real fd ) const;
+    Real invp_zero3( Real d, Real fd, Real e, Real fe ) const;
+
   public:
 
-    Algo748() = default;
-    ~Algo748() = default;
+    AlgoBracket() = default;
+    ~AlgoBracket() = default;
 
     //!
-    //! Find the solution for a function wrapped in the class `Algo748_base_fun<Real>`
+    //! Find the solution for a function wrapped in the class `Bracket_base_fun<Real>`
     //! starting from guess interval `[a,b]`
     //!
     //! \param a    lower bound search interval
     //! \param b    upper bound search interval
-    //! \param fun  the pointer to base class `Algo748_base_fun<Real>` wrapping the user function
+    //! \param fun  the pointer to base class `Bracket_base_fun<Real>` wrapping the user function
     //!
     Real
-    eval( Real a, Real b, Algo748_base_fun<Real> * fun ) {
+    eval( Real a, Real b, Bracket_base_fun<Real> * fun ) {
       m_function = fun;
       return this->eval( a, b );
     }
 
     //!
-    //! Find the solution for a function wrapped in the class `Algo748_base_fun<Real>`
+    //! Find the solution for a function wrapped in the class `Bracket_base_fun<Real>`
     //! starting from guess interval `[a,b]`
     //!
     //! \param a    guess interval lower bound
     //! \param b    guess interval upper bound
     //! \param amin lower bound search interval
     //! \param bmax upper bound search interval
-    //! \param fun  the pointer to base class `Algo748_base_fun<Real>` wrapping the user function
+    //! \param fun  the pointer to base class `Bracket_base_fun<Real>` wrapping the user function
     //!
     Real
-    eval( Real a, Real b, Real amin, Real bmax, Algo748_base_fun<Real> * fun ) {
+    eval( Real a, Real b, Real amin, Real bmax, Bracket_base_fun<Real> * fun ) {
       m_function = fun;
       return this->eval( a, b, amin, bmax );
     }
@@ -350,7 +351,7 @@ namespace Utils {
     template <typename PFUN>
     Real
     eval2( Real a, Real b, PFUN pfun ) {
-      Algo748_fun<Real,PFUN> fun( pfun );
+      Bracket_fun<Real,PFUN> fun( pfun );
       m_function = &fun;
       return this->eval( a, b );
     }
@@ -368,7 +369,7 @@ namespace Utils {
     template <typename PFUN>
     Real
     eval2( Real a, Real b, Real amin, Real bmax, PFUN pfun ) {
-      Algo748_fun<Real,PFUN> fun( pfun );
+      Bracket_fun<Real,PFUN> fun( pfun );
       m_function = &fun;
       return this->eval( a, b, amin, bmax );
     }
@@ -386,7 +387,7 @@ namespace Utils {
     template <typename PFUN>
     Real
     eval3( Real a, Real b, Real fa, Real fb, PFUN pfun ) {
-      Algo748_fun<Real,PFUN> fun( pfun );
+      Bracket_fun<Real,PFUN> fun( pfun );
       m_function             = &fun;
       m_iteration_count      = 0;
       m_fun_evaluation_count = 0;
@@ -434,11 +435,33 @@ namespace Utils {
     Real fa() const { return m_fa; }
     Real fb() const { return m_fb; }
 
+    string algo() const {
+      switch ( m_select ) {
+      case Method::BISECTION:    return "bisection";    break;
+      case Method::ILLINOIS:     return "illinois";     break;
+      case Method::CHANDRUPATLA: return "Chandrupatla"; break;
+      case Method::BRENT:        return "Brent";        break;
+      case Method::RIDDER:       return "Ridder";       break;
+      case Method::MODIFIED_AB:  return "modified_AB";  break;
+      }
+    }
+
+    void select( unsigned i_algo ) {
+      switch ( i_algo ) {
+      case 0: m_select = Method::BISECTION;    break;
+      case 1: m_select = Method::ILLINOIS;     break;
+      case 2: m_select = Method::CHANDRUPATLA; break;
+      case 3: m_select = Method::BRENT;        break;
+      case 4: m_select = Method::RIDDER;       break;
+      case 5: m_select = Method::MODIFIED_AB;  break;
+      }
+    }
+
   };
 
   #ifndef UTILS_OS_WINDOWS
-  extern template class Algo748<float>;
-  extern template class Algo748<double>;
+  extern template class AlgoBracket<float>;
+  extern template class AlgoBracket<double>;
   #endif
 
   /*! @} */
@@ -448,5 +471,5 @@ namespace Utils {
 #endif
 
 //
-// EOF: Utils_Algo748.hh
+// EOF: Utils_AlgoBracket.hh
 //

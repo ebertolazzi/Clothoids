@@ -23,6 +23,7 @@
 
 #include "GenericContainer/GenericContainer.hh"
 #include <iomanip>
+#include <fstream>
 #include <cstdlib>
 
 namespace GC_namespace {
@@ -148,34 +149,34 @@ namespace GC_namespace {
   // -------------------------------------------------------
   // original code by Francesco Biral (francesco.biral@unitn.it)
   GenericContainer const &
-  GenericContainer::writeFormattedData(
+  GenericContainer::write_formatted_data(
     ostream_type & stream,
     char const     delimiter
   ) const {
     GC_ASSERT(
       this->exists("headers"),
-      "writeFormattedData, missing field `headers` in container"
+      "write_formatted_data, missing field `headers` in container"
     );
     GC_ASSERT(
       this->exists("data"),
-      "writeFormattedData, missing field `data` in container"
+      "write_formatted_data, missing field `data` in container"
     );
     GenericContainer const & data    = (*this)("data");
-    vec_string_type  const & headers = (*this)("headers").get_vec_string(" writeFormattedData, `header` field must be `vec_string_type`");
+    vec_string_type  const & headers = (*this)("headers").get_vec_string("write_formatted_data, `header` field must be `vec_string_type`");
     if ( (*this)("data").get_type() == GC_type::MAT_REAL )
-      writeTable( headers, data.get_mat_real(), stream, delimiter );
+      write_table( headers, data.get_mat_real(), stream, delimiter );
     else
-      writeTable( headers, data.get_vector(), stream, delimiter );
+      write_table( headers, data.get_vector(), stream, delimiter );
     return *this;
   }
 
   // -------------------------------------------------------
   // original code by Francesco Biral (francesco.biral@unitn.it)
   GenericContainer &
-  GenericContainer::readFormattedData(
+  GenericContainer::read_formatted_data(
     istream_type & stream,
-    char const   * commentChars,
-    char const   * delimiters
+    char const     commentChars[],
+    char const     delimiters[]
   ) {
     //read a line
     string_type line;
@@ -204,7 +205,7 @@ namespace GC_namespace {
 
       GC_ASSERT(
         unsigned(tokens.size()) == ncol,
-        "readFormattedData, in reading line: " << nline <<
+        "read_formatted_data, in reading line: " << nline <<
         " expected " << ncol << " found: " << tokens.size()
       );
 
@@ -218,11 +219,11 @@ namespace GC_namespace {
   // -------------------------------------------------------
   // original code by Francesco Biral (francesco.biral@unitn.it)
   GenericContainer &
-  GenericContainer::readFormattedData2(
-    istream_type     & stream,
-    char const       * commentChars,
-    char const       * delimiters,
-    GenericContainer * ptr_pars
+  GenericContainer::read_formatted_data2(
+    istream_type   & stream,
+    char const       commentChars[],
+    char const       delimiters[],
+    GenericContainer ptr_pars[]
   ) {
     //read a line
     string_type line;
@@ -257,7 +258,7 @@ namespace GC_namespace {
 
       GC_ASSERT(
         unsigned(tokens.size()) == ncol,
-        "readFormattedData2, in reading line: " << nline <<
+        "read_formatted_data2, in reading line: " << nline <<
         " expected " << ncol << " found: " << tokens.size()
       );
 
@@ -267,6 +268,36 @@ namespace GC_namespace {
     }
     return *this;
   }
+
+  GenericContainer &
+  GenericContainer::read_formatted_data(
+    char const fname[],
+    char const commentChars[],
+    char const delimiters[]
+  ) {
+    std::ifstream file( fname );
+    GC_ASSERT(
+      file.good(),
+      "read_formatted_data, failed to open file: ``" << fname << "''"
+    )
+    return read_formatted_data( file, commentChars, delimiters );
+  }
+
+  GenericContainer &
+  GenericContainer::read_formatted_data2(
+    char const       fname[],
+    char const       commentChars[],
+    char const       delimiters[],
+    GenericContainer ptr_pars[]
+  ) {
+    std::ifstream file( fname );
+    GC_ASSERT(
+      file.good(),
+      "read_formatted_data2, failed to open file: ``" << fname << "''"
+    )
+    return read_formatted_data2( file, commentChars, delimiters, ptr_pars );
+  }
+
 }
 
 //

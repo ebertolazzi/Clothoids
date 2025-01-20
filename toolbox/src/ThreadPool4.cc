@@ -18,9 +18,11 @@
  |                                                                          |
 \*--------------------------------------------------------------------------*/
 
-///
-/// file: ThreadPool4.cc
-///
+//
+// file: ThreadPool4.cc
+//
+
+#ifndef DOXYGEN_SHOULD_SKIP_THIS
 
 #include "Utils.hh"
 #include "Utils_fmt.hh"
@@ -43,11 +45,11 @@ namespace Utils {
     m_tm.tic();
     // --------------------------
     ++m_push_waiting;
-    m_work_on_queue_mutex.lock();
-    m_queue_push_cv.wait( m_work_on_queue_mutex, [&]()->bool { return !m_work_queue.is_full(); } );
-    m_work_queue.push( task );
-    --m_push_waiting;
-    m_work_on_queue_mutex.unlock();
+    { std::unique_lock<std::mutex> lock( m_work_on_queue_mutex );
+      while ( m_work_queue.is_full() ) m_queue_push_cv.wait( m_work_on_queue_mutex );
+      m_work_queue.push( task );
+      --m_push_waiting;
+    }
     if ( m_pop_waiting > 0 ) m_queue_pop_cv.notify_one();
     if ( m_push_waiting > 0 && !m_work_queue.is_full() ) m_queue_push_cv.notify_one();
     // --------------------------
@@ -57,13 +59,14 @@ namespace Utils {
 
   tp::Queue::TaskData *
   ThreadPool4::pop_task() {
+    TaskData * task{ nullptr };
     ++m_pop_waiting;
-    m_work_on_queue_mutex.lock();
-    m_queue_pop_cv.wait( m_work_on_queue_mutex, [&]()->bool { return !m_work_queue.empty(); } );
-    TaskData * task = m_work_queue.pop();
-    ++m_running_task; // must be incremented in the locked part
-    --m_pop_waiting;
-    m_work_on_queue_mutex.unlock();
+    { std::unique_lock<std::mutex> lock(m_work_on_queue_mutex);
+      while ( m_work_queue.empty() ) m_queue_pop_cv.wait( m_work_on_queue_mutex );
+      task = m_work_queue.pop();
+      ++m_running_task; // must be incremented in the locked part
+      --m_pop_waiting;
+    }
     if ( m_push_waiting > 0 ) m_queue_push_cv.notify_one();
     if ( m_pop_waiting  > 0 && !m_work_queue.empty() ) m_queue_pop_cv.notify_one();
     return task;
@@ -151,11 +154,12 @@ namespace Utils {
     unsigned nw = unsigned(m_pop_ms.size());
     for ( unsigned i = 0; i < nw; ++i ) {
       unsigned njob = m_n_job[i];
+      double rjob{1000.0/(njob>0?njob:1)};
       fmt::print( s,
         "Worker {:2}, #job = {:4}, [job {:10}, POP {:10}]\n",
         i, njob,
-        fmt::format( "{:.3} mus", 1000*m_job_ms[i]/njob ),
-        fmt::format( "{:.3} mus", 1000*m_pop_ms[i]/njob )
+        fmt::format( "{:.3} mus", rjob*m_job_ms[i] ),
+        fmt::format( "{:.3} mus", rjob*m_pop_ms[i] )
       );
     }
     fmt::print( s, "PUSH {:10.6} ms\n\n", m_push_ms );
@@ -163,6 +167,8 @@ namespace Utils {
 
 }
 
-///
-/// eof: ThreadPool4.cc
-///
+#endif
+
+//
+// eof: ThreadPool4.cc
+//

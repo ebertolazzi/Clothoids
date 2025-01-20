@@ -29,16 +29,20 @@ namespace GC_namespace {
 
   using std::memcpy;
 
+  static char const msg[]{"GenericContainer::serialize, memory exausted use method mem_size() to estimate memory requirement"};
+
   static
   uint32_t
-  int8_to_buffer( int8_t in, uint8_t * buffer ) {
+  int8_to_buffer( int8_t in, uint8_t * buffer, uint32_t available ) {
+    GC_ASSERT( available >= 1, msg );
     buffer[0] = *reinterpret_cast<uint8_t*>(&in);
     return sizeof(int8_t);
   }
 
   static
   uint32_t
-  uint32_to_buffer( uint32_t in, uint8_t * buffer ) {
+  uint32_to_buffer( uint32_t in, uint8_t * buffer, uint32_t available ) {
+    GC_ASSERT( available >= 4, msg );
     buffer[0] = uint8_t(in&0xFF); in >>= 8;
     buffer[1] = uint8_t(in&0xFF); in >>= 8;
     buffer[2] = uint8_t(in&0xFF); in >>= 8;
@@ -48,13 +52,14 @@ namespace GC_namespace {
 
   static
   uint32_t
-  int32_to_buffer( int32_t in, uint8_t * buffer ) {
-    return uint32_to_buffer( *reinterpret_cast<uint32_t*>(&in), buffer );
+  int32_to_buffer( int32_t in, uint8_t * buffer, uint32_t available ) {
+    return uint32_to_buffer( *reinterpret_cast<uint32_t*>(&in), buffer, available );
   }
 
   static
   uint32_t
-  uint64_to_buffer( uint64_t in, uint8_t * buffer ) {
+  uint64_to_buffer( uint64_t in, uint8_t * buffer, uint32_t available ) {
+    GC_ASSERT( available >= 8, msg );
     buffer[0] = uint8_t(in&0xFF); in >>= 8;
     buffer[1] = uint8_t(in&0xFF); in >>= 8;
     buffer[2] = uint8_t(in&0xFF); in >>= 8;
@@ -68,16 +73,16 @@ namespace GC_namespace {
 
   static
   uint32_t
-  int64_to_buffer( int64_t in, uint8_t * buffer ) {
-    return uint64_to_buffer( *reinterpret_cast<uint64_t*>(&in), buffer );
+  int64_to_buffer( int64_t in, uint8_t * buffer, uint32_t available ) {
+    return uint64_to_buffer( *reinterpret_cast<uint64_t*>(&in), buffer, available );
   }
 
   static
   uint32_t
-  double_to_buffer( double in, uint8_t * buffer ) {
+  double_to_buffer( double in, uint8_t * buffer, uint32_t available ) {
     union { double f; uint64_t i; } tmp;
     tmp.f = in;
-    uint64_to_buffer( tmp.i, buffer );
+    uint64_to_buffer( tmp.i, buffer, available );
     return sizeof(double);
   }
 
@@ -186,170 +191,178 @@ namespace GC_namespace {
   }
 
   int32_t
-  GenericContainer::serialize( int32_t buffer_dim, uint8_t * buffer ) const {
-    //int_type ptr_size = 8;
-    int32_t sz, nb, nbyte;
+  GenericContainer::serialize( int32_t buffer_dim, uint8_t * buffer) const {
 
-    nbyte = nb = int32_to_buffer( static_cast<int32_t>(m_data_type), buffer );
-    buffer += nb;
+    int32_t sz, available{buffer_dim};
+
+    int32_t nb = int32_to_buffer( static_cast<int32_t>(m_data_type), buffer, available );
+    available -= nb;
+    buffer    += nb;
 
     switch (m_data_type) {
     case GC_type::NOTYPE:
       break;
     case GC_type::BOOL:
-      nb = int8_to_buffer( m_data.b ? 1 : 0, buffer );
-      buffer += nb; nbyte += nb;
+      nb = int8_to_buffer( m_data.b ? 1 : 0, buffer, available );
+      buffer += nb; available -= nb;
       break;
     case GC_type::INTEGER:
-      nb = int32_to_buffer( m_data.i, buffer );
-      buffer += nb; nbyte += nb;
+      nb = int32_to_buffer( m_data.i, buffer, available );
+      buffer += nb; available -= nb;
       break;
     case GC_type::LONG:
-      nb = int64_to_buffer( m_data.l, buffer );
-      buffer += nb; nbyte += nb;
+      nb = int64_to_buffer( m_data.l, buffer, available );
+      buffer += nb; available -= nb;
       break;
     case GC_type::REAL:
-      nb = double_to_buffer( m_data.r, buffer );
-      buffer += nb; nbyte += nb;
+      nb = double_to_buffer( m_data.r, buffer, available );
+      buffer += nb; available -= nb;
       break;
     case GC_type::POINTER:
+      nb = int64_to_buffer( int64_t(m_data.p), buffer, available );
+      buffer += nb; available -= nb;
       break;
     case GC_type::STRING:
       sz = int32_t(m_data.s->length()+1);
-      nb = int32_to_buffer( sz, buffer );
-      buffer += nb; nbyte += nb;
+      nb = int32_to_buffer( sz, buffer, available );
+      buffer += nb; available -= nb;
+      GC_ASSERT( sz <= available, msg );
       memcpy( buffer, &m_data.s->front(), sz );
-      buffer += sz; nbyte += sz;
+      buffer += sz; available -= sz;
       break;
     case GC_type::COMPLEX:
-      nb = double_to_buffer( m_data.c->real(), buffer );
-      buffer += nb; nbyte += nb;
-      nb = double_to_buffer( m_data.c->imag(), buffer );
-      buffer += nb; nbyte += nb;
+      nb = double_to_buffer( m_data.c->real(), buffer, available );
+      buffer += nb; available -= nb;
+      nb = double_to_buffer( m_data.c->imag(), buffer, available );
+      buffer += nb; available -= nb;
       break;
     case GC_type::VEC_POINTER:
+      nb = int32_to_buffer( int32_t(m_data.v_p->size()), buffer, available );
+      buffer += nb; available -= nb;
+      for ( auto p : *m_data.v_p ) {
+        nb = int64_to_buffer( int64_t(p), buffer, available );
+        buffer += nb; available -= nb;
+      }
       break;
     case GC_type::VEC_BOOL:
-      nb = int32_to_buffer( int32_t(m_data.v_b->size()), buffer );
-      buffer += nb; nbyte += nb;
+      nb = int32_to_buffer( int32_t(m_data.v_b->size()), buffer, available );
+      buffer += nb; available -= nb;
       for ( auto b : *m_data.v_b ) {
-        int8_to_buffer( b ? 1 : 0, buffer );
-        ++nb; ++buffer; ++nbyte;
+        nb = int8_to_buffer( b ? 1 : 0, buffer, available );
+        buffer += nb; available -= nb;
       }
       break;
     case GC_type::VEC_INTEGER:
-      nb = int32_to_buffer( int32_t(m_data.v_i->size()), buffer );
-      buffer += nb; nbyte += nb;
+      nb = int32_to_buffer( int32_t(m_data.v_i->size()), buffer, available );
+      buffer += nb; available -= nb;
       for ( auto & i : *m_data.v_i ) {
-        sz = int32_to_buffer( i, buffer );
-        nb += sz; buffer += sz; nbyte += sz;
+        nb = int32_to_buffer( i, buffer, available );
+        buffer += nb; available -= nb;
       }
       break;
     case GC_type::VEC_LONG:
-      nb = int32_to_buffer( int32_t(m_data.v_l->size()), buffer );
-      buffer += nb; nbyte += nb;
+      nb = int32_to_buffer( int32_t(m_data.v_l->size()), buffer, available );
+      buffer += nb; available -= nb;
       for ( auto & i : *m_data.v_l ) {
-        sz = int64_to_buffer( i, buffer );
-        nb += sz; buffer += sz; nbyte += sz;
+        nb = int64_to_buffer( i, buffer, available );
+        buffer += nb; available -= nb;
       }
       break;
     case GC_type::VEC_REAL:
-      nb = int32_to_buffer( int32_t(m_data.v_r->size()), buffer );
-      buffer += nb; nbyte += nb;
+      nb = int32_to_buffer( int32_t(m_data.v_r->size()), buffer, available );
+      buffer += nb; available -= nb;
       for ( auto & r : *m_data.v_r ) {
-        sz = double_to_buffer( r, buffer );
-        nb += sz; buffer += sz; nbyte += sz;
+        nb = double_to_buffer( r, buffer, available );
+        buffer += nb; available -= nb;
       }
       break;
     case GC_type::VEC_COMPLEX:
-      nb = int32_to_buffer( int32_t(m_data.v_c->size()), buffer );
-      buffer += nb; nbyte += nb;
+      nb = int32_to_buffer( int32_t(m_data.v_c->size()), buffer, available );
+      buffer += nb; available -= nb;
       for ( auto & c : *m_data.v_c ) {
-        sz = double_to_buffer( c.real(), buffer );
-        nb += sz; buffer += sz; nbyte += sz;
-        sz = double_to_buffer( c.imag(), buffer );
-        nb += sz; buffer += sz; nbyte += sz;
+        nb = double_to_buffer( c.real(), buffer, available );
+        buffer += nb; available -= nb;
+        nb = double_to_buffer( c.imag(), buffer, available );
+        buffer += nb; available -= nb;
       }
       break;
     case GC_type::MAT_INTEGER:
-      nb = int32_to_buffer( m_data.m_i->num_rows(), buffer );
-      buffer += nb; nbyte += nb;
-      nb = int32_to_buffer( m_data.m_i->num_cols(), buffer );
-      buffer += nb; nbyte += nb;
+      nb = int32_to_buffer( m_data.m_i->num_rows(), buffer, available );
+      buffer += nb; available -= nb;
+      nb = int32_to_buffer( m_data.m_i->num_cols(), buffer, available );
+      buffer += nb; available -= nb;
       for ( auto & i : *m_data.m_i ) {
-        sz = int32_to_buffer( i, buffer );
-        nb += sz; buffer += sz; nbyte += sz;
+        nb = int32_to_buffer( i, buffer, available );
+        buffer += nb; available -= nb;
       }
       break;
     case GC_type::MAT_LONG:
-      nb = int32_to_buffer( m_data.m_l->num_rows(), buffer );
-      buffer += nb; nbyte += nb;
-      nb = int32_to_buffer( m_data.m_l->num_cols(), buffer );
-      buffer += nb; nbyte += nb;
+      nb = int32_to_buffer( m_data.m_l->num_rows(), buffer, available );
+      buffer += nb; available -= nb;
+      nb = int32_to_buffer( m_data.m_l->num_cols(), buffer, available );
+      buffer += nb; available -= nb;
       for ( auto & i : *m_data.m_l ) {
-        sz = int64_to_buffer( i, buffer );
-        nb += sz; buffer += sz; nbyte += sz;
+        nb = int64_to_buffer( i, buffer, available );
+        buffer += nb; available -= nb;
       }
       break;
     case GC_type::MAT_REAL:
-      nb = int32_to_buffer( m_data.m_r->num_rows(), buffer );
-      buffer += nb; nbyte += nb;
-      nb = int32_to_buffer( m_data.m_r->num_cols(), buffer );
-      buffer += nb; nbyte += nb;
+      nb = int32_to_buffer( m_data.m_r->num_rows(), buffer, available );
+      buffer += nb; available -= nb;
+      nb = int32_to_buffer( m_data.m_r->num_cols(), buffer, available );
+      buffer += nb; available -= nb;
       for ( auto & r : *m_data.m_r ) {
-        sz = double_to_buffer( r, buffer );
-        nb += sz; buffer += sz; nbyte += sz;
+        nb = double_to_buffer( r, buffer, available );
+        buffer += nb; available -= nb;
       }
       break;
     case GC_type::MAT_COMPLEX:
-      nb = int32_to_buffer( m_data.m_c->num_rows(), buffer );
-      buffer += nb; nbyte += nb;
-      nb = int32_to_buffer( m_data.m_c->num_cols(), buffer );
-      buffer += nb; nbyte += nb;
+      nb = int32_to_buffer( m_data.m_c->num_rows(), buffer, available );
+      buffer += nb; available -= nb;
+      nb = int32_to_buffer( m_data.m_c->num_cols(), buffer, available );
+      buffer += nb; available -= nb;
       for ( auto & c : *m_data.m_c ) {
-        sz = double_to_buffer( c.real(), buffer );
-        nb += sz; buffer += sz; nbyte += sz;
-        sz = double_to_buffer( c.imag(), buffer );
-        nb += sz; buffer += sz; nbyte += sz;
+        nb = double_to_buffer( c.real(), buffer, available );
+        buffer += nb; available -= nb;
+        nb = double_to_buffer( c.imag(), buffer, available );
+        buffer += nb; available -= nb;
       }
     case GC_type::VEC_STRING:
-      nb = int32_to_buffer( int32_t(m_data.v_s->size()), buffer );
-      buffer += nb; nbyte += nb;
+      nb = int32_to_buffer( int32_t(m_data.v_s->size()), buffer, available );
+      buffer += nb; available -= nb;
       for ( auto & s : *m_data.v_s ) {
         sz = int32_t(s.length()+1);
-        nb = int32_to_buffer( sz, buffer );
-        buffer += nb; nbyte += nb;
+        nb = int32_to_buffer( sz, buffer, available );
+        buffer += nb; available -= nb;
+        GC_ASSERT( sz <= available, msg );
         memcpy( buffer, &s.front(), sz );
-        buffer += sz; nbyte += sz;
+        buffer += sz; available -= sz;
       }
       break;
     case GC_type::VECTOR:
-      nb = int32_to_buffer( int32_t(m_data.v->size()), buffer );
-      buffer += nb; nbyte += nb;
+      nb = int32_to_buffer( int32_t(m_data.v->size()), buffer, available );
+      buffer += nb; available -= nb;
       for ( auto & S : *m_data.v ) {
-        sz = S.serialize( buffer_dim-nbyte, buffer );
-        buffer += sz; nbyte += sz;
+        nb = S.serialize( available, buffer );
+        buffer += nb; available -= nb;
       }
       break;
     case GC_type::MAP:
-      nb = int32_to_buffer( int32_t(m_data.m->size()), buffer );
-      buffer += nb; nbyte += nb;
+      nb = int32_to_buffer( int32_t(m_data.m->size()), buffer, available );
+      buffer += nb; available -= nb;
       for ( auto & S : *m_data.m ) {
         sz = int32_t(S.first.length()+1);
-        nb = int32_to_buffer( sz, buffer );
-        buffer += nb; nbyte += nb;
+        nb = int32_to_buffer( sz, buffer, available );
+        buffer += nb; available -= nb;
+        GC_ASSERT( sz <= available, msg );
         memcpy( buffer, &S.first.front(), sz );
-        buffer += sz; nbyte += sz;
-        nb = S.second.serialize( buffer_dim-nbyte, buffer );
-        buffer += nb; nbyte += nb;
+        buffer += sz; available -= sz;
+        nb = S.second.serialize( available, buffer );
+        buffer += nb; available -= nb;
       }
       break;
     }
-    GC_ASSERT(
-      nbyte <= buffer_dim,
-      "GenericContainer::serialize, buffer overflow"
-    );
-    return nbyte;
+    return buffer_dim-available;
   }
 
   int32_t
