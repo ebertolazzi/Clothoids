@@ -2,7 +2,7 @@
 ---
 #=========================
 cmake_utils: main
-submodules/UtilsLite: master
+submodules/UtilsLite: main
 submodules/UtilsLite/cmake_utils: main
 submodules/quarticRootsFlocke: master
 submodules/quarticRootsFlocke/cmake_utils: main
