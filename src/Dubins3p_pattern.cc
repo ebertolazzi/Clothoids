@@ -23,7 +23,8 @@
 
 #include "Clothoids.hh"
 #include "Clothoids_fmt.hh"
-#include "Utils_Algo748.hh"
+//#include "Utils_Algo748.hh"
+#include "Utils_AlgoBracket.hh"
 
 namespace G2lib {
 
@@ -91,7 +92,7 @@ namespace G2lib {
     real_type k_max,
     real_type tolerance,
     bool      use_trichotomy,
-    bool      use_748
+    bool      use_bracket
   ) {
 
     m_evaluation = 0;
@@ -130,7 +131,7 @@ namespace G2lib {
       ++m_evaluation;
     };
 
-    auto eval_for_748 = [this,xi,yi,thetai,xm,ym,xf,yf,thetaf,k_max]( real_type theta ) -> real_type {
+    auto eval_for_bracket = [this,xi,yi,thetai,xm,ym,xf,yf,thetaf,k_max]( real_type theta ) -> real_type {
       Dubins D0{"temporary Dubins A"};
       Dubins D1{"temporary Dubins B"};
       D0.build( xi, yi, thetai, xm, ym, theta,  k_max );
@@ -139,25 +140,25 @@ namespace G2lib {
       return D0.length_Dbeta() + D1.length_Dalpha();
     };
 
-    auto do_748 = [&check_change_sign,&eval3p,&eval_for_748]( Dubins3p_data & L, Dubins3p_data & C, Dubins3p_data & R ) -> bool {
-      Utils::Algo748<real_type> algo748;
+    auto do_bracket = [&check_change_sign,&eval3p,&eval_for_bracket]( Dubins3p_data & L, Dubins3p_data & C, Dubins3p_data & R ) -> bool {
+      Utils::AlgoBracket<real_type> algoBracket;
       real_type theta{0};
       bool ok{ false };
       if ( check_change_sign(L,C) ) {
-        theta = algo748.eval3( L.thetam, C.thetam, L.len_D, C.len_D, eval_for_748 );
-        ok    = algo748.converged();
+        theta = algoBracket.eval3( L.thetam, C.thetam, L.len_D, C.len_D, eval_for_bracket );
+        ok    = algoBracket.converged();
       } else if ( check_change_sign(C,R) ) {
-        theta = algo748.eval3( C.thetam, R.thetam, C.len_D, R.len_D, eval_for_748 );
-        ok    = algo748.converged();
+        theta = algoBracket.eval3( C.thetam, R.thetam, C.len_D, R.len_D, eval_for_bracket );
+        ok    = algoBracket.converged();
       }
       // if ok collapse to one point
       if ( ok ) { eval3p( C, theta ); L.copy(C); R.copy(C); }
       return ok;
     };
 
-    auto bracketing = [&eval3p,&do_748,use_748]( Dubins3p_data & A, Dubins3p_data & P3, Dubins3p_data & B ) -> void {
-      bool ok{ use_748 };
-      if ( ok ) ok = do_748( A, P3, B );
+    auto bracketing = [&eval3p,&do_bracket,&use_bracket]( Dubins3p_data & A, Dubins3p_data & P3, Dubins3p_data & B ) -> void {
+      bool ok{ use_bracket };
+      if ( ok ) ok = do_bracket( A, P3, B );
       if ( !ok ) {
         Dubins3p_data P1, P2, P4, P5;
         eval3p( P2, (A.thetam+2*P3.thetam)/3 );
@@ -179,9 +180,9 @@ namespace G2lib {
       }
     };
 
-    auto simple_search = [&eval3p,&do_748,use_748]( Dubins3p_data & L, Dubins3p_data & C, Dubins3p_data & R ) -> void {
-      bool ok{ use_748 };
-      if ( ok ) ok = do_748( L, C, R );
+    auto simple_search = [&eval3p,&do_bracket,use_bracket]( Dubins3p_data & L, Dubins3p_data & C, Dubins3p_data & R ) -> void {
+      bool ok{ use_bracket };
+      if ( ok ) ok = do_bracket( L, C, R );
       if ( !ok ) {
         Dubins3p_data LL, RR;
         eval3p( LL, (C.thetam+L.thetam)/2 );

@@ -38,17 +38,17 @@ main() {
   G2lib::Dubins3p DB_PS{"D3P_pattern_search"};
   DB_PS.set_tolerance( tol );
   DB_PS.set_sample_angle( sang );
-  G2lib::Dubins3p DB_PS748{"D3P_pattern_search_with_748"};
-  DB_PS748.set_tolerance( tol );
-  DB_PS748.set_sample_angle( sang );
+  G2lib::Dubins3p DB_PS_BRACKET{"D3P_pattern_search_with_BRACKET"};
+  DB_PS_BRACKET.set_tolerance( tol );
+  DB_PS_BRACKET.set_sample_angle( sang );
 
   // Pattern trichotomy
   G2lib::Dubins3p DB_PT{"D3P_pattern_trichotomy"};
   DB_PT.set_tolerance( tol );
   DB_PT.set_sample_angle( sang );
-  G2lib::Dubins3p DB_PT748{"D3P_pattern_trichotomy_with748"};
-  DB_PT748.set_tolerance( tol );
-  DB_PT748.set_sample_angle( sang );
+  G2lib::Dubins3p DB_PT_BRACKET{"D3P_pattern_trichotomy_with_BRACKET"};
+  DB_PT_BRACKET.set_tolerance( tol );
+  DB_PT_BRACKET.set_sample_angle( sang );
 
   // Ellipse
   G2lib::Dubins3p DB_EL{"D3P_ellipse"};
@@ -86,8 +86,8 @@ main() {
   Eigen::MatrixXd lengthsTable_SD(numpts, 6);
   Eigen::MatrixXd lengthsTable_PS(numpts, 6);
   Eigen::MatrixXd lengthsTable_PT(numpts, 6);
-  Eigen::MatrixXd lengthsTable_PS748(numpts, 6);
-  Eigen::MatrixXd lengthsTable_PT748(numpts, 6);
+  Eigen::MatrixXd lengthsTable_PS_BRACKET(numpts, 6);
+  Eigen::MatrixXd lengthsTable_PT_BRACKET(numpts, 6);
   Eigen::MatrixXd lengthsTable_EL(numpts, 6);
 
   Eigen::Vector2d xm_interval(-2, 2);
@@ -170,16 +170,16 @@ main() {
     lengthsTable_PS(i, 5) = DB_PS.length5();
 
     tictoc.tic();
-    DB_PS748.build( xi, yi, thi, xm, ym, xf, yf, thf, k_max, G2lib::Dubins3pBuildType::PATTERN_SEARCH_WITH_ALGO748 );
+    DB_PS_BRACKET.build( xi, yi, thi, xm, ym, xf, yf, thf, k_max, G2lib::Dubins3pBuildType::PATTERN_SEARCH_WITH_ALGO_BRACKET );
     tictoc.toc();
     elapsed_time3 = tictoc.elapsed_ms();
 
-    lengthsTable_PS748(i, 0) = DB_PS748.length0();
-    lengthsTable_PS748(i, 1) = DB_PS748.length1();
-    lengthsTable_PS748(i, 2) = DB_PS748.length2();
-    lengthsTable_PS748(i, 3) = DB_PS748.length3();
-    lengthsTable_PS748(i, 4) = DB_PS748.length4();
-    lengthsTable_PS748(i, 5) = DB_PS748.length5();
+    lengthsTable_PS_BRACKET(i, 0) = DB_PS_BRACKET.length0();
+    lengthsTable_PS_BRACKET(i, 1) = DB_PS_BRACKET.length1();
+    lengthsTable_PS_BRACKET(i, 2) = DB_PS_BRACKET.length2();
+    lengthsTable_PS_BRACKET(i, 3) = DB_PS_BRACKET.length3();
+    lengthsTable_PS_BRACKET(i, 4) = DB_PS_BRACKET.length4();
+    lengthsTable_PS_BRACKET(i, 5) = DB_PS_BRACKET.length5();
 
     // ██████╗  █████╗ ████████╗████████╗███████╗██████╗ ███╗   ██╗    ████████╗██████╗ ██╗ ██████╗
     // ██╔══██╗██╔══██╗╚══██╔══╝╚══██╔══╝██╔════╝██╔══██╗████╗  ██║    ╚══██╔══╝██╔══██╗██║██╔════╝
@@ -201,16 +201,16 @@ main() {
     lengthsTable_PT(i, 5) = DB_PT.length5();
 
     tictoc.tic();
-    DB_PT748.build( xi, yi, thi, xm, ym, xf, yf, thf, k_max, G2lib::Dubins3pBuildType::PATTERN_TRICHOTOMY_WITH_ALGO748 );
+    DB_PT_BRACKET.build( xi, yi, thi, xm, ym, xf, yf, thf, k_max, G2lib::Dubins3pBuildType::PATTERN_TRICHOTOMY_WITH_ALGO_BRACKET );
     tictoc.toc();
     elapsed_time5 = tictoc.elapsed_ms();
 
-    lengthsTable_PT748(i, 0) = DB_PT748.length0();
-    lengthsTable_PT748(i, 1) = DB_PT748.length1();
-    lengthsTable_PT748(i, 2) = DB_PT748.length2();
-    lengthsTable_PT748(i, 3) = DB_PT748.length3();
-    lengthsTable_PT748(i, 4) = DB_PT748.length4();
-    lengthsTable_PT748(i, 5) = DB_PT748.length5();
+    lengthsTable_PT_BRACKET(i, 0) = DB_PT_BRACKET.length0();
+    lengthsTable_PT_BRACKET(i, 1) = DB_PT_BRACKET.length1();
+    lengthsTable_PT_BRACKET(i, 2) = DB_PT_BRACKET.length2();
+    lengthsTable_PT_BRACKET(i, 3) = DB_PT_BRACKET.length3();
+    lengthsTable_PT_BRACKET(i, 4) = DB_PT_BRACKET.length4();
+    lengthsTable_PT_BRACKET(i, 5) = DB_PT_BRACKET.length5();
 
     if ( 1.0014*DB_SD.length() < DB_PT.length() ) {
       fmt::print(
@@ -268,30 +268,30 @@ main() {
 
     thetaMTable(i,0) = DB_SD.theta2(0);
     thetaMTable(i,1) = DB_PS.theta2(0);
-    thetaMTable(i,2) = DB_PS748.theta2(0);
+    thetaMTable(i,2) = DB_PS_BRACKET.theta2(0);
     thetaMTable(i,3) = DB_PT.theta2(0);
-    thetaMTable(i,4) = DB_PT748.theta2(0);
+    thetaMTable(i,4) = DB_PT_BRACKET.theta2(0);
     thetaMTable(i,5) = DB_EL.theta2(0);
 
     evaluationNumberTable(i,0) = DB_SD.num_evaluation();
     evaluationNumberTable(i,1) = DB_PS.num_evaluation();
-    evaluationNumberTable(i,2) = DB_PS748.num_evaluation();
+    evaluationNumberTable(i,2) = DB_PS_BRACKET.num_evaluation();
     evaluationNumberTable(i,3) = DB_PT.num_evaluation();
-    evaluationNumberTable(i,4) = DB_PT748.num_evaluation();
+    evaluationNumberTable(i,4) = DB_PT_BRACKET.num_evaluation();
     evaluationNumberTable(i,5) = DB_EL.num_evaluation();
 
     type0Table(i,0) = (double) DB_SD.solution_type0();
     type0Table(i,1) = (double) DB_PS.solution_type0();
-    type0Table(i,2) = (double) DB_PS748.solution_type0();
+    type0Table(i,2) = (double) DB_PS_BRACKET.solution_type0();
     type0Table(i,3) = (double) DB_PT.solution_type0();
-    type0Table(i,4) = (double) DB_PT748.solution_type0();
+    type0Table(i,4) = (double) DB_PT_BRACKET.solution_type0();
     type0Table(i,5) = (double) DB_EL.solution_type0();
 
     type1Table(i,0) = (double) DB_SD.solution_type1();
     type1Table(i,1) = (double) DB_PS.solution_type1();
-    type1Table(i,2) = (double) DB_PS748.solution_type1();
+    type1Table(i,2) = (double) DB_PS_BRACKET.solution_type1();
     type1Table(i,3) = (double) DB_PT.solution_type1();
-    type1Table(i,4) = (double) DB_PT748.solution_type1();
+    type1Table(i,4) = (double) DB_PT_BRACKET.solution_type1();
     type1Table(i,5) = (double) DB_EL.solution_type1();
 
     printStats(i, elapseTimeTable, evaluationNumberTable, thetaMTable);
@@ -303,68 +303,68 @@ main() {
 
   Eigen::MatrixXd L_SD(numpts, 1);
   Eigen::MatrixXd L_PS(numpts, 1);
-  Eigen::MatrixXd L_PS748(numpts, 1);
+  Eigen::MatrixXd L_PS_BRACKET(numpts, 1);
   Eigen::MatrixXd L_PT(numpts, 1);
-  Eigen::MatrixXd L_PT748(numpts, 1);
+  Eigen::MatrixXd L_PT_BRACKET(numpts, 1);
   Eigen::MatrixXd L_EL(numpts, 1);
-  L_SD    = lengthsTable_SD.rowwise().sum() ;
-  L_PS    = lengthsTable_PS.rowwise().sum() ;
-  L_PS748 = lengthsTable_PS748.rowwise().sum() ;
-  L_PT    = lengthsTable_PT.rowwise().sum() ;
-  L_PT748 = lengthsTable_PT748.rowwise().sum() ;
-  L_EL    = lengthsTable_EL.rowwise().sum() ;
+  L_SD         = lengthsTable_SD.rowwise().sum() ;
+  L_PS         = lengthsTable_PS.rowwise().sum() ;
+  L_PS_BRACKET = lengthsTable_PS_BRACKET.rowwise().sum() ;
+  L_PT         = lengthsTable_PT.rowwise().sum() ;
+  L_PT_BRACKET = lengthsTable_PT_BRACKET.rowwise().sum() ;
+  L_EL         = lengthsTable_EL.rowwise().sum() ;
 
   Eigen::MatrixXd rappEL(numpts, 1);
   Eigen::MatrixXd rappPS(numpts, 1);
-  Eigen::MatrixXd rappPS748(numpts, 1);
+  Eigen::MatrixXd rappPS_BRACKET(numpts, 1);
   Eigen::MatrixXd rappPT(numpts, 1);
-  Eigen::MatrixXd rappPT748(numpts, 1);
+  Eigen::MatrixXd rappPT_BRACKET(numpts, 1);
 
-  rappEL    = L_EL.array()/L_SD.array() ;
-  rappPS    = L_PS.array()/L_SD.array() ;
-  rappPS748 = L_PS748.array()/L_SD.array() ;
-  rappPT    = L_PT.array()/L_SD.array() ;
-  rappPT748 = L_PT748.array()/L_SD.array() ;
+  rappEL         = L_EL.array()/L_SD.array() ;
+  rappPS         = L_PS.array()/L_SD.array() ;
+  rappPS_BRACKET = L_PS_BRACKET.array()/L_SD.array() ;
+  rappPT         = L_PT.array()/L_SD.array() ;
+  rappPT_BRACKET = L_PT_BRACKET.array()/L_SD.array() ;
 
   fmt::print(
     "L_SD = {:>10.5f}, "
     "L_PS = {:>10.5f}, "
-    "L_PS748 = {:>10.5f}, "
+    "L_PS_BRACKET = {:>10.5f}, "
     "L_PT = {:>10.5f}, "
-    "L_PT748 = {:>10.5f}, "
+    "L_PT_BRACKET = {:>10.5f}, "
     "L_EL = {:>10.5f}\n",
     L_SD.mean(),
-    L_PS.mean(), L_PS748.mean(),
-    L_PT.mean(), L_PT748.mean(),
+    L_PS.mean(), L_PS_BRACKET.mean(),
+    L_PT.mean(), L_PT_BRACKET.mean(),
     L_EL.mean()
   );
   // print max and min
   fmt::print(
     "L_SD = {:>10.5f}, "
     "L_PS = {:>10.5f}, "
-    "L_PS748 = {:>10.5f}, "
+    "L_PS_BRACKET = {:>10.5f}, "
     "L_PT = {:>10.5f}, "
-    "L_PT748 = {:>10.5f}, "
+    "L_PT_BRACKET = {:>10.5f}, "
     "L_EL = {:>10.5f}\n",
     L_SD.maxCoeff(),
     L_PS.maxCoeff(),
-    L_PS748.maxCoeff(),
+    L_PS_BRACKET.maxCoeff(),
     L_PT.maxCoeff(),
-    L_PT748.maxCoeff(),
+    L_PT_BRACKET.maxCoeff(),
     L_EL.maxCoeff()
   );
   fmt::print(
     "L_SD = {:>10.5f}, "
     "L_PS = {:>10.5f}, "
-    "L_PS748 = {:>10.5f}, "
+    "L_PS_BRACKET = {:>10.5f}, "
     "L_PT = {:>10.5f}, "
-    "L_PT748 = {:>10.5f}, "
+    "L_PT_BRACKET = {:>10.5f}, "
     "L_EL = {:>10.5f}\n",
     L_SD.minCoeff(),
     L_PS.minCoeff(),
-    L_PS748.minCoeff(),
+    L_PS_BRACKET.minCoeff(),
     L_PT.minCoeff(),
-    L_PT748.minCoeff(),
+    L_PT_BRACKET.minCoeff(),
     L_EL.minCoeff()
   );
 
@@ -378,8 +378,8 @@ main() {
     rappPS.mean(), rappPS.maxCoeff(), rappPS.minCoeff()
   );
   fmt::print(
-    "rapp PS748 = {:>10.5f}:mean, {:>10.5f}:max, {:>10.5f}:min \n",
-    rappPS748.mean(), rappPS748.maxCoeff(), rappPS748.minCoeff()
+    "rapp PS_BRACKET = {:>10.5f}:mean, {:>10.5f}:max, {:>10.5f}:min \n",
+    rappPS_BRACKET.mean(), rappPS_BRACKET.maxCoeff(), rappPS_BRACKET.minCoeff()
   );
 
   fmt::print(
@@ -388,31 +388,31 @@ main() {
   );
 
   fmt::print(
-    "rapp PT748 = {:>10.5f}:mean, {:>10.5f}:max, {:>10.5f}:min \n",
-    rappPT748.mean(), rappPT748.maxCoeff(), rappPT748.minCoeff()
+    "rapp PT_BRACKET = {:>10.5f}:mean, {:>10.5f}:max, {:>10.5f}:min \n",
+    rappPT_BRACKET.mean(), rappPT_BRACKET.maxCoeff(), rappPT_BRACKET.minCoeff()
   );
 
   G2lib::real_type dr{1e-4};
   for ( real_type r{1.0}; r < 10; r += dr ) {
     integer o_EL{ integer( (rappEL.array() > r).count() ) };
     integer o_PS{ integer( (rappPS.array() > r).count() ) };
-    integer o_PS748{ integer( (rappPS748.array() > r).count() ) };
+    integer o_PS_BRACKET{ integer( (rappPS_BRACKET.array() > r).count() ) };
     integer o_PT{ integer( (rappPT.array() > r).count() ) };
-    integer o_PT748{ integer( (rappPT748.array() > r).count() ) };
+    integer o_PT_BRACKET{ integer( (rappPT_BRACKET.array() > r).count() ) };
     fmt::print(
       "num outliers > {:>12.8f}  "
       "EL = {:>6}  "
       "PS = {:>6}  "
-      "PS748 = {:>6}  "
+      "PS_BRACKET = {:>6}  "
       "PT = {:>6}  "
-      "PT748 = {:>6}\n",
-      r, o_EL, o_PS, o_PS748, o_PT, o_PT748
+      "PT_BRACKET = {:>6}\n",
+      r, o_EL, o_PS, o_PS_BRACKET, o_PT, o_PT_BRACKET
     );
-    if ( o_EL    == 0 &&
-         o_PS    == 0 &&
-         o_PS748 == 0 &&
-         o_PT    == 0 &&
-         o_PT748 == 0 ) break;
+    if ( o_EL         == 0 &&
+         o_PS         == 0 &&
+         o_PS_BRACKET == 0 &&
+         o_PT         == 0 &&
+         o_PT_BRACKET == 0 ) break;
     dr *= 2;
   }
 
@@ -499,7 +499,7 @@ printStats(
   fmt::print("Result stats iter: {:>10}:\n",ith);
   fmt::print(
     "  {:<10} {:<20} {:<20} {:<20} {:<20} {:<20} {:<20}\n",
-    "VAL", "SD ", "PS ", "PS748 ", "PT ", "PT748 ", "ELL"
+    "VAL", "SD ", "PS ", "PS_BRACKET ", "PT ", "PT_BRACKET ", "ELL"
   );
   fmt::print(
     "  {:<10} {:<20} {:<20} {:<20} {:<20} {:<20} {:<20}\n",
@@ -564,7 +564,7 @@ printStatsFinal(
   fmt::print("---------------------------------------------\n");
   fmt::print(
     "  {:<10} {:<20} {:<20} {:<20} {:<20} {:<20} {:<20}\n",
-    "VAL", "SD ", "PS ", "PS748 ", "PT ", "PT748 ", "ELL"
+    "VAL", "SD ", "PS ", "PS_BRACKET ", "PT ", "PT_BRACKET ", "ELL"
   );
   fmt::print(
     "  {:<10} {:<20} {:<20} {:<20} {:<20} {:<20} {:<20}\n",

@@ -113,7 +113,7 @@ namespace G2lib {
       real_type k_max,
       real_type tolerance      = 1e-8,
       bool      use_trichotomy = true,
-      bool      use_748        = true
+      bool      use_bracket    = true
     );
 
     bool

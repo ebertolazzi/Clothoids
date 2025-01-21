@@ -44,11 +44,11 @@ namespace G2lib {
   //! - PATTERN_TRICHOTOMY
   //!   search solution by using pattern search based on tricotomy
   //!
-  //! - PATTERN_SEARCH_WITH_ALGO748
-  //!   search solution by using pattern search and refinement using ALGO748
+  //! - PATTERN_SEARCH_WITH_ALGO_BRACKET
+  //!   search solution by using pattern search and refinement using ALGO_BRACKET
   //!
-  //! - PATTERN_TRICHOTOMY_WITH_ALGO748
-  //!   search solution by using pattern search with tricotomy and refinement using ALGO748
+  //! - PATTERN_TRICHOTOMY_WITH_ALGO_BRACKET
+  //!   search solution by using pattern search with tricotomy and refinement using ALGO_BRACKET
   //!
   //! - ELLIPSE
   //!   search solution by using ellipse geometric construction
@@ -60,8 +60,8 @@ namespace G2lib {
     SAMPLE_ONE_DEGREE,
     PATTERN_SEARCH,
     PATTERN_TRICHOTOMY,
-    PATTERN_SEARCH_WITH_ALGO748,
-    PATTERN_TRICHOTOMY_WITH_ALGO748,
+    PATTERN_SEARCH_WITH_ALGO_BRACKET,
+    PATTERN_TRICHOTOMY_WITH_ALGO_BRACKET,
     ELLIPSE,
     POLYNOMIAL_SYSTEM
   };
@@ -113,7 +113,7 @@ namespace G2lib {
       real_type k_max,
       real_type tolerance      = 1e-8,
       bool      use_trichotomy = true,
-      bool      use_748        = true
+      bool      use_bracket    = true
     );
 
     bool
