@@ -23,7 +23,7 @@
 
 #include "Clothoids.hh"
 #include "Clothoids_fmt.hh"
-#include "Utils_Algo748.hh"
+#include "Utils_AlgoBracket.hh"
 
 namespace G2lib {
 
@@ -140,22 +140,22 @@ namespace G2lib {
     };
 
     auto do_bracket = [&check_change_sign,&eval3p,&eval_for_bracket]( Dubins3p_data & L, Dubins3p_data & C, Dubins3p_data & R ) -> bool {
-      Utils::AlgoBracket<real_type> algo_bracket;
+      Utils::AlgoBracket<real_type> algoBracket;
       real_type theta{0};
       bool ok{ false };
       if ( check_change_sign(L,C) ) {
-        theta = algo_bracket.eval3( L.thetam, C.thetam, L.len_D, C.len_D, eval_for_bracket );
-        ok    = algo_bracket.converged();
+        theta = algoBracket.eval3( L.thetam, C.thetam, L.len_D, C.len_D, eval_for_bracket );
+        ok    = algoBracket.converged();
       } else if ( check_change_sign(C,R) ) {
-        theta = algo_bracket.eval3( C.thetam, R.thetam, C.len_D, R.len_D, eval_for_bracket );
-        ok    = algo_bracket.converged();
+        theta = algoBracket.eval3( C.thetam, R.thetam, C.len_D, R.len_D, eval_for_bracket );
+        ok    = algoBracket.converged();
       }
       // if ok collapse to one point
       if ( ok ) { eval3p( C, theta ); L.copy(C); R.copy(C); }
       return ok;
     };
 
-    auto bracketing = [&eval3p,&do_bracket,use_bracket]( Dubins3p_data & A, Dubins3p_data & P3, Dubins3p_data & B ) -> void {
+    auto bracketing = [&eval3p,&do_bracket,&use_bracket]( Dubins3p_data & A, Dubins3p_data & P3, Dubins3p_data & B ) -> void {
       bool ok{ use_bracket };
       if ( ok ) ok = do_bracket( A, P3, B );
       if ( !ok ) {

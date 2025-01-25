@@ -274,12 +274,13 @@ namespace Utils {
   class AlgoBracket {
   
     using Method = enum class Method : unsigned {
-      BISECTION=0, ILLINOIS, CHANDRUPATLA, BRENT, RIDDER, MODIFIED_AB
+      BISECTION=0, ILLINOIS, CHANDRUPATLA, BRENT, RIDDER, MODIFIED_AB, ALGO748
     };
 
     using Integer = int;
 
-    Real m_tolerance{ pow(machine_eps<Real>(),Real(2./3.)) };
+    Real m_tolerance_x{ 100*machine_eps<Real>() };
+    Real m_tolerance_f{ 100*machine_eps<Real>() };
     bool m_converged{ false };
 
     Real   m_a{0}, m_fa{0};
@@ -294,7 +295,6 @@ namespace Utils {
     mutable Integer m_iteration_count{0};    // explore iteration counter
     mutable Integer m_fun_evaluation_count{0};
 
-    void set_tolerance( Real tol );
     Real evaluate( Real x ) { ++m_fun_evaluation_count; return m_function->eval(x); };
 
     Real eval();
@@ -309,6 +309,11 @@ namespace Utils {
 
     AlgoBracket() = default;
     ~AlgoBracket() = default;
+
+    explicit
+    AlgoBracket( Real tol_x, Real tol_f )
+    : m_tolerance_x( tol_x ), m_tolerance_f( tol_f )
+    {}
 
     //!
     //! Find the solution for a function wrapped in the class `Bracket_base_fun<Real>`
@@ -423,7 +428,12 @@ namespace Utils {
     //!
     //! \return the tolerance set for computation
     //!
-    Real tolerance() const { return m_tolerance; }
+    Real tolerance_x() const { return m_tolerance_x; }
+
+    //!
+    //! \return the tolerance set for computation
+    //!
+    Real tolerance_f() const { return m_tolerance_f; }
 
     //!
     //! \return true if the last computation was successfull
@@ -443,6 +453,7 @@ namespace Utils {
       case Method::BRENT:        return "Brent";        break;
       case Method::RIDDER:       return "Ridder";       break;
       case Method::MODIFIED_AB:  return "modified_AB";  break;
+      case Method::ALGO748:      return "algo748";      break;
       }
     }
 
@@ -454,6 +465,7 @@ namespace Utils {
       case 3: m_select = Method::BRENT;        break;
       case 4: m_select = Method::RIDDER;       break;
       case 5: m_select = Method::MODIFIED_AB;  break;
+      case 6: m_select = Method::ALGO748;      break;
       }
     }
 

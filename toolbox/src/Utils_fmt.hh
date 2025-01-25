@@ -26,14 +26,18 @@
 #ifndef UTILS_FMT_dot_HH
 #define UTILS_FMT_dot_HH
 
+#if defined(__llvm__) || defined(__clang__)
+#pragma clang diagnostic ignored "-Wduplicate-enum"
+#endif
+
 #include "Utils.hh"
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
-#include "Utils/fmt/printf.h"
-#include "Utils/fmt/chrono.h"
-#include "Utils/fmt/ostream.h"
-#include "Utils/fmt/color.h"
-#include "Utils/fmt/std.h"
+#include "Utils/3rd/fmt/printf.h"
+#include "Utils/3rd/fmt/chrono.h"
+#include "Utils/3rd/fmt/ostream.h"
+#include "Utils/3rd/fmt/color.h"
+#include "Utils/3rd/fmt/std.h"
 #endif
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS

@@ -285,7 +285,6 @@ namespace Utils {
     // check for trivial solution
     m_converged = fa == 0; if ( m_converged ) return a;
     m_converged = fb == 0; if ( m_converged ) return b;
-    m_tolerance = 10*Utils::machine_eps<Real>()*( 1 + 2*max(abs(a),abs(b)) );
 
     auto check = [this] ( Real c, Real fc ) -> void {
       UTILS_ASSERT(
@@ -326,11 +325,16 @@ namespace Utils {
 
       if ( m_fa*fc < 0 ) { b = c; fb = fc; } // --> [a,c]
       else               { a = c; fa = fc; } // --> [c,b]
+      
+      Real abs_fa{ abs(fa) };
+      Real abs_fb{ abs(fb) };
 
-      m_converged = (b-a) <= m_tolerance;
-      if ( m_converged ) return abs(fb) < abs(fa) ? b : a;
+      m_converged = (b-a)  < m_tolerance_x ||
+                    abs_fa < m_tolerance_f ||
+                    abs_fb < m_tolerance_f;
+      if ( m_converged ) return abs_fb < abs_fa ? b : a;
     }
-    
+
     /*
     //  _     _               _   _
     // | |__ (_)___  ___  ___| |_(_) ___  _ __
@@ -346,8 +350,12 @@ namespace Utils {
       Real & fb { m_fb };
       while ( ++m_iteration_count < m_max_iteration ) {
 
-        Real ba{ b - a };
-        m_converged = ba <= m_tolerance;
+        Real ba     { b - a };
+        Real abs_fa { abs(fa) };
+        Real abs_fb { abs(fb) };
+        m_converged = ba     < m_tolerance_x ||
+                      abs_fa < m_tolerance_f ||
+                      abs_fb < m_tolerance_f;
         if ( m_converged ) break;
         
         Real c  { a + ba/2      };
@@ -380,11 +388,16 @@ namespace Utils {
       while ( ++m_iteration_count < m_max_iteration ) {
       
         Real ba{ b - a };
-        Real tol{ m_tolerance / ( 2 * abs(ba) ) };
+        Real tol{ m_tolerance_x / ( 2 * abs(ba) ) };
         m_converged = tol >= 0.5;
         if ( m_converged ) break;
+        
+        Real abs_fa { abs(fa) };
+        Real abs_fb { abs(fb) };
+        m_converged = abs_fa < m_tolerance_f || abs_fb < m_tolerance_f;
+        if ( m_converged ) break;
 
-        Real c{ abs(fa) < abs(fb) ?
+        Real c{ abs_fa < abs_fb ?
                 a + max( tol, fa/(fa-fb) ) * ba :
                 b - max( tol, fb/(fb-fa) ) * ba };
         Real fc{ evaluate( c ) };
@@ -429,10 +442,15 @@ namespace Utils {
       while ( ++m_iteration_count < m_max_iteration ) {
 
         Real dir{ b-a };
-        Real tol{ m_tolerance / ( 2 * abs( dir ) ) };
+        Real tol{ m_tolerance_x / ( 2 * abs( dir ) ) };
         m_converged = tol >= 0.5;
         if ( m_converged ) break;
         
+        Real abs_fa { abs(fa) };
+        Real abs_fb { abs(fb) };
+        m_converged = abs_fa < m_tolerance_f || abs_fb < m_tolerance_f;
+        if ( m_converged ) break;
+
         if      ( t < tol   ) t = tol;
         else if ( t > 1-tol ) t = 1-tol;
 
@@ -514,11 +532,16 @@ namespace Utils {
           fa = fb; fb = fc; fc = fa;
         }
 
-        Real tol { 2 * Utils::machine_eps<Real>() * abs( b ) + m_tolerance };
+        Real tol { 2 * Utils::machine_eps<Real>() * abs( b ) + m_tolerance_x };
         Real m   { ( c - b )/2 };
         
         m_converged = abs( m ) <= tol || fb == 0;
         if ( m_converged ) { m_a = m_b; m_fa = 0; break; }
+        
+        Real abs_fa { abs(fa) };
+        Real abs_fb { abs(fb) };
+        m_converged = abs_fa < m_tolerance_f || abs_fb < m_tolerance_f;
+        if ( m_converged ) break;
 
         if ( abs( e ) < tol || abs( fa ) <= abs( fb ) ) {
           d = e = m;
@@ -587,7 +610,12 @@ namespace Utils {
       while ( ++m_iteration_count < m_max_iteration ) {
       
         Real d{ (b - a)/2 };
-        m_converged = 2*abs(d) <= m_tolerance;
+        m_converged = 2*abs(d) <= m_tolerance_x;
+        if ( m_converged ) break;
+                        
+        Real abs_fa { abs(fa) };
+        Real abs_fb { abs(fb) };
+        m_converged = abs_fa < m_tolerance_f || abs_fb < m_tolerance_f;
         if ( m_converged ) break;
 
         // Compute the improved root x from Ridder's formula
@@ -657,10 +685,15 @@ namespace Utils {
       while ( ++m_iteration_count < m_max_iteration ) {
 
         Real dir{ x2 - x1 };
-        Real tol{ m_tolerance / ( 2 * abs( dir ) ) };
+        Real tol{ m_tolerance_x / ( 2 * abs( dir ) ) };
         m_converged = tol >= 0.5;
         if ( m_converged ) break;
-        
+                
+        Real abs_f1 { abs(f1) };
+        Real abs_f2 { abs(f2) };
+        m_converged = abs_f1 < m_tolerance_f || abs_f2 < m_tolerance_f;
+        if ( m_converged ) break;
+
         Real x3, f3;
         
         if ( bisection ) {
@@ -703,7 +736,7 @@ namespace Utils {
           if ( !bisection ) side = 2;  // Store the side that move
           x2 = x3; f2 = f3;            // Move the right end
         }
-        
+
         //if ( (m_iteration_count % N) == 0 ) {
         //  bisection = true;
         //  side = 0;
@@ -711,6 +744,348 @@ namespace Utils {
       }
     };
     
+    /*
+    //      _    _           _____ _  _    ___
+    //     / \  | | __ _  __|___  | || |  ( _ )
+    //    / _ \ | |/ _` |/ _ \ / /| || |_ / _ \
+    //   / ___ \| | (_| | (_) / / |__   _| (_) |
+    //  /_/   \_\_|\__, |\___/_/     |_|  \___/
+    //             |___/
+    */
+    auto algo748 = [this,check] () -> void {
+      /*!
+
+      Finds either an exact solution or an approximate solution
+      of the equation \f$ f(x)=0 \f$ in the interval \f$ [a,b] \f$.
+
+      1. The first iteration is simply a secant step.
+
+      2. Starting with the second iteration, three steps are taken in each iteration.
+
+         a. First two steps are either quadratic interpolation or cubic inverse interpolation.
+
+         b. The third step is a double-size secant step.
+
+      If the diameter of the enclosing interval obtained after
+      those three steps is larger than \f$ (b-a)/2 \f$,
+      then an additional bisection step will be taken.
+
+      */
+      
+      Real & a  { m_a  };
+      Real & fa { m_fa };
+      Real & b  { m_b  };
+      Real & fb { m_fb };
+
+      Real m_interval_shink{Real(0.025)};
+
+      Real c  { NaN<Real>() };
+      Real fc { NaN<Real>() }; // Dumb values
+      Real d  { NaN<Real>() };
+      Real fd { NaN<Real>() }; // Dumb values
+      Real e  { NaN<Real>() };
+      Real fe { NaN<Real>() }; // Dumb values
+
+      //auto set_tolerance = [this]( Real B ) -> void {
+      //  Real eps{ 2*machine_eps<Real>() };
+      //  m_tolerance_x = eps + 2*abs(B)*eps;
+      //};
+
+      auto all_different = []( Real a, Real b, Real c, Real d ) -> bool {
+        return a != b && a != c && a != d && b != c && b != d && c != d;
+      };
+
+      auto pzero = [ this, &d, &fd, &e, &fe ] ( ) -> Real {
+        // Uses cubic inverse interpolation of f(x) at a, b, d, and e to
+        // get an approximate root of f(x). Rewritten using divided difference.
+
+        Real & a  { m_a  };
+        Real & fa { m_fa };
+        Real & b  { m_b  };
+        Real & fb { m_fb };
+
+        Real D1{ b - a };
+        Real D2{ d - a };
+        Real D3{ e - a };
+
+        Real DD0{ D1/(fb-fa)      };
+        Real DD1{ (D1-D2)/(fb-fd) };
+        Real DD2{ (D2-D3)/(fd-fe) };
+
+        Real DDD0{ (DD0-DD1)/(fa-fd) };
+        Real DDD1{ (DD1-DD2)/(fb-fe) };
+
+        Real DDDD0{ (DDD0-DDD1)/(fa-fe) };
+
+        Real c{ a - fa*(DD0-fb*(DDD0-fd*DDDD0)) };
+
+        Real tol{ Real(0.7)*m_tolerance_x };
+        if ( c <= a+tol || c >= b-tol ) c = (a+b)/2;
+
+        UTILS_ASSERT(
+          is_finite(c),
+          "AlgoBracket[748]::pzero(), compute NaN or Inf at\n"
+          "a={} f(a)={}\n"
+          "b={} f(b)={}\n"
+          "c={}\n"
+          "d={} f(d)={}\n"
+          "e={} f(e)={}\n",
+          a, fa,
+          b, fb,
+          c,
+          d, fd,
+          e, fe
+        );
+
+        return c;
+      };
+
+      auto newton_quadratic = [this,&d,&fd]( Integer niter, Real & c ) -> bool {
+        // Uses `niter` newton steps to approximate the zero in (a,b) of the
+        // quadratic polynomial interpolating f(x) at a, b, and d.
+        // Safeguard is used to avoid overflow.
+
+        Real & a  { m_a  };
+        Real & fa { m_fa };
+        Real & b  { m_b  };
+        Real & fb { m_fb };
+
+        UTILS_ASSERT(
+          a < b && a != d && b != d,
+          "AlgoBracket[748]::newton_quadratic() bad data\n"
+          "a={} f(a)={}\n"
+          "b={} f(b)={}\n"
+          "d={} f(d)={}\n",
+          a, fa,
+          b, fb,
+          d, fd
+        );
+
+        Real A0{ fa };
+        Real A1{ (fb-fa)/(b-a) };
+        Real A2{ ((fd-fb)/(d-b)-A1)/(d-a) };
+
+        UTILS_ASSERT(
+          is_finite(A0) && is_finite(A1) && is_finite(A2),
+          "AlgoBracket[748]::newton_quadratic(), compute NaN or Inf at\n"
+          "a={} f(a)={}\n"
+          "b={} f(b)={}\n"
+          "d={} f(d)={}\n"
+          "A0={}\n"
+          "A1={}\n"
+          "A2={}\n",
+          a, fa,
+          b, fb,
+          d, fd,
+          A0, A1, A2
+        );
+
+        // Safeguard to avoid overflow.
+        if ( A2 == 0 ) {
+          c = a-A0/A1;
+        } else {
+          // Determine the starting point of newton steps.
+          c = A2*fa > 0 ? a : b;
+
+          // Start the safeguarded newton steps.
+          bool ok{ true };
+          for ( Integer i{0}; i < niter && ok; ++i ) {
+            Real PC  = A0+(A1+A2*(c-b))*(c-a);
+            Real PDC = A1+A2*((2*c)-(a+b));
+            ok = PDC != 0;
+            if ( ok ) c -= PC/PDC;
+          }
+        }
+        return is_finite(c) && c > a && c < b;
+      };
+
+      auto bracketing = [this,check]( Real & c, Real & fc, Real & d, Real & fd ) -> bool {
+        // Given current enclosing interval [a,b] and a number c in (a,b):
+        //
+        //  a) if f(c)=0 then sets the output a=c.
+        //  b) Otherwise determines the new enclosing interval:
+        //     [a,b]=[a,c] or [a,b]=[c,b].
+        //     also updates the termination criterion corresponding
+        //     to the new enclosing interval.
+        //
+        // Adjust c if (b-a) is very small or if c is very close to a or b.
+        {
+          Real tol{ Real(0.7)*m_tolerance_x };
+          Real hba{ (m_b - m_a)/2 };
+          if      ( hba <= tol   ) c = m_a + hba;
+          else if ( c <= m_a+tol ) c = m_a + tol;
+          else if ( c >= m_b-tol ) c = m_b - tol;
+        }
+
+        UTILS_ASSERT(
+          is_finite(c),
+          "AlgoBracket[748]::bracketing(), unexpected\n"
+          "c={} at [a,b] = [{},{}]\n", c, m_a, m_b
+        );
+
+        fc = this->evaluate( c );
+        check( c, fc );
+
+        // If f(c)=0, then set a=b=c and return.
+        // This will terminate the procedure.
+
+        if ( fc == 0 ) {
+          m_a  = m_b  = c;
+          m_fa = m_fb = d = fd = 0;
+          return true;
+        } else {
+          // If f(c) is not zero, then determine the new enclosing interval.
+          if ( m_fa*fc < 0 ) {
+            // D <-- B <-- C
+            d   = m_b; fd   = m_fb;
+            m_b = c;   m_fb = fc;
+          } else {
+            // D <-- A <-- C
+            d   = m_a; fd   = m_fa;
+            m_a = c;   m_fa = fc;
+          }
+          // update the termination criterion according to the new enclosing interval.
+          //if ( abs(m_fb) <= abs(m_fa) ) set_tolerance(m_b);
+          //else                          set_tolerance(m_a);
+          return false;
+        }
+      };
+
+      {
+        using std::abs;
+        using std::min;
+        using std::max;
+        Real ba { b - a };
+        Real R  { ba/(fb - fa) };
+        c = abs(fb) < abs(fa) ? b+fb*R : a-fa*R;
+        // impedisce m_c troppo vicino ad m_a o m_b
+        Real delta{m_interval_shink*ba};
+        c = max(min(c,b-delta),a+delta);
+      }
+      //
+      // Call "bracketing" to get a shrinked enclosing interval as
+      // well as to update the termination criterion.
+      // Stop the procedure if the criterion is satisfied or the
+      // exact solution is obtained.
+      //
+      m_converged = bracketing( c, fc, d, fd );
+      if ( m_converged ) { b = a; fb = fa; return; }
+      // Iteration starts.
+      // The enclosing interval before executing the iteration is recorded as [a0, b0].
+      m_converged = false;
+
+      // ITERATION STARTS. THE ENCLOSING INTERVAL BEFORE EXECUTING THE
+      // ITERATION IS RECORDED AS [A0, B0].
+      while ( !m_converged ) {
+        ++m_iteration_count;
+        Real BA0{ b - a };
+
+        // Calculates the termination criterion.
+        // Stops the procedure if the criterion is satisfied.
+
+        m_converged = BA0 <= m_tolerance_x;
+        if ( m_converged ) return;
+
+        Real abs_fa { abs(fa) };
+        Real abs_fb { abs(fb) };
+        m_converged = abs_fa < m_tolerance_f || abs_fb < m_tolerance_f;
+        if ( m_converged ) return;
+
+        //
+        // Starting with the second iteration, in the first two steps, either
+        // quadratic interpolation is used by calling the subroutine "newtonquadratic"
+        // or the cubic inverse interpolation is used by calling the subroutine
+        // "pzero". in the following, if "prof" is not equal to 0, then the
+        // four function values "fa", "fb", "fd", and "fe" are distinct, and
+        // hence "pzero" will be called.
+        //
+
+        bool do_newton_quadratic = false;
+        if ( !is_finite(fe) ) {
+          do_newton_quadratic = true;
+        } else if ( !all_different( fa, fb, fd, fe ) ) {
+          do_newton_quadratic = true;
+        } else {
+          c = pzero();
+          do_newton_quadratic = (c-a)*(c-b) >= 0;
+        }
+        if ( do_newton_quadratic ) {
+          if ( !newton_quadratic(2,c) ) c = a + (b-a)/2;
+        }
+
+        e  = d;
+        fe = fd;
+
+        //
+        // Call subroutine "bracketing" to get a shrinked enclosing interval as
+        // well as to update the termination criterion. stop the procedure
+        // if the criterion is satisfied or the exact solution is obtained.
+        //
+        m_converged = bracketing( c, fc, d, fd ) || (b-a) <= m_tolerance_x;
+        if ( m_converged ) return;
+
+        if ( !all_different( fa, fb, fd, fe ) ) {
+          do_newton_quadratic = true;
+        } else {
+          c = pzero();
+          do_newton_quadratic = (c-a)*(c-b) >= 0;
+        }
+        if ( do_newton_quadratic ) {
+          if ( !newton_quadratic(3,c) ) c = a + (b-a)/2;
+        }
+
+        //
+        // Call subroutine "bracketing" to get a shrinked enclosing interval as
+        // well as to update the termination criterion. stop the procedure
+        // if the criterion is satisfied or the exact solution is obtained.
+        //
+
+        {
+          m_converged = bracketing( c, fc, d, fd ) || (b-a) <= m_tolerance_x;
+          if ( m_converged ) return;
+
+          e  = d;
+          fe = fd;
+          // Takes the double-size secant step.
+          Real u, fu;
+          Real abs_fa{ abs(fa) };
+          Real abs_fb{ abs(fb) };
+          if ( abs_fa < abs_fb ) { u = a; fu = fa; }
+          else                   { u = b; fu = fb; }
+          Real hba{ (b-a)/2 };
+          c = u-4*(fu/(fb-fa))*hba;
+          if ( abs(c-u) > hba ) c = a + hba;
+        }
+
+        //
+        // Call subroutine "bracketing" to get a shrinked enclosing interval as
+        // well as to update the termination criterion. stop the procedure
+        // if the criterion is satisfied or the exact solution is obtained.
+        //
+        m_converged = bracketing( c, fc, d, fd ) || (b-a) <= m_tolerance_x;
+        if ( m_converged ) return;
+        //
+        // Determines whether an additional bisection step is needed.
+        // Takes it if necessary.
+        //
+        Real mu{Real(0.5)};
+        if ( (b-a) < mu*BA0 ) continue;
+
+        e  = d;
+        fe = fd;
+        //
+        // Call subroutine "bracketing" to get a shrinked enclosing interval as
+        // well as to update the termination criterion. stop the procedure
+        // if the criterion is satisfied or the exact solution is obtained.
+        //
+        {
+          Real ba{ b - a };
+          c = a + ba/2;
+          m_converged = bracketing( c, fc, d, fd ) || ba <= m_tolerance_x;
+        }
+      }
+    };
+  
     switch ( m_select ) {
       case Method::BISECTION:    bisection();    break;
       case Method::ILLINOIS:     illinois();     break;
@@ -718,6 +1093,7 @@ namespace Utils {
       case Method::BRENT:        Brent();        break;
       case Method::RIDDER:       Ridder();       break;
       case Method::MODIFIED_AB:  modified_AB();  break;
+      case Method::ALGO748:      algo748();      break;
     }
 
     if ( m_a > m_b ) { swap(m_a,m_b); swap(m_fa, m_fb); }

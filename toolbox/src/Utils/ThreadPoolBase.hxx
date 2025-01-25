@@ -36,6 +36,24 @@ namespace Utils {
   \*/
 
   class ThreadPoolBase {
+  protected:
+    // Interfaccia per Task
+    class Task {
+    public:
+       virtual ~Task() = default;
+       virtual void execute() = 0;
+    };
+    // Implementazione concreta di Task
+    template <typename Callable>
+    class ConcreteTask : public Task {
+      Callable callable;
+    public:
+      explicit ConcreteTask(Callable&& callable) : callable(std::move(callable)) {}
+      void execute() override { callable(); }
+    };
+
+    typedef std::function<void(void)> FUN;
+    //typedef std::unique_ptr<FUN>      PFUN;
 
   public:
 
@@ -47,9 +65,8 @@ namespace Utils {
 
     ThreadPoolBase() = default;
 
-    virtual
-    void
-    exec( std::function<void()> && ) = 0;
+    //virtual void exec( std::function<void()> && ) = 0;
+    virtual void exec( FUN && ) = 0;
 
     template <typename Func, typename... Args>
     void
@@ -63,11 +80,8 @@ namespace Utils {
     }
 
     virtual void         wait() = 0;
-    virtual void         join() = 0;
     virtual unsigned     thread_count() const = 0;
-    virtual void         resize( unsigned numThreads ) = 0;
     virtual char const * name() const = 0;
-    virtual void         info( ostream_type & ) const { }
   };
 
   namespace tp {

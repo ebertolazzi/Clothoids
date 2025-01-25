@@ -94,6 +94,49 @@ endfunction()
 #
 # ------------------------------------------------------------------------
 #
+function(utils_add_library_or_submodule MODULE_NAME MODULE_LIB )
+  #
+  # DEPENDENCIES (TRY TO USE ALREADY COMPILED SUBMODULE IN LARGE PROJECT)
+  #
+  set(MODULE_DIR ${MODULE_NAME})
+  # Cannot use ARGN directly with list() command,
+  # so copy it to a variable first.
+  set (extra_args ${ARGN})
+  # Did we get any optional args?
+  list(LENGTH extra_args extra_count)
+  if (${extra_count} GREATER 0)
+    list(GET extra_args 0 optional_arg)
+    set(MODULE_DIR ${optional_arg})
+  endif()
+
+  set(UPDIR ${CMAKE_CURRENT_SOURCE_DIR}/..)
+  message(STATUS ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>")
+  message(STATUS "Search library ${MODULE_NAME}${ARTIFACTS_STATIC_SUFFIX}")
+  message(STATUS "at ${UPDIR}/${MODULE_DIR}/lib/lib" )
+  find_library(
+    ${MODULE_LIB} ${MODULE_NAME}${ARTIFACTS_STATIC_SUFFIX}
+    HINTS ${UPDIR}/${MODULE_DIR}/lib/lib
+    NO_DEFAULT_PATH
+  )
+  if( ${MODULE_LIB} )
+    message(STATUS "Found ${${MODULE_LIB}}")
+    utils_copy_directory(
+      "${UPDIR}/${MODULE_DIR}/lib"
+      "${CMAKE_CURRENT_SOURCE_DIR}/lib3rd"
+    )
+  else()
+    message(STATUS "NOT Found ${MODULE_NAME}${ARTIFACTS_STATIC_SUFFIX} use submodule")
+    add_subdirectory(./submodules/${MODULE_NAME})
+    include_directories(./submodules/${MODULE_NAME}/include)
+    include_directories(./submodules/${MODULE_NAME}/src)
+    set( ${MODULE_LIB} ${UTILS_NAMESPACE}_${MODULE_NAME}_Static PARENT_SCOPE )
+    set( UTILS_DEPEND_TARGETS ${UTILS_DEPEND_TARGETS} ${LIB} PARENT_SCOPE )
+  endif()
+  message(STATUS "<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<")
+endfunction()
+#
+# ------------------------------------------------------------------------
+#
 function(utils_final_messages)
   if(SSE_FLAGS)
     message(STATUS "Using ${SSE_FLAGS} extensions")

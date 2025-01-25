@@ -23,12 +23,14 @@
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
 
-#include "Utils.hh"
-#include "Utils_fmt.hh"
-
-#ifdef __clang__
+#if defined(__llvm__) || defined(__clang__)
+#pragma clang diagnostic ignored "-Wexit-time-destructors"
+#pragma clang diagnostic ignored "-Wduplicate-enum"
 #pragma clang diagnostic ignored "-Wpoison-system-directories"
 #endif
+
+#include "Utils.hh"
+#include "Utils_fmt.hh"
 
 namespace Utils {
 

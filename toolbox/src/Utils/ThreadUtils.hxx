@@ -21,6 +21,11 @@
 // file: ThreadUtils.hxx
 //
 
+#include <functional>
+#include <iostream>
+#include <type_traits>
+#include <utility>
+
 namespace Utils {
 
   /*!
@@ -614,7 +619,7 @@ namespace Utils {
     ~at_scope_exit_impl() { if (m_active) m_destructor(); }
   };
 
-  /**
+  /*!
    * Create a variable that when destructed at the end of the scope
    * executes a destructor function.
    *
@@ -638,6 +643,100 @@ namespace Utils {
   template<class Function>
   auto at_scope_exit(Function const & fun) -> at_scope_exit_impl<Function const &>
   { return at_scope_exit_impl<Function const &>(fun); }
+
+  /*!
+   * Create a class that wrap std::function<T> into a non copyable object
+   *
+   */
+
+  // from https://coliru.stacked-crooked.com/a/933248d6a9f07094
+  template<typename T>
+  class unique_function : public std::function<T> {
+    template<typename Fn, typename En = void> struct wrapper;
+
+    // specialization for CopyConstructible Fn
+    template<typename Fn>
+    struct wrapper<Fn, std::enable_if_t< std::is_copy_constructible<Fn>::value >>
+    {
+      Fn fn;
+      template<typename... Args>
+      auto operator()(Args&&... args) { return fn(std::forward<Args>(args)...); }
+    };
+
+    // specialization for MoveConstructible-only Fn
+    template<typename Fn>
+    struct wrapper<Fn, std::enable_if_t< !std::is_copy_constructible<Fn>::value && std::is_move_constructible<Fn>::value >>
+    {
+      Fn fn;
+
+      wrapper(Fn&& fn) : fn(std::forward<Fn>(fn)) { }
+
+      wrapper(wrapper&&) = default;
+      wrapper& operator=(wrapper&&) = default;
+
+      // these two functions are instantiated by std::function
+      // and are never called
+      wrapper(const wrapper& rhs) : fn(const_cast<Fn&&>(rhs.fn)) { throw 0; } // hack to initialize fn for non-DefaultContructible types
+      
+      wrapper& operator=(wrapper&) { throw 0; }
+
+      template<typename... Args> auto operator()(Args&&... args) { return fn(std::forward<Args>(args)...); }
+    };
+
+    using base = std::function<T>;
+
+  public:
+    unique_function() noexcept = default;
+    unique_function(std::nullptr_t) noexcept : base(nullptr) { }
+
+    template<typename Fn>
+    unique_function(Fn&& f) : base(wrapper<Fn>{ std::forward<Fn>(f) }) { }
+
+    unique_function(unique_function&&) = default;
+    unique_function& operator=(unique_function&&) = default;
+
+    unique_function& operator=(std::nullptr_t) { base::operator=(nullptr); return *this; }
+
+    template<typename Fn>
+    unique_function& operator=(Fn&& f)
+    { base::operator=(wrapper<Fn>{ std::forward<Fn>(f) }); return *this; }
+
+    using base::operator();
+  };
+  
+  /*
+  using std::cout; using std::endl;
+
+  struct move_only {
+    move_only(std::size_t) { }
+
+    move_only(move_only&&) = default;
+    move_only& operator=(move_only&&) = default;
+
+    move_only(move_only const&) = delete;
+    move_only& operator=(move_only const&) = delete;
+
+    void operator()() { cout << "move_only" << endl; }
+  };
+
+  int main()
+  {
+    using fn = unique_function<void()>;
+
+    fn f0;
+    fn f1 { nullptr };
+    fn f2 { [](){ cout << "f2" << endl; } }; f2();
+    fn f3 { move_only(42) }; f3();
+    fn f4 { std::move(f2) }; f4();
+
+    f0 = std::move(f3); f0();
+    f0 = nullptr;
+    f2 = [](){ cout << "new f2" << endl; }; f2();
+    f3 = move_only(69); f3();
+
+    return 0;
+  }
+  */
 
   /*! @} */
 

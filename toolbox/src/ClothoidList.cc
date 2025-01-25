@@ -19,7 +19,7 @@
 
 #include "Clothoids.hh"
 #include "Clothoids_fmt.hh"
-#include "Utils_Algo748.hh"
+#include "Utils_AlgoBracket.hh"
 
 #include <cfloat>
 #include <limits>
@@ -684,7 +684,7 @@ namespace G2lib {
         CR->build_G1( x1, y1, theta,  x2, y2, theta2 );
         return CL->kappa_end()-CR->kappa_begin();
       };
-      Utils::Algo748<real_type> solver;
+      Utils::AlgoBracket<real_type> solver;
       real_type theta = solver.eval2( theta1-Utils::m_pi/20,theta1+Utils::m_pi/20,-Utils::m_pi/2,Utils::m_pi/2,fun);
       fun(theta);
       return std::abs(dK);

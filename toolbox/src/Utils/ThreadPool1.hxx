@@ -44,6 +44,9 @@ namespace Utils {
   //!
   class ThreadPool1 : public ThreadPoolBase {
 
+    using FUN = ThreadPoolBase::FUN;
+    //using PFUN = ThreadPoolBase::PFUN;
+
     /*\
      |  __        __         _
      |  \ \      / /__  _ __| | _____ _ __
@@ -58,17 +61,26 @@ namespace Utils {
     //! It provides methods to start, stop, and execute functions on the worker thread.
     //!
     class Worker {
+      
+      std::mutex              m_task_mutex;
+      std::condition_variable m_task_cv;
 
-      using real_type = double;
+      bool        m_active{true};     //!< Indicates if the worker is active
+      std::thread m_running_thread;   //!< Thread executing the worker's tasks
+      bool        m_task_done{true};  //!< Indicates if the worker is active
+      FUN         m_task;             //!< Function to be executed by the worker
 
-      bool                  m_active;         //!< Indicates if the worker is active
-      UTILS_SEMAPHORE       m_running;        //!< Semaphore for controlling task execution
-      std::thread           m_running_thread; //!< Thread executing the worker's tasks
-      std::function<void()> m_job;            //!< Function to be executed by the worker
-
-      TicToc m_tm; //!< Timing object for measuring task execution time
-
-      void worker_loop(); //!< The main loop for the worker thread
+      //! The main loop for the worker thread
+      void
+      worker_loop() {
+        std::unique_lock<std::mutex> lock(m_task_mutex);
+        while ( m_active ) {
+          while ( m_task_done ) m_task_cv.wait( lock );
+          m_task();
+          m_task_done = true;
+          m_task_cv.notify_one();
+        }
+      }
 
     public:
 
@@ -81,29 +93,35 @@ namespace Utils {
       //!
       //! \brief Constructs a new Worker and starts the thread.
       //!
-      Worker() : m_active(false) { start(); }
+      Worker() : m_running_thread( std::thread( &Worker::worker_loop, this ) ) {}
 
       //!
       //! \brief Destroys the Worker and stops the thread.
       //!
-      ~Worker() { stop(); }
-
+      ~Worker() {
+        auto dummy_task = []()->void{};
+        m_active = false; // deactivate computation
+        exec( dummy_task );
+        if ( m_running_thread.joinable() ) m_running_thread.join(); // wait thread for exiting
+      }
+      
       //!
       //! \brief Moves the Worker from one instance to another.
       //!
       Worker( Worker && rhs ) noexcept
       : m_active(rhs.m_active)
       , m_running_thread(std::move(rhs.m_running_thread))
-      , m_job(std::move(rhs.m_job))
+      , m_task(std::move(rhs.m_task))
       {}
-
-      void start(); //!< Starts the worker thread
-      void stop();  //!< Stops the worker thread
 
       //!
       //! \brief Waits for the current task to finish.
       //!
-      void wait() { m_running.wait_red(); }
+      void
+      wait() {
+        std::unique_lock<std::mutex> lock(m_task_mutex);
+        while ( !m_task_done ) m_task_cv.wait( lock );
+      }
 
       //!
       //! \brief Executes a function in the worker thread.
@@ -111,15 +129,14 @@ namespace Utils {
       //! \param fun The function to execute.
       //!
       void
-      exec( std::function<void()> & fun ) {
-        m_running.wait_red(); // se gia occupato in task aspetta
-        m_job = fun;          // cambia funzione da eseguire
-        m_running.green();    // activate computation
+      exec( FUN && fun ) {
+        // aspetto che pointer si liberi se occupato
+        std::unique_lock<std::mutex> lock(m_task_mutex);
+        while ( !m_task_done ) m_task_cv.wait( lock );
+        m_task_done = false;
+        m_task = std::move(fun); // cambia funzione da eseguire
+        m_task_cv.notify_one();
       }
-
-      std::thread::id     get_id()     const { return m_running_thread.get_id(); }
-      std::thread const & get_thread() const { return m_running_thread; }
-      std::thread &       get_thread()       { return m_running_thread; }
     };
 
     //! Index of the next thread to send a task to
@@ -127,9 +144,6 @@ namespace Utils {
 
     //! Vector of worker threads
     std::vector<Worker> m_workers;
-
-    //! Initializes and starts all workers
-    void setup() { for ( auto & w: m_workers ) w.start(); }
 
   public:
 
@@ -144,12 +158,13 @@ namespace Utils {
         unsigned(1),
         unsigned(std::thread::hardware_concurrency()-1)
       )
-    );
+    ) : ThreadPoolBase(), m_workers( size_t( nthread ) ) { }
 
     //!
     //! \brief Destroys the ThreadPool1 and stops all worker threads.
     //!
-    virtual ~ThreadPool1();
+    virtual
+    ~ThreadPool1() { m_workers.clear(); }
 
     //!
     //! \brief Executes a task in the thread pool.
@@ -157,62 +172,26 @@ namespace Utils {
     //! \param fun The function to be executed.
     //!
     void
-    exec( std::function<void()> && fun ) override {
-      m_workers[m_thread_to_send].exec( fun );
+    exec( FUN && fun ) override {
+      m_workers[m_thread_to_send].exec( std::move(fun) );
       if ( ++m_thread_to_send >= m_workers.size() ) m_thread_to_send = 0;
     }
 
-    void wait() override;             //!< Waits for all tasks to finish
-    void join() override { stop(); }  //!< Stops and joins all threads
+    //! Waits for all tasks to finish
+    void wait() override { for ( auto && w : m_workers ) w.wait(); }
 
     //!
     //! \brief Returns the number of threads in the pool.
     //!
     //! \return The number of threads.
     //!
-    unsigned
-    thread_count() const override
-    { return unsigned(m_workers.size()); }
+    unsigned thread_count() const override { return unsigned(m_workers.size()); }
 
-    void resize( unsigned numThreads ) override; //!< Resizes the thread pool
-    char const * name() const override { return "ThreadPool1"; } //!< Returns the name of the thread pool
+    static char const * Name() { return "ThreadPool1"; } //!< Returns the name of the thread pool
 
-    // EXTRA
-    void start(); //!< Starts all worker threads
-    void stop();  //!< Stops all worker threads
+    char const * name() const override { return Name(); }
 
-    //!
-    //! \brief Returns the ID of the specified worker thread.
-    //!
-    //! \param i Index of the worker.
-    //! \return The thread ID.
-    //!
-    std::thread::id
-    get_id( unsigned i ) const
-    { return m_workers[size_t(i)].get_id(); }
-
-    //!
-    //! \brief Returns the thread object of the specified worker.
-    //!
-    //! \param i Index of the worker.
-    //! \return The thread object.
-    //!
-    std::thread const &
-    get_thread( unsigned i ) const
-    { return m_workers[size_t(i)].get_thread(); }
-
-    std::thread &
-    get_thread( unsigned i )
-    { return m_workers[size_t(i)].get_thread(); }
-
-    // ALIAS
-    void wait_all()  { this->wait();  } //!< Alias for wait()
-    void start_all() { this->start(); } //!<  Alias for start()
-    void stop_all()  { this->stop();  } //!<  Alias for stop()
-    unsigned size() const { return this->thread_count(); } //!< Returns the number of threads
   };
-
-  using ThreadPool = ThreadPool1;
 
   /*! @} */
 

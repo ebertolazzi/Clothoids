@@ -24,6 +24,7 @@
 
 #if defined(__llvm__) || defined(__clang__)
 #pragma clang diagnostic ignored "-Wexit-time-destructors"
+#pragma clang diagnostic ignored "-Wduplicate-enum"
 #endif
 
 #include "Utils.hh"

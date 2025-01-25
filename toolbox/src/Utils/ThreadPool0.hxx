@@ -51,7 +51,7 @@ namespace Utils {
   //!  threading is not needed.
   //!
   class ThreadPool0 : public ThreadPoolBase {
-    using Func = std::function<void()>;
+    using ThreadPoolBase::FUN;
 
   public:
 
@@ -78,7 +78,7 @@ namespace Utils {
     //!
     //! \param fun The function to be executed.
     //!
-    void exec( Func && fun ) override { fun(); }
+    void exec( FUN && fun ) override { fun(); }
 
     //!
     //! \brief No-op method to wait for all tasks to complete.
@@ -87,14 +87,6 @@ namespace Utils {
     //! threads or tasks to wait for.
     //!
     void wait() override { }
-
-    //!
-    //! \brief No-op method to join all threads.
-    //!
-    //! This method does not perform any actions, as there are no
-    //! threads to join.
-    //!
-    void join() override { }
 
     //!
     //! \brief Returns the number of threads in the pool.
@@ -107,30 +99,15 @@ namespace Utils {
     unsigned thread_count() const override { return 1; }
 
     //!
-    //! \brief Resizes the pool to a specified number of threads.
-    //!
-    //! This method does not perform any actions, as the fake
-    //! thread pool does not support resizing.
-    //!
-    void resize( unsigned ) override { }
-
-    //!
     //! \brief Returns the name of the thread pool.
     //!
     //! This method returns a string describing the type of thread pool.
     //!
     //! \return A string indicating that this is a "ThreadPool0 (fake thread)".
     //!
-    char const * name() const override { return "ThreadPool0 (fake thread)"; }
+    static char const * Name() { return "ThreadPool0 (fake thread)"; }
 
-    //!
-    //! \brief Returns the size of the thread pool.
-    //!
-    //! This method returns the size of the thread pool, which is always 1.
-    //!
-    //! \return Always returns 1.
-    //!
-    unsigned size() const { return 1; }
+    char const * name() const override { return Name(); }
   };
 
   /*! @} */

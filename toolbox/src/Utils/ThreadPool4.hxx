@@ -1,6 +1,27 @@
+/*--------------------------------------------------------------------------*\
+ |                                                                          |
+ |  Copyright (C) 2025                                                      |
+ |                                                                          |
+ |         , __                 , __                                        |
+ |        /|/  \               /|/  \                                       |
+ |         | __/ _   ,_         | __/ _   ,_                                |
+ |         |   \|/  /  |  |   | |   \|/  /  |  |   |                        |
+ |         |(__/|__/   |_/ \_/|/|(__/|__/   |_/ \_/|/                       |
+ |                           /|                   /|                        |
+ |                           \|                   \|                        |
+ |                                                                          |
+ |      Enrico Bertolazzi                                                   |
+ |      Dipartimento di Ingegneria Industriale                              |
+ |      Universita` degli Studi di Trento                                   |
+ |      email: enrico.bertolazzi@unitn.it                                   |
+ |                                                                          |
+\*--------------------------------------------------------------------------*/
+
 //
 // file: ThreadPool4.hxx
 //
+
+#include "3rd/task_thread_pool.hpp"
 
 namespace Utils {
 
@@ -9,180 +30,77 @@ namespace Utils {
    * @{
    */
 
+  /*\
+   |   _____ _                        _ ____             _
+   |  |_   _| |__  _ __ ___  __ _  __| |  _ \ ___   ___ | |
+   |    | | | '_ \| '__/ _ \/ _` |/ _` | |_) / _ \ / _ \| |
+   |    | | | | | | | |  __/ (_| | (_| |  __/ (_) | (_) | |
+   |    |_| |_| |_|_|  \___|\__,_|\__,_|_|   \___/ \___/|_|
+  \*/
   //!
-  //! \brief A thread pool for concurrent task execution with enhanced synchronization.
+  //! \brief A thread pool for concurrent task execution with worker management.
   //!
-  //! The `ThreadPool4` class provides a flexible and efficient thread pool implementation
-  //! that allows for concurrent execution of tasks. It includes mechanisms for dynamic
-  //! resizing of the thread pool and effective management of task synchronization using
-  //! atomic operations and condition variables.
+  //! The `ThreadPool4` class provides an implementation of a thread pool that
+  //! allows for efficient concurrent execution of tasks. This class manages a
+  //! collection of worker threads that can be dynamically resized, and utilizes
+  //! a semaphore-based mechanism for worker synchronization.
   //!
-  //! This class extends `ThreadPoolBase` and manages a collection of worker threads
-  //! that execute tasks from a queue.
+  //! This class extends `ThreadPoolBase` and supports task execution, joining,
+  //! and resizing of worker threads.
   //!
   class ThreadPool4 : public ThreadPoolBase {
 
-
-    using real_type = double;              //!< Type used for timing measurements.
-    using TaskData  = tp::Queue::TaskData; //!< Type representing a task in the queue.
-
-    std::atomic<bool>        m_done;                //!< Flag indicating if the thread pool has completed execution.
-    std::atomic<unsigned>    m_running_task;        //!< Count of tasks currently running.
-    std::atomic<unsigned>    m_running_thread;      //!< Count of threads currently active.
-    std::vector<std::thread> m_worker_threads;      //!< Collection of worker threads.
-    tp::Queue                m_work_queue;          //!< Queue for holding tasks; not thread-safe.
-    std::mutex               m_work_on_queue_mutex; //!< Mutex for safe access to the task queue.
-
-    // -----------------------------------------
-    std::condition_variable_any m_queue_pop_cv; //!< Condition variable for task popping notifications.
-    std::atomic<unsigned>       m_pop_waiting;  //!< Count of threads waiting to pop tasks from the queue.
-    // -----------------------------------------
-    std::condition_variable_any m_queue_push_cv; //!< Condition variable for task pushing notifications.
-    std::atomic<unsigned>       m_push_waiting;  //!< Count of threads waiting to push tasks into the queue.
-    // -----------------------------------------
-
-    TicToc                   m_tm;      //!< Timing utility for measuring execution durations.
-    std::vector<real_type>   m_job_ms;  //!< Duration of executed jobs.
-    std::vector<real_type>   m_pop_ms;  //!< Duration for popping tasks from the queue.
-    std::vector<unsigned>    m_n_job;   //!< Count of jobs executed.
-    real_type                m_push_ms; //!< Duration for pushing tasks into the queue.
-
-    //!
-    //! \brief Sleep for a brief period to yield control.
-    //!
-    //! On Windows, it calls Sleep(0); otherwise, it sleeps for one nanosecond.
-    //!
-    inline
-    void
-    nano_sleep() const
-    #ifdef UTILS_OS_WINDOWS
-    { Sleep(0); }
-    #else
-    { sleep_for_nanoseconds(1); }
-    //{ std::this_thread::yield(); }
-    #endif
-
-    /*!
-     * \brief Pops a task from the task queue.
-     *
-     * \return A pointer to the popped task data, or nullptr if the queue is empty.
-     */
-    TaskData * pop_task();
-
-    //!
-    //! \brief Pushes a task onto the task queue.
-    //!
-    //! \param task A pointer to the task data to be pushed onto the queue.
-    //!
-    void push_task( TaskData * task );
-
-    //!
-    //! \brief The main function executed by worker threads.
-    //!
-    //! This function continuously pops tasks from the queue and executes them.
-    //!
-    //! \param pop_ms Reference to a variable for measuring the duration of task popping.
-    //! \param job_ms Reference to a variable for measuring the duration of job execution.
-    //! \param n_job Reference to a variable tracking the number of executed jobs.
-    //!
-    void
-    worker_thread(
-      real_type & pop_ms,
-      real_type & job_ms,
-      unsigned  & n_job
-    );
-
-    //!
-    //! \brief Creates worker threads for the thread pool.
-    //!
-    //! \param thread_count The number of worker threads to create.
-    //!
-    void create_workers( unsigned thread_count );
+    task_thread_pool::task_thread_pool m_pool;
 
   public:
 
     //!
-    //! \brief Constructor for the ThreadPool4 class.
+    //! \brief Constructs a new ThreadPool5 instance with a specified number of threads.
     //!
-    //! \param thread_count The number of threads in the pool. Defaults to the number of hardware threads available.
-    //! \param queue_capacity The capacity of the task queue. Defaults to 0, allowing unlimited tasks.
+    //! \param nthread The number of threads to create in the pool. Defaults to the maximum hardware threads available.
     //!
-    explicit
     ThreadPool4(
-      unsigned thread_count   = std::thread::hardware_concurrency(),
-      unsigned queue_capacity = 0
-    );
+      unsigned nthread = std::max(
+        unsigned(1),
+        unsigned(std::thread::hardware_concurrency()-1)
+      )
+    ) : m_pool( nthread ) {}
 
     //!
-    //! \brief Destructor for the ThreadPool4 class.
+    //! \brief Destructor for the ThreadPool5 class.
     //!
-    //! Ensures all tasks are completed before destruction by calling join().
+    //! Ensures all workers are stopped and joined before destruction.
     //!
-    virtual ~ThreadPool4() { join(); }
+    virtual ~ThreadPool4() {}
 
     //!
-    //! \brief Resizes the thread pool to a new thread count.
-    //!
-    //! \param thread_count The new number of threads to maintain in the pool.
-    //!
-    void resize( unsigned thread_count ) override { resize( thread_count, 0 ); }
-
-    //!
-    //! \brief Resizes the thread pool and the task queue.
-    //!
-    //! \param thread_count The new number of threads to maintain in the pool.
-    //! \param queue_capacity The new capacity for the task queue.
-    //!
-    void resize( unsigned thread_count, unsigned queue_capacity );
-
-    //!
-    //! \brief Executes a task and adds it to the task queue.
+    //! \brief Executes a task and assigns it to an available worker.
     //!
     //! \param fun The function to be executed as a task.
     //!
-    void
-    exec( std::function<void()> && fun ) override
-    { push_task( new TaskData(std::move(fun)) ); }
+    void exec( FUN && fun ) override { m_pool.submit_detach( std::move(fun) ); }
 
     //!
-    //! \brief Waits for all tasks in the queue to complete.
+    //! \brief Waits for all tasks to be completed.
     //!
-    //! This function ensures that all queued tasks have finished executing.
-    //!
-    void wait() override;
-
-    //!
-    //! \brief Joins all worker threads and waits for them to finish executing.
-    //!
-    void join() override;
-
-    //!
-    //! \brief Provides information about the thread pool's performance.
-    //!
-    //! \param s The output stream to which information will be written.
-    //!
-    void info( ostream_type & s ) const override;
+    void wait() override { m_pool.wait_for_tasks(); }
 
     //!
     //! \brief Gets the current number of threads in the pool.
     //!
     //! \return The number of threads in the pool.
     //!
-    unsigned thread_count() const override { return unsigned(m_worker_threads.size()); }
-
-    //!
-    //! \brief Gets the current capacity of the task queue.
-    //!
-    //! \return The capacity of the task queue.
-    //!
-    unsigned queue_capacity() const { return m_work_queue.capacity(); }
+    unsigned thread_count() const override { return unsigned( m_pool.get_num_threads() ); }
 
     //!
     //! \brief Gets the name of the thread pool implementation.
     //!
     //! \return A constant character pointer to the name of the thread pool.
     //!
-    char const * name() const override { return "ThreadPool4"; }
+    static char const * Name() { return "ThreadPool4 [task-tp]"; }
+
+    char const * name() const override { return Name(); }
+
   };
 
   /*! @} */

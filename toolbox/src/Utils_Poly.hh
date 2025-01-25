@@ -35,7 +35,7 @@
 #include <algorithm>
 
 #include "Utils_eigen.hh"
-#include "Utils_Algo748.hh"
+#include "Utils_AlgoBracket.hh"
 
 #endif
 
@@ -918,7 +918,7 @@ namespace Utils {
     };
 
     #ifndef DOXYGEN_SHOULD_SKIP_THIS
-    class Algo748_fun : public Algo748_base_fun<Real> {
+    class Bracket_fun : public Bracket_base_fun<Real> {
       Poly<Real> const * P = nullptr;
     public:
       void setup( Poly<Real> const * Pin ) { P = Pin; }
@@ -928,8 +928,8 @@ namespace Utils {
 
   private:
 
-    Algo748<Real>    m_solver;
-    Algo748_fun      m_fun;
+    AlgoBracket<Real> m_solver;
+    Bracket_fun       m_fun;
 
     vector<Poly_t>   m_sturm;
     vector<Interval> m_intervals;

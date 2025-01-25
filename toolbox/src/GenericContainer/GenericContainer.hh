@@ -1716,6 +1716,14 @@ namespace GC_namespace {
 
     //!
     //! Get the stored value in the map as boolean.
+    //!
+    //! \param[in] args  keys lists sequence
+    //! \return the boolean stored in the container
+    //!
+    bool_type get_map_bool( std::initializer_list<string> args ) const;
+
+    //!
+    //! Get the stored value in the map as boolean.
     //! The key is searched between the strings in `keys`
     //! the first one found return the boolena value.
     //!
@@ -1735,6 +1743,14 @@ namespace GC_namespace {
     //! \return The integer value stored in the container.
     //!
     int_type get_map_int( char const key[], char const where[] = "" ) const;
+
+    //!
+    //! Get the stored value in the map as an integer.
+    //!
+    //! \param[in] args  keys lists sequence
+    //! \return the integer stored in the container
+    //!
+    int_type get_map_int( std::initializer_list<string> args ) const;
 
     //!
     //! \brief Get the stored value in the map as an integer from a list of keys.
@@ -1760,6 +1776,14 @@ namespace GC_namespace {
     real_type get_map_number( char const key[], char const where[] = "" ) const;
 
     //!
+    //! Get the stored value in the map as a real number.
+    //!
+    //! \param[in] args  keys lists sequence
+    //! \return the real number stored in the container
+    //!
+    real_type get_map_number( std::initializer_list<string> args ) const;
+
+    //!
     //! \brief Get the stored value in the map as a real number from a list of keys.
     //!
     //! This function searches for the first matching key among the provided strings in `keys`
@@ -1781,6 +1805,14 @@ namespace GC_namespace {
     //! \return A reference to the string stored in the container.
     //!
     string_type const & get_map_string( char const key[], char const where[] = "" ) const;
+
+    //!
+    //! Get the stored value in the map as a string.
+    //!
+    //! \param[in] args  keys lists sequence
+    //! \return the string stored in the container
+    //!
+    string_type const & get_map_string( std::initializer_list<string> args ) const;
 
     //!
     //! \brief Get the stored value in the map as a string from a list of keys.
@@ -1806,6 +1838,14 @@ namespace GC_namespace {
     vec_real_type const & get_map_vec_real( char const key[], char const where[] = "" ) const;
 
     //!
+    //! Get the stored value in the map as a  vector of real numbers.
+    //!
+    //! \param[in] args  keys lists sequence
+    //! \return the vector of real numbers stored in the container
+    //!
+    vec_real_type const & get_map_vec_real( std::initializer_list<string> args ) const;
+
+    //!
     //! \brief Get the stored value in the map as a vector of real numbers from a list of keys.
     //!
     //! This function searches for the first matching key among the provided strings in `keys`
@@ -1829,6 +1869,14 @@ namespace GC_namespace {
     vec_complex_type const & get_map_vec_complex( char const key[], char const where[] = "" ) const;
 
     //!
+    //! Get the stored value in the map as a  vector of complex numbers.
+    //!
+    //! \param[in] args  keys lists sequence
+    //! \return the vector of complex numbers stored in the container
+    //!
+    vec_complex_type const & get_map_vec_complex( std::initializer_list<string> args ) const;
+
+    //!
     //! \brief Get the stored value in the map as a vector of complex numbers from a list of keys.
     //!
     //! This function searches for the first matching key among the provided strings in `keys`
@@ -1850,6 +1898,14 @@ namespace GC_namespace {
     //! \return A reference to the vector of strings stored in the container.
     //!
     vec_string_type const & get_map_vec_string( char const key[], char const where[] = "" ) const;
+
+    //!
+    //! Get the stored value in the map as a  vector of strings.
+    //!
+    //! \param[in] args  keys lists sequence
+    //! \return the vector of strings stored in the container
+    //!
+    vec_string_type const & get_map_vec_string( std::initializer_list<string> args ) const;
 
     //!
     //! \brief Get the stored value in the map as a vector of strings from a list of keys.
@@ -4003,14 +4059,13 @@ namespace GC_namespace {
     bool from_json( istream_type & stream );
     bool from_json2( istream_type & stream );
 
-#if 0
     //!
     //! Print the contents of the object in TOML syntax
     //!
     //! \param[in] stream output stream
     //! \param[in] prefix strig to be prepended to any field of the `GenericContainer`
     //!
-    void to_toml( ostream_type & stream, string_type const & prefix = "" ) const;
+    bool to_toml( ostream_type & stream ) const;
 
     //!
     //! Read the contents of stream in JSON syntax
@@ -4019,7 +4074,6 @@ namespace GC_namespace {
     //! \return true if conversion successful
     //!
     bool from_toml( istream_type & stream );
-#endif
 
     //!
     //! Collapse heterogeneous vectors into a unified type.

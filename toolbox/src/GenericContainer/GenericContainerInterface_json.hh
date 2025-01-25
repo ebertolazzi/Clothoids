@@ -108,13 +108,10 @@ namespace GC_namespace {
   //!
   inline
   void
-  GC_to_JSON(
-    GenericContainer const & gc,
-    string                 & DATA
-  ) {
+  GC_to_JSON( GenericContainer const & gc, std::string & res ) {
     ostringstream stream;
     gc.to_json( stream );
-    DATA = stream.str();
+    res = stream.str();
   }
 
   //!

@@ -169,19 +169,14 @@ namespace Utils {
 #else
   class TicToc {
 
-    using real_type = double;
-    #ifdef TIC_TOC_USE_HRC
-    using clock = std::chrono::high_resolution_clock;
-    #else
-    using clock = std::chrono::steady_clock;
-    #endif
-
+    using real_type          = double;
+    using clock              = std::chrono::high_resolution_clock;
     using elapsed_resolution = std::chrono::microseconds;
 
     clock::time_point m_start_time;
     clock::time_point m_stop_time;
 
-    elapsed_resolution m_elapsed_time;
+    elapsed_resolution m_elapsed_time{0};
 
    public:
 
@@ -194,9 +189,7 @@ namespace Utils {
     //! The constructor initializes the elapsed time to zero and calls
     //! the `tic()` function to start the timing.
     //!
-    TicToc()
-    : m_elapsed_time(0)
-    { this->tic(); }
+    TicToc() { this->tic(); }
 
     ~TicToc() = default;
 
@@ -205,7 +198,9 @@ namespace Utils {
     //!
     //! This function captures the current time point, marking the start of the timing.
     //!
-    void tic();
+    void
+    tic()
+    { m_start_time = clock::now(); }
 
     //!
     //! \brief End timing.
@@ -213,35 +208,39 @@ namespace Utils {
     //! This function captures the current time point, marking the end of the timing
     //! and calculates the elapsed time.
     //!
-    void toc();
+    void
+    toc() {
+      m_stop_time    = clock::now();
+      m_elapsed_time = std::chrono::duration_cast<elapsed_resolution>(m_stop_time - m_start_time);
+    }
 
     //!
     //! \brief Return elapsed time (between tic-toc) in seconds.
     //!
     //! \return The elapsed time in seconds as a double.
     //!
-    real_type elapsed_s() const;
+    real_type elapsed_s() const { return real_type(1e-6*m_elapsed_time.count()); }
 
     //!
     //! \brief Return elapsed time (between tic-toc) in milliseconds.
     //!
     //! \return The elapsed time in milliseconds as a double.
     //!
-    real_type elapsed_ms() const;
+    real_type elapsed_ms() const { return real_type(1e-3*m_elapsed_time.count()); }
 
     //!
     //! \brief Return elapsed time (between tic-toc) in microseconds.
     //!
     //! \return The elapsed time in microseconds as a double.
     //!
-    real_type elapsed_mus() const;
+    real_type elapsed_mus() const { return real_type(m_elapsed_time.count()); }
 
     //!
     //! \brief Return elapsed time (between tic-toc) in nanoseconds.
     //!
     //! \return The elapsed time in nanoseconds as a double.
     //!
-    real_type elapsed_ns() const;
+    real_type elapsed_ns() const { return real_type(1e3*m_elapsed_time.count()); }
   };
 
   //!

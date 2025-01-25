@@ -2347,6 +2347,20 @@ namespace GC_namespace {
   }
 
   bool_type
+  GenericContainer::get_map_bool( std::initializer_list<string> args ) const {
+    GenericContainer const * p{ this };
+    string msg{ "" };
+    for ( string const & key : args ) {
+      msg += " -> `";
+      msg += key;
+      msg += '`';
+      GC_ASSERT( p->exists(key), "in the map sequence: " << msg << " last key is missing" );
+      p = &(*p)(key);
+    }
+    return p->get_bool(msg.c_str());
+  }
+
+  bool_type
   GenericContainer::get_map_bool(
     vec_string_type const & keys,
     char const              where[]
@@ -2362,6 +2376,20 @@ namespace GC_namespace {
   ) const {
     GC_ASSERT( this->exists(key), where << " key: `" << key << "` is missing" );
     return this->m_data.m->at(key).get_as_int( where );
+  }
+
+  int_type
+  GenericContainer::get_map_int( std::initializer_list<string> args ) const {
+    GenericContainer const * p{ this };
+    string msg{ "" };
+    for ( string const & key : args ) {
+      msg += " -> `";
+      msg += key;
+      msg += '`';
+      GC_ASSERT( p->exists(key), "in the map sequence: " << msg << " last key is missing" );
+      p = &(*p)(key);
+    }
+    return p->get_int(msg.c_str());
   }
 
   int_type
@@ -2383,6 +2411,20 @@ namespace GC_namespace {
   }
 
   real_type
+  GenericContainer::get_map_number( std::initializer_list<string> args ) const {
+    GenericContainer const * p{ this };
+    string msg{ "" };
+    for ( string const & key : args ) {
+      msg += " -> `";
+      msg += key;
+      msg += '`';
+      GC_ASSERT( p->exists(key), "in the map sequence: " << msg << " last key is missing" );
+      p = &(*p)(key);
+    }
+    return p->get_number(msg.c_str());
+  }
+
+  real_type
   GenericContainer::get_map_number(
     vec_string_type const & keys,
     char const              where[]
@@ -2398,6 +2440,20 @@ namespace GC_namespace {
   ) const {
     GC_ASSERT( this->exists(key), where << " key: `" << key << "` is missing" );
     return this->m_data.m->at(key).get_string( where );
+  }
+
+  string_type const &
+  GenericContainer::get_map_string( std::initializer_list<string> args ) const {
+    GenericContainer const * p{ this };
+    string msg{ "" };
+    for ( string const & key : args ) {
+      msg += " -> `";
+      msg += key;
+      msg += '`';
+      GC_ASSERT( p->exists(key), "in the map sequence: " << msg << " last key is missing" );
+      p = &(*p)(key);
+    }
+    return p->get_string(msg.c_str());
   }
 
   string_type const &
@@ -2419,6 +2475,20 @@ namespace GC_namespace {
   }
 
   vec_real_type const &
+  GenericContainer::get_map_vec_real( std::initializer_list<string> args ) const {
+    GenericContainer const * p{ this };
+    string msg{ "" };
+    for ( string const & key : args ) {
+      msg += " -> `";
+      msg += key;
+      msg += '`';
+      GC_ASSERT( p->exists(key), "in the map sequence: " << msg << " last key is missing" );
+      p = &(*p)(key);
+    }
+    return p->get_vec_real(msg.c_str());
+  }
+
+  vec_real_type const &
   GenericContainer::get_map_vec_real(
     vec_string_type const & keys,
     char const              where[]
@@ -2437,6 +2507,20 @@ namespace GC_namespace {
   }
 
   vec_complex_type const &
+  GenericContainer::get_map_vec_complex( std::initializer_list<string> args ) const {
+    GenericContainer const * p{ this };
+    string msg{ "" };
+    for ( string const & key : args ) {
+      msg += " -> `";
+      msg += key;
+      msg += '`';
+      GC_ASSERT( p->exists(key), "in the map sequence: " << msg << " last key is missing" );
+      p = &(*p)(key);
+    }
+    return p->get_vec_complex(msg.c_str());
+  }
+
+  vec_complex_type const &
   GenericContainer::get_map_vec_complex(
     vec_string_type const & keys,
     char const              where[]
@@ -2452,6 +2536,20 @@ namespace GC_namespace {
   ) const {
     GC_ASSERT( this->exists(key), where << " key: `" << key << "` is missing" );
     return this->m_data.m->at(key).get_vec_string( where );
+  }
+
+  vec_string_type const &
+  GenericContainer::get_map_vec_string( std::initializer_list<string> args ) const {
+    GenericContainer const * p{ this };
+    string msg{ "" };
+    for ( string const & key : args ) {
+      msg += " -> `";
+      msg += key;
+      msg += '`';
+      GC_ASSERT( p->exists(key), "in the map sequence: " << msg << " last key is missing" );
+      p = &(*p)(key);
+    }
+    return p->get_vec_string(msg.c_str());
   }
 
   vec_string_type const &

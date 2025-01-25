@@ -67,10 +67,10 @@ namespace Utils {
     ostream_type * m_stream{nullptr}; //!< Output stream pointer
     int m_level{4};                   //!< Message level threshold
 
-    Console_style m_message_style = { rang::style::reset, rang::fg::reset, rang::bg::reset }; //!< Message style
-    Console_style m_warning_style = { rang::style::reset, rang::fg::yellow, rang::bg::reset }; //!< Warning style
-    Console_style m_error_style   = { rang::style::italic, rang::fg::red, rang::bg::reset }; //!< Error style
-    Console_style m_fatal_style   = { rang::style::underline, rang::fg::red, rang::bg::reset }; //!< Fatal style
+    Console_style m_message_style = { rang::style::reset,     rang::fg::reset,  rang::bg::reset }; //!< Message style
+    Console_style m_warning_style = { rang::style::reset,     rang::fg::yellow, rang::bg::reset }; //!< Warning style
+    Console_style m_error_style   = { rang::style::italic,    rang::fg::red,    rang::bg::reset }; //!< Error style
+    Console_style m_fatal_style   = { rang::style::underline, rang::fg::red,    rang::bg::reset }; //!< Fatal style
 
   public:
     //! Deleted default constructor.

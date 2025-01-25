@@ -113,13 +113,10 @@ namespace GC_namespace {
   //!
   inline
   void
-  GC_to_YAML(
-    GenericContainer const & gc,
-    string                 & DATA
-  ) {
+  GC_to_YAML( GenericContainer const & gc, std::string & res ) {
     ostringstream stream;
     gc.to_yaml( stream );
-    DATA = stream.str();
+    res = stream.str();
   }
 
   //!
