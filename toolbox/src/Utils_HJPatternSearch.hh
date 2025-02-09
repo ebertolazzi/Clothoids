@@ -225,9 +225,9 @@ namespace Utils {
     //! \param name The name of this instance for identification.
     //!
     explicit
-    HJPatternSearch( string const & name )
+    HJPatternSearch( string_view name )
     : m_name(name)
-    , m_base_value("HJ_"+name)
+    , m_base_value( string("HJ_")+string(name) )
     {}
 
     //!
@@ -235,7 +235,7 @@ namespace Utils {
     //!
     //! \return The name of the instance.
     //!
-    string const & name(void) const { return m_name; }
+    string_view name(void) const { return m_name; }
 
     //!
     //! \brief Sets up the pattern search with the specified dimension and objective function.

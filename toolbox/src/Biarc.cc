@@ -31,13 +31,13 @@ namespace G2lib {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   Biarc::Biarc(
-    real_type x0,
-    real_type y0,
-    real_type theta0,
-    real_type x1,
-    real_type y1,
-    real_type theta1,
-    string const & name
+    real_type   x0,
+    real_type   y0,
+    real_type   theta0,
+    real_type   x1,
+    real_type   y1,
+    real_type   theta1,
+    string_view name
   ) : BaseCurve( name )
   {
     bool ok = build( x0, y0, theta0, x1, y1, theta1 );
@@ -52,8 +52,7 @@ namespace G2lib {
 
   void
   Biarc::setup( GenericContainer const & gc ) {
-    string cwhere{ fmt::format("Biarc[{}]::setup( gc ):", this->name() ) };
-    char const * where{ cwhere.c_str() };
+    string const where{ fmt::format("Biarc[{}]::setup( gc ):", this->name() ) };
     real_type x0     = gc.get_map_number("x0",     where );
     real_type y0     = gc.get_map_number("y0",     where );
     real_type theta0 = gc.get_map_number("theta0", where );

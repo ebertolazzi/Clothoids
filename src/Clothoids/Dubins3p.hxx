@@ -70,7 +70,7 @@ namespace G2lib {
   //!  \param[in] str name of the `Dubins3pBuildType` type
   //!  \return the `Dubins3pBuildType` enumerator
   //!
-  Dubins3pBuildType string_to_Dubins3pBuildType( string const & str );
+  Dubins3pBuildType string_to_Dubins3pBuildType( string_view str );
 
   //!
   //! Class to manage a circle arc
@@ -148,7 +148,7 @@ namespace G2lib {
     //! Build an empty circle
     //!
     Dubins3p() = delete;
-    Dubins3p( string const & name ) : BaseCurve( name ) {};
+    Dubins3p( string_view name ) : BaseCurve( name ) {};
 
     void setup( GenericContainer const & gc ) override;
 
@@ -185,7 +185,7 @@ namespace G2lib {
       real_type         thetaf,
       real_type         k_max,
       Dubins3pBuildType method,
-      string const &    name
+      string_view       name
     ) : BaseCurve( name ) {
       this->build( xi, yi, thetai, xm, ym, xf, yf, thetaf, k_max, method );
     }

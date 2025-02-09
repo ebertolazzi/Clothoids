@@ -60,7 +60,7 @@ namespace Utils {
   }
 
   void
-  SHA3::hash_string( const char * str ){
+  SHA3::hash_string( string_view str ){
     int byte = 0;
     while( str[byte] != '\0' ){
       hash( static_cast<int>( static_cast<uint8_t>(str[byte]) ) );
@@ -69,7 +69,7 @@ namespace Utils {
   }
 
   void
-  SHA3::hash_hex_string( const char *str ){
+  SHA3::hash_hex_string( string_view str ){
     int byte = 0;
     while( str[byte] != '\0' ){
       int f = str[byte];

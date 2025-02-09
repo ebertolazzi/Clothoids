@@ -202,7 +202,7 @@ namespace Utils {
   //! \param DIM The dimension (size) of the array.
   //! \param line The line number where the check is performed.
   //! \param file The name of the file where the check is performed.
-  void check_NaN(double const* pv, char const* v_name, int DIM, int line, char const* file);
+  void check_NaN( double const* pv, string_view v_name, int DIM, int line, string_view file );
 
   //! Checks for NaN values in an array of floats and logs an error if found.
   //!
@@ -211,7 +211,7 @@ namespace Utils {
   //! \param DIM The dimension (size) of the array.
   //! \param line The line number where the check is performed.
   //! \param file The name of the file where the check is performed.
-  void check_NaN(float const* pv, char const* v_name, int DIM, int line, char const* file);
+  void check_NaN( float const* pv, string_view v_name, int DIM, int line, string_view file );
 
   //============================================================================
 
@@ -399,7 +399,7 @@ namespace Utils {
   //! \param line The line number where the check is performed.
   //! \param file The name of the file where the check is performed.
   //! \deprecated
-  static inline void checkNaN(double const* pv, char const* v_name, int DIM, int line, char const* file) {
+  static inline void checkNaN( double const* pv, string_view v_name, int DIM, int line, string_view file ) {
     check_NaN(pv, v_name, DIM, line, file);
   }
 
@@ -411,7 +411,7 @@ namespace Utils {
   //! \param line The line number where the check is performed.
   //! \param file The name of the file where the check is performed.
   //! \deprecated
-  static inline void checkNaN(float const* pv, char const* v_name, int DIM, int line, char const* file) {
+  static inline void checkNaN( float const* pv, string_view v_name, int DIM, int line, string_view file ) {
       check_NaN(pv, v_name, DIM, line, file);
   }
 

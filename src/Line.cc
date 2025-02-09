@@ -96,8 +96,7 @@ namespace G2lib {
 
   void
   LineSegment::setup( GenericContainer const & gc ) {
-    string cwhere{ fmt::format("LineSegment[{}]::setup( gc ):", this->name() ) };
-    char const * where{ cwhere.c_str() };
+    string const where{ fmt::format("LineSegment[{}]::setup( gc ):", this->name() ) };
     real_type x0 = gc.get_map_number("x0", where );
     real_type y0 = gc.get_map_number("y0", where );
     real_type x1 = gc.get_map_number("x1", where );

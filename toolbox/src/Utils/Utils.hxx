@@ -99,6 +99,7 @@
 #include <functional>		// For std::bind()
 
 #include <string>
+#include <string_view>
 #include <vector>
 #include <list>
 #include <map>
@@ -161,6 +162,7 @@
 namespace Utils {
   #ifndef DOXYGEN_SHOULD_SKIP_THIS
   using string       = std::string;
+  using string_view  = std::string_view;
   using ostream_type = std::basic_ostream<char>;
   using istream_type = std::basic_istream<char>;
   #endif
@@ -188,14 +190,10 @@ namespace Utils {
 
 namespace Utils {
 
-  #ifndef DOXYGEN_SHOULD_SKIP_THIS
-  using std::string;
-  #endif
-
   string basename( char const filename[] );
 
-  bool   get_environment( char const ename[], string & res );
-  void   set_environment( char const ename[], char const newval[], bool overwrite );
+  bool   get_environment( string_view ename, string & res );
+  void   set_environment( string_view ename, string_view newval, bool overwrite );
   void   get_MAC_address( std::map<string,string> & addr );
   string get_host_name();
   void   get_IP_address( std::vector<string> & addr );
@@ -206,9 +204,9 @@ namespace Utils {
   string get_user_name();
   string get_home_directory();
   string get_executable_path_name();
-  bool   check_if_file_exists( char const fname[] );
-  bool   check_if_dir_exists( char const dirname[] );
-  bool   make_directory( char const dirname[], unsigned mode = 0777 );
+  bool   check_if_file_exists( string_view fname );
+  bool   check_if_dir_exists( string_view dirname );
+  bool   make_directory( string_view dirname, unsigned mode = 0777 );
 
 
   template <typename T_int, typename T_real>
@@ -291,42 +289,42 @@ namespace Utils {
   static
   inline
   bool
-  is_lower( string const & s ) {
+  is_lower( string_view s ) {
     return std::all_of( s.begin(), s.end(), islower );
   }
 
   static
   inline
   bool
-  is_upper( string const & s ) {
+  is_upper( string_view s ) {
     return std::all_of( s.begin(), s.end(), isupper );
   }
 
   static
   inline
   bool
-  is_alpha( string const & s ) {
+  is_alpha( string_view s ) {
     return std::all_of( s.begin(), s.end(), isalpha );
   }
 
   static
   inline
   bool
-  is_alphanum( string const & s ) {
+  is_alphanum( string_view s ) {
     return std::all_of( s.begin(), s.end(), isalnum );
   }
 
   static
   inline
   bool
-  is_digits( string const & s ) {
+  is_digits( string_view s ) {
     return std::all_of( s.begin(), s.end(), isdigit );
   }
 
   static
   inline
   bool
-  is_xdigits( string const & s ) {
+  is_xdigits( string_view s ) {
     return std::all_of( s.begin(), s.end(), isxdigit );
   }
 
@@ -373,8 +371,8 @@ namespace Utils {
   }
 
   string progress_bar( double progress, int width );
-  void   progress_bar( ostream &, double progress, int width, char const * msg );
-  void   progress_bar2( ostream &, double progress, int width, char const * msg );
+  void   progress_bar( ostream &, double progress, int width, string_view msg );
+  void   progress_bar2( ostream &, double progress, int width, string_view msg );
 
 }
 

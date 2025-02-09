@@ -58,7 +58,7 @@ namespace G2lib {
     //! Construct and empty biarc
     //!
     Biarc() = delete;
-    Biarc( string const & name ) : BaseCurve( name ) {};
+    Biarc( string_view name ) : BaseCurve( name ) {};
 
     ~Biarc() override = default;
 
@@ -85,13 +85,13 @@ namespace G2lib {
     //!
     explicit
     Biarc(
-      real_type x0,
-      real_type y0,
-      real_type theta0,
-      real_type x1,
-      real_type y1,
-      real_type theta1,
-      string const & name
+      real_type   x0,
+      real_type   y0,
+      real_type   theta0,
+      real_type   x1,
+      real_type   y1,
+      real_type   theta1,
+      string_view name
     );
 
     explicit

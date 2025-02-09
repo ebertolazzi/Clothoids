@@ -218,7 +218,7 @@ namespace Utils {
 
   template <typename T>
   void
-  Malloc<T>::must_be_empty( char const * where ) const {
+  Malloc<T>::must_be_empty( string_view where ) const {
     if ( m_num_allocated < m_num_total_values ) {
       string tmp = fmt::format(
         "in {} {}: not fully used!\nUnused: {} values\n",
@@ -239,7 +239,7 @@ namespace Utils {
 
   template <typename T>
   std::string
-  Malloc<T>::info( char const * where ) const {
+  Malloc<T>::info( string_view where ) const {
     std::size_t diff = m_num_allocated > m_num_total_values ?
                        m_num_allocated - m_num_total_values :
                        m_num_total_values - m_num_allocated;

@@ -48,8 +48,7 @@ namespace G2lib {
 
   void
   PolyLine::setup( GenericContainer const & gc ) {
-    string cwhere{ fmt::format("PolyLine[{}]::setup( gc ):", this->name() ) };
-    char const * where{ cwhere.c_str() };
+    string const where{ fmt::format("PolyLine[{}]::setup( gc ):", this->name() ) };
     GenericContainer::vec_real_type const & x = gc.get_map_vec_real("x", where );
     GenericContainer::vec_real_type const & y = gc.get_map_vec_real("y", where );
     integer n{ integer(x.size()) };

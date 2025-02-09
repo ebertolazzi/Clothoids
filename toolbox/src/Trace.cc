@@ -70,8 +70,8 @@ namespace Utils {
   void
   print_trace(
     int            line,
-    char const *   file,
-    string const & msg,
+    string_view    file,
+    string_view    msg,
     ostream_type & stream
   ) {
     fmt::print( stream,
@@ -96,9 +96,9 @@ namespace Utils {
 
   string
   Runtime_TraceError::grab_backtrace(
-    string const & reason,
-    char const *   file,
-    int            line
+    string_view reason,
+    string_view file,
+    int         line
   ) const {
     return fmt::format( "\n{}\nOn File:{}:{}\n", reason, file, line );
   }
@@ -108,11 +108,11 @@ namespace Utils {
   static
   inline
   string
-  demang( char const * mangled_name ) {
+  demang( string_view mangled_name ) {
     if ( mangled_name == nullptr ) return string{""};
     int status = 0;
-    string retval = mangled_name;
-    char * name = abi::__cxa_demangle( mangled_name, nullptr, nullptr, &status );
+    string retval{mangled_name};
+    char * name = abi::__cxa_demangle( mangled_name.data(), nullptr, nullptr, &status );
     if ( status == 0 ) {
       retval = name;
       // extract only name
@@ -127,8 +127,8 @@ namespace Utils {
   void
   print_trace(
     int            line,
-    char const *   file,
-    string const & reason,
+    string_view    file,
+    string_view    reason,
     ostream_type & stream
   ) {
 
@@ -179,9 +179,9 @@ namespace Utils {
 
   string
   Runtime_TraceError::grab_backtrace(
-    string const & reason,
-    char const *   file,
-    int            line
+    string_view reason,
+    string_view file,
+    int         line
   ) const {
     ostringstream ost;
     print_trace( line, file, reason, ost );

@@ -91,6 +91,9 @@
 
 #endif
 
+#include <string>
+#include <string_view>
+
 namespace Utils {
 
   using std::runtime_error;
@@ -128,29 +131,9 @@ namespace Utils {
     //!
     explicit
     Runtime_Error(
-      std::string const & reason,
-      char const *        file,
-      int                 line
-    )
-    : std::runtime_error( fmt::format( "\n{}\nOn File:{}:{}\n", reason, file, line ) )
-    { }
-
-    //!
-    //! \brief Constructs a Runtime_Error instance with a given reason.
-    //!
-    //! This constructor initializes the error with a specified reason,
-    //! the file where the error occurred, and the line number. It formats
-    //! the error message accordingly.
-    //!
-    //! \param reason A C-style string that describes the reason for the error.
-    //! \param file The name of the file where the error occurred.
-    //! \param line The line number in the file where the error occurred.
-    //!
-    explicit
-    Runtime_Error(
-      char const * reason,
-      char const * file,
-      int          line
+      string_view reason,
+      string_view file,
+      int         line
     )
     : std::runtime_error( fmt::format( "\n{}\nOn File:{}:{}\n", reason, file, line ) )
     { }
@@ -166,6 +149,46 @@ namespace Utils {
     //!
     char const * what() const noexcept override;
   };
+
+  inline string fmt_table_left_top()    { return "┌"; };
+  inline string fmt_table_left_middle() { return "├"; };
+  inline string fmt_table_left_bottom() { return "└"; };
+  
+  inline string fmt_table_middle_top()    { return "┬"; };
+  inline string fmt_table_middle_middle() { return "┼"; };
+  inline string fmt_table_middle_bottom() { return "┴"; };
+
+  inline string fmt_table_right_top()    { return "┐"; };
+  inline string fmt_table_right_middle() { return "┤"; };
+  inline string fmt_table_right_bottom() { return "┘"; };
+  
+  inline string fmt_table_cross() { return "┼"; };
+
+  inline string fmt_table_bar()   { return "─"; }
+  inline string fmt_table_vbar()  { return "│"; }
+  inline string fmt_table_dot()   { return "•"; }
+  inline string fmt_table_vdots() { return "⋮"; }
+  
+  using std::string_view;
+
+  string fmt_table_row( unsigned width, string_view L,                string_view R, string_view F, string_view title,                        string_view align );
+  string fmt_table_row( unsigned width, string_view L, string_view C, string_view R, string_view F, std::initializer_list<string_view> names, string_view align );
+  string fmt_table_row( unsigned width, string_view L, string_view C, string_view R, string_view F, unsigned N );
+
+  inline string fmt_table_row        ( unsigned width, string_view title = "", string_view align = "^", string_view fill = " " ) { return fmt_table_row( width, "│", "│\n", fill, title, align ); }
+  inline string fmt_table_top_row    ( unsigned width, string_view title = "", string_view align = "^", string_view fill = "─" ) { return fmt_table_row( width, "┌", "┐\n", fill, title, align ); }
+  inline string fmt_table_middle_row ( unsigned width, string_view title = "", string_view align = "^", string_view fill = "─" ) { return fmt_table_row( width, "├", "┤\n", fill, title, align ); }
+  inline string fmt_table_bottom_row ( unsigned width, string_view title = "", string_view align = "^", string_view fill = "─" ) { return fmt_table_row( width, "└", "┘\n", fill, title, align ); }
+
+  inline string fmt_table_row        ( unsigned width, std::initializer_list<string_view> names, string_view align = "<", string_view fill = " " ) { return fmt_table_row( width, "│", "│", "│\n", fill, names, align ); }
+  inline string fmt_table_top_row    ( unsigned width, std::initializer_list<string_view> names, string_view align = "<", string_view fill = "─" ) { return fmt_table_row( width, "┌", "─", "┐\n", fill, names, align ); }
+  inline string fmt_table_middle_row ( unsigned width, std::initializer_list<string_view> names, string_view align = "<", string_view fill = "─" ) { return fmt_table_row( width, "├", "┼", "┤\n", fill, names, align ); }
+  inline string fmt_table_bottom_row ( unsigned width, std::initializer_list<string_view> names, string_view align = "<", string_view fill = "─" ) { return fmt_table_row( width, "└", "─", "┘\n", fill, names, align ); }
+
+  inline string fmt_table_row        ( unsigned width, unsigned N, string_view fill = " " ) { return fmt_table_row( width, "│", "│", "│\n", fill, N ); }
+  inline string fmt_table_top_row    ( unsigned width, unsigned N, string_view fill = "─" ) { return fmt_table_row( width, "┌", "┬", "┐\n", fill, N ); }
+  inline string fmt_table_middle_row ( unsigned width, unsigned N, string_view fill = "─" ) { return fmt_table_row( width, "├", "┼", "┤\n", fill, N ); }
+  inline string fmt_table_bottom_row ( unsigned width, unsigned N, string_view fill = "─" ) { return fmt_table_row( width, "└", "┴", "┘\n", fill, N ); }
 
 }
 

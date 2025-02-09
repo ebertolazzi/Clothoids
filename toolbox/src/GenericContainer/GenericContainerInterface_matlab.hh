@@ -71,7 +71,7 @@ namespace GC_namespace {
   //!
   //! Convert a string integer to a `mxArray`
   //!
-  void to_mxArray( string_type const & val, mxArray * & mx );
+  void to_mxArray( string_view val, mxArray * & mx );
 
   //!
   //! Convert a vector of boolean to a `mxArray`

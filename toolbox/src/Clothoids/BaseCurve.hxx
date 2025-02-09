@@ -203,7 +203,7 @@ namespace G2lib {
     //!
     //! Initialize the class storing the curve type.
     //!
-    BaseCurve( string const & name ) : m_name(name) {}
+    BaseCurve( string_view name ) : m_name(name) {}
 
     virtual
     ~BaseCurve() = default;
@@ -217,8 +217,8 @@ namespace G2lib {
     //!
     virtual CurveType type() const = 0;
 
-    string name()      const { return m_name; }
-    string type_name() const { return to_string(type()); }
+    string_view name()      const { return m_name; }
+    string_view type_name() const { return to_string(type()); }
 
     // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 

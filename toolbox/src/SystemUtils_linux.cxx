@@ -30,8 +30,8 @@ namespace Utils {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   */
   bool
-  get_environment( char const ename[], string & res ) {
-    char const * RES = getenv(ename);
+  get_environment( string_view ename, string & res ) {
+    char const * RES = getenv(ename.data());
     if ( RES == nullptr ) return false;
     res = string{RES};
     return true;
@@ -41,8 +41,8 @@ namespace Utils {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   */
   void
-  set_environment( char const ename[], char const newval[], bool overwrite ) {
-    int res = setenv( ename, newval, overwrite ? 1 : 0 );
+  set_environment( string_view ename, string_view newval, bool overwrite ) {
+    int res = setenv( ename.data(), newval.data(), overwrite ? 1 : 0 );
     UTILS_ASSERT( res == 0, "set_environment({},{},{}) faled\n", ename, newval, overwrite );
   }
 
@@ -186,9 +186,9 @@ namespace Utils {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   */
   bool
-  check_if_file_exists( char const * fname ) {
+  check_if_file_exists( string_view fname ) {
     struct stat buffer;
-    if (stat (fname, &buffer) == 0) return S_ISREG(buffer.st_mode);
+    if (stat (fname.data(), &buffer) == 0) return S_ISREG(buffer.st_mode);
     return false;
   }
 
@@ -196,9 +196,9 @@ namespace Utils {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   */
   bool
-  check_if_dir_exists( char const * dirname ) {
+  check_if_dir_exists( string_view dirname ) {
     struct stat buffer;
-    if (stat (dirname, &buffer) == 0) return S_ISDIR(buffer.st_mode);
+    if (stat (dirname.data(), &buffer) == 0) return S_ISDIR(buffer.st_mode);
     return false;
   }
 
@@ -206,9 +206,9 @@ namespace Utils {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   */
   bool
-  make_directory( char const * dirname, unsigned mode ) {
+  make_directory( string_view dirname, unsigned mode ) {
     bool ok = check_if_dir_exists( dirname );
-    if ( !ok ) ok = mkdir( dirname, mode_t(mode) ) == 0;
+    if ( !ok ) ok = mkdir( dirname.data(), mode_t(mode) ) == 0;
     return ok;
   }
 

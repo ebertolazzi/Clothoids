@@ -32,7 +32,7 @@ using namespace std;
 int test_int = 42;
 
 //  Pre-declaration to suppress some warnings.
-void test_call_once(int, char const *);
+void test_call_once( int, string_view );
 
 int cond = 0;
 std::mutex m;
@@ -42,18 +42,18 @@ std::condition_variable_any cv_any;
 
 std::atomic<unsigned long long> failure_count {0};
 template<class ... Args>
-void log_error (char const * fmtString, Args ...args) {
+void log_error ( string_view fmtString, Args ...args ) {
   ++failure_count;
   printf("%s", "ERROR: ");
-  printf(fmtString, args...);
+  printf(fmtString.data(), args...);
   printf("%s", "\n");
   fflush(stdout);
 }
 
 
 template<class ... Args>
-void log (char const * fmtString, Args ...args) {
-  printf(fmtString, args...);
+void log ( string_view fmtString, Args ...args ) {
+  printf(fmtString.data(), args...);
   printf("%s", "\n");
   fflush(stdout);
 }

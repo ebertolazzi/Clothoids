@@ -184,9 +184,9 @@ namespace Utils {
     //! \param name The name to be assigned to this instance of the Nelder-Mead optimizer.
     //!
     explicit
-    NelderMead( string const & name )
+    NelderMead( string_view name )
     : m_name(name)
-    , m_base_value("NelderMead_"+name)
+    , m_base_value( string("NelderMead_")+string(name) )
     {}
 
     //!
@@ -194,7 +194,7 @@ namespace Utils {
     //!
     //! \return A string representing the name of the Nelder-Mead optimizer instance.
     //!
-    string const & name(void) const { return m_name; }
+    string_view name(void) const { return m_name; }
 
     //!
     //! \brief Setup the optimizer with the function and console interface.

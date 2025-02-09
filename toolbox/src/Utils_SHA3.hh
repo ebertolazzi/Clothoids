@@ -70,7 +70,7 @@ namespace Utils {
     //!
     //! \param str The null-terminated string of bytes to add to the hash.
     //!
-    void hash_string( char const * str );
+    void hash_string( string_view str );
 
     //!
     //! \brief Adds an entire hexadecimal string to the message.
@@ -80,7 +80,7 @@ namespace Utils {
     //!
     //! \param str The null-terminated hexadecimal string of bytes to add to the hash.
     //!
-    void hash_hex_string( char const * str );
+    void hash_hex_string( string_view str );
 
     //!
     //! \brief Returns a representation of the digest as a hexadecimal string.

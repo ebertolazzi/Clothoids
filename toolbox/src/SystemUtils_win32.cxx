@@ -32,9 +32,9 @@ namespace Utils {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   */
   bool
-  get_environment( char const ename[], string & res ) {
+  get_environment( string_view ename, string & res ) {
     char buffer[1024];
-    DWORD var_size = GetEnvironmentVariable(ename,buffer,1024);
+    DWORD var_size = GetEnvironmentVariable(ename.data(),buffer,1024);
     res = string{buffer};
     return var_size != 0;
   }
@@ -43,8 +43,8 @@ namespace Utils {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   */
   void
-  set_environment( char const ename[], char const newval[], bool /* overwrite */ ) {
-    SetEnvironmentVariable( ename, newval );
+  set_environment( string_view ename, string_view newval, bool /* overwrite */ ) {
+    SetEnvironmentVariable( ename.data(), newval.data() );
   }
 
   /*
@@ -212,13 +212,13 @@ namespace Utils {
   */
 
   bool
-  check_if_file_exists( char const * fname ) {
+  check_if_file_exists( string_view fname ) {
     #ifdef UTILS_OS_MINGW
       struct stat buffer;
-      if (stat (fname, &buffer) == 0) return S_ISREG(buffer.st_mode);
+      if (stat (fnam.data(), &buffer) == 0) return S_ISREG(buffer.st_mode);
       return false;
     #else
-      DWORD ftyp = GetFileAttributesA(fname);
+      DWORD ftyp = GetFileAttributesA(fname.data());
       if (ftyp == INVALID_FILE_ATTRIBUTES) return false;  //something is wrong with your path!
       if (ftyp & FILE_ATTRIBUTE_DIRECTORY) return false;  // this is a directory!
       return true; // this is not a directory!
@@ -229,13 +229,13 @@ namespace Utils {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   */
   bool
-  check_if_dir_exists( char const * dirname ) {
+  check_if_dir_exists( string_view dirname ) {
     #ifdef UTILS_OS_MINGW
       struct stat buffer;
-      if (stat (dirname, &buffer) == 0) return S_ISDIR(buffer.st_mode);
+      if (stat (dirname.data(), &buffer) == 0) return S_ISDIR(buffer.st_mode);
       return false;
     #else
-      DWORD ftyp = GetFileAttributesA(dirname);
+      DWORD ftyp = GetFileAttributesA(dirname.data());
       if (ftyp == INVALID_FILE_ATTRIBUTES) return false;  //something is wrong with your path!
       if (ftyp & FILE_ATTRIBUTE_DIRECTORY) return true;   // this is a directory!
       return false; // this is not a directory!
@@ -246,10 +246,10 @@ namespace Utils {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   */
   bool
-  make_directory( char const * dirname, unsigned /* mode */ ) {
+  make_directory( string_view dirname, unsigned /* mode */ ) {
     bool ok = check_if_dir_exists( dirname );
     if ( ok ) return false;
-    CreateDirectoryA( dirname, NULL );
+    CreateDirectoryA( dirname.data(), NULL );
     return true;
   }
 

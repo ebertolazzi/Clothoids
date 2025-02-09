@@ -60,8 +60,7 @@ namespace G2lib {
 
   void
   ClothoidCurve::setup( GenericContainer const & gc ) {
-    string cwhere{ fmt::format("ClothoidCurve[{}]::setup( gc ):", this->name() ) };
-    char const * where{ cwhere.c_str() };
+    string const where{ fmt::format("ClothoidCurve[{}]::setup( gc ):", this->name() ) };
     real_type x0     = gc.get_map_number("x0",     where );
     real_type y0     = gc.get_map_number("y0",     where );
     real_type theta0 = gc.get_map_number("theta0", where );
@@ -74,7 +73,7 @@ namespace G2lib {
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  ClothoidCurve::ClothoidCurve( string const & name )
+  ClothoidCurve::ClothoidCurve( string_view name )
   : BaseCurve( name )
   {
     m_CD.m_x0     = 0;
@@ -94,13 +93,13 @@ namespace G2lib {
   // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 
   ClothoidCurve::ClothoidCurve(
-    real_type x0,
-    real_type y0,
-    real_type theta0,
-    real_type k,
-    real_type dk,
-    real_type L,
-    string const & name
+    real_type   x0,
+    real_type   y0,
+    real_type   theta0,
+    real_type   k,
+    real_type   dk,
+    real_type   L,
+    string_view name
   ) : BaseCurve( name ) {
     m_CD.m_x0     = x0;
     m_CD.m_y0     = y0;

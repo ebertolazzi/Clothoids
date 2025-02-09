@@ -41,13 +41,13 @@ namespace Utils {
 
   #ifdef UTILS_OS_WINDOWS
     string
-    basename( char const * path ) {
+    basename( string_view path ) {
       static char drive[100];
       static char dir[1024];
       static char fname[256];
       static char ext[128];
       errno_t e = _splitpath_s(
-        path,
+        path.data(),
         drive, 100,
         dir,   1024,
         fname, 256,
@@ -58,7 +58,7 @@ namespace Utils {
     }
   #else
     string
-    basename( char const * path ) {
+    basename( string_view path ) {
 
       if ( path[0] == '\0' ) return string("");
 

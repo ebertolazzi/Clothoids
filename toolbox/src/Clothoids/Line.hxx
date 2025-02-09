@@ -52,7 +52,7 @@ namespace G2lib {
     #include "BaseCurve_using.hxx"
 
     LineSegment() = delete;
-    LineSegment( string const & name ) : BaseCurve( name ) {};
+    LineSegment( string_view name ) : BaseCurve( name ) {};
 
     void setup( GenericContainer const & gc ) override;
 
@@ -67,11 +67,11 @@ namespace G2lib {
     //!
     explicit
     LineSegment(
-      real_type x0,
-      real_type y0,
-      real_type theta0,
-      real_type L,
-      string const & name
+      real_type   x0,
+      real_type   y0,
+      real_type   theta0,
+      real_type   L,
+      string_view name
     )
     : BaseCurve( name )
     , m_x0(x0)

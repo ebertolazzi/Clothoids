@@ -29,8 +29,8 @@
 namespace G2lib {
 
   Dubins3pBuildType
-  string_to_Dubins3pBuildType( string const & str ) {
-    map<string,Dubins3pBuildType> str_to_type {
+  string_to_Dubins3pBuildType( string_view str ) {
+    map<string_view,Dubins3pBuildType> str_to_type {
       {"sample",Dubins3pBuildType::SAMPLE_ONE_DEGREE},
       {"pattern",Dubins3pBuildType::PATTERN_SEARCH},
       {"pattern_bracket",Dubins3pBuildType::PATTERN_SEARCH_WITH_ALGO_BRACKET},
@@ -123,8 +123,7 @@ namespace G2lib {
 
   void
   Dubins3p::setup( GenericContainer const & gc ) {
-    string cwhere{ fmt::format("Dubins[{}]::setup( gc ):", this->name() ) };
-    char const * where{ cwhere.c_str() };
+    string const where{ fmt::format("Dubins[{}]::setup( gc ):", this->name() ) };
     real_type x0     { gc.get_map_number("x0",     where ) };
     real_type y0     { gc.get_map_number("y0",     where ) };
     real_type theta0 { gc.get_map_number("theta0", where ) };
@@ -636,8 +635,9 @@ return m_Dubins1.FUN(s)
 
   string
   Dubins3p::solution_type_string() const {
-    return m_Dubins0.solution_type_string()+
-           m_Dubins1.solution_type_string();
+    string s0{m_Dubins0.solution_type_string()};
+    string s1{m_Dubins0.solution_type_string()};
+    return s0+s1;
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

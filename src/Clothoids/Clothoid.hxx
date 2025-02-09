@@ -129,7 +129,7 @@ namespace G2lib {
     //!
     //! Build an empty clothoid curve
     //!
-    ClothoidCurve( string const & name );
+    ClothoidCurve( string_view name );
 
     //!
     //! Build a copy of an existing clothoid curve
@@ -151,13 +151,13 @@ namespace G2lib {
     //!
     explicit
     ClothoidCurve(
-      real_type      x0,
-      real_type      y0,
-      real_type      theta0,
-      real_type      k,
-      real_type      dk,
-      real_type      L,
-      string const & name
+      real_type   x0,
+      real_type   y0,
+      real_type   theta0,
+      real_type   k,
+      real_type   dk,
+      real_type   L,
+      string_view name
     );
 
     //!

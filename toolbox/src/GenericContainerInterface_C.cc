@@ -82,7 +82,7 @@ namespace GC_namespace {
     int push_map_position( char const pos[] );
     int init_map_key();
 
-    char const * next_map_key();
+    string_view next_map_key();
 
     int reset();
 
@@ -176,7 +176,7 @@ namespace GC_namespace {
     return ok;
   }
 
-  char const *
+  string_view
   GenericContainerExplorer::next_map_key() {
     if ( map_iterator != ptr_map->end() )
       return map_iterator++->first.c_str();
@@ -349,9 +349,9 @@ GC_get_type() {
 
 char const *
 GC_get_type_name() {
-  static char const empty[] = "";
+  static char const * empty{""};
   if ( gc_active == nullptr ) return empty;
-  return gc_active->top()->get_type_name();
+  return gc_active->top()->get_type_name().data();
 }
 
 //..............................................................................
@@ -450,7 +450,7 @@ GC_get_complex_im( ) {
 char const *
 GC_get_string( ) {
   if ( gc_active == nullptr ) return nullptr;
-  return gc_active->top()->get_string().c_str();
+  return gc_active->top()->get_string().data();
 }
 
 //..............................................................................
@@ -543,7 +543,7 @@ GC_get_complex_imag_at_pos( int pos ) {
 char const *
 GC_get_string_at_pos( int pos ) {
   if ( gc_active == nullptr ) return nullptr;
-  return gc_active->top()->get_string_at( unsigned(pos) ).c_str();
+  return gc_active->top()->get_string_at( unsigned(pos) ).data();
 }
 
 //..............................................................................
@@ -735,7 +735,7 @@ GC_init_map_key() {
 char const *
 GC_get_next_key( void ) {
   if ( gc_active == nullptr ) return nullptr;
-  return gc_active->next_map_key();
+  return gc_active->next_map_key().data();
 }
 
 } // close extern "C"

@@ -55,7 +55,7 @@ namespace G2lib {
     //! Build an empty circle
     //!
     CircleArc() = delete;
-    CircleArc( string const & name ) : BaseCurve( name ) {};
+    CircleArc( string_view name ) : BaseCurve( name ) {};
 
     void setup( GenericContainer const & gc ) override;
 
@@ -77,12 +77,12 @@ namespace G2lib {
     //!
     explicit
     CircleArc(
-      real_type      x0,
-      real_type      y0,
-      real_type      theta0,
-      real_type      k,
-      real_type      L,
-      string const & name
+      real_type   x0,
+      real_type   y0,
+      real_type   theta0,
+      real_type   k,
+      real_type   L,
+      string_view name
     )
     : BaseCurve( name )
     , m_x0(x0)

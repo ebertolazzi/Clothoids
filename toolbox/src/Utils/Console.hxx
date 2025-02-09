@@ -33,7 +33,7 @@ namespace Utils {
    * \param filename C-style string representing the file name.
    * \return Base name of the file.
    */
-  string basename(char const * filename);
+  string basename( string_view filename );
 
   //!
   //! \brief Class to handle console output with different styles and levels.
@@ -153,17 +153,7 @@ namespace Utils {
      * \param msg_level The \ref console_level "level of the message" (default is 4).
      * \return Reference to this Console object for chaining.
      */
-    Console const & message(char const * msg, int msg_level = 4) const;
-
-    //! Output a message at a specified \ref console_level "level" using a string.
-    /*!
-     * \param msg       The message to output as a string.
-     * \param msg_level The \ref console_level "level of the message" (default is 4).
-     * \return Reference to this Console object for chaining.
-     */
-    Console const & message(string const & msg, int msg_level = 4) const {
-      return this->message(msg.c_str(), msg_level);
-    }
+    Console const & message( string_view msg, int msg_level = 4) const;
 
     //! Output a semaphore message.
     /*!
@@ -172,18 +162,7 @@ namespace Utils {
      * \param msg_level The \ref console_level "level of the message" (default is 0).
      * \return Reference to this Console object for chaining.
      */
-    Console const & semaphore(unsigned ryg, char const * msg, int msg_level = 0) const;
-
-    //! Output a semaphore message using a string.
-    /*!
-     * \param ryg Semaphore indicator (red, yellow, green).
-     * \param msg       The message to output as a string.
-     * \param msg_level The \ref console_level "level of the message" (default is 0).
-     * \return Reference to this Console object for chaining.
-     */
-    Console const & semaphore(unsigned ryg, string const & msg, int msg_level = 0) const {
-      return this->semaphore(ryg, msg.c_str(), msg_level);
-    }
+    Console const & semaphore(unsigned ryg, string_view msg, int msg_level = 0) const;
 
     //! Output a message with specified colors.
     /*!
@@ -192,66 +171,28 @@ namespace Utils {
      * \param msg_level The \ref console_level "level of the message" (default is 0).
      * \return Reference to this Console object for chaining.
      */
-    Console const & colors(unsigned c, char const * msg, int msg_level = 0) const;
-
-    //! Output a message with specified colors using a string.
-    /*!
-     * \param c Color code.
-     * \param msg       The message to output as a string.
-     * \param msg_level The \ref console_level "level of the message" (default is 0).
-     * \return Reference to this Console object for chaining.
-     */
-    Console const & colors(unsigned c, string const & msg, int msg_level = 0) const {
-      return this->colors(c, msg.c_str(), msg_level);
-    }
+    Console const & colors(unsigned c, string_view msg, int msg_level = 0) const;
 
     //! Output a warning message.
     /*!
      * \param msg The warning message to output.
      * \return Reference to this Console object for chaining.
      */
-    Console const & warning(char const * msg) const; // level >= 2
-
-    //! Output a warning message using a string.
-    /*!
-     * \param msg The warning message to output as a string.
-     * \return Reference to this Console object for chaining.
-     */
-    Console const & warning(string const & msg) const {
-      return this->warning(msg.c_str());
-    }
+    Console const & warning( string_view msg ) const; // level >= 2
 
     //! Output an error message.
     /*!
      * \param msg The error message to output.
      * \return Reference to this Console object for chaining.
      */
-    Console const & error(char const * msg) const; // level >= 1
-
-    //! Output an error message using a string.
-    /*!
-     * \param msg The error message to output as a string.
-     * \return Reference to this Console object for chaining.
-     */
-    Console const & error(string const & msg) const {
-      return this->error(msg.c_str());
-    }
+    Console const & error( string_view msg ) const; // level >= 1
 
     //! Output a fatal message.
     /*!
      * \param msg The fatal message to output.
      * \return Reference to this Console object for chaining.
      */
-    Console const & fatal(char const * msg) const; // level >= 0
-
-    //! Output a fatal message using a string.
-    /*!
-     * \param msg The fatal message to output as a string.
-     * \return Reference to this Console object for chaining.
-     */
-    Console const & fatal(string const & msg) const {
-      return this->fatal(msg.c_str());
-    }
+    Console const & fatal( string_view msg ) const; // level >= 0
 
     //! Output a message in black color.
     /*!
@@ -259,17 +200,7 @@ namespace Utils {
      * \param msg_level The \ref console_level "level of the message" (default is 0).
      * \return Reference to this Console object for chaining.
      */
-    Console const & black(char const * msg, int msg_level = 0) const;
-
-    //! Output a message in black color using a string.
-    /*!
-     * \param msg       The message to output as a string.
-     * \param msg_level The \ref console_level "level of the message" (default is 0).
-     * \return Reference to this Console object for chaining.
-     */
-    Console const & black(string const & msg, int msg_level = 0) const {
-      return this->black(msg.c_str(), msg_level);
-    }
+    Console const & black( string_view msg, int msg_level = 0) const;
 
     //! Output a message in red color.
     /*!
@@ -277,17 +208,7 @@ namespace Utils {
      * \param msg_level The \ref console_level "level of the message" (default is 0).
      * \return Reference to this Console object for chaining.
      */
-    Console const & red(char const * msg, int msg_level = 0) const;
-
-    //! Output a message in red color using a string.
-    /*!
-     * \param msg       The message to output as a string.
-     * \param msg_level The \ref console_level "level of the message" (default is 0).
-     * \return Reference to this Console object for chaining.
-     */
-    Console const & red(string const & msg, int msg_level = 0) const {
-      return this->red(msg.c_str(), msg_level);
-    }
+    Console const & red( string_view msg, int msg_level = 0) const;
 
     //! Output a message in green color.
     /*!
@@ -295,17 +216,7 @@ namespace Utils {
      * \param msg_level The \ref console_level "level of the message" (default is 0).
      * \return Reference to this Console object for chaining.
      */
-    Console const & green(char const * msg, int msg_level = 0) const;
-
-    //! Output a message in green color using a string.
-    /*!
-     * \param msg       The message to output as a string.
-     * \param msg_level The \ref console_level "level of the message" (default is 0).
-     * \return Reference to this Console object for chaining.
-     */
-    Console const & green(string const & msg, int msg_level = 0) const {
-      return this->green(msg.c_str(), msg_level);
-    }
+    Console const & green( string_view msg, int msg_level = 0) const;
 
     //! Output a message in yellow color.
     /*!
@@ -313,17 +224,7 @@ namespace Utils {
      * \param msg_level The \ref console_level "level of the message" (default is 0).
      * \return Reference to this Console object for chaining.
      */
-    Console const & yellow(char const * msg, int msg_level = 0) const;
-
-    //! Output a message in yellow color using a string.
-    /*!
-     * \param msg       The message to output as a string.
-     * \param msg_level The \ref console_level "level of the message" (default is 0).
-     * \return Reference to this Console object for chaining.
-     */
-    Console const & yellow(string const & msg, int msg_level = 0) const {
-      return this->yellow(msg.c_str(), msg_level);
-    }
+    Console const & yellow( string_view msg, int msg_level = 0) const;
 
     //! Output a message in blue color.
     /*!
@@ -331,17 +232,7 @@ namespace Utils {
      * \param msg_level The \ref console_level "level of the message" (default is 0).
      * \return Reference to this Console object for chaining.
      */
-    Console const & blue(char const * msg, int msg_level = 0) const;
-
-    //! Output a message in blue color using a string.
-    /*!
-     * \param msg       The message to output as a string.
-     * \param msg_level The \ref console_level "level of the message" (default is 0).
-     * \return Reference to this Console object for chaining.
-     */
-    Console const & blue(string const & msg, int msg_level = 0) const {
-      return this->blue(msg.c_str(), msg_level);
-    }
+    Console const & blue( string_view msg, int msg_level = 0) const;
 
     //! Output a message in magenta color.
     /*!
@@ -349,17 +240,7 @@ namespace Utils {
      * \param msg_level The \ref console_level "level of the message" (default is 0).
      * \return Reference to this Console object for chaining.
      */
-    Console const & magenta(char const * msg, int msg_level = 0) const;
-
-    //! Output a message in magenta color using a string.
-    /*!
-     * \param msg       The message to output as a string.
-     * \param msg_level The \ref console_level "level of the message" (default is 0).
-     * \return Reference to this Console object for chaining.
-     */
-    Console const & magenta(string const & msg, int msg_level = 0) const {
-      return this->magenta(msg.c_str(), msg_level);
-    }
+    Console const & magenta( string_view msg, int msg_level = 0) const;
 
     //! Output a message in cyan color.
     /*!
@@ -367,17 +248,7 @@ namespace Utils {
      * \param msg_level The \ref console_level "level of the message" (default is 0).
      * \return Reference to this Console object for chaining.
      */
-    Console const & cyan(char const * msg, int msg_level = 0) const;
-
-    //! Output a message in cyan color using a string.
-    /*!
-     * \param msg       The message to output as a string.
-     * \param msg_level The \ref console_level "level of the message" (default is 0).
-     * \return Reference to this Console object for chaining.
-     */
-    Console const & cyan(string const & msg, int msg_level = 0) const {
-      return this->cyan(msg.c_str(), msg_level);
-    }
+    Console const & cyan( string_view msg, int msg_level = 0) const;
 
     //! Output a message in gray color.
     /*!
@@ -385,17 +256,7 @@ namespace Utils {
      * \param msg_level The \ref console_level "level of the message" (default is 0).
      * \return Reference to this Console object for chaining.
      */
-    Console const & gray(char const * msg, int msg_level = 0) const;
-
-    //! Output a message in gray color using a string.
-    /*!
-     * \param msg       The message to output as a string.
-     * \param msg_level The \ref console_level "level of the message" (default is 0).
-     * \return Reference to this Console object for chaining.
-     */
-    Console const & gray(string const & msg, int msg_level = 0) const {
-      return this->gray(msg.c_str(), msg_level);
-    }
+    Console const & gray( string_view msg, int msg_level = 0) const;
 
     //! Output a message in black reversed color.
     /*!
@@ -403,17 +264,7 @@ namespace Utils {
      * \param msg_level The \ref console_level "level of the message" (default is 0).
      * \return Reference to this Console object for chaining.
      */
-    Console const & black_reversed(char const * msg, int msg_level = 0) const;
-
-    //! Output a message in black reversed color using a string.
-    /*!
-     * \param msg       The message to output as a string.
-     * \param msg_level The \ref console_level "level of the message" (default is 0).
-     * \return Reference to this Console object for chaining.
-     */
-    Console const & black_reversed(string const & msg, int msg_level = 0) const {
-      return this->black_reversed(msg.c_str(), msg_level);
-    }
+    Console const & black_reversed( string_view msg, int msg_level = 0) const;
 
     //! Output a message in red reversed color.
     /*!
@@ -421,17 +272,7 @@ namespace Utils {
      * \param msg_level The \ref console_level "level of the message" (default is 0).
      * \return Reference to this Console object for chaining.
      */
-    Console const & red_reversed(char const * msg, int msg_level = 0) const;
-
-    //! Output a message in red reversed color using a string.
-    /*!
-     * \param msg       The message to output as a string.
-     * \param msg_level The \ref console_level "level of the message" (default is 0).
-     * \return Reference to this Console object for chaining.
-     */
-    Console const & red_reversed(string const & msg, int msg_level = 0) const {
-      return this->red_reversed(msg.c_str(), msg_level);
-    }
+    Console const & red_reversed( string_view msg, int msg_level = 0) const;
 
     //! Output a message in green reversed color.
     /*!
@@ -439,17 +280,7 @@ namespace Utils {
      * \param msg_level The \ref console_level "level of the message" (default is 0).
      * \return Reference to this Console object for chaining.
      */
-    Console const & green_reversed(char const * msg, int msg_level = 0) const;
-
-    //! Output a message in green reversed color using a string.
-    /*!
-     * \param msg       The message to output as a string.
-     * \param msg_level The \ref console_level "level of the message" (default is 0).
-     * \return Reference to this Console object for chaining.
-     */
-    Console const & green_reversed(string const & msg, int msg_level = 0) const {
-      return this->green_reversed(msg.c_str(), msg_level);
-    }
+    Console const & green_reversed( string_view msg, int msg_level = 0) const;
 
     //! Output a message in yellow reversed color.
     /*!
@@ -457,17 +288,7 @@ namespace Utils {
      * \param msg_level The \ref console_level "level of the message" (default is 0).
      * \return Reference to this Console object for chaining.
      */
-    Console const & yellow_reversed(char const * msg, int msg_level = 0) const;
-
-    //! Output a message in yellow reversed color using a string.
-    /*!
-     * \param msg       The message to output as a string.
-     * \param msg_level The \ref console_level "level of the message" (default is 0).
-     * \return Reference to this Console object for chaining.
-     */
-    Console const & yellow_reversed(string const & msg, int msg_level = 0) const {
-      return this->yellow_reversed(msg.c_str(), msg_level);
-    }
+    Console const & yellow_reversed( string_view msg, int msg_level = 0) const;
 
     //! Output a message in blue reversed color.
     /*!
@@ -475,17 +296,7 @@ namespace Utils {
      * \param msg_level The \ref console_level "level of the message" (default is 0).
      * \return Reference to this Console object for chaining.
      */
-    Console const & blue_reversed(char const * msg, int msg_level = 0) const;
-
-    //! Output a message in blue reversed color using a string.
-    /*!
-     * \param msg       The message to output as a string.
-     * \param msg_level The \ref console_level "level of the message" (default is 0).
-     * \return Reference to this Console object for chaining.
-     */
-    Console const & blue_reversed(string const & msg, int msg_level = 0) const {
-      return this->blue_reversed(msg.c_str(), msg_level);
-    }
+    Console const & blue_reversed( string_view msg, int msg_level = 0) const;
 
     //! Output a message in magenta reversed color.
     /*!
@@ -493,17 +304,7 @@ namespace Utils {
      * \param msg_level The \ref console_level "level of the message" (default is 0).
      * \return Reference to this Console object for chaining.
      */
-    Console const & magenta_reversed(char const * msg, int msg_level = 0) const;
-
-    //! Output a message in magenta reversed color using a string.
-    /*!
-     * \param msg       The message to output as a string.
-     * \param msg_level The \ref console_level "level of the message" (default is 0).
-     * \return Reference to this Console object for chaining.
-     */
-    Console const & magenta_reversed(string const & msg, int msg_level = 0) const {
-      return this->magenta_reversed(msg.c_str(), msg_level);
-    }
+    Console const & magenta_reversed( string_view msg, int msg_level = 0) const;
 
     //! Output a message in cyan reversed color.
     /*!
@@ -511,17 +312,7 @@ namespace Utils {
      * \param msg_level The \ref console_level "level of the message" (default is 0).
      * \return Reference to this Console object for chaining.
      */
-    Console const & cyan_reversed(char const * msg, int msg_level = 0) const;
-
-    //! Output a message in cyan reversed color using a string.
-    /*!
-     * \param msg       The message to output as a string.
-     * \param msg_level The \ref console_level "level of the message" (default is 0).
-     * \return Reference to this Console object for chaining.
-     */
-    Console const & cyan_reversed(string const & msg, int msg_level = 0) const {
-      return this->cyan_reversed(msg.c_str(), msg_level);
-    }
+    Console const & cyan_reversed( string_view msg, int msg_level = 0) const;
 
     //! Output a message in gray reversed color.
     /*!
@@ -529,17 +320,7 @@ namespace Utils {
      * \param msg_level The \ref console_level "level of the message" (default is 0).
      * \return Reference to this Console object for chaining.
      */
-    Console const & gray_reversed(char const * msg, int msg_level = 0) const;
-
-    //! Output a message in gray reversed color using a string.
-    /*!
-     * \param msg       The message to output as a string.
-     * \param msg_level The \ref console_level "level of the message" (default is 0).
-     * \return Reference to this Console object for chaining.
-     */
-    Console const & gray_reversed(string const & msg, int msg_level = 0) const {
-      return this->gray_reversed(msg.c_str(), msg_level);
-    }
+    Console const & gray_reversed( string_view msg, int msg_level = 0) const;
 
     //! Sets the message style.
     //! \param s The text style (e.g., bold, underline).

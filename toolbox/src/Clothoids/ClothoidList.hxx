@@ -916,7 +916,7 @@ namespace G2lib {
     //!
     //! Build an empty clothoid list
     //!
-    ClothoidList( string const & name ) : BaseCurve( name )
+    ClothoidList( string_view name ) : BaseCurve( name )
     { this->reset_last_interval(); }
 
     ~ClothoidList() override {
@@ -989,17 +989,17 @@ namespace G2lib {
     //!
     //! Build a clothoid from G2solve2arc
     //!
-    explicit ClothoidList( G2solve2arc const & C, string const & name );
+    explicit ClothoidList( G2solve2arc const & C, string_view name );
 
     //!
     //! Build a clothoid from G2solve3arc
     //!
-    explicit ClothoidList( G2solve3arc const & C, string const & name  );
+    explicit ClothoidList( G2solve3arc const & C, string_view name  );
 
     //!
     //! Build a clothoid from G2solveCLC
     //!
-    explicit ClothoidList( G2solveCLC const & C, string const & name  );
+    explicit ClothoidList( G2solveCLC const & C, string_view name  );
 
     //!
     //! Build a clothoid from a curve
@@ -2280,21 +2280,20 @@ namespace G2lib {
     //!
     static
     inline
-    string
+    string_view
     to_string( TargetType n ) {
-      string res{""};
       switch ( n ) {
-      case TargetType::P1: res = "P1"; break;
-      case TargetType::P2: res = "P2"; break;
-      case TargetType::P3: res = "P3"; break;
-      case TargetType::P4: res = "P4"; break;
-      case TargetType::P5: res = "P5"; break;
-      case TargetType::P6: res = "P6"; break;
-      case TargetType::P7: res = "P7"; break;
-      case TargetType::P8: res = "P8"; break;
-      case TargetType::P9: res = "P9"; break;
+      case TargetType::P1: return "P1";
+      case TargetType::P2: return "P2";
+      case TargetType::P3: return "P3";
+      case TargetType::P4: return "P4";
+      case TargetType::P5: return "P5";
+      case TargetType::P6: return "P6";
+      case TargetType::P7: return "P7";
+      case TargetType::P8: return "P8";
+      case TargetType::P9: return "P9";
       }
-      return res;
+      return "";
     };
 
   private:

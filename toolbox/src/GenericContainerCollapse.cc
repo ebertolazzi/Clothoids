@@ -24,7 +24,6 @@
 #include "GenericContainer/GenericContainer.hh"
 #include <iomanip>
 #include <cmath>
-#include <ctgmath>
 
 #ifdef __clang__
 #pragma clang diagnostic ignored "-Wc++98-compat"

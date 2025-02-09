@@ -190,14 +190,14 @@ namespace Utils {
     /*!
      * \param where Identifier for where the check is performed.
      */
-    void must_be_empty( char const * where ) const;
+    void must_be_empty( string_view where ) const;
 
     //! Get memory allocation information.
     /*!
      * \param where Identifier for where the information is retrieved.
      * \return A string containing information about memory allocation.
      */
-    std::string info( char const * where ) const;
+    std::string info( string_view where ) const;
 
   };
 

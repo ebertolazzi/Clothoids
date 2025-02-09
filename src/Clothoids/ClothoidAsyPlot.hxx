@@ -30,13 +30,13 @@ namespace G2lib {
 
     void
     drawClothoid(
-      ClothoidCurve const& c,
-      string const & penna="black",
-      real_type offset = 0
+      ClothoidCurve const & c,
+      string_view           penna  = "black",
+      real_type             offset = 0
     ) const;
 
-    void dot( real_type x, real_type y, string const & penna="black" ) const;
-    void triangle(Triangle2D const & t, string const & penna="black" ) const;
+    void dot( real_type x, real_type y, string_view penna="black" ) const;
+    void triangle(Triangle2D const & t, string_view penna="black" ) const;
 
     void
     drawRect(
@@ -44,43 +44,43 @@ namespace G2lib {
       real_type x1, real_type y1,
       real_type x2, real_type y2,
       real_type x3, real_type y3,
-      string const & penna="black"
+      string_view penna = "black"
     ) const;
 
     void
     drawLine(
       real_type x0, real_type y0,
       real_type x1, real_type y1,
-      string const & penna="black"
+      string_view penna = "black"
     ) const;
 
     void
     label(
-      string const & text,
-      real_type      x,
-      real_type      y,
-      string const & placement = "",
-      string const & penna = "black"
+      string_view text,
+      real_type   x,
+      real_type   y,
+      string_view placement = "",
+      string_view penna     = "black"
     ) const;
 
     void
     displayAxes(
-      string const & labX,
-      string const & labY,
-      real_type      xmin,
-      real_type      xmax,
-      real_type      ymin,
-      real_type      ymax
+      string_view labX,
+      string_view labY,
+      real_type   xmin,
+      real_type   xmax,
+      real_type   ymin,
+      real_type   ymax
     ) const;
 
   private:
     mutable ofstream file;
     string  filename;
-    bool showAxes;
-    bool openFile();
-    bool closeFile();
-    void initFile();
-    void displayAxes() const;
-    void compileFile();
+    bool    showAxes;
+    bool    openFile();
+    bool    closeFile();
+    void    initFile();
+    void    displayAxes() const;
+    void    compileFile();
   };
 }

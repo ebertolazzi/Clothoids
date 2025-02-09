@@ -54,8 +54,7 @@ namespace G2lib {
 
   void
   ClothoidList::setup( GenericContainer const & gc ) {
-    string cwhere{ fmt::format("ClothoidList[{}]::setup( gc ):", this->name() ) };
-    char const * where{ cwhere.c_str() };
+    string const where{ fmt::format("ClothoidList[{}]::setup( gc ):", this->name() ) };
     GenericContainer::vec_real_type const & x = gc.get_map_vec_real("x", where );
     GenericContainer::vec_real_type const & y = gc.get_map_vec_real("y", where );
     integer n{ integer(x.size()) };
@@ -195,9 +194,9 @@ namespace G2lib {
   ClothoidList::ClothoidList( ClothoidCurve const & C ) : BaseCurve( C.name() ) { this->build( C ); }
   ClothoidList::ClothoidList( PolyLine      const & C ) : BaseCurve( C.name() ) { this->build( C ); }
 
-  ClothoidList::ClothoidList( G2solve2arc const & C, string const & name ) : BaseCurve( name ) { this->build( C ); }
-  ClothoidList::ClothoidList( G2solve3arc const & C, string const & name ) : BaseCurve( name ) { this->build( C ); }
-  ClothoidList::ClothoidList( G2solveCLC  const & C, string const & name ) : BaseCurve( name ) { this->build( C ); }
+  ClothoidList::ClothoidList( G2solve2arc const & C, string_view name ) : BaseCurve( name ) { this->build( C ); }
+  ClothoidList::ClothoidList( G2solve3arc const & C, string_view name ) : BaseCurve( name ) { this->build( C ); }
+  ClothoidList::ClothoidList( G2solveCLC  const & C, string_view name ) : BaseCurve( name ) { this->build( C ); }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 

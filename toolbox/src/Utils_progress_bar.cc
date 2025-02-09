@@ -70,7 +70,7 @@ namespace Utils {
   //! \param msg      An optional message to display alongside the progress bar.
   //!
   void
-  progress_bar( ostream & s, double progress, int width, char const * msg ) {
+  progress_bar( ostream & s, double progress, int width, string_view msg ) {
     s << "[";
     int pos = int(width * progress);
     for (int i = 0; i < width; ++i)
@@ -92,7 +92,7 @@ namespace Utils {
   //! \param msg      An optional message to display alongside the progress bar.
   //!
   void
-  progress_bar2( ostream & s, double progress, int width, char const * msg ) {
+  progress_bar2( ostream & s, double progress, int width, string_view msg ) {
     vector<string> ch{"_", "▏", "▎", "▍", "▌", "▋", "▊", "▉", "█"};
     s << "[";
     double ww = width * progress;

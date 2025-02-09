@@ -45,10 +45,11 @@
 
 namespace Utils {
 
-  namespace Table {
+  using std::string;
+  using std::string_view;
+  using std::vector;
 
-    using std::string;
-    using std::vector;
+  namespace Table {
 
     class Table;
 
@@ -172,11 +173,11 @@ namespace Utils {
     //!
     class Cell {
     private:
-      Table *     m_Table    = nullptr;
-      std::string m_Value    = "";
-      Alignment   m_Align    = Alignment::LEFT;
-      integer     m_col_span = 1;
-      integer     m_Width    = 0;
+      Table *   m_Table    = nullptr;
+      string    m_Value    = "";
+      Alignment m_Align    = Alignment::LEFT;
+      integer   m_col_span = 1;
+      integer   m_Width    = 0;
 
     public:
 
@@ -194,13 +195,13 @@ namespace Utils {
       //!
       explicit
       Cell(
-        Table*              table,
-        std::string const & val      = "",
-        integer             col_span = 1
+        Table*      table,
+        string_view val      = "",
+        integer     col_span = 1
       );
 
-      std::string const & value() const { return m_Value; }
-      void value( std::string const & val ) { m_Value = val; }
+      string_view value() const { return m_Value; }
+      void value( string_view val ) { m_Value = val; }
 
       Alignment alignment() const { return m_Align; }
       void alignment( Alignment align ) { m_Align = align; }
@@ -213,10 +214,10 @@ namespace Utils {
 
       integer maximum_line_width() const;
 
-      std::string line( integer idx ) const;
+      string line( integer idx ) const;
       void trim_line( std::string & line ) const;
 
-      std::string render( integer line, integer col ) const;
+      string render( integer line, integer col ) const;
     };
 
     //!
@@ -227,8 +228,8 @@ namespace Utils {
     //!
     class Row {
     protected:
-      using vecCell = std::vector<Cell>;
-      using vecstr  = std::vector<std::string>;
+      using vecCell = vector<Cell>;
+      using vecstr  = vector<string>;
 
       Table * m_Table = nullptr;
       vecCell m_Cells;
@@ -261,7 +262,7 @@ namespace Utils {
       integer cell_width( integer idx ) const;
       void cell_col_span( integer idx, integer span );
 
-      void cell( std::string const & value );
+      void cell( string_view value );
       //Cell& cell( integer idx ) { return m_Cells[idx]; }
 
       Cell const & operator [] ( integer idx ) const { return m_Cells[idx]; }
@@ -269,7 +270,7 @@ namespace Utils {
 
       integer height() const;
 
-      std::string render() const;
+      string render() const;
     };
 
    //!
@@ -288,10 +289,10 @@ namespace Utils {
       using integer   = int;
 
     private:
-      Style       m_Style;
-      std::string m_Title;
-      Row         m_Headings;
-      vecRow      m_Rows;
+      Style  m_Style;
+      string m_Title;
+      Row    m_Headings;
+      vecRow m_Rows;
 
     public:
       //!
@@ -337,9 +338,9 @@ namespace Utils {
 
       void style( Style const & style ) { m_Style = style; }
 
-      std::string const & title() const { return m_Title; }
+      string_view title() const { return m_Title; }
 
-      void title( std::string const & title ) { m_Title = title; }
+      void title( string_view title ) { m_Title = title; }
 
       Row const & headings() const { return m_Headings; }
 

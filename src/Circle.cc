@@ -48,8 +48,7 @@ namespace G2lib {
 
   void
   CircleArc::setup( GenericContainer const & gc ) {
-    string cwhere{ fmt::format("CircleArc[{}]::setup( gc ):", this->name() ) };
-    char const * where{ cwhere.c_str() };
+    string const where{ fmt::format("CircleArc[{}]::setup( gc ):", this->name() ) };
     real_type x0     = gc.get_map_number("x0",     where );
     real_type y0     = gc.get_map_number("y0",     where );
     real_type theta0 = gc.get_map_number("theta0", where );

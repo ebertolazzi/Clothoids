@@ -44,6 +44,7 @@
 #include "GenericContainer/GenericContainer.hh"
 
 #include <string>
+#include <string_view>
 #include <fstream>
 #include <iostream>
 #include <iomanip>
@@ -70,6 +71,7 @@
 namespace G2lib {
 
   using std::string;
+  using std::string_view;
   using std::vector;
   using std::map;
   using std::set;
@@ -102,21 +104,20 @@ namespace G2lib {
   //! Convert curve type to a string
   //!
   inline
-  string
+  string_view
   to_string( CurveType n ) {
-    string res{""};
     switch ( n ) {
-    case CurveType::LINE:          res = "LINE";          break;
-    case CurveType::POLYLINE:      res = "POLYLINE";      break;
-    case CurveType::CIRCLE:        res = "CIRCLE";        break;
-    case CurveType::BIARC:         res = "BIARC";         break;
-    case CurveType::BIARC_LIST:    res = "BIARC_LIST";    break;
-    case CurveType::CLOTHOID:      res = "CLOTHOID";      break;
-    case CurveType::CLOTHOID_LIST: res = "CLOTHOID_LIST"; break;
-    case CurveType::DUBINS:        res = "DUBINS";        break;
-    case CurveType::DUBINS3P:      res = "DUBINS3P";      break;
+    case CurveType::LINE:          return "LINE";
+    case CurveType::POLYLINE:      return "POLYLINE";
+    case CurveType::CIRCLE:        return "CIRCLE";
+    case CurveType::BIARC:         return "BIARC";
+    case CurveType::BIARC_LIST:    return "BIARC_LIST";
+    case CurveType::CLOTHOID:      return "CLOTHOID";
+    case CurveType::CLOTHOID_LIST: return "CLOTHOID_LIST";
+    case CurveType::DUBINS:        return "DUBINS";
+    case CurveType::DUBINS3P:      return "DUBINS3P";
     }
-    return res;
+    return "";
   };
 
   //!

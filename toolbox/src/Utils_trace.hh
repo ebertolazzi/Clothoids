@@ -85,10 +85,10 @@ namespace Utils {
   //!/
   void
   print_trace(
-    int                 line,
-    char const *        file,
-    std::string const & msg,
-    ostream_type      & stream
+    int            line,
+    string_view    file,
+    string_view    msg,
+    ostream_type & stream
   );
 
   //!
@@ -97,10 +97,10 @@ namespace Utils {
   inline
   void
   printTrace(
-    int                 line,
-    char const *        file,
-    std::string const & msg,
-    ostream_type      & stream
+    int            line,
+    string_view    file,
+    string_view    msg,
+    ostream_type & stream
   ) {
     print_trace( line, file, msg, stream );
   }
@@ -132,9 +132,9 @@ namespace Utils {
     //!
     std::string
     grab_backtrace(
-      std::string const & reason,
-      char const *        file,
-      int                 line
+      string_view  reason,
+      string_view  file,
+      int          line
     ) const;
 
   public:
@@ -150,9 +150,9 @@ namespace Utils {
     //!
     explicit
     Runtime_TraceError(
-      std::string const & reason,
-      char const *        file,
-      int                 line
+      string_view reason,
+      string_view file,
+      int         line
     )
     : std::runtime_error( grab_backtrace( reason, file, line ) )
     { }

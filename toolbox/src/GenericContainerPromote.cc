@@ -24,7 +24,6 @@
 #include "GenericContainer/GenericContainer.hh"
 #include <iomanip>
 #include <cmath>
-#include <ctgmath>
 
 #ifdef __clang__
 #pragma clang diagnostic ignored "-Wc++98-compat"
@@ -63,7 +62,7 @@ namespace GC_namespace {
   // ---------------------------------------------------------------------------
   // ---------------------------------------------------------------------------
   void
-  GenericContainer::copyto_vec_int( vec_int_type & v, char const where[] ) const {
+  GenericContainer::copyto_vec_int( vec_int_type & v, string_view where ) const {
     v.clear();
     unsigned ne = get_num_elements();
     v.reserve(ne);
@@ -191,7 +190,7 @@ namespace GC_namespace {
   // ---------------------------------------------------------------------------
   // ---------------------------------------------------------------------------
   void
-  GenericContainer::copyto_vec_uint( vec_uint_type & v, char const where[] ) const {
+  GenericContainer::copyto_vec_uint( vec_uint_type & v, string_view where ) const {
     v.clear();
     unsigned ne{ get_num_elements() };
     v.reserve(ne);
@@ -338,7 +337,7 @@ namespace GC_namespace {
   // ---------------------------------------------------------------------------
   // ---------------------------------------------------------------------------
   void
-  GenericContainer::copyto_vec_long( vec_long_type & v, char const where[] ) const {
+  GenericContainer::copyto_vec_long( vec_long_type & v, string_view where ) const {
     v.clear();
     unsigned ne{ get_num_elements() };
     v.reserve(ne);
@@ -447,7 +446,7 @@ namespace GC_namespace {
   // ---------------------------------------------------------------------------
   // ---------------------------------------------------------------------------
   void
-  GenericContainer::copyto_vec_ulong( vec_ulong_type & v, char const where[] ) const {
+  GenericContainer::copyto_vec_ulong( vec_ulong_type & v, string_view where ) const {
     v.clear();
     unsigned ne{ get_num_elements() };
     v.reserve(ne);
@@ -595,7 +594,7 @@ namespace GC_namespace {
   // ---------------------------------------------------------------------------
   // ---------------------------------------------------------------------------
   void
-  GenericContainer::copyto_vec_real( vec_real_type & v, char const where[] ) const {
+  GenericContainer::copyto_vec_real( vec_real_type & v, string_view where ) const {
     v.clear();
     unsigned ne{ get_num_elements() };
     v.reserve(ne);
@@ -664,7 +663,7 @@ namespace GC_namespace {
   // ---------------------------------------------------------------------------
   // ---------------------------------------------------------------------------
   void
-  GenericContainer::copyto_vec_complex( vec_complex_type & v, char const where[] ) const {
+  GenericContainer::copyto_vec_complex( vec_complex_type & v, string_view where ) const {
     v.clear();
     unsigned ne{ get_num_elements() };
     v.reserve(ne);
@@ -704,7 +703,7 @@ namespace GC_namespace {
   }
 
   void
-  GenericContainer::copyto_vec_string( vec_string_type & v, char const where[] ) const {
+  GenericContainer::copyto_vec_string( vec_string_type & v, string_view where ) const {
     v.clear();
     unsigned ne{ get_num_elements() };
     switch (m_data_type) {
@@ -751,7 +750,7 @@ namespace GC_namespace {
   // ---------------------------------------------------------------------------
   // ---------------------------------------------------------------------------
   void
-  GenericContainer::copyto_mat_int( mat_int_type & m, char const where[] ) const {
+  GenericContainer::copyto_mat_int( mat_int_type & m, string_view where ) const {
     m.clear();
     switch (m_data_type) {
     case GC_type::NOTYPE:
@@ -827,7 +826,7 @@ namespace GC_namespace {
   // ---------------------------------------------------------------------------
   // ---------------------------------------------------------------------------
   void
-  GenericContainer::copyto_mat_long( mat_long_type & m, char const where[] ) const {
+  GenericContainer::copyto_mat_long( mat_long_type & m, string_view where ) const {
     m.clear();
     switch (m_data_type) {
     case GC_type::NOTYPE:
@@ -915,7 +914,7 @@ namespace GC_namespace {
   // ---------------------------------------------------------------------------
   // ---------------------------------------------------------------------------
   void
-  GenericContainer::copyto_mat_real( mat_real_type & m, char const where[] ) const {
+  GenericContainer::copyto_mat_real( mat_real_type & m, string_view where ) const {
     m.clear();
     switch (m_data_type) {
     case GC_type::NOTYPE:
@@ -1015,7 +1014,7 @@ namespace GC_namespace {
   // ---------------------------------------------------------------------------
   // ---------------------------------------------------------------------------
   void
-  GenericContainer::copyto_mat_complex( mat_complex_type & m, char const where[] ) const {
+  GenericContainer::copyto_mat_complex( mat_complex_type & m, string_view where ) const {
     m.clear();
     switch (m_data_type) {
     case GC_type::NOTYPE:

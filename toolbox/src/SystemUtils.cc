@@ -53,7 +53,7 @@ namespace Utils {
    * \return True if the environment variable was found and its value retrieved,
    *         false otherwise.
    */
-   bool get_environment(char const ename[], string &res);
+   bool get_environment( string_view ename, string &res);
 
    //! Sets the value of an environment variable.
    /*!
@@ -66,7 +66,7 @@ namespace Utils {
     * \param overwrite Flag to indicate whether the environment variable should be
     *                  overwritten if it already exists.
     */
-    void set_environment(char const ename[], char const newval[], bool overwrite);
+    void set_environment( string_view ename, string_view newval, bool overwrite );
 
     //! Retrieves the hostname of the system.
     /*!
@@ -116,14 +116,14 @@ namespace Utils {
      * \param fname The path to the file to check.
      * \return True if the file exists and is a regular file, false otherwise.
      */
-    bool check_if_file_exists(char const *fname);
+    bool check_if_file_exists( string_view fname );
 
     //! Checks if a directory exists.
     /*!
      * \param dirname The path to the directory to check.
      * \return True if the directory exists and is valid, false otherwise.
      */
-    bool check_if_dir_exists(char const *dirname);
+    bool check_if_dir_exists( string_view dirname );
 
     //! Creates a directory if it does not exist.
     /*!
@@ -134,7 +134,7 @@ namespace Utils {
      * \param mode The permissions mode to set for the new directory.
      * \return True if the directory was created or already exists, false otherwise.
      */
-    bool make_directory(char const *dirname, unsigned mode);
+    bool make_directory( string_view dirname, unsigned mode );
 
   /*! @} */  // End of OS group
 

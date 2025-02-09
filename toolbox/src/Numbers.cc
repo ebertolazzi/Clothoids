@@ -71,10 +71,10 @@ namespace Utils {
   void
   check_NaN(
     double const * pv,
-    char   const * v_name,
+    string_view    v_name,
     int            DIM,
     int            line,
-    char   const * file
+    string_view    file
   ) {
     for ( int i = 0; i < DIM; ++i ) {
       if ( is_infinite(pv[i]) ) {
@@ -98,10 +98,10 @@ namespace Utils {
   void
   check_NaN(
     float const * pv,
-    char  const * v_name,
+    string_view   v_name,
     int           DIM,
     int           line,
-    char  const * file
+    string_view   file
   ) {
     for ( int i = 0; i < DIM; ++i ) {
       if ( is_infinite(pv[i]) ) {

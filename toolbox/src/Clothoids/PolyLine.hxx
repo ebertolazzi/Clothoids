@@ -81,7 +81,7 @@ namespace G2lib {
     PolyLine() = delete;
 
     //explicit
-    PolyLine( string const & name ) : BaseCurve( name )
+    PolyLine( string_view name ) : BaseCurve( name )
     { this->reset_last_interval(); }
 
     void setup( GenericContainer const & gc ) override;

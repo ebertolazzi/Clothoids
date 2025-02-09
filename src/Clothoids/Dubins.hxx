@@ -88,7 +88,7 @@ namespace G2lib {
     //! Build an empty circle
     //!
     Dubins() = delete;
-    Dubins( string const & name ) : BaseCurve( name ) {};
+    Dubins( string_view name ) : BaseCurve( name ) {};
 
     void setup( GenericContainer const & gc ) override;
 
@@ -112,14 +112,14 @@ namespace G2lib {
     //!
     explicit
     Dubins(
-      real_type      x0,
-      real_type      y0,
-      real_type      theta0,
-      real_type      x1,
-      real_type      y1,
-      real_type      theta1,
-      real_type      k_max,
-      string const & name
+      real_type   x0,
+      real_type   y0,
+      real_type   theta0,
+      real_type   x1,
+      real_type   y1,
+      real_type   theta1,
+      real_type   k_max,
+      string_view name
     ) : BaseCurve( name ) {
       this->build( x0, y0, theta0, x1, y1, theta1, k_max );
     }
@@ -270,8 +270,8 @@ namespace G2lib {
 
     DubinsType solution_type() const { return m_solution_type; }
 
-    string solution_type_string() const;
-    string solution_type_string_short() const;
+    string_view solution_type_string() const;
+    string      solution_type_string_short() const;
 
     integer icode() const { return to_integer(m_solution_type); }
 
@@ -636,19 +636,18 @@ namespace G2lib {
   //! \return  the string with the name of the solution
   //!
   inline
-  string
+  string_view
   to_string( DubinsType n ) {
-    string res{""};
     switch ( n ) {
-    case DubinsType::LSL:          res = "LSL";   break;
-    case DubinsType::RSR:          res = "RSR";   break;
-    case DubinsType::LSR:          res = "LSR";   break;
-    case DubinsType::RSL:          res = "RSL";   break;
-    case DubinsType::LRL:          res = "LRL";   break;
-    case DubinsType::RLR:          res = "RLR";   break;
-    case DubinsType::DUBINS_ERROR: res = "ERROR"; break;
+    case DubinsType::LSL:          return "LSL";
+    case DubinsType::RSR:          return "RSR";
+    case DubinsType::LSR:          return "LSR";
+    case DubinsType::RSL:          return "RSL";
+    case DubinsType::LRL:          return "LRL";
+    case DubinsType::RLR:          return "RLR";
+    case DubinsType::DUBINS_ERROR: return "ERROR";
     }
-    return res;
+    return "";
   };
 
 }
