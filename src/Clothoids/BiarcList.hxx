@@ -96,6 +96,7 @@ namespace G2lib {
     //!
     //! Build an empty biarc spline.
     //!
+    explicit
     BiarcList( string_view name ) : BaseCurve( name )
     { this->reset_last_interval(); }
 

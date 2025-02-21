@@ -341,9 +341,9 @@ namespace G2lib {
     real_type c   = T*T;
     PolynomialRoots::Quadratic qsolve( a, b, c);
     if ( qsolve.complex_root() ) return 0;
-    real_type z[2]{ qsolve.real_root0(), qsolve.real_root1() };
+    real_type const z[2]{ qsolve.real_root0(), qsolve.real_root1() };
     integer nint{0};
-    for ( integer i = 0; i < qsolve.numRoots(); ++i ) {
+    for ( integer i{0}; i < qsolve.numRoots(); ++i ) {
       real_type tmp = z[i]*(4-kB2*z[i]);
       if ( tmp < 0 ) continue;
       real_type xx = kB*z[i]/2;
@@ -440,7 +440,7 @@ namespace G2lib {
       real_type Tx1 = -2*(Sa1*kappa2+C12);
       real_type Ty1 = -2*(Ca1*kappa2+S12);
       nsol = solveNLsysCircleCircle( kappa2, T1, Tx1, Ty1, kappa1, xx1, yy1 );
-      for ( integer i = 0; i < nsol; ++i ) {
+      for ( integer i{0}; i < nsol; ++i ) {
         xx2[i] = C12*xx1[i]+S12*yy1[i]-Sa2;
         yy2[i] = C12*yy1[i]-S12*xx1[i]-Ca2;
       }
@@ -448,14 +448,14 @@ namespace G2lib {
       real_type Tx2 = 2*(Sa2*kappa1-C12);
       real_type Ty2 = 2*(Ca2*kappa1+S12);
       nsol = solveNLsysCircleCircle( kappa1, T2, Tx2, Ty2, kappa2, xx2, yy2 );
-      for ( integer i = 0; i < nsol; ++i ) {
+      for ( integer i{0}; i < nsol; ++i ) {
         xx1[i] = C12*xx2[i]-S12*yy2[i]+Sa1;
         yy1[i] = C12*yy2[i]+S12*xx2[i]+Ca1;
       }
     }
     real_type len1 = Utils::m_2pi/(machepsi+abs(kappa1));
-    real_type len2 = Utils::m_2pi/(machepsi+abs(kappa1));
-    for ( integer i = 0; i < nsol; ++i ) {
+    real_type len2 = Utils::m_2pi/(machepsi+abs(kappa2));
+    for ( integer i{0}; i < nsol; ++i ) {
       real_type ss1 = invCoscSinc( kappa1, xx1[i], yy1[i] );
       real_type ss2 = invCoscSinc( kappa2, xx2[i], yy2[i] );
       while ( ss1 < 0    ) ss1 += len1;
@@ -512,7 +512,7 @@ namespace G2lib {
     real_type dy = y[1]-y[0];
     omega[0] = atan2(dy,dx);
     len[0]   = hypot(dy,dx);
-    for ( integer j = 1; j < ne; ++j ) {
+    for ( integer j{1}; j < ne; ++j ) {
       dx       = x[j+1]-x[j];
       dy       = y[j+1]-y[j];
       omega[j] = atan2(dy,dx);
@@ -534,7 +534,7 @@ namespace G2lib {
 
     real_type omega_L = omega[0];
     real_type len_L   = len[0];
-    for ( integer j = 1; j < ne; ++j ) {
+    for ( integer j{1}; j < ne; ++j ) {
       real_type omega_R = omega[j];
       real_type len_R   = len[j];
       theta[j] = ( omega_L/len_L + omega_R / len_R ) / ( 1/len_L + 1/len_R );

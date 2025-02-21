@@ -769,7 +769,7 @@ namespace G2lib {
 
     ss1 = (s1_min+s1_max)/2;
     ss2 = (s2_min+s2_max)/2;
-    for ( integer i = 0; i < m_max_iter && !converged; ++i ) {
+    for ( integer i{0}; i < m_max_iter && !converged; ++i ) {
       real_type t1[2], t2[2], p1[2], p2[2];
       m_CD.eval_ISO  ( ss1, offs, p1[0], p1[1] );
       m_CD.eval_ISO_D( ss1, offs, t1[0], t1[1] );
@@ -788,7 +788,7 @@ namespace G2lib {
       real_type py  = p2[1]-p1[1];
       ss1 += (py*t2[0] - px*t2[1])/det;
       ss2 += (t1[0]*py - t1[1]*px)/det;
-      if ( ! ( isfinite(ss1) && isfinite(ss1) ) ) break;
+      if ( ! ( isfinite(ss1) && isfinite(ss2) ) ) break;
       bool out = false;
       if      ( ss1 < s1_min ) { out = true; ss1 = s1_min; }
       else if ( ss1 > s1_max ) { out = true; ss1 = s1_max; }

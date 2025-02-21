@@ -832,10 +832,10 @@ namespace G2lib {
     for ( auto & it : ilist10 ) it.first  += L;
     for ( auto & it : ilist11 ) { it.first += L; it.second += LB; }
 
-    for ( auto & it : ilist00 ) ilist.push_back( it );
-    for ( auto & it : ilist01 ) ilist.push_back( it );
-    for ( auto & it : ilist10 ) ilist.push_back( it );
-    for ( auto & it : ilist11 ) ilist.push_back( it );
+    for ( auto const & it : ilist00 ) ilist.push_back( it );
+    for ( auto const & it : ilist01 ) ilist.push_back( it );
+    for ( auto const & it : ilist10 ) ilist.push_back( it );
+    for ( auto const & it : ilist11 ) ilist.push_back( it );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -859,13 +859,15 @@ namespace G2lib {
                    ilist01.size() +
                    ilist10.size() +
                    ilist11.size() );
-    for ( auto & it : ilist01 ) it.second += LB;
+
+                   for ( auto & it : ilist01 ) it.second += LB;
     for ( auto & it : ilist10 ) it.first  += L;
     for ( auto & it : ilist11 ) { it.first += L; it.second += LB; }
-    for ( auto & it : ilist00 ) ilist.push_back( it );
-    for ( auto & it : ilist01 ) ilist.push_back( it );
-    for ( auto & it : ilist10 ) ilist.push_back( it );
-    for ( auto & it : ilist11 ) ilist.push_back( it );
+
+    for ( auto const & it : ilist00 ) ilist.push_back( it );
+    for ( auto const & it : ilist01 ) ilist.push_back( it );
+    for ( auto const & it : ilist10 ) ilist.push_back( it );
+    for ( auto const & it : ilist11 ) ilist.push_back( it );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -983,7 +985,7 @@ namespace G2lib {
         UTILS_ASSERT0( ok, "build_guess_theta, failed\n" );
         theta[0] = theta[n-1] = b.theta_middle();
       }
-      for ( integer k = 1; k < n-1; ++k ) {
+      for ( integer k{1}; k < n-1; ++k ) {
         ok = b.build_3P( x[k-1], y[k-1], x[k], y[k], x[k+1], y[k+1] );
         UTILS_ASSERT0( ok, "build_guess_theta, failed\n" );
         theta[k] = b.theta_middle();

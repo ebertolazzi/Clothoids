@@ -916,6 +916,7 @@ namespace G2lib {
     //!
     //! Build an empty clothoid list
     //!
+    explicit
     ClothoidList( string_view name ) : BaseCurve( name )
     { this->reset_last_interval(); }
 

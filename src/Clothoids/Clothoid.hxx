@@ -129,11 +129,13 @@ namespace G2lib {
     //!
     //! Build an empty clothoid curve
     //!
+    explicit
     ClothoidCurve( string_view name );
 
     //!
     //! Build a copy of an existing clothoid curve
     //!
+    explicit
     ClothoidCurve( ClothoidCurve const & s );
 
     void setup( GenericContainer const & gc ) override;

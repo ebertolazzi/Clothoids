@@ -647,7 +647,7 @@ namespace G2lib {
     init();
     reserve( n-1 );
 
-    for ( integer k = 1; k < n; ++k ) {
+    for ( integer k{1}; k < n; ++k ) {
       c.build_G1( x[k-1], y[k-1], theta[k-1], x[k], y[k], theta[k] );
       this->push_back(c);
     }
@@ -733,7 +733,7 @@ namespace G2lib {
       L, k, dk
     );
     this->push_back( x0, y0, theta0, k, dk, L );
-    for ( integer i = 2; i < n; ++i ) {
+    for ( integer i{2}; i < n; ++i ) {
       k  = kappa[i-1];
       L  = s[i]-s[i-1];
       if ( abs(L) < tol ) {
@@ -771,7 +771,7 @@ namespace G2lib {
     real_type const * pa = abscissa;
     real_type const * pt = theta;
     real_type const * pk = kappa;
-    for ( integer i = 1; i < n; ++i, ++px, ++py, ++pa, ++pt, ++pk ) {
+    for ( integer i{1}; i < n; ++i, ++px, ++py, ++pa, ++pt, ++pk ) {
       real_type dk = pk[1]-pk[0];
       real_type L  = pa[1]-pa[0];
       this->push_back( *px, *py, *pt, *pk, dk, L );
@@ -1500,24 +1500,24 @@ namespace G2lib {
     if ( s_begin < s_end ) {
       // get initial and final segment
       if ( i_begin == i_end ) { // stesso segmento
-        real_type   ss0 = m_s0[i_begin];
-        ClothoidCurve C = m_clothoid_list[i_begin];
+        real_type ss0{ m_s0[i_begin] };
+        ClothoidCurve C{ m_clothoid_list[i_begin] };
         C.trim( s_begin-ss0, s_end-ss0 );
         newCL.push_back( C );
       } else {
-        ClothoidCurve C0 = m_clothoid_list[i_begin];
+        ClothoidCurve C0{ m_clothoid_list[i_begin] };
         C0.trim( s_begin - m_s0[i_begin], C0.length() );
         newCL.push_back( C0 );
 
         for ( ++i_begin; i_begin < i_end; ++i_begin )
           newCL.push_back( m_clothoid_list[i_begin] );
 
-        ClothoidCurve C1 = m_clothoid_list[i_end];
+        ClothoidCurve C1{ m_clothoid_list[i_end] };
         C1.trim( 0, s_end - m_s0[i_end] );
         newCL.push_back( C1 );
       }
     } else {
-      ClothoidCurve C0 = m_clothoid_list[i_begin];
+      ClothoidCurve C0{ m_clothoid_list[i_begin] };
       C0.trim( s_begin - m_s0[i_begin], C0.length() );
       newCL.push_back( C0 );
 
@@ -1527,7 +1527,7 @@ namespace G2lib {
       for ( i_begin = 0; i_begin < i_end; ++i_begin )
         newCL.push_back( m_clothoid_list[i_begin] );
 
-      ClothoidCurve C1 = m_clothoid_list[i_end];
+      ClothoidCurve C1{ m_clothoid_list[i_end] };
       C1.trim( 0, s_end - m_s0[i_end] );
       newCL.push_back( C1 );
     }
@@ -2172,8 +2172,8 @@ namespace G2lib {
     integer res     = 0;
     if ( i_begin == i_end ) {
       // stesso segmento
-      real_type     ss0 = m_s0[i_begin];
-      ClothoidCurve C   = m_clothoid_list[i_begin]; // crea copia
+      real_type     ss0 { m_s0[i_begin] };
+      ClothoidCurve C   { m_clothoid_list[i_begin] }; // crea copia
       C.trim( s_begin-ss0, s_end-ss0 );
       res = C.closest_point_ISO( qx, qy, x, y, s, t, dst );
       s += s_begin;
@@ -2182,10 +2182,10 @@ namespace G2lib {
       integer   res1;
       real_type x1, y1, s1, t1, dst1;
 
-      real_type     ss0 = m_s0[i_begin];
-      real_type     ss1 = m_s0[i_end];
-      ClothoidCurve C0  = m_clothoid_list[i_begin]; // crea copia
-      ClothoidCurve C1  = m_clothoid_list[i_end];   // crea copia
+      real_type     ss0 { m_s0[i_begin]            };
+      real_type     ss1 { m_s0[i_end]              };
+      ClothoidCurve C0  { m_clothoid_list[i_begin] }; // crea copia
+      ClothoidCurve C1  { m_clothoid_list[i_end]   };   // crea copia
 
       // taglia il segmento
       C0.trim( s_begin-ss0, C0.length() );

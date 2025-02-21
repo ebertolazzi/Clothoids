@@ -1548,7 +1548,7 @@ namespace G2lib {
     integer ne  = m_npts - 1;
     integer ne1 = m_npts - 2;
 
-    integer kk = 0;
+    integer kk{0};
     for ( integer j = 0; j < ne1; ++j ) {
       ii[kk] = j; jj[kk] = j; ++kk;
       ii[kk] = j; jj[kk] = j+1; ++kk;
@@ -1558,7 +1558,7 @@ namespace G2lib {
     switch (m_tt) {
     case TargetType::P1:
       ii[kk] = ne1; jj[kk] = 0; ++kk;
-      ii[kk] = ne; jj[kk] = ne; ++kk;
+      ii[kk] = ne; jj[kk] = ne; // ++kk;
       break;
     case TargetType::P2:
       ii[kk] = ne1; jj[kk] = 0; ++kk;
@@ -1566,7 +1566,7 @@ namespace G2lib {
       ii[kk] = ne1; jj[kk] = ne1; ++kk;
       ii[kk] = ne1; jj[kk] = ne; ++kk;
       ii[kk] = ne; jj[kk] = 0; ++kk;
-      ii[kk] = ne; jj[kk] = ne; ++kk;
+      ii[kk] = ne; jj[kk] = ne; // ++kk;
       break;
     default:
       break;
@@ -1587,7 +1587,7 @@ namespace G2lib {
     integer ne1 = m_npts - 2;
 
     integer kk = 0;
-    for ( integer j = 1; j <= ne1; ++j ) {
+    for ( integer j{1}; j <= ne1; ++j ) {
       ii[kk] = j; jj[kk] = j;   ++kk;
       ii[kk] = j; jj[kk] = j+1; ++kk;
       ii[kk] = j; jj[kk] = j+2; ++kk;

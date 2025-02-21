@@ -469,7 +469,7 @@ namespace G2lib {
     integer m = integer(floor(2*b));
     if ( m >= nk ) m = nk-1;
     if ( m < 1   ) m = 1;
-    for ( integer k = 1; k < m; ++k ) {
+    for ( integer k{1}; k < m; ++k ) {
       X[k] = (sb-k*Y[k-1])/b;
       Y[k] = (k*X[k-1]-cb)/b;
     }
@@ -563,7 +563,7 @@ namespace G2lib {
     for ( integer n=1; n <= p; ++n ) {
       t *= aa/(2*n*(2*n-1));
       real_type bf = a/(4*n+2);
-      for ( integer j = 0; j < nk; ++j ) {
+      for ( integer j{0}; j < nk; ++j ) {
         integer jj = 4*n+j;
         X[j] += t*(X0[jj]-bf*Y0[jj+2]);
         Y[j] += t*(Y0[jj]+bf*X0[jj+2]);
@@ -614,7 +614,7 @@ namespace G2lib {
     real_type cosc = cos(c);
     real_type sinc = sin(c);
 
-    for ( integer k = 0; k < nk; ++k ) {
+    for ( integer k{0}; k < nk; ++k ) {
       real_type xx = intC[k];
       real_type yy = intS[k];
       intC[k] = xx * cosc - yy * sinc;
@@ -1478,7 +1478,7 @@ namespace G2lib {
       break;
     case 3:
       theta = r[0];
-      for ( integer i = 1; i < 3; ++i ) {
+      for ( integer i{1}; i < 3; ++i ) {
         if ( abs(theta-theta0) > abs(r[i]-theta0) )
           theta = r[i];
       }

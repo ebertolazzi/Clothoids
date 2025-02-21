@@ -452,24 +452,24 @@ namespace G2lib {
     if ( s_begin < s_end ) {
       // get initial and final segment
       if ( i_begin == i_end ) { // stesso segmento
-        real_type   ss0 = m_s0[i_begin];
-        LineSegment LL  = m_polyline_list[i_begin];
+        real_type   ss0 { m_s0[i_begin] };
+        LineSegment LL  { m_polyline_list[i_begin] };
         LL.trim( s_begin-ss0, s_end-ss0 );
         newPL.push_back( LL );
       } else {
-        LineSegment L0 = m_polyline_list[i_begin];
+        LineSegment L0 { m_polyline_list[i_begin] };
         L0.trim( s_begin - m_s0[i_begin], L0.length() );
         newPL.push_back( L0 );
 
         for ( ++i_begin; i_begin < i_end; ++i_begin )
           newPL.push_back( m_polyline_list[i_begin] );
 
-        LineSegment L1 = m_polyline_list[i_end];
+        LineSegment L1 { m_polyline_list[i_end] };
         L1.trim( 0, s_end - m_s0[i_end] );
         newPL.push_back( L1 );
       }
     } else {
-      LineSegment L0 = m_polyline_list[i_begin];
+      LineSegment L0 { m_polyline_list[i_begin] };
       L0.trim( s_begin - m_s0[i_begin], L0.length() );
       newPL.push_back( L0 );
 
@@ -479,7 +479,7 @@ namespace G2lib {
       for ( i_begin = 0; i_begin < i_end; ++i_begin )
         newPL.push_back( m_polyline_list[i_begin] );
 
-      LineSegment L1 = m_polyline_list[i_end];
+      LineSegment L1 { m_polyline_list[i_end] };
       L1.trim( 0, s_end - m_s0[i_end] );
       newPL.push_back( L1 );
     }
@@ -558,7 +558,7 @@ namespace G2lib {
     integer   ns = integer(ceil( L / C.len_tolerance( tol ) ));
     real_type tx = m_xe - C.x_begin();
     real_type ty = m_ye - C.y_begin();
-    for ( integer i = 1; i < ns; ++i ) {
+    for ( integer i{1}; i < ns; ++i ) {
       real_type s = (i*L)/ns;
       this->push_back( tx + C.X(s), ty + C.Y(s) );
     }
@@ -582,12 +582,12 @@ namespace G2lib {
     real_type tx = m_xe - C0.x_begin();
     real_type ty = m_ye - C0.y_begin();
 
-    for ( integer i = 1; i < ns0; ++i ) {
+    for ( integer i{1}; i < ns0; ++i ) {
       real_type s = (i*L0)/ns0;
       this->push_back( tx + C0.X(s), ty + C0.Y(s) );
     }
     this->push_back( tx + C1.x_begin(), ty + C1.y_begin() );
-    for ( integer i = 1; i < ns1; ++i ) {
+    for ( integer i{1}; i < ns1; ++i ) {
       real_type s = (i*L1)/ns1;
       this->push_back( tx + C1.X(s), ty + C1.Y(s) );
     }
@@ -610,7 +610,7 @@ namespace G2lib {
 
     real_type tx = m_xe - C.x_begin();
     real_type ty = m_ye - C.y_begin();
-    for ( integer i = 1; i < ns; ++i ) {
+    for ( integer i{1}; i < ns; ++i ) {
       real_type s = (i*L)/ns;
       this->push_back( tx + C.X(s), ty + C.Y(s) );
     }
@@ -642,7 +642,7 @@ namespace G2lib {
     real_type const y[]
   ) {
     init( x[0], y[0] );
-    for ( integer k = 1; k < npts; ++k )
+    for ( integer k{1}; k < npts; ++k )
       this->push_back( x[k], y[k] );
   }
 

@@ -350,7 +350,7 @@ namespace G2lib {
     init();
     reserve( n-1 );
     Biarc c{"BiarcList::build_G1 temporary c"};
-    for ( integer k = 1; k < n; ++k ) {
+    for ( integer k{1}; k < n; ++k ) {
       c.build( x[k-1], y[k-1], theta[k-1], x[k], y[k], theta[k] );
       this->push_back(c);
     }

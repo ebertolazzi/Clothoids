@@ -80,7 +80,7 @@ namespace G2lib {
 
     PolyLine() = delete;
 
-    //explicit
+    explicit
     PolyLine( string_view name ) : BaseCurve( name )
     { this->reset_last_interval(); }
 
@@ -90,7 +90,7 @@ namespace G2lib {
 
     void copy( PolyLine const & l );
 
-    //explicit
+    explicit
     PolyLine( PolyLine const & PL ) : BaseCurve( PL.name() )
     { this->reset_last_interval(); this->copy(PL); }
 

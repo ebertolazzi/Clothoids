@@ -500,7 +500,7 @@ return m_Dubins1.FUN(s)
                    ilist10.size() +
                    ilist11.size() );
 
-    for ( auto & it : ilist00 ) ilist.push_back( it );
+    for ( auto const & it : ilist00 ) ilist.push_back( it );
     for ( auto & it : ilist01 ) { it.second += LB0; ilist.push_back( it ); }
 
     for ( auto & it : ilist10 ) { it.first += L0; ilist.push_back( it ); }
@@ -537,7 +537,7 @@ return m_Dubins1.FUN(s)
                    ilist10.size() +
                    ilist11.size() );
 
-    for ( auto & it : ilist00 ) ilist.push_back( it );
+    for ( auto const & it : ilist00 ) ilist.push_back( it );
     for ( auto & it : ilist01 ) { it.second += LB0; ilist.push_back( it ); }
 
     for ( auto & it : ilist10 ) { it.first += L0; ilist.push_back( it ); }

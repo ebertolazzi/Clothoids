@@ -614,7 +614,7 @@ namespace G2lib {
     );
     real_type eps1 = machepsi100*m_L;
     real_type eps2 = machepsi100*C.m_L;
-    for ( integer i = 0; i < ni; ++i ) {
+    for ( integer i{0}; i < ni; ++i ) {
       if ( s1[i] >= -eps1 && s1[i] <= m_L+eps1 &&
            s2[i] >= -eps2 && s2[i] <= m_L+eps2 )
         return true;
@@ -664,9 +664,9 @@ namespace G2lib {
     );
     real_type eps1 = machepsi100*m_L;
     real_type eps2 = machepsi100*C.m_L;
-    for ( integer i = 0; i < ni; ++i ) {
-      real_type ss1 = s1[i]/sc1;
-      real_type ss2 = s2[i]/sc2;
+    for ( integer i{0}; i < ni; ++i ) {
+      real_type ss1{ s1[i]/sc1 };
+      real_type ss2{ s2[i]/sc2 };
       if ( ss1 >= -eps1 && ss1 <= m_L+eps1 &&
            ss2 >= -eps2 && ss2 <= C.m_L+eps2 )
         return true;
@@ -708,11 +708,11 @@ namespace G2lib {
       m_x0, m_y0, m_theta0, m_k,
       C.m_x0, C.m_y0, C.m_theta0, C.m_k, s1, s2
     );
-    real_type eps1 = machepsi100*m_L;
-    real_type eps2 = machepsi100*C.m_L;
-    for ( integer i = 0; i < ni; ++i ) {
-      real_type ss1 = s1[i];
-      real_type ss2 = s2[i];
+    real_type eps1 { machepsi100*m_L   };
+    real_type eps2 { machepsi100*C.m_L };
+    for ( integer i{0}; i < ni; ++i ) {
+      real_type ss1{ s1[i] };
+      real_type ss2{ s2[i] };
       if ( ss1 >= -eps1 && ss1 <= m_L+eps1 &&
            ss2 >= -eps2 && ss2 <= C.m_L+eps2 ) {
         ilist.emplace_back( ss1, ss2 );
@@ -743,11 +743,11 @@ namespace G2lib {
       C.m_k/sc2,
       s1, s2
     );
-    real_type eps1 = machepsi100*m_L;
-    real_type eps2 = machepsi100*C.m_L;
-    for ( integer i = 0; i < ni; ++i ) {
-      real_type ss1 = s1[i]/sc1;
-      real_type ss2 = s2[i]/sc2;
+    real_type eps1 { machepsi100*m_L   };
+    real_type eps2 { machepsi100*C.m_L };
+    for ( integer i{0}; i < ni; ++i ) {
+      real_type ss1{ s1[i]/sc1 };
+      real_type ss2{ s2[i]/sc2 };
       if ( ss1 >= -eps1 && ss1 <= m_L+eps1 &&
            ss2 >= -eps2 && ss2 <= C.m_L+eps2 ) {
         ilist.emplace_back( ss1, ss2 );
@@ -933,7 +933,7 @@ namespace G2lib {
     real_type s{0};
     real_type ds{m_L/ns};
     integer   kk{0};
-    for ( integer i = 0; i < ns; ++i ) {
+    for ( integer i{0}; i < ns; ++i ) {
       s += ds;
       eval( s, p2[0], p2[1] );
 

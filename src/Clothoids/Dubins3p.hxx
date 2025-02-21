@@ -85,7 +85,7 @@ namespace G2lib {
     real_type m_sample_angle{10*Utils::m_pi/180}; // ten degree
     real_type m_sample_points{360};
     integer   m_max_evaluation{1000};
-    integer   m_evaluation;
+    integer   m_evaluation{0};
 
     bool
     build_sample(
@@ -148,6 +148,8 @@ namespace G2lib {
     //! Build an empty circle
     //!
     Dubins3p() = delete;
+
+    explicit
     Dubins3p( string_view name ) : BaseCurve( name ) {};
 
     void setup( GenericContainer const & gc ) override;
@@ -155,6 +157,7 @@ namespace G2lib {
     //!
     //! Build a copy of an existing Dubins problem.
     //!
+    explicit
     Dubins3p( Dubins3p const & s ) : BaseCurve( s.name() )
     { this->copy(s); }
 

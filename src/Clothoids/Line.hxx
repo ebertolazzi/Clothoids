@@ -52,10 +52,13 @@ namespace G2lib {
     #include "BaseCurve_using.hxx"
 
     LineSegment() = delete;
+
+    explicit
     LineSegment( string_view name ) : BaseCurve( name ) {};
 
     void setup( GenericContainer const & gc ) override;
 
+    explicit
     LineSegment( LineSegment const & s ) : BaseCurve( s.name() )
     { this->copy(s); }
 

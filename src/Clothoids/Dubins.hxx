@@ -88,6 +88,8 @@ namespace G2lib {
     //! Build an empty circle
     //!
     Dubins() = delete;
+
+    explicit
     Dubins( string_view name ) : BaseCurve( name ) {};
 
     void setup( GenericContainer const & gc ) override;
@@ -95,6 +97,7 @@ namespace G2lib {
     //!
     //! Build a copy of an existing Dubins problem.
     //!
+    explicit
     Dubins( Dubins const & s ) : BaseCurve( s.name() )
     { this->copy(s); }
 

@@ -722,7 +722,7 @@ return m_C2.FUN(s)
                    ilist21.size() +
                    ilist22.size() );
 
-    for ( auto & it : ilist00 ) ilist.push_back( it );
+    for ( auto const & it : ilist00 ) ilist.push_back( it );
     for ( auto & it : ilist01 ) { it.second += LB0; ilist.push_back( it ); }
     for ( auto & it : ilist02 ) { it.second += LB1; ilist.push_back( it ); }
 
@@ -780,7 +780,7 @@ return m_C2.FUN(s)
                    ilist21.size() +
                    ilist22.size() );
 
-    for ( auto & it : ilist00 ) ilist.push_back( it );
+    for ( auto const & it : ilist00 ) ilist.push_back( it );
     for ( auto & it : ilist01 ) { it.second += LB0; ilist.push_back( it ); }
     for ( auto & it : ilist02 ) { it.second += LB1; ilist.push_back( it ); }
 
