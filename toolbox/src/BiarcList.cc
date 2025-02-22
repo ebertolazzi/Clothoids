@@ -365,14 +365,13 @@ namespace G2lib {
     real_type const x[],
     real_type const y[]
   ) {
-    size_t nn = size_t(n);
     Utils::Malloc<real_type> mem( "BiarcList::build_G1" );
-    mem.allocate( 5 * nn );
-    real_type * theta     = mem( nn );
-    real_type * theta_min = mem( nn );
-    real_type * theta_max = mem( nn );
-    real_type * omega     = mem( nn );
-    real_type * len       = mem( nn );
+    mem.allocate( 5 * n );
+    real_type * theta     = mem( n );
+    real_type * theta_min = mem( n );
+    real_type * theta_max = mem( n );
+    real_type * omega     = mem( n );
+    real_type * len       = mem( n );
     G2lib::xy_to_guess_angle(
       n, x, y, theta, theta_min, theta_max, omega, len
     );

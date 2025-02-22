@@ -18,11 +18,11 @@ namespace G2lib {
 
   void
   AsyPlot::compileFile() {
-    string cmdComp = "asy -f pdf "+ filename;
+    string const cmdComp = "asy -f pdf "+ filename;
     system(cmdComp.c_str());
-    string pdfFile = filename.substr(0,filename.find(".asy")) + ".pdf";
+    string const pdfFile = filename.substr(0,filename.find(".asy")) + ".pdf";
     std::cout << pdfFile << std::endl;
-    string cmdOpen = "(okular " + pdfFile + " &> /dev/null )&";
+    string const cmdOpen = "(okular " + pdfFile + " &> /dev/null )&";
     system(cmdOpen.c_str());
   }
 
@@ -38,8 +38,8 @@ namespace G2lib {
 
   void
   AsyPlot::drawClothoid( ClothoidCurve const & c,
-                         string_view           penna,
-                         real_type             offset ) const {
+                         string_view   const   penna,
+                         real_type     const   offset ) const {
   	if (offset == 0.) {
       fmt::print( file,
         "path pclot = clothoidPoints(({},{}),{},{},{},{},100,0);\n"

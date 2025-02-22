@@ -63,8 +63,8 @@ namespace G2lib {
   }
 
   #ifndef DOXYGEN_SHOULD_SKIP_THIS
-  static inline real_type power2( real_type a ) { return a*a; }
-  static inline real_type power3( real_type a ) { return a*a*a; }
+  static real_type power2( real_type a ) { return a*a; }
+  static real_type power3( real_type a ) { return a*a*a; }
   #endif
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -75,32 +75,31 @@ namespace G2lib {
   real_type
   Sinc( real_type x ) {
     if ( abs(x) < 0.02 ) {
-      real_type x2 = x*x;
+      real_type const x2{x*x};
       return 1-(x2/6)*(1-(x2/20)*(1-x2/42));
-    } else {
-      return sin(x)/x;
     }
+    return sin(x)/x;
   }
 
   real_type
   Sinc_D( real_type x ) {
-    real_type x2 = x*x;
+    real_type const x2{x*x};
     if ( abs(x) < 0.04 ) return -(x/3)*(1-(x2/10)*(1-(x2/28)*(1-(x2/54))));
-    else                 return (cos(x)-sin(x)/x)/x;
+    return (cos(x)-sin(x)/x)/x;
   }
 
   real_type
   Sinc_DD( real_type x ) {
-    real_type x2 = x*x;
+    real_type const x2{x*x};
     if ( abs(x) < 0.02 ) return -1./3.+x2*(0.1-x2*((1.0/168.0)-(x2/6480)));
-    else                 return ((2/x2-1)*sin(x)-2*cos(x)/x)/x;
+    return ((2/x2-1)*sin(x)-2*cos(x)/x)/x;
   }
 
   real_type
   Sinc_DDD( real_type x ) {
-    real_type x2 = x*x;
+    real_type const x2{x*x};
     if ( abs(x) < 0.009 ) return (1.0/5.0+(-1.0/42.0+(1.0/1080.0)*x2)*x2)*x;
-    else                  return ((6/x2-1)*cos(x)+(3-6/x2)*sin(x)/x)/x;
+    return ((6/x2-1)*cos(x)+(3-6/x2)*sin(x)/x)/x;
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -111,39 +110,33 @@ namespace G2lib {
   real_type
   Cosc( real_type x ) {
     if ( abs(x) < 0.04 ) {
-      real_type x2 = x*x;
+      real_type const x2{x*x};
       return (x/2)*(1-(x2/12)*(1-(x2/30)*(1-x2/56)));
-    } else {
-      return (1-cos(x))/x;
     }
+    return (1-cos(x))/x;
   }
 
   real_type
   Cosc_D( real_type x ) {
     if ( abs(x) < 0.02 ) {
-      real_type x2  = x*x;
+      real_type const x2{x*x};
       return 0.5*(1-(x2/4)*(1-(x2/18)*(1-(x2/40))));
-    } else {
-      return (sin(x)+(cos(x)-1)/x)/x;
     }
+    return (sin(x)+(cos(x)-1)/x)/x;
   }
 
   real_type
   Cosc_DD( real_type x ) {
-    real_type x2  = x*x;
-    if ( abs(x) < 0.04 )
-      return -(x/4)*(1-(x2/9)*(1-((3.0/80.0)*x2)*(1-((2.0/105.0)*x2))));
-    else
-      return ((1-2/x2)*cos(x)+(2/x-sin(x))/x)/x;
+    real_type const x2{x*x};
+    if ( abs(x) < 0.04 ) return -(x/4)*(1-(x2/9)*(1-((3.0/80.0)*x2)*(1-((2.0/105.0)*x2))));
+    return ((1-2/x2)*cos(x)+(2/x-sin(x))/x)/x;
   }
 
   real_type
   Cosc_DDD( real_type x ) {
-    real_type x2 = x*x;
-    if ( abs(x) < 0.02 )
-      return -(1-(x2/3)*(1-(x2/16)*(1-(2.0/75.0)*x2)))/4.0;
-    else
-      return ((6/x2-1)*sin(x)+((6/x2-3)*cos(x)-6/x2)/x)/x;
+    real_type const x2{x*x};
+    if ( abs(x) < 0.02 ) return -(1-(x2/3)*(1-(x2/16)*(1-(2.0/75.0)*x2)))/4.0;
+    return ((6/x2-1)*sin(x)+((6/x2-3)*cos(x)-6/x2)/x)/x;
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -154,41 +147,37 @@ namespace G2lib {
   real_type
   Atanc( real_type x ) {
     if ( abs(x) < 0.03 ) {
-      real_type x2 = x*x;
+      real_type const x2{x*x};
       return 1-x2*((1./3.)-x2*((1./5.)-x2*((1./7.)-x2*((1./9.)-(x2/11)))));
-    } else {
-      return atan(x)/x;
     }
+    return atan(x)/x;
   }
 
   real_type
   Atanc_D( real_type x ) {
-    real_type x2 = x*x;
+    real_type const x2{x*x};
     if ( abs(x) < 0.03 ) {
       return x*( -(2./3.) + x2*( (4./5.) + x2*( -(6./7.) + x2*( (8./9.) + x2*( -(10./11.) + x2*(12./13.))))));
-    } else {
-      return (1/(1+x2)-atan(x)/x)/x;
     }
+    return (1/(1+x2)-atan(x)/x)/x;
   }
 
   real_type
   Atanc_DD( real_type x ) {
-    real_type x2 = x*x;
+    real_type const x2{x*x};
     if ( abs(x) < 0.02 ) {
       return -2./3.+ x2*( (12./5.) + (-(30./7.) + x2 * ( (56./9.) + x2*( -(90./11.) + x2 * (132./13.)))));
-    } else {
-      return (2*atan(x)/x-(4*x2+2)/power2(1+x2))/x2;
     }
+    return (2*atan(x)/x-(4*x2+2)/power2(1+x2))/x2;
   }
 
   real_type
   Atanc_DDD( real_type x ) {
-    real_type x2 = x*x;
+    real_type const x2{x*x};
     if ( abs(x) < 0.02 ) {
       return x*(24./5.+x2*(-120./7. + x2 * (112./3. + x2 * (-720./11. + x2*(1320./13. - x2*728./5.)))));
-    } else {
-      return ( ((18*x2+16)*x2+6)/power3(x2+1)-6*atan(x)/x )/(x2*x);
     }
+    return ( ((18*x2+16)*x2+6)/power3(x2+1)-6*atan(x)/x )/(x2*x);
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -617,18 +606,18 @@ namespace G2lib {
       // check consistency
       tmp = (LU[0][0]*x[j[0]]+LU[0][1]*x[j[1]]);
       return hypot( b[i[0]]-tmp, b[i[1]]+tmp*LU[1][0] ) < hypot(b[0],b[1])*epsi;
-    } else { // non singular
-      // L^(-1) Pb
-      x[j[0]] = b[i[0]];
-      x[j[1]] = b[i[1]]-LU[1][0]*x[j[0]];
-      // U^(-1) x
-      x[j[1]] /= LU[1][1];
-      x[j[0]]  = (x[j[0]]-LU[0][1]*x[j[1]])/LU[0][0];
-      return FP_INFINITE != fpclassify(x[0]) &&
-             FP_NAN      != fpclassify(x[0]) &&
-             FP_INFINITE != fpclassify(x[1]) &&
-             FP_NAN      != fpclassify(x[1]);
     }
+    // non singular
+    // L^(-1) Pb
+    x[j[0]] = b[i[0]];
+    x[j[1]] = b[i[1]]-LU[1][0]*x[j[0]];
+    // U^(-1) x
+    x[j[1]] /= LU[1][1];
+    x[j[0]]  = (x[j[0]]-LU[0][1]*x[j[1]])/LU[0][0];
+    return FP_INFINITE != fpclassify(x[0]) &&
+           FP_NAN      != fpclassify(x[0]) &&
+           FP_INFINITE != fpclassify(x[1]) &&
+           FP_NAN      != fpclassify(x[1]);
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -645,8 +634,8 @@ namespace G2lib {
     real_type dy2 = P3[1] - P1[1];
     real_type tol = machepsi10*(hypot(dx1,dy1)*hypot(dx2,dy2));
     real_type det = dx1*dy2 - dy1*dx2;
-    if      ( det >  tol ) return  1;
-    else if ( det < -tol ) return -1;
+    if ( det >  tol ) return  1;
+    if ( det < -tol ) return -1;
     return 0;
   }
 
@@ -654,20 +643,20 @@ namespace G2lib {
 
   real_type
   projectPointOnCircleArc(
-    real_type x0,
-    real_type y0,
-    real_type c0,
-    real_type s0,
-    real_type k,
-    real_type L,
-    real_type qx,
-    real_type qy
+    real_type const x0,
+    real_type const y0,
+    real_type const c0,
+    real_type const s0,
+    real_type const k,
+    real_type const L,
+    real_type const qx,
+    real_type const qy
   ) {
-    real_type dx  = x0 - qx;
-    real_type dy  = y0 - qy;
-    real_type a0  = c0 * dy - s0 * dx;
-    real_type b0  = s0 * dy + c0 * dx;
-    real_type tmp = a0*k;
+    real_type const dx  = x0 - qx;
+    real_type const dy  = y0 - qy;
+    real_type const a0  = c0 * dy - s0 * dx;
+    real_type const b0  = s0 * dy + c0 * dx;
+    real_type       tmp = a0*k;
 
     if ( 1+2*tmp > 0 ) {
 
@@ -682,16 +671,14 @@ namespace G2lib {
 
       return tmp;
 
-    } else {
-
-      real_type om = atan2( b0, a0+1/k );
-      if ( k < 0 ) om += Utils::m_pi;
-      real_type ss = -om/k;
-      real_type t  = Utils::m_2pi/abs(k);
-      if      ( ss < 0 ) ss += t;
-      else if ( ss > t ) ss -= t;
-      return ss;
     }
+    real_type om = atan2( b0, a0+1/k );
+    if ( k < 0 ) om += Utils::m_pi;
+    real_type ss = -om/k;
+    real_type t  = Utils::m_2pi/abs(k);
+    if      ( ss < 0 ) ss += t;
+    else if ( ss > t ) ss -= t;
+    return ss;
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -718,14 +705,13 @@ namespace G2lib {
       tmp = b0/(1+tmp);
       tmp *= -Atanc(tmp*k); // lunghezza
       return tmp;
-    } else {
-      real_type om = atan2( b0, a0+1/k );
-      if ( k < 0 ) {
-        if ( om < 0 ) om += Utils::m_pi;
-        else          om -= Utils::m_pi;
-      }
-      return -om/k;
     }
+    real_type om = atan2( b0, a0+1/k );
+    if ( k < 0 ) {
+      if ( om < 0 ) om += Utils::m_pi;
+      else          om -= Utils::m_pi;
+    }
+    return -om/k;
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

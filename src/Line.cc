@@ -124,7 +124,7 @@ namespace G2lib {
     switch ( pC->type() ) {
     case CurveType::LINE:
       G2LIB_DEBUG_MESSAGE( "to -> LineSegment\n" );
-      *this = *static_cast<LineSegment const *>(pC);
+      *this = *dynamic_cast<LineSegment const *>(pC);
       break;
     default:
       UTILS_ERROR(
@@ -581,17 +581,15 @@ namespace G2lib {
   bool
   LineSegment::collision( BaseCurve const * pC ) const {
     if ( pC->type() == CurveType::LINE ) {
-      LineSegment const & LS = *static_cast<LineSegment const*>(pC);
+      LineSegment const & LS = *dynamic_cast<LineSegment const*>(pC);
       return this->collision( LS );
-    } else {
-      CurveType CT = curve_promote( this->type(), pC->type() );
-      if ( CT == CurveType::LINE ) {
-        LineSegment C(pC);
-        return this->collision( C );
-      } else {
-        return G2lib::collision( this, pC );
-      }
     }
+    CurveType CT = curve_promote( this->type(), pC->type() );
+    if ( CT == CurveType::LINE ) {
+      LineSegment C(pC);
+      return this->collision( C );
+    }
+    return G2lib::collision( this, pC );
   }
 
   bool
@@ -601,17 +599,15 @@ namespace G2lib {
     real_type         offs_C
   ) const {
     if ( pC->type() == CurveType::LINE ) {
-      LineSegment const & LS = *static_cast<LineSegment const*>(pC);
+      LineSegment const & LS = *dynamic_cast<LineSegment const*>(pC);
       return this->collision_ISO( offs, LS, offs_C );
-    } else {
-      CurveType CT = curve_promote( this->type(), pC->type() );
-      if ( CT == CurveType::LINE ) {
-        LineSegment C(pC);
-        return this->collision_ISO( offs, C, offs_C );
-      } else {
-        return G2lib::collision_ISO( this, offs, pC, offs_C );
-      }
     }
+    CurveType CT = curve_promote( this->type(), pC->type() );
+    if ( CT == CurveType::LINE ) {
+      LineSegment C(pC);
+      return this->collision_ISO( offs, C, offs_C );
+    }
+    return G2lib::collision_ISO( this, offs, pC, offs_C );
   }
 
   void
@@ -642,7 +638,7 @@ namespace G2lib {
     IntersectList   & ilist
   ) const {
     if ( pC->type() == CurveType::LINE ) {
-      LineSegment const & LS = *static_cast<LineSegment const *>(pC);
+      LineSegment const & LS = *dynamic_cast<LineSegment const *>(pC);
       this->intersect( LS, ilist );
     } else {
       CurveType CT = curve_promote( this->type(), pC->type() );
@@ -663,7 +659,7 @@ namespace G2lib {
     IntersectList   & ilist
   ) const {
     if ( pC->type() == CurveType::LINE ) {
-      LineSegment const & LS = *static_cast<LineSegment const *>(pC);
+      LineSegment const & LS = *dynamic_cast<LineSegment const *>(pC);
       this->intersect_ISO( offs, LS, offs_C, ilist );
     } else {
       CurveType CT = curve_promote( this->type(), pC->type() );

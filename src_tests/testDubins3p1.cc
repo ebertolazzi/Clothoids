@@ -98,7 +98,7 @@ main() {
 
   // Seed the random number generator
   std::mt19937 gen(1);
-  std::uniform_real_distribution<> dis(0.0, 1.0);
+  std::uniform_real_distribution dis(0.0, 1.0);
 
   // Create a matrix to store the data
   Eigen::MatrixXd dataTable(numpts, 9);
@@ -106,7 +106,7 @@ main() {
   // Fill the matrix with data
   for ( int i{0}; i < numpts; ++i) {
 
-    G2lib::real_type ss{ G2lib::real_type(i)/G2lib::real_type(numpts) };
+    G2lib::real_type ss{ static_cast<G2lib::real_type>(i)/static_cast<G2lib::real_type>(numpts) };
     // if (i % PRINT_EVERY == 0)  std::cout << "completed " << ( (double) i ) / ((double) numpts) << " %, " << "i = " << i << std::endl;
     if (i % PRINT_EVERY == 0)
       fmt::print("completed {:>5.3f} %, i = {}\n", 100*ss, i);
@@ -280,19 +280,19 @@ main() {
     evaluationNumberTable(i,4) = DB_PT_BRACKET.num_evaluation();
     evaluationNumberTable(i,5) = DB_EL.num_evaluation();
 
-    type0Table(i,0) = (double) DB_SD.solution_type0();
-    type0Table(i,1) = (double) DB_PS.solution_type0();
-    type0Table(i,2) = (double) DB_PS_BRACKET.solution_type0();
-    type0Table(i,3) = (double) DB_PT.solution_type0();
-    type0Table(i,4) = (double) DB_PT_BRACKET.solution_type0();
-    type0Table(i,5) = (double) DB_EL.solution_type0();
+    type0Table(i,0) = static_cast<double>(DB_SD.solution_type0());
+    type0Table(i,1) = static_cast<double>(DB_PS.solution_type0());
+    type0Table(i,2) = static_cast<double>(DB_PS_BRACKET.solution_type0());
+    type0Table(i,3) = static_cast<double>(DB_PT.solution_type0());
+    type0Table(i,4) = static_cast<double>(DB_PT_BRACKET.solution_type0());
+    type0Table(i,5) = static_cast<double>(DB_EL.solution_type0());
 
-    type1Table(i,0) = (double) DB_SD.solution_type1();
-    type1Table(i,1) = (double) DB_PS.solution_type1();
-    type1Table(i,2) = (double) DB_PS_BRACKET.solution_type1();
-    type1Table(i,3) = (double) DB_PT.solution_type1();
-    type1Table(i,4) = (double) DB_PT_BRACKET.solution_type1();
-    type1Table(i,5) = (double) DB_EL.solution_type1();
+    type1Table(i,0) = static_cast<double>(DB_SD.solution_type1());
+    type1Table(i,1) = static_cast<double>(DB_PS.solution_type1());
+    type1Table(i,2) = static_cast<double>(DB_PS_BRACKET.solution_type1());
+    type1Table(i,3) = static_cast<double>(DB_PT.solution_type1());
+    type1Table(i,4) = static_cast<double>(DB_PT_BRACKET.solution_type1());
+    type1Table(i,5) = static_cast<double>(DB_EL.solution_type1());
 
     printStats(i, elapseTimeTable, evaluationNumberTable, thetaMTable);
 
@@ -394,11 +394,11 @@ main() {
 
   G2lib::real_type dr{1e-4};
   for ( real_type r{1.0}; r < 10; r += dr ) {
-    integer o_EL{ integer( (rappEL.array() > r).count() ) };
-    integer o_PS{ integer( (rappPS.array() > r).count() ) };
-    integer o_PS_BRACKET{ integer( (rappPS_BRACKET.array() > r).count() ) };
-    integer o_PT{ integer( (rappPT.array() > r).count() ) };
-    integer o_PT_BRACKET{ integer( (rappPT_BRACKET.array() > r).count() ) };
+    integer o_EL{ static_cast<integer>((rappEL.array() > r).count()) };
+    integer o_PS{ static_cast<integer>((rappPS.array() > r).count()) };
+    integer o_PS_BRACKET{ static_cast<integer>((rappPS_BRACKET.array() > r).count()) };
+    integer o_PT{ static_cast<integer>((rappPT.array() > r).count()) };
+    integer o_PT_BRACKET{ static_cast<integer>((rappPT_BRACKET.array() > r).count()) };
     fmt::print(
       "num outliers > {:>12.8f}  "
       "EL = {:>6}  "
@@ -494,7 +494,7 @@ printStats(
   Eigen::MatrixXd & ith_num,
   Eigen::MatrixXd & thetaM
 ) {
-  if( !(ith % PRINT_EVERY == 0) ) return;
+  if( ith % PRINT_EVERY != 0 ) return;
   fmt::print("---------------------------------------------\n");
   fmt::print("Result stats iter: {:>10}:\n",ith);
   fmt::print(

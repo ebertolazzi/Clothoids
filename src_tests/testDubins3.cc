@@ -17,23 +17,23 @@ main() {
   G2lib::Dubins DB2{"DB2"};
 
   {
-    real_type k_max  = 1;
-    real_type x0     = 0;
-    real_type y0     = 0;
-    real_type x3     = x0+1;
-    real_type y3     = y0;
-    real_type theta0 = -m_pi/2;
-    real_type theta3 = m_pi/2;
+    real_type const k_max  = 1;
+    real_type const x0     = 0;
+    real_type const y0     = 0;
+    real_type const x3     = x0+1;
+    real_type const y3     = y0;
+    real_type const theta0 = -m_pi/2;
+    real_type const theta3 = m_pi/2;
     DB1.build( x0, y0, theta0, x3, y3, theta3, k_max );
   }
   {
-    real_type k_max  = 1;
-    real_type x0     = 1;
-    real_type y0     = 0;
-    real_type x3     = x0+1;
-    real_type y3     = y0;
-    real_type theta0 = m_pi/2;
-    real_type theta3 = m_pi/2;
+    real_type const k_max  = 1;
+    real_type const x0     = 1;
+    real_type const y0     = 0;
+    real_type const x3     = x0+1;
+    real_type const y3     = y0;
+    real_type const theta0 = m_pi/2;
+    real_type const theta3 = m_pi/2;
     DB2.build( x0, y0, theta0, x3, y3, theta3, k_max );
   }
 

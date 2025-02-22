@@ -13,12 +13,12 @@ main() {
   G2lib::PolyLine      P1{"P1"};
   G2lib::PolyLine      P2{"P2"};
 
-  real_type x0  = 0;
-  real_type y0  = 0;
-  real_type th0 = 0;
-  real_type x1  = 0;
-  real_type y1  = 3;
-  real_type th1 = Utils::m_pi;
+  real_type const x0  = 0;
+  real_type const y0  = 0;
+  real_type const th0 = 0;
+  real_type const x1  = 0;
+  real_type const y1  = 3;
+  real_type const th1 = Utils::m_pi;
 
   C1.build_G1( x0, y0, th0, x1, y1, th1 );
   C1.info(cout);

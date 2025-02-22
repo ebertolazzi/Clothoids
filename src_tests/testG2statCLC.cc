@@ -23,8 +23,8 @@ main() {
   real_type y1 = 0;
 
   // insert code here...
-  real_type thmin = -m_pi*0.99;
-  real_type thmax =  m_pi*0.99;
+  real_type const thmin = -m_pi*0.99;
+  real_type const thmax =  m_pi*0.99;
 
   real_type kur[1000], kmax = 10;
   real_type a = exp( 2*log(kmax)/(nkur-1) );
@@ -82,7 +82,7 @@ main() {
     "ok = {} perc = {}\n"
     "elapsed = {}\n"
     "All done\n",
-    acc, double(acc)/(acc+acc1), tictoc.elapsed_s()
+    acc, static_cast<double>(acc)/(acc+acc1), tictoc.elapsed_s()
   );
   return 0;
 }

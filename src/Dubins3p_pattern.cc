@@ -43,7 +43,7 @@ namespace G2lib {
   ) const {
 
     // select angles
-    integer NSEG{ integer(std::floor(Utils::m_2pi / m_sample_angle)) };
+    integer const NSEG{ static_cast<integer>(std::floor(Utils::m_2pi / m_sample_angle)) };
     angles.clear();
     angles.reserve( 2*NSEG + 12 );
     {
@@ -53,8 +53,8 @@ namespace G2lib {
         for ( integer i{0}; i < npts; ++i ) {
           real_type a{ i == 0 ? ang[npts-1]-Utils::m_2pi : ang[i-1] };
           //real_type b{ i == npts ? ang[0]+Utils::m_2pi      : ang[i]   };
-          real_type b{ ang[i] };
-          real_type delta{ std::min( (b-a)/2.99999, m_sample_angle ) };
+          real_type const b{ ang[i] };
+          real_type const delta{ std::min( (b-a)/2.99999, m_sample_angle ) };
           while ( a < b ) {
             real_type aa{ a };
             if      ( aa < 0            ) aa += Utils::m_2pi;
@@ -70,7 +70,7 @@ namespace G2lib {
     }
     std::sort( angles.begin(), angles.end() );
     // remove duplicates
-    integer i{integer(angles.size())};
+    integer i{static_cast<integer>(angles.size())};
     for ( --i; i > 0; --i ) {
       if ( std::abs(angles[i]-angles[i-1]) < tolerance ) {
         angles.erase(angles.begin()+i);
@@ -204,7 +204,7 @@ namespace G2lib {
 
     // initialize and find min
     real_type lmin{Utils::Inf<real_type>()};
-    integer NSEG{integer(angles.size())};
+    integer const NSEG{static_cast<integer>(angles.size())};
     eval3p( C, angles[NSEG-2] );
     eval3p( R, angles[NSEG-1] );
 

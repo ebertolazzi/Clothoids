@@ -85,7 +85,7 @@ main() {
     "ok = {} perc = {}\n"
     "elapsed = {}\n"
     "All done\n",
-    acc, double(acc)/(acc+acc1), tictoc.elapsed_s()
+    acc, static_cast<double>(acc)/(acc+acc1), tictoc.elapsed_s()
   );
 
   return 0;
