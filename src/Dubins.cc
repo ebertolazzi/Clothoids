@@ -55,7 +55,7 @@ namespace G2lib {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   integer
-  to_integer( DubinsType d ) {
+  to_integer( DubinsType const d ) {
     switch ( d ) {
     case DubinsType::LSL: return 0;
     case DubinsType::RSR: return 1;
@@ -133,18 +133,18 @@ namespace G2lib {
   //!
   bool
   Dubins_build(
-    real_type    x0,
-    real_type    y0,
-    real_type    theta0,
-    real_type    x3,
-    real_type    y3,
-    real_type    theta3,
-    real_type    k_max,
-    DubinsType & type,
-    real_type  & L1,
-    real_type  & L2,
-    real_type  & L3,
-    real_type    grad[2]
+    real_type const x0,
+    real_type const y0,
+    real_type const theta0,
+    real_type const x3,
+    real_type const y3,
+    real_type const theta3,
+    real_type const k_max,
+    DubinsType    & type,
+    real_type     & L1,
+    real_type     & L2,
+    real_type     & L3,
+    real_type       grad[2]
   ) {
 
     using std::abs;
@@ -333,15 +333,15 @@ namespace G2lib {
 
   bool
   Dubins::build(
-    real_type x0,
-    real_type y0,
-    real_type theta0,
+    real_type const x0,
+    real_type const y0,
+    real_type const theta0,
 
-    real_type x3,
-    real_type y3,
-    real_type theta3,
+    real_type const x3,
+    real_type const y3,
+    real_type const theta3,
 
-    real_type k_max
+    real_type const k_max
   ) {
     real_type L1, L2, L3, grad[2];
     bool const ok{ Dubins_build(
@@ -380,7 +380,7 @@ namespace G2lib {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   real_type
-  Dubins::length_ISO( real_type offs ) const {
+  Dubins::length_ISO( real_type const offs ) const {
     return m_C0.length_ISO( offs )+m_C1.length_ISO( offs )+m_C2.length_ISO( offs );
   }
 
@@ -393,16 +393,16 @@ if ( s < m_C1.length() ) return m_C1.FUN(s);  \
 s -= m_C1.length();                           \
 return m_C2.FUN(s)
 
-  real_type Dubins::theta  ( real_type s ) const { DUBINS_SELECT( theta ); }
-  real_type Dubins::theta_D( real_type s ) const { DUBINS_SELECT( theta_D ); }
-  real_type Dubins::X( real_type s )       const { DUBINS_SELECT( X ); }
-  real_type Dubins::X_D( real_type s )     const { DUBINS_SELECT( X_D ); }
-  real_type Dubins::X_DD( real_type s )    const { DUBINS_SELECT( X_DD ); }
-  real_type Dubins::X_DDD( real_type s )   const { DUBINS_SELECT( X_DDD ); }
-  real_type Dubins::Y( real_type s )       const { DUBINS_SELECT( Y ); }
-  real_type Dubins::Y_D( real_type s )     const { DUBINS_SELECT( Y_D ); }
-  real_type Dubins::Y_DD( real_type s )    const { DUBINS_SELECT( Y_DD ); }
-  real_type Dubins::Y_DDD( real_type s )   const { DUBINS_SELECT( Y_DDD ); }
+  real_type Dubins::theta   ( real_type s ) const { DUBINS_SELECT( theta ); }
+  real_type Dubins::theta_D ( real_type s ) const { DUBINS_SELECT( theta_D ); }
+  real_type Dubins::X       ( real_type s ) const { DUBINS_SELECT( X ); }
+  real_type Dubins::X_D     ( real_type s ) const { DUBINS_SELECT( X_D ); }
+  real_type Dubins::X_DD    ( real_type s ) const { DUBINS_SELECT( X_DD ); }
+  real_type Dubins::X_DDD   ( real_type s ) const { DUBINS_SELECT( X_DDD ); }
+  real_type Dubins::Y       ( real_type s ) const { DUBINS_SELECT( Y ); }
+  real_type Dubins::Y_D     ( real_type s ) const { DUBINS_SELECT( Y_D ); }
+  real_type Dubins::Y_DD    ( real_type s ) const { DUBINS_SELECT( Y_DD ); }
+  real_type Dubins::Y_DDD   ( real_type s ) const { DUBINS_SELECT( Y_DDD ); }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
@@ -479,10 +479,10 @@ return m_C2.FUN(s)
   // offset curve
   void
   Dubins::eval_ISO(
-    real_type   s,
-    real_type   offs,
-    real_type & x,
-    real_type & y
+    real_type       s,
+    real_type const offs,
+    real_type     & x,
+    real_type     & y
   ) const {
     DUBINS_SELECT_EVAL( eval_ISO, offs, x, y );
   }
@@ -491,10 +491,10 @@ return m_C2.FUN(s)
 
   void
   Dubins::eval_ISO_D(
-    real_type   s,
-    real_type   offs,
-    real_type & x_D,
-    real_type & y_D
+    real_type       s,
+    real_type const offs,
+    real_type     & x_D,
+    real_type     & y_D
   ) const {
     DUBINS_SELECT_EVAL( eval_ISO_D, offs, x_D, y_D );
   }
@@ -503,10 +503,10 @@ return m_C2.FUN(s)
 
   void
   Dubins::eval_ISO_DD(
-    real_type   s,
-    real_type   offs,
-    real_type & x_DD,
-    real_type & y_DD
+    real_type       s,
+    real_type const offs,
+    real_type     & x_DD,
+    real_type     & y_DD
   ) const {
     DUBINS_SELECT_EVAL( eval_ISO_DD, offs, x_DD, y_DD );
   }
@@ -515,10 +515,10 @@ return m_C2.FUN(s)
 
   void
   Dubins::eval_ISO_DDD(
-    real_type   s,
-    real_type   offs,
-    real_type & x_DDD,
-    real_type & y_DDD
+    real_type       s,
+    real_type const offs,
+    real_type     & x_DDD,
+    real_type     & y_DDD
   ) const {
     DUBINS_SELECT_EVAL( eval_ISO_DDD, offs, x_DDD, y_DDD );
   }
@@ -534,14 +534,14 @@ return m_C2.FUN(s)
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   void
-  Dubins::scale( real_type scl ) {
+  Dubins::scale( real_type const scl ) {
     m_C0.scale( scl );
     m_C1.scale( scl );
     m_C1.change_origin( m_C0.x_end(), m_C0.y_end() );
   }
 
   void
-  Dubins::change_origin( real_type newx0, real_type newy0 ) {
+  Dubins::change_origin( real_type const newx0, real_type const newy0 ) {
     m_C0.change_origin(newx0,newy0);
     m_C1.change_origin(m_C0.x_end(),m_C0.y_end());
     m_C2.change_origin(m_C1.x_end(),m_C1.y_end());
@@ -581,11 +581,11 @@ return m_C2.FUN(s)
 
   void
   Dubins::bbox_ISO(
-    real_type   offs,
-    real_type & xmin,
-    real_type & ymin,
-    real_type & xmax,
-    real_type & ymax
+    real_type const offs,
+    real_type     & xmin,
+    real_type     & ymin,
+    real_type     & xmax,
+    real_type     & ymax
   ) const {
     m_C0.bbox_ISO( offs, xmin, ymin, xmax, ymax );
     real_type xmi1, ymi1, xma1, yma1;
@@ -626,9 +626,9 @@ return m_C2.FUN(s)
 
   bool
   Dubins::collision_ISO(
-    real_type      offs,
-    Dubins const & B,
-    real_type      offs_B
+    real_type const   offs,
+    Dubins    const & B,
+    real_type const   offs_B
   ) const {
     return m_C0.collision_ISO( offs, B.m_C0, offs_B ) ||
            m_C0.collision_ISO( offs, B.m_C1, offs_B ) ||
@@ -666,9 +666,9 @@ return m_C2.FUN(s)
 
   bool
   Dubins::collision_ISO(
-    real_type         offs,
+    real_type const   offs,
     BaseCurve const * pC,
-    real_type         offs_C
+    real_type const   offs_C
   ) const {
     if ( pC->type() == CurveType::DUBINS ) {
       Dubins const & C = *dynamic_cast<Dubins const *>(pC);
@@ -737,9 +737,9 @@ return m_C2.FUN(s)
 
   void
   Dubins::intersect_ISO(
-    real_type       offs,
-    Dubins const  & B,
-    real_type       offs_B,
+    real_type const   offs,
+    Dubins    const & B,
+    real_type const   offs_B,
     IntersectList & ilist
   ) const {
 
@@ -796,10 +796,10 @@ return m_C2.FUN(s)
 
   integer
   Dubins::closest_point_ISO(
-    real_type   qx,
-    real_type   qy,
-    real_type & x,
-    real_type & y,
+    real_type const qx,
+    real_type const qy,
+    real_type     & x,
+    real_type     & y,
     real_type & s,
     real_type & t,
     real_type & dst
@@ -842,9 +842,9 @@ return m_C2.FUN(s)
 
   void
   Dubins::intersect_ISO(
-    real_type         offs,
+    real_type const   offs,
     BaseCurve const * pC,
-    real_type         offs_C,
+    real_type const   offs_C,
     IntersectList   & ilist
   ) const {
     if ( pC->type() == CurveType::DUBINS ) {
@@ -859,18 +859,18 @@ return m_C2.FUN(s)
 
   integer
   Dubins::closest_point_ISO(
-    real_type   qx,
-    real_type   qy,
-    real_type   offs,
-    real_type & x,
-    real_type & y,
-    real_type & s,
-    real_type & t,
-    real_type & dst
+    real_type const qx,
+    real_type const qy,
+    real_type const offs,
+    real_type     & x,
+    real_type     & y,
+    real_type     & s,
+    real_type     & t,
+    real_type     & dst
   ) const {
     real_type x1, y1, s1, t1, dst1;
-    integer res  = m_C0.closest_point_ISO( qx, qy, offs, x,  y,  s,  t,  dst  );
-    integer res1 = m_C1.closest_point_ISO( qx, qy, offs, x1, y1, s1, t1, dst1 );
+    integer res  { m_C0.closest_point_ISO( qx, qy, offs, x,  y,  s,  t,  dst  ) };
+    integer res1 { m_C1.closest_point_ISO( qx, qy, offs, x1, y1, s1, t1, dst1 ) };
     if ( dst1 < dst ) {
       x   = x1;
       y   = y1;
@@ -968,11 +968,11 @@ return m_C2.FUN(s)
         real_type const t6  { t5 * sb };
         real_type const t13 { t5 * (t2-t7) };
 
-        real_type A { -t10 * (t6 - cb) + 4* ((t8+t3) * t5 - d*t9) + 26 + t11 - t12 };
-        real_type B { t14 * (t13 + t3) + t16 + t5 * (40-t15) };
-        real_type C { (t14 * t7 - 16) * sb * t5 - 2 * (d*d) * t7 + 12*t2 + 4*t7 * (t2 + 1) + 52 };
-        real_type D { t14 * (t13 - t3) + t16 + t5 * (t15 + 40) };
-        real_type E { -t10 * (t6 + cb) - 4* ((t3-t8) * t5 - d*t9) + 26 + t11 - t12 };
+        real_type       A { -t10 * (t6 - cb) + 4* ((t8+t3) * t5 - d*t9) + 26 + t11 - t12 };
+        real_type       B { t14 * (t13 + t3) + t16 + t5 * (40-t15) };
+        real_type const C { (t14 * t7 - 16) * sb * t5 - 2 * (d*d) * t7 + 12*t2 + 4*t7 * (t2 + 1) + 52 };
+        real_type       D { t14 * (t13 - t3) + t16 + t5 * (t15 + 40) };
+        real_type       E { -t10 * (t6 + cb) - 4* ((t3-t8) * t5 - d*t9) + 26 + t11 - t12 };
 
         bool const reciprocal{ std::abs(A) >= std::abs(E) };
         if ( reciprocal ) {
@@ -999,15 +999,15 @@ return m_C2.FUN(s)
       for ( integer i{0}; i < 2; ++i ) {
         real_type const tmp { s_x_d[i]*sb + t };
         real_type       A   { tmp - cb        };
-        real_type       B   { 2*(s_x_d[i]+sb) };
+        real_type const B   { 2*(s_x_d[i]+sb) };
         real_type       C   { tmp + cb        };
 
-        bool reciprocal{ std::abs(A) >= std::abs(C) };
+        bool const reciprocal{ std::abs(A) >= std::abs(C) };
         if ( reciprocal ) std::swap( A, C );
 
         Quadratic Q( A, B, C );
         real_type X[2];
-        integer nr{ Q.get_real_roots( X ) };
+        integer const nr{ Q.get_real_roots( X ) };
         for ( integer ir{0}; ir < nr; ++ir ) {
           // convert to angle
           real_type y{ X[ir] };
@@ -1070,21 +1070,21 @@ return m_C2.FUN(s)
         real_type const t9  { t8 * sa      };
         real_type const t13 { t8 * (t2-t5) };
 
-        real_type A { t10 * (t9 + ca) + t11 - t12 - 4 * ((t6 + t3) * t8 + d*t7) + 26 };
-        real_type B { t14 * (t13 - t3) + t16 + t8 * (t15 - 40) };
-        real_type C { -2*(d*d) * t5 + (t14 * t5 + 16) * sa * t8 + 12 * t2 + 4*t5 * (t2 + 1) + 52 };
-        real_type D { t14 * (t13 + t3) + t16 + t8 * (-t15 - 40) };
-        real_type E { t10 * (t9 - ca) + t11 - t12 - 4 * ((t6 - t3) * t8 - d*t7) + 26 };
+        real_type       A { t10 * (t9 + ca) + t11 - t12 - 4 * ((t6 + t3) * t8 + d*t7) + 26 };
+        real_type       B { t14 * (t13 - t3) + t16 + t8 * (t15 - 40) };
+        real_type const C { -2*(d*d) * t5 + (t14 * t5 + 16) * sa * t8 + 12 * t2 + 4*t5 * (t2 + 1) + 52 };
+        real_type       D { t14 * (t13 + t3) + t16 + t8 * (-t15 - 40) };
+        real_type       E { t10 * (t9 - ca) + t11 - t12 - 4 * ((t6 - t3) * t8 - d*t7) + 26 };
 
-        bool reciprocal{ std::abs(A) >= std::abs(E) };
+        bool const reciprocal{ std::abs(A) >= std::abs(E) };
         if ( reciprocal ) {
           std::swap( A, E );
           std::swap( B, D );
         }
 
-        Quartic Q( A, B, C, D, E );
+        Quartic const Q( A, B, C, D, E );
         real_type X[4];
-        integer nr{ Q.get_real_roots( X ) };
+        integer const nr{ Q.get_real_roots( X ) };
         for ( integer ir{0}; ir < nr; ++ir ) {
           // convert to angle
           real_type y{ X[ir] };
@@ -1097,21 +1097,21 @@ return m_C2.FUN(s)
       }
     }
     { // case CSC+
-      real_type t{ d*d/2-1 };
-      real_type s_x_d[2]{d,-d};
+      real_type const t{ d*d/2-1 };
+      real_type const s_x_d[2]{d,-d};
       for ( integer i{0}; i < 2; ++i ) {
 
-        real_type tmp { s_x_d[i]*sa + t };
-        real_type A   { tmp - ca        };
-        real_type B   { 2*(s_x_d[i]+sa) };
-        real_type C   { tmp + ca        };
+        real_type const tmp { s_x_d[i]*sa + t };
+        real_type       A   { tmp - ca        };
+        real_type const B   { 2*(s_x_d[i]+sa) };
+        real_type       C   { tmp + ca        };
 
-        bool reciprocal{ std::abs(A) >= std::abs(C) };
+        bool const reciprocal{ std::abs(A) >= std::abs(C) };
         if ( reciprocal ) std::swap( A, C );
 
         Quadratic Q( A, B, C );
         real_type X[2];
-        integer nr{ Q.get_real_roots( X ) };
+        integer const nr{ Q.get_real_roots( X ) };
         for ( integer ir{0}; ir < nr; ++ir ) {
           // convert to angle
           real_type y{ X[ir] };

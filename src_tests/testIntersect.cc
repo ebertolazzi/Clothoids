@@ -10,20 +10,20 @@ int
 main() {
 
   G2lib::ClothoidCurve C0{"C0"}, C1{"C1"};
-  real_type const x0     = 0;
-  real_type const y0     = 0;
-  real_type const theta0 = Utils::m_pi*0.7;
-  real_type const k0     = -0.1;
-  real_type const dk0    = 0.05;
-  real_type const L0     = 100;
+  constexpr real_type x0     = 0;
+  constexpr real_type y0     = 0;
+  real_type const theta0     = Utils::m_pi*0.7;
+  constexpr real_type k0     = -0.1;
+  constexpr real_type dk0    = 0.05;
+  constexpr real_type L0     = 100;
   C0.build( x0, y0, theta0, k0, dk0, L0 );
 
-  real_type const x1     = -13;
-  real_type const y1     = 0.3;
-  real_type const theta1 = Utils::m_pi/4;
-  real_type const k1     = 0.1;
-  real_type const dk1    = -0.05;
-  real_type const L1     = 100;
+  constexpr real_type x1     = -13;
+  constexpr real_type y1     = 0.3;
+  real_type const theta1     = Utils::m_pi/4;
+  constexpr real_type k1     = 0.1;
+  constexpr real_type dk1    = -0.05;
+  constexpr real_type L1     = 100;
   C1.build( x1, y1, theta1, k1, dk1, L1 );
 
   G2lib::LineSegment L{"L"};

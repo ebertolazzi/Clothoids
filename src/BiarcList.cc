@@ -1179,23 +1179,23 @@ namespace G2lib {
     BL.build_AABBtree_ISO( offs_C );
     AABB_MAP intersectList;
     m_aabb_tree.intersect_and_refine( BL.m_aabb_tree, intersectList );
-    for ( auto const & I : intersectList ) {
-      integer i = I.first;
+    for ( const auto &[fst, snd] : intersectList ) {
+      integer i{fst};
       UTILS_ASSERT_DEBUG(
         i >= 0 && i < static_cast<integer>(m_aabb_triangles.size()),
         "BiarcList::collision_ISO( offs={}, BL, offs_BL={} ) i={} out of range [0,{})\n",
         offs, offs_C, i, m_aabb_triangles.size()
       );
-      Triangle2D const & T1  = m_aabb_triangles.at(i);
-      Biarc      const & BA1 = m_biarc_list.at(T1.Icurve());
-      for ( auto const & j : I.second ) {
+      Triangle2D const & T1  { m_aabb_triangles.at(i) };
+      Biarc      const & BA1 { m_biarc_list.at(T1.Icurve()) };
+      for ( auto const & j : snd ) {
         UTILS_ASSERT_DEBUG(
           j >= 0 && j < static_cast<integer>(BL.m_aabb_triangles.size()),
           "BiarcList::collision_ISO( offs={}, BL, offs_BL={} ) j={} out of range [0,{})\n",
           offs, offs_C, j, BL.m_aabb_triangles.size()
         );
-        Triangle2D const & T2  = BL.m_aabb_triangles.at(j);
-        Biarc      const & BA2 = BL.m_biarc_list.at(T2.Icurve());
+        Triangle2D const & T2  { BL.m_aabb_triangles.at(j) };
+        Biarc      const & BA2 { BL.m_biarc_list.at(T2.Icurve()) };
         if ( BA1.collision_ISO( offs, BA2, offs_C ) ) return true;
       }
     }
@@ -1225,31 +1225,31 @@ namespace G2lib {
       BL.build_AABBtree_ISO( offs_BL );
       AABB_MAP intersectList;
       m_aabb_tree.intersect_and_refine( BL.m_aabb_tree, intersectList );
-      for ( auto const & I : intersectList ) {
-        integer i = I.first;
+      for ( const auto &[fst, snd] : intersectList ) {
+        integer i{fst};
         UTILS_ASSERT_DEBUG(
           i >= 0 && i < static_cast<integer>(m_aabb_triangles.size()),
           "BiarcList::intersect_ISO( offs={}, BL, offs_BL={}, ilist ) i={} out of range [0,{})\n",
           offs, offs_BL, i, m_aabb_triangles.size()
         );
-        Triangle2D const & T1  = m_aabb_triangles.at(i);
-        Biarc      const & BA1 = m_biarc_list.at(T1.Icurve());
+        Triangle2D const & T1  { m_aabb_triangles.at(i) };
+        Biarc      const & BA1 { m_biarc_list.at(T1.Icurve()) };
 
-        for ( integer j : I.second ) {
+        for ( integer j : snd ) {
           UTILS_ASSERT_DEBUG(
             j >= 0 && j < static_cast<integer>(BL.m_aabb_triangles.size()),
             "BiarcList::intersect_ISO( offs={}, BL, offs_BL={}, ilist ) j={} out of range [0,{})\n",
             offs, offs_BL, j, BL.m_aabb_triangles.size()
           );
-          Triangle2D const & T2  = BL.m_aabb_triangles.at(j);
-          Biarc      const & BA2 = BL.m_biarc_list.at(T2.Icurve());
+          Triangle2D const & T2  { BL.m_aabb_triangles.at(j) };
+          Biarc      const & BA2 { BL.m_biarc_list.at(T2.Icurve()) };
 
           IntersectList ilist1;
           BA1.intersect_ISO( offs, BA2, offs_BL, ilist1 );
 
-          for ( auto const & it : ilist1 ) {
-            real_type ss1 = it.first  + m_s0.at(T1.Icurve());
-            real_type ss2 = it.second + BL.m_s0.at(T2.Icurve());
+          for ( const auto &[fst, snd] : ilist1 ) {
+            real_type ss1 = fst  + m_s0.at(T1.Icurve());
+            real_type ss2 = snd + BL.m_s0.at(T2.Icurve());
             ilist.emplace_back( ss1, ss2 );
           }
         }
@@ -1269,9 +1269,9 @@ namespace G2lib {
           IntersectList ilist1;
           BA1.intersect_ISO( offs, BA2, offs_BL, ilist1 );
 
-          for ( auto const & it : ilist1 ) {
-            real_type ss1 = it.first  + m_s0.at(T1.Icurve());
-            real_type ss2 = it.second + BL.m_s0.at(T2.Icurve());
+          for ( const auto &[fst, snd] : ilist1 ) {
+            real_type ss1{ fst  + m_s0.at(T1.Icurve()) };
+            real_type ss2{ snd + BL.m_s0.at(T2.Icurve()) };
             ilist.emplace_back( ss1, ss2 );
           }
         }
@@ -1300,9 +1300,9 @@ namespace G2lib {
 
   void
   BiarcList::intersect_ISO(
-    real_type         offs,
+    real_type const   offs,
     BaseCurve const * pC,
-    real_type         offs_C,
+    real_type const   offs_C,
     IntersectList   & ilist
   ) const {
     if ( pC->type() == CurveType::BIARC_LIST ) {

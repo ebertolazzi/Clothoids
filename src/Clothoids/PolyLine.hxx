@@ -90,7 +90,6 @@ namespace G2lib {
 
     void copy( PolyLine const & l );
 
-    explicit
     PolyLine( PolyLine const & PL ) : BaseCurve( PL.name() )
     { this->reset_last_interval(); this->copy(PL); }
 

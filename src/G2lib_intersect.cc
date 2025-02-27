@@ -133,7 +133,7 @@ namespace G2lib {
 
     try {
 
-      CurveType CT = curve_promote( pC1->type(), pC2->type() );
+      CurveType const CT{ curve_promote( pC1->type(), pC2->type() ) };
       switch ( CT ) {
       case CurveType::LINE:
         G2LIB_DEBUG_MESSAGE( "promote -> LineSegment\n" );
@@ -245,7 +245,7 @@ namespace G2lib {
 
     try {
 
-      CurveType CT = curve_promote( pC1->type(), pC2->type() );
+      CurveType const CT{ curve_promote( pC1->type(), pC2->type() ) };
       switch ( CT ) {
       case CurveType::LINE:
         G2LIB_DEBUG_MESSAGE( "promote -> LineSegment\n" );
@@ -354,7 +354,7 @@ namespace G2lib {
 
     try {
 
-      CurveType CT = curve_promote( pC1->type(), pC2->type() );
+      CurveType const CT{ curve_promote( pC1->type(), pC2->type() ) };
       switch ( CT ) {
       case CurveType::LINE:
         G2LIB_DEBUG_MESSAGE( "promote -> LineSegment\n" );
@@ -462,7 +462,7 @@ namespace G2lib {
 
     try {
 
-      CurveType CT = curve_promote( pC1->type(), pC2->type() );
+      CurveType const CT{ curve_promote( pC1->type(), pC2->type() ) };
       switch ( CT ) {
       case CurveType::LINE:
         G2LIB_DEBUG_MESSAGE( "promote -> LineSegment\n" );

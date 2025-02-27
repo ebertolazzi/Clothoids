@@ -10,12 +10,12 @@ int
 main() {
 
   // check constructors
-  real_type const x0{0};
-  real_type const y0{2};
-  real_type const x1{4};
-  real_type const y1{3.5};
-  real_type const x2{6};
-  real_type const y2{1};
+  constexpr real_type x0{0};
+  constexpr real_type y0{2};
+  constexpr real_type x1{4};
+  constexpr real_type y1{3.5};
+  constexpr real_type x2{6};
+  constexpr real_type y2{1};
 
   G2lib::Triangle2D T1;
   T1.build( x0, y0, x1, y1, x2, y2, 0, 0, 0 );
@@ -35,12 +35,12 @@ main() {
   {
     G2lib::ClothoidCurve C{"temporary"};
 
-    real_type const xx0    = 0;
-    real_type const yy0    = 2;
-    real_type const theta0 = 0;
-    real_type const kappa0 = 10;
-    real_type const dk     = -1;// 0;
-    real_type const L      = 1;
+    constexpr real_type xx0    = 0;
+    constexpr real_type yy0    = 2;
+    constexpr real_type theta0 = 0;
+    constexpr real_type kappa0 = 10;
+    constexpr real_type dk     = -1;// 0;
+    constexpr real_type L      = 1;
     C.build( xx0, yy0, theta0, kappa0, dk, L );
 
     vector<G2lib::Triangle2D> tvec;

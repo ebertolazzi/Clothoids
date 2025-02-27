@@ -58,7 +58,6 @@ namespace G2lib {
 
     void setup( GenericContainer const & gc ) override;
 
-    explicit
     LineSegment( LineSegment const & s ) : BaseCurve( s.name() )
     { this->copy(s); }
 

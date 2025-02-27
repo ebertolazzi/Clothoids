@@ -31,15 +31,15 @@ main() {
   DB_PS.set_tolerance( 1e-10 );
   DB_PS.set_sample_angle( m_2pi/4 );
 
-  G2lib::real_type const x0     =                             -1;
-  G2lib::real_type const y0     =                              0;
-  G2lib::real_type const theta0 =         -1.4793802997313432179;
-  G2lib::real_type const xM     =        -0.94180274966005206316;
-  G2lib::real_type const yM     =        -0.94180274966005206316;
-  G2lib::real_type const xf     =                              1;
-  G2lib::real_type const yf     =                              0;
-  G2lib::real_type const thetaf =         -1.4793802997313432179;
-  G2lib::real_type const k_max  =         0.47036903761898174459;
+  constexpr G2lib::real_type x0     =                             -1;
+  constexpr G2lib::real_type y0     =                              0;
+  constexpr G2lib::real_type theta0 =         -1.4793802997313432179;
+  constexpr G2lib::real_type xM     =        -0.94180274966005206316;
+  constexpr G2lib::real_type yM     =        -0.94180274966005206316;
+  constexpr G2lib::real_type xf     =                              1;
+  constexpr G2lib::real_type yf     =                              0;
+  constexpr G2lib::real_type thetaf =         -1.4793802997313432179;
+  constexpr G2lib::real_type k_max  =         0.47036903761898174459;
   //G2lib::real_type thetaM =          4.5902159327450595683; (SAMPLE)
   //G2lib::real_type len    =          15.846598851367838634; (SAMPLE)
   //G2lib::real_type thetaM =          4.9447976995266156308; (PATTERN)

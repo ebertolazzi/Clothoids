@@ -97,7 +97,6 @@ namespace G2lib {
     //!
     //! Build a copy of an existing Dubins problem.
     //!
-    explicit
     Dubins( Dubins const & s ) : BaseCurve( s.name() )
     { this->copy(s); }
 

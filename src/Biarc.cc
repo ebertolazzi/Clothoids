@@ -168,9 +168,9 @@ namespace G2lib {
     real_type const l0 = 1/(t*Sinc( dth0 ));
     real_type const l1 = 1/(t*Sinc( dth1 ));
     real_type const k0 = 2*t*sin( dth0 );
-    real_type const k1 = -2*t*sin( dth1 );
+    real_type const k1{ -2*t*sin( dth1 ) };
 
-    real_type const epsi = 100*d*Utils::machine_eps<real_type>();
+    real_type const epsi{ 100*d*Utils::machine_eps<real_type>() };
     if ( l0 > epsi && l1 > epsi ) {
 
       m_C0.build( x0, y0, theta0, k0, l0 );
@@ -317,7 +317,7 @@ namespace G2lib {
       "Biarc::trim( begin={}, s_end={} ) s_end must be > s_begin\n",
       s_begin, s_end
     );
-    real_type const L0 = m_C0.length();
+    real_type const L0{ m_C0.length() };
     if ( s_end <= L0 ) {
       m_C0.trim( s_begin, s_end );
       m_C1 = m_C0;
@@ -349,7 +349,7 @@ namespace G2lib {
 
   real_type
   Biarc::theta_D( real_type const s ) const {
-    real_type const L0 = m_C0.length();
+    real_type const L0{ m_C0.length() };
     if ( s < L0 ) return m_C0.m_k;
     return m_C1.m_k;
   }
@@ -776,7 +776,7 @@ namespace G2lib {
       Biarc const & C = *dynamic_cast<Biarc const *>(pC);
       return this->collision( C );
     }
-    CurveType CT = curve_promote( this->type(), pC->type() );
+    CurveType const CT{ curve_promote( this->type(), pC->type() ) };
     if ( CT == CurveType::BIARC ) {
       Biarc const C(pC);
       return this->collision( C );
@@ -796,7 +796,7 @@ namespace G2lib {
       Biarc const & C = *dynamic_cast<Biarc const *>(pC);
       return this->collision_ISO( offs, C, offs_C );
     }
-    CurveType CT = curve_promote( this->type(), pC->type() );
+    CurveType const CT{ curve_promote( this->type(), pC->type() ) };
     if ( CT == CurveType::BIARC ) {
       Biarc const C(pC);
       return this->collision_ISO( offs, C, offs_C );
@@ -824,9 +824,9 @@ namespace G2lib {
                    ilist10.size() +
                    ilist11.size() );
 
-    for ( auto & it : ilist01 ) it.second += LB;
-    for ( auto & it : ilist10 ) it.first  += L;
-    for ( auto & it : ilist11 ) { it.first += L; it.second += LB; }
+    for ( auto &[fst, snd] : ilist01 ) snd += LB;
+    for ( auto &[fst, snd] : ilist10 ) fst  += L;
+    for ( auto &[fst, snd] : ilist11 ) { fst += L; snd += LB; }
 
     for ( auto const & it : ilist00 ) ilist.push_back( it );
     for ( auto const & it : ilist01 ) ilist.push_back( it );
@@ -856,7 +856,7 @@ namespace G2lib {
                    ilist10.size() +
                    ilist11.size() );
 
-                   for ( auto & it : ilist01 ) it.second += LB;
+    for ( auto &[fst, snd] : ilist01 ) snd += LB;
     for ( auto &[fst, snd] : ilist10 ) fst  += L;
     for ( auto &[fst, snd] : ilist11 ) { fst += L; snd += LB; }
 
@@ -901,7 +901,7 @@ namespace G2lib {
       Biarc const & C = *dynamic_cast<Biarc const *>(pC);
       this->intersect( C, ilist );
     } else {
-      CurveType CT = curve_promote( this->type(), pC->type() );
+      CurveType const CT{ curve_promote( this->type(), pC->type() ) };
       if ( CT == CurveType::BIARC ) {
         Biarc const C(pC);
         this->intersect( C, ilist );
@@ -922,7 +922,7 @@ namespace G2lib {
       Biarc const & C = *dynamic_cast<Biarc const *>(pC);
       this->intersect_ISO( offs, C, offs_LS, ilist );
     } else {
-      CurveType CT = curve_promote( this->type(), pC->type() );
+      CurveType const CT{ curve_promote( this->type(), pC->type() ) };
       if ( CT == CurveType::BIARC ) {
         Biarc const C(pC);
         this->intersect_ISO( offs, C, offs_LS, ilist );

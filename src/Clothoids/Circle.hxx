@@ -57,14 +57,13 @@ namespace G2lib {
     CircleArc() = delete;
 
     explicit
-    CircleArc( string_view name ) : BaseCurve( name ) {};
+    CircleArc( string_view const name ) : BaseCurve( name ) {};
 
     void setup( GenericContainer const & gc ) override;
 
     //!
     //! Build a copy of an existing circle arc.
     //!
-    explicit
     CircleArc( CircleArc const & s ) : BaseCurve( s.name() )
     { this->copy(s); }
 

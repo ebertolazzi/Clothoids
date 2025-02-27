@@ -69,7 +69,6 @@ namespace G2lib {
     //!
     //! Make a copy of an existing biarc
     //!
-    explicit
     Biarc( Biarc const & ba ) : BaseCurve( ba.name() )
     { this->copy(ba); }
 

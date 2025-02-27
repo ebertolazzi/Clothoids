@@ -46,17 +46,17 @@ namespace G2lib {
 
   inline
   real_type
-  power2( real_type a )
+  power2( real_type const a )
   { return a*a; }
 
   inline
   real_type
-  power3( real_type a )
+  power3( real_type const a )
   { return a*a*a; }
 
   inline
   real_type
-  power4( real_type a )
+  power4( real_type const a )
   { real_type const a2 = a*a; return a2*a2; }
 
   #endif
@@ -796,9 +796,7 @@ namespace G2lib {
 
   int
   G2solve3arc::solve( real_type const sM_guess, real_type const thM_guess ) {
-
-    Solve2x2 solver;
-    real_type F[2], d[2], X[2], J[2][2];
+    real_type X[2];
     X[0] = sM_guess;
     X[1] = thM_guess;
 
@@ -808,9 +806,13 @@ namespace G2lib {
     integer iter{0};
     bool converged{false};
     try {
+      Solve2x2 solver;
       do {
+        real_type J[2][2];
+        real_type d[2];
+        real_type F[2];
         evalFJ(X, F, J);
-        real_type const lenF = hypot(F[0], F[1]);
+        real_type const lenF{ hypot(F[0], F[1]) };
         converged = lenF < m_tolerance;
         if ( converged || !solver.factorize(J) ) break;
         solver.solve(F, d);
@@ -1119,10 +1121,10 @@ namespace G2lib {
   // offset curve
   void
   G2solve3arc::eval_ISO(
-    real_type   s,
-    real_type   offs,
-    real_type & x,
-    real_type & y
+    real_type       s,
+    real_type const offs,
+    real_type     & x,
+    real_type     & y
   ) const {
     if ( s < m_S0.length() ) {
       m_S0.eval_ISO( s, offs, x, y );
@@ -1141,10 +1143,10 @@ namespace G2lib {
 
   void
   G2solve3arc::eval_ISO_D(
-    real_type   s,
-    real_type   offs,
-    real_type & x_D,
-    real_type & y_D
+    real_type       s,
+    real_type const offs,
+    real_type     & x_D,
+    real_type     & y_D
   ) const {
     if ( s < m_S0.length() ) {
       m_S0.eval_ISO_D( s, offs, x_D, y_D );
@@ -1163,10 +1165,10 @@ namespace G2lib {
 
   void
   G2solve3arc::eval_ISO_DD(
-    real_type   s,
-    real_type   offs,
-    real_type & x_DD,
-    real_type & y_DD
+    real_type       s,
+    real_type const offs,
+    real_type &     x_DD,
+    real_type &     y_DD
   ) const {
     if ( s < m_S0.length() ) {
       m_S0.eval_ISO_DD( s, offs, x_DD, y_DD );
@@ -1185,10 +1187,10 @@ namespace G2lib {
 
   void
   G2solve3arc::eval_ISO_DDD(
-    real_type   s,
-    real_type   offs,
-    real_type & x_DDD,
-    real_type & y_DDD
+    real_type       s,
+    real_type const offs,
+    real_type &     x_DDD,
+    real_type &     y_DDD
   ) const {
     if ( s < m_S0.length() ) {
       m_S0.eval_ISO_DDD( s, offs, x_DDD, y_DDD );

@@ -217,7 +217,7 @@ namespace G2lib {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   real_type
-  Triangle2D::dist_max( real_type x, real_type y ) const {
+  Triangle2D::dist_max( real_type const x, real_type const y ) const {
     real_type const d1 = hypot( x-m_p1[0], y-m_p1[1] );
     real_type const d2 = hypot( x-m_p2[0], y-m_p2[1] );
     real_type const d3 = hypot( x-m_p3[0], y-m_p3[1] );
@@ -231,30 +231,30 @@ namespace G2lib {
   static
   real_type
   distSeg(
-    real_type       x,
-    real_type       y,
+    real_type const x,
+    real_type const y,
     real_type const A[],
     real_type const B[]
   ) {
-    real_type dx  = x    - A[0];
-    real_type dy  = y    - A[1];
-    real_type dx1 = B[0] - A[0];
-    real_type dy1 = B[1] - A[1];
+    real_type const dx  { x    - A[0] };
+    real_type const dy  { y    - A[1] };
+    real_type const dx1 { B[0] - A[0] };
+    real_type const dy1 { B[1] - A[1] };
 
     // < P-A - s*(B-A), B-A> = 0
     // <P-A, B-A> = s <B-A,B-A>
 
-    real_type tmp = dx * dx1 + dy * dy1;
+    real_type const tmp{ dx * dx1 + dy * dy1 };
 
     if ( tmp < 0 ) return hypot(dx,dy);
 
-    real_type tmp2 = dx1*dx1+dy1*dy1;
+    real_type const tmp2{ dx1*dx1+dy1*dy1 };
 
     if ( tmp > tmp2 ) return hypot(x-B[0],y-B[1]);
 
-    real_type S = tmp/tmp2;
-    real_type X = A[0] + S*dx1;
-    real_type Y = A[1] + S*dy1;
+    real_type const S { tmp/tmp2 };
+    real_type const X { A[0] + S*dx1 };
+    real_type const Y { A[1] + S*dy1 };
 
     return hypot( x-X, y-Y );
   }
@@ -264,7 +264,7 @@ namespace G2lib {
   real_type
   Triangle2D::dist_min( real_type x, real_type y ) const {
 
-    integer in = is_inside( x, y );
+    integer in{ is_inside( x, y ) };
     if ( in >= 0 ) return 0;
 
 #if 0

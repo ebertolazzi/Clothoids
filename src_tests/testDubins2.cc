@@ -14,7 +14,7 @@ main() {
 
   ifstream file("DSdubinsP2P6Rand.csv");
   //ifstream file("DSdubinsP2P6.csv");
-  int wrong = 0;
+  int wrong{0};
   if (file.is_open()) {
     real_type x0, y0, th0, x1, y1, th1, kmax, l, t;
     std::string man;
