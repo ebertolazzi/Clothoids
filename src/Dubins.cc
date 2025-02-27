@@ -70,30 +70,59 @@ namespace G2lib {
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
+  Dubins::Dubins(
+    real_type         x0,
+    real_type         y0,
+    real_type         theta0,
+    real_type         x1,
+    real_type         y1,
+    real_type         theta1,
+    real_type         k_max,
+    string_view const name
+  ) : BaseCurve( name ) {
+    bool const ok{ this->build( x0, y0, theta0, x1, y1, theta1, k_max ) };
+    UTILS_ASSERT(
+      ok,
+      "Dubins::Dubins(\n"
+      "  x0     = {},\n"
+      "  y0     = {},\n"
+      "  theta0 = {},\n"
+      "  x1     = {},\n"
+      "  y1     = {},\n"
+      "  theta1 = {},\n"
+      "  k_max  = {},\n"
+      "  name   = {}\n"
+      ") failed\n",
+      x0, y0, theta0, x1, y1, theta1, k_max, name
+    );
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
   void
   Dubins::setup( GenericContainer const & gc ) {
     string const where{ fmt::format("Dubins[{}]::setup( gc ):", this->name() ) };
-    real_type const x0     = gc.get_map_number("x0",     where );
-    real_type const y0     = gc.get_map_number("y0",     where );
-    real_type const theta0 = gc.get_map_number("theta0", where );
-    real_type const x1     = gc.get_map_number("x1",     where );
-    real_type const y1     = gc.get_map_number("y1",     where );
-    real_type const theta1 = gc.get_map_number("theta1", where );
-    real_type const kmax   = gc.get_map_number("kmax",   where );
-    bool const ok = this->build( x0, y0, theta0, x1, y1, theta1, kmax );
+    real_type const x0     { gc.get_map_number("x0",     where ) };
+    real_type const y0     { gc.get_map_number("y0",     where ) };
+    real_type const theta0 { gc.get_map_number("theta0", where ) };
+    real_type const x1     { gc.get_map_number("x1",     where ) };
+    real_type const y1     { gc.get_map_number("y1",     where ) };
+    real_type const theta1 { gc.get_map_number("theta1", where ) };
+    real_type const kmax   { gc.get_map_number("kmax",   where ) };
+    bool const ok{ this->build( x0, y0, theta0, x1, y1, theta1, kmax ) };
     UTILS_ASSERT( ok, "Dubins[{}]::setup( gc ) failed\n", this->name() );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  void Dubins::build( LineSegment const & )   { UTILS_ERROR("can convert from LineSegment to Dubins\n"); }
-  void Dubins::build( CircleArc const & )     { UTILS_ERROR("can convert from CircleArc to Dubins\n"); }
-  void Dubins::build( Biarc const & )         { UTILS_ERROR("can convert from Biarc to Dubins\n"); }
-  void Dubins::build( ClothoidCurve const & ) { UTILS_ERROR("can convert from ClothoidCurve to Dubins\n"); }
-  void Dubins::build( PolyLine const & )      { UTILS_ERROR("can convert from PolyLine to Dubins\n"); }
-  void Dubins::build( BiarcList const & )     { UTILS_ERROR("can convert from BiarcList to Dubins\n"); }
-  void Dubins::build( ClothoidList const & )  { UTILS_ERROR("can convert from ClothoidList to Dubins\n"); }
-  void Dubins::build( Dubins3p const & )      { UTILS_ERROR("can convert from Dubins3p to Dubins\n"); }
+  void Dubins::build( LineSegment   const & ) { UTILS_ERROR("cannot convert from LineSegment to Dubins\n"); }
+  void Dubins::build( CircleArc     const & ) { UTILS_ERROR("cannot convert from CircleArc to Dubins\n"); }
+  void Dubins::build( Biarc         const & ) { UTILS_ERROR("cannot convert from Biarc to Dubins\n"); }
+  void Dubins::build( ClothoidCurve const & ) { UTILS_ERROR("cannot convert from ClothoidCurve to Dubins\n"); }
+  void Dubins::build( PolyLine      const & ) { UTILS_ERROR("cannot convert from PolyLine to Dubins\n"); }
+  void Dubins::build( BiarcList     const & ) { UTILS_ERROR("cannot convert from BiarcList to Dubins\n"); }
+  void Dubins::build( ClothoidList  const & ) { UTILS_ERROR("cannot convert from ClothoidList to Dubins\n"); }
+  void Dubins::build( Dubins3p      const & ) { UTILS_ERROR("cannot convert from Dubins3p to Dubins\n"); }
 
   void
   Dubins::build( Dubins const & DB ) {
@@ -243,7 +272,7 @@ namespace G2lib {
         real_type const Xsol{ X[ir] };
         real_type const Xsol2{ Xsol*Xsol };
         real_type const th{ atan2( -2*Xsol, good ? Xsol2-1:1-Xsol2 ) };
-        real_type l2{ ( d - sasb)*cos(th) + cacb*sin(th) };
+        real_type const l2{ ( d - sasb)*cos(th) + cacb*sin(th) };
         if ( l2 >= 0 ) {
           real_type l1{ alpha - th }; into_0_2pi( l1 );
           real_type l3{ beta  - th }; into_0_2pi( l3 );

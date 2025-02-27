@@ -103,6 +103,7 @@ namespace G2lib {
       case 6: dst = hypot( x-x_min(), y-y_max() ); break;
       case 7: dst = y-y_max();                     break;
       case 8: dst = hypot( x-x_max(), y-y_max() ); break;
+      default:                                     break;
     }
     return dst;
   }

@@ -41,10 +41,12 @@ main() {
     constexpr real_type kappa0 = 10;
     constexpr real_type dk     = -1;// 0;
     constexpr real_type L      = 1;
+    real_type const max_angle { Utils::m_pi/18 };
+    real_type const max_size  { 1e100 };
     C.build( xx0, yy0, theta0, kappa0, dk, L );
 
     vector<G2lib::Triangle2D> tvec;
-    C.bb_triangles_ISO( 0, tvec );
+    C.bb_triangles_ISO( 0, tvec, max_angle, max_size, 0 );
 
     for ( size_t i = 0; i < tvec.size(); ++i )
       fmt::print( "{} {}\n\n", i, tvec[i] );

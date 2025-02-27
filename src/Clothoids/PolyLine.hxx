@@ -44,9 +44,9 @@ namespace G2lib {
     friend class BiarcList;
   private:
     vector<LineSegment> m_polyline_list;
-    vector<real_type>   m_s0;
-    real_type           m_xe;
-    real_type           m_ye;
+    vector<real_type>   m_s0{0};
+    real_type           m_xe{0};
+    real_type           m_ye{0};
 
     #ifdef CLOTHOIDS_USE_THREADS
     mutable std::mutex                                         m_last_interval_mutex;
@@ -66,8 +66,8 @@ namespace G2lib {
     reset_last_interval() {
       #ifdef CLOTHOIDS_USE_THREADS
       std::unique_lock<std::mutex> lock(m_last_interval_mutex);
-      auto id = std::this_thread::get_id();
-      auto it = m_last_interval.find(id);
+      auto id { std::this_thread::get_id() };
+      auto it { m_last_interval.find(id) };
       if ( it == m_last_interval.end() ) it = m_last_interval.insert( {id,std::make_shared<integer>()} ).first;
       integer & last_interval{ *it->second.get() };
       #else
@@ -81,7 +81,7 @@ namespace G2lib {
     PolyLine() = delete;
 
     explicit
-    PolyLine( string_view name ) : BaseCurve( name )
+    PolyLine( string_view const name ) : BaseCurve( name )
     { this->reset_last_interval(); }
 
     void setup( GenericContainer const & gc ) override;
@@ -95,28 +95,28 @@ namespace G2lib {
 
     integer find_at_s( real_type & s ) const;
 
-    explicit PolyLine( LineSegment const & LS );
-    explicit PolyLine( CircleArc const & C, real_type tol );
-    explicit PolyLine( Biarc const & B, real_type tol );
+    explicit PolyLine( LineSegment   const & LS );
+    explicit PolyLine( CircleArc     const & C, real_type tol );
+    explicit PolyLine( Biarc         const & B, real_type tol );
     explicit PolyLine( ClothoidCurve const & B, real_type tol );
-    explicit PolyLine( ClothoidList const & B, real_type tol );
-    explicit PolyLine( BaseCurve const * pC );
+    explicit PolyLine( ClothoidList  const & B, real_type tol );
+    explicit PolyLine( BaseCurve     const * pC );
 
     CurveType type() const override { return CurveType::POLYLINE; }
 
-    PolyLine const & operator = ( PolyLine const & s )
-    { this->copy(s); return *this; }
+    PolyLine & operator = ( PolyLine const & C )
+    { this->copy(C); return *this; }
 
     LineSegment const &
     getSegment( integer n ) const;
 
     integer
     num_segments() const
-    { return integer(m_polyline_list.size()); }
+    { return static_cast<integer>(m_polyline_list.size()); }
 
     integer
     numPoints() const
-    { return integer(m_s0.size()); }
+    { return static_cast<integer>(m_s0.size()); }
 
     void polygon( real_type x[], real_type y[] ) const;
     void init( real_type x0, real_type y0 );
@@ -134,20 +134,21 @@ namespace G2lib {
       real_type const y[]
     );
 
-    void build( LineSegment const & L );
-    void build( CircleArc const & C, real_type tol );
-    void build( Biarc const & B, real_type tol );
-    void build( ClothoidCurve const & C, real_type tol );
-    void build( ClothoidList const & CL, real_type tol );
+    void build( LineSegment   const & L );
+    void build( CircleArc     const & C,  real_type tol );
+    void build( Biarc         const & B,  real_type tol );
+    void build( ClothoidCurve const & C,  real_type tol );
+    void build( ClothoidList  const & CL, real_type tol );
 
-    void build( CircleArc const & C );
-    void build( ClothoidCurve const & );
-    void build( Biarc const & );
-    void build( BiarcList const & );
-    void build( PolyLine const & );
-    void build( ClothoidList const & );
-    void build( Dubins const & );
-    void build( Dubins3p const & );
+    void build( PolyLine const & PL ) { *this = PL; }
+
+    static void build( CircleArc     const & );
+    static void build( ClothoidCurve const & );
+    static void build( Biarc         const & );
+    static void build( BiarcList     const & );
+    static void build( ClothoidList  const & );
+    static void build( Dubins        const & );
+    static void build( Dubins3p      const & );
 
     void
     bbox(
@@ -177,27 +178,27 @@ namespace G2lib {
     void
     bb_triangles(
       vector<Triangle2D> & tvec,
-      real_type            max_angle = Utils::m_pi/6, // 30 degree
-      real_type            max_size  = 1e100,
-      integer              icurve    = 0
+      real_type            max_angle, // = Utils::m_pi/6, // 30 degree
+      real_type            max_size,  // = 1e100,
+      integer              icurve     // = 0
     ) const override;
 
     void
     bb_triangles_ISO(
       real_type            offs,
       vector<Triangle2D> & tvec,
-      real_type            max_angle = Utils::m_pi/6, // 30 degree
-      real_type            max_size  = 1e100,
-      integer              icurve    = 0
+      real_type            max_angle, // = Utils::m_pi/6, // 30 degree
+      real_type            max_size,  // = 1e100,
+      integer              icurve     // = 0
     ) const override;
 
     void
     bb_triangles_SAE(
       real_type            offs,
       vector<Triangle2D> & tvec,
-      real_type            max_angle = Utils::m_pi/6, // 30 degree
-      real_type            max_size  = 1e100,
-      integer              icurve    = 0
+      real_type            max_angle, // = Utils::m_pi/6, // 30 degree
+      real_type            max_size,  // = 1e100,
+      integer              icurve     // = 0
     ) const override {
       this->bb_triangles_ISO( -offs, tvec, max_angle, max_size, icurve );
     }

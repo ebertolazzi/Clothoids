@@ -68,8 +68,23 @@ namespace G2lib {
     } Dubins3p_data;
 
     auto eval3p = [this,xi,yi,thetai,xm,ym,xf,yf,thetaf,k_max]( Dubins3p_data & D3P ) -> void {
-      D3P.D0.build( xi, yi, thetai, xm, ym, D3P.thetam, k_max );
-      D3P.D1.build( xm, ym, D3P.thetam, xf, yf, thetaf, k_max );
+      bool ok{ D3P.D0.build( xi, yi, thetai, xm, ym, D3P.thetam, k_max ) };
+      if ( ok ) ok = D3P.D1.build( xm, ym, D3P.thetam, xf, yf, thetaf, k_max );
+      UTILS_ASSERT(
+        ok,
+        "Dubins3p::build_ellipse(\n"
+        "  xi     = {},\n"
+        "  yi     = {},\n"
+        "  thetai = {},\n"
+        "  xm     = {},\n"
+        "  ym     = {},\n"
+        "  xf     = {},\n"
+        "  yf     = {},\n"
+        "  thetaf = {},\n"
+        "  k_max  = {}\n"
+        ") failed\n",
+        xi, yi, thetai, xm, ym, xf, yf, thetaf, k_max
+      );
       D3P.len = D3P.D0.length() + D3P.D1.length();
       ++m_evaluation;
     };

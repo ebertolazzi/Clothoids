@@ -24,7 +24,8 @@ main() {
     constexpr real_type y3     = y0;
     real_type const theta0 = -m_pi/2;
     real_type const theta3 = m_pi/2;
-    DB1.build( x0, y0, theta0, x3, y3, theta3, k_max );
+    bool ok { DB1.build( x0, y0, theta0, x3, y3, theta3, k_max ) };
+    fmt::print( "DB1.build = {}\n", ok );
   }
   {
     constexpr real_type k_max  = 1;
@@ -34,7 +35,8 @@ main() {
     constexpr real_type y3     = y0;
     real_type const theta0 = m_pi/2;
     real_type const theta3 = m_pi/2;
-    DB2.build( x0, y0, theta0, x3, y3, theta3, k_max );
+    bool ok { DB2.build( x0, y0, theta0, x3, y3, theta3, k_max ) };
+    fmt::print( "DB2.build = {}\n", ok );
   }
 
   G2lib::IntersectList ilist;
@@ -42,13 +44,13 @@ main() {
 
   fmt::print( "{}\n", G2lib::collision( &DB1, &DB2 ) );
 
-  for ( size_t i = 0; i < ilist.size(); ++i )
+  for ( size_t i{0}; i < ilist.size(); ++i )
     fmt::print( "s1[ {} ] = {}\n", i, ilist[i].first );
 
-  for ( size_t i = 0; i < ilist.size(); ++i )
+  for ( size_t i{0}; i < ilist.size(); ++i )
     fmt::print( "s2[ {} ] = {}\n", i, ilist[i].second );
 
-  for ( size_t i = 0; i < ilist.size(); ++i )
+  for ( size_t i{0}; i < ilist.size(); ++i )
     fmt::print(
       "x[ {} ] = {:10}\n"
       "y[ {} ] = {:10}\n"

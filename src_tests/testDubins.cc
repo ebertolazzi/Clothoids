@@ -19,7 +19,8 @@ main() {
   constexpr real_type k_max  = 1;
 
   G2lib::Dubins DB{"DB"};
-  DB.build( x0, y0, theta0, x3, y3, theta3, k_max );
+  bool ok { DB.build( x0, y0, theta0, x3, y3, theta3, k_max ) };
+  fmt::print( "DB.build = {}\n", ok );
   fmt::print( "C0\n{}\n", DB.C0() );
   fmt::print( "C1\n{}\n", DB.C1() );
   fmt::print( "C2\n{}\n", DB.C2() );

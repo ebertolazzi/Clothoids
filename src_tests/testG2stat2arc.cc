@@ -7,7 +7,7 @@
 
 using G2lib::real_type;
 
-static const real_type m_pi = 3.14159265358979323846264338328;
+static constexpr real_type m_pi{ 3.14159265358979323846264338328 };
 using namespace std;
 
 int
@@ -21,10 +21,10 @@ main() {
   int const NMAX{ 128/8 };
   int       nkur{ 64/8 };
 
-  real_type x0 = 0;
-  real_type y0 = 0;
-  real_type x1 = 1;
-  real_type y1 = 0;
+  constexpr real_type x0{ 0 };
+  constexpr real_type y0{ 0 };
+  constexpr real_type x1{ 1 };
+  constexpr real_type y1{ 0 };
 
   // insert code here...
   real_type const thmin { -m_pi*0.99 };
@@ -37,7 +37,7 @@ main() {
   fmt::print( "a = {}\n", a );
   real_type k0 = 1/kmax;
   kur[0] = 0;
-  for ( int ii = 1; ii < nkur; ii += 2 ) {
+  for ( int ii{1}; ii < nkur; ii += 2 ) {
     kur[ii]   = k0;
     kur[ii+1] = -kur[ii];
     k0 *= a;
@@ -54,7 +54,7 @@ main() {
 
   // real_type kur[] = {-1e3, -100,-10,-1,-0.1,-0.01,-0.001,-0.0001,0, 0.0001, 0.001, 0.01, 0.1, 1, 10, 100, 1e3 };
   tictoc.tic();
-  for ( int ii = 0; ii < nkur; ++ii ) {
+  for ( int ii{0}; ii < nkur; ++ii ) {
     k0 = kur[ii];
     for ( int jj{0}; jj < nkur; ++jj ) {
       real_type const k1{kur[jj]};

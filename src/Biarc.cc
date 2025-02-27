@@ -93,13 +93,12 @@ namespace G2lib {
     );
   }
 
-  void Biarc::build( Biarc const & B )        { *this = B; }
-  void Biarc::build( ClothoidCurve const & )  { UTILS_ERROR("can convert from ClothoidCurve to Biarc\n"); }
-  void Biarc::build( PolyLine const & )       { UTILS_ERROR("can convert from PolyLine to Biarc\n"); }
-  void Biarc::build( BiarcList const & )      { UTILS_ERROR("can convert from BiarcList to Biarc\n"); }
-  void Biarc::build( ClothoidList const & )   { UTILS_ERROR("can convert from ClothoidList to Biarc\n"); }
-  void Biarc::build( Dubins const & )         { UTILS_ERROR("can convert from Dubins to CircleArc\n"); }
-  void Biarc::build( Dubins3p const & )       { UTILS_ERROR("can convert from Dubins3p to CircleArc\n"); }
+  void Biarc::build( ClothoidCurve const & ) { UTILS_ERROR("cannot convert from ClothoidCurve to Biarc\n"); }
+  void Biarc::build( PolyLine      const & ) { UTILS_ERROR("cannot convert from PolyLine to Biarc\n"); }
+  void Biarc::build( BiarcList     const & ) { UTILS_ERROR("cannot convert from BiarcList to Biarc\n"); }
+  void Biarc::build( ClothoidList  const & ) { UTILS_ERROR("cannot convert from ClothoidList to Biarc\n"); }
+  void Biarc::build( Dubins        const & ) { UTILS_ERROR("cannot convert from Dubins to CircleArc\n"); }
+  void Biarc::build( Dubins3p      const & ) { UTILS_ERROR("cannot convert from Dubins3p to CircleArc\n"); }
 
   /*\
    |   ____  _
@@ -127,11 +126,7 @@ namespace G2lib {
       *this = *dynamic_cast<Biarc const *>(pC);
       break;
     default:
-      UTILS_ERROR(
-        "Biarc constructor cannot convert from: {}\n",
-        pC->type_name()
-      );
-      break;
+      UTILS_ERROR( "Biarc constructor cannot convert from: {}\n", pC->type_name() );
     }
   }
 
@@ -145,39 +140,39 @@ namespace G2lib {
     real_type const theta1
   ) {
 
-    real_type const dx = x1-x0;
-    real_type const dy = y1-y0;
-    real_type const d  = hypot(dy,dx);
+    real_type const dx { x1-x0 };
+    real_type const dy { y1-y0 };
+    real_type const d  { hypot(dy,dx) };
 
-    real_type const omega = atan2(dy,dx);
+    real_type const omega{ atan2(dy,dx) };
 
     // put in range
-    real_type th0 = theta0 - omega;
-    real_type th1 = theta1 - omega;
+    real_type th0 { theta0 - omega };
+    real_type th1 { theta1 - omega };
 
     rangeSymm(th0);
     rangeSymm(th1);
 
-    real_type const thstar = - (th0+th1)/2;
+    real_type const thstar{ - (th0+th1)/2 };
 
-    real_type const dth  = (th1 - th0)/4;
-    real_type const dth0 = (thstar - th0)/2;
-    real_type const dth1 = (thstar - th1)/2;
+    real_type const dth  { (th1 - th0)/4    };
+    real_type const dth0 { (thstar - th0)/2 };
+    real_type const dth1 { (thstar - th1)/2 };
 
-    real_type const t  = 2 * cos( dth ) / d;
-    real_type const l0 = 1/(t*Sinc( dth0 ));
-    real_type const l1 = 1/(t*Sinc( dth1 ));
-    real_type const k0 = 2*t*sin( dth0 );
-    real_type const k1{ -2*t*sin( dth1 ) };
+    real_type const t  { 2 * cos( dth ) / d };
+    real_type const l0 { 1/(t*Sinc( dth0 )) };
+    real_type const l1 { 1/(t*Sinc( dth1 )) };
+    real_type const k0 { 2*t*sin( dth0 )    };
+    real_type const k1 { -2*t*sin( dth1 )   };
 
     real_type const epsi{ 100*d*Utils::machine_eps<real_type>() };
     if ( l0 > epsi && l1 > epsi ) {
 
       m_C0.build( x0, y0, theta0, k0, l0 );
 
-      real_type const an = omega+(thstar+th0)/2;
-      real_type const xs = x0 + cos(an)/t;
-      real_type const ys = y0 + sin(an)/t;
+      real_type const an { omega+(thstar+th0)/2 };
+      real_type const xs { x0 + cos(an)/t };
+      real_type const ys { y0 + sin(an)/t };
 
       m_C1.build( xs, ys, omega+thstar, k1, l1 );
       return true;
@@ -197,38 +192,38 @@ namespace G2lib {
     real_type const y2
   ) {
 
-    real_type const dxa   = x1-x0;
-    real_type const dya   = y1-y0;
-    real_type const dxb   = x2-x1;
-    real_type const dyb   = y2-y1;
-    real_type const La    = hypot(dya,dxa);
-    real_type const Lb    = hypot(dyb,dxb);
-    real_type       arg   = (dxa*dxb + dya * dyb)/(La*Lb);
+    real_type const dxa {  x1-x0 };
+    real_type const dya {  y1-y0 };
+    real_type const dxb {  x2-x1 };
+    real_type const dyb {  y2-y1 };
+    real_type const La  {  hypot(dya,dxa) };
+    real_type const Lb  {  hypot(dyb,dxb) };
+    real_type       arg {  (dxa*dxb + dya * dyb)/(La*Lb) };
     if      ( arg >  1 ) arg = 1;
     else if ( arg < -1 ) arg = -1;
-    real_type const om = acos(arg);
+    real_type const om{ acos(arg) };
 
-    real_type at = (La/(La+Lb))*om;
-    real_type bt = (Lb/(La+Lb))*om;
+    real_type at { (La/(La+Lb))*om };
+    real_type bt { (Lb/(La+Lb))*om };
     // find solution using Halley
     real_type Delta{0};
-    bool found = false;
-    for ( integer iter = 0; iter < 10 && !found; ++iter ) {
+    bool found{false};
+    for ( integer iter{0}; iter < 10 && !found; ++iter ) {
       real_type ga[3], gb[3];
       gfun( at+Delta, ga );
       gfun( bt-Delta, gb );
-      real_type const f   = ga[0]/La - gb[0]/Lb;
-      real_type const df  = ga[1]/La + gb[1]/Lb;
-      real_type const ddf = ga[2]/La - gb[2]/Lb;
-      real_type const h   = (df*f)/(df*df-0.5*f*ddf);
+      real_type const f   { ga[0]/La - gb[0]/Lb };
+      real_type const df  { ga[1]/La + gb[1]/Lb };
+      real_type const ddf { ga[2]/La - gb[2]/Lb };
+      real_type const h   { (df*f)/(df*df-0.5*f*ddf) };
       Delta -= h;
       found = abs(h) < 1e-10 && abs(f) < 1e-10;
     }
 
     if ( found ) {
       at += Delta; bt -= Delta;
-      real_type tha = atan2(dya,dxa);
-      real_type thb = atan2(dyb,dxb);
+      real_type tha { atan2(dya,dxa) };
+      real_type thb { atan2(dyb,dxb) };
       if ( dxa*dyb < dya*dxb ) {
         tha += at;
         thb += bt;
@@ -321,13 +316,13 @@ namespace G2lib {
     if ( s_end <= L0 ) {
       m_C0.trim( s_begin, s_end );
       m_C1 = m_C0;
-      real_type const ss = m_C0.length();
+      real_type const ss{ m_C0.length() };
       m_C0.trim( 0, ss/2 );
       m_C1.trim( ss/2, ss );
     } else if ( s_begin >= L0 ) {
       m_C1.trim( s_begin-L0, s_end-L0 );
       m_C0 = m_C1;
-      real_type const ss = m_C0.length();
+      real_type const ss{ m_C0.length() };
       m_C0.trim( 0, ss/2 );
       m_C1.trim( ss/2, ss );
     } else {
@@ -340,7 +335,7 @@ namespace G2lib {
 
   real_type
   Biarc::theta( real_type const s ) const {
-    real_type const L0 = m_C0.length();
+    real_type const L0{ m_C0.length() };
     if ( s < L0 ) return m_C0.theta(s);
     return m_C1.theta(s-L0);
   }
@@ -367,7 +362,7 @@ namespace G2lib {
 
   real_type
   Biarc::tx_D( real_type const s ) const {
-    real_type const L0 = m_C0.length();
+    real_type const L0{ m_C0.length() };
     if ( s < L0 ) return m_C0.tx_D(s);
     return m_C1.tx_D(s-L0);
   }
@@ -376,7 +371,7 @@ namespace G2lib {
 
   real_type
   Biarc::tx_DD( real_type const s ) const {
-    real_type const L0 = m_C0.length();
+    real_type const L0{ m_C0.length() };
     if ( s < L0 ) return m_C0.tx_DD(s);
     return m_C1.tx_DD(s-L0);
   }
@@ -385,7 +380,7 @@ namespace G2lib {
 
   real_type
   Biarc::tx_DDD( real_type const s ) const {
-    real_type const L0 = m_C0.length();
+    real_type const L0{ m_C0.length() };
     if ( s < L0 ) return m_C0.tx_DDD(s);
     return m_C1.tx_DDD(s-L0);
   }
@@ -394,7 +389,7 @@ namespace G2lib {
 
   real_type
   Biarc::ty( real_type const s ) const {
-    real_type const L0 = m_C0.length();
+    real_type const L0{ m_C0.length() };
     if ( s < L0 ) return m_C0.ty(s);
     return m_C1.ty(s-L0);
   }
@@ -403,7 +398,7 @@ namespace G2lib {
 
   real_type
   Biarc::ty_D( real_type const s ) const {
-    real_type const L0 = m_C0.length();
+    real_type const L0{ m_C0.length() };
     if ( s < L0 ) return m_C0.ty_D(s);
     return m_C1.ty_D(s-L0);
   }
@@ -412,7 +407,7 @@ namespace G2lib {
 
   real_type
   Biarc::ty_DD( real_type const s ) const {
-    real_type const L0 = m_C0.length();
+    real_type const L0{ m_C0.length() };
     if ( s < L0 ) return m_C0.ty_DD(s);
     return m_C1.ty_DD(s-L0);
   }
@@ -421,7 +416,7 @@ namespace G2lib {
 
   real_type
   Biarc::ty_DDD( real_type const s ) const {
-    real_type const L0 = m_C0.length();
+    real_type const L0{ m_C0.length() };
     if ( s < L0 ) return m_C0.ty_DDD(s);
     return m_C1.ty_DDD(s-L0);
   }
@@ -430,7 +425,7 @@ namespace G2lib {
 
   real_type
   Biarc::X( real_type const s ) const {
-    real_type const L0 = m_C0.length();
+    real_type const L0{ m_C0.length() };
     if ( s < L0 ) return m_C0.X(s);
     return m_C1.X(s-L0);
   }
@@ -439,7 +434,7 @@ namespace G2lib {
 
   real_type
   Biarc::X_D( real_type const s ) const {
-    real_type const L0 = m_C0.length();
+    real_type const L0{ m_C0.length() };
     if ( s < L0 ) return m_C0.X_D(s);
     return m_C1.X_D(s-L0);
   }
@@ -448,7 +443,7 @@ namespace G2lib {
 
   real_type
   Biarc::X_DD( real_type const s ) const {
-    real_type const L0 = m_C0.length();
+    real_type const L0{ m_C0.length() };
     if ( s < L0 ) return m_C0.X_DD(s);
     return m_C1.X_DD(s-L0);
   }
@@ -457,7 +452,7 @@ namespace G2lib {
 
   real_type
   Biarc::X_DDD( real_type const s ) const {
-    real_type const L0 = m_C0.length();
+    real_type const L0{ m_C0.length() };
     if ( s < L0 ) return m_C0.X_DDD(s);
     return m_C1.X_DDD(s-L0);
   }
@@ -466,7 +461,7 @@ namespace G2lib {
 
   real_type
   Biarc::Y( real_type const s ) const {
-    real_type const L0 = m_C0.length();
+    real_type const L0{ m_C0.length() };
     if ( s < L0 ) return m_C0.Y(s);
     return m_C1.Y(s-L0);
   }
@@ -475,7 +470,7 @@ namespace G2lib {
 
   real_type
   Biarc::Y_D( real_type const s ) const {
-    real_type const L0 = m_C0.length();
+    real_type const L0{ m_C0.length() };
     if ( s < L0 ) return m_C0.Y_D(s);
     return m_C1.Y_D(s-L0);
   }
@@ -484,7 +479,7 @@ namespace G2lib {
 
   real_type
   Biarc::Y_DD( real_type const s ) const {
-    real_type const L0 = m_C0.length();
+    real_type const L0{ m_C0.length() };
     if ( s < L0 ) return m_C0.Y_DD(s);
     return m_C1.Y_DD(s-L0);
   }
@@ -493,7 +488,7 @@ namespace G2lib {
 
   real_type
   Biarc::Y_DDD( real_type const s ) const {
-    real_type const L0 = m_C0.length();
+    real_type const L0{ m_C0.length() };
     if ( s < L0 ) return m_C0.Y_DDD(s);
     return m_C1.Y_DDD(s-L0);
   }
@@ -502,7 +497,7 @@ namespace G2lib {
 
   real_type
   Biarc::X_ISO( real_type const s, real_type const offs ) const {
-    real_type const L0 = m_C0.length();
+    real_type const L0{ m_C0.length() };
     if ( s < L0 ) return m_C0.X_ISO(s,offs);
     return m_C1.X_ISO(s-L0,offs);
   }
@@ -511,7 +506,7 @@ namespace G2lib {
 
   real_type
   Biarc::X_ISO_D( real_type const s, real_type const offs ) const {
-    real_type const L0 = m_C0.length();
+    real_type const L0{ m_C0.length() };
     if ( s < L0 ) return m_C0.X_ISO_D(s,offs);
     return m_C1.X_ISO_D(s-L0,offs);
   }
@@ -520,7 +515,7 @@ namespace G2lib {
 
   real_type
   Biarc::X_ISO_DD( real_type const s, real_type const offs ) const {
-    real_type const L0 = m_C0.length();
+    real_type const L0{ m_C0.length() };
     if ( s < L0 ) return m_C0.X_ISO_DD(s,offs);
     return m_C1.X_ISO_DD(s-L0,offs);
   }
@@ -529,7 +524,7 @@ namespace G2lib {
 
   real_type
   Biarc::X_ISO_DDD( real_type const s, real_type const offs ) const {
-    real_type const L0 = m_C0.length();
+    real_type const L0{ m_C0.length() };
     if ( s < L0 ) return m_C0.X_ISO_DDD(s,offs);
     return m_C1.X_ISO_DDD(s-L0,offs);
   }
@@ -538,7 +533,7 @@ namespace G2lib {
 
   real_type
   Biarc::Y_ISO( real_type const s, real_type const offs ) const {
-    real_type const L0 = m_C0.length();
+    real_type const L0{ m_C0.length() };
     if ( s < L0 ) return m_C0.Y_ISO(s,offs);
     return m_C1.Y_ISO(s-L0,offs);
   }
@@ -547,7 +542,7 @@ namespace G2lib {
 
   real_type
   Biarc::Y_ISO_D( real_type const s, real_type const offs ) const {
-    real_type const L0 = m_C0.length();
+    real_type const L0{ m_C0.length() };
     if ( s < L0 ) return m_C0.Y_ISO_D(s,offs);
     return m_C1.Y_ISO_D(s-L0,offs);
   }
@@ -556,7 +551,7 @@ namespace G2lib {
 
   real_type
   Biarc::Y_ISO_DD( real_type const s, real_type const offs ) const {
-    real_type const L0 = m_C0.length();
+    real_type const L0{ m_C0.length() };
     if ( s < L0 ) return m_C0.Y_ISO_DD(s,offs);
     return m_C1.Y_ISO_DD(s-L0,offs);
   }
@@ -565,7 +560,7 @@ namespace G2lib {
 
   real_type
   Biarc::Y_ISO_DDD( real_type const s, real_type const offs ) const {
-    real_type const L0 = m_C0.length();
+    real_type const L0{ m_C0.length() };
     if ( s < L0 ) return m_C0.Y_ISO_DDD(s,offs);
     return m_C1.Y_ISO_DDD(s-L0,offs);
   }
@@ -574,7 +569,7 @@ namespace G2lib {
 
   void
   Biarc::tg( real_type const s, real_type & tx, real_type & ty ) const {
-    real_type const L0 = m_C0.length();
+    real_type const L0{ m_C0.length() };
     if ( s < L0 ) return m_C0.tg(s,tx,ty);
     return m_C1.tg(s-L0,tx,ty);
   }
@@ -583,7 +578,7 @@ namespace G2lib {
 
   void
   Biarc::tg_D( real_type const s, real_type & tx_D, real_type & ty_D ) const {
-    real_type const L0 = m_C0.length();
+    real_type const L0{ m_C0.length() };
     if ( s < L0 ) return m_C0.tg_D(s,tx_D,ty_D);
     return m_C1.tg_D(s-L0,tx_D,ty_D);
   }
@@ -592,7 +587,7 @@ namespace G2lib {
 
   void
   Biarc::tg_DD( real_type const s, real_type & tx_DD, real_type & ty_DD ) const {
-    real_type const L0 = m_C0.length();
+    real_type const L0{ m_C0.length() };
     if ( s < L0 ) return m_C0.tg_DD(s,tx_DD,ty_DD);
     return m_C1.tg_DD(s-L0,tx_DD,ty_DD);
   }
@@ -601,7 +596,7 @@ namespace G2lib {
 
   void
   Biarc::tg_DDD( real_type const s, real_type & tx_DDD, real_type & ty_DDD ) const {
-    real_type const L0 = m_C0.length();
+    real_type const L0{ m_C0.length() };
     if ( s < L0 ) return m_C0.tg_DDD(s,tx_DDD,ty_DDD);
     return m_C1.tg_DDD(s-L0,tx_DDD,ty_DDD);
   }
@@ -773,7 +768,7 @@ namespace G2lib {
   bool
   Biarc::collision( BaseCurve const * pC ) const {
     if ( pC->type() == CurveType::BIARC ) {
-      Biarc const & C = *dynamic_cast<Biarc const *>(pC);
+      Biarc const & C{ *dynamic_cast<Biarc const *>(pC) };
       return this->collision( C );
     }
     CurveType const CT{ curve_promote( this->type(), pC->type() ) };
@@ -793,7 +788,7 @@ namespace G2lib {
     real_type const   offs_C
   ) const {
     if ( pC->type() == CurveType::BIARC ) {
-      Biarc const & C = *dynamic_cast<Biarc const *>(pC);
+      Biarc const & C{ *dynamic_cast<Biarc const *>(pC) };
       return this->collision_ISO( offs, C, offs_C );
     }
     CurveType const CT{ curve_promote( this->type(), pC->type() ) };
@@ -816,8 +811,8 @@ namespace G2lib {
     m_C0.intersect( B.m_C1, ilist01 );
     m_C1.intersect( B.m_C0, ilist10 );
     m_C1.intersect( B.m_C1, ilist11 );
-    real_type const L  = m_C0.length();
-    real_type const LB = B.m_C0.length();
+    real_type const L  { m_C0.length()   };
+    real_type const LB { B.m_C0.length() };
     ilist.reserve( ilist.size() +
                    ilist00.size() +
                    ilist01.size() +
@@ -848,8 +843,8 @@ namespace G2lib {
     m_C0.intersect_ISO( offs, B.m_C1, offs_B, ilist01 );
     m_C1.intersect_ISO( offs, B.m_C0, offs_B, ilist10 );
     m_C1.intersect_ISO( offs, B.m_C1, offs_B, ilist11 );
-    real_type const L  = m_C0.length();
-    real_type const LB = B.m_C0.length();
+    real_type const L  { m_C0.length()   };
+    real_type const LB { B.m_C0.length() };
     ilist.reserve( ilist.size() +
                    ilist00.size() +
                    ilist01.size() +
@@ -879,8 +874,8 @@ namespace G2lib {
     real_type &     dst
   ) const {
     real_type x1, y1, s1, t1, dst1;
-    integer       res  = m_C0.closest_point_ISO( qx, qy, x,  y,  s,  t,  dst  );
-    integer const res1 = m_C1.closest_point_ISO( qx, qy, x1, y1, s1, t1, dst1 );
+    integer       res  { m_C0.closest_point_ISO( qx, qy, x,  y,  s,  t,  dst  ) };
+    integer const res1 { m_C1.closest_point_ISO( qx, qy, x1, y1, s1, t1, dst1 ) };
     if ( dst1 < dst ) {
       x   = x1;
       y   = y1;
@@ -898,7 +893,7 @@ namespace G2lib {
     IntersectList   & ilist
   ) const {
     if ( pC->type() == CurveType::BIARC ) {
-      Biarc const & C = *dynamic_cast<Biarc const *>(pC);
+      Biarc const & C{ *dynamic_cast<Biarc const *>(pC) };
       this->intersect( C, ilist );
     } else {
       CurveType const CT{ curve_promote( this->type(), pC->type() ) };
@@ -919,7 +914,7 @@ namespace G2lib {
     IntersectList   & ilist
   ) const {
     if ( pC->type() == CurveType::BIARC ) {
-      Biarc const & C = *dynamic_cast<Biarc const *>(pC);
+      Biarc const & C{ *dynamic_cast<Biarc const *>(pC) };
       this->intersect_ISO( offs, C, offs_LS, ilist );
     } else {
       CurveType const CT{ curve_promote( this->type(), pC->type() ) };
@@ -946,8 +941,8 @@ namespace G2lib {
     real_type &     dst
   ) const {
     real_type x1, y1, s1, t1, dst1;
-    integer       res  = m_C0.closest_point_ISO( qx, qy, offs, x,  y,  s,  t,  dst  );
-    integer const res1 = m_C1.closest_point_ISO( qx, qy, offs, x1, y1, s1, t1, dst1 );
+    integer       res  { m_C0.closest_point_ISO( qx, qy, offs, x,  y,  s,  t,  dst  ) };
+    integer const res1 { m_C1.closest_point_ISO( qx, qy, offs, x1, y1, s1, t1, dst1 ) };
     if ( dst1 < dst ) {
       x   = x1;
       y   = y1;
@@ -968,9 +963,7 @@ namespace G2lib {
     real_type const y[],
     real_type       theta[]
   ) {
-    UTILS_ASSERT0(
-      n > 1, "build_guess_theta, at least 2 points are necessary\n"
-    );
+    UTILS_ASSERT0( n > 1, "build_guess_theta, at least 2 points are necessary\n" );
     Biarc b("build_guess_theta temporary b");
     if ( n == 2 ) {
       theta[0] = theta[1] = atan2( y[1] - y[0], x[1] - x[0] );

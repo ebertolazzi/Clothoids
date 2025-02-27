@@ -234,28 +234,29 @@ namespace G2lib {
     void set_max_evaluation( integer max_eval );
     void set_sample_points( integer npts );
 
-    real_type  tolerance()          const { return m_tolerance; }
-    real_type  sample_angle()       const { return m_sample_angle; }
-    DubinsType solution_type0()     const { return m_Dubins0.solution_type(); }
-    DubinsType solution_type1()     const { return m_Dubins1.solution_type(); }
-    integer    icode()              const { return m_Dubins0.icode()+16*m_Dubins1.icode(); }
-    integer    icode0()             const { return m_Dubins0.icode(); }
-    integer    icode1()             const { return m_Dubins1.icode(); }
-    integer    num_evaluation()     const { return m_evaluation; }
-    integer    max_num_evaluation() const { return m_max_evaluation; }
+    [[nodiscard]] real_type  tolerance()          const { return m_tolerance; }
+    [[nodiscard]] real_type  sample_angle()       const { return m_sample_angle; }
+    [[nodiscard]] DubinsType solution_type0()     const { return m_Dubins0.solution_type(); }
+    [[nodiscard]] DubinsType solution_type1()     const { return m_Dubins1.solution_type(); }
+    [[nodiscard]] integer    icode()              const { return m_Dubins0.icode()+16*m_Dubins1.icode(); }
+    [[nodiscard]] integer    icode0()             const { return m_Dubins0.icode(); }
+    [[nodiscard]] integer    icode1()             const { return m_Dubins1.icode(); }
+    [[nodiscard]] integer    num_evaluation()     const { return m_evaluation; }
+    [[nodiscard]] integer    max_num_evaluation() const { return m_max_evaluation; }
 
-    string solution_type_string() const;
-    string solution_type_string_short() const;
+    [[nodiscard]] string solution_type_string() const;
+    [[nodiscard]] string solution_type_string_short() const;
 
-    void build( LineSegment const & L );
-    void build( CircleArc const & C );
-    void build( ClothoidCurve const & );
-    void build( Biarc const & );
-    void build( BiarcList const & );
-    void build( PolyLine const & );
-    void build( ClothoidList const & );
-    void build( Dubins const & );
     void build( Dubins3p const & );
+
+    static void build( LineSegment   const & );
+    static void build( CircleArc     const & );
+    static void build( ClothoidCurve const & );
+    static void build( Biarc         const & );
+    static void build( BiarcList     const & );
+    static void build( PolyLine      const & );
+    static void build( ClothoidList  const & );
+    static void build( Dubins        const & );
 
     //!
     //! Get possible point of discontinuity for the length
@@ -334,17 +335,17 @@ namespace G2lib {
     ) const override;
 
     //! Return the first cicle of the Dubins solution
-    CircleArc const & C0() const { return m_Dubins0.m_C0; }
+    [[nodiscard]] CircleArc const & C0() const { return m_Dubins0.m_C0; }
     //! Return the second cicle of the Dubins solution
-    CircleArc const & C1() const { return m_Dubins0.m_C1; }
+    [[nodiscard]] CircleArc const & C1() const { return m_Dubins0.m_C1; }
     //! Return the third cicle of the Dubins solution
-    CircleArc const & C2() const { return m_Dubins0.m_C2; }
+    [[nodiscard]] CircleArc const & C2() const { return m_Dubins0.m_C2; }
     //! Return the first cicle of the Dubins solution
-    CircleArc const & C3() const { return m_Dubins1.m_C0; }
+    [[nodiscard]] CircleArc const & C3() const { return m_Dubins1.m_C0; }
     //! Return the seco4d cicle of the Dubins solution
-    CircleArc const & C4() const { return m_Dubins1.m_C1; }
+    [[nodiscard]] CircleArc const & C4() const { return m_Dubins1.m_C1; }
     //! Return the third cicle of the Dubins solution
-    CircleArc const & C5() const { return m_Dubins1.m_C2; }
+    [[nodiscard]] CircleArc const & C5() const { return m_Dubins1.m_C2; }
 
     void
     get_solution( ClothoidList & CL ) const {
@@ -358,144 +359,144 @@ namespace G2lib {
       CL.push_back( m_Dubins1.m_C2 );
     }
 
-    real_type length() const override;
-    real_type length_ISO( real_type offs ) const override;
+    [[nodiscard]] real_type length() const override;
+    [[nodiscard]] real_type length_ISO( real_type offs ) const override;
 
-    real_type length0() const { return m_Dubins0.m_C0.length(); }
-    real_type length1() const { return m_Dubins0.m_C1.length(); }
-    real_type length2() const { return m_Dubins0.m_C2.length(); }
-    real_type length3() const { return m_Dubins1.m_C0.length(); }
-    real_type length4() const { return m_Dubins1.m_C1.length(); }
-    real_type length5() const { return m_Dubins1.m_C2.length(); }
+    [[nodiscard]] real_type length0() const { return m_Dubins0.m_C0.length(); }
+    [[nodiscard]] real_type length1() const { return m_Dubins0.m_C1.length(); }
+    [[nodiscard]] real_type length2() const { return m_Dubins0.m_C2.length(); }
+    [[nodiscard]] real_type length3() const { return m_Dubins1.m_C0.length(); }
+    [[nodiscard]] real_type length4() const { return m_Dubins1.m_C1.length(); }
+    [[nodiscard]] real_type length5() const { return m_Dubins1.m_C2.length(); }
 
-    real_type kappa0() const { return m_Dubins0.m_C0.kappa_begin(); }
-    real_type kappa1() const { return m_Dubins0.m_C1.kappa_begin(); }
-    real_type kappa2() const { return m_Dubins0.m_C2.kappa_begin(); }
-    real_type kappa3() const { return m_Dubins1.m_C0.kappa_begin(); }
-    real_type kappa4() const { return m_Dubins1.m_C1.kappa_begin(); }
-    real_type kappa5() const { return m_Dubins1.m_C2.kappa_begin(); }
+    [[nodiscard]] real_type kappa0() const { return m_Dubins0.m_C0.kappa_begin(); }
+    [[nodiscard]] real_type kappa1() const { return m_Dubins0.m_C1.kappa_begin(); }
+    [[nodiscard]] real_type kappa2() const { return m_Dubins0.m_C2.kappa_begin(); }
+    [[nodiscard]] real_type kappa3() const { return m_Dubins1.m_C0.kappa_begin(); }
+    [[nodiscard]] real_type kappa4() const { return m_Dubins1.m_C1.kappa_begin(); }
+    [[nodiscard]] real_type kappa5() const { return m_Dubins1.m_C2.kappa_begin(); }
 
-    real_type X0( real_type s ) const { return m_Dubins0.m_C0.X(s); }
-    real_type Y0( real_type s ) const { return m_Dubins0.m_C0.Y(s); }
+    [[nodiscard]] real_type X0( real_type s ) const { return m_Dubins0.m_C0.X(s); }
+    [[nodiscard]] real_type Y0( real_type s ) const { return m_Dubins0.m_C0.Y(s); }
 
-    real_type X1( real_type s ) const { return m_Dubins0.m_C1.X(s); }
-    real_type Y1( real_type s ) const { return m_Dubins0.m_C1.Y(s); }
+    [[nodiscard]] real_type X1( real_type s ) const { return m_Dubins0.m_C1.X(s); }
+    [[nodiscard]] real_type Y1( real_type s ) const { return m_Dubins0.m_C1.Y(s); }
 
-    real_type X2( real_type s ) const { return m_Dubins0.m_C2.X(s); }
-    real_type Y2( real_type s ) const { return m_Dubins0.m_C2.Y(s); }
+    [[nodiscard]] real_type X2( real_type s ) const { return m_Dubins0.m_C2.X(s); }
+    [[nodiscard]] real_type Y2( real_type s ) const { return m_Dubins0.m_C2.Y(s); }
 
-    real_type X3( real_type s ) const { return m_Dubins1.m_C0.X(s); }
-    real_type Y3( real_type s ) const { return m_Dubins1.m_C0.Y(s); }
+    [[nodiscard]] real_type X3( real_type s ) const { return m_Dubins1.m_C0.X(s); }
+    [[nodiscard]] real_type Y3( real_type s ) const { return m_Dubins1.m_C0.Y(s); }
 
-    real_type X4( real_type s ) const { return m_Dubins1.m_C1.X(s); }
-    real_type Y4( real_type s ) const { return m_Dubins1.m_C1.Y(s); }
+    [[nodiscard]] real_type X4( real_type s ) const { return m_Dubins1.m_C1.X(s); }
+    [[nodiscard]] real_type Y4( real_type s ) const { return m_Dubins1.m_C1.Y(s); }
 
-    real_type X5( real_type s ) const { return m_Dubins1.m_C2.X(s); }
-    real_type Y5( real_type s ) const { return m_Dubins1.m_C2.Y(s); }
+    [[nodiscard]] real_type X5( real_type s ) const { return m_Dubins1.m_C2.X(s); }
+    [[nodiscard]] real_type Y5( real_type s ) const { return m_Dubins1.m_C2.Y(s); }
 
-    real_type theta0( real_type s ) const { return m_Dubins0.m_C0.theta(s); }
-    real_type theta1( real_type s ) const { return m_Dubins0.m_C1.theta(s); }
-    real_type theta2( real_type s ) const { return m_Dubins0.m_C2.theta(s); }
-    real_type theta3( real_type s ) const { return m_Dubins1.m_C0.theta(s); }
-    real_type theta4( real_type s ) const { return m_Dubins1.m_C1.theta(s); }
-    real_type theta5( real_type s ) const { return m_Dubins1.m_C2.theta(s); }
+    [[nodiscard]] real_type theta0( real_type s ) const { return m_Dubins0.m_C0.theta(s); }
+    [[nodiscard]] real_type theta1( real_type s ) const { return m_Dubins0.m_C1.theta(s); }
+    [[nodiscard]] real_type theta2( real_type s ) const { return m_Dubins0.m_C2.theta(s); }
+    [[nodiscard]] real_type theta3( real_type s ) const { return m_Dubins1.m_C0.theta(s); }
+    [[nodiscard]] real_type theta4( real_type s ) const { return m_Dubins1.m_C1.theta(s); }
+    [[nodiscard]] real_type theta5( real_type s ) const { return m_Dubins1.m_C2.theta(s); }
 
-    real_type theta_begin()  const override { return m_Dubins0.m_C0.theta_begin(); }
-    real_type theta_end()    const override { return m_Dubins1.m_C2.theta_end(); }
+    [[nodiscard]] real_type theta_begin()  const override { return m_Dubins0.m_C0.theta_begin(); }
+    [[nodiscard]] real_type theta_end()    const override { return m_Dubins1.m_C2.theta_end(); }
 
-    real_type kappa_begin()  const override { return m_Dubins0.m_C0.kappa_begin(); }
-    real_type kappa_end()    const override { return m_Dubins1.m_C2.kappa_end(); }
+    [[nodiscard]] real_type kappa_begin()  const override { return m_Dubins0.m_C0.kappa_begin(); }
+    [[nodiscard]] real_type kappa_end()    const override { return m_Dubins1.m_C2.kappa_end(); }
 
-    real_type x_begin()      const override { return m_Dubins0.m_C0.x_begin(); }
-    real_type x_end()        const override { return m_Dubins1.m_C2.x_end(); }
+    [[nodiscard]] real_type x_begin()      const override { return m_Dubins0.m_C0.x_begin(); }
+    [[nodiscard]] real_type x_end()        const override { return m_Dubins1.m_C2.x_end(); }
 
-    real_type y_begin()      const override { return m_Dubins0.m_C0.y_begin(); }
-    real_type y_end()        const override { return m_Dubins1.m_C2.y_end(); }
+    [[nodiscard]] real_type y_begin()      const override { return m_Dubins0.m_C0.y_begin(); }
+    [[nodiscard]] real_type y_end()        const override { return m_Dubins1.m_C2.y_end(); }
 
-    real_type tx_begin()     const override { return m_Dubins0.m_C0.tx_begin(); }
-    real_type tx_end()       const override { return m_Dubins1.m_C2.tx_end(); }
+    [[nodiscard]] real_type tx_begin()     const override { return m_Dubins0.m_C0.tx_begin(); }
+    [[nodiscard]] real_type tx_end()       const override { return m_Dubins1.m_C2.tx_end(); }
 
-    real_type ty_begin()     const override { return m_Dubins0.m_C0.ty_begin(); }
-    real_type ty_end()       const override { return m_Dubins1.m_C2.ty_end(); }
+    [[nodiscard]] real_type ty_begin()     const override { return m_Dubins0.m_C0.ty_begin(); }
+    [[nodiscard]] real_type ty_end()       const override { return m_Dubins1.m_C2.ty_end(); }
 
-    real_type nx_begin_ISO() const override { return m_Dubins0.m_C0.nx_begin_ISO(); }
-    real_type nx_end_ISO()   const override { return m_Dubins1.m_C2.nx_end_ISO(); }
+    [[nodiscard]] real_type nx_begin_ISO() const override { return m_Dubins0.m_C0.nx_begin_ISO(); }
+    [[nodiscard]] real_type nx_end_ISO()   const override { return m_Dubins1.m_C2.nx_end_ISO(); }
 
-    real_type ny_begin_ISO() const override { return m_Dubins0.m_C0.ny_begin_ISO(); }
-    real_type ny_end_ISO()   const override { return m_Dubins1.m_C2.ny_end_ISO(); }
+    [[nodiscard]] real_type ny_begin_ISO() const override { return m_Dubins0.m_C0.ny_begin_ISO(); }
+    [[nodiscard]] real_type ny_end_ISO()   const override { return m_Dubins1.m_C2.ny_end_ISO(); }
 
-    real_type theta0_begin() const { return m_Dubins0.m_C0.theta_begin(); }
-    real_type theta0_end()   const { return m_Dubins0.m_C0.theta_end(); }
+    [[nodiscard]] real_type theta0_begin() const { return m_Dubins0.m_C0.theta_begin(); }
+    [[nodiscard]] real_type theta0_end()   const { return m_Dubins0.m_C0.theta_end(); }
 
-    real_type theta1_begin() const { return m_Dubins0.m_C1.theta_begin(); }
-    real_type theta1_end()   const { return m_Dubins0.m_C1.theta_end(); }
+    [[nodiscard]] real_type theta1_begin() const { return m_Dubins0.m_C1.theta_begin(); }
+    [[nodiscard]] real_type theta1_end()   const { return m_Dubins0.m_C1.theta_end(); }
 
-    real_type theta2_begin() const { return m_Dubins0.m_C2.theta_begin(); }
-    real_type theta2_end()   const { return m_Dubins0.m_C2.theta_end(); }
+    [[nodiscard]] real_type theta2_begin() const { return m_Dubins0.m_C2.theta_begin(); }
+    [[nodiscard]] real_type theta2_end()   const { return m_Dubins0.m_C2.theta_end(); }
 
-    real_type theta3_begin() const { return m_Dubins1.m_C0.theta_begin(); }
-    real_type theta3_end()   const { return m_Dubins1.m_C0.theta_end(); }
+    [[nodiscard]] real_type theta3_begin() const { return m_Dubins1.m_C0.theta_begin(); }
+    [[nodiscard]] real_type theta3_end()   const { return m_Dubins1.m_C0.theta_end(); }
 
-    real_type theta4_begin() const { return m_Dubins1.m_C1.theta_begin(); }
-    real_type theta4_end()   const { return m_Dubins1.m_C1.theta_end(); }
+    [[nodiscard]] real_type theta4_begin() const { return m_Dubins1.m_C1.theta_begin(); }
+    [[nodiscard]] real_type theta4_end()   const { return m_Dubins1.m_C1.theta_end(); }
 
-    real_type theta5_begin() const { return m_Dubins1.m_C2.theta_begin(); }
-    real_type theta5_end()   const { return m_Dubins1.m_C2.theta_end(); }
+    [[nodiscard]] real_type theta5_begin() const { return m_Dubins1.m_C2.theta_begin(); }
+    [[nodiscard]] real_type theta5_end()   const { return m_Dubins1.m_C2.theta_end(); }
 
-    real_type x0_begin() const { return m_Dubins0.m_C0.x_begin(); }
-    real_type x0_end()   const { return m_Dubins0.m_C0.x_end(); }
+    [[nodiscard]] real_type x0_begin() const { return m_Dubins0.m_C0.x_begin(); }
+    [[nodiscard]] real_type x0_end()   const { return m_Dubins0.m_C0.x_end(); }
 
-    real_type y0_begin() const { return m_Dubins0.m_C0.y_begin(); }
-    real_type y0_end()   const { return m_Dubins0.m_C0.y_end(); }
+    [[nodiscard]] real_type y0_begin() const { return m_Dubins0.m_C0.y_begin(); }
+    [[nodiscard]] real_type y0_end()   const { return m_Dubins0.m_C0.y_end(); }
 
-    real_type x1_begin() const { return m_Dubins0.m_C1.x_begin(); }
-    real_type x1_end()   const { return m_Dubins0.m_C1.x_end(); }
+    [[nodiscard]] real_type x1_begin() const { return m_Dubins0.m_C1.x_begin(); }
+    [[nodiscard]] real_type x1_end()   const { return m_Dubins0.m_C1.x_end(); }
 
-    real_type y1_begin() const { return m_Dubins0.m_C1.y_begin(); }
-    real_type y1_end()   const { return m_Dubins0.m_C1.y_end(); }
+    [[nodiscard]] real_type y1_begin() const { return m_Dubins0.m_C1.y_begin(); }
+    [[nodiscard]] real_type y1_end()   const { return m_Dubins0.m_C1.y_end(); }
 
-    real_type x2_begin() const { return m_Dubins0.m_C2.x_begin(); }
-    real_type x2_end()   const { return m_Dubins0.m_C2.x_end(); }
+    [[nodiscard]] real_type x2_begin() const { return m_Dubins0.m_C2.x_begin(); }
+    [[nodiscard]] real_type x2_end()   const { return m_Dubins0.m_C2.x_end(); }
 
-    real_type y2_begin() const { return m_Dubins0.m_C2.y_begin(); }
-    real_type y2_end()   const { return m_Dubins0.m_C2.y_end(); }
+    [[nodiscard]] real_type y2_begin() const { return m_Dubins0.m_C2.y_begin(); }
+    [[nodiscard]] real_type y2_end()   const { return m_Dubins0.m_C2.y_end(); }
 
-    real_type x3_begin() const { return m_Dubins1.m_C0.x_begin(); }
-    real_type x3_end()   const { return m_Dubins1.m_C0.x_end(); }
+    [[nodiscard]] real_type x3_begin() const { return m_Dubins1.m_C0.x_begin(); }
+    [[nodiscard]] real_type x3_end()   const { return m_Dubins1.m_C0.x_end(); }
 
-    real_type y3_begin() const { return m_Dubins1.m_C0.y_begin(); }
-    real_type y3_end()   const { return m_Dubins1.m_C0.y_end(); }
+    [[nodiscard]] real_type y3_begin() const { return m_Dubins1.m_C0.y_begin(); }
+    [[nodiscard]] real_type y3_end()   const { return m_Dubins1.m_C0.y_end(); }
 
-    real_type x4_begin() const { return m_Dubins1.m_C1.x_begin(); }
-    real_type x4_end()   const { return m_Dubins1.m_C1.x_end(); }
+    [[nodiscard]] real_type x4_begin() const { return m_Dubins1.m_C1.x_begin(); }
+    [[nodiscard]] real_type x4_end()   const { return m_Dubins1.m_C1.x_end(); }
 
-    real_type y4_begin() const { return m_Dubins1.m_C1.y_begin(); }
-    real_type y4_end()   const { return m_Dubins1.m_C1.y_end(); }
+    [[nodiscard]] real_type y4_begin() const { return m_Dubins1.m_C1.y_begin(); }
+    [[nodiscard]] real_type y4_end()   const { return m_Dubins1.m_C1.y_end(); }
 
-    real_type x5_begin() const { return m_Dubins1.m_C2.x_begin(); }
-    real_type x5_end()   const { return m_Dubins1.m_C2.x_end(); }
+    [[nodiscard]] real_type x5_begin() const { return m_Dubins1.m_C2.x_begin(); }
+    [[nodiscard]] real_type x5_end()   const { return m_Dubins1.m_C2.x_end(); }
 
-    real_type y5_begin() const { return m_Dubins1.m_C2.y_begin(); }
-    real_type y5_end()   const { return m_Dubins1.m_C2.y_end(); }
+    [[nodiscard]] real_type y5_begin() const { return m_Dubins1.m_C2.y_begin(); }
+    [[nodiscard]] real_type y5_end()   const { return m_Dubins1.m_C2.y_end(); }
 
     // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 
-    real_type theta    ( real_type s ) const override;
-    real_type theta_D  ( real_type   ) const override;
-    real_type theta_DD ( real_type   ) const override { return 0; }
-    real_type theta_DDD( real_type   ) const override { return 0; }
+    [[nodiscard]] real_type theta    ( real_type s ) const override;
+    [[nodiscard]] real_type theta_D  ( real_type   ) const override;
+    [[nodiscard]] real_type theta_DD ( real_type   ) const override { return 0; }
+    [[nodiscard]] real_type theta_DDD( real_type   ) const override { return 0; }
 
-    real_type X( real_type s ) const override;
-    real_type Y( real_type s ) const override;
+    [[nodiscard]] real_type X( real_type s ) const override;
+    [[nodiscard]] real_type Y( real_type s ) const override;
 
-    real_type X_D( real_type s ) const override;
-    real_type Y_D( real_type s ) const override;
+    [[nodiscard]] real_type X_D( real_type s ) const override;
+    [[nodiscard]] real_type Y_D( real_type s ) const override;
 
-    real_type X_DD( real_type s ) const override;
-    real_type Y_DD( real_type s ) const override;
+    [[nodiscard]] real_type X_DD( real_type s ) const override;
+    [[nodiscard]] real_type Y_DD( real_type s ) const override;
 
-    real_type X_DDD( real_type s ) const override;
-    real_type Y_DDD( real_type s ) const override;
+    [[nodiscard]] real_type X_DDD( real_type s ) const override;
+    [[nodiscard]] real_type Y_DDD( real_type s ) const override;
 
     /*\
      |  _                        __
@@ -599,9 +600,9 @@ namespace G2lib {
     void
     bb_triangles(
       vector<Triangle2D> & tvec,
-      real_type            max_angle = Utils::m_pi/18,
-      real_type            max_size  = 1e100,
-      integer              icurve    = 0
+      real_type            max_angle, // = Utils::m_pi/18,
+      real_type            max_size,  // = 1e100,
+      integer              icurve     // = 0
     ) const override {
       m_Dubins0.bb_triangles( tvec, max_angle, max_size, icurve );
       m_Dubins1.bb_triangles( tvec, max_angle, max_size, icurve );
@@ -611,9 +612,9 @@ namespace G2lib {
     bb_triangles_ISO(
       real_type            offs,
       vector<Triangle2D> & tvec,
-      real_type            max_angle = Utils::m_pi/18,
-      real_type            max_size  = 1e100,
-      integer              icurve    = 0
+      real_type            max_angle, // = Utils::m_pi/18,
+      real_type            max_size,  // = 1e100,
+      integer              icurve     // = 0
     ) const override {
       m_Dubins0.bb_triangles_ISO( offs, tvec, max_angle, max_size, icurve );
       m_Dubins1.bb_triangles_ISO( offs, tvec, max_angle, max_size, icurve );
@@ -673,7 +674,7 @@ namespace G2lib {
     //!
     //! Detect a collision with another biarc.
     //!
-    bool collision( Dubins3p const & B ) const;
+    [[nodiscard]] bool collision( Dubins3p const & B ) const;
 
     //!
     //! Detect a collision with another biarc with offset.
@@ -682,6 +683,7 @@ namespace G2lib {
     //! \param[in] B      second biarc
     //! \param[in] offs_B offset of second biarc
     //!
+    [[nodiscard]]
     bool
     collision_ISO(
       real_type        offs,
@@ -689,8 +691,9 @@ namespace G2lib {
       real_type        offs_B
     ) const;
 
-    bool collision( BaseCurve const * pC ) const override;
+    [[nodiscard]] bool collision( BaseCurve const * pC ) const override;
 
+    [[nodiscard]]
     bool
     collision_ISO(
       real_type         offs,
@@ -748,7 +751,7 @@ namespace G2lib {
       IntersectList   & ilist
     ) const override;
 
-    string info() const;
+    [[nodiscard]] string info() const;
 
     void
     info( ostream_type & stream ) const override
@@ -758,7 +761,7 @@ namespace G2lib {
     ostream_type &
     operator << ( ostream_type & stream, Dubins3p const & bi );
 
-    CurveType type() const override { return CurveType::DUBINS; }
+    [[nodiscard]] CurveType type() const override { return CurveType::DUBINS; }
 
   };
 

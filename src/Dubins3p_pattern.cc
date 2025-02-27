@@ -48,7 +48,7 @@ namespace G2lib {
     angles.reserve( 2*NSEG + 12 );
     {
       real_type ang[12];
-      integer npts = this->get_range_angles( xi, yi, thetai, xm, ym, xf, yf, thetaf, k_max, ang );
+      integer npts{ this->get_range_angles( xi, yi, thetai, xm, ym, xf, yf, thetaf, k_max, ang ) };
       if ( npts > 0 ) {
         for ( integer i{0}; i < npts; ++i ) {
           real_type a{ i == 0 ? ang[npts-1]-Utils::m_2pi : ang[i-1] };
@@ -121,20 +121,56 @@ namespace G2lib {
       return ok;
     };
 
-    auto eval3p = [this,xi,yi,thetai,xm,ym,xf,yf,thetaf,k_max]( Dubins3p_data & D3P, real_type const thetam ) -> void {
+    auto eval3p = [this,xi,yi,thetai,xm,ym,xf,yf,thetaf,k_max,tolerance,use_trichotomy,use_bracket]( Dubins3p_data & D3P, real_type const thetam ) -> void {
       D3P.thetam = thetam;
-      D3P.D0.build( xi, yi, thetai, xm, ym, thetam, k_max );
-      D3P.D1.build( xm, ym, thetam, xf, yf, thetaf,     k_max );
+      bool ok{ D3P.D0.build( xi, yi, thetai, xm, ym, thetam, k_max ) };
+      if ( ok ) ok = D3P.D1.build( xm, ym, thetam, xf, yf, thetaf,     k_max );
+      UTILS_ASSERT(
+        ok,
+        "Dubins3p::build_pattern_search(\n"
+        "  xi             = {}\n"
+        "  yi             = {}\n"
+        "  thetai         = {}\n"
+        "  xm             = {}\n"
+        "  ym             = {}\n"
+        "  xf             = {}\n"
+        "  yf             = {}\n"
+        "  thetaf         = {}\n"
+        "  k_max          = {}\n"
+        "  tolerance      = {}\n"
+        "  use_trichotomy = {}\n"
+        "  use_bracket    = {}\n"
+        ") failed\n",
+        xi, yi, thetai, xm, ym, xf, yf, thetaf, k_max, tolerance, use_trichotomy, use_bracket
+      );
       D3P.len   = D3P.D0.length()       + D3P.D1.length();
       D3P.len_D = D3P.D0.length_Dbeta() + D3P.D1.length_Dalpha();
       ++m_evaluation;
     };
 
-    auto eval_for_bracket = [this,xi,yi,thetai,xm,ym,xf,yf,thetaf,k_max]( real_type const theta ) -> real_type {
+    auto eval_for_bracket = [this,xi,yi,thetai,xm,ym,xf,yf,thetaf,k_max,tolerance,use_trichotomy,use_bracket]( real_type const theta ) -> real_type {
       Dubins D0{"temporary Dubins A"};
       Dubins D1{"temporary Dubins B"};
-      D0.build( xi, yi, thetai, xm, ym, theta,  k_max );
-      D1.build( xm, ym, theta,  xf, yf, thetaf, k_max );
+      bool ok{ D0.build( xi, yi, thetai, xm, ym, theta,  k_max ) };
+      if ( ok ) ok = D1.build( xm, ym, theta,  xf, yf, thetaf, k_max );
+      UTILS_ASSERT(
+        ok,
+        "Dubins3p::build_pattern_search(\n"
+        "  xi             = {}\n"
+        "  yi             = {}\n"
+        "  thetai         = {}\n"
+        "  xm             = {}\n"
+        "  ym             = {}\n"
+        "  xf             = {}\n"
+        "  yf             = {}\n"
+        "  thetaf         = {}\n"
+        "  k_max          = {}\n"
+        "  tolerance      = {}\n"
+        "  use_trichotomy = {}\n"
+        "  use_bracket    = {}\n"
+        ") failed\n",
+        xi, yi, thetai, xm, ym, xf, yf, thetaf, k_max, tolerance, use_trichotomy, use_bracket
+      );
       ++m_evaluation;
       return D0.length_Dbeta() + D1.length_Dalpha();
     };

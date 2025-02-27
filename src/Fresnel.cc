@@ -1330,7 +1330,7 @@ namespace G2lib {
     real_type       k_D[2],
     real_type       dk_D[2]
   ) {
-    static real_type const CF[]{
+    static constexpr real_type CF[]{
       2.989696028701907,   0.716228953608281,
       -0.458969738821509, -0.502821153340377,
       0.261062141752652,  -0.045854475238709

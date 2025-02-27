@@ -61,12 +61,12 @@ namespace G2lib {
   void
   ClothoidCurve::setup( GenericContainer const & gc ) {
     string const where{ fmt::format("ClothoidCurve[{}]::setup( gc ):", this->name() ) };
-    real_type const x0     = gc.get_map_number("x0",     where );
-    real_type const y0     = gc.get_map_number("y0",     where );
-    real_type const theta0 = gc.get_map_number("theta0", where );
-    real_type const x1     = gc.get_map_number("x1",     where );
-    real_type const y1     = gc.get_map_number("y1",     where );
-    real_type const theta1 = gc.get_map_number("theta1", where );
+    real_type const x0     { gc.get_map_number("x0",     where ) };
+    real_type const y0     { gc.get_map_number("y0",     where ) };
+    real_type const theta0 { gc.get_map_number("theta0", where ) };
+    real_type const x1     { gc.get_map_number("x1",     where ) };
+    real_type const y1     { gc.get_map_number("y1",     where ) };
+    real_type const theta1 { gc.get_map_number("theta1", where ) };
     bool const ok = this->build_G1( x0, y0, theta0, x1, y1, theta1 );
     UTILS_ASSERT( ok, "ClothoidCurve[{}]::setup( gc ) failed\n", this->name() );
   }
@@ -161,18 +161,12 @@ namespace G2lib {
 
   // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 
-  void
-  ClothoidCurve::build( ClothoidCurve const & C )
-  { this->copy(C); }
-
-  // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
-
-  void ClothoidCurve::build( Biarc const & )        { UTILS_ERROR("can convert from Biarc to ClothoidCurve\n"); }
-  void ClothoidCurve::build( PolyLine const & )     { UTILS_ERROR("can convert from PolyLine to ClothoidCurve\n"); }
-  void ClothoidCurve::build( BiarcList const & )    { UTILS_ERROR("can convert from BiarcList to ClothoidCurve\n"); }
-  void ClothoidCurve::build( ClothoidList const & ) { UTILS_ERROR("can convert from ClothoidList to ClothoidCurve\n"); }
-  void ClothoidCurve::build( Dubins const & )       { UTILS_ERROR("can convert from Dubins to ClothoidCurve\n"); }
-  void ClothoidCurve::build( Dubins3p const & )     { UTILS_ERROR("can convert from Dubins3p to ClothoidCurve\n"); }
+  void ClothoidCurve::build( Biarc        const & ) { UTILS_ERROR("cannot convert from Biarc to ClothoidCurve\n"); }
+  void ClothoidCurve::build( PolyLine     const & ) { UTILS_ERROR("cannot convert from PolyLine to ClothoidCurve\n"); }
+  void ClothoidCurve::build( BiarcList    const & ) { UTILS_ERROR("cannot convert from BiarcList to ClothoidCurve\n"); }
+  void ClothoidCurve::build( ClothoidList const & ) { UTILS_ERROR("cannot convert from ClothoidList to ClothoidCurve\n"); }
+  void ClothoidCurve::build( Dubins       const & ) { UTILS_ERROR("cannot convert from Dubins to ClothoidCurve\n"); }
+  void ClothoidCurve::build( Dubins3p     const & ) { UTILS_ERROR("cannot convert from Dubins3p to ClothoidCurve\n"); }
 
   // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 
@@ -301,11 +295,7 @@ namespace G2lib {
       this->copy( *dynamic_cast<ClothoidCurve const *>(pC) );
       break;
     default:
-      UTILS_ERROR(
-        "ClothoidList constructor cannot convert from: {}\n",
-        pC->type_name()
-      );
-      break;
+      UTILS_ERROR( "ClothoidList constructor cannot convert from: {}\n", pC->type_name() );
     }
   }
 
@@ -507,7 +497,7 @@ namespace G2lib {
     real_type &     ymax
   ) const {
     vector<Triangle2D> tvec;
-    bb_triangles_ISO( offs, tvec, Utils::m_pi/18, 1e100 );
+    bb_triangles_ISO( offs, tvec, Utils::m_pi/18, 1e100, 0 );
     xmin = ymin = Utils::Inf<real_type>();
     xmax = ymax = -xmin;
     for ( auto const & T : tvec ) {
@@ -554,7 +544,7 @@ namespace G2lib {
          Utils::is_zero( max_angle-m_aabb_max_angle ) &&
          Utils::is_zero( max_size-m_aabb_max_size ) ) return;
 
-    bb_triangles_ISO( offs, m_aabb_triangles, max_angle, max_size );
+    bb_triangles_ISO( offs, m_aabb_triangles, max_angle, max_size, 0 );
 
     integer       ipos{0};
     integer const nobj{ static_cast<integer>(m_aabb_triangles.size()) };
@@ -693,7 +683,7 @@ namespace G2lib {
           "ClothoidCurve::collision_ISO( offs={}, C, offs_C={} ) j={} out of range [0,{})\n",
           offs, offs_C, j, C.m_aabb_triangles.size()
         );
-        Triangle2D const & T2 = C.m_aabb_triangles.at(j);
+        Triangle2D const & T2{ C.m_aabb_triangles.at(j) };
         if ( T1.overlap(T2) ) return true;
       }
     }
@@ -869,8 +859,8 @@ namespace G2lib {
     } else {
 
       G2LIB_DEBUG_TIC;
-      bb_triangles_ISO( offs, m_aabb_triangles, Utils::m_pi/18, 1e100 );
-      C.bb_triangles_ISO( offs_C, C.m_aabb_triangles, Utils::m_pi/18, 1e100 );
+      bb_triangles_ISO( offs, m_aabb_triangles, Utils::m_pi/18, 1e100, 0 );
+      C.bb_triangles_ISO( offs_C, C.m_aabb_triangles, Utils::m_pi/18, 1e100, 0 );
 
       for ( Triangle2D const & T1 : m_aabb_triangles ) {
         for ( Triangle2D const & T2 : C.m_aabb_triangles ) {
@@ -1035,7 +1025,7 @@ namespace G2lib {
           qx, qy, offs, ipos, m_aabb_triangles.size()
         );
         Triangle2D const & T = m_aabb_triangles.at(ipos);
-        real_type dst = T.dist_min( qx, qy );
+        real_type dst{ T.dist_min( qx, qy ) };
         if ( dst < DST ) {
           // refine distance
           closest_point_internal( T.S0(), T.S1(), qx, qy, offs, xx, yy, ss, dst );
@@ -1058,7 +1048,7 @@ namespace G2lib {
 
       G2LIB_DEBUG_TIC;
       for ( Triangle2D const & T : m_aabb_triangles ) {
-        real_type dst = T.dist_min( qx, qy );
+        real_type dst{ T.dist_min( qx, qy ) };
         if ( dst < DST ) {
           // refine distance
           closest_point_internal( T.S0(), T.S1(), qx, qy, offs, xx, yy, ss, dst );
@@ -1121,7 +1111,7 @@ namespace G2lib {
     constexpr real_type thL{0};
     real_type const thR { m_CD.delta_theta(m_L) };
     if ( kL*kR < 0 ) {
-      real_type root = -m_CD.m_kappa0/m_CD.m_dk;
+      real_type root{ -m_CD.m_kappa0/m_CD.m_dk };
       if ( root > 0 && root < m_L ) {
         real_type const thM  = m_CD.delta_theta(root);
         return abs( thR - thM ) + abs( thM - thL );
@@ -1136,16 +1126,16 @@ namespace G2lib {
   ClothoidCurve::theta_min_max( real_type & thMin, real_type & thMax ) const {
     // cerco punto minimo parabola
     // root = -k/dk;
-    real_type const kL  = m_CD.m_kappa0;
-    real_type const kR  = m_CD.kappa(m_L);
-    real_type thL = 0;
-    real_type thR = m_CD.delta_theta(m_L);
+    real_type const kL  { m_CD.m_kappa0 };
+    real_type const kR  { m_CD.kappa(m_L) };
+    real_type const thL { 0 };
+    real_type       thR { m_CD.delta_theta(m_L) };
     if ( thL < thR ) { thMin = thL; thMax = thR; }
     else             { thMin = thR; thMax = thL; }
     if ( kL*kR < 0 ) {
-      real_type root = -m_CD.m_kappa0/m_CD.m_dk;
+      real_type const root{ -m_CD.m_kappa0/m_CD.m_dk };
       if ( root > 0 && root < m_L ) {
-        real_type thM = m_CD.delta_theta(root);
+        real_type thM{ m_CD.delta_theta(root) };
         if      ( thM < thMin ) thMin = thM;
         else if ( thM > thMax ) thMax = thM;
       }

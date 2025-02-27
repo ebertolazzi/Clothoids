@@ -132,12 +132,12 @@ namespace G2lib {
     explicit
     CircleArc( BaseCurve const * pC );
 
-    CurveType type() const override { return CurveType::CIRCLE; }
+    [[nodiscard]] CurveType type() const override { return CurveType::CIRCLE; }
 
     //!
     //! Make a copy of an existing circle arc.
     //!
-    CircleArc const &
+    CircleArc &
     operator = ( CircleArc const & s )
     { this->copy(s); return *this; }
 
@@ -209,15 +209,17 @@ namespace G2lib {
     //! Construct a circle arc from a line
     //! segment (degenerate circle).
     //!
+
+    void build( CircleArc   const & C ) { *this = C; }
     void build( LineSegment const & );
-    void build( CircleArc const & );
-    void build( Biarc const & );
-    void build( ClothoidCurve const & );
-    void build( PolyLine const & );
-    void build( BiarcList const & );
-    void build( ClothoidList const & );
-    void build( Dubins const & );
-    void build( Dubins3p const & );
+
+    static void build( Biarc         const & );
+    static void build( ClothoidCurve const & );
+    static void build( PolyLine      const & );
+    static void build( BiarcList     const & );
+    static void build( ClothoidList  const & );
+    static void build( Dubins        const & );
+    static void build( Dubins3p      const & );
 
     // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 
@@ -421,9 +423,9 @@ namespace G2lib {
     void
     bb_triangles(
       vector<Triangle2D> & tvec,
-      real_type max_angle = Utils::m_pi/18,
-      real_type max_size  = 1e100,
-      integer   icurve    = 0
+      real_type max_angle, // = Utils::m_pi/18,
+      real_type max_size,  // = 1e100,
+      integer   icurve     // = 0
     ) const override; // 10 degree
 
     //!
@@ -439,9 +441,9 @@ namespace G2lib {
     bb_triangles_ISO(
       real_type offs,
       vector<Triangle2D> & tvec,
-      real_type max_angle = Utils::m_pi/18,
-      real_type max_size  = 1e100,
-      integer   icurve    = 0
+      real_type max_angle, // = Utils::m_pi/18,
+      real_type max_size,  // = 1e100,
+      integer   icurve     // = 0
     ) const override; // 10 degree
 
     //!
@@ -457,9 +459,9 @@ namespace G2lib {
     bb_triangles_SAE(
       real_type offs,
       vector<Triangle2D> & tvec,
-      real_type max_angle = Utils::m_pi/18,
-      real_type max_size  = 1e100,
-      integer   icurve    = 0
+      real_type max_angle, // = Utils::m_pi/18,
+      real_type max_size,  // = 1e100,
+      integer   icurve     // = 0
     ) const override {
       this->bb_triangles_ISO( -offs, tvec, max_angle, max_size, icurve );
     }
@@ -485,40 +487,35 @@ namespace G2lib {
 
     // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 
-    real_type
-    length() const override
-    { return m_L; }
+    [[nodiscard]] real_type length() const override { return m_L; }
+    [[nodiscard]] real_type length_ISO( real_type const offs ) const override { return m_L*(1+m_k*offs); }
 
-    real_type
-    length_ISO( real_type offs ) const override
-    { return m_L*(1+m_k*offs); }
-
-    real_type theta_begin()  const override { return m_theta0; }
-    real_type kappa_begin()  const override { return m_k; }
-    real_type kappa_end()    const override { return m_k; }
-    real_type x_begin()      const override { return m_x0; }
-    real_type y_begin()      const override { return m_y0; }
-    real_type tx_begin()     const override { return m_c0; }
-    real_type ty_begin()     const override { return m_s0; }
-    real_type nx_begin_ISO() const override { return m_s0; }
-    real_type ny_begin_ISO() const override { return -m_c0; }
+    [[nodiscard]] real_type theta_begin()  const override { return m_theta0; }
+    [[nodiscard]] real_type kappa_begin()  const override { return m_k; }
+    [[nodiscard]] real_type kappa_end()    const override { return m_k; }
+    [[nodiscard]] real_type x_begin()      const override { return m_x0; }
+    [[nodiscard]] real_type y_begin()      const override { return m_y0; }
+    [[nodiscard]] real_type tx_begin()     const override { return m_c0; }
+    [[nodiscard]] real_type ty_begin()     const override { return m_s0; }
+    [[nodiscard]] real_type nx_begin_ISO() const override { return m_s0; }
+    [[nodiscard]] real_type ny_begin_ISO() const override { return -m_c0; }
 
     // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 
-    real_type theta    ( real_type s ) const override { return m_theta0 + s*m_k; }
-    real_type theta_D  ( real_type   ) const override { return m_k; }
-    real_type theta_DD ( real_type   ) const override { return 0; }
-    real_type theta_DDD( real_type   ) const override { return 0; }
+    [[nodiscard]] real_type theta    ( real_type s ) const override { return m_theta0 + s*m_k; }
+    [[nodiscard]] real_type theta_D  ( real_type   ) const override { return m_k; }
+    [[nodiscard]] real_type theta_DD ( real_type   ) const override { return 0; }
+    [[nodiscard]] real_type theta_DDD( real_type   ) const override { return 0; }
 
     // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 
     void
     evaluate(
-      real_type   s,
-      real_type & th,
-      real_type & kappa,
-      real_type & x,
-      real_type & y
+      real_type const s,
+      real_type     & th,
+      real_type     & kappa,
+      real_type     & x,
+      real_type     & y
     ) const override {
       eval( s, x, y );
       th     = m_theta0 + s*m_k;
@@ -527,17 +524,17 @@ namespace G2lib {
 
     // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 
-    real_type X( real_type s ) const override;
-    real_type Y( real_type s ) const override;
+    [[nodiscard]] real_type X( real_type ) const override;
+    [[nodiscard]] real_type Y( real_type ) const override;
 
-    real_type X_D( real_type ) const override;
-    real_type Y_D( real_type ) const override;
+    [[nodiscard]] real_type X_D( real_type ) const override;
+    [[nodiscard]] real_type Y_D( real_type ) const override;
 
-    real_type X_DD( real_type ) const override;
-    real_type Y_DD( real_type ) const override;
+    [[nodiscard]] real_type X_DD( real_type ) const override;
+    [[nodiscard]] real_type Y_DD( real_type ) const override;
 
-    real_type X_DDD( real_type ) const override;
-    real_type Y_DDD( real_type ) const override;
+    [[nodiscard]] real_type X_DDD( real_type ) const override;
+    [[nodiscard]] real_type Y_DDD( real_type ) const override;
 
     // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 
@@ -577,17 +574,17 @@ namespace G2lib {
      |   |_|    \__,_|_| |_|\__,_| |_| \_|
     \*/
 
-    real_type tx( real_type s ) const override { return cos(theta(s)); }
-    real_type ty( real_type s ) const override { return sin(theta(s)); }
+    [[nodiscard]] real_type tx( real_type const s ) const override { return cos(theta(s)); }
+    [[nodiscard]] real_type ty( real_type const s ) const override { return sin(theta(s)); }
 
-    real_type tx_D( real_type s ) const override { return -sin(theta(s))*m_k; }
-    real_type ty_D( real_type s ) const override { return cos(theta(s))*m_k; }
+    [[nodiscard]] real_type tx_D( real_type const s ) const override { return -sin(theta(s))*m_k; }
+    [[nodiscard]] real_type ty_D( real_type const s ) const override { return cos(theta(s))*m_k; }
 
-    real_type tx_DD( real_type s ) const override { return -cos(theta(s))*m_k*m_k; }
-    real_type ty_DD( real_type s ) const override { return -sin(theta(s))*m_k*m_k; }
+    [[nodiscard]] real_type tx_DD( real_type const s ) const override { return -cos(theta(s))*m_k*m_k; }
+    [[nodiscard]] real_type ty_DD( real_type const s ) const override { return -sin(theta(s))*m_k*m_k; }
 
-    real_type tx_DDD( real_type s ) const override { return sin(theta(s))*m_k*m_k*m_k; }
-    real_type ty_DDD( real_type s ) const override { return -cos(theta(s))*m_k*m_k*m_k; }
+    [[nodiscard]] real_type tx_DDD( real_type const s ) const override { return sin(theta(s))*m_k*m_k*m_k; }
+    [[nodiscard]] real_type ty_DDD( real_type const s ) const override { return -cos(theta(s))*m_k*m_k*m_k; }
 
     // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 
@@ -605,14 +602,14 @@ namespace G2lib {
     \*/
 
     void
-    translate( real_type tx, real_type ty ) override
+    translate( real_type const tx, real_type const ty ) override
     { m_x0 += tx; m_y0 += ty; }
 
     void rotate( real_type angle, real_type cx, real_type cy ) override;
     void reverse() override;
 
     void
-    change_origin( real_type newx0, real_type newy0 ) override
+    change_origin( real_type const newx0, real_type const newy0 ) override
     { m_x0 = newx0; m_y0 = newy0; }
 
     void scale( real_type s ) override;
@@ -650,7 +647,7 @@ namespace G2lib {
       real_type & dst
     ) const override;
 
-    string info() const;
+    [[nodiscard]] string info() const;
 
     void
     info( ostream_type & stream ) const override
@@ -675,8 +672,7 @@ namespace G2lib {
     //!
     //! Detect a collision with another circle arc.
     //!
-    bool
-    collision( CircleArc const & ) const;
+    [[nodiscard]] bool collision( CircleArc const & ) const;
 
     //!
     //! Detect a collision with another circle arc with offset.
@@ -685,6 +681,7 @@ namespace G2lib {
     //! \param[in] C        second circle arc
     //! \param[in] offs_obj offset of second circle arc
     //!
+    [[nodiscard]]
     bool
     collision_ISO(
       real_type         offs,
@@ -692,9 +689,11 @@ namespace G2lib {
       real_type         offs_obj
     ) const;
 
+    [[nodiscard]]
     bool
     collision( BaseCurve const * pC ) const override;
 
+    [[nodiscard]]
     bool
     collision_ISO(
       real_type         offs,
@@ -748,7 +747,7 @@ namespace G2lib {
     intersect_ISO(
       real_type         offs,
       BaseCurve const * pC,
-      real_type         offs_LS,
+      real_type         offs_C,
       IntersectList   & ilist
     ) const override;
 
@@ -756,35 +755,35 @@ namespace G2lib {
     //! Return \f$ \sin \theta_0 \f$ where
     //! \f$ \theta_0 \f$ is the initial tangent angle.
     //!
-    real_type sin_theta0() const { return sin(m_theta0); }
+    [[nodiscard]] real_type sin_theta0() const { return sin(m_theta0); }
 
     //!
     //! Return \f$ \cos \theta_0 \f$ where
     //! \f$ \theta_0 \f$ is the initial tangent angle.
     //!
-    real_type cos_theta0() const { return cos(m_theta0); }
+    [[nodiscard]] real_type cos_theta0() const { return cos(m_theta0); }
 
     //!
     //! Return curvature of the circle arc.
     //!
-    real_type curvature() const { return m_k; }
+    [[nodiscard]] real_type curvature() const { return m_k; }
 
     //!
     //! Return the length of the arc that
     //! can approximated by a line segment.
     //!
-    real_type len_tolerance( real_type tol ) const;
+    [[nodiscard]] real_type len_tolerance( real_type tol ) const;
 
     //!
     //! Return the tangent angle variation in the circle arc.
     //!
-    real_type delta_theta() const { return std::abs(m_L*m_k); }
+    [[nodiscard]] real_type delta_theta() const { return std::abs(m_L*m_k); }
 
     //!
     //! Return the absolute value of the tangent
     //! angle variation in the circle arc.
     //!
-    real_type theta_total_variation() const { return delta_theta(); }
+    [[nodiscard]] real_type theta_total_variation() const { return delta_theta(); }
 
     //!
     //! Minimum and maximum tangent angle.
@@ -793,8 +792,7 @@ namespace G2lib {
     //! \param[out] thMax maximum tangent angle
     //! \return `thMax`-`thMin`
     //!
-    real_type
-    theta_min_max( real_type & thMin, real_type & thMax ) const;
+    [[nodiscard]] real_type theta_min_max( real_type & thMin, real_type & thMax ) const;
 
     //!
     //! Change the origin of the circle arc at \f$ s_0 \f$
@@ -818,7 +816,7 @@ namespace G2lib {
     //!
     //! Get the ray of the circle arc.
     //!
-    real_type ray() const { return 1/std::abs(m_k); }
+    [[nodiscard]] real_type ray() const { return 1/std::abs(m_k); }
 
     /*\
      |   _   _ _   _ ____  ____ ____

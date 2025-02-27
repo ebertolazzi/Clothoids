@@ -1263,21 +1263,21 @@ namespace G2lib {
 
     } else {
 
-      bb_triangles_ISO( offs, m_aabb_triangles, Utils::m_pi/18, 1e100 );
-      BL.bb_triangles_ISO( offs_BL, BL.m_aabb_triangles, Utils::m_pi/18, 1e100 );
+      bb_triangles_ISO( offs, m_aabb_triangles, Utils::m_pi/18, 1e100, 0 );
+      BL.bb_triangles_ISO( offs_BL, BL.m_aabb_triangles, Utils::m_pi/18, 1e100, 0 );
 
       for ( Triangle2D const & T1 : m_aabb_triangles ) {
-        Biarc const & BA1 = m_biarc_list.at(T1.Icurve());
+        Biarc const & BA1{ m_biarc_list.at(T1.Icurve()) };
 
         for ( Triangle2D const & T2 : BL.m_aabb_triangles ) {
-          Biarc const & BA2 = BL.m_biarc_list.at(T2.Icurve());
+          Biarc const & BA2{ BL.m_biarc_list.at(T2.Icurve()) };
 
           IntersectList ilist1;
           BA1.intersect_ISO( offs, BA2, offs_BL, ilist1 );
 
           for ( auto const & it : ilist1 ) {
-            real_type ss1 = it.first  + m_s0.at(T1.Icurve());
-            real_type ss2 = it.second + BL.m_s0.at(T2.Icurve());
+            real_type ss1{ it.first  + m_s0.at(T1.Icurve()) };
+            real_type ss2{ it.second + BL.m_s0.at(T2.Icurve()) };
             ilist.emplace_back( ss1, ss2 );
           }
         }

@@ -27,8 +27,8 @@ main() {
   constexpr real_type y1 { 0 };
 
   // insert code here...
-  real_type const thmin { -m_pi*0.999 };
-  real_type const thmax {  m_pi*0.999 };
+  constexpr real_type thmin { -m_pi*0.999 };
+  constexpr real_type thmax {  m_pi*0.999 };
 
   real_type           kur[1000];
   constexpr real_type kmax { 10 };

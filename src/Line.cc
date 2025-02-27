@@ -105,15 +105,14 @@ namespace G2lib {
   }
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  void LineSegment::build( LineSegment const & LS ) { *this = LS; }
-  void LineSegment::build( CircleArc const & )      { UTILS_ERROR("can convert from CircleArc to LineSegment\n"); }
-  void LineSegment::build( Biarc const & )          { UTILS_ERROR("can convert from Biarc to LineSegment\n"); }
-  void LineSegment::build( ClothoidCurve const & )  { UTILS_ERROR("can convert from ClothoidCurve to LineSegment\n"); }
-  void LineSegment::build( PolyLine const & )       { UTILS_ERROR("can convert from PolyLine to LineSegment\n"); }
-  void LineSegment::build( BiarcList const & )      { UTILS_ERROR("can convert from BiarcList to LineSegment\n"); }
-  void LineSegment::build( ClothoidList const & )   { UTILS_ERROR("can convert from ClothoidList to LineSegment\n"); }
-  void LineSegment::build( Dubins const & )         { UTILS_ERROR("can convert from Dubins to LineSegment\n"); }
-  void LineSegment::build( Dubins3p const & )       { UTILS_ERROR("can convert from Dubins3p to LineSegment\n"); }
+  void LineSegment::build( CircleArc     const & ) { UTILS_ERROR("cannot convert from CircleArc to LineSegment\n"); }
+  void LineSegment::build( Biarc         const & ) { UTILS_ERROR("cannot convert from Biarc to LineSegment\n"); }
+  void LineSegment::build( ClothoidCurve const & ) { UTILS_ERROR("cannot convert from ClothoidCurve to LineSegment\n"); }
+  void LineSegment::build( PolyLine      const & ) { UTILS_ERROR("cannot convert from PolyLine to LineSegment\n"); }
+  void LineSegment::build( BiarcList     const & ) { UTILS_ERROR("cannot convert from BiarcList to LineSegment\n"); }
+  void LineSegment::build( ClothoidList  const & ) { UTILS_ERROR("cannot convert from ClothoidList to LineSegment\n"); }
+  void LineSegment::build( Dubins        const & ) { UTILS_ERROR("cannot convert from Dubins to LineSegment\n"); }
+  void LineSegment::build( Dubins3p      const & ) { UTILS_ERROR("cannot convert from Dubins3p to LineSegment\n"); }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
@@ -127,11 +126,7 @@ namespace G2lib {
       *this = *dynamic_cast<LineSegment const *>(pC);
       break;
     default:
-      UTILS_ERROR(
-        "LineSegment constructor cannot convert from: {}\n",
-        pC->type_name()
-      );
-      break;
+      UTILS_ERROR( "LineSegment constructor cannot convert from: {}\n", pC->type_name() );
     }
   }
 

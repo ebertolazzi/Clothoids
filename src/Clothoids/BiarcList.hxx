@@ -134,7 +134,7 @@ namespace G2lib {
     //!
     //! Copy another biarc spline.
     //!
-    BiarcList const & operator = ( BiarcList const & s )
+    BiarcList & operator = ( BiarcList const & s )
     { this->copy(s); return *this; }
 
     //!
@@ -163,14 +163,16 @@ namespace G2lib {
     explicit BiarcList( BaseCurve const * pC );
 
     void build( LineSegment const & );
-    void build( CircleArc const & );
-    void build( ClothoidCurve const & );
-    void build( Biarc const & );
-    void build( BiarcList const & );
-    void build( PolyLine const & );
-    void build( ClothoidList const & );
-    void build( Dubins const & );
-    void build( Dubins3p const & );
+    void build( CircleArc   const & );
+    void build( Biarc       const & );
+
+    void build( BiarcList const & C ) { *this = C; }
+
+    static void build( ClothoidCurve const & );
+    static void build( PolyLine      const & );
+    static void build( ClothoidList  const & );
+    static void build( Dubins        const & );
+    static void build( Dubins3p      const & );
 
     //!
     //! Append a line segment to the biarc list
@@ -308,26 +310,26 @@ namespace G2lib {
     bb_triangles_ISO(
       real_type            offs,
       vector<Triangle2D> & tvec,
-      real_type            max_angle = Utils::m_pi/6, // 30 degree
-      real_type            max_size  = 1e100,
-      integer              icurve    = 0
+      real_type            max_angle, // = Utils::m_pi/6, // 30 degree
+      real_type            max_size,  // = 1e100,
+      integer              icurve     // = 0
     ) const override;
 
     void
     bb_triangles_SAE(
       real_type            offs,
       vector<Triangle2D> & tvec,
-      real_type            max_angle = Utils::m_pi/6, // 30 degree
-      real_type            max_size  = 1e100,
-      integer              icurve    = 0
+      real_type            max_angle, // = Utils::m_pi/6, // 30 degree
+      real_type            max_size,  // = 1e100,
+      integer              icurve     // = 0
     ) const override;
 
     void
     bb_triangles(
       vector<Triangle2D> & tvec,
-      real_type            max_angle = Utils::m_pi/6, // 30 degree
-      real_type            max_size  = 1e100,
-      integer              icurve    = 0
+      real_type            max_angle, // = Utils::m_pi/6, // 30 degree
+      real_type            max_size,  // = 1e100,
+      integer              icurve     // = 0
     ) const override;
 
     #ifndef DOXYGEN_SHOULD_SKIP_THIS

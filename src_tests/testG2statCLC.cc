@@ -17,23 +17,23 @@ main() {
   int const NMAX { 32/8 };
   int       nkur { 32/8 };
 
-  real_type x0 = 0;
-  real_type y0 = 0;
-  real_type x1 = 1;
-  real_type y1 = 0;
+  constexpr real_type x0{ 0 };
+  constexpr real_type y0{ 0 };
+  constexpr real_type x1{ 1 };
+  constexpr real_type y1{ 0 };
 
   // insert code here...
-  real_type const thmin = -m_pi*0.99;
-  real_type const thmax{ m_pi*0.99 };
+  constexpr real_type thmin{-m_pi*0.99};
+  constexpr real_type thmax{ m_pi*0.99 };
 
   real_type       kur[1000];
   real_type const kmax{10};
   real_type       a{ exp( 2*log(kmax)/(nkur-1) ) };
   nkur = 2*nkur+1;
   fmt::print( "a = {}\n", a );
-  real_type k0 = 1/kmax;
+  real_type k0{1/kmax};
   kur[0] = 0;
-  for ( int ii = 1; ii < nkur; ii += 2 ) {
+  for ( int ii{1}; ii < nkur; ii += 2 ) {
     kur[ii]   = k0;
     kur[ii+1] = -kur[ii];
     k0 *= a;
@@ -50,7 +50,7 @@ main() {
 
   // real_type kur[] = {-1e3, -100,-10,-1,-0.1,-0.01,-0.001,-0.0001,0, 0.0001, 0.001, 0.01, 0.1, 1, 10, 100, 1e3 };
   tictoc.tic();
-  for ( int ii = 0; ii < nkur; ++ii ) {
+  for ( int ii{0}; ii < nkur; ++ii ) {
     fmt::print( "ii = {}\n", ii );
     k0 = kur[ii];
     for ( int jj{0}; jj < nkur; ++jj ) {

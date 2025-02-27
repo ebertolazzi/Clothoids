@@ -102,16 +102,48 @@ namespace G2lib {
   ) {
     m_evaluation = 0;
     real_type thetam{0};
-    m_Dubins0.build( xi, yi, thetai, xm, ym, thetam, k_max );
-    m_Dubins1.build( xm, ym, thetam, xf, yf, thetaf, k_max );
+    bool ok { m_Dubins0.build( xi, yi, thetai, xm, ym, thetam, k_max ) };
+    if ( ok ) ok = m_Dubins1.build( xm, ym, thetam, xf, yf, thetaf, k_max );
+
+    UTILS_ASSERT(
+      ok,
+      "Dubins3p::build_sample(\n"
+      "  xi             = {}\n"
+      "  yi             = {}\n"
+      "  thetai         = {}\n"
+      "  xm             = {}\n"
+      "  ym             = {}\n"
+      "  xf             = {}\n"
+      "  yf             = {}\n"
+      "  thetaf         = {}\n"
+      "  k_max          = {}\n"
+      ") failed\n",
+      xi, yi, thetai, xm, ym, xf, yf, thetaf, k_max
+    );
+
     real_type len{m_Dubins0.length()+m_Dubins1.length()};
 
     Dubins D0{"temporary Dubins A"};
     Dubins D1{"temporary Dubins B"};
     real_type const dangle{Utils::m_2pi/m_sample_points};
     for ( thetam = dangle; thetam < Utils::m_2pi; thetam += dangle ) {
-      D0.build( xi, yi, thetai, xm, ym, thetam, k_max );
-      D1.build( xm, ym, thetam, xf, yf, thetaf, k_max );
+      bool ok { D0.build( xi, yi, thetai, xm, ym, thetam, k_max ) };
+      if ( ok ) ok = D1.build( xm, ym, thetam, xf, yf, thetaf, k_max );
+      UTILS_ASSERT(
+        ok,
+        "Dubins3p::build_sample(\n"
+        "  xi             = {}\n"
+        "  yi             = {}\n"
+        "  thetai         = {}\n"
+        "  xm             = {}\n"
+        "  ym             = {}\n"
+        "  xf             = {}\n"
+        "  yf             = {}\n"
+        "  thetaf         = {}\n"
+        "  k_max          = {}\n"
+        ") failed\n",
+        xi, yi, thetai, xm, ym, xf, yf, thetaf, k_max
+      );
       ++m_evaluation;
       real_type len1{D0.length()+D1.length()};
       if ( len1 < len ) { len = len1; m_Dubins0.copy(D0); m_Dubins1.copy(D1); }
@@ -191,14 +223,14 @@ namespace G2lib {
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  void Dubins3p::build( LineSegment const & )   { UTILS_ERROR("can convert from LineSegment to Dubins3p\n"); }
-  void Dubins3p::build( CircleArc const & )     { UTILS_ERROR("can convert from CircleArc to Dubins3p\n"); }
-  void Dubins3p::build( Biarc const & )         { UTILS_ERROR("can convert from Biarc to Dubins3p\n"); }
-  void Dubins3p::build( ClothoidCurve const & ) { UTILS_ERROR("can convert from ClothoidCurve to Dubins3p\n"); }
-  void Dubins3p::build( PolyLine const & )      { UTILS_ERROR("can convert from PolyLine to Dubins3p\n"); }
-  void Dubins3p::build( BiarcList const & )     { UTILS_ERROR("can convert from BiarcList to Dubins3p\n"); }
-  void Dubins3p::build( ClothoidList const & )  { UTILS_ERROR("can convert from ClothoidList to Dubins3p\n"); }
-  void Dubins3p::build( Dubins const & )        { UTILS_ERROR("can convert from Dubins to Dubins3p\n"); }
+  void Dubins3p::build( LineSegment   const & ) { UTILS_ERROR("cannot convert from LineSegment to Dubins3p\n"); }
+  void Dubins3p::build( CircleArc     const & ) { UTILS_ERROR("cannot convert from CircleArc to Dubins3p\n"); }
+  void Dubins3p::build( Biarc         const & ) { UTILS_ERROR("cannot convert from Biarc to Dubins3p\n"); }
+  void Dubins3p::build( ClothoidCurve const & ) { UTILS_ERROR("cannot convert from ClothoidCurve to Dubins3p\n"); }
+  void Dubins3p::build( PolyLine      const & ) { UTILS_ERROR("cannot convert from PolyLine to Dubins3p\n"); }
+  void Dubins3p::build( BiarcList     const & ) { UTILS_ERROR("cannot convert from BiarcList to Dubins3p\n"); }
+  void Dubins3p::build( ClothoidList  const & ) { UTILS_ERROR("cannot convert from ClothoidList to Dubins3p\n"); }
+  void Dubins3p::build( Dubins        const & ) { UTILS_ERROR("cannot convert from Dubins to Dubins3p\n"); }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
