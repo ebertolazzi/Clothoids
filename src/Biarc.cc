@@ -43,7 +43,7 @@ namespace G2lib {
     bool const ok = build( x0, y0, theta0, x1, y1, theta1 );
     UTILS_ASSERT(
       ok,
-      "Biarc( x0={}, y0={}, theta0={}, x1={}, y1={}, theta1={}) cannot be computed\n",
+      "Biarc( x₀={}, y₀={}, θ₀={}, x₁={}, y₁={}, θ₁={}) cannot be computed\n",
       x0, y0, theta0, x1, y1, theta1
     );
   }
