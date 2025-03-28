@@ -12,7 +12,7 @@
  |                                                                          |
  |      Enrico Bertolazzi                                                   |
  |      Dipartimento di Ingegneria Industriale                              |
- |      Universita` degli Studi di Trento                                   |
+ |      Università degli Studi di Trento                                    |
  |      email: enrico.bertolazzi@unitn.it                                   |
  |                                                                          |
 \*--------------------------------------------------------------------------*/
@@ -769,10 +769,10 @@ namespace G2lib {
   ostream_type &
   operator << ( ostream_type & stream, LineSegment const & c ) {
     fmt::print( stream,
-      "x0     = {}\n"
-      "y0     = {}\n"
-      "theta0 = {}\n"
-      "L      = {}\n",
+      "x₀ = {}\n"
+      "y₀ = {}\n"
+      "θ₀ = {}\n"
+      "L  = {}\n",
       c.m_x0, c.m_y0, c.m_theta0, c.m_L
     );
     return stream;

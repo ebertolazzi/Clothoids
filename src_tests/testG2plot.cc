@@ -53,12 +53,12 @@ main() {
 
   fmt::print(
     "\n\n\n"
-    "x1     = {}\n"
-    "x0     = {}\n\n"
-    "y1     = {}\n"
-    "y0     = {}\n\n"
-    "theta1 = {}\n"
-    "theta0 = {}\n\n",
+    "x₁ = {}\n"
+    "x₀ = {}\n\n"
+    "y₁ = {}\n"
+    "y₀ = {}\n\n"
+    "θ₁ = {}\n"
+    "θ₀ = {}\n\n",
     S0.x_end(),
     S1.x_begin(),
     S0.y_end(),

@@ -12,7 +12,7 @@
  |                                                                          |
  |      Enrico Bertolazzi                                                   |
  |      Dipartimento di Ingegneria Industriale                              |
- |      Universita` degli Studi di Trento                                   |
+ |      Università degli Studi di Trento                                    |
  |      email: enrico.bertolazzi@unitn.it                                   |
  |                                                                          |
 \*--------------------------------------------------------------------------*/
@@ -57,7 +57,7 @@ namespace G2lib {
       GenericContainer::vec_real_type const & theta = gc.get_map_vec_real("theta", where );
       UTILS_ASSERT(
         n == static_cast<integer>(theta.size()),
-        "BiarcList[{}]::setup( gc ) (size(x)={}) != (size(theta)={})\n",
+        "BiarcList[{}]::setup( gc ) (size(x)={}) != (size(θ)={})\n",
         this->name(), x.size(), theta.size()
       );
       ok = this->build_G1( n, x.data(), y.data(), theta.data() );

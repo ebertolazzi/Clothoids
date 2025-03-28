@@ -15,7 +15,7 @@
  |      (1) Dipartimento di Ingegneria e Scienza dell'Informazione          |
  |      (2) Dipartimento di Ingegneria Industriale                          |
  |                                                                          |
- |      Universita` degli Studi di Trento                                   |
+ |      Università  degli Studi di Trento                                   |
  |      email: paolo.bevilacqua@unitn.it                                    |
  |      email: enrico.bertolazzi@unitn.it                                   |
  |                                                                          |

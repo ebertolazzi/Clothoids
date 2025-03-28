@@ -42,7 +42,7 @@ main() {
       }
       if (error) {
         fmt::print(
-          "\nx0={} y0={} theta0={} x1={} y1={} theta1={} kmax={} l={}:{}:{} errx={}, erry{}\n",
+          "\nx₀={} y₀={} θ₀={} x₁={} y₁={} θ₁={} κᴹᵃˣ={} l={}:{}:{} εˣ={}, εʸ={}\n",
           x0, y0, th0, x1, y1, th1, kmax,
           dub.C0().length(), dub.C1().length(), dub.C2().length(),
           x1-dub.C2().x_end(), y1-dub.C2().y_end()

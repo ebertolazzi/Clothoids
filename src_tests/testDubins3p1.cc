@@ -214,19 +214,19 @@ main() {
 
     if ( 1.0014*DB_SD.length() < DB_PT.length() ) {
       fmt::print(
-        "x0     = {:30.20};\n"
-        "y0     = {:30.20};\n"
-        "theta0 = {:30.20};\n"
-        "xM     = {:30.20};\n"
-        "yM     = {:30.20};\n"
-        "xf     = {:30.20};\n"
-        "yf     = {:30.20};\n"
-        "thetaf = {:30.20};\n"
-        "k_max  = {:30.20};\n"
-        "thetaM = {:30.20}; (SAMPLE)\n"
-        "len    = {:30.20}; (SAMPLE)\n"
-        "thetaM = {:30.20}; (PATTERN)\n"
-        "len    = {:30.20}; (PATTERN)\n\n",
+        "x₀   = {:30.20};\n"
+        "y₀   = {:30.20};\n"
+        "θ₀   = {:30.20};\n"
+        "xᵐ   = {:30.20};\n"
+        "yᵐ   = {:30.20};\n"
+        "xᶠ   = {:30.20};\n"
+        "yᶠ   = {:30.20};\n"
+        "θf   = {:30.20};\n"
+        "κᵐᵃˣ = {:30.20};\n"
+        "θᵐ   = {:30.20}; (SAMPLE)\n"
+        "len  = {:30.20}; (SAMPLE)\n"
+        "θᵐ   = {:30.20}; (PATTERN)\n"
+        "len  = {:30.20}; (PATTERN)\n\n",
         xi, yi, thi, xm, ym, xf, yf, thf, k_max,
         DB_SD.theta3_begin(), DB_SD.length(),
         DB_PT.theta3_begin(), DB_PT.length()

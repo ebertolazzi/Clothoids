@@ -12,7 +12,7 @@
  |                                                                          |
  |      Enrico Bertolazzi                                                   |
  |      Dipartimento di Ingegneria Industriale                              |
- |      Universita` degli Studi di Trento                                   |
+ |      Università degli Studi di Trento                                    |
  |      email: enrico.bertolazzi@unitn.it                                   |
  |                                                                          |
 \*--------------------------------------------------------------------------*/
@@ -1235,11 +1235,11 @@ namespace G2lib {
   ostream_type &
   operator << ( ostream_type & stream, ClothoidCurve const & c ) {
     fmt::print( stream,
-      "x0     = {:<12} x1     = {:<12}\n"
-      "y0     = {:<12} y1     = {:<12}\n"
-      "theta0 = {:<12} theta1 = {:<12}\n"
-      "kappa0 = {:<12} kappa1 = {:<12}\n"
-      "dk     = {:<12} L      = {:<12}\n",
+      "x₀ = {:<12} x₁ = {:<12}\n"
+      "y₀ = {:<12} y₁ = {:<12}\n"
+      "θ₀ = {:<12} θ₁ = {:<12}\n"
+      "κ₀ = {:<12} κ₁ = {:<12}\n"
+      "∆κ = {:<12} L  = {:<12}\n",
       fmt::format("{:.6}",c.x_begin()),
       fmt::format("{:.6}",c.x_end()),
       fmt::format("{:.6}",c.y_begin()),
