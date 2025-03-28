@@ -44,10 +44,10 @@ namespace Utils {
   //! \return A string representing the progress bar along with the percentage completed.
   //!
   string
-  progress_bar( double progress, int width ) {
+  progress_bar( double const progress, int const width ) {
     string res{"["};
-    int pos = int(width * progress);
-    for (int i = 0; i < width; ++i) {
+    int const pos{ static_cast<int>(width * progress) };
+    for ( int i{0}; i < width; ++i ) {
       if      (i  < pos) res += '=';
       else if (i == pos) res += '>';
       else               res += '_';
@@ -70,10 +70,10 @@ namespace Utils {
   //! \param msg      An optional message to display alongside the progress bar.
   //!
   void
-  progress_bar( ostream & s, double progress, int width, string_view msg ) {
+  progress_bar( ostream_type & s, double const progress, int const width, string_view const msg ) {
     s << "[";
-    int pos = int(width * progress);
-    for (int i = 0; i < width; ++i)
+    int const pos{ static_cast<int>(width * progress) };
+    for ( int i{0}; i < width; ++i )
       s << (i<pos? u8"\u25A0":u8"\u25A1");
     fmt::print( s, "] {:3.0f}% {}\r", ceil(100*progress), msg );
     s << std::flush;
@@ -92,13 +92,13 @@ namespace Utils {
   //! \param msg      An optional message to display alongside the progress bar.
   //!
   void
-  progress_bar2( ostream & s, double progress, int width, string_view msg ) {
-    vector<string> ch{"_", "▏", "▎", "▍", "▌", "▋", "▊", "▉", "█"};
+  progress_bar2( ostream_type & s, double const progress, int const width, string_view const msg ) {
+    vector<string> const ch{"_", "▏", "▎", "▍", "▌", "▋", "▊", "▉", "█"};
     s << "[";
-    double ww = width * progress;
-    int pos   = int(floor(ww));
-    int frac8 = int(round(8*(ww-pos)));
-    for (int i = 0; i < width; ++i) {
+    double const ww    { width * progress };
+    int    const pos   { static_cast<int>(floor(ww)) };
+    int    const frac8 { static_cast<int>(round(8 * (ww - pos))) };
+    for ( int i{0}; i < width; ++i ) {
       if      (i < pos) s << ch.back();
       else if (i > pos) s << ' ';
       else              s << ch[frac8];

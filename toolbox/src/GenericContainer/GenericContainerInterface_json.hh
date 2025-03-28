@@ -51,7 +51,7 @@ namespace GC_namespace {
     string const     & file_name,
     GenericContainer & gc
   ) {
-    ifstream stream(file_name.c_str());
+    ifstream stream(file_name.data());
     gc.clear();
     return gc.from_json( stream );
   }

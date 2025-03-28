@@ -53,159 +53,143 @@ namespace Utils {
     m_level = new_level;
   }
 
-  Console const &
-  Console::black( string_view msg, int msg_level ) const {
-    lock_guard<mutex> lock_access(m_message_mutex);
+  void
+  Console::black( string_view const msg, int const msg_level ) const {
+    lock_guard lock_access(m_message_mutex);
     if ( msg_level <= m_level )
       (*m_stream) << rang::fg::black << msg << rang::fg::reset;
-    return *this;
   }
 
-  Console const &
-  Console::red( string_view msg, int msg_level ) const {
-    lock_guard<mutex> lock_access(m_message_mutex);
+  void
+  Console::red( string_view const msg, int const msg_level ) const {
+    lock_guard lock_access(m_message_mutex);
     if ( msg_level <= m_level )
       (*m_stream) << rang::fg::red << msg << rang::fg::reset;
-    return *this;
   }
 
-  Console const &
-  Console::green( string_view msg, int msg_level ) const {
-    lock_guard<mutex> lock_access(m_message_mutex);
+  void
+  Console::green( string_view const msg, int const msg_level ) const {
+    lock_guard lock_access(m_message_mutex);
     if ( msg_level <= m_level )
       (*m_stream) << rang::fg::green << msg << rang::fg::reset;
-    return *this;
   }
 
-  Console const &
-  Console::yellow( string_view msg, int msg_level ) const {
-    lock_guard<mutex> lock_access(m_message_mutex);
+  void
+  Console::yellow( string_view const msg, int const msg_level ) const {
+    lock_guard lock_access(m_message_mutex);
     if ( msg_level <= m_level )
       (*m_stream) << rang::fg::yellow << msg << rang::fg::reset;
-    return *this;
   }
 
-  Console const &
-  Console::blue( string_view msg, int msg_level ) const {
-    lock_guard<mutex> lock_access(m_message_mutex);
+  void
+  Console::blue( string_view const msg, int const msg_level ) const {
+    lock_guard lock_access(m_message_mutex);
     if ( msg_level <= m_level )
       (*m_stream) << rang::fg::blue << msg << rang::fg::reset;
-    return *this;
   }
 
-  Console const &
-  Console::magenta( string_view msg, int msg_level ) const {
-    lock_guard<mutex> lock_access(m_message_mutex);
+  void
+  Console::magenta( string_view const msg, int const msg_level ) const {
+    lock_guard lock_access(m_message_mutex);
     if ( msg_level <= m_level )
       (*m_stream) << rang::fg::magenta << msg << rang::fg::reset;
-    return *this;
   }
 
-  Console const &
-  Console::cyan( string_view msg, int msg_level ) const {
-    lock_guard<mutex> lock_access(m_message_mutex);
+  void
+  Console::cyan( string_view const msg, int const msg_level ) const {
+    lock_guard lock_access(m_message_mutex);
     if ( msg_level <= m_level )
       (*m_stream) << rang::fg::cyan << msg << rang::fg::reset;
-    return *this;
   }
 
-  Console const &
-  Console::gray( string_view msg, int msg_level ) const {
-    lock_guard<mutex> lock_access(m_message_mutex);
+  void
+  Console::gray( string_view const msg, int const msg_level ) const {
+    lock_guard lock_access(m_message_mutex);
     if ( msg_level <= m_level )
       (*m_stream) << rang::fg::gray << msg << rang::fg::reset;
-    return *this;
   }
 
-  Console const &
-  Console::black_reversed( string_view msg, int msg_level ) const {
-    lock_guard<mutex> lock_access(m_message_mutex);
+  void
+  Console::black_reversed( string_view const msg, int const msg_level ) const {
+    lock_guard lock_access(m_message_mutex);
     if ( msg_level <= m_level )
       (*m_stream)
         << rang::fg::black << rang::style::reversed
         << msg
         << rang::style::reset << rang::fg::reset;
-    return *this;
   }
 
-  Console const &
-  Console::red_reversed( string_view msg, int msg_level ) const {
-    lock_guard<mutex> lock_access(m_message_mutex);
+  void
+  Console::red_reversed( string_view const msg, int const msg_level ) const {
+    lock_guard lock_access(m_message_mutex);
     if ( msg_level <= m_level )
       (*m_stream)
         << rang::fg::red << rang::style::reversed
         << msg
         << rang::style::reset << rang::fg::reset;
-    return *this;
   }
 
-  Console const &
-  Console::green_reversed( string_view msg, int msg_level ) const {
-    lock_guard<mutex> lock_access(m_message_mutex);
+  void
+  Console::green_reversed( string_view const msg, int const msg_level ) const {
+    lock_guard lock_access(m_message_mutex);
     if ( msg_level <= m_level )
       (*m_stream)
         << rang::fg::green << rang::style::reversed
         << msg
         << rang::style::reset << rang::fg::reset;
-    return *this;
   }
 
-  Console const &
-  Console::yellow_reversed( string_view msg, int msg_level ) const {
-    lock_guard<mutex> lock_access(m_message_mutex);
+  void
+  Console::yellow_reversed( string_view const msg, int const msg_level ) const {
+    lock_guard lock_access(m_message_mutex);
     if ( msg_level <= m_level )
       (*m_stream)
         << rang::fg::yellow << rang::style::reversed
         << msg
         << rang::style::reset << rang::fg::reset;
-    return *this;
   }
 
-  Console const &
-  Console::blue_reversed( string_view msg, int msg_level ) const {
-    lock_guard<mutex> lock_access(m_message_mutex);
+  void
+  Console::blue_reversed( string_view const msg, int const msg_level ) const {
+    lock_guard lock_access(m_message_mutex);
     if ( msg_level <= m_level )
       (*m_stream)
         << rang::fg::blue << rang::style::reversed
         << msg
         << rang::style::reset << rang::fg::reset;
-    return *this;
   }
 
-  Console const &
-  Console::magenta_reversed( string_view msg, int msg_level ) const {
-    lock_guard<mutex> lock_access(m_message_mutex);
+  void
+  Console::magenta_reversed( string_view const msg, int const msg_level ) const {
+    lock_guard lock_access(m_message_mutex);
     if ( msg_level <= m_level )
       (*m_stream)
         << rang::fg::magenta << rang::style::reversed
         << msg
         << rang::style::reset << rang::fg::reset;
-    return *this;
   }
 
-  Console const &
-  Console::cyan_reversed( string_view msg, int msg_level ) const {
-    lock_guard<mutex> lock_access(m_message_mutex);
+  void
+  Console::cyan_reversed( string_view const msg, int const msg_level ) const {
+    lock_guard lock_access(m_message_mutex);
     if ( msg_level <= m_level )
       (*m_stream)
         << rang::fg::cyan << rang::style::reversed
         << msg
         << rang::style::reset << rang::fg::reset;
-    return *this;
   }
 
-  Console const &
-  Console::gray_reversed( string_view msg, int msg_level ) const {
-    lock_guard<mutex> lock_access(m_message_mutex);
+  void
+  Console::gray_reversed( string_view const msg, int const msg_level ) const {
+    lock_guard lock_access(m_message_mutex);
     if ( msg_level <= m_level )
       (*m_stream)
         << rang::fg::gray << rang::style::reversed
         << msg
         << rang::style::reset << rang::fg::reset;
-    return *this;
   }
 
-  Console::Console( ostream_type * stream, int level )
+  Console::Console( ostream_type * stream, int const level )
   : m_stream(stream)
   , m_level(level)
   {
@@ -226,14 +210,14 @@ namespace Utils {
     m_fatal_style.b = rang::bg::reset;
   }
 
-  Console const &
+  void
   Console::semaphore(
-    unsigned    rvg,
-    string_view msg,
-    int         msg_level
+    unsigned    const ryg,
+    string_view const msg,
+    int         const msg_level
   ) const {
-    lock_guard<mutex> lock_access(m_message_mutex);
-    static rang::fg rvg_color[3] = {
+    lock_guard lock_access(m_message_mutex);
+    static rang::fg ryg_color[3] = {
       rang::fg::red,
       rang::fg::yellow,
       rang::fg::green
@@ -242,19 +226,18 @@ namespace Utils {
       (*m_stream)
         << rang::style::reset
         << rang::bg::reset
-        << rvg_color[rvg%3]
+        << ryg_color[ryg%3]
         << msg
         << rang::fg::reset;
-    return *this;
   }
 
-  Console const &
+  void
   Console::colors(
-    unsigned    c,
-    string_view msg,
-    int         msg_level
+    unsigned    const c,
+    string_view const msg,
+    int const         msg_level
   ) const {
-    lock_guard<mutex> lock_access(m_message_mutex);
+    lock_guard lock_access(m_message_mutex);
     static rang::fg rvg_color[5] = {
       rang::fg::red,
       rang::fg::magenta,
@@ -269,12 +252,11 @@ namespace Utils {
         << rvg_color[c%5]
         << msg
         << rang::fg::reset;
-    return *this;
   }
 
-  Console const &
-  Console::message( string_view msg, int msg_level ) const {
-    lock_guard<mutex> lock_access(m_message_mutex);
+  void
+  Console::message( string_view const msg, int const msg_level ) const {
+    lock_guard lock_access(m_message_mutex);
     if ( msg_level <= m_level )
       (*m_stream)
         << m_message_style.s
@@ -284,12 +266,11 @@ namespace Utils {
         << rang::style::reset
         << rang::fg::reset
         << rang::bg::reset;
-    return *this;
   }
 
-  Console const &
-  Console::warning( string_view msg ) const {
-    lock_guard<mutex> lock_access(m_message_mutex);
+  void
+  Console::warning( string_view const msg ) const {
+    lock_guard lock_access(m_message_mutex);
     if ( m_level >= 2 )
       (*m_stream)
         << m_warning_style.s
@@ -299,12 +280,11 @@ namespace Utils {
         << rang::style::reset
         << rang::fg::reset
         << rang::bg::reset;
-    return *this;
   }
 
-  Console const &
-  Console::error( string_view msg ) const {
-    lock_guard<mutex> lock_access(m_message_mutex);
+  void
+  Console::error( string_view const msg ) const {
+    lock_guard lock_access(m_message_mutex);
     if ( m_level >= 1 )
       (*m_stream)
         << m_error_style.s
@@ -314,12 +294,11 @@ namespace Utils {
         << rang::style::reset
         << rang::fg::reset
         << rang::bg::reset;
-    return *this;
   }
 
-  Console const &
-  Console::fatal( string_view msg ) const {
-    lock_guard<mutex> lock_access(m_message_mutex);
+  void
+  Console::fatal( string_view const msg ) const {
+    lock_guard lock_access(m_message_mutex);
     (*m_stream)
       << m_fatal_style.s
       << m_fatal_style.f
@@ -328,7 +307,6 @@ namespace Utils {
       << rang::style::reset
       << rang::fg::reset
       << rang::bg::reset;
-    return *this;
   }
 
 }

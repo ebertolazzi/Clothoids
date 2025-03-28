@@ -97,6 +97,7 @@
 #include <algorithm>
 #include <type_traits>  // For std::remove_reference()
 #include <functional>		// For std::bind()
+#include <cctype>
 
 #include <string>
 #include <string_view>
@@ -110,6 +111,7 @@
 #include <iomanip>
 #include <sstream>
 #include <cstdlib>
+#include <filesystem>
 
 // C/C++
 #include <cstddef>
@@ -190,24 +192,139 @@ namespace Utils {
 
 namespace Utils {
 
-  string basename( char const filename[] );
+  /*\
+  :|:  _
+  :|: | |__  __ _ ___ ___ _ _  __ _ _ __  ___
+  :|: | '_ \/ _` (_-</ -_) ' \/ _` | '  \/ -_)
+  :|: |_.__/\__,_/__/\___|_||_\__,_|_|_|_\___|
+  :|:
+  \*/
 
-  bool   get_environment( string_view ename, string & res );
-  void   set_environment( string_view ename, string_view newval, bool overwrite );
-  void   get_MAC_address( std::map<string,string> & addr );
+  inline
+  string
+  get_basename( string_view path ) {
+    namespace fs = std::filesystem;
+    return fs::path(path).parent_path().string();
+  }
+
+  inline
+  string
+  get_filename( string_view path ) {
+    namespace fs = std::filesystem;
+    return fs::path(path).filename().string();
+  }
+
+  inline
+  string
+  get_extension( string_view path ) {
+    namespace fs = std::filesystem;
+    return fs::path(path).extension().string();
+  }
+
+  /*!
+   * \addtogroup OS
+   * @{
+   */
+
+  //! Fetches the value of an environment variable.
+  /*!
+   * This function retrieves the value of the environment variable with the name
+   * specified by `ename` and stores it in the reference `res`.
+   *
+   * \param ename Name of the environment variable to retrieve.
+   * \param res Reference to a string where the result will be stored.
+   * \return True if the environment variable was found and its value retrieved,
+   *         false otherwise.
+   */
+  bool get_environment( string_view ename, string & res );
+
+  //! Sets the value of an environment variable.
+  /*!
+   * This function sets the value of the environment variable specified by
+   * `ename` to `newval`. If the variable already exists, it will be overwritten
+   * if the `overwrite` flag is true.
+   *
+   * \param ename Name of the environment variable to set.
+   * \param newval The new value to set for the environment variable.
+   * \param overwrite Flag to indicate whether the environment variable should be
+   *                  overwritten if it already exists.
+   */
+  void set_environment( string_view ename, string_view newval, bool overwrite );
+
+  //! Retrieves the MAC addresses of network interfaces.
+  /*!
+   * This function retrieves the MAC addresses for all available network
+   * interfaces on the system and stores them in the provided map, with
+   * interface names as the keys and MAC addresses as the values.
+   *
+   * \param addr A reference to a map where the MAC addresses will be stored.
+   */
+  void get_MAC_address( std::map<string,string> & addr );
+
+  //! Retrieves the hostname of the system.
+  /*!
+   * \return A string containing the system's hostname.
+   */
   string get_host_name();
-  void   get_IP_address( std::vector<string> & addr );
+
+  //! Fetches the IP addresses of the system.
+  /*!
+   * This function retrieves all IP addresses associated with the current system's
+   * network interfaces and stores them in the provided vector `addr`.
+   *
+   * \param addr A reference to a vector where the IP addresses will be stored.
+   */
+  void get_IP_address( std::vector<string> & addr );
+
+  //! Retrieves the username of the current user.
+  /*!
+   * \return A string containing the username of the current user.
+   */
+  string get_user_name();
+
+  //! Retrieves the home directory of the current user.
+  /*!
+   * \return A string containing the home directory path of the current user.
+   */
+  string get_home_directory();
+
+  //! Retrieves the full path to the current executable.
+  /*!
+   * \return A string containing the full path to the executable.
+   */
+  string get_executable_path_name();
+
+  //! Checks if a file exists.
+  /*!
+   * \param fname The path to the file to check.
+   * \return True if the file exists and is a regular file, false otherwise.
+   */
+  bool check_if_file_exists( string_view fname );
+
+  //! Checks if a directory exists.
+  /*!
+   * \param dirname The path to the directory to check.
+   * \return True if the directory exists and is valid, false otherwise.
+   */
+  bool check_if_dir_exists( string_view dirname );
+
+  //! Creates a directory if it does not exist.
+  /*!
+   * This function creates a directory with the specified mode if it does not
+   * already exist.
+   *
+   * \param dirname The path to the directory to create.
+   * \param mode The permissions mode to set for the new directory.
+   * \return True if the directory was created or already exists, false otherwise.
+   */
+  bool make_directory( string_view dirname, unsigned mode = 0777 );
+
   string get_date();
   string get_day_time();
   string get_day_time_and_date();
   string get_log_date_time();
-  string get_user_name();
-  string get_home_directory();
-  string get_executable_path_name();
-  bool   check_if_file_exists( string_view fname );
-  bool   check_if_dir_exists( string_view dirname );
-  bool   make_directory( string_view dirname, unsigned mode = 0777 );
 
+  /*! @} */  // End of OS group
 
   template <typename T_int, typename T_real>
   void
@@ -272,61 +389,14 @@ namespace Utils {
     search_interval( npts, X, x, last_interval, closed, can_extend );
   }
 
-  static
-  inline
-  void
-  to_upper( string & str ) {
-    for ( auto & c: str ) c = char(toupper(int(c)));
-  }
-
-  static
-  inline
-  void
-  to_lower( string & str ) {
-    for ( auto & c: str ) c = char(tolower(int(c)));
-  }
-
-  static
-  inline
-  bool
-  is_lower( string_view s ) {
-    return std::all_of( s.begin(), s.end(), islower );
-  }
-
-  static
-  inline
-  bool
-  is_upper( string_view s ) {
-    return std::all_of( s.begin(), s.end(), isupper );
-  }
-
-  static
-  inline
-  bool
-  is_alpha( string_view s ) {
-    return std::all_of( s.begin(), s.end(), isalpha );
-  }
-
-  static
-  inline
-  bool
-  is_alphanum( string_view s ) {
-    return std::all_of( s.begin(), s.end(), isalnum );
-  }
-
-  static
-  inline
-  bool
-  is_digits( string_view s ) {
-    return std::all_of( s.begin(), s.end(), isdigit );
-  }
-
-  static
-  inline
-  bool
-  is_xdigits( string_view s ) {
-    return std::all_of( s.begin(), s.end(), isxdigit );
-  }
+  static inline void to_upper    ( string & str  ) { std::transform(str.begin(), str.end(), str.begin(), [](unsigned char c) { return std::toupper(c); }); }
+  static inline void to_lower    ( string & str  ) { std::transform(str.begin(), str.end(), str.begin(), [](unsigned char c) { return std::tolower(c); }); }
+  static inline bool is_lower    ( string_view s ) { return std::all_of( s.begin(), s.end(), islower ); }
+  static inline bool is_upper    ( string_view s ) { return std::all_of( s.begin(), s.end(), isupper ); }
+  static inline bool is_alpha    ( string_view s ) { return std::all_of( s.begin(), s.end(), isalpha ); }
+  static inline bool is_alphanum ( string_view s ) { return std::all_of( s.begin(), s.end(), isalnum ); }
+  static inline bool is_digits   ( string_view s ) { return std::all_of( s.begin(), s.end(), isdigit ); }
+  static inline bool is_xdigits  ( string_view s ) { return std::all_of( s.begin(), s.end(), isxdigit ); }
 
   // https://stackoverflow.com/questions/11376288/fast-computing-of-log2-for-64-bit-integers
   static
@@ -371,8 +441,8 @@ namespace Utils {
   }
 
   string progress_bar( double progress, int width );
-  void   progress_bar( ostream &, double progress, int width, string_view msg );
-  void   progress_bar2( ostream &, double progress, int width, string_view msg );
+  void   progress_bar( ostream_type &, double progress, int width, string_view msg );
+  void   progress_bar2( ostream_type &, double progress, int width, string_view msg );
 
 }
 

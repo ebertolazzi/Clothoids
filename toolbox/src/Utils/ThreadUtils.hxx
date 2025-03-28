@@ -151,7 +151,7 @@ namespace Utils {
     WinCriticalSection m_critical;
     CONDITION_VARIABLE m_condition;
 
-    void notify_one() noexcept { WakeConditionVariable( &m_condition ); }
+    //void notify_one() noexcept { WakeConditionVariable( &m_condition ); }
     void notify_all() noexcept { WakeAllConditionVariable( &m_condition ); }
     void wait_cond() noexcept { SleepConditionVariableCS( &m_condition, &m_critical.data(), INFINITE ); }
 
@@ -458,7 +458,7 @@ namespace Utils {
     #ifdef UTILS_OS_WINDOWS
     std::atomic<int> n_worker;
     #else
-    std::atomic<int> n_worker = {0};
+    std::atomic<int> n_worker{0};
     #endif
   public:
     #ifdef UTILS_OS_WINDOWS
@@ -500,7 +500,7 @@ namespace Utils {
 
     ~BinarySearch() {
       m_spin_write.wait();
-      for ( auto & a : m_data ) delete a.second;
+      for ( auto const & a : m_data ) delete a.second;
       m_data.clear();
       m_spin_write.wait();
     }
@@ -508,7 +508,7 @@ namespace Utils {
     void
     clear() {
       m_spin_write.wait();
-      for ( auto & a : m_data ) delete a.second;
+      for ( auto const & a : m_data ) delete a.second;
       m_data.clear(); m_data.reserve(64);
       m_spin_write.wait();
     }
@@ -614,6 +614,7 @@ namespace Utils {
       m_destructor = std::move(x.m_destructor);
       m_active     = x.m_active;
       x.m_active   = false;
+      return *this;
     }
 
     ~at_scope_exit_impl() { if (m_active) m_destructor(); }
@@ -643,6 +644,8 @@ namespace Utils {
   template<class Function>
   auto at_scope_exit(Function const & fun) -> at_scope_exit_impl<Function const &>
   { return at_scope_exit_impl<Function const &>(fun); }
+
+  #if 0
 
   /*!
    * Create a class that wrap std::function<T> into a non copyable object
@@ -678,7 +681,7 @@ namespace Utils {
       // and are never called
       wrapper(const wrapper& rhs) : fn(const_cast<Fn&&>(rhs.fn)) { throw 0; } // hack to initialize fn for non-DefaultContructible types
       
-      wrapper& operator=(wrapper&) { throw 0; }
+      wrapper& operator=(wrapper&) { throw 0; return *this; }
 
       template<typename... Args> auto operator()(Args&&... args) { return fn(std::forward<Args>(args)...); }
     };
@@ -703,6 +706,8 @@ namespace Utils {
 
     using base::operator();
   };
+
+  #endif
   
   /*
   using std::cout; using std::endl;

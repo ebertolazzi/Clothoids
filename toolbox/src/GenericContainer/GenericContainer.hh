@@ -53,7 +53,7 @@
   #define GC_DO_ERROR(MSG) {                          \
     ostringstream ost;                                \
     ost << "in GenericContainer: " << MSG << '\n';    \
-    GenericContainer::exception( ost.str().c_str() ); \
+    GenericContainer::exception( ost.str().data() ); \
   }
 #endif
 
@@ -160,7 +160,7 @@ namespace GC_namespace {
   //! \brief Generic matrix storage type.
   //!
   //! This template class defines a matrix type that extends vector<TYPE>
-  //! to store and manipulate a 2D matrix of elements of type TYPE.
+  //! to store and manipulate a 2D matrix of elements of type `TYPE`.
   //! The matrix is stored internally as a 1D vector in row-major order.
   //!
   //! @tparam TYPE The type of elements stored in the matrix.
@@ -309,12 +309,12 @@ namespace GC_namespace {
     //! unsigned rows = matrix.num_rows();  // Returns 3
     //! \endcode
     //!
-    unsigned num_rows() const { return m_num_rows; }
+    [[nodiscard]] unsigned num_rows() const { return m_num_rows; }
 
     //!
     //! \deprecated
     //!
-    unsigned numRows() const { return m_num_rows; }
+    [[nodiscard]] unsigned numRows() const { return m_num_rows; }
 
     //!
     //! Returns the number of columns in the matrix.
@@ -327,12 +327,12 @@ namespace GC_namespace {
     //! unsigned cols = matrix.num_cols();  // Returns 3
     //! \endcode
     //!
-    unsigned num_cols() const { return m_num_cols; }
+    [[nodiscard]] unsigned num_cols() const { return m_num_cols; }
 
     //!
     //! \deprecated
     //!
-    unsigned numCols() const { return m_num_cols; }
+    [[nodiscard]] unsigned numCols() const { return m_num_cols; }
 
     //!
     //! Provides constant access to the element at position (i, j).
@@ -689,7 +689,7 @@ namespace GC_namespace {
     void ck( string_view, TypeAllowed) const;
 
     //! \brief Checks the type of data stored, returns an error code for type mismatch.
-    int ck(TypeAllowed) const;
+    [[nodiscard]] int ck(TypeAllowed) const;
 
     //! \brief Checks or sets the type of data stored.
     void ck_or_set(string_view, TypeAllowed);
@@ -698,14 +698,14 @@ namespace GC_namespace {
     #ifdef GENERIC_CONTAINER_ON_WINDOWS
     bool simple_data() const;
     #else
-    bool simple_data() const { return m_data_type <= GC_type::STRING; }
+    [[nodiscard]] bool simple_data() const { return m_data_type <= GC_type::STRING; }
     #endif
 
     //! \brief Returns true if the data type is a simple vector type.
     #ifdef GENERIC_CONTAINER_ON_WINDOWS
     bool simple_vec_data() const;
     #else
-    bool simple_vec_data() const { return m_data_type < GC_type::VEC_STRING; }
+    [[nodiscard]] bool simple_vec_data() const { return m_data_type < GC_type::VEC_STRING; }
     #endif
 
   public:
@@ -778,7 +778,7 @@ namespace GC_namespace {
     //! gc.erase("key1");  // Remove the entry with key "key1"
     //! \endcode
     //!
-    void erase( string_view name );
+    void erase( string_view name ) const;
 
     //!
     //! \name Methods for Initializing Simple Data Types
@@ -966,7 +966,7 @@ namespace GC_namespace {
     //! gc.set_complex(1.0, 2.0);  // Store a complex number (1.0 + 2.0i)
     //! \endcode
     //!
-    complex_type & set_complex( real_type r, real_type i );
+    complex_type & set_complex( real_type re, real_type im );
 
     //!
     //! \brief Set the data type to `string_type`, allocate memory, and assign a string value.
@@ -1014,6 +1014,10 @@ namespace GC_namespace {
     //!
     vec_pointer_type & set_vec_pointer( unsigned sz = 0 );
 
+    template <typename T, typename std::enable_if<std::is_integral<T>::value, int>::type = 0>
+    vec_pointer_type& set_vec_pointer(T sz)
+    { return set_vec_pointer(static_cast<unsigned>(sz)); }
+
     //! \brief Set the data to `vec_pointer_type` by copying from another vector.
     //!
     //! This method initializes the vector of pointers by copying data from the provided vector `v`.
@@ -1045,6 +1049,10 @@ namespace GC_namespace {
     //! \endcode
     //!
     vec_bool_type & set_vec_bool( unsigned sz = 0 );
+
+    template <typename T, typename std::enable_if<std::is_integral<T>::value, int>::type = 0>
+    vec_bool_type& set_vec_bool(T sz)
+    { return set_vec_bool(static_cast<unsigned>(sz)); }
 
     //! \brief Set the data to `vec_bool_type` by copying from another vector.
     //!
@@ -1078,6 +1086,10 @@ namespace GC_namespace {
     //!
     vec_int_type & set_vec_int( unsigned sz = 0 );
 
+    template <typename T, typename std::enable_if<std::is_integral<T>::value, int>::type = 0>
+    vec_int_type& set_vec_int(T sz)
+    { return set_vec_int(static_cast<unsigned>(sz)); }
+
     //! \brief Set the data to `vec_int_type` by copying from another vector.
     //!
     //! This method initializes the vector of integers by copying data from the provided vector `v`.
@@ -1109,6 +1121,10 @@ namespace GC_namespace {
     //! \endcode
     //!
     vec_long_type & set_vec_long( unsigned sz = 0 );
+
+    template <typename T, typename std::enable_if<std::is_integral<T>::value, int>::type = 0>
+    vec_long_type& set_vec_long(T sz)
+    { return set_vec_long(static_cast<unsigned>(sz)); }
 
     //! \brief Set the data to `vec_long_type` by copying from another vector.
     //!
@@ -1142,6 +1158,10 @@ namespace GC_namespace {
     //!
     vec_real_type & set_vec_real( unsigned sz = 0 );
 
+    template <typename T, typename std::enable_if<std::is_integral<T>::value, int>::type = 0>
+    vec_real_type& set_vec_real(T sz)
+    { return set_vec_real(static_cast<unsigned>(sz)); }
+
     //! \brief Set the data to `vec_real_type` by copying from another vector.
     //!
     //! This method initializes the vector of `real_type` numbers by copying data from the provided vector `v`.
@@ -1174,6 +1194,10 @@ namespace GC_namespace {
     //!
     vec_complex_type & set_vec_complex( unsigned sz = 0 );
 
+    template <typename T, typename std::enable_if<std::is_integral<T>::value, int>::type = 0>
+    vec_complex_type& set_vec_complex(T sz)
+    { return set_vec_complex(static_cast<unsigned>(sz)); }
+
     //! \brief Set the data to `vec_complex_type` by copying from another vector.
     //!
     //! This method initializes the vector of complex numbers by copying data from the provided vector `v`.
@@ -1205,6 +1229,10 @@ namespace GC_namespace {
     //! \endcode
     //!
     vec_string_type & set_vec_string( unsigned sz = 0 );
+
+    template <typename T, typename std::enable_if<std::is_integral<T>::value, int>::type = 0>
+    vec_string_type& set_vec_string(T sz)
+    { return set_vec_string(static_cast<unsigned>(sz)); }
 
     //! \brief Set the data to `vec_string_type` by copying from another vector.
     //!
@@ -1360,7 +1388,7 @@ namespace GC_namespace {
     //!
     //! \param[in] b value The boolean value to push.
     //!
-    void push_bool( bool b );
+    void push_bool( bool b ) const;
 
     //! \brief Push an integer value into the vector or matrix.
     //!
@@ -1570,7 +1598,7 @@ namespace GC_namespace {
     //! \param[in] where Optional parameter to provide context for error messages.
     //! \return The numeric value, or `0` if the data is of an unsupported type.
     //!
-    real_type get_number( string_view where = "" ) const;
+    real_type get_number( string_view const where = "" ) const;
 
     //!
     //! \brief Get a stored complex number if the data is boolean, integer, real, or complex type.
@@ -1578,7 +1606,7 @@ namespace GC_namespace {
     //! \param[in] where Optional parameter to provide context for error messages.
     //! \return The complex number, or `0` if the data is of an unsupported type.
     //!
-    complex_type get_complex_number( string_view where = "" ) const;
+    complex_type get_complex_number( string_view const where = "" ) const;
 
     //!
     //! \brief Get the real and imaginary parts of a stored complex number.
@@ -1597,7 +1625,7 @@ namespace GC_namespace {
     //! \param[in] where Optional parameter to provide context for error messages.
     //! \return A void pointer to the stored data.
     //!
-    void * get_pvoid( string_view where = "" ) const;
+    void * get_pvoid( string_view const where = "" ) const;
 
     //!
     //! \brief Return the stored data as a double pointer.
@@ -1605,7 +1633,7 @@ namespace GC_namespace {
     //! \param[in] where Optional parameter to provide context for error messages.
     //! \return A double pointer to the stored data.
     //!
-    void ** get_ppvoid( string_view where = "" ) const;
+    void ** get_ppvoid( string_view const where = "" ) const;
 
     //!
     //! Return the stored data as a pointer to const integer
@@ -1672,7 +1700,7 @@ namespace GC_namespace {
     //!
     template <typename T>
     void
-    get_value( T & v, string_view where = "" ) const;
+    get_value( T & v, string_view const where = "" ) const;
 
     //!
     //! \brief Get the stored value as a pointer.
@@ -1714,7 +1742,7 @@ namespace GC_namespace {
     //! \param[in] where Optional parameter to provide context for error messages.
     //! \return The boolean value stored in the container.
     //!
-    bool_type get_map_bool( string_view key, string_view where = "" ) const;
+    bool_type get_map_bool( string_view const key, string_view const where = "" ) const;
 
     //!
     //! Get the stored value in the map as boolean.
@@ -1733,7 +1761,7 @@ namespace GC_namespace {
     //! \param[in] where position added to the error message
     //! \return the boolean stored in the container
     //!
-    bool_type get_map_bool( vec_string_type const & keys, string_view where = "" ) const;
+    bool_type get_map_bool( vec_string_type const & keys, string_view const where = "" ) const;
 
     //!
     //! \brief Get the stored value in the map as an integer.
@@ -1744,7 +1772,7 @@ namespace GC_namespace {
     //! \param[in] where Optional context for error messages, indicating the position of the call.
     //! \return The integer value stored in the container.
     //!
-    int_type get_map_int( string_view key, string_view where = "" ) const;
+    int_type get_map_int( string_view const key, string_view const where = "" ) const;
 
     //!
     //! Get the stored value in the map as an integer.
@@ -1764,7 +1792,7 @@ namespace GC_namespace {
     //! \param[in] where Optional context for error messages, indicating the position of the call.
     //! \return The integer value stored in the container for the first found key.
     //!
-    int_type get_map_int( vec_string_type const & keys, string_view where = "" ) const;
+    int_type get_map_int( vec_string_type const & keys, string_view const where = "" ) const;
 
     //!
     //! \brief Get the stored value in the map as a real number.
@@ -1775,7 +1803,7 @@ namespace GC_namespace {
     //! \param[in] where Optional context for error messages, indicating the position of the call.
     //! \return The real number stored in the container.
     //!
-    real_type get_map_number( string_view key, string_view where = "" ) const;
+    real_type get_map_number( string_view const key, string_view const where = "" ) const;
 
     //!
     //! Get the stored value in the map as a real number.
@@ -1795,7 +1823,7 @@ namespace GC_namespace {
     //! \param[in] where Optional context for error messages, indicating the position of the call.
     //! \return The real number stored in the container for the first found key.
     //!
-    real_type get_map_number( vec_string_type const & keys, string_view where = "" ) const;
+    real_type get_map_number( vec_string_type const & keys, string_view const where = "" ) const;
 
     //!
     //! \brief Get the stored value in the map as a string.
@@ -1806,7 +1834,7 @@ namespace GC_namespace {
     //! \param[in] where Optional context for error messages, indicating the position of the call.
     //! \return A reference to the string stored in the container.
     //!
-    string_view get_map_string( string_view key, string_view where = "" ) const;
+    string_view get_map_string( string_view const key, string_view const where = "" ) const;
 
     //!
     //! Get the stored value in the map as a string.
@@ -1826,7 +1854,7 @@ namespace GC_namespace {
     //! \param[in] where Optional context for error messages, indicating the position of the call.
     //! \return A reference to the string stored in the container for the first found key.
     //!
-    string_view get_map_string( vec_string_type const & keys, string_view where = "" ) const;
+    string_view get_map_string( vec_string_type const & keys, string_view const where = "" ) const;
 
     //!
     //! \brief Get the stored value in the map as a vector of real numbers.
@@ -1837,7 +1865,7 @@ namespace GC_namespace {
     //! \param[in] where Optional context for error messages, indicating the position of the call.
     //! \return A reference to the vector of real numbers stored in the container.
     //!
-    vec_real_type const & get_map_vec_real( string_view key, string_view where = "" ) const;
+    vec_real_type const & get_map_vec_real( string_view const key, string_view const where = "" ) const;
 
     //!
     //! Get the stored value in the map as a  vector of real numbers.
@@ -1857,7 +1885,7 @@ namespace GC_namespace {
     //! \param[in] where Optional context for error messages, indicating the position of the call.
     //! \return A reference to the vector of real numbers stored in the container for the first found key.
     //!
-    vec_real_type const & get_map_vec_real( vec_string_type const & keys, string_view where = "" ) const;
+    vec_real_type const & get_map_vec_real( vec_string_type const & keys, string_view const where = "" ) const;
 
     //!
     //! \brief Get the stored value in the map as a vector of complex numbers.
@@ -1868,7 +1896,7 @@ namespace GC_namespace {
     //! \param[in] where Optional context for error messages, indicating the position of the call.
     //! \return A reference to the vector of complex numbers stored in the container.
     //!
-    vec_complex_type const & get_map_vec_complex( string_view key, string_view where = "" ) const;
+    vec_complex_type const & get_map_vec_complex( string_view const key, string_view const where = "" ) const;
 
     //!
     //! Get the stored value in the map as a  vector of complex numbers.
@@ -1888,7 +1916,7 @@ namespace GC_namespace {
     //! \param[in] where Optional context for error messages, indicating the position of the call.
     //! \return A reference to the vector of complex numbers stored in the container for the first found key.
     //!
-    vec_complex_type const & get_map_vec_complex( vec_string_type const & keys, string_view where = "" ) const;
+    vec_complex_type const & get_map_vec_complex( vec_string_type const & keys, string_view const where = "" ) const;
 
     //!
     //! \brief Get the stored value in the map as a vector of strings.
@@ -1899,7 +1927,7 @@ namespace GC_namespace {
     //! \param[in] where Optional context for error messages, indicating the position of the call.
     //! \return A reference to the vector of strings stored in the container.
     //!
-    vec_string_type const & get_map_vec_string( string_view key, string_view where = "" ) const;
+    vec_string_type const & get_map_vec_string( string_view const key, string_view const where = "" ) const;
 
     //!
     //! Get the stored value in the map as a  vector of strings.
@@ -1919,7 +1947,7 @@ namespace GC_namespace {
     //! \param[in] where Optional context for error messages, indicating the position of the call.
     //! \return A reference to the vector of strings stored in the container for the first found key.
     //!
-    vec_string_type const & get_map_vec_string( vec_string_type const & keys, string_view where = "" ) const;
+    vec_string_type const & get_map_vec_string( vec_string_type const & keys, string_view const where = "" ) const;
 
     //!
     //! \brief Get the stored value as a boolean.
@@ -1929,7 +1957,7 @@ namespace GC_namespace {
     //! \param[in] where Optional context for error messages, indicating the position of the call.
     //! \return A reference to the boolean stored in the container.
     //!
-    bool_type & get_bool( string_view where = "" );
+    bool_type & get_bool( string_view const where = "" );
 
     //!
     //! \brief Get the stored value as a const boolean.
@@ -1939,7 +1967,7 @@ namespace GC_namespace {
     //! \param[in] where Optional context for error messages, indicating the position of the call.
     //! \return A reference to the const boolean stored in the container.
     //!
-    bool_type const & get_bool( string_view where = "" ) const;
+    bool_type const & get_bool( string_view const where = "" ) const;
 
     //!
     //! \brief Get the stored value as an integer.
@@ -1949,7 +1977,7 @@ namespace GC_namespace {
     //! \param[in] where Optional context for error messages, indicating the position of the call.
     //! \return A reference to the integer stored in the container.
     //!
-    int_type & get_int( string_view where = "" );
+    int_type & get_int( string_view const where = "" );
 
     //!
     //! \brief Get the stored value as a const integer.
@@ -1959,7 +1987,7 @@ namespace GC_namespace {
     //! \param[in] where Optional context for error messages, indicating the position of the call.
     //! \return A reference to the const integer stored in the container.
     //!
-    int_type const & get_int( string_view where = "" ) const;
+    int_type const & get_int( string_view const where = "" ) const;
 
     //!
     //! \brief Get the stored value as a long integer.
@@ -1969,7 +1997,7 @@ namespace GC_namespace {
     //! \param[in] where Optional context for error messages, indicating the position of the call.
     //! \return A reference to the long integer stored in the container.
     //!
-    long_type & get_long( string_view where = "" );
+    long_type & get_long( string_view const where = "" );
 
     //!
     //! \brief Get the stored value as a const long integer.
@@ -1979,7 +2007,7 @@ namespace GC_namespace {
     //! \param[in] where Optional context for error messages, indicating the position of the call.
     //! \return A reference to the const long integer stored in the container.
     //!
-    long_type const & get_long( string_view where = "" ) const;
+    long_type const & get_long( string_view const where = "" ) const;
 
     //!
     //! \brief Get the stored value as an integer.
@@ -1989,7 +2017,7 @@ namespace GC_namespace {
     //! \param[in] where Optional context for error messages, indicating the position of the call.
     //! \return The data stored in the container as an integer.
     //!
-    int_type get_as_int( string_view where = "" ) const;
+    int_type get_as_int( string_view const where = "" ) const;
 
     //!
     //! \brief Get the stored value as an unsigned integer.
@@ -1999,7 +2027,7 @@ namespace GC_namespace {
     //! \param[in] where Optional context for error messages, indicating the position of the call.
     //! \return The data stored in the container as an unsigned integer.
     //!
-    uint_type get_as_uint( string_view where = "" ) const;
+    uint_type get_as_uint( string_view const where = "" ) const;
 
     //!
     //! \brief Get the stored value as a long integer.
@@ -2009,7 +2037,7 @@ namespace GC_namespace {
     //! \param[in] where Optional context for error messages, indicating the position of the call.
     //! \return The data stored in the container as a long integer.
     //!
-    long_type get_as_long( string_view where = "" ) const;
+    long_type get_as_long( string_view const where = "" ) const;
 
     //!
     //! \brief Get the stored value as an unsigned long integer.
@@ -2019,7 +2047,7 @@ namespace GC_namespace {
     //! \param[in] where Optional context for error messages, indicating the position of the call.
     //! \return The data stored in the container as an unsigned long integer.
     //!
-    ulong_type get_as_ulong( string_view where = "" ) const;
+    ulong_type get_as_ulong( string_view const where = "" ) const;
 
     //!
     //! \brief Get the stored value as a real number.
@@ -2029,7 +2057,7 @@ namespace GC_namespace {
     //! \param[in] where Optional context for error messages, indicating the position of the call.
     //! \return A reference to the real number stored in the container.
     //!
-    real_type & get_real( string_view where = "" );
+    real_type & get_real( string_view const where = "" );
 
     //!
     //! \brief Get the stored value as a const real number.
@@ -2039,7 +2067,7 @@ namespace GC_namespace {
     //! \param[in] where Optional context for error messages, indicating the position of the call.
     //! \return A reference to the const real number stored in the container.
     //!
-    real_type const & get_real( string_view where = "" ) const;
+    real_type const & get_real( string_view const where = "" ) const;
 
     //!
     //! \brief Get the stored value as a complex number.
@@ -2049,7 +2077,7 @@ namespace GC_namespace {
     //! \param[in] where Optional context for error messages, indicating the position of the call.
     //! \return A reference to the complex number stored in the container.
     //!
-    complex_type & get_complex( string_view where = "" );
+    complex_type & get_complex( string_view const where = "" );
 
     //!
     //! \brief Get the stored value as a const complex number.
@@ -2059,7 +2087,7 @@ namespace GC_namespace {
     //! \param[in] where Optional context for error messages, indicating the position of the call.
     //! \return A reference to the const complex number stored in the container.
     //!
-    complex_type const & get_complex( string_view where = "" ) const;
+    complex_type const & get_complex( string_view const where = "" ) const;
 
     //!
     //! \brief Get the stored value as a string.
@@ -2069,7 +2097,7 @@ namespace GC_namespace {
     //! \param[in] where Optional context for error messages, indicating the position of the call.
     //! \return A reference to the string stored in the container.
     //!
-    string_type & get_string( string_view where = "" );
+    string_type & get_string( string_view const where = "" );
 
     //!
     //! \brief Get the stored value as a const string.
@@ -2079,7 +2107,7 @@ namespace GC_namespace {
     //! \param[in] where Optional context for error messages, indicating the position of the call.
     //! \return A reference to the const string stored in the container.
     //!
-    string_view get_string( string_view where = "" ) const;
+    string_view get_string( string_view const where = "" ) const;
 
     ///@}
 
@@ -2108,7 +2136,7 @@ namespace GC_namespace {
     //! // Use data...
     //! \endcode
     //!
-    vector_type & get_vector( string_view where = "" );
+    vector_type & get_vector( string_view const where = "" );
 
     //!
     //! Get the stored value as a const vector of `GenericoContainer`
@@ -2122,7 +2150,7 @@ namespace GC_namespace {
     //! // Use data...
     //! \endcode
     //!
-    vector_type const & get_vector( string_view where = "" ) const;
+    vector_type const & get_vector( string_view const where = "" ) const;
 
     //!
     //! Get the stored value as a vector of pointers
@@ -2136,7 +2164,7 @@ namespace GC_namespace {
     //! // Use ptr_data...
     //! \endcode
     //!
-    vec_pointer_type & get_vec_pointer( string_view where = "" );
+    vec_pointer_type & get_vec_pointer( string_view const where = "" );
 
     //!
     //! Get the stored value as a const vector of pointers
@@ -2150,7 +2178,7 @@ namespace GC_namespace {
     //! // Use ptr_data...
     //! \endcode
     //!
-    vec_pointer_type const & get_vec_pointer( string_view where = "" ) const;
+    vec_pointer_type const & get_vec_pointer( string_view const where = "" ) const;
 
     //!
     //! Get the stored value as a vector of booleans
@@ -2164,7 +2192,7 @@ namespace GC_namespace {
     //! // Use bool_data...
     //! \endcode
     //!
-    vec_bool_type & get_vec_bool( string_view where = "" );
+    vec_bool_type & get_vec_bool( string_view const where = "" );
 
     //!
     //! Get the stored value as a const vector of booleans
@@ -2178,7 +2206,7 @@ namespace GC_namespace {
     //! // Use bool_data...
     //! \endcode
     //!
-    vec_bool_type const & get_vec_bool( string_view where = "" ) const;
+    vec_bool_type const & get_vec_bool( string_view const where = "" ) const;
 
     //!
     //! Get the stored value as a vector of integers
@@ -2730,6 +2758,10 @@ namespace GC_namespace {
     //!
     bool_type get_bool_at( unsigned i );
 
+    template <typename T, typename std::enable_if<std::is_integral<T>::value, int>::type = 0>
+    bool_type get_bool_at( T i )
+    { return get_bool_at(static_cast<unsigned>(i)); }
+
     //!
     //! Get the `i`-th boolean of the stored data.
     //!
@@ -2743,7 +2775,7 @@ namespace GC_namespace {
     //! // Use value...
     //! \endcode
     //!
-    bool_type get_bool_at( unsigned i, string_view where ) const;
+    bool_type get_bool_at( unsigned i, string_view const where ) const;
 
     //!
     //! Get the `i`-th integer of the stored data.
@@ -2759,6 +2791,10 @@ namespace GC_namespace {
     //!
     int_type & get_int_at( unsigned i );
 
+    template <typename T, typename std::enable_if<std::is_integral<T>::value, int>::type = 0>
+    int_type & get_int_at( T i )
+    { return get_int_at(static_cast<unsigned>(i)); }
+
     //!
     //! Get the `i`-th const integer of the stored data.
     //!
@@ -2772,7 +2808,7 @@ namespace GC_namespace {
     //! // Use value...
     //! \endcode
     //!
-    int_type const & get_int_at( unsigned i, string_view where ) const;
+    int_type const & get_int_at( unsigned i, string_view const where ) const;
 
     //!
     //! Get the `i`-th long integer of the stored data.
@@ -2788,6 +2824,10 @@ namespace GC_namespace {
     //!
     long_type & get_long_at( unsigned i );
 
+    template <typename T, typename std::enable_if<std::is_integral<T>::value, int>::type = 0>
+    long_type & get_long_at( T i )
+    { return get_long_at(static_cast<unsigned>(i)); }
+
     //!
     //! Get the `i`-th const long integer of the stored data.
     //!
@@ -2801,7 +2841,7 @@ namespace GC_namespace {
     //! // Use value...
     //! \endcode
     //!
-    long_type const & get_long_at( unsigned i, string_view where ) const;
+    long_type const & get_long_at( unsigned i, string_view const where ) const;
 
     //!
     //! Get the `i`-th `real_type` of the stored data.
@@ -2817,6 +2857,10 @@ namespace GC_namespace {
     //!
     real_type & get_real_at( unsigned i );
 
+    template <typename T, typename std::enable_if<std::is_integral<T>::value, int>::type = 0>
+    real_type & get_real_at( T i )
+    { return get_real_at(static_cast<unsigned>(i)); }
+
     //!
     //! Get the `i`-th const `real_type` of the stored data.
     //!
@@ -2830,7 +2874,7 @@ namespace GC_namespace {
     //! // Use value...
     //! \endcode
     //!
-    real_type const & get_real_at( unsigned i, string_view where ) const;
+    real_type const & get_real_at( unsigned i, string_view const where ) const;
 
     //!
     //! Get the `i`-th `complex_type` of the stored data.
@@ -2846,6 +2890,10 @@ namespace GC_namespace {
     //!
     complex_type & get_complex_at( unsigned i );
 
+    template <typename T, typename std::enable_if<std::is_integral<T>::value, int>::type = 0>
+    complex_type & get_complex_at( T i )
+    { return get_complex_at(static_cast<unsigned>(i)); }
+
     //!
     //! Get the `i`-th const `complex_type` of the stored data.
     //!
@@ -2859,7 +2907,7 @@ namespace GC_namespace {
     //! // Use value...
     //! \endcode
     //!
-    complex_type const & get_complex_at( unsigned i, string_view where ) const;
+    complex_type const & get_complex_at( unsigned i, string_view const where ) const;
 
     //!
     //! Get the `i`-th integer of the stored data in a matrix.
@@ -2890,7 +2938,7 @@ namespace GC_namespace {
     //! // Use value...
     //! \endcode
     //!
-    int_type const & get_int_at( unsigned i, unsigned j, string_view where ) const;
+    int_type const & get_int_at( unsigned i, unsigned j, string_view const where ) const;
 
     //!
     //! Get the `i`-th long integer of the stored data in a matrix.
@@ -2921,7 +2969,7 @@ namespace GC_namespace {
     //! // Use value...
     //! \endcode
     //!
-    long_type const & get_long_at( unsigned i, unsigned j, string_view where ) const;
+    long_type const & get_long_at( unsigned i, unsigned j, string_view const where ) const;
 
     //!
     //! Get the `i`-th `real_type` of the stored data in a matrix.
@@ -2952,7 +3000,7 @@ namespace GC_namespace {
     //! // Use value...
     //! \endcode
     //!
-    real_type const & get_real_at( unsigned i, unsigned j, string_view where ) const;
+    real_type const & get_real_at( unsigned i, unsigned j, string_view const where ) const;
 
     //!
     //! Get the `i`-th `complex_type` of the stored data in a matrix.
@@ -2983,7 +3031,7 @@ namespace GC_namespace {
     //! // Use value...
     //! \endcode
     //!
-    complex_type const & get_complex_at( unsigned i, unsigned j, string_view where ) const;
+    complex_type const & get_complex_at( unsigned i, unsigned j, string_view const where ) const;
 
     //!
     //! Get the `i`-th string of the stored data.
@@ -2999,6 +3047,10 @@ namespace GC_namespace {
     //!
     string_type & get_string_at( unsigned i );
 
+    template <typename T, typename std::enable_if<std::is_integral<T>::value, int>::type = 0>
+    string_type & get_string_at( T i )
+    { return get_string_at(static_cast<unsigned>(i)); }
+
     //!
     //! Get the `i`-th const string of the stored data.
     //!
@@ -3012,7 +3064,7 @@ namespace GC_namespace {
     //! // Use value...
     //! \endcode
     //!
-    string_view get_string_at( unsigned i, string_view where ) const;
+    string_view get_string_at( unsigned i, string_view const where ) const;
 
     //!
     //! Get the `i`-th const `GenericContainer` of the stored data.
@@ -3028,6 +3080,10 @@ namespace GC_namespace {
     //!
     GenericContainer & get_gc_at( unsigned i );
 
+    template <typename T, typename std::enable_if<std::is_integral<T>::value, int>::type = 0>
+    GenericContainer & get_gc_at( T i )
+    { return get_gc_at(static_cast<unsigned>(i)); }
+
     //!
     //! Get the `i`-th const `GenericContainer` of the stored data.
     //!
@@ -3041,7 +3097,7 @@ namespace GC_namespace {
     //! // Use value...
     //! \endcode
     //!
-    GenericContainer const & get_gc_at( unsigned i, string_view where ) const;
+    GenericContainer const & get_gc_at( unsigned i, string_view const where ) const;
 
     ///@}
 
@@ -3851,7 +3907,7 @@ namespace GC_namespace {
     //! \param[in] `vs` vector of string with the keys to be searched
     //! \param[in]  where position added to the error message
     //!
-    string must_exists( vec_string_type const & vs, string_view where ) const;
+    string must_exists( vec_string_type const & vs, string_view const where ) const;
 
     //!
     //! Check if string `field` is a key of the stored map and extract value if exists
@@ -4041,7 +4097,7 @@ namespace GC_namespace {
     //! \param[in] gc    input `GenericContainer`
     //! \param[in] where position added to the error message
     //!
-    void merge( GenericContainer const & gc, string_view where );
+    void merge( GenericContainer const & gc, string_view const where );
 
     //!
     //! Print the contents of the object in YAML syntax
@@ -4337,7 +4393,7 @@ namespace GC_namespace {
     //!
     static
     void
-    exception( string_view where ) GC_NO_RETURN;
+    exception( string_view const where ) GC_NO_RETURN;
 
   };
 

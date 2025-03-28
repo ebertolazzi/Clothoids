@@ -56,7 +56,7 @@ namespace Utils {
 
   BOOLEAN
   nanosleep( LONGLONG ns100 ) {
-    LARGE_INTEGER li;	   // Time defintion
+    LARGE_INTEGER li;    // Time defintion
     // Create timer
     HANDLE timer = CreateWaitableTimerW(NULL, TRUE, NULL);
     if ( !timer ) return FALSE;

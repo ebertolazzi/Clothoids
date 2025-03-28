@@ -19,8 +19,6 @@
 
 #include "Utils_TVD.hh"
 
-#include <vector>
-
 #ifdef __GNUC__
 #pragma GCC diagnostic ignored "-Wsign-conversion"
 #endif
@@ -34,23 +32,23 @@ namespace Utils {
   template <typename Real>
   void
   TVD<Real>::denoise(
-    Integer    N,
-    Real const y[],
-    Integer    incy,
-    Real       lambda,
-    Real       x[],
-    Integer    incx
+    Integer const N,
+    Real    const y[],
+    Integer const incy,
+    Real    const lambda,
+    Real          x[],
+    Integer const incx
   ) {
     for ( Integer j = 0; j < N; ++j ) x[j*incx] = 0;
-    Real vmin = y[0]-lambda;
-    Real vmax = y[0]+lambda;
-    Real umin = +lambda;
-    Real umax = -lambda;
-    Integer k  = 0;
-    Integer k0 = 0;
-    Integer km = 0;
-    Integer kp = 0;
-    Integer nm1 = N-1;
+    Real          vmin { y[0]-lambda };
+    Real          vmax { y[0]+lambda };
+    Real          umin { +lambda };
+    Real          umax { -lambda };
+    Integer       k    { 0 };
+    Integer       k0   { 0 };
+    Integer       km   { 0 };
+    Integer       kp   { 0 };
+    Integer const nm1  { N-1 };
     while ( true ) {
       if ( k >= nm1 ) { x[nm1*incx] = vmin+umin; break; }
       if ( y[(k+1)*incy]+umin < vmin-lambda ) {

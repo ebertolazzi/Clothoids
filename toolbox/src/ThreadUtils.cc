@@ -53,7 +53,7 @@ namespace Utils {
   void
   WorkerLoop::worker_loop() {
     while ( m_active ) {
-      std::unique_lock<std::mutex> lk(m_mutex);
+      std::unique_lock lk(m_mutex);
       m_cv.wait(lk, [this]{ return this->m_do_job;} );
       if ( !m_active ) break;
       m_running = true;
@@ -66,7 +66,7 @@ namespace Utils {
 
   void
   WorkerLoop::exec( std::function<void()> & fun ) {
-    std::unique_lock<std::mutex> lk(m_mutex);
+    std::unique_lock lk(m_mutex);
     m_cv.wait(lk, [this]{ return !this->m_do_job;}  ); // another job
     m_cv.wait(lk, [this]{ return !this->m_running;} ); // still running
     m_job    = fun;
@@ -76,7 +76,7 @@ namespace Utils {
 
   void
   WorkerLoop::exec() {
-    std::unique_lock<std::mutex> lk(m_mutex);
+    std::unique_lock lk(m_mutex);
     m_cv.wait(lk, [this]{ return !this->m_do_job;}  ); // another job
     m_cv.wait(lk, [this]{ return !this->m_running;} ); // still running
     m_do_job = true;
@@ -85,7 +85,7 @@ namespace Utils {
 
   void
   WorkerLoop::wait() {
-    std::unique_lock<std::mutex> lk(m_mutex);
+    std::unique_lock lk(m_mutex);
     m_cv.wait(lk, [this]{ return !this->m_do_job;} );
     m_cv.notify_one();
   }
@@ -105,13 +105,13 @@ namespace Utils {
 
   void
   WinMutex::lock() {
-  	DWORD res = WaitForSingleObject(m_mutex, INFINITE);
+    DWORD res = WaitForSingleObject(m_mutex, INFINITE);
     UTILS_ASSERT0( res == WAIT_OBJECT_0, "WinMutex::lock, WAIT_TIMEOUT" );
   }
 
   void
   WinMutex::unlock() {
-  	DWORD res = ReleaseMutex(m_mutex);
+    DWORD res = ReleaseMutex(m_mutex);
     UTILS_ASSERT0( res == WAIT_OBJECT_0, "WinMutex::lock, WAIT_TIMEOUT" );
   }
   #endif

@@ -52,10 +52,10 @@ namespace GC_namespace {
   inline
   bool
   file_YAML_to_GC(
-    string const     & file_name,
+    string_view        file_name,
     GenericContainer & gc
   ) {
-    ifstream stream(file_name.c_str());
+    ifstream stream(file_name.data());
     gc.clear();
     return gc.from_yaml( stream );
   }

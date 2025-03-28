@@ -36,78 +36,78 @@ namespace Utils {
 
   template <typename Real>
   bool
-  AABBtree<Real>::overlap1( Real const bb1[], Real const bb2[], integer ) {
-    return bb1[0] <= bb2[1] && bb1[1] >= bb2[0];
+  AABBtree<Real>::overlap1( Real const bbox1[], Real const bbox2[], integer ) {
+    return bbox1[0] <= bbox2[1] && bbox1[1] >= bbox2[0];
   }
 
   template <typename Real>
   bool
-  AABBtree<Real>::overlap2( Real const bb1[], Real const bb2[], integer ) {
-    return bb1[0] <= bb2[2] && bb1[2] >= bb2[0] &&
-           bb1[1] <= bb2[3] && bb1[3] >= bb2[1];
+  AABBtree<Real>::overlap2( Real const bbox1[], Real const bbox2[], integer ) {
+    return bbox1[0] <= bbox2[2] && bbox1[2] >= bbox2[0] &&
+           bbox1[1] <= bbox2[3] && bbox1[3] >= bbox2[1];
   }
 
   template <typename Real>
   bool
-  AABBtree<Real>::overlap3( Real const bb1[], Real const bb2[], integer ) {
-    return bb1[0] <= bb2[3] && bb1[3] >= bb2[0] &&
-           bb1[1] <= bb2[4] && bb1[4] >= bb2[1] &&
-           bb1[2] <= bb2[5] && bb1[5] >= bb2[2];
+  AABBtree<Real>::overlap3( Real const bbox1[], Real const bbox2[], integer ) {
+    return bbox1[0] <= bbox2[3] && bbox1[3] >= bbox2[0] &&
+           bbox1[1] <= bbox2[4] && bbox1[4] >= bbox2[1] &&
+           bbox1[2] <= bbox2[5] && bbox1[5] >= bbox2[2];
   }
 
   template <typename Real>
   bool
-  AABBtree<Real>::overlap4( Real const bb1[], Real const bb2[], integer ) {
-    return bb1[0] <= bb2[4] && bb1[4] >= bb2[0] &&
-           bb1[1] <= bb2[5] && bb1[5] >= bb2[1] &&
-           bb1[2] <= bb2[6] && bb1[6] >= bb2[2] &&
-           bb1[3] <= bb2[7] && bb1[7] >= bb2[3];
+  AABBtree<Real>::overlap4( Real const bbox1[], Real const bbox2[], integer ) {
+    return bbox1[0] <= bbox2[4] && bbox1[4] >= bbox2[0] &&
+           bbox1[1] <= bbox2[5] && bbox1[5] >= bbox2[1] &&
+           bbox1[2] <= bbox2[6] && bbox1[6] >= bbox2[2] &&
+           bbox1[3] <= bbox2[7] && bbox1[7] >= bbox2[3];
   }
 
   template <typename Real>
   bool
-  AABBtree<Real>::overlap5( Real const bb1[], Real const bb2[], integer ) {
-    return bb1[0] <= bb2[5] && bb1[5] >= bb2[0] &&
-           bb1[1] <= bb2[6] && bb1[6] >= bb2[1] &&
-           bb1[2] <= bb2[7] && bb1[7] >= bb2[2] &&
-           bb1[3] <= bb2[8] && bb1[8] >= bb2[3] &&
-           bb1[4] <= bb2[9] && bb1[9] >= bb2[4];
+  AABBtree<Real>::overlap5( Real const bbox1[], Real const bbox2[], integer ) {
+    return bbox1[0] <= bbox2[5] && bbox1[5] >= bbox2[0] &&
+           bbox1[1] <= bbox2[6] && bbox1[6] >= bbox2[1] &&
+           bbox1[2] <= bbox2[7] && bbox1[7] >= bbox2[2] &&
+           bbox1[3] <= bbox2[8] && bbox1[8] >= bbox2[3] &&
+           bbox1[4] <= bbox2[9] && bbox1[9] >= bbox2[4];
   }
 
   template <typename Real>
   bool
-  AABBtree<Real>::overlap6( Real const bb1[], Real const bb2[], integer ) {
-    return bb1[0] <= bb2[6]  && bb1[6]  >= bb2[0] &&
-           bb1[1] <= bb2[7]  && bb1[7]  >= bb2[1] &&
-           bb1[2] <= bb2[8]  && bb1[8]  >= bb2[2] &&
-           bb1[3] <= bb2[9]  && bb1[9]  >= bb2[3] &&
-           bb1[4] <= bb2[10] && bb1[10] >= bb2[4] &&
-           bb1[5] <= bb2[11] && bb1[11] >= bb2[5];
+  AABBtree<Real>::overlap6( Real const bbox1[], Real const bbox2[], integer ) {
+    return bbox1[0] <= bbox2[6]  && bbox1[6]  >= bbox2[0] &&
+           bbox1[1] <= bbox2[7]  && bbox1[7]  >= bbox2[1] &&
+           bbox1[2] <= bbox2[8]  && bbox1[8]  >= bbox2[2] &&
+           bbox1[3] <= bbox2[9]  && bbox1[9]  >= bbox2[3] &&
+           bbox1[4] <= bbox2[10] && bbox1[10] >= bbox2[4] &&
+           bbox1[5] <= bbox2[11] && bbox1[11] >= bbox2[5];
   }
 
   template <typename Real>
   bool
-  AABBtree<Real>::overlap7( Real const bb1[], Real const bb2[], integer ) {
-    return bb1[0] <= bb2[7]  && bb1[7]  >= bb2[0] &&
-           bb1[1] <= bb2[8]  && bb1[8]  >= bb2[1] &&
-           bb1[2] <= bb2[9]  && bb1[9]  >= bb2[2] &&
-           bb1[3] <= bb2[10] && bb1[10] >= bb2[3] &&
-           bb1[4] <= bb2[11] && bb1[11] >= bb2[4] &&
-           bb1[5] <= bb2[12] && bb1[12] >= bb2[5] &&
-           bb1[6] <= bb2[13] && bb1[14] >= bb2[6];
+  AABBtree<Real>::overlap7( Real const bbox1[], Real const bbox2[], integer ) {
+    return bbox1[0] <= bbox2[7]  && bbox1[7]  >= bbox2[0] &&
+           bbox1[1] <= bbox2[8]  && bbox1[8]  >= bbox2[1] &&
+           bbox1[2] <= bbox2[9]  && bbox1[9]  >= bbox2[2] &&
+           bbox1[3] <= bbox2[10] && bbox1[10] >= bbox2[3] &&
+           bbox1[4] <= bbox2[11] && bbox1[11] >= bbox2[4] &&
+           bbox1[5] <= bbox2[12] && bbox1[12] >= bbox2[5] &&
+           bbox1[6] <= bbox2[13] && bbox1[14] >= bbox2[6];
   }
 
   template <typename Real>
   bool
-  AABBtree<Real>::overlap8( Real const bb1[], Real const bb2[], integer ) {
-    return bb1[0] <= bb2[8]  && bb1[8]  >= bb2[0] &&
-           bb1[1] <= bb2[9]  && bb1[9]  >= bb2[1] &&
-           bb1[2] <= bb2[10] && bb1[10] >= bb2[2] &&
-           bb1[3] <= bb2[11] && bb1[11] >= bb2[3] &&
-           bb1[4] <= bb2[12] && bb1[12] >= bb2[4] &&
-           bb1[5] <= bb2[13] && bb1[13] >= bb2[5] &&
-           bb1[6] <= bb2[14] && bb1[14] >= bb2[6] &&
-           bb1[7] <= bb2[15] && bb1[15] >= bb2[7];
+  AABBtree<Real>::overlap8( Real const bbox1[], Real const bbox2[], integer ) {
+    return bbox1[0] <= bbox2[8]  && bbox1[8]  >= bbox2[0] &&
+           bbox1[1] <= bbox2[9]  && bbox1[9]  >= bbox2[1] &&
+           bbox1[2] <= bbox2[10] && bbox1[10] >= bbox2[2] &&
+           bbox1[3] <= bbox2[11] && bbox1[11] >= bbox2[3] &&
+           bbox1[4] <= bbox2[12] && bbox1[12] >= bbox2[4] &&
+           bbox1[5] <= bbox2[13] && bbox1[13] >= bbox2[5] &&
+           bbox1[6] <= bbox2[14] && bbox1[14] >= bbox2[6] &&
+           bbox1[7] <= bbox2[15] && bbox1[15] >= bbox2[7];
   }
 
   template <typename Real>
@@ -125,72 +125,72 @@ namespace Utils {
 
   template <typename Real>
   bool
-  AABBtree<Real>::pnt_overlap3( Real const pnt[], Real const bb2[], integer ) {
-    return pnt[0] <= bb2[3] && pnt[0] >= bb2[0] &&
-           pnt[1] <= bb2[4] && pnt[1] >= bb2[1] &&
-           pnt[2] <= bb2[5] && pnt[2] >= bb2[2];
+  AABBtree<Real>::pnt_overlap3( Real const pnt[], Real const bbox2[], integer ) {
+    return pnt[0] <= bbox2[3] && pnt[0] >= bbox2[0] &&
+           pnt[1] <= bbox2[4] && pnt[1] >= bbox2[1] &&
+           pnt[2] <= bbox2[5] && pnt[2] >= bbox2[2];
   }
 
   template <typename Real>
   bool
-  AABBtree<Real>::pnt_overlap4( Real const pnt[], Real const bb2[], integer ) {
-    return pnt[0] <= bb2[4] && pnt[0] >= bb2[0] &&
-           pnt[1] <= bb2[5] && pnt[1] >= bb2[1] &&
-           pnt[2] <= bb2[6] && pnt[2] >= bb2[2] &&
-           pnt[3] <= bb2[7] && pnt[3] >= bb2[3];
+  AABBtree<Real>::pnt_overlap4( Real const pnt[], Real const bbox2[], integer ) {
+    return pnt[0] <= bbox2[4] && pnt[0] >= bbox2[0] &&
+           pnt[1] <= bbox2[5] && pnt[1] >= bbox2[1] &&
+           pnt[2] <= bbox2[6] && pnt[2] >= bbox2[2] &&
+           pnt[3] <= bbox2[7] && pnt[3] >= bbox2[3];
   }
 
   template <typename Real>
   bool
-  AABBtree<Real>::pnt_overlap5( Real const pnt[], Real const bb2[], integer ) {
-    return pnt[0] <= bb2[5] && pnt[0] >= bb2[0] &&
-           pnt[1] <= bb2[6] && pnt[1] >= bb2[1] &&
-           pnt[2] <= bb2[7] && pnt[2] >= bb2[2] &&
-           pnt[3] <= bb2[8] && pnt[3] >= bb2[3] &&
-           pnt[4] <= bb2[9] && pnt[4] >= bb2[4];
+  AABBtree<Real>::pnt_overlap5( Real const pnt[], Real const bbox2[], integer ) {
+    return pnt[0] <= bbox2[5] && pnt[0] >= bbox2[0] &&
+           pnt[1] <= bbox2[6] && pnt[1] >= bbox2[1] &&
+           pnt[2] <= bbox2[7] && pnt[2] >= bbox2[2] &&
+           pnt[3] <= bbox2[8] && pnt[3] >= bbox2[3] &&
+           pnt[4] <= bbox2[9] && pnt[4] >= bbox2[4];
   }
 
   template <typename Real>
   bool
-  AABBtree<Real>::pnt_overlap6( Real const pnt[], Real const bb2[], integer ) {
-    return pnt[0] <= bb2[6]  && pnt[0] >= bb2[0] &&
-           pnt[1] <= bb2[7]  && pnt[1] >= bb2[1] &&
-           pnt[2] <= bb2[8]  && pnt[2] >= bb2[2] &&
-           pnt[3] <= bb2[9]  && pnt[3] >= bb2[3] &&
-           pnt[4] <= bb2[10] && pnt[4] >= bb2[4] &&
-           pnt[5] <= bb2[11] && pnt[5] >= bb2[5];
+  AABBtree<Real>::pnt_overlap6( Real const pnt[], Real const bbox2[], integer ) {
+    return pnt[0] <= bbox2[6]  && pnt[0] >= bbox2[0] &&
+           pnt[1] <= bbox2[7]  && pnt[1] >= bbox2[1] &&
+           pnt[2] <= bbox2[8]  && pnt[2] >= bbox2[2] &&
+           pnt[3] <= bbox2[9]  && pnt[3] >= bbox2[3] &&
+           pnt[4] <= bbox2[10] && pnt[4] >= bbox2[4] &&
+           pnt[5] <= bbox2[11] && pnt[5] >= bbox2[5];
   }
 
   template <typename Real>
   bool
-  AABBtree<Real>::pnt_overlap7( Real const pnt[], Real const bb2[], integer ) {
-    return pnt[0] <= bb2[7]  && pnt[0] >= bb2[0] &&
-           pnt[1] <= bb2[8]  && pnt[1] >= bb2[1] &&
-           pnt[2] <= bb2[9]  && pnt[2] >= bb2[2] &&
-           pnt[3] <= bb2[10] && pnt[3] >= bb2[3] &&
-           pnt[4] <= bb2[11] && pnt[4] >= bb2[4] &&
-           pnt[5] <= bb2[12] && pnt[5] >= bb2[5] &&
-           pnt[6] <= bb2[13] && pnt[6] >= bb2[6];
+  AABBtree<Real>::pnt_overlap7( Real const pnt[], Real const bbox2[], integer ) {
+    return pnt[0] <= bbox2[7]  && pnt[0] >= bbox2[0] &&
+           pnt[1] <= bbox2[8]  && pnt[1] >= bbox2[1] &&
+           pnt[2] <= bbox2[9]  && pnt[2] >= bbox2[2] &&
+           pnt[3] <= bbox2[10] && pnt[3] >= bbox2[3] &&
+           pnt[4] <= bbox2[11] && pnt[4] >= bbox2[4] &&
+           pnt[5] <= bbox2[12] && pnt[5] >= bbox2[5] &&
+           pnt[6] <= bbox2[13] && pnt[6] >= bbox2[6];
   }
 
   template <typename Real>
   bool
-  AABBtree<Real>::pnt_overlap8( Real const pnt[], Real const bb2[], integer ) {
-    return pnt[0] <= bb2[8]  && pnt[0] >= bb2[0] &&
-           pnt[1] <= bb2[9]  && pnt[1] >= bb2[1] &&
-           pnt[2] <= bb2[10] && pnt[2] >= bb2[2] &&
-           pnt[3] <= bb2[11] && pnt[3] >= bb2[3] &&
-           pnt[4] <= bb2[12] && pnt[4] >= bb2[4] &&
-           pnt[5] <= bb2[13] && pnt[5] >= bb2[5] &&
-           pnt[6] <= bb2[14] && pnt[6] >= bb2[6] &&
-           pnt[7] <= bb2[15] && pnt[7] >= bb2[7];
+  AABBtree<Real>::pnt_overlap8( Real const pnt[], Real const bbox2[], integer ) {
+    return pnt[0] <= bbox2[8]  && pnt[0] >= bbox2[0] &&
+           pnt[1] <= bbox2[9]  && pnt[1] >= bbox2[1] &&
+           pnt[2] <= bbox2[10] && pnt[2] >= bbox2[2] &&
+           pnt[3] <= bbox2[11] && pnt[3] >= bbox2[3] &&
+           pnt[4] <= bbox2[12] && pnt[4] >= bbox2[4] &&
+           pnt[5] <= bbox2[13] && pnt[5] >= bbox2[5] &&
+           pnt[6] <= bbox2[14] && pnt[6] >= bbox2[6] &&
+           pnt[7] <= bbox2[15] && pnt[7] >= bbox2[7];
   }
 
   template <typename Real>
   bool
   AABBtree<Real>::check_overlap( Real const bb1[], Real const bb2[], integer dim ) {
-    bool overlap = false;
-    integer k = dim % 4;
+    bool    overlap { false   };
+    integer k       { dim % 4 };
     switch ( k ) {
     case 1:
       overlap = bb1[0] <= bb2[dim] && bb1[dim] >= bb2[0];
@@ -221,8 +221,8 @@ namespace Utils {
   template <typename Real>
   bool
   AABBtree<Real>::check_overlap_with_point( Real const pnt[], Real const bb2[], integer dim ) {
-    bool overlap = false;
-    integer k = dim % 4;
+    bool    overlap { false   };
+    integer k       { dim % 4 };
     switch ( k ) {
     case 1:
       overlap = pnt[0] <= bb2[dim] && pnt[0] >= bb2[0];
@@ -253,7 +253,7 @@ namespace Utils {
   // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 
   template <typename Real>
-  AABBtree<Real>::AABBtree( AABBtree<Real> const & T )
+  AABBtree<Real>::AABBtree( AABBtree const & T )
   {
     allocate( T.m_num_objects, T.m_dim );
 
@@ -369,7 +369,7 @@ namespace Utils {
 
   template <typename Real>
   void
-  AABBtree<Real>::allocate( integer nbox, integer dim ) {
+  AABBtree<Real>::allocate( integer const nbox, integer const dim ) {
 
     UTILS_WARNING(
       dim <= 10,
@@ -425,20 +425,20 @@ namespace Utils {
     m_num_objects = nbox;
     m_nmax        = 2*m_num_objects; // estimate max memory usage
 
-    m_rmem.allocate( size_t((m_nmax+m_num_objects)*m_2dim) );
-    m_imem.allocate( size_t(4*m_nmax+m_num_objects) );
+    m_rmem.allocate( (m_nmax+m_num_objects)*m_2dim );
+    m_imem.allocate( (4*m_nmax+m_num_objects) );
 
-    m_bbox_tree = m_rmem( size_t(m_nmax*m_2dim) );
-    m_bbox_objs = m_rmem( size_t(m_num_objects*m_2dim) );
+    m_bbox_tree = m_rmem( m_nmax*m_2dim );
+    m_bbox_objs = m_rmem( m_num_objects*m_2dim );
 
-    m_father    = m_imem( size_t(m_nmax) );
-    m_child     = m_imem( size_t(m_nmax) );
-    m_ptr_nodes = m_imem( size_t(m_nmax) );
-    m_num_nodes = m_imem( size_t(m_nmax) );
-    m_id_nodes  = m_imem( size_t(m_num_objects) );
+    m_father    = m_imem( m_nmax );
+    m_child     = m_imem( m_nmax );
+    m_ptr_nodes = m_imem( m_nmax );
+    m_num_nodes = m_imem( m_nmax );
+    m_id_nodes  = m_imem( m_num_objects );
 
     // initialize id nodes, will be reordered during the tree build
-    for ( integer i = 0; i < m_num_objects; ++i ) m_id_nodes[i] = i;
+    for ( integer i{0}; i < m_num_objects; ++i ) m_id_nodes[i] = i;
 
     // setup root node
     m_father[0]    = -1;
@@ -555,21 +555,21 @@ namespace Utils {
       m_child[id_father] = -1;
 
       // get rectangles id in parent
-      integer num = m_num_nodes[id_father];
+      integer const num{ m_num_nodes[id_father] };
 
       // if few bbox stop splitting
       if ( num < m_max_num_objects_per_node ) continue;
 
-      integer  iptr = m_ptr_nodes[id_father];
+      integer const iptr{ m_ptr_nodes[id_father] };
       integer * ptr = m_id_nodes + iptr;
 
       // split plane on longest axis, use euristic
       Real const * father_min = m_bbox_tree + id_father * m_2dim;
       Real const * father_max = father_min + m_dim;
 
-      integer idim = 0;
-      Real    mx   = father_max[0] - father_min[0];
-      for ( integer i = 1; i < m_dim; ++i ) {
+      integer idim { 0 };
+      Real    mx   { father_max[0] - father_min[0] };
+      for ( integer i{1}; i < m_dim; ++i ) {
         Real mx1 = father_max[i] - father_min[i];
         if ( mx < mx1 ) { mx = mx1; idim = i; }
       }
@@ -577,12 +577,12 @@ namespace Utils {
       // if too small bbox stop splitting
       if ( mx < m_bbox_min_size_tolerance ) continue;
 
-      Real tol_len = m_bbox_long_edge_ratio * mx;
-      Real sp      = 0;
+      Real tol_len { m_bbox_long_edge_ratio * mx };
+      Real sp      { 0 };
 
       // separate short/long and accumulate short baricenter
-      integer n_long  = 0;
-      integer n_short = 0;
+      integer n_long  { 0 };
+      integer n_short { 0 };
       while ( n_long + n_short < num ) {
         integer id = ptr[n_long];
         UTILS_ASSERT_DEBUG(
@@ -612,14 +612,14 @@ namespace Utils {
       sp /= 2*n_short;
 
       // partition based on centers
-      integer n_left  = 0;
-      integer n_right = 0;
+      integer n_left  { 0 };
+      integer n_right { 0 };
 
       while ( n_long + n_left + n_right < num ) {
-        integer id = ptr[n_long+n_left];
-        Real const * id_min = m_bbox_objs + id * m_2dim;
-        Real const * id_max = id_min + m_dim;
-        Real id_mid = (id_max[idim] + id_min[idim])/2;
+        integer const id{ ptr[n_long+n_left] };
+        Real const * id_min { m_bbox_objs + id * m_2dim };
+        Real const * id_max { id_min + m_dim };
+        Real id_mid { (id_max[idim] + id_min[idim])/2 };
         if ( id_mid < sp ) {
           ++n_left; // in right position do nothing
         } else {
@@ -632,8 +632,8 @@ namespace Utils {
       if ( n_left == 0 || n_right == 0 ) continue;
 
       // child indexing
-      integer id_left  = m_num_tree_nodes + 0;
-      integer id_right = m_num_tree_nodes + 1;
+      integer id_left  { m_num_tree_nodes + 0 };
+      integer id_right { m_num_tree_nodes + 1 };
 
       UTILS_ASSERT_DEBUG(
         id_right < m_nmax,
@@ -642,22 +642,22 @@ namespace Utils {
       );
 
       // compute bbox of left and right child
-      Real * bb_left_min = m_bbox_tree + id_left * m_2dim;
-      Real * bb_left_max = bb_left_min + m_dim;
-      for ( integer i = 0; i < n_left; ++i ) {
-        integer id = ptr[n_long+i];
+      Real * bb_left_min { m_bbox_tree + id_left * m_2dim };
+      Real * bb_left_max { bb_left_min + m_dim };
+      for ( integer i{0}; i < n_left; ++i ) {
+        integer id{ ptr[n_long+i] };
         UTILS_ASSERT_DEBUG(
           id < m_num_objects,
           "AABBtree::build, id = {} must be less than m_num_objects ={}\n",
           id, m_num_objects
         );
-        Real const * bb_id_min = m_bbox_objs + id * m_2dim;
-        Real const * bb_id_max = bb_id_min + m_dim;
+        Real const * bb_id_min { m_bbox_objs + id * m_2dim };
+        Real const * bb_id_max { bb_id_min + m_dim };
         if ( i == 0 ) {
           copy_n( bb_id_min, m_2dim, bb_left_min );
           //copy_n( bb_id_max, m_dim, left_max );
         } else {
-          for ( integer j = 0; j < m_dim; ++j ) {
+          for ( integer j{0}; j < m_dim; ++j ) {
             if ( bb_left_min[j] > bb_id_min[j] ) bb_left_min[j] = bb_id_min[j];
             if ( bb_left_max[j] < bb_id_max[j] ) bb_left_max[j] = bb_id_max[j];
           }
@@ -692,11 +692,11 @@ namespace Utils {
         Real vo{1};
         Real vL{1};
         Real vR{1};
-        for ( integer j = 0l; j < m_dim; ++j ) {
-          Real Lmin = bb_left_min[j];
-          Real Lmax = bb_left_max[j];
-          Real Rmin = bb_right_min[j];
-          Real Rmax = bb_right_max[j];
+        for ( integer j{0}; j < m_dim; ++j ) {
+          Real Lmin { bb_left_min[j]  };
+          Real Lmax { bb_left_max[j]  };
+          Real Rmin { bb_right_min[j] };
+          Real Rmax { bb_right_max[j] };
           vo *= max(min(Lmax,Rmax) - max(Lmin,Rmin), Real(0));
           vL *= Lmax - Lmin;
           vR *= Rmax - Rmin;
@@ -750,16 +750,14 @@ namespace Utils {
       Real const * bb_father = m_bbox_tree + id_father * m_2dim;
 
       ++m_num_check;
-      bool overlap = m_check_overlap_with_point( pnt, bb_father, m_dim );
 
       // if do not overlap skip
-      if ( !overlap ) continue;
+      if ( !m_check_overlap_with_point( pnt, bb_father, m_dim ) ) continue;
 
       // get rectangles id in parent
       this->get_bbox_indexes_of_a_node( id_father, bb_index );
 
-      integer nn = m_child[id_father];
-      if ( nn > 0 ) { // root == 0, children > 0
+      if (integer nn{ m_child[id_father]}; nn > 0 ) { // root == 0, children > 0
         // push on stack children
         m_stack.emplace_back(nn);
         m_stack.emplace_back(nn+1);
@@ -793,24 +791,21 @@ namespace Utils {
       Real const * bb_father = m_bbox_tree + id_father * m_2dim;
 
       ++m_num_check;
-      bool overlap = m_check_overlap_with_point( pnt, bb_father, m_dim );
 
       // if do not overlap skip
-      if ( !overlap ) continue;
+      if ( !m_check_overlap_with_point( pnt, bb_father, m_dim ) ) continue;
 
       // refine candidate
-      integer num = this->m_num_nodes[id_father];
-      integer const * ptr = this->m_id_nodes + this->m_ptr_nodes[id_father];
-      for ( integer ii = 0; ii < num; ++ii ) {
-        integer s = ptr[ii];
-        Real const * bb_s = m_bbox_objs + s * m_2dim;
+      integer const   num { this->m_num_nodes[id_father] };
+      integer const * ptr { this->m_id_nodes + this->m_ptr_nodes[id_father] };
+      for ( integer ii{0}; ii < num; ++ii ) {
+        integer s{ ptr[ii] };
+        Real const * bb_s { m_bbox_objs + s * m_2dim };
         ++m_num_check;
-        bool olap = m_check_overlap_with_point( pnt, bb_s, m_dim );
-        if ( olap ) bb_index.insert(s);
+        if ( m_check_overlap_with_point( pnt, bb_s, m_dim ) ) bb_index.insert(s);
       }
 
-      integer nn = m_child[id_father];
-      if ( nn > 0 ) { // root == 0, children > 0
+      if ( integer nn{m_child[id_father]}; nn > 0 ) { // root == 0, children > 0
         // push on stack children
         m_stack.emplace_back(nn);
         m_stack.emplace_back(nn+1);
@@ -843,16 +838,14 @@ namespace Utils {
       Real const * bb_father = m_bbox_tree + id_father * m_2dim;
 
       ++m_num_check;
-      bool overlap = m_check_overlap( bb_father, bbox, m_dim );
 
       // if do not overlap skip
-      if ( !overlap ) continue;
+      if ( !m_check_overlap( bb_father, bbox, m_dim ) ) continue;
 
       // get rectangles id in parent
       this->get_bbox_indexes_of_a_node( id_father, bb_index );
 
-      integer nn = m_child[id_father];
-      if ( nn > 0 ) { // root == 0, children > 0
+      if (integer nn{m_child[id_father]}; nn > 0 ) { // root == 0, children > 0
         // push on stack children
         m_stack.emplace_back(nn);
         m_stack.emplace_back(nn+1);
@@ -886,24 +879,21 @@ namespace Utils {
       Real const * bb_father = m_bbox_tree + id_father * m_2dim;
 
       ++m_num_check;
-      bool overlap = m_check_overlap( bb_father, bbox, m_dim );
 
       // if do not overlap skip
-      if ( !overlap ) continue;
+      if ( !m_check_overlap( bb_father, bbox, m_dim ) ) continue;
 
       // refine candidate
-      integer num = this->m_num_nodes[id_father];
-      integer const * ptr = this->m_id_nodes + this->m_ptr_nodes[id_father];
-      for ( integer ii = 0; ii < num; ++ii ) {
-        integer s = ptr[ii];
-        Real const * bb_s = m_bbox_objs + ptr[ii] * m_2dim;
+      integer const   num { this->m_num_nodes[id_father] };
+      integer const * ptr { this->m_id_nodes + this->m_ptr_nodes[id_father] };
+      for ( integer ii{0}; ii < num; ++ii ) {
+        integer s { ptr[ii] };
+        Real const * bb_s { m_bbox_objs + ptr[ii] * m_2dim };
         ++m_num_check;
-        bool olap = m_check_overlap( bb_s, bbox, m_dim );
-        if ( olap ) bb_index.insert(s);
+        if ( m_check_overlap( bb_s, bbox, m_dim ) ) bb_index.insert(s);
       }
 
-      integer nn = m_child[id_father];
-      if ( nn > 0 ) { // root == 0, children > 0
+      if ( integer nn{ m_child[id_father] }; nn > 0 ) { // root == 0, children > 0
         // push on stack children
         m_stack.emplace_back(nn);
         m_stack.emplace_back(nn+1);
@@ -916,8 +906,8 @@ namespace Utils {
   template <typename Real>
   void
   AABBtree<Real>::intersect(
-    AABBtree<Real> const & aabb,
-    AABB_MAP             & bb_index
+    AABBtree const & aabb,
+    AABB_MAP       & bb_index
   ) const {
 
     m_num_check = 0;
@@ -930,7 +920,7 @@ namespace Utils {
     m_stack.reserve(m_num_tree_nodes+aabb.m_num_tree_nodes+2);
     m_stack.emplace_back(0);
     m_stack.emplace_back(0);
-    integer n_stack = 2;
+    constexpr integer n_stack{2};
     while ( !m_stack.empty() ) {
       // pop node from stack
       integer root2  = m_stack.back(); m_stack.pop_back();
@@ -942,18 +932,17 @@ namespace Utils {
       Real const * bb_root2 = aabb.m_bbox_tree + root2 * m_2dim;
 
       ++m_num_check;
-      bool overlap = m_check_overlap( bb_root1, bb_root2, m_dim );
 
       // if do not overlap skip
-      if ( !overlap ) continue;
+      if ( !m_check_overlap( bb_root1, bb_root2, m_dim ) ) continue;
 
       // check if there are elements to check
-      integer nn1 = this->m_num_nodes[root1];
-      integer nn2 = aabb.m_num_nodes[root2];
+      integer const nn1 { this->m_num_nodes[root1] };
+      integer const nn2 { aabb.m_num_nodes[root2]  };
       if ( nn1 > 0 && nn2 > 0 ) aabb.get_bbox_indexes_of_a_node( root2, bb_index[root1] );
 
-      integer id_lr1 = sroot1 >= 0 ? m_child[root1] : -1;
-      integer id_lr2 = aabb.m_child[root2];
+      integer id_lr1 { sroot1 >= 0 ? m_child[root1] : -1 };
+      integer id_lr2 { aabb.m_child[root2]               };
 
       UTILS_ASSERT_DEBUG(
         n_stack+3 < 2*m_nmax,
@@ -979,8 +968,8 @@ namespace Utils {
   template <typename Real>
   void
   AABBtree<Real>::intersect_and_refine(
-    AABBtree<Real> const & aabb,
-    AABB_MAP             & bb_index
+    AABBtree const & aabb,
+    AABB_MAP       & bb_index
   ) const {
 
     m_num_check = 0;
@@ -1004,35 +993,33 @@ namespace Utils {
       Real const * bb_root2 = aabb.m_bbox_tree + root2 * m_2dim;
 
       ++m_num_check;
-      bool overlap = m_check_overlap( bb_root1, bb_root2, m_dim );
 
       // if do not overlap skip
-      if ( !overlap ) continue;
+      if ( !m_check_overlap( bb_root1, bb_root2, m_dim ) ) continue;
 
       // check if there are elements to check
-      integer nn1 = this->m_num_nodes[root1];
-      integer nn2 = aabb.m_num_nodes[root2];
+      integer const nn1 { this->m_num_nodes[root1] };
+      integer       nn2 { aabb.m_num_nodes[root2]  };
       if ( nn1 > 0 && nn2 > 0 ) {
         // construct list of intersecting candidated
-        integer const * ptr1 = this->m_id_nodes + this->m_ptr_nodes[root1];
-        integer const * ptr2 = aabb.m_id_nodes + aabb.m_ptr_nodes[root2];
-        for ( integer ii = 0; ii < nn1; ++ii ) {
-          integer s1 = ptr1[ii];
-          Real const * bb_s1 = m_bbox_objs + s1 * m_2dim;
-          AABB_SET & BB = bb_index[s1];
-          for ( integer jj = 0; jj < nn2; ++jj ) {
-            integer s2 = ptr2[jj];
-            Real const * bb_s2 = aabb.m_bbox_objs + s2 * m_2dim;
+        integer const * ptr1 { this->m_id_nodes + this->m_ptr_nodes[root1] };
+        integer const * ptr2 { aabb.m_id_nodes + aabb.m_ptr_nodes[root2]   };
+        for ( integer ii{0}; ii < nn1; ++ii ) {
+          integer s1 { ptr1[ii] };
+          Real const * bb_s1 { m_bbox_objs + s1 * m_2dim };
+          AABB_SET & BB { bb_index[s1] };
+          for ( integer jj{0}; jj < nn2; ++jj ) {
+            integer s2{ ptr2[jj] };
+            Real const * bb_s2{ aabb.m_bbox_objs + s2 * m_2dim };
             ++m_num_check;
-            bool olap = m_check_overlap( bb_s1, bb_s2, m_dim );
             //if ( olap ) bb_index[s1].insert(s2);
-            if ( olap ) BB.insert(s2);
+            if ( m_check_overlap( bb_s1, bb_s2, m_dim ) ) BB.insert(s2);
           }
         }
       }
 
-      integer id_lr1 = sroot1 >= 0 ? m_child[root1] : -1;
-      integer id_lr2 = aabb.m_child[root2];
+      integer id_lr1 { sroot1 >= 0 ? m_child[root1] : -1 };
+      integer id_lr2 { aabb.m_child[root2] };
 
       if ( id_lr1 >= 0 ) {
         m_stack.emplace_back(id_lr1);   m_stack.emplace_back(root2);
@@ -1082,7 +1069,7 @@ namespace Utils {
   AABBtree<Real>::min_distance_candidates(
     Real const pnt[],
     AABB_SET & bb_index
-  ) const {;
+  ) const {
 
     Real dst2_min, dst2_max;
 
@@ -1098,11 +1085,11 @@ namespace Utils {
     m_stack.emplace_back(0);
     while ( !m_stack.empty() ) {
       // pop node from stack
-      integer id_father = m_stack.back(); m_stack.pop_back();
+      integer const id_father { m_stack.back() }; m_stack.pop_back();
 
       // get BBOX
       // check for intersection
-      Real const * father_bbox = this->m_bbox_tree + id_father * m_2dim;
+      Real const * father_bbox { this->m_bbox_tree + id_father * m_2dim };
       this->pnt_bbox_minmax( pnt, father_bbox, dst2_min, dst2_max );
 
       if ( dst2_min <= min_max_distance2 ) {
@@ -1110,8 +1097,7 @@ namespace Utils {
         if ( m_num_nodes[id_father] > 0 && dst2_max < min_max_distance2 )
           min_max_distance2 = dst2_max;
 
-        integer nn = m_child[id_father];
-        if ( nn > 0 ) { // root == 0, children > 0
+        if ( integer nn { m_child[id_father] }; nn > 0 ) { // root == 0, children > 0
           // push on stack childrens
           m_stack.emplace_back(nn);
           m_stack.emplace_back(nn+1);
@@ -1124,13 +1110,12 @@ namespace Utils {
     m_stack.emplace_back(0);
     while ( !m_stack.empty() ) {
       // pop node from stack
-      integer id_father = m_stack.back(); m_stack.pop_back();
-      Real const * father_bbox = this->m_bbox_tree + id_father * m_2dim;
+      integer id_father { m_stack.back() }; m_stack.pop_back();
+      Real const * father_bbox { this->m_bbox_tree + id_father * m_2dim };
       this->pnt_bbox_minmax( pnt, father_bbox, dst2_min, dst2_max );
       if ( dst2_min <= min_max_distance2 ) {
         this->get_bbox_indexes_of_a_node( id_father, bb_index );
-        integer nn = m_child[id_father];
-        if ( nn > 0 ) { // root == 0, children > 0
+        if ( integer nn { m_child[id_father] }; nn > 0 ) { // root == 0, children > 0
           // push on stack childrens
           m_stack.emplace_back(nn);
           m_stack.emplace_back(nn+1);
@@ -1161,9 +1146,9 @@ namespace Utils {
 
   template <typename Real>
   typename AABBtree<Real>::integer
-  AABBtree<Real>::num_tree_nodes( integer nmin ) const {
-    integer n = 0;
-    for ( integer i = 0; i < m_num_tree_nodes; ++i )
+  AABBtree<Real>::num_tree_nodes( integer const nmin ) const {
+    integer n{0};
+    for ( integer i{0}; i < m_num_tree_nodes; ++i )
       if ( m_num_nodes[i] >= nmin ) ++n;
     return n;
   }

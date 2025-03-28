@@ -181,7 +181,7 @@ namespace G2lib {
   ) {
     UTILS_ASSERT(
       L > 0,
-      "ClothoidCurve::build( x0={}, y0={}, theta0={}, k={}, dk={}, L={} )\n"
+      "ClothoidCurve::build( x₀={}, y₀={}, θ₀={}, k={}, Δk={}, L={} )\n"
       "L must be positive!\n",
       x0, y0, theta0, k, dk, L
     );

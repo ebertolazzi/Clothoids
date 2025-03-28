@@ -12,7 +12,7 @@
  |                                                                          |
  |      Enrico Bertolazzi                                                   |
  |      Dipartimento di Ingegneria Industriale                              |
- |      Universita` degli Studi di Trento                                   |
+ |      Università degli Studi di Trento                                    |
  |      email: enrico.bertolazzi@unitn.it                                   |
  |                                                                          |
 \*--------------------------------------------------------------------------*/
@@ -50,7 +50,7 @@ namespace G2lib {
   private:
 
     ClothoidData m_CD;  //!< clothoid data
-    real_type    m_L;   //!< length of clothoid segment
+    real_type    m_L{0};   //!< length of clothoid segment
 
     void
     optimized_sample_internal_ISO(
@@ -66,8 +66,8 @@ namespace G2lib {
     bb_triangles_internal_ISO(
       real_type            offs,
       vector<Triangle2D> & tvec,
-      real_type            s0,
-      real_type            s1,
+      real_type            s_begin,
+      real_type            s_end,
       real_type            max_angle,
       real_type            max_size,
       integer              icurve
@@ -94,7 +94,7 @@ namespace G2lib {
       real_type & x,
       real_type & y,
       real_type & s,
-      real_type & dst
+      real_type & DST
     ) const;
 
     static integer   m_max_iter;
@@ -129,6 +129,7 @@ namespace G2lib {
     //!
     //! Build an empty clothoid curve
     //!
+    explicit
     ClothoidCurve( string_view name );
 
     //!
@@ -327,13 +328,14 @@ namespace G2lib {
     //! Build a clothoid from a circle arc.
     //!
     void build( CircleArc const & );
-    void build( ClothoidCurve const & );
-    void build( Biarc const & );
-    void build( PolyLine const & );
-    void build( BiarcList const & );
-    void build( ClothoidList const & );
-    void build( Dubins const & );
-    void build( Dubins3p const & );
+    void build( ClothoidCurve const & C ) { this->copy(C); }
+
+    static void build( Biarc        const & );
+    static void build( PolyLine     const & );
+    static void build( BiarcList    const & );
+    static void build( ClothoidList const & );
+    static void build( Dubins       const & );
+    static void build( Dubins3p     const & );
 
     //!
     //! Return the point at infinity of the clothoids \f$ P(s) \f$.
@@ -586,18 +588,18 @@ namespace G2lib {
     bb_triangles_ISO(
       real_type            offs,
       vector<Triangle2D> & tvec,
-      real_type            max_angle = Utils::m_pi/6, // 30 degree
-      real_type            max_size  = 1e100,
-      integer              icurve    = 0
+      real_type            max_angle, // = Utils::m_pi/6, // 30 degree
+      real_type            max_size,  // = 1e100,
+      integer              icurve     // = 0
     ) const override;
 
     void
     bb_triangles_SAE(
       real_type            offs,
       vector<Triangle2D> & tvec,
-      real_type            max_angle = Utils::m_pi/6, // 30 degree
-      real_type            max_size  = 1e100,
-      integer              icurve    = 0
+      real_type            max_angle, // = Utils::m_pi/6, // 30 degree
+      real_type            max_size,  // = 1e100,
+      integer              icurve     // = 0
     ) const override {
       this->bb_triangles_ISO( -offs, tvec, max_angle, max_size, icurve );
     }
@@ -605,9 +607,9 @@ namespace G2lib {
     void
     bb_triangles(
       vector<Triangle2D> & tvec,
-      real_type            max_angle = Utils::m_pi/6, // 30 degree
-      real_type            max_size  = 1e100,
-      integer              icurve    = 0
+      real_type            max_angle, // = Utils::m_pi/6, // 30 degree
+      real_type            max_size,  // = 1e100,
+      integer              icurve     // = 0
     ) const override {
       this->bb_triangles_ISO( 0, tvec, max_angle, max_size, icurve );
     }
@@ -1008,8 +1010,8 @@ namespace G2lib {
     bool
     approximate_collision_ISO(
       real_type             offs,
-      ClothoidCurve const & c,
-      real_type             c_offs,
+      ClothoidCurve const & C,
+      real_type             offs_C,
       real_type             max_angle,
       real_type             max_size
     ) const;
@@ -1070,7 +1072,7 @@ namespace G2lib {
     intersect_ISO(
       real_type         offs,
       BaseCurve const * pC,
-      real_type         offs_LS,
+      real_type         offs_C,
       IntersectList   & ilist
     ) const override;
 

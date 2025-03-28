@@ -204,7 +204,7 @@ namespace Utils {
       void value( string_view val ) { m_Value = val; }
 
       Alignment alignment() const { return m_Align; }
-      void alignment( Alignment align ) { m_Align = align; }
+      void alignment( Alignment const & align ) { m_Align = align; }
 
       integer col_span() const { return m_col_span; }
       void col_span( integer col_span ) { m_col_span = col_span; }
@@ -215,7 +215,7 @@ namespace Utils {
       integer maximum_line_width() const;
 
       string line( integer idx ) const;
-      void trim_line( std::string & line ) const;
+      static void trim_line( std::string & line ) ;
 
       string render( integer line, integer col ) const;
     };

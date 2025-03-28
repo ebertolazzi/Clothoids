@@ -26,19 +26,19 @@ namespace Utils {
   //!
   class SHA3 {
 
-    using uint8_t      = std::uint8_t;
-    using uint64_t     = std::uint64_t;
+    using uint8_t  = std::uint8_t;
+    using uint64_t = std::uint64_t;
 
     // Round state
-    uint8_t  *m_buffer_location; // used for writing and to know when to flush the buffer
+    uint8_t  *m_buffer_location{nullptr}; // used for writing and to know when to flush the buffer
     uint64_t m_state[5][5];
     uint64_t m_message_buffer_64[1600/8];  // rate bits wide, defined during construction
 
-    int m_digest_size; // bytes
+    int m_digest_size{0}; // bytes
 
     // Digest-length specific Values
-    int m_sponge_capacity;
-    int m_sponge_rate;
+    int m_sponge_capacity{0};
+    int m_sponge_rate{0};
 
     void m_reset();
     void m_perform_rounds( int rounds );
@@ -57,7 +57,7 @@ namespace Utils {
     //!
     //! \param digest_size The size of the desired hash output in bytes (e.g., 224, 256, 384, or 512).
     //!
-    SHA3( int digest_size );
+    explicit SHA3( int digest_size );
 
     //! \brief Destructor for the SHA3 class.
     ~SHA3() { }

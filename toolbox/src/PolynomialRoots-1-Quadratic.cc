@@ -40,7 +40,7 @@
 namespace PolynomialRoots {
 
   using  std::abs;
-  static real_type const machepsi = std::numeric_limits<real_type>::epsilon();
+  static constexpr real_type machepsi{ std::numeric_limits<real_type>::epsilon() };
 
   integer
   Quadratic::get_real_roots( real_type r[] ) const {
@@ -73,7 +73,7 @@ namespace PolynomialRoots {
   }
 
   integer
-  Quadratic::get_roots_in_range( real_type a, real_type b, real_type r[] ) const {
+  Quadratic::get_roots_in_range( real_type const a, real_type const b, real_type r[] ) const {
     integer nr{0};
     if ( !m_cplx ) {
       if ( m_nrts > 0 && m_r0 >= a && m_r0 <= b ) r[nr++] = m_r0;
@@ -83,7 +83,7 @@ namespace PolynomialRoots {
   }
 
   integer
-  Quadratic::get_roots_in_open_range( real_type a, real_type b, real_type r[] ) const {
+  Quadratic::get_roots_in_open_range( real_type const a, real_type const b, real_type r[] ) const {
     integer nr{0};
     if ( !m_cplx ) {
       if ( m_nrts > 0 && m_r0 > a && m_r0 < b ) r[nr++] = m_r0;
@@ -134,9 +134,9 @@ namespace PolynomialRoots {
         if ( m_r0 < 0 ) std::swap(m_r0,m_r1);
       }
     } else { // Compute discriminant avoiding overflow.
-      real_type hb    = B/2; // b now b/2
-      real_type abs_b = std::abs(hb);
-      real_type abs_c = std::abs(C);
+      real_type const hb    { B/2          }; // b now b/2
+      real_type const abs_b { std::abs(hb) };
+      real_type const abs_c { std::abs(C)  };
       real_type e, d;
       if ( abs_b < abs_c ) {
         e = C < 0 ? -A : A;
@@ -197,23 +197,23 @@ namespace PolynomialRoots {
     real_type const & B{ m_ABC[1] };
     real_type const & C{ m_ABC[2] };
     bool ok{ true };
-    real_type epsi{ 10 * ( std::abs(A) +
-                           std::abs(B) +
-                           std::abs(C) ) * machepsi };
+    real_type const epsi{ 10 * ( std::abs(A) +
+                                 std::abs(B) +
+                                 std::abs(C) ) * machepsi };
     if ( m_cplx ) {
-      real_type z0{ std::abs(eval( root0() )) };
-      real_type z1{ std::abs(eval( root1() )) };
+      real_type const z0{ std::abs(eval( root0() )) };
+      real_type const z1{ std::abs(eval( root1() )) };
       s << "|p(r0)| = " << z0
         << "\n|p(r1)| = " << z1
         << '\n';
       ok = z0 < epsi && z1 < epsi;
     } else if ( m_nrts == 1 ) {
-      real_type z0 = eval( real_root0() );
+      real_type const z0{ eval( real_root0() ) };
       s << "p(r0) = " << z0  << '\n';
       ok = std::abs(z0) < epsi;
     } else if ( m_nrts == 2 ) {
-      real_type z0 = eval( real_root0() );
-      real_type z1 = eval( real_root1() );
+      real_type const z0{ eval( real_root0() ) };
+      real_type const z1{ eval( real_root1() ) };
       s << "p(r0) = " << z0
         << "\np(r1) = " << z1
         << '\n';

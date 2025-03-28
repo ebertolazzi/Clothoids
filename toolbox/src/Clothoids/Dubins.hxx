@@ -12,7 +12,7 @@
  |                                                                          |
  |      Enrico Bertolazzi                                                   |
  |      Dipartimento di Ingegneria Industriale                              |
- |      Universita` degli Studi di Trento                                   |
+ |      Università degli Studi di Trento                                    |
  |      email: enrico.bertolazzi@unitn.it                                   |
  |                                                                          |
 \*--------------------------------------------------------------------------*/
@@ -88,6 +88,8 @@ namespace G2lib {
     //! Build an empty circle
     //!
     Dubins() = delete;
+
+    explicit
     Dubins( string_view name ) : BaseCurve( name ) {};
 
     void setup( GenericContainer const & gc ) override;
@@ -120,9 +122,7 @@ namespace G2lib {
       real_type   theta1,
       real_type   k_max,
       string_view name
-    ) : BaseCurve( name ) {
-      this->build( x0, y0, theta0, x1, y1, theta1, k_max );
-    }
+    );
 
     //!
     //! Make a copy of an existing Dubins solution.
@@ -149,6 +149,7 @@ namespace G2lib {
     //! \param[in] theta1 final angle
     //! \param[in] k_max  max curvature
     //!
+    [[nodiscard]]
     bool
     build(
       real_type x0,
@@ -206,15 +207,16 @@ namespace G2lib {
       real_type angles[]
     ) const;
 
-    void build( LineSegment const & L );
-    void build( CircleArc const & C );
-    void build( ClothoidCurve const & );
-    void build( Biarc const & );
-    void build( BiarcList const & );
-    void build( PolyLine const & );
-    void build( ClothoidList const & );
-    void build( Dubins const & );
-    void build( Dubins3p const & );
+    void build( Dubins        const & );
+
+    static void build( LineSegment   const & );
+    static void build( CircleArc     const & );
+    static void build( Biarc         const & );
+    static void build( ClothoidCurve const & );
+    static void build( BiarcList     const & );
+    static void build( PolyLine      const & );
+    static void build( ClothoidList  const & );
+    static void build( Dubins3p      const & );
 
     void
     bbox(
@@ -236,17 +238,17 @@ namespace G2lib {
     //!
     //! Return the first cicle of the Dubins solution
     //!
-    CircleArc const & C0() const { return m_C0; }
+    [[nodiscard]] CircleArc const & C0() const { return m_C0; }
 
     //!
     //! Return the second cicle of the Dubins solution
     //!
-    CircleArc const & C1() const { return m_C1; }
+    [[nodiscard]] CircleArc const & C1() const { return m_C1; }
 
     //!
     //! Return the third cicle of the Dubins solution
     //!
-    CircleArc const & C2() const { return m_C2; }
+    [[nodiscard]] CircleArc const & C2() const { return m_C2; }
 
     void
     get_solution( ClothoidList & CL ) const {
@@ -257,10 +259,10 @@ namespace G2lib {
       CL.push_back( m_C2 );
     }
 
-    real_type length()        const override { return m_length; }
-    real_type length_Dalpha() const          { return m_length_Dalpha; }
-    real_type length_Dbeta()  const          { return m_length_Dbeta; }
-    real_type length_ISO( real_type offs ) const override;
+    [[nodiscard]] real_type length()        const override { return m_length; }
+    [[nodiscard]] real_type length_Dalpha() const          { return m_length_Dalpha; }
+    [[nodiscard]] real_type length_Dbeta()  const          { return m_length_Dbeta; }
+    [[nodiscard]] real_type length_ISO( real_type offs ) const override;
 
     void
     length_grad( real_type grad[2] ) const {
@@ -268,103 +270,103 @@ namespace G2lib {
       grad[1] = m_length_Dbeta;
     }
 
-    DubinsType solution_type() const { return m_solution_type; }
+    [[nodiscard]] DubinsType solution_type() const { return m_solution_type; }
 
-    string_view solution_type_string() const;
-    string      solution_type_string_short() const;
+    [[nodiscard]] string_view solution_type_string() const;
+    [[nodiscard]] string      solution_type_string_short() const;
 
-    integer icode() const { return to_integer(m_solution_type); }
+    [[nodiscard]] integer icode() const { return to_integer(m_solution_type); }
 
-    real_type length0() const { return m_C0.length(); }
-    real_type length1() const { return m_C1.length(); }
-    real_type length2() const { return m_C2.length(); }
+    [[nodiscard]] real_type length0() const { return m_C0.length(); }
+    [[nodiscard]] real_type length1() const { return m_C1.length(); }
+    [[nodiscard]] real_type length2() const { return m_C2.length(); }
 
-    real_type kappa0() const { return m_C0.kappa_begin(); }
-    real_type kappa1() const { return m_C1.kappa_begin(); }
-    real_type kappa2() const { return m_C2.kappa_begin(); }
+    [[nodiscard]] real_type kappa0() const { return m_C0.kappa_begin(); }
+    [[nodiscard]] real_type kappa1() const { return m_C1.kappa_begin(); }
+    [[nodiscard]] real_type kappa2() const { return m_C2.kappa_begin(); }
 
-    real_type X0( real_type s ) const { return m_C0.X(s); }
-    real_type Y0( real_type s ) const { return m_C0.Y(s); }
+    [[nodiscard]] real_type X0( real_type s ) const { return m_C0.X(s); }
+    [[nodiscard]] real_type Y0( real_type s ) const { return m_C0.Y(s); }
 
-    real_type X1( real_type s ) const { return m_C1.X(s); }
-    real_type Y1( real_type s ) const { return m_C1.Y(s); }
+    [[nodiscard]] real_type X1( real_type s ) const { return m_C1.X(s); }
+    [[nodiscard]] real_type Y1( real_type s ) const { return m_C1.Y(s); }
 
-    real_type X2( real_type s ) const { return m_C2.X(s); }
-    real_type Y2( real_type s ) const { return m_C2.Y(s); }
+    [[nodiscard]] real_type X2( real_type s ) const { return m_C2.X(s); }
+    [[nodiscard]] real_type Y2( real_type s ) const { return m_C2.Y(s); }
 
-    real_type theta0( real_type s ) const { return m_C0.theta(s); }
-    real_type theta1( real_type s ) const { return m_C1.theta(s); }
-    real_type theta2( real_type s ) const { return m_C2.theta(s); }
+    [[nodiscard]] real_type theta0( real_type s ) const { return m_C0.theta(s); }
+    [[nodiscard]] real_type theta1( real_type s ) const { return m_C1.theta(s); }
+    [[nodiscard]] real_type theta2( real_type s ) const { return m_C2.theta(s); }
 
-    real_type theta_begin()  const override { return m_C0.theta_begin(); }
-    real_type theta_end()    const override { return m_C2.theta_end(); }
+    [[nodiscard]] real_type theta_begin()  const override { return m_C0.theta_begin(); }
+    [[nodiscard]] real_type theta_end()    const override { return m_C2.theta_end(); }
 
-    real_type kappa_begin()  const override { return m_C0.kappa_begin(); }
-    real_type kappa_end()    const override { return m_C2.kappa_end(); }
+    [[nodiscard]] real_type kappa_begin()  const override { return m_C0.kappa_begin(); }
+    [[nodiscard]] real_type kappa_end()    const override { return m_C2.kappa_end(); }
 
-    real_type x_begin()      const override { return m_C0.x_begin(); }
-    real_type x_end()        const override { return m_C2.x_end(); }
+    [[nodiscard]] real_type x_begin()      const override { return m_C0.x_begin(); }
+    [[nodiscard]] real_type x_end()        const override { return m_C2.x_end(); }
 
-    real_type y_begin()      const override { return m_C0.y_begin(); }
-    real_type y_end()        const override { return m_C2.y_end(); }
+    [[nodiscard]] real_type y_begin()      const override { return m_C0.y_begin(); }
+    [[nodiscard]] real_type y_end()        const override { return m_C2.y_end(); }
 
-    real_type tx_begin()     const override { return m_C0.tx_begin(); }
-    real_type tx_end()       const override { return m_C2.tx_end(); }
+    [[nodiscard]] real_type tx_begin()     const override { return m_C0.tx_begin(); }
+    [[nodiscard]] real_type tx_end()       const override { return m_C2.tx_end(); }
 
-    real_type ty_begin()     const override { return m_C0.ty_begin(); }
-    real_type ty_end()       const override { return m_C2.ty_end(); }
+    [[nodiscard]] real_type ty_begin()     const override { return m_C0.ty_begin(); }
+    [[nodiscard]] real_type ty_end()       const override { return m_C2.ty_end(); }
 
-    real_type nx_begin_ISO() const override { return m_C0.nx_begin_ISO(); }
-    real_type nx_end_ISO()   const override { return m_C2.nx_end_ISO(); }
+    [[nodiscard]] real_type nx_begin_ISO() const override { return m_C0.nx_begin_ISO(); }
+    [[nodiscard]] real_type nx_end_ISO()   const override { return m_C2.nx_end_ISO(); }
 
-    real_type ny_begin_ISO() const override { return m_C0.ny_begin_ISO(); }
-    real_type ny_end_ISO()   const override { return m_C2.ny_end_ISO(); }
+    [[nodiscard]] real_type ny_begin_ISO() const override { return m_C0.ny_begin_ISO(); }
+    [[nodiscard]] real_type ny_end_ISO()   const override { return m_C2.ny_end_ISO(); }
 
-    real_type theta0_begin() const { return m_C0.theta_begin(); }
-    real_type theta0_end()   const { return m_C0.theta_end(); }
+    [[nodiscard]] real_type theta0_begin() const { return m_C0.theta_begin(); }
+    [[nodiscard]] real_type theta0_end()   const { return m_C0.theta_end(); }
 
-    real_type theta1_begin() const { return m_C1.theta_begin(); }
-    real_type theta1_end()   const { return m_C1.theta_end(); }
+    [[nodiscard]] real_type theta1_begin() const { return m_C1.theta_begin(); }
+    [[nodiscard]] real_type theta1_end()   const { return m_C1.theta_end(); }
 
-    real_type theta2_begin() const { return m_C2.theta_begin(); }
-    real_type theta2_end()   const { return m_C2.theta_end(); }
+    [[nodiscard]] real_type theta2_begin() const { return m_C2.theta_begin(); }
+    [[nodiscard]] real_type theta2_end()   const { return m_C2.theta_end(); }
 
-    real_type x0_begin() const { return m_C0.x_begin(); }
-    real_type x0_end()   const { return m_C0.x_end(); }
+    [[nodiscard]] real_type x0_begin() const { return m_C0.x_begin(); }
+    [[nodiscard]] real_type x0_end()   const { return m_C0.x_end(); }
 
-    real_type y0_begin() const { return m_C0.y_begin(); }
-    real_type y0_end()   const { return m_C0.y_end(); }
+    [[nodiscard]] real_type y0_begin() const { return m_C0.y_begin(); }
+    [[nodiscard]] real_type y0_end()   const { return m_C0.y_end(); }
 
-    real_type x1_begin() const { return m_C1.x_begin(); }
-    real_type x1_end()   const { return m_C1.x_end(); }
+    [[nodiscard]] real_type x1_begin() const { return m_C1.x_begin(); }
+    [[nodiscard]] real_type x1_end()   const { return m_C1.x_end(); }
 
-    real_type y1_begin() const { return m_C1.y_begin(); }
-    real_type y1_end()   const { return m_C1.y_end(); }
+    [[nodiscard]] real_type y1_begin() const { return m_C1.y_begin(); }
+    [[nodiscard]] real_type y1_end()   const { return m_C1.y_end(); }
 
-    real_type x2_begin() const { return m_C2.x_begin(); }
-    real_type x2_end()   const { return m_C2.x_end(); }
+    [[nodiscard]] real_type x2_begin() const { return m_C2.x_begin(); }
+    [[nodiscard]] real_type x2_end()   const { return m_C2.x_end(); }
 
-    real_type y2_begin() const { return m_C2.y_begin(); }
-    real_type y2_end()   const { return m_C2.y_end(); }
+    [[nodiscard]] real_type y2_begin() const { return m_C2.y_begin(); }
+    [[nodiscard]] real_type y2_end()   const { return m_C2.y_end(); }
 
     // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 
-    real_type theta    ( real_type s ) const override;
-    real_type theta_D  ( real_type   ) const override;
-    real_type theta_DD ( real_type   ) const override { return 0; }
-    real_type theta_DDD( real_type   ) const override { return 0; }
+    [[nodiscard]] real_type theta    ( real_type s ) const override;
+    [[nodiscard]] real_type theta_D  ( real_type   ) const override;
+    [[nodiscard]] real_type theta_DD ( real_type   ) const override { return 0; }
+    [[nodiscard]] real_type theta_DDD( real_type   ) const override { return 0; }
 
-    real_type X( real_type s ) const override;
-    real_type Y( real_type s ) const override;
+    [[nodiscard]] real_type X( real_type s ) const override;
+    [[nodiscard]] real_type Y( real_type s ) const override;
 
-    real_type X_D( real_type s ) const override;
-    real_type Y_D( real_type s ) const override;
+    [[nodiscard]] real_type X_D( real_type s ) const override;
+    [[nodiscard]] real_type Y_D( real_type s ) const override;
 
-    real_type X_DD( real_type s ) const override;
-    real_type Y_DD( real_type s ) const override;
+    [[nodiscard]] real_type X_DD( real_type s ) const override;
+    [[nodiscard]] real_type Y_DD( real_type s ) const override;
 
-    real_type X_DDD( real_type s ) const override;
-    real_type Y_DDD( real_type s ) const override;
+    [[nodiscard]] real_type X_DDD( real_type s ) const override;
+    [[nodiscard]] real_type Y_DDD( real_type s ) const override;
 
     /*\
      |  _                        __
@@ -507,6 +509,7 @@ namespace G2lib {
      |   \___|_|\___/|___/\___||___/\__|_|   \___/|_|_| |_|\__|
     \*/
 
+    [[nodiscard]]
     integer
     closest_point_ISO(
       real_type   qx,
@@ -518,6 +521,7 @@ namespace G2lib {
       real_type & dst
     ) const override;
 
+    [[nodiscard]]
     integer
     closest_point_ISO(
       real_type   qx,
@@ -541,7 +545,7 @@ namespace G2lib {
     //!
     //! Detect a collision with another biarc.
     //!
-    bool collision( Dubins const & B ) const;
+    [[nodiscard]] bool collision( Dubins const & B ) const;
 
     //!
     //! Detect a collision with another biarc with offset.
@@ -550,6 +554,7 @@ namespace G2lib {
     //! \param[in] B      second biarc
     //! \param[in] offs_B offset of second biarc
     //!
+    [[nodiscard]]
     bool
     collision_ISO(
       real_type      offs,
@@ -557,8 +562,9 @@ namespace G2lib {
       real_type      offs_B
     ) const;
 
-    bool collision( BaseCurve const * pC ) const override;
+    [[nodiscard]] bool collision( BaseCurve const * pC ) const override;
 
+    [[nodiscard]]
     bool
     collision_ISO(
       real_type         offs,
@@ -637,7 +643,7 @@ namespace G2lib {
   //!
   inline
   string_view
-  to_string( DubinsType n ) {
+  to_string( DubinsType const n ) {
     switch ( n ) {
     case DubinsType::LSL:          return "LSL";
     case DubinsType::RSR:          return "RSR";

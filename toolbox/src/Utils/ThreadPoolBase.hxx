@@ -124,7 +124,7 @@ namespace Utils {
 
       explicit
       Queue( unsigned capacity )
-      : m_queue_data( std::size_t( capacity+1 ) )
+      : m_queue_data( size_t( capacity+1 ) )
       , m_size( capacity+1 )
       , m_capacity( capacity )
       { }

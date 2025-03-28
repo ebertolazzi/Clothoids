@@ -61,7 +61,7 @@ namespace Utils {
     //! It provides methods to start, stop, and execute functions on the worker thread.
     //!
     class Worker {
-      
+
       std::mutex              m_task_mutex;
       std::condition_variable m_task_cv;
 

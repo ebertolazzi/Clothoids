@@ -22,6 +22,7 @@
 #include "mex.h"
 #include <map>
 #include <string>
+#include <string_view>
 #include <cstring>
 #include <vector>
 #include <cstdint>
@@ -71,7 +72,6 @@
 #define arg_out_18 plhs[18]
 #define arg_out_19 plhs[19]
 
-
 #define UTILS_MEX_ASSERT0( COND, MSG ) if ( !(COND) ) Utils::mex_error_message( MSG )
 
 #define UTILS_MEX_ASSERT( COND, FMT, ... ) \
@@ -80,6 +80,11 @@
 // -----------------------------------------------------------------------------
 
 namespace Utils {
+
+  using std::string;
+  using std::string_view;
+  using std::vector;
+
   /*!
    * \addtogroup Mex
    * @{
@@ -90,11 +95,7 @@ namespace Utils {
   //!
   //! \param msg The error message to display.
   //!
-  inline
-  void
-  mex_error_message( std::string msg ) {
-    mexErrMsgTxt( msg.c_str() );
-  }
+  inline void mex_error_message( string_view msg ) { mexErrMsgTxt( msg.data() ); }
 
   //!
   //! \brief Checks if the input argument is a scalar.
@@ -105,24 +106,11 @@ namespace Utils {
   //!
   inline
   bool
-  mex_is_scalar( mxArray const * arg, char const msg[] ) {
+  mex_is_scalar( mxArray const * arg, string_view msg ) {
     mwSize number_of_dimensions = mxGetNumberOfDimensions(arg);
     UTILS_MEX_ASSERT0( number_of_dimensions == 2, msg );
     mwSize const * dims = mxGetDimensions(arg);
     return dims[0] == 1 && dims[1] == 1;
-  }
-
-  //!
-  //! \brief Checks if the input argument is a scalar (overloaded).
-  //!
-  //! \param arg The mxArray input argument.
-  //! \param msg The error message to display if not scalar.
-  //! \return True if arg is a scalar, false otherwise.
-  //!
-  inline
-  bool
-  mex_is_scalar( mxArray const * arg, std::string msg ) {
-    return mex_is_scalar( arg, msg.c_str() );
   }
 
   //!
@@ -134,7 +122,7 @@ namespace Utils {
   //!
   inline
   double
-  mex_get_scalar_value( mxArray const * arg, char const msg[] ) {
+  mex_get_scalar_value( mxArray const * arg, string_view msg ) {
     mwSize number_of_dimensions = mxGetNumberOfDimensions(arg);
     UTILS_MEX_ASSERT0( number_of_dimensions == 2, msg );
     mwSize const * dims = mxGetDimensions(arg);
@@ -147,19 +135,6 @@ namespace Utils {
   }
 
   //!
-  //! \brief Gets the scalar value from the input argument (overloaded).
-  //!
-  //! \param arg The mxArray input argument.
-  //! \param msg The error message to display if not scalar.
-  //! \return The scalar value.
-  //!
-  inline
-  double
-  mex_get_scalar_value( mxArray const * arg, std::string msg ) {
-    return mex_get_scalar_value( arg, msg.c_str() );
-  }
-
-  //!
   //! \brief Gets a boolean value from the input argument.
   //!
   //! \param arg The mxArray input argument.
@@ -168,22 +143,9 @@ namespace Utils {
   //!
   inline
   bool
-  mex_get_bool( mxArray const * arg, char const msg[] ) {
+  mex_get_bool( mxArray const * arg, string_view msg ) {
     UTILS_MEX_ASSERT0( mxIsLogicalScalar(arg), msg );
     return mxIsLogicalScalarTrue(arg);
-  }
-
-  //!
-  //! \brief Gets a boolean value from the input argument (overloaded).
-  //!
-  //! \param arg The mxArray input argument.
-  //! \param msg The error message to display if not a logical scalar.
-  //! \return The boolean value.
-  //!
-  inline
-  bool
-  mex_get_bool( mxArray const * arg, std::string msg ) {
-    return mex_get_bool( arg, msg.c_str() );
   }
 
   //!
@@ -195,7 +157,8 @@ namespace Utils {
   //!
   inline
   int64_t
-  mex_get_int64( mxArray const * arg, char const msg[] ) {
+  mex_get_int64( mxArray const * arg, string_view msg ) {
+    using std::floor;
     mwSize number_of_dimensions = mxGetNumberOfDimensions(arg);
     UTILS_MEX_ASSERT0( number_of_dimensions == 2, msg );
     mwSize const * dims = mxGetDimensions(arg);
@@ -218,13 +181,13 @@ namespace Utils {
       case mxUINT64_CLASS: res = *static_cast<uint64_t*>(ptr); break;
       case mxDOUBLE_CLASS:
         { double tmp = *static_cast<double*>(ptr);
-          UTILS_MEX_ASSERT( tmp == std::floor(tmp), "{} expected int, found {}\n", msg, tmp );
+          UTILS_MEX_ASSERT( tmp == floor(tmp), "{} expected int, found {}\n", msg, tmp );
           res = static_cast<int64_t>(tmp);
         }
         break;
       case mxSINGLE_CLASS:
         { float tmp = *static_cast<float*>(ptr);
-          UTILS_MEX_ASSERT( tmp == std::floor(tmp), "{} expected int, found {}\n", msg, tmp );
+          UTILS_MEX_ASSERT( tmp == floor(tmp), "{} expected int, found {}\n", msg, tmp );
           res = static_cast<int64_t>(tmp);
         }
         break;
@@ -233,19 +196,6 @@ namespace Utils {
       break;
     }
     return res;
-  }
-
-  //!
-  //! \brief Gets a 64-bit integer value from the input argument (overloaded).
-  //!
-  //! \param arg The mxArray input argument.
-  //! \param msg The error message to display if not a valid scalar.
-  //! \return The 64-bit integer value.
-  //!
-  inline
-  int64_t
-  mex_get_int64( mxArray const * arg, string msg ) {
-    return mex_get_int64( arg, msg.c_str() );
   }
 
   //!
@@ -261,7 +211,7 @@ namespace Utils {
   mex_vector_pointer(
     mxArray const * arg,
     mwSize        & sz,
-    char const      msg[]
+    string_view     msg
   ) {
     mwSize number_of_dimensions = mxGetNumberOfDimensions(arg);
     UTILS_MEX_ASSERT0( number_of_dimensions == 2, msg );
@@ -273,24 +223,6 @@ namespace Utils {
     );
     sz = dims[0]*dims[1];
     return mxGetPr(arg);
-  }
-
-  //!
-  //! \brief Gets a pointer to a vector from the input argument (overloaded).
-  //!
-  //! \param arg The mxArray input argument.
-  //! \param sz The size of the vector (output).
-  //! \param msg The error message to display if not a valid vector.
-  //! \return Pointer to the vector data.
-  //!
-  inline
-  double const *
-  mex_vector_pointer(
-    mxArray const * arg,
-    mwSize        & sz,
-    string          msg
-  ) {
-    return mex_vector_pointer( arg, sz, msg.c_str() );
   }
 
   //!
@@ -308,7 +240,7 @@ namespace Utils {
     mxArray const * arg,
     mwSize        & nr,
     mwSize        & nc,
-    char const    msg[]
+    string_view     msg
   ) {
     mwSize number_of_dimensions = mxGetNumberOfDimensions(arg);
     UTILS_MEX_ASSERT0( number_of_dimensions == 2, msg );
@@ -316,26 +248,6 @@ namespace Utils {
     nr = dims[0];
     nc = dims[1];
     return mxGetPr(arg);
-  }
-
-  //!
-  //! \brief Gets a pointer to a matrix from the input argument (overloaded).
-  //!
-  //! \param arg The mxArray input argument.
-  //! \param nr The number of rows (output).
-  //! \param nc The number of columns (output).
-  //! \param msg The error message to display if not a valid matrix.
-  //! \return Pointer to the matrix data.
-  //!
-  inline
-  double const *
-  mex_matrix_pointer(
-    mxArray const * arg,
-    mwSize        & nr,
-    mwSize        & nc,
-    string          msg
-  ) {
-    return mex_matrix_pointer( arg, nr, nc, msg.c_str() );
   }
 
   // -----------------------------------------------------------------------------
@@ -512,13 +424,13 @@ namespace Utils {
 
   inline
   void
-  mex_create_string_cell_array( mxArray * & arg, std::vector<std::string> const & str_vec ) {
+  mex_create_string_cell_array( mxArray * & arg, vector<string> const & str_vec ) {
     // Crea un cell array MATLAB con lo stesso numero di elementi del vettore di stringhe
     arg = mxCreateCellMatrix(str_vec.size(), 1);
 
     // Riempie il cell array con le stringhe C++
     for ( size_t i{0}; i < str_vec.size(); ++i ) {
-      mxArray *str = mxCreateString(str_vec[i].c_str()); // Crea una stringa MATLAB dalla stringa C++
+      mxArray *str = mxCreateString(str_vec[i].data()); // Crea una stringa MATLAB dalla stringa C++
       mxSetCell(arg, i, str); // Imposta la stringa nella posizione corretta del cell array
     }
   }
@@ -540,9 +452,9 @@ namespace Utils {
   //!
   template <typename base>
   class mex_class_handle {
-    uint32_t    m_signature{CLASS_HANDLE_SIGNATURE}; //!< Signature to verify handle validity.
-    base *      m_ptr{nullptr};                      //!< Pointer to the C++ object.
-    std::string m_name;                              //!< Name of the class type.
+    uint32_t m_signature{CLASS_HANDLE_SIGNATURE}; //!< Signature to verify handle validity.
+    base *   m_ptr{nullptr};                      //!< Pointer to the C++ object.
+    string   m_name;                              //!< Name of the class type.
 
   public:
 
@@ -586,7 +498,7 @@ namespace Utils {
     //!
     bool is_valid()
     { return ((m_signature == CLASS_HANDLE_SIGNATURE) &&
-              !strcmp(m_name.c_str(), typeid(base).name())); }
+              !strcmp(m_name.data(), typeid(base).name())); }
 
     //!
     //! \brief Retrieves the pointer to the managed C++ object.

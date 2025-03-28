@@ -44,11 +44,11 @@ namespace Utils {
   //!
   bool
   Tokenizer::next_token() {
-    size_t i = m_string.find_first_not_of( m_delimiters, m_offset );
+    size_t const i{ m_string.find_first_not_of( m_delimiters, m_offset ) };
     m_offset = m_string.length();
     if ( string::npos == i ) return false;
 
-    size_t j = m_string.find_first_of( m_delimiters, i );
+    size_t const j{ m_string.find_first_of( m_delimiters, i ) };
     if ( string::npos == j ) {
       m_token = m_string.substr(i);
       return true;

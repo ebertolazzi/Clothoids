@@ -12,7 +12,7 @@
  |                                                                          |
  |      Enrico Bertolazzi                                                   |
  |      Dipartimento di Ingegneria Industriale                              |
- |      Universita` degli Studi di Trento                                   |
+ |      Università degli Studi di Trento                                    |
  |      email: enrico.bertolazzi@unitn.it                                   |
  |                                                                          |
 \*--------------------------------------------------------------------------*/
@@ -29,32 +29,32 @@ namespace G2lib {
 
   void
   Dubins3p::get_sample_angles(
-    real_type xi,
-    real_type yi,
-    real_type thetai,
-    real_type xm,
-    real_type ym,
-    real_type xf,
-    real_type yf,
-    real_type thetaf,
-    real_type k_max,
-    real_type tolerance,
+    real_type const xi,
+    real_type const yi,
+    real_type const thetai,
+    real_type const xm,
+    real_type const ym,
+    real_type const xf,
+    real_type const yf,
+    real_type const thetaf,
+    real_type const k_max,
+    real_type const tolerance,
     vector<real_type> & angles
   ) const {
 
     // select angles
-    integer NSEG{ integer(std::floor(Utils::m_2pi / m_sample_angle)) };
+    integer const NSEG{ static_cast<integer>(std::floor(Utils::m_2pi / m_sample_angle)) };
     angles.clear();
     angles.reserve( 2*NSEG + 12 );
     {
       real_type ang[12];
-      integer npts = this->get_range_angles( xi, yi, thetai, xm, ym, xf, yf, thetaf, k_max, ang );
+      integer npts{ this->get_range_angles( xi, yi, thetai, xm, ym, xf, yf, thetaf, k_max, ang ) };
       if ( npts > 0 ) {
         for ( integer i{0}; i < npts; ++i ) {
           real_type a{ i == 0 ? ang[npts-1]-Utils::m_2pi : ang[i-1] };
           //real_type b{ i == npts ? ang[0]+Utils::m_2pi      : ang[i]   };
-          real_type b{ ang[i] };
-          real_type delta{ std::min( (b-a)/2.99999, m_sample_angle ) };
+          real_type const b{ ang[i] };
+          real_type const delta{ std::min( (b-a)/2.99999, m_sample_angle ) };
           while ( a < b ) {
             real_type aa{ a };
             if      ( aa < 0            ) aa += Utils::m_2pi;
@@ -70,7 +70,7 @@ namespace G2lib {
     }
     std::sort( angles.begin(), angles.end() );
     // remove duplicates
-    integer i{integer(angles.size())};
+    integer i{static_cast<integer>(angles.size())};
     for ( --i; i > 0; --i ) {
       if ( std::abs(angles[i]-angles[i-1]) < tolerance ) {
         angles.erase(angles.begin()+i);
@@ -80,18 +80,18 @@ namespace G2lib {
 
   bool
   Dubins3p::build_pattern_search(
-    real_type xi,
-    real_type yi,
-    real_type thetai,
-    real_type xm,
-    real_type ym,
-    real_type xf,
-    real_type yf,
-    real_type thetaf,
-    real_type k_max,
-    real_type tolerance,
-    bool      use_trichotomy,
-    bool      use_bracket
+    real_type       xi,
+    real_type       yi,
+    real_type       thetai,
+    real_type       xm,
+    real_type       ym,
+    real_type       xf,
+    real_type       yf,
+    real_type       thetaf,
+    real_type       k_max,
+    real_type const tolerance,
+    bool      const use_trichotomy,
+    bool      const use_bracket
   ) {
 
     m_evaluation = 0;
@@ -121,20 +121,56 @@ namespace G2lib {
       return ok;
     };
 
-    auto eval3p = [this,xi,yi,thetai,xm,ym,xf,yf,thetaf,k_max]( Dubins3p_data & D3P, real_type thetam ) -> void {
+    auto eval3p = [this,xi,yi,thetai,xm,ym,xf,yf,thetaf,k_max,tolerance,use_trichotomy,use_bracket]( Dubins3p_data & D3P, real_type const thetam ) -> void {
       D3P.thetam = thetam;
-      D3P.D0.build( xi, yi, thetai, xm, ym, thetam, k_max );
-      D3P.D1.build( xm, ym, thetam, xf, yf, thetaf,     k_max );
+      bool ok{ D3P.D0.build( xi, yi, thetai, xm, ym, thetam, k_max ) };
+      if ( ok ) ok = D3P.D1.build( xm, ym, thetam, xf, yf, thetaf,     k_max );
+      UTILS_ASSERT(
+        ok,
+        "Dubins3p::build_pattern_search(\n"
+        "  xi             = {}\n"
+        "  yi             = {}\n"
+        "  thetai         = {}\n"
+        "  xm             = {}\n"
+        "  ym             = {}\n"
+        "  xf             = {}\n"
+        "  yf             = {}\n"
+        "  thetaf         = {}\n"
+        "  k_max          = {}\n"
+        "  tolerance      = {}\n"
+        "  use_trichotomy = {}\n"
+        "  use_bracket    = {}\n"
+        ") failed\n",
+        xi, yi, thetai, xm, ym, xf, yf, thetaf, k_max, tolerance, use_trichotomy, use_bracket
+      );
       D3P.len   = D3P.D0.length()       + D3P.D1.length();
       D3P.len_D = D3P.D0.length_Dbeta() + D3P.D1.length_Dalpha();
       ++m_evaluation;
     };
 
-    auto eval_for_bracket = [this,xi,yi,thetai,xm,ym,xf,yf,thetaf,k_max]( real_type theta ) -> real_type {
+    auto eval_for_bracket = [this,xi,yi,thetai,xm,ym,xf,yf,thetaf,k_max,tolerance,use_trichotomy,use_bracket]( real_type const theta ) -> real_type {
       Dubins D0{"temporary Dubins A"};
       Dubins D1{"temporary Dubins B"};
-      D0.build( xi, yi, thetai, xm, ym, theta,  k_max );
-      D1.build( xm, ym, theta,  xf, yf, thetaf, k_max );
+      bool ok{ D0.build( xi, yi, thetai, xm, ym, theta,  k_max ) };
+      if ( ok ) ok = D1.build( xm, ym, theta,  xf, yf, thetaf, k_max );
+      UTILS_ASSERT(
+        ok,
+        "Dubins3p::build_pattern_search(\n"
+        "  xi             = {}\n"
+        "  yi             = {}\n"
+        "  thetai         = {}\n"
+        "  xm             = {}\n"
+        "  ym             = {}\n"
+        "  xf             = {}\n"
+        "  yf             = {}\n"
+        "  thetaf         = {}\n"
+        "  k_max          = {}\n"
+        "  tolerance      = {}\n"
+        "  use_trichotomy = {}\n"
+        "  use_bracket    = {}\n"
+        ") failed\n",
+        xi, yi, thetai, xm, ym, xf, yf, thetaf, k_max, tolerance, use_trichotomy, use_bracket
+      );
       ++m_evaluation;
       return D0.length_Dbeta() + D1.length_Dalpha();
     };
@@ -159,15 +195,18 @@ namespace G2lib {
       bool ok{ use_bracket };
       if ( ok ) ok = do_bracket( A, P3, B );
       if ( !ok ) {
-        Dubins3p_data P1, P2, P4, P5;
+        Dubins3p_data P2;
         eval3p( P2, (A.thetam+2*P3.thetam)/3 );
         if ( P2.len <= P3.len ) {
+          Dubins3p_data P1;
           eval3p( P1, (2*A.thetam+P3.thetam)/3 );
           if ( P1.len <= P2.len ) { P3.copy(P1); B.copy(P2); }
           else                    { A.copy(P1);  B.copy(P3); P3.copy(P2); }
         } else {
+          Dubins3p_data P4;
           eval3p( P4, (B.thetam+2*P3.thetam)/3 );
           if ( P4.len <= P3.len ) {
+            Dubins3p_data P5;
             eval3p( P5, (2*B.thetam+P3.thetam)/3 );
             if ( P5.len <= P4.len ) { A.copy(P4); P3.copy(P5); }
             else                    { A.copy(P3); P3.copy(P4); B.copy(P5); }
@@ -204,11 +243,11 @@ namespace G2lib {
 
     // initialize and find min
     real_type lmin{Utils::Inf<real_type>()};
-    integer NSEG{integer(angles.size())};
+    integer const NSEG{static_cast<integer>(angles.size())};
     eval3p( C, angles[NSEG-2] );
     eval3p( R, angles[NSEG-1] );
 
-    for ( real_type a : angles ) {
+    for ( real_type const a : angles ) {
       L.copy( C );
       C.copy( R );
       eval3p( R, a );

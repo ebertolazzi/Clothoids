@@ -35,20 +35,20 @@ namespace GC_namespace {
     vec_string_type const & headers,
     vector_type     const & data,
     ostream_type          & stream,
-    char                    delimiter
+    char const              delimiter
   ) {
 
-    unsigned ncol = unsigned(headers.size());
-    unsigned nrow = unsigned(data[0].get_num_elements());
+    auto const ncol{ static_cast<unsigned>(headers.size()) };
+    auto const nrow{ (data[0].get_num_elements()) };
 
     stream << headers[0];
-    for ( unsigned icol = 1; icol < ncol; ++icol )
+    for ( unsigned icol{1}; icol < ncol; ++icol )
       stream << delimiter << headers[icol];
     stream << '\n';
 
-    for ( unsigned row = 0; row < nrow; ++row ) {
+    for ( unsigned row{0}; row < nrow; ++row ) {
       stream << data[0].get_number_at(row);
-      for ( unsigned icol = 1; icol < ncol; ++icol )
+      for ( unsigned icol{1}; icol < ncol; ++icol )
         stream << delimiter << data[icol].get_number_at(row);
       stream << '\n';
     }
@@ -59,20 +59,20 @@ namespace GC_namespace {
     vec_string_type const & headers,
     mat_real_type   const & data,
     ostream_type          & stream,
-    char                    delimiter
+    char const              delimiter
   ) {
 
-    unsigned ncol = unsigned(data.num_cols());
-    unsigned nrow = unsigned(data.num_rows());
+    auto const ncol{ (data.num_cols()) };
+    auto const nrow{ (data.num_rows()) };
 
     stream << headers[0];
-    for ( unsigned icol = 1; icol < ncol; ++icol )
+    for ( unsigned icol{1}; icol < ncol; ++icol )
       stream << delimiter << headers[icol];
     stream << '\n';
 
-    for ( unsigned row = 0; row < nrow; ++row ) {
+    for ( unsigned row{0}; row < nrow; ++row ) {
       stream << data(row,0);
-      for ( unsigned icol = 1; icol < ncol; ++icol )
+      for ( unsigned icol{1}; icol < ncol; ++icol )
         stream << delimiter << data(row,icol);
       stream << '\n';
     }
@@ -85,32 +85,32 @@ namespace GC_namespace {
     ostream_type          & stream
   ) {
 
-    unsigned ncol = unsigned(headers.size());
-    unsigned nrow = data[0].get_num_elements();
+    auto const ncol{ static_cast<unsigned>(headers.size()) };
+    auto const nrow{ (data[0].get_num_elements()) };
 
     if ( ncol == 0 ) return;
 
     // calcolo lunghezza massima stringhe headers
-    unsigned ml{0};
-    vec_string_type::const_iterator is{ headers.begin() };
+    unsigned ml { 0 };
+    auto     is { headers.begin() };
     for (; is != headers.end(); ++is )
-      if ( ml < is->length() ) ml = unsigned(is->length());
+      if ( ml < is->length() ) ml = static_cast<unsigned>(is->length());
     // taglio a lunghezza min/max
     if      ( ml < 8  ) ml = 8;
     else if ( ml > 20 ) ml = 20;
 
-    string line = string_type(ncol*(ml+1)-1, '-');
+    string const line{ string_type(ncol*(ml+1)-1, '-') };
 
     is = headers.begin();
-    stream << std::setw(int(ml)) << is->c_str();
+    stream << std::setw(static_cast<int>(ml)) << is->c_str();
     for ( ++is; is != headers.end(); ++is )
-      stream << " " << std::setw(int(ml)) << is->c_str();
+      stream << " " << std::setw(static_cast<int>(ml)) << is->c_str();
     stream << '\n' << line << '\n';
 
-    for ( unsigned row = 0; row < nrow; ++row ) {
-      stream << std::setw(int(ml)) << data[0].get_number_at(row);
-      for ( unsigned icol = 1; icol < ncol; ++icol )
-        stream << " " << std::setw(int(ml)) << data[icol].get_number_at(row);
+    for ( unsigned row{0}; row < nrow; ++row ) {
+      stream << std::setw(static_cast<int>(ml)) << data[0].get_number_at(row);
+      for ( unsigned icol{1}; icol < ncol; ++icol )
+        stream << " " << std::setw(static_cast<int>(ml)) << data[icol].get_number_at(row);
       stream << '\n';
     }
     stream << line << '\n';
@@ -123,32 +123,32 @@ namespace GC_namespace {
     ostream_type          & stream
   ) {
 
-    unsigned ncol = unsigned(data.num_cols());
-    unsigned nrow = unsigned(data.num_rows());
+    auto const ncol{ (data.num_cols()) };
+    auto const nrow{ (data.num_rows()) };
 
     if ( ncol == 0 ) return;
 
     // calcolo lunghezza massima stringhe headers
-    unsigned ml = 0;
-    vec_string_type::const_iterator is = headers.begin();
+    unsigned ml { 0 };
+    auto     is { headers.begin() };
     for (; is != headers.end(); ++is )
-      if ( ml < is->length() ) ml = unsigned(is->length());
+      if ( ml < is->length() ) ml = static_cast<unsigned>(is->length());
     // taglio a lunghezza min/max
     if      ( ml < 8  ) ml = 8;
     else if ( ml > 20 ) ml = 20;
 
-    string line = string_type(ncol*(ml+1)-1, '-');
+    string const line{ string_type(ncol*(ml+1)-1, '-') };
 
     is = headers.begin();
-    stream << std::setw(int(ml)) << is->c_str();
+    stream << std::setw(static_cast<int>(ml)) << is->c_str();
     for ( ++is; is != headers.end(); ++is )
-      stream << " " << std::setw(int(ml)) << is->c_str();
+      stream << " " << std::setw(static_cast<int>(ml)) << is->c_str();
     stream << '\n' << line << '\n';
 
     for ( unsigned row{0}; row < nrow; ++row ) {
-      stream << std::setw(int(ml)) << data(row,0);
+      stream << std::setw(static_cast<int>(ml)) << data(row,0);
       for ( unsigned icol{1}; icol < ncol; ++icol )
-        stream << " " << std::setw(int(ml)) << data(row,icol);
+        stream << " " << std::setw(static_cast<int>(ml)) << data(row,icol);
       stream << '\n';
     }
     stream << line << '\n';

@@ -80,6 +80,15 @@ namespace Utils {
       }
     }
 
+    void
+    close_all() { 
+      wait();
+      // note that we're done, and wake up any thread that's
+      // waiting for a new job
+      m_running = false;
+      for( unsigned i{unsigned(m_threads.size())}; i > 0; --i ) exec( [](){} );
+      for( auto & t : m_threads ) if( t.joinable() ) t.join();
+    }
 
   public:
 
@@ -99,15 +108,7 @@ namespace Utils {
     //!
     //! \brief Destroys the ThreadPool1 and stops all worker threads.
     //!
-    virtual
-    ~ThreadPool2() { 
-      wait();
-      // note that we're done, and wake up any thread that's
-      // waiting for a new job
-      m_running = false;
-      for( unsigned i{unsigned(m_threads.size())}; i > 0; --i ) exec( [](){} );
-      for( auto & t : m_threads ) if( t.joinable() ) t.join();
-    }
+    virtual ~ThreadPool2() { close_all(); }
 
     //!
     //! \brief Executes a task in the thread pool.

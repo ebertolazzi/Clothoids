@@ -115,7 +115,7 @@ namespace Utils {
     //! \param os The output stream where the quaternion will be printed.
     //!
     void
-    print( ostream_type & os) const {
+    print( ostream_type & os ) const {
       os << "[ "
          << m_Q[0] << ", "
          << m_Q[1] << "i, "

@@ -63,9 +63,9 @@ namespace Utils {
   class TicToc {
 
     using real_type = double;
-    int64_t   m_frequency;   // ticks per second
-    int64_t   m_t1, m_t2;    // ticks
-    real_type m_elapsed_time;
+    int64_t   m_frequency{0};   // ticks per second
+    int64_t   m_t1{0}, m_t2{0};    // ticks
+    real_type m_elapsed_time{0};
 
     TicToc( TicToc const & ) = delete;
     TicToc const & operator = ( TicToc const & ) const = delete;

@@ -45,7 +45,7 @@ namespace rang {
     supportsColor() noexcept {
       #if defined(UTILS_OS_LINUX) || defined(UTILS_OS_OSX)
       static const bool result = [] {
-        char const * Terms[] = {
+        char const * terms[] = {
           "ansi",    "color",  "console", "cygwin", "gnome",
           "konsole", "kterm",  "linux",   "msys",   "putty",
           "rxvt",    "screen", "vt100",   "xterm"
@@ -53,7 +53,7 @@ namespace rang {
         char const *env_p = getenv("TERM");
         if ( env_p == nullptr ) return false;
         return any_of(
-          begin(Terms), end(Terms),
+          begin(terms), end(terms),
           [&](const char *term) { return strstr(env_p, term) != nullptr; }
         );
       }();
@@ -107,7 +107,7 @@ namespace rang {
       if ( !ptrGetFileInformationByHandleEx( h, FileNameInfo, pNameInfo.get(), sizeof(MY_FILE_NAME_INFO)) ) return false;
 
       wstring name(pNameInfo->FileName, pNameInfo->FileNameLength / sizeof(WCHAR));
-      
+
       if ( ( name.find(L"msys-") == wstring::npos && name.find(L"cygwin-") == wstring::npos )
             || name.find(L"-pty") == wstring::npos) return false;
 
@@ -123,7 +123,8 @@ namespace rang {
       if ( osbuf == cout.rdbuf() ) {
         static const bool cout_term = isatty(fileno(stdout)) != 0;
         return cout_term;
-      } else if ( osbuf == cerr.rdbuf() || osbuf == clog.rdbuf() ) {
+      }
+      if ( osbuf == cerr.rdbuf() || osbuf == clog.rdbuf() ) {
         static const bool cerr_term = isatty(fileno(stderr)) != 0;
         return cerr_term;
       }
@@ -131,7 +132,8 @@ namespace rang {
       if ( osbuf == cout.rdbuf()) {
         static const bool cout_term = (_isatty(_fileno(stdout)) || isMsysPty(_fileno(stdout)));
         return cout_term;
-      } else if (osbuf == cerr.rdbuf() || osbuf == clog.rdbuf()) {
+      }
+      if ( osbuf == cerr.rdbuf() || osbuf == clog.rdbuf() ) {
         static const bool cerr_term = (_isatty(_fileno(stderr)) || isMsysPty(_fileno(stderr)));
         return cerr_term;
       }

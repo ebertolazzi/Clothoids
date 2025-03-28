@@ -54,10 +54,10 @@ namespace Utils {
   //!
   class Tokenizer {
   protected:
-    size_t            m_offset;      //!< Current position in the string.
-    std::string const m_string;      //!< The original string to tokenize.
-    std::string       m_token;       //!< The current token extracted.
-    std::string const m_delimiters;  //!< Characters used to separate tokens.
+    size_t       m_offset;      //!< Current position in the string.
+    string const m_string;      //!< The original string to tokenize.
+    string       m_token;       //!< The current token extracted.
+    string const m_delimiters;  //!< Characters used to separate tokens.
   public:
     //!
     //! Constructs a Tokenizer object with the provided string and delimiters.
@@ -66,8 +66,8 @@ namespace Utils {
     //! \param delimiters A string containing delimiter characters.
     //!
     Tokenizer(
-      std::string str,
-      std::string delimiters
+      string str,
+      string delimiters
     )
     : m_offset(0)
     , m_string(std::move(str))
@@ -79,7 +79,7 @@ namespace Utils {
     //!
     //! \return The last token that was retrieved using `next_token()`.
     //!
-    std::string get_token() const { return m_token; }
+    string const & get_token() const { return m_token; }
 
     //!
     //! Advances the tokenizer to the next token in the string.
@@ -109,9 +109,9 @@ namespace Utils {
   //!
   void
   split_string(
-    std::string const        & str,
-    std::string const        & sep,
-    std::vector<std::string> & arr
+    string const   & str,
+    string const   & sep,
+    vector<string> & arr
   );
 
   /*! @} */

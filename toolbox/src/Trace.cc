@@ -69,10 +69,10 @@ namespace Utils {
 
   void
   print_trace(
-    int            line,
-    string_view    file,
-    string_view    msg,
-    ostream_type & stream
+    int         const line,
+    string_view const file,
+    string_view const msg,
+    ostream_type &    stream
   ) {
     fmt::print( stream,
       "---------------------------------------------------------\n"
@@ -96,28 +96,26 @@ namespace Utils {
 
   string
   Runtime_TraceError::grab_backtrace(
-    string_view reason,
-    string_view file,
-    int         line
-  ) const {
+    string_view const reason,
+    string_view const file,
+    int         const line
+  ) {
     return fmt::format( "\n{}\nOn File:{}:{}\n", reason, file, line );
   }
 
   #else
 
   static
-  inline
   string
-  demang( string_view mangled_name ) {
-    if ( mangled_name == nullptr ) return string{""};
+  demang( string_view const mangled_name ) {
+    if ( mangled_name.data() == nullptr ) return string{""};
     int status = 0;
     string retval{mangled_name};
     char * name = abi::__cxa_demangle( mangled_name.data(), nullptr, nullptr, &status );
     if ( status == 0 ) {
       retval = name;
       // extract only name
-      char const * p = strchr(name,'(');
-      if ( p != nullptr ) retval = retval.substr(0,p-name);
+      if (char const * p { strchr(name,'(') }; p != nullptr ) retval = retval.substr(0,p-name);
     }
     if ( name != nullptr ) free(name);
     return retval;
@@ -126,15 +124,15 @@ namespace Utils {
   //! print a trace stack used in debug
   void
   print_trace(
-    int            line,
-    string_view    file,
-    string_view    reason,
-    ostream_type & stream
+    int         const line,
+    string_view const file,
+    string_view const reason,
+    ostream_type &    stream
   ) {
 
     fmt::print(
       stream, "\n{}\nOn File:{}:{}\nprocess ID:{}, parent process ID:{}\nstack trace:\n",
-      reason, basename(file), line, getpid(), getppid()
+      reason, Utils::get_basename(file), line, getpid(), getppid()
     );
 
     #ifdef UTILS_OS_OSX
@@ -151,8 +149,7 @@ namespace Utils {
       unw_get_reg(&cursor, UNW_REG_IP, &pc);
       if ( pc == 0 ) break;
       stream << "0x" << hex << pc << ":" << dec;
-      char sym[256];
-      if ( unw_get_proc_name(&cursor, sym, sizeof(sym), &offset) == 0 ) {
+      if (char sym[256]; unw_get_proc_name(&cursor, sym, sizeof(sym), &offset) == 0 ) {
         stream << " (" << demang( sym ) << "+0x" << hex << offset << ")\n" << dec;
       } else {
         stream << " -- error: unable to obtain symbol name for this frame\n";
@@ -179,10 +176,10 @@ namespace Utils {
 
   string
   Runtime_TraceError::grab_backtrace(
-    string_view reason,
-    string_view file,
-    int         line
-  ) const {
+    string_view const reason,
+    string_view const file,
+    int         const line
+  ) {
     ostringstream ost;
     print_trace( line, file, reason, ost );
     return ost.str();

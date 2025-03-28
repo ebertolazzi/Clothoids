@@ -5,13 +5,13 @@
 using std::string;
 
 // Circular rotate left
-#define ROT_L( X, Y ) (( X << Y ) | ( X >> (64 - Y) ))
+#define ROT_L( X, Y ) (( (X) << (Y) ) | ( (X) >> (64 - (Y)) ))
 #define ROUNDS 24
 
 //! For converting binary output to hexidecimal for printing
-static char const * hexLookup = "0123456789abcdef";
+static auto hexLookup { "0123456789abcdef" };
 
-static uint64_t const roundConstants[] = {
+static constexpr uint64_t roundConstants[] = {
   0x0000000000000001,
   0x0000000000008082,
   0x800000000000808A,
@@ -40,7 +40,7 @@ static uint64_t const roundConstants[] = {
 
 namespace Utils {
 
-  SHA3::SHA3( int digest_size ) : m_digest_size( digest_size ) {
+  SHA3::SHA3( int const digest_size ) : m_digest_size( digest_size ) {
     // zero the state
     // CHANGE: Now uses bit shifting instead of multiplication
     m_sponge_capacity = m_digest_size << 4; // x 16
@@ -60,7 +60,7 @@ namespace Utils {
   }
 
   void
-  SHA3::hash_string( string_view str ){
+  SHA3::hash_string( string_view const str ){
     int byte = 0;
     while( str[byte] != '\0' ){
       hash( static_cast<int>( static_cast<uint8_t>(str[byte]) ) );
@@ -69,11 +69,11 @@ namespace Utils {
   }
 
   void
-  SHA3::hash_hex_string( string_view str ){
-    int byte = 0;
+  SHA3::hash_hex_string( string_view const str ){
+    int byte{0};
     while( str[byte] != '\0' ){
-      int f = str[byte];
-      int s = str[byte+1];
+      int f { str[byte]   };
+      int s { str[byte+1] };
       if      ( f >= 97 ) f -= 87; // lowercase
       else if ( f >= 65 ) f -= 55; // uppercase
       else                f -= 48; // numeric
@@ -97,13 +97,13 @@ namespace Utils {
     memset(
       m_buffer_location,
       0,
-      size_t(reinterpret_cast<uint8_t*>(m_message_buffer_64) + (m_sponge_rate>>3) - m_buffer_location)
+      static_cast<size_t>(reinterpret_cast<uint8_t *>(m_message_buffer_64) + (m_sponge_rate >> 3) - m_buffer_location)
     );
     reinterpret_cast<uint8_t*>(m_message_buffer_64)[(m_sponge_rate >> 3) - 1] |= 0x80;
     m_absorb_buffer();
 
     // Squeeze
-    memcpy( d, m_state, size_t(digest_size()) );
+    memcpy( d, m_state, static_cast<size_t>(digest_size()) );
     m_reset(); // Ready the function to hash another message
   }
 
@@ -131,26 +131,26 @@ namespace Utils {
 
   void
   SHA3::m_reset() {
-    uint64_t * s = static_cast<uint64_t*>(m_state[0]);
-    std::fill( s, s+25, 0 );
+    auto const s { static_cast<uint64_t*>(m_state[0]) };
+    std::fill_n( s, 25, 0 );
     m_buffer_location = reinterpret_cast<uint8_t*>(m_message_buffer_64);
   }
 
   void
   SHA3::m_absorb_buffer(){
-    uint64_t *x = m_message_buffer_64;
-    for( int i = 0; i*64 < m_sponge_rate; ++i ) m_state[i/5][i%5] ^= x[i]; // TODO: unroll
+    uint64_t const * x { m_message_buffer_64 };
+    for( int i{0}; i*64 < m_sponge_rate; ++i ) m_state[i/5][i%5] ^= x[i]; // TODO: unroll
     m_perform_rounds( ROUNDS );
   }
 
   // CHANGE: Function changed to inline
   void
-  SHA3::m_perform_rounds( int rounds ) {
+  SHA3::m_perform_rounds( int const rounds ) {
     uint64_t b[5][5];
     uint64_t c[5];
     uint64_t d[5];
 
-    for( int i = 0; i < rounds; i++ ) {
+    for( int i{0}; i < rounds; i++ ) {
 
       //CHANGE: For loops change to pre-determined steps, reduces branching
 
@@ -264,18 +264,18 @@ namespace Utils {
 
   void
   SHA3::m_print_message_buffer( ostream_type & stream ) const {
-    uint8_t const * m_messageBuffer = reinterpret_cast<uint8_t const*>(m_message_buffer_64);
+    auto const m_messageBuffer { reinterpret_cast<uint8_t const*>(m_message_buffer_64) };
     stream << "mb = [ ";
-    for( int i = 0; i < m_sponge_rate/8; ++i )
-      stream << int(m_messageBuffer[i]) << ' ';
+    for( int i{0}; i < m_sponge_rate/8; ++i )
+      stream << static_cast<int>(m_messageBuffer[i]) << ' ';
     stream << "]\n";
   }
 
   void
   SHA3::m_print_sponge( ostream_type & stream ) const {
     stream << "s = [ " << std::hex;
-    for( int i = 0; i < 5; ++i )
-      for( int j = 0; j < 5; ++j )
+    for( int i{0}; i < 5; ++i )
+      for( int j{0}; j < 5; ++j )
         stream << m_state[i][j] << ' ';
     stream << std::dec << "]\n";
   }

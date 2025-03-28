@@ -68,14 +68,13 @@ namespace PolynomialRoots {
 
   //static real_type const maxValue   = std::numeric_limits<real_type>::max();
   //static real_type const minValue   = std::numeric_limits<real_type>::min();
-  static real_type const epsilon    = std::numeric_limits<real_type>::epsilon();
-  static real_type const epsilon10  = 10*epsilon;
-  static real_type const epsilon100 = 100*epsilon;
+  static constexpr real_type epsilon    { std::numeric_limits<real_type>::epsilon() };
+  static constexpr real_type epsilon10  { 10*epsilon };
+  static constexpr real_type epsilon100 { 100*epsilon };
 
-  static real_type const RADFAC = M_PI / 180; // Degrees - to - radians conversion factor = pi / 180
-  //static real_type const lb2    = log(2.0); // Dummy variable to avoid re - calculating this value in loop below
-  static real_type const cosr   = cos(94.0 * RADFAC); //= -0.069756474
-  static real_type const sinr   = sin(94.0 * RADFAC); //= 0.99756405
+  static constexpr real_type RADFAC { M_PI / 180 }; // Degrees - to - radians conversion factor = pi / 180
+  static real_type const cosr{ cos(94 * RADFAC)}; //= -0.069756474
+  static real_type const sinr{ sin(94 * RADFAC)}; //= 0.99756405
 
   //============================================================================
   // Divides p by the quadratic x^2+u*x+v
@@ -83,9 +82,9 @@ namespace PolynomialRoots {
   static
   void
   QuadraticSyntheticDivision(
-    integer         NN,
-    real_type       u,
-    real_type       v,
+    integer   const NN,
+    real_type const u,
+    real_type const v,
     real_type const p[],
     real_type       q[],
     real_type     & a,
@@ -105,9 +104,9 @@ namespace PolynomialRoots {
   static
   integer
   calcSC(
-    integer         N,
-    real_type       a,
-    real_type       b,
+    integer   const N,
+    real_type const a,
+    real_type const b,
     real_type     & a1,
     real_type     & a3,
     real_type     & a7,
@@ -118,8 +117,8 @@ namespace PolynomialRoots {
     real_type     & g,
     real_type     & h,
     real_type const K[],
-    real_type       u,
-    real_type       v,
+    real_type const u,
+    real_type const v,
     real_type       qk[]
   ) {
 
@@ -157,11 +156,11 @@ namespace PolynomialRoots {
   static
   void
   nextK(
-    integer         N,
-    integer         tFlag,
-    real_type       a,
-    real_type       b,
-    real_type       a1,
+    integer   const N,
+    integer   const tFlag,
+    real_type const a,
+    real_type const b,
+    real_type const a1,
     real_type     & a3,
     real_type     & a7,
     real_type       K[],
@@ -173,8 +172,7 @@ namespace PolynomialRoots {
       K[1] = K[0] = 0;
       for ( integer i = 2; i < N; ++i ) K[i] = qk[i-2];
     } else {
-      real_type temp = tFlag == 1 ? b : a;
-      if ( std::abs(a1) > epsilon10 * std::abs(temp) ) {
+      if ( real_type const temp{ tFlag == 1 ? b : a }; std::abs(a1) > epsilon10 * std::abs(temp) ) {
         // Use scaled form of the recurrence
         a7 /= a1;
         a3 /= a1;
@@ -198,23 +196,23 @@ namespace PolynomialRoots {
   static
   void
   newest(
-    integer         tFlag,
+    integer   const tFlag,
     real_type     & uu,
     real_type     & vv,
-    real_type       a,
-    real_type       a1,
-    real_type       a3,
-    real_type       a7,
-    real_type       b,
-    real_type       c,
-    real_type       d,
-    real_type       f,
-    real_type       g,
-    real_type       h,
-    real_type       u,
-    real_type       v,
+    real_type const a,
+    real_type const a1,
+    real_type const a3,
+    real_type const a7,
+    real_type const b,
+    real_type const c,
+    real_type const d,
+    real_type const f,
+    real_type const g,
+    real_type const h,
+    real_type const u,
+    real_type const v,
     real_type const K[],
-    integer         N,
+    integer   const N,
     real_type const p[]
   ) {
 
@@ -229,13 +227,13 @@ namespace PolynomialRoots {
         a5 = (f + u) * c + v * d;
       }
       // Evaluate new quadratic coefficients
-      real_type b1 = -K[N - 1] / p[N];
-      real_type b2 = -(K[N - 2] + b1 * p[N - 1]) / p[N];
-      real_type c1 = v * b2 * a1;
-      real_type c2 = b1 * a7;
-      real_type c3 = b1 * b1 * a3;
-      real_type c4 = -(c2 + c3) + c1;
-      real_type temp = -c4 + a5 + b1 * a4;
+      real_type const b1   { -K[N - 1] / p[N] };
+      real_type const b2   { -(K[N - 2] + b1 * p[N - 1]) / p[N] };
+      real_type const c1   { v * b2 * a1 };
+      real_type const c2   { b1 * a7 };
+      real_type const c3   { b1 * b1 * a3 };
+      real_type const c4   { -(c2 + c3) + c1 };
+      real_type const temp { -c4 + a5 + b1 * a4 };
       if ( temp != 0.0) {
         uu = -((u * (c3 + c2) + v * (b1 * a1 + b2 * a7)) / temp) + u;
         vv = v * (1.0 + c4 / temp);
@@ -254,9 +252,9 @@ namespace PolynomialRoots {
     integer       & iFlag,
     integer       & NZ,
     real_type     & sss,
-    integer         N,
+    integer   const N,
     real_type const p[],
-    integer         NN,
+    integer   const NN,
     real_type       qp[],
     real_type     & szr,
     real_type     & szi,
@@ -270,9 +268,9 @@ namespace PolynomialRoots {
       qp[0] = pv;
       for ( integer i = 1; i < NN; ++i )
         qp[i] = pv = pv * s + p[i];
-      real_type mp = std::abs(pv);
+      real_type const mp{ std::abs(pv) };
       // Compute a rigorous bound on the error in evaluating p
-      real_type ms = std::abs(s);
+      real_type const ms{ std::abs(s) };
       real_type ee = 0.5 * std::abs(qp[0]);
       for ( integer i = 1; i < NN; ++i ) ee = ee * ms + std::abs(qp[i]);
       // Iteration has converged sufficiently if the polynomial
@@ -300,15 +298,15 @@ namespace PolynomialRoots {
 
       if ( std::abs(kv) > std::abs(K[N-1]) * epsilon10 ) {
         // Use the scaled form of the recurrence if the value of K at s is non - zero
-        real_type tt = -(pv / kv);
+        real_type const tt{ -(pv / kv) };
         K[0] = qp[0];
-        for ( integer i = 1; i < N; ++i ) K[i] = tt * qk[i-1] + qp[i];
+        for ( integer i{1}; i < N; ++i ) K[i] = tt * qk[i-1] + qp[i];
       } else { // Use unscaled form
         K[0] = 0.0;
-        for ( integer i = 1; i < N; ++i ) K[i] = qk[i-1];
+        for ( integer i{1}; i < N; ++i ) K[i] = qk[i-1];
       }
       kv = K[0];
-      for ( integer i = 1; i < N; ++i ) kv = kv * s + K[i];
+      for ( integer i{1}; i < N; ++i ) kv = kv * s + K[i];
       t = std::abs(kv) > std::abs(K[N-1])*epsilon10 ? -(pv/kv) : 0;
       s += t;
     }
@@ -320,16 +318,16 @@ namespace PolynomialRoots {
   static
   void
   QuadIT(
-    integer         N,
+    integer   const N,
     integer       & NZ,
-    real_type       uu,
-    real_type       vv,
+    real_type const uu,
+    real_type const vv,
     real_type     & szr,
     real_type     & szi,
     real_type     & lzr,
     real_type     & lzi,
     real_type       qp[],
-    integer         NN,
+    integer   const NN,
     real_type     & a,
     real_type     & b,
     real_type const p[],
@@ -364,12 +362,12 @@ namespace PolynomialRoots {
       if ( std::abs(abs(szr) - std::abs(lzr)) > 0.01 * std::abs(lzr) ) break;
       // Evaluate polynomial by quadratic synthetic division
       QuadraticSyntheticDivision( NN, u, v, p, qp, a, b );
-      real_type mp = std::abs(a-(szr*b)) + std::abs(szi*b);
+      real_type const mp{ std::abs(a-(szr*b)) + std::abs(szi*b) };
       // Compute a rigorous bound on the rounding error in evaluating p
-      real_type zm = std::sqrt(abs(v));
-      real_type ee = 2 * std::abs(qp[0]);
-      real_type t  = -szr*b;
-      for ( integer i = 1; i < N; ++i ) ee = ee * zm + std::abs(qp[i]);
+      real_type const zm{ std::sqrt(abs(v)) };
+      real_type       ee{ 2 * std::abs(qp[0]) };
+      real_type const t{ -szr*b };
+      for ( integer i{1}; i < N; ++i ) ee = ee * zm + std::abs(qp[i]);
       ee = ee * zm + std::abs(a+t);
       ee = (9*ee+2*abs(t)-7*(abs(a+t)+zm*abs(b)))*epsilon;
       // Iteration has converged sufficiently if the polynomial
@@ -421,19 +419,19 @@ namespace PolynomialRoots {
   static
   integer
   FixedShift(
-    integer     L2,
-    real_type   sr,
-    real_type   v,
-    real_type   K[],
-    integer     N,
-    real_type   p[],
-    integer     NN,
-    real_type   qp[],
-    real_type   u,
-    real_type & lzi,
-    real_type & lzr,
-    real_type & szi,
-    real_type & szr
+    integer   const L2,
+    real_type const sr,
+    real_type const v,
+    real_type       K[],
+    integer   const N,
+    real_type       p[],
+    integer   const NN,
+    real_type       qp[],
+    real_type const u,
+    real_type &     lzi,
+    real_type &     lzr,
+    real_type &     szi,
+    real_type &     szr
   ) {
 
     #ifdef _MSC_VER
@@ -459,35 +457,35 @@ namespace PolynomialRoots {
     real_type otv = 0; // initialize remove warning
     real_type ots = 0; // initialize remove warning
     for ( integer j = 0; j < L2; ++j ) {
-      integer fflag = 1;
       // Calculate next K polynomial and estimate v
       nextK( N, tFlag, a, b, a1, a3, a7, K, qk, qp );
       tFlag = calcSC(N, a, b, a1, a3, a7, c, d, e, f, g, h, K, u, v, qk);
       real_type ui, vi;
       newest(tFlag, ui, vi, a, a1, a3, a7, b, c, d, f, g, h, u, v, K, N, p);
-      real_type vv = vi;
+      real_type const vv{vi};
       // Estimate s
-      real_type ss = (K[N-1] != 0.0) ? -(p[N]/K[N-1]) : 0.0;
-      real_type ts = 1.0;
-      real_type tv = 1.0;
+      real_type const ss{ (K[N-1] != 0.0) ? -(p[N]/K[N-1]) : 0.0 };
+      real_type ts{1};
+      real_type tv{1};
       if ( (j != 0) && (tFlag != 3) ) {
         // Compute relative measures of convergence of s and v sequences
         tv = (vv != 0.0) ? std::abs((vv - ovv) / vv) : tv;
         ts = (ss != 0.0) ? std::abs((ss - oss) / ss) : ts;
         // If decreasing, multiply the two most recent convergence measures
-        real_type tvv = (tv < otv) ? tv * otv : 1;
-        real_type tss = (ts < ots) ? ts * ots : 1;
+        real_type const tvv{ static_cast<real_type>( (tv < otv) ? tv * otv : 1 ) };
+        real_type const tss{ static_cast<real_type>( (ts < ots) ? ts * ots : 1 ) };
         // Compare with convergence criteria
-        bool vpass = tvv < betav;
-        bool spass = tss < betas;
+        bool const vpass{tvv < betav};
+        bool const spass{tss < betas};
         if ( spass || vpass ) {
+          integer fflag{1};
           // At least one sequence has passed the convergence test.
           // Store variables before iterating
-          for ( integer i = 0; i < N; ++i ) svk[i] = K[i];
-          real_type s = ss;
+          for ( integer i{0}; i < N; ++i ) svk[i] = K[i];
+          real_type s{ss};
           // Choose iteration according to the fastest converging sequence
-          integer stry = 0;
-          integer vtry = 0;
+          integer stry{0};
+          integer vtry{0};
           for (;;) {
             if ( (fflag && ((fflag = 0) == 0)) &&
                  ((spass) && (!vpass || (tss < tvv))) ) {
@@ -502,7 +500,7 @@ namespace PolynomialRoots {
               betav *= 0.25;
               // Try linear iteration if it has not been tried and the s sequence is converging
               if ( stry || !spass ) iFlag = 0;
-              else                  std::copy( svk, svk + N, K );
+              else                  copy_n( svk, N, K );
             }
             if ( iFlag != 0 ) {
               RealIT(iFlag, NZ, s, N, p, NN, qp, szr, szi, K, qk);
@@ -519,7 +517,7 @@ namespace PolynomialRoots {
               }
             }
             // Restore variables
-            std::copy( svk, svk+N, K );
+            copy_n( svk, N, K );
 
             // Try quadratic iteration if it has not been tried
             // and the v sequence is converging
@@ -541,9 +539,8 @@ namespace PolynomialRoots {
   //============================================================================
 
   static
-  inline
   real_type
-  evalPoly( real_type x, real_type const p[], integer Degree ) {
+  evalPoly( real_type const x, real_type const p[], integer const Degree ) {
     real_type ff = p[0];
     for ( integer i = 1; i <= Degree; ++i ) ff = ff * x + p[i];
     return ff;
@@ -552,12 +549,11 @@ namespace PolynomialRoots {
   //============================================================================
 
   static
-  inline
   void
   evalPoly(
-    real_type       x,
+    real_type const x,
     real_type const p[],
-    integer         Degree,
+    integer   const Degree,
     real_type     & f,
     real_type     & df
   ) {
@@ -579,9 +575,8 @@ namespace PolynomialRoots {
   // The factor is a power of the base.
   */
   static
-  inline
   void
-  scalePoly( real_type p[], integer N ) {
+  scalePoly( real_type p[], integer const N ) {
     /*
     .. double ldexp(double x, int n)
     .. The ldexp() functions multiply x by 2 to the power n.
@@ -601,17 +596,16 @@ namespace PolynomialRoots {
         if ( exponent > max_exponent ) max_exponent = exponent;
       }
     }
-    int l = -max_exponent;
-    for ( integer i = 0; i <= N; ++i ) p[i] = ldexp(p[i],l);
+    int const l{-max_exponent};
+    for ( integer i{0}; i <= N; ++i ) p[i] = ldexp(p[i],l);
   }
 
   //============================================================================
 
   // Compute lower bound on moduli of zeros
   static
-  inline
   real_type
-  lowerBoundZeroPoly( real_type p[], integer N ) {
+  lowerBoundZeroPoly( real_type p[], integer const N ) {
 
     #ifdef _MSC_VER
     real_type * pt  = (real_type*)alloca( (N+1)*sizeof(real_type) );
@@ -623,13 +617,12 @@ namespace PolynomialRoots {
     pt[N] = -abs(p[N]);
 
     // Compute upper estimate of bound
-    real_type x = exp((log(-pt[N]) - log(pt[0]))/N);
+    real_type x{ exp((log(-pt[N]) - log(pt[0]))/N) };
     if ( !isZero(pt[N-1]) ) { // If Newton step at the origin is better, use it
-      real_type xm = -pt[N]/pt[N-1];
-      if ( xm < x ) x = xm;
+      if ( real_type const xm{ -pt[N]/pt[N-1] }; xm < x ) x = xm;
     }
     // Chop the interval(0, x) until f <= 0
-    real_type xm = x;
+    real_type xm{ x };
     while ( evalPoly( xm, pt, N ) > 0 ) { x = xm; xm = 0.1 * x; }
 
     // Do Newton iteration until x converges to two decimal places
@@ -646,11 +639,10 @@ namespace PolynomialRoots {
   //============================================================================
 
   static
-  inline
   void
   roots3(
     real_type const p[4],
-    integer         Degree,
+    integer   const Degree,
     real_type       zeror[],
     real_type       zeroi[]
   ) {
@@ -658,13 +650,13 @@ namespace PolynomialRoots {
       zeror[0] = -(p[1]/p[0]);
       zeroi[0] = 0;
     } else if ( Degree == 2 ) {
-      Quadratic solve( p[0], p[1], p[2] );
+      Quadratic const solve( p[0], p[1], p[2] );
       switch ( solve.num_roots() ) {
         case 2: solve.get_root1( zeror[1], zeroi[1] );
         case 1: solve.get_root0( zeror[0], zeroi[0] );
       }
     } else if ( Degree == 3 ) {
-      Cubic solve( p[0], p[1], p[2], p[3] );
+      Cubic const solve( p[0], p[1], p[2], p[3] );
       switch ( solve.num_roots() ) {
         case 3: solve.get_root2( zeror[2], zeroi[2] );
         case 2: solve.get_root1( zeror[1], zeroi[1] );
@@ -679,7 +671,7 @@ namespace PolynomialRoots {
   int
   roots(
     real_type const * op,
-    integer           Degree,
+    integer   const   Degree,
     real_type       * zeror,
     real_type       * zeroi
   ) {
@@ -703,12 +695,12 @@ namespace PolynomialRoots {
     real_type temp[Degree+1];
     #endif
 
-    int N = Degree;
-    real_type xx = std::sqrt(0.5); //= 0.70710678
-    real_type yy = -xx;
+    int N{Degree};
+    real_type xx{ std::sqrt(0.5) }; //= 0.70710678
+    real_type yy{ -xx };
 
     // Remove zeros at the origin, if any
-    for ( integer j = 0; isZero(op[N]); ++j, --N ) zeror[j] = zeroi[j] = 0.0;
+    for ( integer j{0}; isZero(op[N]); ++j, --N ) zeror[j] = zeroi[j] = 0.0;
     std::copy( op, op+N+1, p ); // Make a copy of the coefficients
 
     while ( N > 0 ) {
@@ -720,25 +712,25 @@ namespace PolynomialRoots {
       scalePoly( p, N );
 
       // Compute lower bound on moduli of zeros
-      real_type bnd = lowerBoundZeroPoly( p, N );
+      real_type const bnd{lowerBoundZeroPoly( p, N )};
 
       // Compute the derivative as the initial K polynomial and
       // do 5 steps with no shift
-      for ( integer i = 1; i < N; ++i ) K[i] = ((N-i) * p[i]) / N;
+      for ( integer i{1}; i < N; ++i ) K[i] = ((N-i) * p[i]) / N;
       K[0] = p[0];
-      integer NM1 = N-1;
-      real_type aa = p[N];
-      real_type bb = p[NM1];
-      bool zerok = isZero(K[NM1]);
-      for ( integer iter = 0; iter < 5; ++iter ) {
+      integer   const NM1   { N-1    };
+      real_type const aa    { p[N]   };
+      real_type const bb    { p[NM1] };
+      bool            zerok { isZero(K[NM1]) };
+      for ( integer iter{0}; iter < 5; ++iter ) {
         if ( zerok ) { // Use unscaled form of recurrence
-          for ( integer i = 0; i < NM1; ++i ) K[NM1-i] = K[NM1-i-1];
+          for ( integer i{0}; i < NM1; ++i ) K[NM1-i] = K[NM1-i-1];
           K[0] = 0;
           zerok = isZero(K[NM1]);
         } else { // Used scaled form of recurrence if value of K at 0 is nonzero
-          real_type t = -aa / K[NM1];
-          for ( integer i = 0; i < NM1; ++i ) {
-            integer j = NM1-i;
+          real_type const t{-aa / K[NM1]};
+          for ( integer i{0}; i < NM1; ++i ) {
+            integer const j{ NM1-i };
             K[j] = t * K[j-1] + p[j];
           }
           K[0] = p[0];
@@ -747,39 +739,39 @@ namespace PolynomialRoots {
       }
 
       // Save K for restarts with new shifts
-      std::copy( K, K+N, temp );
+      copy_n( K, N, temp );
 
       // Loop to select the quadratic corresponding to each new shift
-      bool ok = false;
-      for ( integer iter = 0; iter < 20 && !ok; ++iter ) {
+      bool ok{false};
+      for ( integer iter{0}; iter < 20 && !ok; ++iter ) {
         // Quadratic corresponds to a double shift to a non-real point and its
         // complex conjugate. The point has modulus BND and amplitude rotated
         // by 94 degrees from the previous shift.
-        real_type tmp = -(sinr * yy) + cosr * xx;
+        real_type const tmp{ -(sinr * yy) + cosr * xx };
         yy = sinr * xx + cosr * yy;
         xx = tmp;
-        real_type sr = bnd * xx;
-        real_type u = -2*sr;
+        real_type const sr { bnd * xx };
+        real_type const u  { -2*sr };
         // Second stage calculation, fixed quadratic
         real_type lzi, lzr, szi, szr;
-        integer NZ = FixedShift( 20*(iter+1), sr, bnd, K, N, p, N+1, qp, u, lzi, lzr, szi, szr);
+        integer const NZ{ FixedShift( 20*(iter+1), sr, bnd, K, N, p, N+1, qp, u, lzi, lzr, szi, szr) };
         ok = NZ != 0;
         if ( ok ) {
           //The second stage jumps directly to one of the third stage iterations and
           //returns here if successful.Deflate the polynomial, store the zero or
           //zeros, and return to the main algorithm.
-          integer j = Degree - N;
+          integer const j{Degree - N};
           zeror[j] = szr;
           zeroi[j] = szi;
           N -= NZ;
-          for ( integer i = 0; i <= N; i++) p[i] = qp[i];
+          for ( integer i{0}; i <= N; i++) p[i] = qp[i];
           if ( NZ != 1 ) {
             zeror[j+1] = lzr;
             zeroi[j+1] = lzi;
           }
         } else {
           // If the iteration is unsuccessful, another quadratic is chosen after restoring K
-          std::copy( temp, temp+N, K );
+          copy_n( temp, N, K );
         }
       }
       // Return with failure if no convergence with 20 shifts

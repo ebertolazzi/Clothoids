@@ -12,7 +12,7 @@
  |                                                                          |
  |      Enrico Bertolazzi                                                   |
  |      Dipartimento di Ingegneria Industriale                              |
- |      Universita` degli Studi di Trento                                   |
+ |      Università degli Studi di Trento                                    |
  |      email: enrico.bertolazzi@unitn.it                                   |
  |                                                                          |
 \*--------------------------------------------------------------------------*/
@@ -133,7 +133,7 @@ namespace G2lib {
 
     try {
 
-      CurveType CT = curve_promote( pC1->type(), pC2->type() );
+      CurveType const CT{ curve_promote( pC1->type(), pC2->type() ) };
       switch ( CT ) {
       case CurveType::LINE:
         G2LIB_DEBUG_MESSAGE( "promote -> LineSegment\n" );
@@ -193,15 +193,15 @@ namespace G2lib {
         break;
       case CurveType::DUBINS:
         {
-          Dubins const & DB1{*static_cast<Dubins const *>(pC1)};
-          Dubins const & DB2{*static_cast<Dubins const *>(pC2)};
+          Dubins const & DB1{*dynamic_cast<Dubins const *>(pC1)};
+          Dubins const & DB2{*dynamic_cast<Dubins const *>(pC2)};
           ok = DB1.collision( DB2 );
         }
         break;
       case CurveType::DUBINS3P:
         {
-          Dubins3p const & DB1{*static_cast<Dubins3p const *>(pC1)};
-          Dubins3p const & DB2{*static_cast<Dubins3p const *>(pC2)};
+          Dubins3p const & DB1{*dynamic_cast<Dubins3p const *>(pC1)};
+          Dubins3p const & DB2{*dynamic_cast<Dubins3p const *>(pC2)};
           ok = DB1.collision( DB2 );
         }
         break;
@@ -245,7 +245,7 @@ namespace G2lib {
 
     try {
 
-      CurveType CT = curve_promote( pC1->type(), pC2->type() );
+      CurveType const CT{ curve_promote( pC1->type(), pC2->type() ) };
       switch ( CT ) {
       case CurveType::LINE:
         G2LIB_DEBUG_MESSAGE( "promote -> LineSegment\n" );
@@ -305,15 +305,15 @@ namespace G2lib {
         break;
       case CurveType::DUBINS:
         {
-          Dubins const & DB1{*static_cast<Dubins const *>(pC1)};
-          Dubins const & DB2{*static_cast<Dubins const *>(pC2)};
+          Dubins const & DB1{*dynamic_cast<Dubins const *>(pC1)};
+          Dubins const & DB2{*dynamic_cast<Dubins const *>(pC2)};
           ok = DB1.collision_ISO( offs1, DB2, offs2 );
         }
         break;
       case CurveType::DUBINS3P:
         {
-          Dubins3p const & DB1{*static_cast<Dubins3p const *>(pC1)};
-          Dubins3p const & DB2{*static_cast<Dubins3p const *>(pC2)};
+          Dubins3p const & DB1{*dynamic_cast<Dubins3p const *>(pC1)};
+          Dubins3p const & DB2{*dynamic_cast<Dubins3p const *>(pC2)};
           ok = DB1.collision_ISO( offs1, DB2, offs2 );
         }
         break;
@@ -354,7 +354,7 @@ namespace G2lib {
 
     try {
 
-      CurveType CT = curve_promote( pC1->type(), pC2->type() );
+      CurveType const CT{ curve_promote( pC1->type(), pC2->type() ) };
       switch ( CT ) {
       case CurveType::LINE:
         G2LIB_DEBUG_MESSAGE( "promote -> LineSegment\n" );
@@ -414,15 +414,15 @@ namespace G2lib {
         break;
       case CurveType::DUBINS:
         {
-          Dubins const & DB1{*static_cast<Dubins const *>(pC1)};
-          Dubins const & DB2{*static_cast<Dubins const *>(pC2)};
+          Dubins const & DB1{*dynamic_cast<Dubins const *>(pC1)};
+          Dubins const & DB2{*dynamic_cast<Dubins const *>(pC2)};
           DB1.intersect( DB2, ilist );
         }
         break;
       case CurveType::DUBINS3P:
         {
-          Dubins3p const & DB1{*static_cast<Dubins3p const *>(pC1)};
-          Dubins3p const & DB2{*static_cast<Dubins3p const *>(pC2)};
+          Dubins3p const & DB1{*dynamic_cast<Dubins3p const *>(pC1)};
+          Dubins3p const & DB2{*dynamic_cast<Dubins3p const *>(pC2)};
           DB1.intersect( DB2, ilist );
         }
         break;
@@ -462,7 +462,7 @@ namespace G2lib {
 
     try {
 
-      CurveType CT = curve_promote( pC1->type(), pC2->type() );
+      CurveType const CT{ curve_promote( pC1->type(), pC2->type() ) };
       switch ( CT ) {
       case CurveType::LINE:
         G2LIB_DEBUG_MESSAGE( "promote -> LineSegment\n" );
@@ -522,15 +522,15 @@ namespace G2lib {
         break;
       case CurveType::DUBINS:
         {
-          Dubins const & DB1{*static_cast<Dubins const *>(pC1)};
-          Dubins const & DB2{*static_cast<Dubins const *>(pC2)};
+          Dubins const & DB1{*dynamic_cast<Dubins const *>(pC1)};
+          Dubins const & DB2{*dynamic_cast<Dubins const *>(pC2)};
           DB1.intersect_ISO( offs1, DB2, offs2, ilist );
         }
         break;
       case CurveType::DUBINS3P:
         {
-          Dubins3p const & DB1{*static_cast<Dubins3p const *>(pC1)};
-          Dubins3p const & DB2{*static_cast<Dubins3p const *>(pC2)};
+          Dubins3p const & DB1{*dynamic_cast<Dubins3p const *>(pC1)};
+          Dubins3p const & DB2{*dynamic_cast<Dubins3p const *>(pC2)};
           DB1.intersect_ISO( offs1, DB2, offs2, ilist );
         }
         break;

@@ -98,7 +98,7 @@ main() {
 
   // Seed the random number generator
   std::mt19937 gen(1);
-  std::uniform_real_distribution dis(0.0, 1.0);
+  std::uniform_real_distribution<real_type> dis(0.0, 1.0);
 
   // Create a matrix to store the data
   Eigen::MatrixXd dataTable(numpts, 9);

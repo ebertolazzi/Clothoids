@@ -12,7 +12,7 @@
  |                                                                          |
  |      Enrico Bertolazzi                                                   |
  |      Dipartimento di Ingegneria Industriale                              |
- |      Universita` degli Studi di Trento                                   |
+ |      Università degli Studi di Trento                                    |
  |      email: enrico.bertolazzi@unitn.it                                   |
  |                                                                          |
 \*--------------------------------------------------------------------------*/
@@ -916,6 +916,7 @@ namespace G2lib {
     //!
     //! Build an empty clothoid list
     //!
+    explicit
     ClothoidList( string_view name ) : BaseCurve( name )
     { this->reset_last_interval(); }
 

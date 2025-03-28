@@ -99,10 +99,10 @@ namespace Utils {
   printTrace(
     int            line,
     string_view    file,
-    string_view    msg,
+    string_view    reason,
     ostream_type & stream
   ) {
-    print_trace( line, file, msg, stream );
+    print_trace( line, file, reason, stream );
   }
 
   //!
@@ -130,12 +130,13 @@ namespace Utils {
     //!
     //! \return A formatted string containing the backtrace information.
     //!
-    std::string
+    static
+    string
     grab_backtrace(
-      string_view  reason,
-      string_view  file,
-      int          line
-    ) const;
+      string_view reason,
+      string_view file,
+      int         line
+    );
 
   public:
     //!

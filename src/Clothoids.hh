@@ -152,7 +152,6 @@ namespace G2lib {
 #include "Clothoids/PolyLine.hxx"
 #include "Clothoids/BiarcList.hxx"
 #include "Clothoids/ClothoidList.hxx"
-#include "Clothoids/ClothoidAsyPlot.hxx"
 #include "Clothoids/Dubins.hxx"
 #include "Clothoids/Dubins3p.hxx"
 

@@ -15,7 +15,7 @@
  |      (1) Dipartimento di Ingegneria e Scienza dell'Informazione          |
  |      (2) Dipartimento di Ingegneria Industriale                          |
  |                                                                          |
- |      Universita` degli Studi di Trento                                   |
+ |      Università degli Studi di Trento                                    |
  |      email: paolo.bevilacqua@unitn.it                                    |
  |      email: enrico.bertolazzi@unitn.it                                   |
  |                                                                          |
@@ -75,7 +75,7 @@ namespace G2lib {
   // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 
   real_type
-  BBox::distance( real_type x, real_type y ) const {
+  BBox::distance( real_type const x, real_type const y ) const {
     /*\
      |
      |   6          7          8
@@ -103,6 +103,7 @@ namespace G2lib {
       case 6: dst = hypot( x-x_min(), y-y_max() ); break;
       case 7: dst = y-y_max();                     break;
       case 8: dst = hypot( x-x_max(), y-y_max() ); break;
+      default:                                     break;
     }
     return dst;
   }
@@ -110,9 +111,9 @@ namespace G2lib {
   // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 
   real_type
-  BBox::max_distance( real_type x, real_type y ) const {
-    real_type dx = max( abs(x-x_min()), abs(x-x_max()) );
-    real_type dy = max( abs(y-y_min()), abs(y-y_max()) );
+  BBox::max_distance( real_type const x, real_type const y ) const {
+    real_type const dx = max( abs(x-x_min()), abs(x-x_max()) );
+    real_type const dy = max( abs(y-y_min()), abs(y-y_max()) );
     return hypot(dx,dy);
   }
 

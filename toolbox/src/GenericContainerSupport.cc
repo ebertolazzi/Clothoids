@@ -49,9 +49,9 @@ namespace GC_namespace {
   static
   void
   tokenizeString(
-    string_view       str,
+    string_view const str,
     vec_string_type & tokens,
-    string_view       delimiters
+    string_view const delimiters
   ) {
 
     tokens.clear();
@@ -70,7 +70,7 @@ namespace GC_namespace {
       pos = str.find_first_of(delimiters, lastPos);
     }
     // work around for end line delimiters
-    if ( tokens.size() > 0 )
+    if ( !tokens.empty() )
       if ( tokens.back()[0] == '\n' || tokens.back()[0] == '\r' )
         tokens.pop_back();
   }
@@ -86,9 +86,9 @@ namespace GC_namespace {
   static
   unsigned
   get_line_and_skip_comments(
-    istream_type & stream,
-    string_type  & line,
-    string_view    commentchars
+    istream_type    & stream,
+    string_type     & line,
+    string_view const commentchars
   ) {
     unsigned nl = 0;
     do {
@@ -104,7 +104,7 @@ namespace GC_namespace {
   get_line_and_skip_comments2(
     istream_type     & stream,
     string_type      & line,
-    string_view        commentchars,
+    string_view const  commentchars,
     GenericContainer * ptr_pars
   ) {
     unsigned nl      = 0;
@@ -122,21 +122,15 @@ namespace GC_namespace {
           // trim trailing spaces
           string lhs = a_eq_b[0];
           string rhs = a_eq_b[1];
-          { // trim
-            size_t endpos = lhs.find_last_not_of(" \t");
-            if ( string::npos != endpos ) lhs = lhs.substr( 0, endpos+1 );
-            size_t startpos = lhs.find_first_not_of(" \t");
-            if ( string::npos != startpos ) lhs = lhs.substr( startpos );
-          }
-          { // trim
-            size_t endpos = rhs.find_last_not_of(" \t");
-            if ( string::npos != endpos ) rhs = rhs.substr( 0, endpos+1 );
-            size_t startpos = rhs.find_first_not_of(" \t");
-            if ( string::npos != startpos ) rhs = rhs.substr( startpos );
-          }
+          // trim
+          if ( size_t const endpos{ lhs.find_last_not_of(" \t") };    string::npos != endpos   ) lhs = lhs.substr( 0, endpos+1 );
+          if ( size_t const startpos{ lhs.find_first_not_of(" \t") }; string::npos != startpos ) lhs = lhs.substr( startpos );
+          // trim
+          if ( size_t const endpos{ rhs.find_last_not_of(" \t") };    string::npos != endpos   ) rhs = rhs.substr( 0, endpos+1 );
+          if ( size_t const startpos{ rhs.find_first_not_of(" \t") }; string::npos != startpos ) rhs = rhs.substr( startpos );
           char * ptr;
-          (*ptr_pars)[lhs] = strtod(rhs.c_str(),&ptr);
-          if ( ptr == rhs.c_str() ) (*ptr_pars)[lhs] = rhs;
+          (*ptr_pars)[lhs] = strtod(rhs.data(),&ptr);
+          if ( ptr == rhs.data() ) (*ptr_pars)[lhs] = rhs;
         }
       }
       ++nl;
@@ -186,12 +180,12 @@ namespace GC_namespace {
     vec_string_type & headers = tmp.set_vec_string();
 
     // reading header line
-    unsigned nline = get_line_and_skip_comments( stream, line, commentChars ); // read  line
+    unsigned nline { get_line_and_skip_comments( stream, line, commentChars ) }; // read  line
     tokenizeString( line, headers, delimiters ); // tokenize line
-    unsigned ncol = unsigned( headers.size() );
+    unsigned const ncol { static_cast<unsigned>(headers.size()) };
 
-    vector_type & data = (*this)["data"].set_vector(ncol);
-    for ( unsigned icol = 0; icol < ncol; ++icol ) data[icol].set_vec_real();
+    vector_type & data { (*this)["data"].set_vector(ncol) };
+    for ( unsigned icol{0}; icol < ncol; ++icol ) data[icol].set_vec_real();
 
     // read data by line
     unsigned nread;
@@ -201,17 +195,17 @@ namespace GC_namespace {
 
       // read line and convert into vector of strings
       tokenizeString( line, tokens, delimiters );
-      if ( tokens.size() == 0 ) break; // riga vuota!
+      if ( tokens.empty() ) break; // riga vuota!
 
       GC_ASSERT(
-        unsigned(tokens.size()) == ncol,
+        static_cast<unsigned>(tokens.size()) == ncol,
         "read_formatted_data, in reading line: " << nline <<
         " expected " << ncol << " found: " << tokens.size()
       );
 
       // store data in row vector
       for ( unsigned icol = 0; icol < ncol; ++icol )
-        data[icol].get_vec_real().push_back(atof(tokens[icol].c_str()) );
+        data[icol].get_vec_real().push_back(atof(tokens[icol].data()) );
     }
     return *this;
   }
@@ -233,9 +227,9 @@ namespace GC_namespace {
     vec_string_type & headers = tmp.set_vec_string();
 
     // reading header line
-    unsigned nline = get_line_and_skip_comments2( stream, line, commentChars, ptr_pars ); // read  line
+    auto nline{ get_line_and_skip_comments2( stream, line, commentChars, ptr_pars ) }; // read  line
     tokenizeString( line, headers, delimiters ); // tokenize line
-    unsigned ncol = unsigned( headers.size() );
+    auto const ncol { static_cast<unsigned>(headers.size()) };
 
     vector<vec_real_type*> pcolumns(ncol);
 
@@ -254,17 +248,17 @@ namespace GC_namespace {
 
       // read line and convert into vector of strings
       tokenizeString( line, tokens, delimiters );
-      if ( tokens.size() == 0 ) break; // riga vuota!
+      if ( tokens.empty() ) break; // riga vuota!
 
       GC_ASSERT(
-        unsigned(tokens.size()) == ncol,
+        static_cast<unsigned>(tokens.size()) == ncol,
         "read_formatted_data2, in reading line: " << nline <<
         " expected " << ncol << " found: " << tokens.size()
       );
 
       // store data in row vector
       for ( unsigned icol = 0; icol < ncol; ++icol )
-        pcolumns[icol]->push_back(atof(tokens[icol].c_str()) );
+        pcolumns[icol]->push_back(atof(tokens[icol].data()) );
     }
     return *this;
   }

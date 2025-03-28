@@ -12,7 +12,7 @@
  |                                                                          |
  |      Enrico Bertolazzi                                                   |
  |      Dipartimento di Ingegneria Industriale                              |
- |      Universita` degli Studi di Trento                                   |
+ |      Università degli Studi di Trento                                    |
  |      email: enrico.bertolazzi@unitn.it                                   |
  |                                                                          |
 \*--------------------------------------------------------------------------*/
@@ -49,10 +49,10 @@ namespace G2lib {
   ) const {
     real_type xmin, ymin, xmax, ymax;
     this->bbox( xmin, ymin, xmax, ymax );
-    real_type xc = (xmax+xmin)/2;
-    real_type yc = (ymax+ymin)/2;
-    real_type nx = (ymax-ymin)/100;
-    real_type ny = (xmin-xmax)/100;
+    real_type const xc { (xmax+xmin)/2 };
+    real_type const yc { (ymax+ymin)/2 };
+    real_type const nx { (ymax-ymin)/100 };
+    real_type const ny { (xmin-xmax)/100 };
     if ( xmax > xmin || ymax > ymin ) {
       tvec.emplace_back( xmin, ymin, xmax, ymax, xc+nx, yc+ny, 0, 0, icurve );
     } else {
@@ -76,10 +76,10 @@ namespace G2lib {
   ) const {
     real_type xmin, ymin, xmax, ymax;
     this->bbox_ISO( offs, xmin, ymin, xmax, ymax );
-    real_type xc = (xmax+xmin)/2;
-    real_type yc = (ymax+ymin)/2;
-    real_type nx = (ymax-ymin)/100;
-    real_type ny = (xmin-xmax)/100;
+    real_type const xc { (xmax+xmin)/2 };
+    real_type const yc { (ymax+ymin)/2 };
+    real_type const nx { (ymax-ymin)/100 };
+    real_type const ny { (xmin-xmax)/100 };
     if ( xmax > xmin || ymax > ymin ) {
       tvec.emplace_back( xmin, ymin, xmax, ymax, xc+nx, yc+ny, 0, 0, icurve );
     } else {
@@ -97,23 +97,22 @@ namespace G2lib {
   void
   LineSegment::setup( GenericContainer const & gc ) {
     string const where{ fmt::format("LineSegment[{}]::setup( gc ):", this->name() ) };
-    real_type x0 = gc.get_map_number("x0", where );
-    real_type y0 = gc.get_map_number("y0", where );
-    real_type x1 = gc.get_map_number("x1", where );
-    real_type y1 = gc.get_map_number("y1", where );
+    real_type const x0 { gc.get_map_number("x0", where ) };
+    real_type const y0 { gc.get_map_number("y0", where ) };
+    real_type const x1 { gc.get_map_number("x1", where ) };
+    real_type const y1 { gc.get_map_number("y1", where ) };
     this->build_2P( x0, y0, x1, y1 );
   }
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  void LineSegment::build( LineSegment const & LS ) { *this = LS; }
-  void LineSegment::build( CircleArc const & )      { UTILS_ERROR("can convert from CircleArc to LineSegment\n"); }
-  void LineSegment::build( Biarc const & )          { UTILS_ERROR("can convert from Biarc to LineSegment\n"); }
-  void LineSegment::build( ClothoidCurve const & )  { UTILS_ERROR("can convert from ClothoidCurve to LineSegment\n"); }
-  void LineSegment::build( PolyLine const & )       { UTILS_ERROR("can convert from PolyLine to LineSegment\n"); }
-  void LineSegment::build( BiarcList const & )      { UTILS_ERROR("can convert from BiarcList to LineSegment\n"); }
-  void LineSegment::build( ClothoidList const & )   { UTILS_ERROR("can convert from ClothoidList to LineSegment\n"); }
-  void LineSegment::build( Dubins const & )         { UTILS_ERROR("can convert from Dubins to LineSegment\n"); }
-  void LineSegment::build( Dubins3p const & )       { UTILS_ERROR("can convert from Dubins3p to LineSegment\n"); }
+  void LineSegment::build( CircleArc     const & ) { UTILS_ERROR("cannot convert from CircleArc to LineSegment\n"); }
+  void LineSegment::build( Biarc         const & ) { UTILS_ERROR("cannot convert from Biarc to LineSegment\n"); }
+  void LineSegment::build( ClothoidCurve const & ) { UTILS_ERROR("cannot convert from ClothoidCurve to LineSegment\n"); }
+  void LineSegment::build( PolyLine      const & ) { UTILS_ERROR("cannot convert from PolyLine to LineSegment\n"); }
+  void LineSegment::build( BiarcList     const & ) { UTILS_ERROR("cannot convert from BiarcList to LineSegment\n"); }
+  void LineSegment::build( ClothoidList  const & ) { UTILS_ERROR("cannot convert from ClothoidList to LineSegment\n"); }
+  void LineSegment::build( Dubins        const & ) { UTILS_ERROR("cannot convert from Dubins to LineSegment\n"); }
+  void LineSegment::build( Dubins3p      const & ) { UTILS_ERROR("cannot convert from Dubins3p to LineSegment\n"); }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
@@ -124,14 +123,10 @@ namespace G2lib {
     switch ( pC->type() ) {
     case CurveType::LINE:
       G2LIB_DEBUG_MESSAGE( "to -> LineSegment\n" );
-      *this = *static_cast<LineSegment const *>(pC);
+      *this = *dynamic_cast<LineSegment const *>(pC);
       break;
     default:
-      UTILS_ERROR(
-        "LineSegment constructor cannot convert from: {}\n",
-        pC->type_name()
-      );
-      break;
+      UTILS_ERROR( "LineSegment constructor cannot convert from: {}\n", pC->type_name() );
     }
   }
 
@@ -204,12 +199,12 @@ namespace G2lib {
   ) {
     // See https://www.geeksforgeeks.org/orientation-3-ordered-points/
     // for details of below formula.
-    real_type qp_x = q[0] - p[0];
-    real_type qp_y = q[1] - p[1];
-    real_type rq_x = r[0] - q[0];
-    real_type rq_y = r[1] - q[1];
+    real_type const qp_x { q[0] - p[0] };
+    real_type const qp_y { q[1] - p[1] };
+    real_type const rq_x { r[0] - q[0] };
+    real_type const rq_y { r[1] - q[1] };
 
-    real_type det = qp_y * rq_x - qp_x * rq_y;
+    real_type const det{ qp_y * rq_x - qp_x * rq_y };
     if ( std::abs(det) < epsi ) return 0;  // collinear
     return (det > 0)? 1: 2; // clock or counterclock wise
   }
@@ -219,24 +214,24 @@ namespace G2lib {
   static
   bool
   intersect(
-    real_type        epsi,
-    L_struct const & L1,
-    L_struct const & L2,
+    real_type const   epsi,
+    L_struct  const & L1,
+    L_struct  const & L2,
     real_type      & s1,
     real_type      & s2
   ) {
 
     // Find the four orientations needed for general and special cases
-    integer o1 = orientation( L1.p, L1.q, L2.p, epsi );
-    integer o2 = orientation( L1.p, L1.q, L2.q, epsi );
-    integer o3 = orientation( L2.p, L2.q, L1.p, epsi );
-    integer o4 = orientation( L2.p, L2.q, L1.q, epsi );
+    integer const o1 { orientation( L1.p, L1.q, L2.p, epsi ) };
+    integer const o2 { orientation( L1.p, L1.q, L2.q, epsi ) };
+    integer const o3 { orientation( L2.p, L2.q, L1.p, epsi ) };
+    integer const o4 { orientation( L2.p, L2.q, L1.q, epsi ) };
 
     // General case
     if ( o1 != o2 && o3 != o4 ) {
-      real_type det = L1.c * L2.s - L1.s * L2.c;
-      real_type px  = L2.p[0]-L1.p[0];
-      real_type py  = L2.p[1]-L1.p[1];
+      real_type const det { L1.c * L2.s - L1.s * L2.c };
+      real_type const px  { L2.p[0]-L1.p[0] };
+      real_type const py  { L2.p[1]-L1.p[1] };
       s1 = (px * L2.s - py * L2.c)/ det;
       s2 = (px * L1.s - py * L1.c)/ det;
       return true;
@@ -280,16 +275,16 @@ namespace G2lib {
   static
   bool
   collision(
-    real_type        epsi,
-    L_struct const & L1,
-    L_struct const & L2
+    real_type const   epsi,
+    L_struct  const & L1,
+    L_struct  const & L2
   ) {
 
     // Find the four orientations needed for general and special cases
-    integer o1 = orientation( L1.p, L1.q, L2.p, epsi );
-    integer o2 = orientation( L1.p, L1.q, L2.q, epsi );
-    integer o3 = orientation( L2.p, L2.q, L1.p, epsi );
-    integer o4 = orientation( L2.p, L2.q, L1.q, epsi );
+    integer const o1 { orientation( L1.p, L1.q, L2.p, epsi ) };
+    integer const o2 { orientation( L1.p, L1.q, L2.q, epsi ) };
+    integer const o3 { orientation( L2.p, L2.q, L1.p, epsi ) };
+    integer const o4 { orientation( L2.p, L2.q, L1.q, epsi ) };
 
     // General case
     if ( o1 != o2 && o3 != o4 ) return true;
@@ -327,8 +322,8 @@ namespace G2lib {
     real_type x1,
     real_type y1
   ) {
-    real_type dx = x1-x0;
-    real_type dy = y1-y0;
+    real_type const dx { x1-x0 };
+    real_type const dy { y1-y0 };
     m_L      = hypot( dx, dy );
     m_x0     = x0;
     m_y0     = y0;
@@ -360,14 +355,14 @@ namespace G2lib {
 
   void
   LineSegment::bbox_ISO(
-    real_type   offs,
-    real_type & xmin,
-    real_type & ymin,
+    real_type const offs,
+    real_type     & xmin,
+    real_type     & ymin,
     real_type & xmax,
     real_type & ymax
   ) const {
-    real_type dx = offs*nx_begin_ISO();
-    real_type dy = offs*ny_begin_ISO();
+    real_type const dx { offs*nx_begin_ISO() };
+    real_type const dy { offs*ny_begin_ISO() };
     xmin = m_x0+dx; xmax = x_end()+dx;
     ymin = m_y0+dy; ymax = y_end()+dy;
     if ( xmin > xmax ) swap( xmin, xmax );
@@ -377,13 +372,13 @@ namespace G2lib {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   void
-  LineSegment::rotate( real_type angle, real_type cx, real_type cy ) {
-    real_type dx  = m_x0 - cx;
-    real_type dy  = m_y0 - cy;
-    real_type C   = cos(angle);
-    real_type S   = sin(angle);
-    real_type ndx = C*dx - S*dy;
-    real_type ndy = C*dy + S*dx;
+  LineSegment::rotate( real_type const angle, real_type const cx, real_type const cy ) {
+    real_type const dx  { m_x0 - cx };
+    real_type const dy  { m_y0 - cy };
+    real_type const C   { cos(angle) };
+    real_type const S   { sin(angle) };
+    real_type const ndx { C*dx - S*dy };
+    real_type const ndy { C*dy + S*dx };
     m_x0      = cx + ndx;
     m_y0      = cy + ndy;
     m_theta0 += angle;
@@ -474,9 +469,9 @@ namespace G2lib {
 
   bool
   LineSegment::intersect_ISO(
-    real_type           offs,
+    real_type   const   offs,
     LineSegment const & S,
-    real_type           S_offs,
+    real_type   const   S_offs,
     real_type         & s1,
     real_type         & s2
   ) const {
@@ -540,9 +535,9 @@ namespace G2lib {
 
   bool
   LineSegment::collision_ISO(
-    real_type           offs,
+    real_type   const   offs,
     LineSegment const & S,
-    real_type           S_offs
+    real_type   const   S_offs
   ) const {
     // The main function that returns true if line segment 'p1q1'
     // and 'p2q2' intersect.
@@ -581,37 +576,33 @@ namespace G2lib {
   bool
   LineSegment::collision( BaseCurve const * pC ) const {
     if ( pC->type() == CurveType::LINE ) {
-      LineSegment const & LS = *static_cast<LineSegment const*>(pC);
+      LineSegment const & LS = *dynamic_cast<LineSegment const*>(pC);
       return this->collision( LS );
-    } else {
-      CurveType CT = curve_promote( this->type(), pC->type() );
-      if ( CT == CurveType::LINE ) {
-        LineSegment C(pC);
-        return this->collision( C );
-      } else {
-        return G2lib::collision( this, pC );
-      }
     }
+    CurveType CT = curve_promote( this->type(), pC->type() );
+    if ( CT == CurveType::LINE ) {
+      LineSegment const C(pC);
+      return this->collision( C );
+    }
+    return G2lib::collision( this, pC );
   }
 
   bool
   LineSegment::collision_ISO(
-    real_type         offs,
+    real_type const   offs,
     BaseCurve const * pC,
-    real_type         offs_C
+    real_type const   offs_C
   ) const {
     if ( pC->type() == CurveType::LINE ) {
-      LineSegment const & LS = *static_cast<LineSegment const*>(pC);
+      LineSegment const & LS = *dynamic_cast<LineSegment const*>(pC);
       return this->collision_ISO( offs, LS, offs_C );
-    } else {
-      CurveType CT = curve_promote( this->type(), pC->type() );
-      if ( CT == CurveType::LINE ) {
-        LineSegment C(pC);
-        return this->collision_ISO( offs, C, offs_C );
-      } else {
-        return G2lib::collision_ISO( this, offs, pC, offs_C );
-      }
     }
+    CurveType CT = curve_promote( this->type(), pC->type() );
+    if ( CT == CurveType::LINE ) {
+      LineSegment const C(pC);
+      return this->collision_ISO( offs, C, offs_C );
+    }
+    return G2lib::collision_ISO( this, offs, pC, offs_C );
   }
 
   void
@@ -620,19 +611,19 @@ namespace G2lib {
     IntersectList     & ilist
   ) const {
     real_type s1, s2;
-    bool ok = this->intersect( LS, s1, s2 );
+    bool const ok{ this->intersect( LS, s1, s2 ) };
     if ( ok ) ilist.emplace_back( s1, s2 );
   }
 
   void
   LineSegment::intersect_ISO(
-    real_type           offs,
+    real_type   const   offs,
     LineSegment const & LS,
-    real_type           offs_LS,
+    real_type   const   offs_LS,
     IntersectList     & ilist
   ) const {
     real_type s1, s2;
-    bool ok = this->intersect_ISO( offs, LS, offs_LS, s1, s2 );
+    bool const ok{ this->intersect_ISO( offs, LS, offs_LS, s1, s2 ) };
     if ( ok ) ilist.emplace_back( s1, s2 );
   }
 
@@ -642,12 +633,12 @@ namespace G2lib {
     IntersectList   & ilist
   ) const {
     if ( pC->type() == CurveType::LINE ) {
-      LineSegment const & LS = *static_cast<LineSegment const *>(pC);
+      LineSegment const & LS = *dynamic_cast<LineSegment const *>(pC);
       this->intersect( LS, ilist );
     } else {
       CurveType CT = curve_promote( this->type(), pC->type() );
       if ( CT == CurveType::LINE ) {
-        LineSegment C(pC);
+        LineSegment const C(pC);
         this->intersect( C, ilist );
       } else {
         G2lib::intersect( this, pC, ilist );
@@ -657,18 +648,18 @@ namespace G2lib {
 
   void
   LineSegment::intersect_ISO(
-    real_type         offs,
+    real_type const   offs,
     BaseCurve const * pC,
-    real_type         offs_C,
+    real_type const   offs_C,
     IntersectList   & ilist
   ) const {
     if ( pC->type() == CurveType::LINE ) {
-      LineSegment const & LS = *static_cast<LineSegment const *>(pC);
+      LineSegment const & LS = *dynamic_cast<LineSegment const *>(pC);
       this->intersect_ISO( offs, LS, offs_C, ilist );
     } else {
       CurveType CT = curve_promote( this->type(), pC->type() );
       if ( CT == CurveType::LINE ) {
-        LineSegment C(pC);
+        LineSegment const C(pC);
         this->intersect_ISO( offs, C, offs_C, ilist );
       } else {
         G2lib::intersect_ISO( this, offs, pC, offs_C, ilist );
@@ -686,10 +677,10 @@ namespace G2lib {
 
   integer
   LineSegment::closest_point_ISO(
-    real_type   qx,
-    real_type   qy,
-    real_type & x,
-    real_type & y,
+    real_type const qx,
+    real_type const qy,
+    real_type     & x,
+    real_type     & y,
     real_type & s,
     real_type & t,
     real_type & dst
@@ -724,17 +715,17 @@ namespace G2lib {
 
   integer
   LineSegment::closest_point_ISO(
-    real_type   qx,
-    real_type   qy,
-    real_type   offs,
-    real_type & x,
-    real_type & y,
+    real_type const qx,
+    real_type const qy,
+    real_type const offs,
+    real_type     & x,
+    real_type     & y,
     real_type & s,
     real_type & t,
     real_type & dst
   ) const {
-    real_type xx0 = m_x0+offs*nx_begin_ISO();
-    real_type yy0 = m_y0+offs*ny_begin_ISO();
+    real_type const xx0 { m_x0+offs*nx_begin_ISO() };
+    real_type const yy0 { m_y0+offs*ny_begin_ISO() };
 
     real_type dx = qx - xx0;
     real_type dy = qy - yy0;
@@ -778,10 +769,10 @@ namespace G2lib {
   ostream_type &
   operator << ( ostream_type & stream, LineSegment const & c ) {
     fmt::print( stream,
-      "x0     = {}\n"
-      "y0     = {}\n"
-      "theta0 = {}\n"
-      "L      = {}\n",
+      "x₀ = {}\n"
+      "y₀ = {}\n"
+      "θ₀ = {}\n"
+      "L  = {}\n",
       c.m_x0, c.m_y0, c.m_theta0, c.m_L
     );
     return stream;

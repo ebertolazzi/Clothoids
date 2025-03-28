@@ -15,7 +15,7 @@
  |      (1) Dipartimento di Ingegneria e Scienza dell'Informazione          |
  |      (2) Dipartimento di Ingegneria Industriale                          |
  |                                                                          |
- |      Universita` degli Studi di Trento                                   |
+ |      Università  degli Studi di Trento                                   |
  |      email: paolo.bevilacqua@unitn.it                                    |
  |      email: enrico.bertolazzi@unitn.it                                   |
  |                                                                          |
@@ -152,7 +152,6 @@ namespace G2lib {
 #include "Clothoids/PolyLine.hxx"
 #include "Clothoids/BiarcList.hxx"
 #include "Clothoids/ClothoidList.hxx"
-#include "Clothoids/ClothoidAsyPlot.hxx"
 #include "Clothoids/Dubins.hxx"
 #include "Clothoids/Dubins3p.hxx"
 
