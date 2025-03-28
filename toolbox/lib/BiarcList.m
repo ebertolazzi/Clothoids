@@ -395,7 +395,7 @@ classdef BiarcList < CurveBase
     %> - `step`: number of sampling normals
     %> - `len`:  length of the plotted normal
     %>
-    function plotNormal( self, step, len )
+    function plot_normal( self, step, len )
       for k=1:self.num_segments()
         C = self.get(k);
         C.plot_normal( step, len );

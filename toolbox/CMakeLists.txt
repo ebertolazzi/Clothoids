@@ -153,8 +153,9 @@ foreach(MEX ${MEX_LIST})
   matlab_add_mex(
     NAME mex_${MEX}
     SRC src_mex/mex_${MEX}.cc
-    LINK_TO Clothoids
+    LINK_TO Clothoids Matlab::mex Matlab::mx
     OUTPUT_NAME ${MEX}
+    NO_IMPLICIT_LINK_TO_MATLAB_LIBRARIES
   )
   add_custom_command(
     TARGET mex_${MEX}

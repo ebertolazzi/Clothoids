@@ -10,6 +10,8 @@
 % Driver test program to check Clothoids lib                              %
 %=========================================================================%
 
+close all
+
 % check constructors
 x0     = 0;
 y0     = 2;
