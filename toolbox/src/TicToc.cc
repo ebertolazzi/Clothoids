@@ -12,7 +12,7 @@
  |                                                                          |
  |      Enrico Bertolazzi                                                   |
  |      Dipartimento di Ingegneria Industriale                              |
- |      Universita` degli Studi di Trento                                   |
+ |      Università degli Studi di Trento                                    |
  |      Via Sommarive 9, I-38123 Povo, Trento, Italy                        |
  |      email: enrico.bertolazzi@unitn.it                                   |
  |                                                                          |

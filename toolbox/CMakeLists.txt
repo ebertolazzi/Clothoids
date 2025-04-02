@@ -7,7 +7,7 @@
 #                                                                       #
 #      Enrico Bertolazzi                                                #
 #      Dipartimento di Ingegneria Industriale                           #
-#      Universita` degli Studi di Trento                                #
+#      Università degli Studi di Trento                                 #
 #      Via Sommarive 9, I-38123, Trento, Italy                          #
 #      email: enrico.bertolazzi@unitn.it                                #
 #-----------------------------------------------------------------------#
@@ -42,6 +42,13 @@ include(./cmake_utils/CMakeLists-utilities.txt)
 utils_artifacts_suffix(ARTIFACTS_STATIC_SUFFIX TRUE)
 if( UTILS_BUILD_SHARED )
   utils_artifacts_suffix(ARTIFACTS_DYNAMIC_SUFFIX FALSE)
+endif()
+
+if( CMAKE_CXX_COMPILER_ID MATCHES "Clang|AppleClang" )
+  add_compile_options( "$<$<COMPILE_LANGUAGE:C,CXX>:-Wno-poison-system-directories>" )
+  add_compile_options( "$<$<COMPILE_LANGUAGE:C,CXX>:-Wno-switch-default>" )
+  add_compile_options( "$<$<COMPILE_LANGUAGE:C,CXX>:-Wno-exit-time-destructors>" )
+  add_compile_options( "$<$<COMPILE_LANGUAGE:C,CXX>:-Wno-missing-include-dirs>" )
 endif()
 
 message( STATUS "Compiler used: ${CMAKE_CXX_COMPILER_ID}" )

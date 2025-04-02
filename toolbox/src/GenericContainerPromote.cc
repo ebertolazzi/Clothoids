@@ -12,7 +12,7 @@
  |                                                                          |
  |      Enrico Bertolazzi                                                   |
  |      Dipartimento di Ingegneria Industriale                              |
- |      Universita` degli Studi di Trento                                   |
+ |      Università degli Studi di Trento                                    |
  |      email: enrico.bertolazzi@unitn.it                                   |
  |                                                                          |
 \*--------------------------------------------------------------------------*/
@@ -24,6 +24,7 @@
 #include "GenericContainer/GenericContainer.hh"
 #include <iomanip>
 #include <cmath>
+#include <algorithm>
 
 #ifdef __clang__
 #pragma clang diagnostic ignored "-Wc++98-compat"

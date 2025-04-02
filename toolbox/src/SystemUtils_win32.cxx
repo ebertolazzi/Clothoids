@@ -67,9 +67,9 @@ namespace Utils {
     do {
       if ( pAdapterInfo->Type == MIB_IF_TYPE_ETHERNET ||
            pAdapterInfo->Type == IF_TYPE_IEEE80211 ) {
-        unsigned char * MACData = pAdapterInfo->Address;
+        unsigned char const * MACData{ pAdapterInfo->Address };
         string str;
-        for ( int k = 0; k < 6; ++k ) {
+        for ( int k{0}; k < 6; ++k ) {
           str += digits[MACData[k]/16];
           str += digits[MACData[k]%16];
           if ( k < 5 ) str += ':';

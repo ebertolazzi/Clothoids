@@ -4,7 +4,7 @@
 #  Copyright (C) 2016                                                      #
 #      Enrico Bertolazzi                                                   #
 #      Dipartimento di Ingegneria Industriale                              #
-#      Universita` degli Studi di Trento                                   #
+#      Università degli Studi di Trento                                    #
 #      email: enrico.bertolazzi@unitn.it                                   #
 #                                                                          #
 ############################################################################
@@ -39,6 +39,12 @@ endif()
 
 include( "${HOME}/CMakeLists-cflags.txt" )
 include( "${HOME}/CMakeLists-utilities.txt" )
+
+if( CMAKE_CXX_COMPILER_ID MATCHES "Clang|AppleClang" )
+  add_compile_options( "$<$<COMPILE_LANGUAGE:C,CXX>:-Wno-poison-system-directories>" )
+  add_compile_options( "$<$<COMPILE_LANGUAGE:C,CXX>:-Wno-switch-default>" )
+  add_compile_options( "$<$<COMPILE_LANGUAGE:C,CXX>:-Wno-exit-time-destructors>" )
+endif()
 
 # Evaluating the suffix to append to target built by this CMake file
 utils_artifacts_suffix(ARTIFACTS_STATIC_SUFFIX TRUE)
