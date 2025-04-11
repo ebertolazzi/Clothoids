@@ -12,7 +12,7 @@
  |                                                                          |
  |      Enrico Bertolazzi                                                   |
  |      Dipartimento di Ingegneria Industriale                              |
- |      Universita` degli Studi di Trento                                   |
+ |      Università degli Studi di Trento                                    |
  |      email: enrico.bertolazzi@unitn.it                                   |
  |                                                                          |
 \*--------------------------------------------------------------------------*/
@@ -27,12 +27,12 @@ namespace Utils {
 
   string
   fmt_table_row(
-    unsigned    width,
-    string_view L,
-    string_view R,
-    string_view F,
-    string_view title,
-    string_view align
+    unsigned    const width,
+    string_view const L,
+    string_view const R,
+    string_view const F,
+    string_view const title,
+    string_view const align
   ) {
     string const FMT{ fmt::format( "{{}}{{:{}{}{}}}{{}}", F, align, width ) };
     return fmt::format( FMT, L, title, R );

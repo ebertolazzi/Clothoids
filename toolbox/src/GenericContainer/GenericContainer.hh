@@ -12,7 +12,7 @@
  |                                                                          |
  |      Enrico Bertolazzi                                                   |
  |      Dipartimento di Ingegneria Industriale                              |
- |      Universita` degli Studi di Trento                                   |
+ |      Università degli Studi di Trento                                    |
  |      email: enrico.bertolazzi@unitn.it                                   |
  |                                                                          |
 \*--------------------------------------------------------------------------*/
@@ -1721,7 +1721,7 @@ namespace GC_namespace {
     #else
     template <typename T>
     T& get_pointer()
-    { ck("get_pointer",GC_type::POINTER); return *reinterpret_cast<T*>(&(m_data.p)); }
+    { ck("get_pointer", GC_type::POINTER); return *static_cast<T*>(m_data.p); }
 
     //!
     //! \brief Get the stored value as a pointer (const version).

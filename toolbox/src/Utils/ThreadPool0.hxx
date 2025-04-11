@@ -12,7 +12,7 @@
  |                                                                          |
  |      Enrico Bertolazzi                                                   |
  |      Dipartimento di Ingegneria Industriale                              |
- |      Universita` degli Studi di Trento                                   |
+ |      Università degli Studi di Trento                                    |
  |      email: enrico.bertolazzi@unitn.it                                   |
  |                                                                          |
 \*--------------------------------------------------------------------------*/
@@ -52,6 +52,7 @@ namespace Utils {
   //!
   class ThreadPool0 : public ThreadPoolBase {
     using ThreadPoolBase::FUN;
+    unsigned n_thread{1};
 
   public:
 
@@ -63,8 +64,8 @@ namespace Utils {
     //!  The specified number is ignored.
     //!
     explicit
-    ThreadPool0( unsigned )
-    : ThreadPoolBase()
+    ThreadPool0( unsigned n )
+    : ThreadPoolBase(), n_thread{n}
     {}
 
     //! Destructor.
@@ -96,7 +97,7 @@ namespace Utils {
     //!
     //! \return Always returns 1.
     //!
-    unsigned thread_count() const override { return 1; }
+    unsigned thread_count() const override { return n_thread; }
 
     //!
     //! \brief Returns the name of the thread pool.

@@ -49,14 +49,16 @@
 #include <cmath>
 #include <cfloat>
 #include <limits>
+#include <algorithm>
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
 using namespace std;
 #endif
 
 namespace PolynomialRoots {
+    static integer FixedShift(integer const L2, real_type const sr, real_type const v, real_type K[], integer const N, real_type p[], integer const NN, real_type qp[], real_type const u, real_type &lzi, real_type &lzr, real_type &szi, real_type &szr);
 
-  #ifndef DOXYGEN_SHOULD_SKIP_THIS
+#ifndef DOXYGEN_SHOULD_SKIP_THIS
 
   using std::abs;
   using std::pow;

@@ -12,7 +12,7 @@
  |                                                                          |
  |      Enrico Bertolazzi                                                   |
  |      Dipartimento di Ingegneria Industriale                              |
- |      Universita` degli Studi di Trento                                   |
+ |      Università degli Studi di Trento                                    |
  |      email: enrico.bertolazzi@unitn.it                                   |
  |                                                                          |
 \*--------------------------------------------------------------------------*/
@@ -455,6 +455,7 @@ namespace Utils {
       case Method::MODIFIED_AB:  return "modified_AB";  break;
       case Method::ALGO748:      return "algo748";      break;
       }
+      return "";
     }
 
     void select( unsigned i_algo ) {
