@@ -4,7 +4,7 @@
 #  Copyright (C) 2020                                                      #
 #      Enrico Bertolazzi                                                   #
 #      Dipartimento di Ingegneria Industriale                              #
-#      Universita` degli Studi di Trento                                   #
+#      Università degli Studi di Trento                                    #
 #      <mailto:enrico.bertolazzi@unitn.it>                                 #
 #                                                                          #
 ############################################################################
