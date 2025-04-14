@@ -114,3 +114,11 @@ ruby build.rb
 
 
 for more details see: **online documentation** at http://ebertolazzi.github.io/Clothoids/
+
+## Contributors and Acknowledgements
+
+- **[Enrico Bertolazzi](mailto:enrico.bertolazzi@unitn.it)** – Main developer  
+- **[Marco Frego](mailto:marco.frego@unibz.it)** – Theoretical development, Fresnel integral computation and Dubins problem.
+- **[Francesco Biral](mailto:francesco.biral@unitn.it)** – testing.
+- **[Sebastiano Taddei](mailto:sebastiano.taddei@unitn.it)** – Python support, bug reporting  
+- **[Mattia Piazza](mailto:mattia.piazza@unitn.it)** – Bug reporting
