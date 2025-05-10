@@ -239,7 +239,7 @@ namespace Utils {
       Real t2  = t1*t1;
       Real t8  = s*s;
       Real t17 = s*t8;
-      Real t23 = 2.0*u;
+      Real t23 = 2*u;
       return ( (8*u+6*t2+4)*s-(6*t8+4*(s+u+1))*t1 + 2*t8 - 4*t17 + t23 + 2 )*t +
                t1*(t8+s+u+1) + (1-3*t2+t23)*s + u - t17 + 1;
     }
@@ -254,14 +254,22 @@ namespace Utils {
       Real t37 = t*t17;
       Real t46 = 1+v;
       Real t65 = u+1+v;
-      Real t76 = (-2*t22+u+4.0*v+2)*u;
+      Real t76 = (2-2*t22+u+4*v)*u;
+
+      constexpr Real r1_2{ static_cast<Real>(1.0/2.0) };
+      constexpr Real r1_4{ static_cast<Real>(1.0/4.0) };
+      constexpr Real r2_3{ static_cast<Real>(2.0/3.0) };
+      constexpr Real r3_2{ static_cast<Real>(3.0/2.0) };
+      constexpr Real r3_4{ static_cast<Real>(3.0/4.0) };
+      constexpr Real r3_8{ static_cast<Real>(3.0/8.0) };
+      constexpr Real r5_8{ static_cast<Real>(5.0/8.0) };
       return (2*t-1)*(2+5*t)*u*t*t2 +
              (4*t+1)*u*s*t2+
              (u*t22-2*u*v-u-v-1)*(4*t17+3*t+1)*(t-1)-
-             8.0*(t22*(t17/2.0-1.0/4.0)+u*(t17*t32-5.0/8.0*t34-3.0/4.0*t32+
-             3.0/8.0*t37+3.0/4.0*t17-t/8.0-1.0/4.0)+3.0/4.0*t46*(t+1.0/2.0)*(t-2.0/3.0))*t*t1+
-             4.0*(t22*(-3.0/2.0*t-1.0/4.0)+u*(t34-t32-3.0/2.0*t37+t17/4.0-t-1.0/4.0)-
-             t46*(t+1.0/4.0))*s*t1+(1.0+v+t65*t17-4.0*t65*t37-3.0*t65*t32+6.0*t65*t34+t76+4.0*(1.0+v+t76)*t)*s;
+             8*(t22*(t17/2-r1_4)+u*(t17*t32-r5_8*t34-r3_4*t32+
+             r3_8*t37+r3_4*t17-t/8-r1_4)+r3_4*t46*(t+r1_2)*(t-r2_3))*t*t1+
+             4*(t22*(-r3_2*t-r1_4)+u*(t34-t32-r3_2*t37+t17/4-t-r1_4)-
+             t46*(t+r3_4))*s*t1+(1+v+t65*t17-4*t65*t37-3*t65*t32+6*t65*t34+t76+4*(1+v+t76)*t)*s;
     }
 
   public:

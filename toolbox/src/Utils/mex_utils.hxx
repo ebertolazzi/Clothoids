@@ -27,6 +27,7 @@
 #include <vector>
 #include <cstdint>
 #include <typeinfo>
+#include <algorithm>
 
 #define CLASS_HANDLE_SIGNATURE 0xFF00F0A5
 
@@ -66,7 +67,7 @@
 #define arg_out_12 plhs[12]
 #define arg_out_13 plhs[13]
 #define arg_out_14 plhs[14]
-#define arg_out_15 plhs[14]
+#define arg_out_15 plhs[15]
 #define arg_out_16 plhs[16]
 #define arg_out_17 plhs[17]
 #define arg_out_18 plhs[18]
@@ -109,7 +110,7 @@ namespace Utils {
   mex_is_scalar( mxArray const * arg, string_view msg ) {
     mwSize number_of_dimensions = mxGetNumberOfDimensions(arg);
     UTILS_MEX_ASSERT0( number_of_dimensions == 2, msg );
-    mwSize const * dims = mxGetDimensions(arg);
+    mwSize const * dims{ mxGetDimensions(arg) };
     return dims[0] == 1 && dims[1] == 1;
   }
 
@@ -125,12 +126,8 @@ namespace Utils {
   mex_get_scalar_value( mxArray const * arg, string_view msg ) {
     mwSize number_of_dimensions = mxGetNumberOfDimensions(arg);
     UTILS_MEX_ASSERT0( number_of_dimensions == 2, msg );
-    mwSize const * dims = mxGetDimensions(arg);
-    UTILS_MEX_ASSERT(
-      dims[0] == 1 && dims[1] == 1,
-      "{}, found {} x {} matrix\n",
-      msg, dims[0], dims[1]
-    );
+    mwSize const * dims{ mxGetDimensions(arg) };
+    UTILS_MEX_ASSERT( dims[0] == 1 && dims[1] == 1, "{}, found {} x {} matrix\n", msg, dims[0], dims[1] );
     return mxGetScalar(arg);
   }
 
@@ -162,16 +159,12 @@ namespace Utils {
     mwSize number_of_dimensions = mxGetNumberOfDimensions(arg);
     UTILS_MEX_ASSERT0( number_of_dimensions == 2, msg );
     mwSize const * dims = mxGetDimensions(arg);
-    UTILS_MEX_ASSERT(
-      dims[0] == 1 && dims[1] == 1,
-      "{}, found {} x {} matrix\n",
-      msg, dims[0], dims[1]
-    );
+    UTILS_MEX_ASSERT( dims[0] == 1 && dims[1] == 1, "{}, found {} x {} matrix\n", msg, dims[0], dims[1] );
     mxClassID category = mxGetClassID(arg);
     int64_t res = 0;
     void *ptr = mxGetData(arg);
     switch (category)  {
-      case mxINT8_CLASS:   res = *static_cast<uint8_t*>(ptr); break;
+      case mxINT8_CLASS:   res = *static_cast<int8_t*>(ptr);   break;
       case mxUINT8_CLASS:  res = *static_cast<uint8_t*>(ptr);  break;
       case mxINT16_CLASS:  res = *static_cast<int16_t*>(ptr);  break;
       case mxUINT16_CLASS: res = *static_cast<uint16_t*>(ptr); break;
@@ -180,13 +173,13 @@ namespace Utils {
       case mxINT64_CLASS:  res = *static_cast<int64_t*>(ptr);  break;
       case mxUINT64_CLASS: res = *static_cast<uint64_t*>(ptr); break;
       case mxDOUBLE_CLASS:
-        { double tmp = *static_cast<double*>(ptr);
+        { double tmp{ *static_cast<double*>(ptr) };
           UTILS_MEX_ASSERT( tmp == floor(tmp), "{} expected int, found {}\n", msg, tmp );
           res = static_cast<int64_t>(tmp);
         }
         break;
       case mxSINGLE_CLASS:
-        { float tmp = *static_cast<float*>(ptr);
+        { float tmp{ *static_cast<float*>(ptr) };
           UTILS_MEX_ASSERT( tmp == floor(tmp), "{} expected int, found {}\n", msg, tmp );
           res = static_cast<int64_t>(tmp);
         }
@@ -215,7 +208,7 @@ namespace Utils {
   ) {
     mwSize number_of_dimensions = mxGetNumberOfDimensions(arg);
     UTILS_MEX_ASSERT0( number_of_dimensions == 2, msg );
-    mwSize const * dims = mxGetDimensions(arg);
+    mwSize const * dims{ mxGetDimensions(arg) };
     UTILS_MEX_ASSERT(
       dims[0] == 1 || dims[1] == 1 || dims[0]*dims[1] == 0,
       "{}\nExpect (1 x n or n x 1 or empty) matrix, found {} x {}\n",
@@ -244,7 +237,7 @@ namespace Utils {
   ) {
     mwSize number_of_dimensions = mxGetNumberOfDimensions(arg);
     UTILS_MEX_ASSERT0( number_of_dimensions == 2, msg );
-    mwSize const * dims = mxGetDimensions(arg);
+    mwSize const * dims{ mxGetDimensions(arg) };
     nr = dims[0];
     nc = dims[1];
     return mxGetPr(arg);
@@ -395,9 +388,9 @@ namespace Utils {
     mxArray *args[5]; // Array of arguments to be passed to MATLAB's sparse function.
 
     // Create MATLAB matrices to store row indices, column indices, and values.
-    double *Irow = mex_create_matrix_value(args[0], 1, nnz);
-    double *Jcol = mex_create_matrix_value(args[1], 1, nnz);
-    double *VALS = mex_create_matrix_value(args[2], 1, nnz);
+    double *Irow{ mex_create_matrix_value(args[0], 1, nnz) };
+    double *Jcol{ mex_create_matrix_value(args[1], 1, nnz) };
+    double *VALS{ mex_create_matrix_value(args[2], 1, nnz) };
 
     // Set the number of rows and columns in the sparse matrix.
     mex_set_scalar_value(args[3], nrows);
@@ -430,7 +423,7 @@ namespace Utils {
 
     // Riempie il cell array con le stringhe C++
     for ( size_t i{0}; i < str_vec.size(); ++i ) {
-      mxArray *str = mxCreateString(str_vec[i].data()); // Crea una stringa MATLAB dalla stringa C++
+      mxArray * str{ mxCreateString(str_vec[i].data()) }; // Crea una stringa MATLAB dalla stringa C++
       mxSetCell(arg, i, str); // Imposta la stringa nella posizione corretta del cell array
     }
   }
@@ -442,91 +435,83 @@ namespace Utils {
   */
 
   //!
-  //! \brief A class template that manages a C++ object for use with MATLAB.
+  //! \brief A class template that wraps and manages a C++ object for use in MATLAB.
   //!
-  //! This class template is designed to wrap a C++ class pointer for
-  //! integration with MATLAB. It manages the memory of the object and provides
-  //! a mechanism for checking the validity of the handle.
+  //! This handle safely encapsulates a pointer to a C++ object for use with MEX functions.
+  //! It provides automatic memory management and type-safe access, and ensures validity
+  //! through a unique signature and RTTI type checking.
   //!
-  //! \tparam base The type of the C++ class being wrapped.
+  //! \tparam base The C++ class type being wrapped.
   //!
   template <typename base>
   class mex_class_handle {
-    uint32_t m_signature{CLASS_HANDLE_SIGNATURE}; //!< Signature to verify handle validity.
-    base *   m_ptr{nullptr};                      //!< Pointer to the C++ object.
-    string   m_name;                              //!< Name of the class type.
+    uint32_t m_signature{CLASS_HANDLE_SIGNATURE}; ///< Signature used to verify handle validity
+    base *   m_ptr{nullptr};                      ///< Pointer to the managed C++ object..
+    string   m_name;                              ///< Name of the C++ class type (RTTI).
 
   public:
 
-    //!
-    //! \brief Deleted copy assignment operator.
-    //!
-    //! This operator is deleted to prevent copying of the handle.
-    //!
-    mex_class_handle<base> const & operator = ( mex_class_handle<base> const & ) = delete;
+    /// Deleted copy assignment operator to prevent copying
+    mex_class_handle& operator=(const mex_class_handle&) = delete;
 
-    //!
-    //! \brief Deleted default constructor.
-    //!
-    //! This constructor is deleted to prevent creating an uninitialized handle.
-    //!
+    /// Deleted default constructor to enforce explicit initialization
     mex_class_handle() = delete;
 
     //!
-    //! \brief Constructor that initializes the handle with a pointer to a C++ object.
+    //! \brief Constructs a handle for the given C++ object.
     //!
-    //! \param ptr Pointer to the C++ object being managed.
+    //! \param ptr Pointer to the object to be managed.
     //!
-    explicit
-    mex_class_handle( base * ptr )
-    : m_ptr(ptr)
-    , m_name(typeid(base).name())
-    {}
+    explicit mex_class_handle(base* ptr) : m_ptr(ptr), m_name(typeid(base).name()) {}
 
     //!
-    //! \brief Destructor that cleans up the managed object.
+    //! \brief Destructor that deletes the managed object.
     //!
     ~mex_class_handle()
     { m_signature = 0; delete m_ptr; m_ptr = nullptr; }
 
     //!
-    //! \brief Checks if the handle is valid.
+    //! \brief Verifies the integrity and type of the handle.
     //!
-    //! The handle is considered valid if the signature matches and the type name is correct.
+    //! \return true if the handle is valid and matches the expected type.
     //!
-    //! \return true if the handle is valid, false otherwise.
-    //!
-    bool is_valid()
-    { return ((m_signature == CLASS_HANDLE_SIGNATURE) &&
-              !strcmp(m_name.data(), typeid(base).name())); }
+    bool is_valid() const {
+      return m_signature == CLASS_HANDLE_SIGNATURE &&
+             m_name == typeid(base).name();
+    }
 
     //!
-    //! \brief Retrieves the pointer to the managed C++ object.
+    //! \brief Returns a pointer to the managed object.
     //!
-    //! \return Pointer to the managed object.
+    //! \return Pointer to the wrapped C++ object.
     //!
-    base * ptr() { return m_ptr; }
+    base* ptr() const { return m_ptr; }
   };
 
+
   //!
-  //! \brief Converts a pointer to a mex_class_handle into a MATLAB mxArray.
+  //! \brief Converts a C++ pointer into a MATLAB mxArray handle.
   //!
-  //! This function locks the MATLAB environment and creates a MATLAB
-  //! numeric array that holds a pointer to a new mex_class_handle.
+  //! Allocates a `mxUINT64_CLASS` array to store a pointer to a `mex_class_handle` wrapper.
+  //! Also locks the MEX file to prevent unloading while the handle is in use.
   //!
-  //! \tparam base The type of the C++ class being wrapped.
-  //! \param ptr Pointer to the C++ object to be wrapped.
-  //! \return A pointer to a MATLAB mxArray containing the handle.
+  //! \tparam base The C++ class type being wrapped.
+  //! \param ptr Pointer to the object to wrap.
+  //! \return mxArray* containing the handle.
   //!
   template <typename base>
   inline
   mxArray *
-  mex_convert_ptr_to_mx( base * ptr ) {
-    mexLock();
-    mxArray *out = mxCreateNumericMatrix(1, 1, mxUINT64_CLASS, mxREAL);
-    *((uint64_t *)mxGetData(out)) = reinterpret_cast<uint64_t>(
-      new mex_class_handle<base>(ptr)
-    );
+  mex_convert_ptr_to_mx(base* ptr) {
+    mexLock();  // Impedisce che MEX venga scaricato mentre il puntatore è attivo
+  
+    // Alloca una matrice numerica di 2x1 uint64, anche se usi solo il primo elemento
+    mxArray* out{ mxCreateNumericMatrix(2, 1, mxUINT64_CLASS, mxREAL) };
+  
+    // Converte l'indirizzo del puntatore in uintptr_t e lo salva nell'array
+    uintptr_t handle = reinterpret_cast<uintptr_t>(new mex_class_handle<base>(ptr));
+    std::memcpy(mxGetData(out), &handle, sizeof(uintptr_t));
+  
     return out;
   }
 
@@ -544,28 +529,26 @@ namespace Utils {
   template <typename base>
   inline
   mex_class_handle<base> *
-  mex_convert_mx_to_handle_ptr( mxArray const * in ) {
-    if ( mxGetNumberOfElements(in) != 1 ||
-         mxGetClassID(in) != mxUINT64_CLASS ||
-         mxIsComplex(in) ) {
-      mexErrMsgTxt( "Input must be an uint64 scalar." );
+  mex_convert_mx_to_handle_ptr(const mxArray* in) {
+    if ( mxGetNumberOfElements(in) != 2 || mxGetClassID(in) != mxUINT64_CLASS || mxIsComplex(in)) {
+      mexErrMsgTxt("Expected a real 2x1 uint64 array");
     }
-    mex_class_handle<base> * ptr = reinterpret_cast<mex_class_handle<base> *>(
-      *((uint64_t *)mxGetData(in))
-    );
-    if ( !ptr->is_valid() ) mexErrMsgTxt( "Handle not valid." );
+  
+    uintptr_t handle;
+    std::memcpy(&handle, mxGetData(in), sizeof(uintptr_t));
+  
+    auto* ptr = reinterpret_cast<mex_class_handle<base>*>(handle);
+    if ( !ptr->is_valid() ) mexErrMsgTxt("Invalid handle");
+  
     return ptr;
   }
 
   //!
-  //! \brief Converts a MATLAB mxArray to a pointer of the wrapped C++ object.
+  //! \brief Extracts the managed C++ object pointer from an mxArray.
   //!
-  //! This function first converts the mxArray to a mex_class_handle pointer
-  //! and then retrieves the managed C++ object pointer.
-  //!
-  //! \tparam base The type of the C++ class being wrapped.
-  //! \param in The mxArray containing the handle.
-  //! \return Pointer to the managed C++ object.
+  //! \tparam base The C++ class type being wrapped.
+  //! \param in mxArray containing the handle.
+  //! \return Pointer to the original C++ object.
   //!
   template <typename base>
   inline

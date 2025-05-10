@@ -189,7 +189,7 @@ namespace GC_namespace {
     mat_type( unsigned nr, unsigned nc )
     : m_num_rows(nr)
     , m_num_cols(nc)
-    { vector<TYPE>::resize(size_type(nr*nc)); }
+    { vector<TYPE>::resize(size_type(nr*nc)); }    
 
     //!
     //! Resizes the matrix to the specified dimensions.
@@ -204,10 +204,18 @@ namespace GC_namespace {
     //! \endcode
     //!
     void
-    resize( unsigned nr, unsigned nc ) {
+    resize( unsigned const nr, unsigned const nc ) {
       m_num_rows = nr;
       m_num_cols = nc;
       vector<TYPE>::resize(size_type(nr*nc));
+    }
+
+    template <typename T1, typename T2>
+    void
+    resize( T1 const nr, T2 const nc ) {
+      static_assert(std::is_integral_v<T1>, "resize() accepts only integral types!");
+      static_assert(std::is_integral_v<T1>, "resize() accepts only integral types!");
+      resize( static_cast<unsigned>(nr), static_cast<unsigned>(nc) );
     }
 
     //!
@@ -224,6 +232,13 @@ namespace GC_namespace {
     //! \endcode
     //!
     void get_column( unsigned nc, vector<TYPE> & C ) const;
+
+    template <typename T>
+    void
+    get_column( T const nc, vector<TYPE> & C ) const {
+      static_assert(std::is_integral_v<T>, "get_column() accepts only integral types as first argument!");
+      get_column( static_cast<unsigned>(nc), C );
+    }
 
     //!
     //! \deprecated
@@ -247,6 +262,13 @@ namespace GC_namespace {
     //!
     void get_row( unsigned nr, vector<TYPE> & R ) const;
 
+    template <typename T>
+    void
+    get_row( T const nr, vector<TYPE> & R ) const {
+      static_assert(std::is_integral_v<T>, "get_row() accepts only integral types as first argument!");
+      get_row( static_cast<unsigned>(nr), R );
+    }
+
     //!
     //! \deprecated
     //!
@@ -269,6 +291,13 @@ namespace GC_namespace {
     //!
     void get_column( unsigned nc, TYPE * C ) const;
 
+    template <typename T>
+    void
+    get_column( T const nc, TYPE * C ) const {
+      static_assert(std::is_integral_v<T>, "get_column() accepts only integral types as first argument!");
+      get_column( static_cast<unsigned>(nc), C );
+    }
+
     //!
     //! \deprecated
     //!
@@ -290,6 +319,13 @@ namespace GC_namespace {
     //! \endcode
     //!
     void get_row( unsigned nr, TYPE * R ) const;
+
+    template <typename T>
+    void
+    get_row( T const nr, TYPE * R ) const {
+      static_assert(std::is_integral_v<T>, "get_row() accepts only integral types as first argument!");
+      get_row( static_cast<unsigned>(nr), R );
+    }
 
     //!
     //! \deprecated
@@ -1014,9 +1050,12 @@ namespace GC_namespace {
     //!
     vec_pointer_type & set_vec_pointer( unsigned sz = 0 );
 
-    template <typename T, typename std::enable_if<std::is_integral<T>::value, int>::type = 0>
-    vec_pointer_type& set_vec_pointer(T sz)
-    { return set_vec_pointer(static_cast<unsigned>(sz)); }
+    template <typename T>
+    vec_pointer_type &
+    set_vec_pointer( T sz ) {
+      static_assert(std::is_integral_v<T>, "set_vec_pointers() accepts only integral types!");
+      return set_vec_pointer(static_cast<unsigned>(sz));
+    }
 
     //! \brief Set the data to `vec_pointer_type` by copying from another vector.
     //!
@@ -1050,9 +1089,12 @@ namespace GC_namespace {
     //!
     vec_bool_type & set_vec_bool( unsigned sz = 0 );
 
-    template <typename T, typename std::enable_if<std::is_integral<T>::value, int>::type = 0>
-    vec_bool_type& set_vec_bool(T sz)
-    { return set_vec_bool(static_cast<unsigned>(sz)); }
+    template <typename T>
+    vec_bool_type &
+    set_vec_bool( T sz ) {
+      static_assert(std::is_integral_v<T>, "set_vec_bool() accepts only integral types!");
+      return set_vec_bool(static_cast<unsigned>(sz));
+    }
 
     //! \brief Set the data to `vec_bool_type` by copying from another vector.
     //!
@@ -1086,9 +1128,12 @@ namespace GC_namespace {
     //!
     vec_int_type & set_vec_int( unsigned sz = 0 );
 
-    template <typename T, typename std::enable_if<std::is_integral<T>::value, int>::type = 0>
-    vec_int_type& set_vec_int(T sz)
-    { return set_vec_int(static_cast<unsigned>(sz)); }
+    template <typename T>
+    vec_int_type &
+    set_vec_int( T sz ) {
+      static_assert(std::is_integral_v<T>, "set_vec_ints() accepts only integral types!");
+      return set_vec_int(static_cast<unsigned>(sz));
+    }
 
     //! \brief Set the data to `vec_int_type` by copying from another vector.
     //!
@@ -1122,9 +1167,12 @@ namespace GC_namespace {
     //!
     vec_long_type & set_vec_long( unsigned sz = 0 );
 
-    template <typename T, typename std::enable_if<std::is_integral<T>::value, int>::type = 0>
-    vec_long_type& set_vec_long(T sz)
-    { return set_vec_long(static_cast<unsigned>(sz)); }
+    template <typename T>
+    vec_long_type &
+    set_vec_long( T sz ) {
+      static_assert(std::is_integral_v<T>, "set_vec_long() accepts only integral types!");
+      return set_vec_long(static_cast<unsigned>(sz));
+    }
 
     //! \brief Set the data to `vec_long_type` by copying from another vector.
     //!
@@ -1158,9 +1206,12 @@ namespace GC_namespace {
     //!
     vec_real_type & set_vec_real( unsigned sz = 0 );
 
-    template <typename T, typename std::enable_if<std::is_integral<T>::value, int>::type = 0>
-    vec_real_type& set_vec_real(T sz)
-    { return set_vec_real(static_cast<unsigned>(sz)); }
+    template <typename T>
+    vec_real_type &
+    set_vec_real( T sz ) {
+      static_assert(std::is_integral_v<T>, "set_vec_real() accepts only integral types!");
+      return set_vec_real(static_cast<unsigned>(sz));
+    }
 
     //! \brief Set the data to `vec_real_type` by copying from another vector.
     //!
@@ -1194,9 +1245,12 @@ namespace GC_namespace {
     //!
     vec_complex_type & set_vec_complex( unsigned sz = 0 );
 
-    template <typename T, typename std::enable_if<std::is_integral<T>::value, int>::type = 0>
-    vec_complex_type& set_vec_complex(T sz)
-    { return set_vec_complex(static_cast<unsigned>(sz)); }
+    template <typename T>
+    vec_complex_type &
+    set_vec_complex( T sz ) {
+      static_assert(std::is_integral_v<T>, "set_vec_complex() accepts only integral types!");
+      return set_vec_complex(static_cast<unsigned>(sz));
+    }
 
     //! \brief Set the data to `vec_complex_type` by copying from another vector.
     //!
@@ -1230,9 +1284,12 @@ namespace GC_namespace {
     //!
     vec_string_type & set_vec_string( unsigned sz = 0 );
 
-    template <typename T, typename std::enable_if<std::is_integral<T>::value, int>::type = 0>
-    vec_string_type& set_vec_string(T sz)
-    { return set_vec_string(static_cast<unsigned>(sz)); }
+    template <typename T>
+    vec_string_type &
+    set_vec_string( T sz ) {
+      static_assert(std::is_integral_v<T>, "set_vec_string() accepts only integral types!");
+      return set_vec_string(static_cast<unsigned>(sz));
+    }
 
     //! \brief Set the data to `vec_string_type` by copying from another vector.
     //!
@@ -1834,7 +1891,7 @@ namespace GC_namespace {
     //! \param[in] where Optional context for error messages, indicating the position of the call.
     //! \return A reference to the string stored in the container.
     //!
-    string_view get_map_string( string_view const key, string_view const where = "" ) const;
+    string const & get_map_string( string_view const key, string_view const where = "" ) const;
 
     //!
     //! Get the stored value in the map as a string.
@@ -1842,7 +1899,7 @@ namespace GC_namespace {
     //! \param[in] args  keys lists sequence
     //! \return the string stored in the container
     //!
-    string_view get_map_string( std::initializer_list<string> args ) const;
+    string const & get_map_string( std::initializer_list<string> args ) const;
 
     //!
     //! \brief Get the stored value in the map as a string from a list of keys.
@@ -1854,7 +1911,7 @@ namespace GC_namespace {
     //! \param[in] where Optional context for error messages, indicating the position of the call.
     //! \return A reference to the string stored in the container for the first found key.
     //!
-    string_view get_map_string( vec_string_type const & keys, string_view const where = "" ) const;
+    string const & get_map_string( vec_string_type const & keys, string_view const where = "" ) const;
 
     //!
     //! \brief Get the stored value in the map as a vector of real numbers.
@@ -2107,7 +2164,7 @@ namespace GC_namespace {
     //! \param[in] where Optional context for error messages, indicating the position of the call.
     //! \return A reference to the const string stored in the container.
     //!
-    string_view get_string( string_view const where = "" ) const;
+    string_type const & get_string( string_view const where = "" ) const;
 
     ///@}
 
@@ -2758,9 +2815,12 @@ namespace GC_namespace {
     //!
     bool_type get_bool_at( unsigned i );
 
-    template <typename T, typename std::enable_if<std::is_integral<T>::value, int>::type = 0>
-    bool_type get_bool_at( T i )
-    { return get_bool_at(static_cast<unsigned>(i)); }
+    template <typename T>
+    bool_type
+    get_bool_at( T i ) {
+      static_assert(std::is_integral_v<T>, "get_bool_at() accepts only integral types!");
+      return get_bool_at(static_cast<unsigned>(i));
+    }
 
     //!
     //! Get the `i`-th boolean of the stored data.
@@ -2791,9 +2851,12 @@ namespace GC_namespace {
     //!
     int_type & get_int_at( unsigned i );
 
-    template <typename T, typename std::enable_if<std::is_integral<T>::value, int>::type = 0>
-    int_type & get_int_at( T i )
-    { return get_int_at(static_cast<unsigned>(i)); }
+    template <typename T>
+    int_type &
+    get_int_at( T i ) {
+      static_assert(std::is_integral_v<T>, "get_int_at() accepts only integral types!");
+      return get_int_at(static_cast<unsigned>(i));
+    }
 
     //!
     //! Get the `i`-th const integer of the stored data.
@@ -2824,9 +2887,12 @@ namespace GC_namespace {
     //!
     long_type & get_long_at( unsigned i );
 
-    template <typename T, typename std::enable_if<std::is_integral<T>::value, int>::type = 0>
-    long_type & get_long_at( T i )
-    { return get_long_at(static_cast<unsigned>(i)); }
+    template <typename T>
+    long_type &
+    get_long_at( T i ) {
+      static_assert(std::is_integral_v<T>, "get_long_at() accepts only integral types!");
+      return get_long_at(static_cast<unsigned>(i));
+    }
 
     //!
     //! Get the `i`-th const long integer of the stored data.
@@ -2857,9 +2923,11 @@ namespace GC_namespace {
     //!
     real_type & get_real_at( unsigned i );
 
-    template <typename T, typename std::enable_if<std::is_integral<T>::value, int>::type = 0>
-    real_type & get_real_at( T i )
-    { return get_real_at(static_cast<unsigned>(i)); }
+    template <typename T>
+    real_type & get_real_at( T i ) {
+      static_assert(std::is_integral_v<T>, "get_real_at() accepts only integral types!");
+      return get_real_at(static_cast<unsigned>(i));
+    }
 
     //!
     //! Get the `i`-th const `real_type` of the stored data.
@@ -2890,9 +2958,11 @@ namespace GC_namespace {
     //!
     complex_type & get_complex_at( unsigned i );
 
-    template <typename T, typename std::enable_if<std::is_integral<T>::value, int>::type = 0>
-    complex_type & get_complex_at( T i )
-    { return get_complex_at(static_cast<unsigned>(i)); }
+    template <typename T>
+    complex_type & get_complex_at( T i ) {
+      static_assert(std::is_integral_v<T>, "get_complex_at() accepts only integral types!");
+      return get_complex_at(static_cast<unsigned>(i));
+    }
 
     //!
     //! Get the `i`-th const `complex_type` of the stored data.
@@ -3047,9 +3117,12 @@ namespace GC_namespace {
     //!
     string_type & get_string_at( unsigned i );
 
-    template <typename T, typename std::enable_if<std::is_integral<T>::value, int>::type = 0>
-    string_type & get_string_at( T i )
-    { return get_string_at(static_cast<unsigned>(i)); }
+    template <typename T>
+    string_type &
+    get_string_at( T i ) {
+      static_assert(std::is_integral_v<T>, "get_string_at() accepts only integral types!");
+      return get_string_at(static_cast<unsigned>(i));
+    }
 
     //!
     //! Get the `i`-th const string of the stored data.
@@ -3064,7 +3137,7 @@ namespace GC_namespace {
     //! // Use value...
     //! \endcode
     //!
-    string_view get_string_at( unsigned i, string_view const where ) const;
+    string_type const & get_string_at( unsigned i, string_view const where ) const;
 
     //!
     //! Get the `i`-th const `GenericContainer` of the stored data.
@@ -3080,9 +3153,11 @@ namespace GC_namespace {
     //!
     GenericContainer & get_gc_at( unsigned i );
 
-    template <typename T, typename std::enable_if<std::is_integral<T>::value, int>::type = 0>
-    GenericContainer & get_gc_at( T i )
-    { return get_gc_at(static_cast<unsigned>(i)); }
+    template <typename T>
+    GenericContainer & get_gc_at( T i ) {
+      static_assert(std::is_integral_v<T>, "get_gc_at() accepts only integral types!");
+      return get_gc_at(static_cast<unsigned>(i));
+    }
 
     //!
     //! Get the `i`-th const `GenericContainer` of the stored data.
@@ -3689,7 +3764,7 @@ namespace GC_namespace {
     //! \param[in] a `GenericContainer` to be stored
     //!
     GenericContainer const & operator = ( GenericContainer const & a )
-    { this->from_gc( a ); return * this; }
+    { this->clear(); this->from_gc( a ); return * this; }
 
     //!
     //! Load a `GenericContainer` to the generic container (deep copy).
@@ -4098,6 +4173,14 @@ namespace GC_namespace {
     //! \param[in] where position added to the error message
     //!
     void merge( GenericContainer const & gc, string_view const where );
+
+    //!
+    //! Read the contents of stream from a file (YAML,JSON or TOML)
+    //!
+    //! \param[in] file_name file name of the data
+    //! \return true if conversion successful
+    //!
+    bool from_file( string_view file_name );
 
     //!
     //! Print the contents of the object in YAML syntax

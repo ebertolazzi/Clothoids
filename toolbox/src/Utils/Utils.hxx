@@ -389,8 +389,8 @@ namespace Utils {
     search_interval( npts, X, x, last_interval, closed, can_extend );
   }
 
-  static inline void to_upper    ( string & str  ) { std::transform(str.begin(), str.end(), str.begin(), [](unsigned char c) { return std::toupper(c); }); }
-  static inline void to_lower    ( string & str  ) { std::transform(str.begin(), str.end(), str.begin(), [](unsigned char c) { return std::tolower(c); }); }
+  static inline void to_upper    ( string & str  ) { std::transform(str.begin(), str.end(), str.begin(), [](unsigned char c)->unsigned char { return static_cast<unsigned char>(std::toupper(c)); }); }
+  static inline void to_lower    ( string & str  ) { std::transform(str.begin(), str.end(), str.begin(), [](unsigned char c)->unsigned char { return static_cast<unsigned char>(std::tolower(c)); }); }
   static inline bool is_lower    ( string_view s ) { return std::all_of( s.begin(), s.end(), islower ); }
   static inline bool is_upper    ( string_view s ) { return std::all_of( s.begin(), s.end(), isupper ); }
   static inline bool is_alpha    ( string_view s ) { return std::all_of( s.begin(), s.end(), isalpha ); }

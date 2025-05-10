@@ -105,6 +105,7 @@ namespace Utils {
   public:
     explicit Bracket_fun( PFUN pfun ) : m_fun(pfun) {}
     Real eval( Real x ) const override { return m_fun(x); };
+    virtual ~Bracket_fun() {}
   };
   #endif
 

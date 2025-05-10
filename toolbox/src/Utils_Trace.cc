@@ -30,11 +30,18 @@
 #ifdef UTILS_OS_WINDOWS
 #include <windows.h>
 #else
-#include <execinfo.h> // for backtrace
-#include <dlfcn.h>    // for dladdr
-#include <cxxabi.h>   // for __cxa_demangle
-#include <sys/types.h>
+#include <execinfo.h>
 #include <unistd.h>
+#include <dlfcn.h>
+#include <cxxabi.h>
+#include <iostream>
+#include <sstream>
+#include <vector>
+#include <cstdlib>
+#include <cstdio>
+#ifdef UTILS_OS_OSX
+  #include <mach-o/dyld.h>
+#endif
 #endif
 
 #ifdef __clang__
@@ -104,7 +111,27 @@ namespace Utils {
   }
 
   #else
+  
+  #ifdef UTILS_OS_OSX
+  static
+  std::string
+  addr_to_line( std::string const & binary_path, void * addr ) {
+    string cmd{ fmt::format("atos -o {} {}", binary_path, addr ) };
+    
+    FILE* pipe = popen(cmd.data(), "r");
+    if (!pipe) return "??";
 
+    char buffer[256];
+    std::string result;
+    if ( fgets(buffer, sizeof(buffer), pipe) ) {
+      result = buffer;
+      result.erase(result.find_last_not_of(" \n\r\t") + 1); // trim
+    }
+
+    pclose(pipe);
+    return result;
+  }
+  #else
   static
   string
   demang( string_view const mangled_name ) {
@@ -120,6 +147,7 @@ namespace Utils {
     if ( name != nullptr ) free(name);
     return retval;
   }
+  #endif
 
   //! print a trace stack used in debug
   void
@@ -136,23 +164,33 @@ namespace Utils {
     );
 
     #ifdef UTILS_OS_OSX
-    unw_cursor_t cursor;
-    unw_context_t context;
+    int const max_frames{64};
+    void *    callstack[max_frames];
+    int       frames{ backtrace(callstack, max_frames) };
 
-    // Initialize cursor to current frame for local unwinding.
-    unw_getcontext(&context);
-    unw_init_local(&cursor, &context);
+    Dl_info info;
+    char exe_path[1024];
+    ssize_t len = readlink("/proc/self/exe", exe_path, sizeof(exe_path)-1);
+    if (len == -1) {
+      // fallback for macOS
+      if (_NSGetExecutablePath(exe_path, (uint32_t*)&len) != 0) {
+        std::cerr << "Cannot get executable path" << std::endl;
+        return;
+      }
+    }
 
-    // Unwind frames one by one, going up the frame stack.
-    while ( unw_step(&cursor) > 0 ) {
-      unw_word_t offset, pc;
-      unw_get_reg(&cursor, UNW_REG_IP, &pc);
-      if ( pc == 0 ) break;
-      stream << "0x" << hex << pc << ":" << dec;
-      if (char sym[256]; unw_get_proc_name(&cursor, sym, sizeof(sym), &offset) == 0 ) {
-        stream << " (" << demang( sym ) << "+0x" << hex << offset << ")\n" << dec;
-      } else {
-        stream << " -- error: unable to obtain symbol name for this frame\n";
+    for (int i = 1; i < frames; ++i) {
+      if (dladdr(callstack[i], &info)) {
+        const char * symname{ info.dli_sname };
+        int          status{ 0 };
+        char       * demangled{ abi::__cxa_demangle(symname, nullptr, nullptr, &status) };
+
+        std::string symbol    = (status == 0 && demangled) ? demangled : symname;
+        std::string file_line = addr_to_line(info.dli_fname, callstack[i]);
+
+        stream << "#" << i << " " << symbol << " at " << file_line << '\n';
+
+        free(demangled);
       }
     }
     #else

@@ -53,11 +53,11 @@ namespace G2lib {
     }
 
     Triangle2D(
-      real_type x1, real_type y1,
-      real_type x2, real_type y2,
-      real_type x3, real_type y3,
-      real_type s0, real_type s1,
-      integer   icurve
+      real_type const  x1, real_type const y1,
+      real_type const  x2, real_type const y2,
+      real_type const  x3, real_type const y3,
+      real_type const  s0, real_type const s1,
+      integer   const  icurve
     ) {
       m_p1[0]  = x1; m_p1[1] = y1;
       m_p2[0]  = x2; m_p2[1] = y2;
@@ -71,9 +71,9 @@ namespace G2lib {
       real_type const p1[2],
       real_type const p2[2],
       real_type const p3[2],
-      real_type       s0,
-      real_type       s1,
-      integer         icurve
+      real_type const s0,
+      real_type const s1,
+      integer   const icurve
     ) {
       m_p1[0] = p1[0]; m_p1[1] = p1[1];
       m_p2[0] = p2[0]; m_p2[1] = p2[1];
@@ -101,9 +101,9 @@ namespace G2lib {
       real_type const p1[2],
       real_type const p2[2],
       real_type const p3[2],
-      real_type       s0,
-      real_type       s1,
-      integer         icurve
+      real_type const s0,
+      real_type const s1,
+      integer   const icurve
     ) {
       m_p1[0] = p1[0]; m_p1[1] = p1[1];
       m_p2[0] = p2[0]; m_p2[1] = p2[1];
@@ -115,12 +115,12 @@ namespace G2lib {
 
     void
     build(
-      real_type x1, real_type y1,
-      real_type x2, real_type y2,
-      real_type x3, real_type y3,
-      real_type s0,
-      real_type s1,
-      integer   icurve
+      real_type const x1, real_type const y1,
+      real_type const x2, real_type const y2,
+      real_type const x3, real_type const y3,
+      real_type const s0,
+      real_type const s1,
+      integer   const icurve
     ) {
       m_p1[0] = x1; m_p1[1] = y1;
       m_p2[0] = x2; m_p2[1] = y2;
@@ -145,16 +145,16 @@ namespace G2lib {
     real_type S1() const { return m_s1; }
 
     void
-    translate( real_type tx, real_type ty ) {
+    translate( real_type const tx, real_type const ty ) {
       m_p1[0] += tx; m_p2[0] += tx; m_p3[0] += tx;
       m_p1[1] += ty; m_p2[1] += ty; m_p3[1] += ty;
     }
 
     void
-    rotate( real_type angle, real_type cx, real_type cy );
+    rotate( real_type const angle, real_type const cx, real_type const cy );
 
     void
-    scale( real_type sc ) {
+    scale( real_type const sc ) {
       m_p1[0] *= sc; m_p1[1] *= sc;
       m_p2[0] *= sc; m_p2[1] *= sc;
       m_p3[0] *= sc; m_p3[1] *= sc;
@@ -194,7 +194,7 @@ namespace G2lib {
     //! return  0 = on the border
     //!
     integer
-    is_inside( real_type x, real_type y ) const {
+    is_inside( real_type const x, real_type const y ) const {
       real_type const pt[2] = {x,y};
       return is_point_in_triangle( pt, m_p1, m_p2, m_p3 );
     }
@@ -205,10 +205,10 @@ namespace G2lib {
     }
 
     real_type
-    dist_min( real_type x, real_type y ) const;
+    dist_min( real_type const x, real_type const y ) const;
 
     real_type
-    dist_max( real_type x, real_type y ) const;
+    dist_max( real_type const x, real_type const y ) const;
 
     string info() const;
 

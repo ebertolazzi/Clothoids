@@ -21,6 +21,11 @@
 // file: GenericContainer.cc
 //
 
+#ifdef _MSC_VER
+  #pragma warning(disable : 4661)
+  #pragma warning(disable : 4244)
+#endif
+
 #include "GenericContainer/GenericContainer.hh"
 #include <iomanip>
 #include <cmath>
@@ -1016,10 +1021,10 @@ namespace GC_namespace {
       { m.resize(1,1); m(0,0) = complex_type(m_data.b?1.0:0.0,0.0); }
       break;
     case GC_type::INTEGER:
-      { m.resize(1,1); m(0,0) = complex_type(m_data.i,0.0); }
+      { m.resize(1,1); m(0,0) = complex_type(static_cast<real_type>(m_data.i),0.0); }
       break;
     case GC_type::LONG:
-      { m.resize(1,1); m(0,0) = complex_type(m_data.l,0.0); }
+      { m.resize(1,1); m(0,0) = complex_type(static_cast<real_type>(m_data.l),0.0); }
       break;
     case GC_type::REAL:
       { m.resize(1,1); m(0,0) = complex_type(m_data.r,0.0); }
@@ -1913,7 +1918,7 @@ namespace GC_namespace {
     case GC_type::VEC_POINTER:
       { vec_pointer_type const * v_p{m_data.v_p};
         m_data_type = GC_type::NOTYPE;
-        set_vector(v_p->size());
+        set_vector( static_cast<unsigned>( v_p->size() ) );
         for ( unsigned i{0}; i < v_p->size(); ++i )
           (*m_data.v)[i] = (*v_p)[i];
         delete v_p;
@@ -1922,7 +1927,7 @@ namespace GC_namespace {
     case GC_type::VEC_BOOL:
       { vec_bool_type const * v_b{m_data.v_b};
         m_data_type = GC_type::NOTYPE;
-        set_vector(v_b->size());
+        set_vector( static_cast<unsigned>( v_b->size() ) );
         for ( unsigned i{0}; i < v_b->size(); ++i )
           (*m_data.v)[i] = (*v_b)[i];
         delete v_b;
@@ -1931,7 +1936,7 @@ namespace GC_namespace {
     case GC_type::VEC_INTEGER:
       { vec_int_type const * v_i{m_data.v_i};
         m_data_type = GC_type::NOTYPE;
-        set_vector(static_cast<unsigned>(v_i->size()));
+        set_vector( static_cast<unsigned>( v_i->size() ) );
         for ( unsigned i{0}; i < v_i->size(); ++i )
           (*m_data.v)[i] = (*v_i)[i];
         delete v_i;
@@ -1940,7 +1945,7 @@ namespace GC_namespace {
     case GC_type::VEC_LONG:
       { vec_long_type const * v_l{m_data.v_l};
         m_data_type = GC_type::NOTYPE;
-        set_vector(v_l->size());
+        set_vector( static_cast<unsigned>( v_l->size() ) );
         for ( unsigned i{0}; i < v_l->size(); ++i )
           (*m_data.v)[i] = (*v_l)[i];
         delete v_l;
@@ -1949,7 +1954,7 @@ namespace GC_namespace {
     case GC_type::VEC_REAL:
       { vec_real_type const * v_r{m_data.v_r};
         m_data_type = GC_type::NOTYPE;
-        set_vector(v_r->size());
+        set_vector( static_cast<unsigned>( v_r->size() ) );
         for ( unsigned i{0}; i < v_r->size(); ++i )
           (*m_data.v)[i] = (*v_r)[i];
         delete v_r;
@@ -1958,7 +1963,7 @@ namespace GC_namespace {
     case GC_type::VEC_COMPLEX:
       { vec_complex_type const * v_c{m_data.v_c};
         m_data_type = GC_type::NOTYPE;
-        set_vector(v_c->size());
+        set_vector( static_cast<unsigned>( v_c->size() ) );
         for ( unsigned i{0}; i < v_c->size(); ++i )
           (*m_data.v)[i] = (*v_c)[i];
         delete v_c;
@@ -1967,7 +1972,7 @@ namespace GC_namespace {
     case GC_type::VEC_STRING:
       { vec_string_type const * v_s{m_data.v_s};
         m_data_type = GC_type::NOTYPE;
-        set_vector(v_s->size());
+        set_vector( static_cast<unsigned>( v_s->size() ) );
         for ( unsigned i{0}; i < v_s->size(); ++i )
           (*m_data.v)[i] = (*v_s)[i];
         delete v_s;

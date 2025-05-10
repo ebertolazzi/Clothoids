@@ -28,7 +28,74 @@
 //!
 namespace G2lib {
 
-  #ifndef DOXYGEN_SHOULD_SKIP_THIS
+  #define G2LIB_DEFINE_1ARG_AUTODIFF(FUN)                    \
+  template <typename T>                                      \
+  DualT<T>                                                   \
+  FUN( T const & s ) const {                                 \
+    constexpr size_t N{ DualOrder<T>::value };               \
+    static_check_N<N>();                                     \
+    if constexpr ( N == 0 ) return FUN( DualN<0>(s) );       \
+    if constexpr ( N == 1 ) return FUN( DualN<1>(s) );       \
+    if constexpr ( N == 2 ) return FUN( DualN<2>(s) );       \
+  }                                                          \
+                                                             \
+  [[nodiscard]]                                              \
+  autodiff::dual1st                                          \
+  FUN( autodiff::dual1st const & S ) const {                 \
+    using autodiff::detail::val;                             \
+    real_type s   { val(S) };                                \
+    dual1st   res { FUN(s) };                                \
+    res.grad = FUN##_D(s) * S.grad;                          \
+    return res;                                              \
+  }                                                          \
+                                                             \
+  [[nodiscard]]                                              \
+  autodiff::dual2nd                                          \
+  FUN( autodiff::dual2nd const & S ) const {                 \
+    using autodiff::detail::val;                             \
+    real_type s   { val(S) };                                \
+    dual2nd   res { FUN(s) };                                \
+    real_type d   { FUN##_D(s) };                            \
+    real_type xg  { S.grad };                                \
+    res.grad      = d * xg;                                  \
+    res.grad.grad = d * S.grad.grad + FUN##_DD(s) * (xg*xg); \
+    return res;                                              \
+  }
+  
+
+  #define G2LIB_DEFINE_1ARG_1PAR_AUTODIFF(FUN)                       \
+  template <typename T>                                              \
+  DualT<T>                                                           \
+  FUN( T const & s, real_type const par ) const {                    \
+    constexpr size_t N{ DualOrder<T>::value };                       \
+    static_check_N<N>();                                             \
+    if constexpr ( N == 0 ) return FUN( DualN<0>(s), par );          \
+    if constexpr ( N == 1 ) return FUN( DualN<1>(s), par );          \
+    if constexpr ( N == 2 ) return FUN( DualN<2>(s), par );          \
+  }                                                                  \
+                                                                     \
+  [[nodiscard]]                                                      \
+  autodiff::dual1st                                                  \
+  FUN( autodiff::dual1st const & S, real_type const par ) const {    \
+    using autodiff::detail::val;                                     \
+    real_type s   { val(S) };                                        \
+    dual1st   res { FUN(s,par) };                                    \
+    res.grad = FUN##_D(s,par) * S.grad;                              \
+    return res;                                                      \
+  }                                                                  \
+                                                                     \
+  [[nodiscard]]                                                      \
+  autodiff::dual2nd                                                  \
+  FUN( autodiff::dual2nd const & S, real_type const par ) const {    \
+    using autodiff::detail::val;                                     \
+    real_type s   { val(S) };                                        \
+    dual2nd   res { FUN(s,par) };                                    \
+    real_type d   { FUN##_D(s,par) };                                \
+    real_type xg  { S.grad };                                        \
+    res.grad      = d * xg;                                          \
+    res.grad.grad = d * S.grad.grad + FUN##_DD(s,par) * (xg*xg);     \
+    return res;                                                      \
+  }
 
   extern real_type const m_1_sqrt_pi;  //!< \f$ 1/\sqrt{\pi} \f$
   extern real_type const machepsi;     //!< machine espilon \f$ \varepsilon \f$
@@ -43,8 +110,6 @@ namespace G2lib {
 
   // for CLOTHOIDS_BACK_COMPATIBILITY
   extern bool use_ISO;
-
-  #endif
 
   #ifdef CLOTHOIDS_BACK_COMPATIBILITY
 

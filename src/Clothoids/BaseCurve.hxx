@@ -52,6 +52,7 @@ namespace G2lib {
   //! \param[in] pC2 second curve
   //! \return  `true` if the curves collide
   //!
+  [[nodiscard]]
   bool
   collision( BaseCurve const * pC1, BaseCurve const * pC2 );
 
@@ -64,12 +65,13 @@ namespace G2lib {
   //! \param[in] offs_C2 offset of the second curve
   //! \return  `true` if the curves collide
   //!
+  [[nodiscard]]
   bool
   collision_ISO(
     BaseCurve const * pC1,
-    real_type         offs_C1,
+    real_type const   offs_C1,
     BaseCurve const * pC2,
-    real_type         offs_C2
+    real_type const   offs_C2
   );
 
   //!
@@ -81,13 +83,14 @@ namespace G2lib {
   //! \param[in] offs_C2 offset of the second curve
   //! \return  `true` if the curves collide
   //!
+  [[nodiscard]]
   inline
   bool
   collision_SAE(
     BaseCurve const * pC1,
-    real_type         offs_C1,
+    real_type const   offs_C1,
     BaseCurve const * pC2,
-    real_type         offs_C2
+    real_type const   offs_C2
   ) {
     return collision_ISO( pC1, -offs_C1, pC2, -offs_C2 );
   }
@@ -117,8 +120,8 @@ namespace G2lib {
   //!
   void
   intersect_ISO(
-    BaseCurve const * pC1, real_type offs_C1,
-    BaseCurve const * pC2, real_type offs_C2,
+    BaseCurve const * pC1, real_type const offs_C1,
+    BaseCurve const * pC2, real_type const offs_C2,
     IntersectList   & ilist
   );
 
@@ -134,8 +137,8 @@ namespace G2lib {
   inline
   void
   intersect_SAE(
-    BaseCurve const * pC1, real_type offs_C1,
-    BaseCurve const * pC2, real_type offs_C2,
+    BaseCurve const * pC1, real_type const offs_C1,
+    BaseCurve const * pC2, real_type const offs_C2,
     IntersectList   & ilist
   ) {
     G2lib::intersect_ISO( pC1, -offs_C1, pC2, -offs_C2, ilist );
@@ -156,9 +159,9 @@ namespace G2lib {
   bool
   collision(
     BaseCurve const * pC1,
-    real_type         offs_C1,
+    real_type const   offs_C1,
     BaseCurve const * pC2,
-    real_type         offs_C2
+    real_type const   offs_C2
   ) {
     if ( G2lib::use_ISO ) return collision_ISO( pC1, offs_C1, pC2, offs_C2 );
     else                  return collision_SAE( pC1, offs_C1, pC2, offs_C2 );
@@ -176,8 +179,8 @@ namespace G2lib {
   inline
   void
   intersect(
-    BaseCurve const * pC1, real_type offs_C1,
-    BaseCurve const * pC2, real_type offs_C2,
+    BaseCurve const * pC1, real_type const offs_C1,
+    BaseCurve const * pC2, real_type const offs_C2,
     IntersectList   & ilist
   ) {
     if ( G2lib::use_ISO ) G2lib::intersect_ISO( pC1,  offs_C1, pC2,  offs_C2, ilist );
@@ -217,8 +220,8 @@ namespace G2lib {
     //!
     virtual CurveType type() const = 0;
 
-    string_view name()      const { return m_name; }
-    string_view type_name() const { return to_string(type()); }
+    [[nodiscard]] string_view name()      const { return m_name; }
+    [[nodiscard]] string_view type_name() const { return to_string(type()); }
 
     // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 
@@ -230,13 +233,14 @@ namespace G2lib {
     //!
     //! The length of the curve with offset (ISO)
     //!
-    virtual real_type length_ISO( real_type offs ) const = 0;
+    virtual real_type length_ISO( real_type const offs ) const = 0;
 
     //!
     //! The length of the curve with offset (SAE)
     //!
+    [[nodiscard]]
     real_type
-    length_SAE( real_type offs ) const
+    length_SAE( real_type const offs ) const
     { return this->length_ISO(-offs); }
 
     /*\
@@ -276,11 +280,11 @@ namespace G2lib {
     virtual
     void
     bbox_ISO(
-      real_type   offs,
-      real_type & xmin,
-      real_type & ymin,
-      real_type & xmax,
-      real_type & ymax
+      real_type const offs,
+      real_type     & xmin,
+      real_type     & ymin,
+      real_type     & xmax,
+      real_type     & ymax
     ) const = 0;
 
     //!
@@ -294,11 +298,11 @@ namespace G2lib {
     //!
     void
     bbox_SAE(
-      real_type   offs,
-      real_type & xmin,
-      real_type & ymin,
-      real_type & xmax,
-      real_type & ymax
+      real_type const offs,
+      real_type     & xmin,
+      real_type     & ymin,
+      real_type     & xmax,
+      real_type     & ymax
     ) const {
       this->bbox_ISO( -offs, xmin, ymin, xmax, ymax );
     }
@@ -325,9 +329,9 @@ namespace G2lib {
     void
     bb_triangles(
       vector<Triangle2D> & tvec,
-      real_type            max_angle = Utils::m_pi/18,
-      real_type            max_size  = 1e100,
-      integer              icurve    = 0
+      real_type const       max_angle = Utils::m_pi/18,
+      real_type const       max_size  = 1e100,
+      integer   const       icurve    = 0
     ) const = 0;
 
     //!
@@ -342,11 +346,11 @@ namespace G2lib {
     virtual
     void
     bb_triangles_ISO(
-      real_type            offs,
+      real_type const      offs,
       vector<Triangle2D> & tvec,
-      real_type            max_angle = Utils::m_pi/18,
-      real_type            max_size  = 1e100,
-      integer              icurve    = 0
+      real_type const      max_angle = Utils::m_pi/18,
+      real_type const      max_size  = 1e100,
+      integer   const      icurve    = 0
     ) const = 0;
 
     //!
@@ -361,10 +365,10 @@ namespace G2lib {
     virtual
     void
     bb_triangles_SAE(
-      real_type            offs,
+      real_type const      offs,
       vector<Triangle2D> & tvec,
-      real_type            max_angle = Utils::m_pi/18,
-      real_type            max_size  = 1e100,
+      real_type const      max_angle = Utils::m_pi/18,
+      real_type const      max_size  = 1e100,
       integer              icurve    = 0
     ) const = 0;
 
@@ -420,42 +424,42 @@ namespace G2lib {
     //!
     //! Initial \f$x\f$-coordinate with offset (ISO standard).
     //!
-    virtual real_type x_begin_ISO( real_type offs ) const { return this->X_ISO(0,offs); }
+    virtual real_type x_begin_ISO( real_type const offs ) const { return this->X_ISO(0,offs); }
 
     //!
     //! Initial \f$y\f$-coordinate with offset (ISO standard).
     //!
-    virtual real_type y_begin_ISO( real_type offs ) const { return this->Y_ISO(0,offs); }
+    virtual real_type y_begin_ISO( real_type const offs ) const { return this->Y_ISO(0,offs); }
 
     //!
     //! Final \f$x\f$-coordinate with offset (ISO standard).
     //!
-    virtual real_type x_end_ISO( real_type offs ) const { return this->X_ISO(this->length(),offs); }
+    virtual real_type x_end_ISO( real_type const offs ) const { return this->X_ISO(this->length(),offs); }
 
     //!
     //! Final \f$y\f$-coordinate with offset (ISO standard).
     //!
-    virtual real_type y_end_ISO( real_type offs ) const { return this->Y_ISO(this->length(),offs); }
+    virtual real_type y_end_ISO( real_type const offs ) const { return this->Y_ISO(this->length(),offs); }
 
     //!
     //! Initial \f$x\f$-coordinate with offset (SAE standard).
     //!
-    real_type x_begin_SAE( real_type offs ) const { return this->x_begin_ISO(-offs); }
+    [[nodiscard]] real_type x_begin_SAE( real_type const offs ) const { return this->x_begin_ISO(-offs); }
 
     //!
     //! Initial \f$y\f$-coordinate with offset (SAE standard).
     //!
-    real_type y_begin_SAE( real_type offs ) const { return this->y_begin_ISO(-offs); }
+    [[nodiscard]] real_type y_begin_SAE( real_type const offs ) const { return this->y_begin_ISO(-offs); }
 
     //!
     //! Final \f$y\f$-coordinate with offset (SAE standard).
     //!
-    real_type x_end_SAE( real_type offs ) const { return this->x_end_ISO(-offs); }
+    [[nodiscard]] real_type x_end_SAE( real_type const offs ) const { return this->x_end_ISO(-offs); }
 
     //!
     //! Final \f$y\f$-coordinate with offset (ISO standard).
     //!
-    real_type y_end_SAE( real_type offs ) const { return this->y_end_ISO(-offs); }
+    [[nodiscard]] real_type y_end_SAE( real_type const offs ) const { return this->y_end_ISO(-offs); }
 
     //!
     //! Initial tangent \f$x\f$-coordinate.
@@ -500,22 +504,22 @@ namespace G2lib {
     //!
     //! Intial normal \f$x\f$-coordinate (SAE).
     //!
-    real_type nx_begin_SAE() const { return -nx_begin_ISO(); }
+    [[nodiscard]] real_type nx_begin_SAE() const { return -nx_begin_ISO(); }
 
     //!
     //! Intial normal \f$y\f$-coordinate (SAE).
     //!
-    real_type ny_begin_SAE() const { return -ny_begin_ISO(); }
+    [[nodiscard]] real_type ny_begin_SAE() const { return -ny_begin_ISO(); }
 
     //!
     //! Final normal \f$x\f$-coordinate (SAE).
     //!
-    real_type nx_end_SAE() const { return -nx_end_ISO(); }
+    [[nodiscard]] real_type nx_end_SAE() const { return -nx_end_ISO(); }
 
     //!
     //! Intial normal \f$y\f$-coordinate (SAE).
     //!
-    real_type ny_end_SAE() const { return -ny_end_ISO(); }
+    [[nodiscard]] real_type ny_end_SAE() const { return -ny_end_ISO(); }
 
     /*\
      |  _   _          _
@@ -528,22 +532,24 @@ namespace G2lib {
     //!
     //! Angle at curvilinear coordinate \f$s\f$.
     //!
-    virtual real_type theta( real_type s ) const = 0;
+    virtual real_type theta( real_type const s ) const = 0;
 
     //!
     //! Angle derivative (curvature) at curvilinear coordinate \f$s\f$.
     //!
-    virtual real_type theta_D( real_type s ) const = 0;
+    virtual real_type theta_D( real_type const s ) const = 0;
 
     //!
     //! Angle second derivative (devitive of curvature) at curvilinear coordinate \f$s\f$.
     //!
-    virtual real_type theta_DD( real_type s ) const = 0;
+    virtual real_type theta_DD( real_type const s ) const = 0;
 
     //!
     //! Angle third derivative at curvilinear coordinate \f$s\f$.
     //!
-    virtual real_type theta_DDD( real_type s ) const = 0;
+    virtual real_type theta_DDD( real_type const s ) const = 0;
+
+    G2LIB_DEFINE_1ARG_AUTODIFF( theta )
 
     /*\
      |   _
@@ -557,17 +563,19 @@ namespace G2lib {
     //!
     //! Ccurvature at curvilinear coordinate \f$s\f$.
     //!
-    real_type kappa( real_type s ) const { return theta_D(s); }
+    real_type kappa( real_type const s ) const { return theta_D(s); }
 
     //!
     //! Curvature derivative at curvilinear coordinate \f$s\f$.
     //!
-    real_type kappa_D( real_type s ) const { return theta_DD(s); }
+    real_type kappa_D( real_type const s ) const { return theta_DD(s); }
 
     //!
     //! Curvature second derivative at curvilinear coordinate \f$s\f$.
     //!
-    real_type kappa_DD( real_type s ) const { return theta_DDD(s); }
+    real_type kappa_DD( real_type const s ) const { return theta_DDD(s); }
+
+    G2LIB_DEFINE_1ARG_AUTODIFF( kappa )
 
     /*\
      |  _____                   _   _   _
@@ -580,123 +588,131 @@ namespace G2lib {
     //!
     //! Tangent \f$x\f$-coordinate at curvilinear coordinate \f$s\f$.
     //!
-    virtual real_type tx( real_type s ) const;
+    virtual real_type tx( real_type const s ) const;
 
     //!
     //! Tangent \f$y\f$-coordinate at curvilinear coordinate \f$s\f$.
     //!
-    virtual real_type ty( real_type s ) const;
+    virtual real_type ty( real_type const s ) const;
 
     //!
     //! Tangent derivative \f$x\f$-coordinate at curvilinear coordinate \f$s\f$.
     //!
-    virtual real_type tx_D( real_type s ) const;
+    virtual real_type tx_D( real_type const s ) const;
 
     //!
     //! Tangent derivative \f$y\f$-coordinate at curvilinear coordinate \f$s\f$.
     //!
-    virtual real_type ty_D( real_type s ) const;
+    virtual real_type ty_D( real_type const s ) const;
 
     //!
     //! Tangent second derivative \f$x\f$-coordinate at curvilinear coordinate \f$s\f$.
     //!
-    virtual real_type tx_DD( real_type s ) const;
+    virtual real_type tx_DD( real_type const s ) const;
 
     //!
     //! Tangent second derivative \f$y\f$-coordinate at curvilinear coordinate \f$s\f$.
     //!
-    virtual real_type ty_DD( real_type s ) const;
+    virtual real_type ty_DD( real_type const s ) const;
 
     //!
     //! Tangent third derivative \f$x\f$-coordinate at curvilinear coordinate \f$s\f$.
     //!
-    virtual real_type tx_DDD( real_type s ) const;
+    virtual real_type tx_DDD( real_type const s ) const;
 
     //!
     //! Tangent third derivative \f$y\f$-coordinate at curvilinear coordinate \f$s\f$.
     //!
-    virtual real_type ty_DDD( real_type s ) const;
+    virtual real_type ty_DDD( real_type const s ) const;
+
+    G2LIB_DEFINE_1ARG_AUTODIFF( tx )
+    G2LIB_DEFINE_1ARG_AUTODIFF( ty )
 
     // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
     //!
     //! Normal \f$x\f$-coordinate at curvilinear coordinate \f$s\f$ (ISO).
     //!
-    real_type nx_ISO( real_type s ) const { return -ty(s); }
+    [[nodiscard]] real_type nx_ISO( real_type const s ) const { return -ty(s); }
 
     //!
     //! Normal derivative \f$x\f$-coordinate at curvilinear coordinate \f$s\f$ (ISO).
     //!
-    real_type nx_ISO_D( real_type s ) const { return -ty_D(s); }
+    [[nodiscard]] real_type nx_ISO_D( real_type const s ) const { return -ty_D(s); }
 
     //!
     //! Normal second derivative \f$x\f$-coordinate at curvilinear coordinate \f$s\f$ (ISO).
     //!
-    real_type nx_ISO_DD( real_type s ) const { return -ty_DD(s); }
+    [[nodiscard]] real_type nx_ISO_DD( real_type const s ) const { return -ty_DD(s); }
 
     //!
     //! Normal third derivative \f$x\f$-coordinate at curvilinear coordinate \f$s\f$ (ISO).
     //!
-    real_type nx_ISO_DDD( real_type s ) const { return -ty_DDD(s); }
+    [[nodiscard]] real_type nx_ISO_DDD( real_type const s ) const { return -ty_DDD(s); }
 
     //!
     //! Normal \f$y\f$-coordinate at curvilinear coordinate \f$s\f$ (ISO).
     //!
-    real_type ny_ISO( real_type s ) const { return tx(s); }
+    [[nodiscard]] real_type ny_ISO( real_type const s ) const { return tx(s); }
 
     //!
     //! Normal derivative \f$y\f$-coordinate at curvilinear coordinate \f$s\f$ (ISO).
     //!
-    real_type ny_ISO_D( real_type s ) const { return tx_D(s); }
+    [[nodiscard]] real_type ny_ISO_D( real_type const s ) const { return tx_D(s); }
 
     //!
     //! Normal second derivative \f$y\f$-coordinate at curvilinear coordinate \f$s\f$ (ISO).
     //!
-    real_type ny_ISO_DD( real_type s ) const { return tx_DD(s); }
+    [[nodiscard]] real_type ny_ISO_DD( real_type const s ) const { return tx_DD(s); }
 
     //!
     //! Normal third derivative \f$y\f$-coordinate at curvilinear coordinate \f$s\f$ (ISO).
     //!
-    real_type ny_ISO_DDD( real_type s ) const { return tx_DDD(s); }
+    [[nodiscard]] real_type ny_ISO_DDD( real_type const s ) const { return tx_DDD(s); }
 
     //!
     //! Normal \f$x\f$-coordinate at curvilinear coordinate \f$s\f$ (SAE).
     //!
-    real_type nx_SAE( real_type s ) const { return ty(s); }
+    [[nodiscard]] real_type nx_SAE( real_type const s ) const { return ty(s); }
 
     //!
     //! Normal derivative \f$x\f$-coordinate at curvilinear coordinate \f$s\f$ (SAE).
     //!
-    real_type nx_SAE_D( real_type s ) const { return ty_D(s); }
+    [[nodiscard]] real_type nx_SAE_D( real_type const s ) const { return ty_D(s); }
 
     //!
     //! Normal second derivative \f$x\f$-coordinate at curvilinear coordinate \f$s\f$ (SAE).
     //!
-    real_type nx_SAE_DD( real_type s ) const { return ty_DD(s); }
+    [[nodiscard]] real_type nx_SAE_DD( real_type const s ) const { return ty_DD(s); }
 
     //!
     //! Normal third derivative \f$x\f$-coordinate at curvilinear coordinate \f$s\f$ (SAE).
     //!
-    real_type nx_SAE_DDD( real_type s ) const { return ty_DDD(s); }
+    [[nodiscard]] real_type nx_SAE_DDD( real_type const s ) const { return ty_DDD(s); }
 
     //!
     //! Normal \f$y\f$-coordinate at curvilinear coordinate \f$s\f$ (ISO)
     //!
-    real_type ny_SAE( real_type s ) const { return -tx(s); }
+    [[nodiscard]] real_type ny_SAE( real_type const s ) const { return -tx(s); }
 
     //!
     //! Normal derivative \f$y\f$-coordinate at curvilinear coordinate \f$s\f$ (SAE).
     //!
-    real_type ny_SAE_D( real_type s ) const { return -tx_D(s); }
+    [[nodiscard]] real_type ny_SAE_D( real_type const s ) const { return -tx_D(s); }
 
     //!
     //! Normal second derivative \f$x\f$-coordinate at curvilinear coordinate \f$s\f$ (SAE).
     //!
-    real_type ny_SAE_DD ( real_type s ) const { return -tx_DD(s); }
+    [[nodiscard]] real_type ny_SAE_DD ( real_type const s ) const { return -tx_DD(s); }
 
     //!
     //! Normal third derivative \f$y\f$-coordinate at curvilinear coordinate \f$s\f$ (SAE).
     //!
-    real_type ny_SAE_DDD( real_type s ) const { return -tx_DDD(s); }
+    [[nodiscard]] real_type ny_SAE_DDD( real_type const s ) const { return -tx_DDD(s); }
+
+    G2LIB_DEFINE_1ARG_AUTODIFF( nx_ISO )
+    G2LIB_DEFINE_1ARG_AUTODIFF( ny_ISO )
+    G2LIB_DEFINE_1ARG_AUTODIFF( nx_SAE )
+    G2LIB_DEFINE_1ARG_AUTODIFF( ny_SAE )
 
     // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 
@@ -705,7 +721,7 @@ namespace G2lib {
     //!
     virtual
     void
-    tg( real_type s, real_type & tg_x, real_type & tg_y ) const {
+    tg( real_type const s, real_type & tg_x, real_type & tg_y ) const {
       tg_x = this->tx(s);
       tg_y = this->ty(s);
     }
@@ -715,7 +731,7 @@ namespace G2lib {
     //!
     virtual
     void
-    tg_D( real_type s, real_type & tg_x_D, real_type & tg_y_D ) const {
+    tg_D( real_type const s, real_type & tg_x_D, real_type & tg_y_D ) const {
       tg_x_D = this->tx_D(s);
       tg_y_D = this->ty_D(s);
     }
@@ -725,7 +741,7 @@ namespace G2lib {
     //!
     virtual
     void
-    tg_DD( real_type s, real_type & tg_x_DD, real_type & tg_y_DD ) const {
+    tg_DD( real_type const s, real_type & tg_x_DD, real_type & tg_y_DD ) const {
       tg_x_DD = this->tx_DD(s);
       tg_y_DD = this->ty_DD(s);
     }
@@ -735,7 +751,7 @@ namespace G2lib {
     //!
     virtual
     void
-    tg_DDD( real_type s, real_type & tg_x_DDD, real_type & tg_y_DDD ) const {
+    tg_DDD( real_type const s, real_type & tg_x_DDD, real_type & tg_y_DDD ) const {
       tg_x_DDD = this->tx_DDD(s);
       tg_y_DDD = this->ty_DDD(s);
     }
@@ -746,21 +762,21 @@ namespace G2lib {
     //! Normal at curvilinear coordinate \f$s\f$ (ISO).
     //!
     void
-    nor_ISO( real_type s, real_type & nx, real_type & ny ) const
+    nor_ISO( real_type const s, real_type & nx, real_type & ny ) const
     { tg( s, ny, nx ); nx = -nx; }
 
     //!
     //! Normal derivative at curvilinear coordinate \f$s\f$ (ISO).
     //!
     void
-    nor_ISO_D( real_type s, real_type & nx_D, real_type & ny_D ) const
+    nor_ISO_D( real_type const s, real_type & nx_D, real_type & ny_D ) const
     { tg_D( s, ny_D, nx_D ); nx_D = -nx_D; }
 
     //!
     //! Normal second derivative at curvilinear coordinate \f$s\f$ (ISO).
     //!
     void
-    nor_ISO_DD( real_type s, real_type & nx_DD, real_type & ny_DD ) const
+    nor_ISO_DD( real_type const s, real_type & nx_DD, real_type & ny_DD ) const
     { tg_DD( s, ny_DD, nx_DD ); nx_DD = -nx_DD; }
 
     //!
@@ -774,28 +790,28 @@ namespace G2lib {
     //! Normal at curvilinear coordinate \f$s\f$ (SAE).
     //!
     void
-    nor_SAE( real_type s, real_type & nx, real_type & ny ) const
+    nor_SAE( real_type const s, real_type & nx, real_type & ny ) const
     { tg( s, ny, nx ); ny = -ny; }
 
     //!
     //! Normal derivative at curvilinear coordinate \f$s\f$ (SAE).
     //!
     void
-    nor_SAE_D( real_type s, real_type & nx_D, real_type & ny_D ) const
+    nor_SAE_D( real_type const s, real_type & nx_D, real_type & ny_D ) const
     { tg_D( s, ny_D, nx_D ); ny_D = -ny_D; }
 
     //!
     //! Normal second derivative at curvilinear coordinate \f$s\f$ (SAE).
     //!
     void
-    nor_SAE_DD( real_type s, real_type & nx_DD, real_type & ny_DD ) const
+    nor_SAE_DD( real_type const s, real_type & nx_DD, real_type & ny_DD ) const
     { tg_DD( s, ny_DD, nx_DD ); ny_DD = -ny_DD; }
 
     //!
     //! Normal third at curvilinear coordinate \f$s\f$ (SAE).
     //!
     void
-    nor_SAE_DDD( real_type s, real_type & nx_DDD, real_type & ny_DDD ) const
+    nor_SAE_DDD( real_type const s, real_type & nx_DDD, real_type & ny_DDD ) const
     { tg_DDD( s, ny_DDD, nx_DDD ); ny_DDD = -ny_DDD; }
 
     // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
@@ -812,11 +828,11 @@ namespace G2lib {
     virtual
     void
     evaluate(
-      real_type   s,
-      real_type & th,
-      real_type & k,
-      real_type & x,
-      real_type & y
+      real_type const s,
+      real_type     & th,
+      real_type     & k,
+      real_type     & x,
+      real_type     & y
     ) const {
       eval( s, x, y );
       th = theta( s );
@@ -836,12 +852,12 @@ namespace G2lib {
     virtual
     void
     evaluate_ISO(
-      real_type   s,
-      real_type   offs,
-      real_type & th,
-      real_type & k,
-      real_type & x,
-      real_type & y
+      real_type const s,
+      real_type const offs,
+      real_type     & th,
+      real_type     & k,
+      real_type     & x,
+      real_type     & y
     ) const {
       eval_ISO( s, offs, x, y );
       th = theta( s );
@@ -862,12 +878,12 @@ namespace G2lib {
     virtual
     void
     evaluate_SAE(
-      real_type   s,
-      real_type   offs,
-      real_type & th,
-      real_type & k,
-      real_type & x,
-      real_type & y
+      real_type const s,
+      real_type const offs,
+      real_type     & th,
+      real_type     & k,
+      real_type     & x,
+      real_type     & y
     ) const {
       eval_SAE( s, offs, x, y );
       th = theta( s );
@@ -880,42 +896,45 @@ namespace G2lib {
     //!
     //! \f$x\f$-coordinate at curvilinear coordinate \f$s\f$.
     //!
-    virtual real_type X( real_type s ) const = 0;
+    virtual real_type X( real_type const s ) const = 0;
 
     //!
     //! \f$y\f$-coordinate at curvilinear coordinate \f$s\f$.
     //!
-    virtual real_type Y( real_type s ) const = 0;
+    virtual real_type Y( real_type const s ) const = 0;
 
     //!
     //! \f$x\f$-coordinate derivative at curvilinear coordinate \f$s\f$.
     //!
-    virtual real_type X_D( real_type s ) const = 0;
+    virtual real_type X_D( real_type const s ) const = 0;
 
     //!
     //! \f$y\f$-coordinate derivative at curvilinear coordinate \f$s\f$.
     //!
-    virtual real_type Y_D( real_type s ) const = 0;
+    virtual real_type Y_D( real_type const s ) const = 0;
 
     //!
     //! \f$x\f$-coordinate second derivative at curvilinear coordinate \f$s\f$.
     //!
-    virtual real_type X_DD( real_type s ) const = 0;
+    virtual real_type X_DD( real_type const s ) const = 0;
 
     //!
     //! \f$y\f$-coordinate second derivative at curvilinear coordinate \f$s\f$.
     //!
-    virtual real_type Y_DD( real_type s ) const = 0;
+    virtual real_type Y_DD( real_type const s ) const = 0;
 
     //!
     //! \f$x\f$-coordinate third derivative at curvilinear coordinate \f$s\f$.
     //!
-    virtual real_type X_DDD( real_type s ) const = 0;
+    virtual real_type X_DDD( real_type const s ) const = 0;
 
     //!
     //! \f$y\f$-coordinate third derivative at curvilinear coordinate \f$s\f$.
     //!
-    virtual real_type Y_DDD( real_type s ) const = 0;
+    virtual real_type Y_DDD( real_type const s ) const = 0;
+
+    G2LIB_DEFINE_1ARG_AUTODIFF( X )
+    G2LIB_DEFINE_1ARG_AUTODIFF( Y )
 
     // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 
@@ -924,28 +943,28 @@ namespace G2lib {
     //!
     virtual
     void
-    eval( real_type s, real_type & x, real_type & y ) const = 0;
+    eval( real_type const s, real_type & x, real_type & y ) const = 0;
 
     //!
     //! x and \f$y\f$-coordinate derivative at curvilinear coordinate \f$s\f$.
     //!
     virtual
     void
-    eval_D( real_type s, real_type & x_D, real_type & y_D ) const = 0;
+    eval_D( real_type const s, real_type & x_D, real_type & y_D ) const = 0;
 
     //!
     //! x and \f$y\f$-coordinate second derivative at curvilinear coordinate \f$s\f$.
     //!
     virtual
     void
-    eval_DD( real_type s, real_type & x_DD, real_type & y_DD ) const = 0;
+    eval_DD( real_type const s, real_type & x_DD, real_type & y_DD ) const = 0;
 
     //!
     //! x and \f$y\f$-coordinate third derivative at curvilinear coordinate \f$s\f$.
     //!
     virtual
     void
-    eval_DDD( real_type s, real_type & x_DDD, real_type & y_DDD ) const = 0;
+    eval_DDD( real_type const s, real_type & x_DDD, real_type & y_DDD ) const = 0;
 
     /*\
      |         __  __          _
@@ -958,82 +977,87 @@ namespace G2lib {
     //!
     //! \f$x\f$-coordinate at curvilinear coordinate \f$s\f$ with offset `offs` (ISO).
     //!
-    virtual real_type X_ISO( real_type s, real_type offs ) const;
+    virtual real_type X_ISO( real_type const s, real_type const offs ) const;
 
     //!
     //! \f$y\f$-coordinate at curvilinear coordinate \f$s\f$ with offset `offs` (ISO).
     //!
-    virtual real_type Y_ISO( real_type s, real_type offs ) const;
+    virtual real_type Y_ISO( real_type const s, real_type const offs ) const;
 
     //!
     //! \f$x\f$-coordinate derivative at curvilinear coordinate \f$s\f$ with offset `offs` (ISO).
     //!
-    virtual real_type X_ISO_D( real_type s, real_type offs ) const;
+    virtual real_type X_ISO_D( real_type const s, real_type const offs ) const;
 
     //!
     //! \f$y\f$-coordinate derivative at curvilinear coordinate \f$s\f$ with offset `offs` (ISO).
     //!
-    virtual real_type Y_ISO_D( real_type s, real_type offs ) const;
+    virtual real_type Y_ISO_D( real_type const s, real_type const offs ) const;
 
     //!
     //! \f$x\f$-coordinate second derivative at curvilinear coordinate \f$s\f$ with offset `offs` (ISO).
     //!
-    virtual real_type X_ISO_DD( real_type s, real_type offs ) const;
+    virtual real_type X_ISO_DD( real_type const s, real_type const offs ) const;
 
     //!
     //! \f$y\f$-coordinate second derivative at curvilinear coordinate \f$s\f$ with offset `offs` (ISO).
     //!
-    virtual real_type Y_ISO_DD( real_type s, real_type offs ) const;
+    virtual real_type Y_ISO_DD( real_type const s, real_type const offs ) const;
 
     //!
     //! \f$x\f$-coordinate third derivative at curvilinear coordinate \f$s\f$ with offset `offs` (ISO).
     //!
-    virtual real_type X_ISO_DDD( real_type s, real_type offs ) const;
+    virtual real_type X_ISO_DDD( real_type const s, real_type const offs ) const;
 
     //!
     //! \f$y\f$-coordinate third derivative at curvilinear coordinate \f$s\f$ with offset `offs` (ISO).
     //!
-    virtual real_type Y_ISO_DDD( real_type s, real_type offs ) const;
+    virtual real_type Y_ISO_DDD( real_type const s, real_type const offs ) const;
 
     //!
     //! \f$x\f$-coordinate at curvilinear coordinate \f$s\f$ with offset `offs` (SAE).
     //!
-    real_type X_SAE( real_type s, real_type offs ) const { return this->X_ISO(s,-offs); }
+    [[nodiscard]] real_type X_SAE( real_type const s, real_type const offs ) const { return this->X_ISO(s,-offs); }
 
     //!
     //! \f$y\f$-coordinate at curvilinear coordinate \f$s\f$ with offset `offs` (SAE).
     //!
-    real_type Y_SAE( real_type s, real_type offs ) const { return this->Y_ISO(s,-offs); }
+    [[nodiscard]] real_type Y_SAE( real_type const s, real_type const offs ) const { return this->Y_ISO(s,-offs); }
 
     //!
     //! \f$x\f$-coordinate derivative at curvilinear coordinate \f$s\f$ with offset `offs` (SAE).
     //!
-    real_type X_SAE_D( real_type s, real_type offs ) const { return this->X_ISO_D(s,-offs); }
+    [[nodiscard]] real_type X_SAE_D( real_type const s, real_type const offs ) const { return this->X_ISO_D(s,-offs); }
 
     //!
     //! \f$y\f$-coordinate derivative at curvilinear coordinate \f$s\f$ with offset `offs` (SAE).
     //!
-    real_type Y_SAE_D( real_type s, real_type offs ) const { return this->Y_ISO_D(s,-offs); }
+    [[nodiscard]] real_type Y_SAE_D( real_type const s, real_type const offs ) const { return this->Y_ISO_D(s,-offs); }
 
     //!
     //! \f$x\f$-coordinate second derivative at curvilinear coordinate \f$s\f$ with offset `offs` (SAE).
     //!
-    real_type X_SAE_DD( real_type s, real_type offs ) const { return this->X_ISO_DD(s,-offs); }
+    [[nodiscard]] real_type X_SAE_DD( real_type const s, real_type const offs ) const { return this->X_ISO_DD(s,-offs); }
 
     //!
     //! \f$y\f$-coordinate second derivative at curvilinear coordinate \f$s\f$ with offset `offs` (SAE).
     //!
-    real_type Y_SAE_DD( real_type s, real_type offs ) const { return this->Y_ISO_DD(s,-offs); }
+    [[nodiscard]] real_type Y_SAE_DD( real_type const s, real_type const offs ) const { return this->Y_ISO_DD(s,-offs); }
 
     //!
     //! \f$x\f$-coordinate third derivative at curvilinear coordinate \f$s\f$ with offset `offs` (SAE).
     //!
-    real_type X_SAE_DDD( real_type s, real_type offs ) const { return this->X_ISO_DDD(s,-offs); }
+    [[nodiscard]] real_type X_SAE_DDD( real_type const s, real_type const offs ) const { return this->X_ISO_DDD(s,-offs); }
 
     //!
     //! \f$y\f$-coordinate third derivative at curvilinear coordinate \f$s\f$ with offset `offs` (SAE).
     //!
-    real_type Y_SAE_DDD( real_type s, real_type offs ) const { return this->Y_ISO_DDD(s,-offs); }
+    [[nodiscard]] real_type Y_SAE_DDD( real_type const s, real_type const offs ) const { return this->Y_ISO_DDD(s,-offs); }
+
+    G2LIB_DEFINE_1ARG_1PAR_AUTODIFF( X_ISO )
+    G2LIB_DEFINE_1ARG_1PAR_AUTODIFF( Y_ISO )
+    G2LIB_DEFINE_1ARG_1PAR_AUTODIFF( X_SAE )
+    G2LIB_DEFINE_1ARG_1PAR_AUTODIFF( Y_SAE )
 
     // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 
@@ -1048,10 +1072,10 @@ namespace G2lib {
     virtual
     void
     eval_ISO(
-      real_type   s,
-      real_type   offs,
-      real_type & x,
-      real_type & y
+      real_type const s,
+      real_type const offs,
+      real_type     & x,
+      real_type     & y
     ) const;
 
     //!
@@ -1064,10 +1088,10 @@ namespace G2lib {
     //!
     void
     eval_SAE(
-      real_type   s,
-      real_type   offs,
-      real_type & x,
-      real_type & y
+      real_type const s,
+      real_type const offs,
+      real_type     & x,
+      real_type     & y
     ) const {
       this->eval_ISO( s, -offs, x, y );
     }
@@ -1083,10 +1107,10 @@ namespace G2lib {
     virtual
     void
     eval_ISO_D(
-      real_type   s,
-      real_type   offs,
-      real_type & x_D,
-      real_type & y_D
+      real_type const s,
+      real_type const offs,
+      real_type     & x_D,
+      real_type     & y_D
     ) const;
 
     //!
@@ -1099,10 +1123,10 @@ namespace G2lib {
     //!
     void
     eval_SAE_D(
-      real_type   s,
-      real_type   offs,
-      real_type & x_D,
-      real_type & y_D
+      real_type const s,
+      real_type const offs,
+      real_type     & x_D,
+      real_type     & y_D
     ) const {
       this->eval_ISO_D( s, -offs, x_D, y_D );
     }
@@ -1118,10 +1142,10 @@ namespace G2lib {
     virtual
     void
     eval_ISO_DD(
-      real_type   s,
-      real_type   offs,
-      real_type & x_DD,
-      real_type & y_DD
+      real_type const s,
+      real_type const offs,
+      real_type     & x_DD,
+      real_type     & y_DD
     ) const;
 
     //!
@@ -1134,10 +1158,10 @@ namespace G2lib {
     //!
     void
     eval_SAE_DD(
-      real_type   s,
-      real_type   offs,
-      real_type & x_DD,
-      real_type & y_DD
+      real_type const s,
+      real_type const offs,
+      real_type     & x_DD,
+      real_type     & y_DD
     ) const {
       this->eval_ISO_DD( s, -offs, x_DD, y_DD );
     }
@@ -1153,10 +1177,10 @@ namespace G2lib {
     virtual
     void
     eval_ISO_DDD(
-      real_type   s,
-      real_type   offs,
-      real_type & x_DDD,
-      real_type & y_DDD
+      real_type const s,
+      real_type const offs,
+      real_type     & x_DDD,
+      real_type     & y_DDD
     ) const;
 
     //!
@@ -1169,10 +1193,10 @@ namespace G2lib {
     //!
     void
     eval_SAE_DDD(
-      real_type   s,
-      real_type   offs,
-      real_type & x_DDD,
-      real_type & y_DDD
+      real_type const s,
+      real_type const offs,
+      real_type     & x_DDD,
+      real_type     & y_DDD
     ) const {
       this->eval_ISO_DDD( s, -offs, x_DDD, y_DDD );
     }
@@ -1199,14 +1223,14 @@ namespace G2lib {
     //!
     virtual
     void
-    rotate( real_type angle, real_type cx, real_type cy ) = 0;
+    rotate( real_type const angle, real_type const cx, real_type const cy ) = 0;
 
     //!
     //! Scale curve by factor `sc`.
     //!
     virtual
     void
-    scale( real_type sc ) = 0;
+    scale( real_type const sc ) = 0;
 
     //!
     //! Reverse curve parameterization.
@@ -1220,14 +1244,14 @@ namespace G2lib {
     //!
     virtual
     void
-    change_origin( real_type newx0, real_type newy0 ) = 0;
+    change_origin( real_type const newx0, real_type const newy0 ) = 0;
 
     //!
     //! Cut curve at parametric coordinate `s_begin` and `s_end`.
     //!
     virtual
     void
-    trim( real_type s_begin, real_type s_end ) = 0;
+    trim( real_type const s_begin, real_type const s_end ) = 0;
 
     /*\
      |   _       _                          _
@@ -1253,9 +1277,9 @@ namespace G2lib {
     virtual
     bool
     collision_ISO(
-      real_type         offs,
+      real_type const   offs,
       BaseCurve const * pC,
-      real_type         offs_C
+      real_type const   offs_C
     ) const = 0;
 
     //!
@@ -1268,9 +1292,9 @@ namespace G2lib {
     //!
     bool
     collision_SAE(
-      real_type         offs,
+      real_type const   offs,
       BaseCurve const * pC,
-      real_type         offs_C
+      real_type const   offs_C
     ) const {
       return this->collision_ISO( -offs, pC, -offs_C );
     }
@@ -1299,9 +1323,9 @@ namespace G2lib {
     virtual
     void
     intersect_ISO(
-      real_type         offs,
+      real_type const   offs,
       BaseCurve const * pC,
-      real_type         offs_C,
+      real_type const   offs_C,
       IntersectList   & ilist
     ) const = 0;
 
@@ -1315,9 +1339,9 @@ namespace G2lib {
     //!
     void
     intersect_SAE(
-      real_type         offs,
+      real_type const   offs,
       BaseCurve const * pC,
-      real_type         offs_C,
+      real_type const   offs_C,
       IntersectList   & ilist
     ) const {
       this->intersect_ISO( -offs, pC, -offs_C, ilist );
@@ -1348,13 +1372,13 @@ namespace G2lib {
     virtual
     integer
     closest_point_ISO(
-      real_type   qx,
-      real_type   qy,
-      real_type & x,
-      real_type & y,
-      real_type & s,
-      real_type & t,
-      real_type & dst
+      real_type const qx,
+      real_type const qy,
+      real_type     & x,
+      real_type     & y,
+      real_type     & s,
+      real_type     & t,
+      real_type     & dst
     ) const = 0;
 
     //!
@@ -1373,13 +1397,13 @@ namespace G2lib {
     //!
     integer
     closest_point_SAE(
-      real_type   qx,
-      real_type   qy,
-      real_type & x,
-      real_type & y,
-      real_type & s,
-      real_type & t,
-      real_type & dst
+      real_type const qx,
+      real_type const qy,
+      real_type     & x,
+      real_type     & y,
+      real_type     & s,
+      real_type     & t,
+      real_type     & dst
     ) const {
       integer res = this->closest_point_ISO( qx, qy, x, y, s, t, dst );
       t = -t;
@@ -1404,14 +1428,14 @@ namespace G2lib {
     virtual
     integer // true if projection is unique and orthogonal
     closest_point_ISO(
-      real_type   qx,
-      real_type   qy,
-      real_type   offs,
-      real_type & x,
-      real_type & y,
-      real_type & s,
-      real_type & t,
-      real_type & dst
+      real_type const qx,
+      real_type const qy,
+      real_type const offs,
+      real_type     & x,
+      real_type     & y,
+      real_type     & s,
+      real_type     & t,
+      real_type     & dst
     ) const = 0;
 
     //!
@@ -1431,14 +1455,14 @@ namespace G2lib {
     //!
     integer
     closest_point_SAE(
-      real_type   qx,
-      real_type   qy,
-      real_type   offs,
-      real_type & x,
-      real_type & y,
-      real_type & s,
-      real_type & t,
-      real_type & dst
+      real_type const qx,
+      real_type const qy,
+      real_type const offs,
+      real_type     & x,
+      real_type     & y,
+      real_type     & s,
+      real_type     & t,
+      real_type     & dst
     ) const {
       integer res = this->closest_point_ISO( qx, qy, -offs, x, y, s, t, dst );
       t = -t;
@@ -1454,7 +1478,7 @@ namespace G2lib {
     //!
     virtual
     real_type
-    distance( real_type qx, real_type qy ) const {
+    distance( real_type const qx, real_type const qy ) const {
       real_type x, y, s, t, dst;
       closest_point_ISO( qx, qy, x, y, s, t, dst );
       return dst;
@@ -1468,11 +1492,12 @@ namespace G2lib {
     //! \param[in] offs offset of the curve
     //! \return the computed distance
     //!
+    [[nodiscard]]
     real_type
     distance_ISO(
-      real_type qx,
-      real_type qy,
-      real_type offs
+      real_type const qx,
+      real_type const qy,
+      real_type const offs
     ) const {
       real_type x, y, s, t, dst;
       this->closest_point_ISO( qx, qy, offs, x, y, s, t, dst );
@@ -1487,14 +1512,15 @@ namespace G2lib {
     //! \param[in] offs offset of the curve
     //! \return the computed distance
     //!
+    [[nodiscard]]
     real_type
     distance_SAE(
-      real_type qx,
-      real_type qy,
-      real_type offs
+      real_type const qx,
+      real_type const qy,
+      real_type const offs
     ) const {
       real_type x, y, s, t, dst;
-      this->closest_point_SAE( qx, qy, offs, x, y, s, t, dst );
+      this->closest_point_SAE( qx, qy, offs, x, y, s, t, dst ); // ignore return
       return dst;
     }
 
@@ -1523,12 +1549,13 @@ namespace G2lib {
     //! \param[out] t offset respect to the curve of \f$(x,y)\f$
     //! \return true if the coordinate are found
     //!
+    [[nodiscard]]
     bool
     findST_ISO(
-      real_type   x,
-      real_type   y,
-      real_type & s,
-      real_type & t
+      real_type const x,
+      real_type const y,
+      real_type     & s,
+      real_type     & t
     ) const {
       real_type X, Y, dst;
       integer icode = this->closest_point_ISO( x, y, X, Y, s, t, dst );
@@ -1552,15 +1579,16 @@ namespace G2lib {
     //! \param[out] t offset respect to the curve of \f$(x,y)\f$
     //! \return true if the coordinate are found
     //!
+    [[nodiscard]]
     bool
     findST_SAE(
-      real_type   x,
-      real_type   y,
-      real_type & s,
-      real_type & t
+      real_type const x,
+      real_type const y,
+      real_type     & s,
+      real_type     & t
     ) const {
       real_type X, Y, dst;
-      integer icode = this->closest_point_SAE( x, y, X, Y, s, t, dst );
+      integer icode{ this->closest_point_SAE( x, y, X, Y, s, t, dst ) };
       return icode >= 0;
     }
 

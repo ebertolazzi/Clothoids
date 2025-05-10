@@ -21,6 +21,10 @@
 // file: GenericContainerCollapse.cc
 //
 
+#ifdef _MSC_VER
+  #pragma warning(disable : 4661)
+#endif
+
 #include "GenericContainer/GenericContainer.hh"
 #include <iomanip>
 #include <cmath>

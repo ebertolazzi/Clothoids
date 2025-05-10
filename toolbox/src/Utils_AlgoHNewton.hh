@@ -240,7 +240,9 @@ namespace Utils {
 
     Real p_zero2() const;
     Real invp_zero2() const;
+    #if 0
     Real invp_zero3() const;
+    #endif
 
   public:
 

@@ -720,10 +720,10 @@ namespace Utils {
 
         switch ( side ) {
         case 1: // Apply Anderson-Bjork modification for side 1
-          { Real m{ 1-f3/f1 }; f2 *= m > Utils::machine_eps<Real>() ? m : 0.5; }
+          { Real m{ 1-f3/f1 }; f2 *= m > Utils::machine_eps<Real>() ? m : static_cast<Real>(0.5); }
           break;
         case 2: // Apply Anderson-Bjork modification for side 2
-          { Real m{ 1-f3/f2 }; f1 *= m > Utils::machine_eps<Real>() ? m : 0.5; }
+          { Real m{ 1-f3/f2 }; f1 *= m > Utils::machine_eps<Real>() ? m : static_cast<Real>(0.5); }
           break;
         }
 
