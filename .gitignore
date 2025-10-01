@@ -50,3 +50,4 @@ cmake-build-debug
 toolbox/CMakeFiles
 Xcode
 *.csv
+.DS_Store
