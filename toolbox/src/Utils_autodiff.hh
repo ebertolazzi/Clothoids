@@ -620,13 +620,525 @@ CLASS PREFIX##D_4_4( real_type const x, real_type const y,            \
   return res.grad.grad;                                               \
 }
 
+
+#define UTILS_AUTODIFF_DERIV_5ARG(INLINE,CLASS,PREFIX,FUN,CONST)      \
+INLINE real_type                                                      \
+CLASS PREFIX##D_1( real_type const x1, real_type const x2,            \
+                   real_type const x3, real_type const x4,            \
+                   real_type const x5 ) CONST {                       \
+  autodiff::dual1st X1{x1};                                           \
+  X1.grad = 1;                                                        \
+  autodiff::dual1st res{ FUN( X1, x2, x3, x4, x5 ) };                 \
+  return res.grad;                                                    \
+}                                                                     \
+                                                                      \
+INLINE real_type                                                      \
+CLASS PREFIX##D_2( real_type const x1, real_type const x2,            \
+                   real_type const x3, real_type const x4,            \
+                   real_type const x5  ) CONST {                      \
+  autodiff::dual1st X2{x2};                                           \
+  X2.grad = 1;                                                        \
+  autodiff::dual1st res{ FUN( x1, X2, x3, x4, x5 ) };                 \
+  return res.grad;                                                    \
+}                                                                     \
+                                                                      \
+INLINE real_type                                                      \
+CLASS PREFIX##D_3( real_type const x1, real_type const x2,            \
+                   real_type const x3, real_type const x4,            \
+                   real_type const x5  ) CONST {                      \
+  autodiff::dual1st X3{x3};                                           \
+  X3.grad = 1;                                                        \
+  autodiff::dual1st res{ FUN( x1, x2, X3, x4, x5 ) };                 \
+  return res.grad;                                                    \
+}                                                                     \
+                                                                      \
+INLINE real_type                                                      \
+CLASS PREFIX##D_4( real_type const x1, real_type const x2,            \
+                   real_type const x3, real_type const x4,            \
+                   real_type const x5  ) CONST {                      \
+  autodiff::dual1st X4{x4};                                           \
+  X4.grad = 1;                                                        \
+  autodiff::dual1st res{ FUN( x1, x2, x3, X4, x5 ) };                 \
+  return res.grad;                                                    \
+}                                                                     \
+                                                                      \
+INLINE real_type                                                      \
+CLASS PREFIX##D_5( real_type const x1, real_type const x2,            \
+                   real_type const x3, real_type const x4,            \
+                   real_type const x5  ) CONST {                      \
+  autodiff::dual1st X5{x5};                                           \
+  X5.grad = 1;                                                        \
+  autodiff::dual1st res{ FUN( x1, x2, x3, x4, X5 ) };                 \
+  return res.grad;                                                    \
+}                                                                     \
+                                                                      \
+INLINE real_type                                                      \
+CLASS PREFIX##D_1_1( real_type const x1, real_type const x2,          \
+                     real_type const x3, real_type const x4,          \
+                     real_type const x5 ) CONST {                     \
+  autodiff::dual2nd X1{x1};                                           \
+  X1.val.grad = 1;                                                    \
+  X1.grad.val = 1;                                                    \
+  autodiff::dual2nd res{ FUN( X1, x2, x3, x4, x5 ) };                 \
+  return res.grad.grad;                                               \
+}                                                                     \
+                                                                      \
+INLINE real_type                                                      \
+CLASS PREFIX##D_1_2( real_type const x1, real_type const x2,          \
+                     real_type const x3, real_type const x4,          \
+                     real_type const x5  ) CONST {                    \
+  autodiff::dual2nd X1{x1}, X2{x2};                                   \
+  X1.val.grad = 1;                                                    \
+  X2.grad.val = 1;                                                    \
+  autodiff::dual2nd res{ FUN( X1, X2, x3, x4, x5 ) };                 \
+  return res.grad.grad;                                               \
+}                                                                     \
+                                                                      \
+INLINE real_type                                                      \
+CLASS PREFIX##D_1_3( real_type const x1, real_type const x2,          \
+                     real_type const x3, real_type const x4,          \
+                     real_type const x5  ) CONST {                    \
+  autodiff::dual2nd X1{x1}, X3{x3};                                   \
+  X1.val.grad = 1;                                                    \
+  X3.grad.val = 1;                                                    \
+  autodiff::dual2nd res{ FUN( X1, x2, X3, x4, x5 ) };                 \
+  return res.grad.grad;                                               \
+}                                                                     \
+                                                                      \
+INLINE real_type                                                      \
+CLASS PREFIX##D_1_4( real_type const x1, real_type const x2,          \
+                     real_type const x3, real_type const x4,          \
+                     real_type const x5  ) CONST {                    \
+  autodiff::dual2nd X1{x1}, X4{x4};                                   \
+  X1.val.grad = 1;                                                    \
+  X4.grad.val = 1;                                                    \
+  autodiff::dual2nd res{ FUN( X1, x2, x3, X4, x5 ) };                 \
+  return res.grad.grad;                                               \
+}                                                                     \
+                                                                      \
+INLINE real_type                                                      \
+CLASS PREFIX##D_1_5( real_type const x1, real_type const x2,          \
+                     real_type const x3, real_type const x4,          \
+                     real_type const x5  ) CONST {                    \
+  autodiff::dual2nd X1{x1}, X5{x5};                                   \
+  X1.val.grad = 1;                                                    \
+  X5.grad.val = 1;                                                    \
+  autodiff::dual2nd res{ FUN( X1, x2, x3, x4, X5 ) };                 \
+  return res.grad.grad;                                               \
+}                                                                     \
+                                                                      \
+INLINE real_type                                                      \
+CLASS PREFIX##D_2_2( real_type const x1, real_type const x2,          \
+                     real_type const x3, real_type const x4,          \
+                     real_type const x5  ) CONST {                    \
+  autodiff::dual2nd X2{x2};                                           \
+  X2.val.grad = 1;                                                    \
+  X2.grad.val = 1;                                                    \
+  autodiff::dual2nd res{ FUN( x1, X2, x3, x4, x5) };                  \
+  return res.grad.grad;                                               \
+}                                                                     \
+                                                                      \
+INLINE real_type                                                      \
+CLASS PREFIX##D_2_3( real_type const x1, real_type const x2,          \
+                     real_type const x3, real_type const x4,          \
+                     real_type const x5  ) CONST {                    \
+  autodiff::dual2nd X2{x2}, X3{x3};                                   \
+  X2.val.grad = 1;                                                    \
+  X3.grad.val = 1;                                                    \
+  autodiff::dual2nd res{ FUN( x1, X2, X3, x4, x5 ) };                 \
+  return res.grad.grad;                                               \
+}                                                                     \
+                                                                      \
+INLINE real_type                                                      \
+CLASS PREFIX##D_2_4( real_type const x1, real_type const x2,          \
+                     real_type const x3, real_type const x4,          \
+                     real_type const x5  ) CONST {                    \
+  autodiff::dual2nd X2{x2}, X4{x4};                                   \
+  X2.val.grad = 1;                                                    \
+  X4.grad.val = 1;                                                    \
+  autodiff::dual2nd res{ FUN( x1, X2, x3, X4, x5 ) };                 \
+  return res.grad.grad;                                               \
+}                                                                     \
+                                                                      \
+INLINE real_type                                                      \
+CLASS PREFIX##D_2_5( real_type const x1, real_type const x2,          \
+                     real_type const x3, real_type const x4,          \
+                     real_type const x5  ) CONST {                    \
+  autodiff::dual2nd X2{x2}, X5{x5};                                   \
+  X2.val.grad = 1;                                                    \
+  X5.grad.val = 1;                                                    \
+  autodiff::dual2nd res{ FUN( x1, X2, x3, x4, X5 ) };                 \
+  return res.grad.grad;                                               \
+}                                                                     \
+                                                                      \
+INLINE real_type                                                      \
+CLASS PREFIX##D_3_3( real_type const x1, real_type const x2,          \
+                     real_type const x3, real_type const x4,          \
+                     real_type const x5  ) CONST {                    \
+  autodiff::dual2nd X3{x3};                                           \
+  X3.val.grad = 1;                                                    \
+  X3.grad.val = 1;                                                    \
+  autodiff::dual2nd res{ FUN( x1, x2, X3, x4, x5 ) };                 \
+  return res.grad.grad;                                               \
+}                                                                     \
+                                                                      \
+INLINE real_type                                                      \
+CLASS PREFIX##D_3_4( real_type const x1, real_type const x2,          \
+                     real_type const x3, real_type const x4,          \
+                     real_type const x5  ) CONST {                    \
+  autodiff::dual2nd X3{x3}, X4{x4};                                   \
+  X3.val.grad = 1;                                                    \
+  X4.grad.val = 1;                                                    \
+  autodiff::dual2nd res{ FUN( x1, x2, X3, X4, x5 ) };                 \
+  return res.grad.grad;                                               \
+}                                                                     \
+                                                                      \
+INLINE real_type                                                      \
+CLASS PREFIX##D_3_5( real_type const x1, real_type const x2,          \
+                     real_type const x3, real_type const x4,          \
+                     real_type const x5  ) CONST {                    \
+  autodiff::dual2nd X3{x3}, X5{x5};                                   \
+  X3.val.grad = 1;                                                    \
+  X5.grad.val = 1;                                                    \
+  autodiff::dual2nd res{ FUN( x1, x2, X3, x4, X5 ) };                 \
+  return res.grad.grad;                                               \
+}                                                                     \
+                                                                      \
+INLINE real_type                                                      \
+CLASS PREFIX##D_4_4( real_type const x1, real_type const x2,          \
+                     real_type const x3, real_type const x4,          \
+                     real_type const x5  ) CONST {                    \
+  autodiff::dual2nd X4{x4};                                           \
+  X4.val.grad = 1;                                                    \
+  X4.grad.val = 1;                                                    \
+  autodiff::dual2nd res{ FUN( x1, x2, x3, X4, x5 ) };                 \
+  return res.grad.grad;                                               \
+}                                                                     \
+                                                                      \
+INLINE real_type                                                      \
+CLASS PREFIX##D_4_5( real_type const x1, real_type const x2,          \
+                     real_type const x3, real_type const x4,          \
+                     real_type const x5  ) CONST {                    \
+  autodiff::dual2nd X4{x4}, X5{x5};                                   \
+  X4.val.grad = 1;                                                    \
+  X5.grad.val = 1;                                                    \
+  autodiff::dual2nd res{ FUN( x1, x2, x3, X4, X5 ) };                 \
+  return res.grad.grad;                                               \
+}                                                                     \
+                                                                      \
+INLINE real_type                                                      \
+CLASS PREFIX##D_5_5( real_type const x1, real_type const x2,          \
+                     real_type const x3, real_type const x4,          \
+                     real_type const x5  ) CONST {                    \
+  autodiff::dual2nd X5{x5};                                           \
+  X5.val.grad = 1;                                                    \
+  X5.grad.val = 1;                                                    \
+  autodiff::dual2nd res{ FUN( x1, x2, x3, x4, X5 ) };                 \
+  return res.grad.grad;                                               \
+}
+
+
+
+
+#define UTILS_AUTODIFF_DERIV_6ARG(INLINE,CLASS,PREFIX,FUN,CONST)      \
+INLINE real_type                                                      \
+CLASS PREFIX##D_1( real_type const x1, real_type const x2,            \
+                   real_type const x3, real_type const x4,            \
+                   real_type const x5, real_type const x6 ) CONST {   \
+  autodiff::dual1st X1{x1};                                           \
+  X1.grad = 1;                                                        \
+  autodiff::dual1st res{ FUN( X1, x2, x3, x4, x5, x6 ) };             \
+  return res.grad;                                                    \
+}                                                                     \
+                                                                      \
+INLINE real_type                                                      \
+CLASS PREFIX##D_2( real_type const x1, real_type const x2,            \
+                   real_type const x3, real_type const x4,            \
+                   real_type const x5, real_type const x6  ) CONST {  \
+  autodiff::dual1st X2{x2};                                           \
+  X2.grad = 1;                                                        \
+  autodiff::dual1st res{ FUN( x1, X2, x3, x4, x5, x6 ) };             \
+  return res.grad;                                                    \
+}                                                                     \
+                                                                      \
+INLINE real_type                                                      \
+CLASS PREFIX##D_3( real_type const x1, real_type const x2,            \
+                   real_type const x3, real_type const x4,            \
+                   real_type const x5, real_type const x6  ) CONST {  \
+  autodiff::dual1st X3{x3};                                           \
+  X3.grad = 1;                                                        \
+  autodiff::dual1st res{ FUN( x1, x2, X3, x4, x5, x6 ) };             \
+  return res.grad;                                                    \
+}                                                                     \
+                                                                      \
+INLINE real_type                                                      \
+CLASS PREFIX##D_4( real_type const x1, real_type const x2,            \
+                   real_type const x3, real_type const x4,            \
+                   real_type const x5, real_type const x6  ) CONST {  \
+  autodiff::dual1st X4{x4};                                           \
+  X4.grad = 1;                                                        \
+  autodiff::dual1st res{ FUN( x1, x2, x3, X4, x5, x6 ) };             \
+  return res.grad;                                                    \
+}                                                                     \
+                                                                      \
+INLINE real_type                                                      \
+CLASS PREFIX##D_5( real_type const x1, real_type const x2,            \
+                   real_type const x3, real_type const x4,            \
+                   real_type const x5, real_type const x6  ) CONST {  \
+  autodiff::dual1st X5{x5};                                           \
+  X5.grad = 1;                                                        \
+  autodiff::dual1st res{ FUN( x1, x2, x3, x4, X5, x6 ) };             \
+  return res.grad;                                                    \
+}                                                                     \
+                                                                      \
+INLINE real_type                                                      \
+CLASS PREFIX##D_6( real_type const x1, real_type const x2,            \
+                   real_type const x3, real_type const x4,            \
+                   real_type const x5, real_type const x6  ) CONST {  \
+  autodiff::dual1st X6{x6};                                           \
+  X6.grad = 1;                                                        \
+  autodiff::dual1st res{ FUN( x1, x2, x3, x4, x5, X6 ) };             \
+  return res.grad;                                                    \
+}                                                                     \
+                                                                      \
+INLINE real_type                                                      \
+CLASS PREFIX##D_1_1( real_type const x1, real_type const x2,          \
+                     real_type const x3, real_type const x4,          \
+                     real_type const x5, real_type const x6 ) CONST { \
+  autodiff::dual2nd X1{x1};                                           \
+  X1.val.grad = 1;                                                    \
+  X1.grad.val = 1;                                                    \
+  autodiff::dual2nd res{ FUN( X1, x2, x3, x4, x5, x6 ) };             \
+  return res.grad.grad;                                               \
+}                                                                     \
+                                                                      \
+INLINE real_type                                                      \
+CLASS PREFIX##D_1_2( real_type const x1, real_type const x2,          \
+                     real_type const x3, real_type const x4,          \
+                     real_type const x5, real_type const x6 ) CONST { \
+  autodiff::dual2nd X1{x1}, X2{x2};                                   \
+  X1.val.grad = 1;                                                    \
+  X2.grad.val = 1;                                                    \
+  autodiff::dual2nd res{ FUN( X1, X2, x3, x4, x5, x6 ) };             \
+  return res.grad.grad;                                               \
+}                                                                     \
+                                                                      \
+INLINE real_type                                                      \
+CLASS PREFIX##D_1_3( real_type const x1, real_type const x2,          \
+                     real_type const x3, real_type const x4,          \
+                     real_type const x5, real_type const x6 ) CONST { \
+  autodiff::dual2nd X1{x1}, X3{x3};                                   \
+  X1.val.grad = 1;                                                    \
+  X3.grad.val = 1;                                                    \
+  autodiff::dual2nd res{ FUN( X1, x2, X3, x4, x5, x6 ) };             \
+  return res.grad.grad;                                               \
+}                                                                     \
+                                                                      \
+INLINE real_type                                                      \
+CLASS PREFIX##D_1_4( real_type const x1, real_type const x2,          \
+                     real_type const x3, real_type const x4,          \
+                     real_type const x5, real_type const x6 ) CONST { \
+  autodiff::dual2nd X1{x1}, X4{x4};                                   \
+  X1.val.grad = 1;                                                    \
+  X4.grad.val = 1;                                                    \
+  autodiff::dual2nd res{ FUN( X1, x2, x3, X4, x5, x6 ) };             \
+  return res.grad.grad;                                               \
+}                                                                     \
+                                                                      \
+INLINE real_type                                                      \
+CLASS PREFIX##D_1_5( real_type const x1, real_type const x2,          \
+                     real_type const x3, real_type const x4,          \
+                     real_type const x5, real_type const x6 ) CONST { \
+  autodiff::dual2nd X1{x1}, X5{x5};                                   \
+  X1.val.grad = 1;                                                    \
+  X5.grad.val = 1;                                                    \
+  autodiff::dual2nd res{ FUN( X1, x2, x3, x4, X5, x6 ) };             \
+  return res.grad.grad;                                               \
+}                                                                     \
+                                                                      \
+INLINE real_type                                                      \
+CLASS PREFIX##D_1_6( real_type const x1, real_type const x2,          \
+                     real_type const x3, real_type const x4,          \
+                     real_type const x5, real_type const x6 ) CONST { \
+  autodiff::dual2nd X1{x1}, X6{x6};                                   \
+  X1.val.grad = 1;                                                    \
+  X6.grad.val = 1;                                                    \
+  autodiff::dual2nd res{ FUN( X1, x2, x3, x4, x5, X6 ) };             \
+  return res.grad.grad;                                               \
+}                                                                     \
+                                                                      \
+INLINE real_type                                                      \
+CLASS PREFIX##D_2_2( real_type const x1, real_type const x2,          \
+                     real_type const x3, real_type const x4,          \
+                     real_type const x5, real_type const x6 ) CONST { \
+  autodiff::dual2nd X2{x2};                                           \
+  X2.val.grad = 1;                                                    \
+  X2.grad.val = 1;                                                    \
+  autodiff::dual2nd res{ FUN( x1, X2, x3, x4, x5, x6 ) };             \
+  return res.grad.grad;                                               \
+}                                                                     \
+                                                                      \
+INLINE real_type                                                      \
+CLASS PREFIX##D_2_3( real_type const x1, real_type const x2,          \
+                     real_type const x3, real_type const x4,          \
+                     real_type const x5, real_type const x6 ) CONST { \
+  autodiff::dual2nd X2{x2}, X3{x3};                                   \
+  X2.val.grad = 1;                                                    \
+  X3.grad.val = 1;                                                    \
+  autodiff::dual2nd res{ FUN( x1, X2, X3, x4, x5, x6 ) };             \
+  return res.grad.grad;                                               \
+}                                                                     \
+                                                                      \
+INLINE real_type                                                      \
+CLASS PREFIX##D_2_4( real_type const x1, real_type const x2,          \
+                     real_type const x3, real_type const x4,          \
+                     real_type const x5, real_type const x6 ) CONST { \
+  autodiff::dual2nd X2{x2}, X4{x4};                                   \
+  X2.val.grad = 1;                                                    \
+  X4.grad.val = 1;                                                    \
+  autodiff::dual2nd res{ FUN( x1, X2, x3, X4, x5, x6 ) };             \
+  return res.grad.grad;                                               \
+}                                                                     \
+                                                                      \
+INLINE real_type                                                      \
+CLASS PREFIX##D_2_5( real_type const x1, real_type const x2,          \
+                     real_type const x3, real_type const x4,          \
+                     real_type const x5, real_type const x6 ) CONST { \
+  autodiff::dual2nd X2{x2}, X5{x5};                                   \
+  X2.val.grad = 1;                                                    \
+  X5.grad.val = 1;                                                    \
+  autodiff::dual2nd res{ FUN( x1, X2, x3, x4, X5, x6 ) };             \
+  return res.grad.grad;                                               \
+}                                                                     \
+                                                                      \
+INLINE real_type                                                      \
+CLASS PREFIX##D_2_6( real_type const x1, real_type const x2,          \
+                     real_type const x3, real_type const x4,          \
+                     real_type const x5, real_type const x6 ) CONST { \
+  autodiff::dual2nd X2{x2}, X6{x6};                                   \
+  X2.val.grad = 1;                                                    \
+  X6.grad.val = 1;                                                    \
+  autodiff::dual2nd res{ FUN( x1, X2, x3, x4, x5, X6 ) };             \
+  return res.grad.grad;                                               \
+}                                                                     \
+                                                                      \
+INLINE real_type                                                      \
+CLASS PREFIX##D_3_3( real_type const x1, real_type const x2,          \
+                     real_type const x3, real_type const x4,          \
+                     real_type const x5, real_type const x6 ) CONST { \
+  autodiff::dual2nd X3{x3};                                           \
+  X3.val.grad = 1;                                                    \
+  X3.grad.val = 1;                                                    \
+  autodiff::dual2nd res{ FUN( x1, x2, X3, x4, x5, x6 ) };             \
+  return res.grad.grad;                                               \
+}                                                                     \
+                                                                      \
+INLINE real_type                                                      \
+CLASS PREFIX##D_3_4( real_type const x1, real_type const x2,          \
+                     real_type const x3, real_type const x4,          \
+                     real_type const x5, real_type const x6 ) CONST { \
+  autodiff::dual2nd X3{x3}, X4{x4};                                   \
+  X3.val.grad = 1;                                                    \
+  X4.grad.val = 1;                                                    \
+  autodiff::dual2nd res{ FUN( x1, x2, X3, X4, x5, x6 ) };             \
+  return res.grad.grad;                                               \
+}                                                                     \
+                                                                      \
+INLINE real_type                                                      \
+CLASS PREFIX##D_3_5( real_type const x1, real_type const x2,          \
+                     real_type const x3, real_type const x4,          \
+                     real_type const x5, real_type const x6 ) CONST { \
+  autodiff::dual2nd X3{x3}, X5{x5};                                   \
+  X3.val.grad = 1;                                                    \
+  X5.grad.val = 1;                                                    \
+  autodiff::dual2nd res{ FUN( x1, x2, X3, x4, X5, x6 ) };             \
+  return res.grad.grad;                                               \
+}                                                                     \
+                                                                      \
+INLINE real_type                                                      \
+CLASS PREFIX##D_3_6( real_type const x1, real_type const x2,          \
+                     real_type const x3, real_type const x4,          \
+                     real_type const x5, real_type const x6 ) CONST { \
+  autodiff::dual2nd X3{x3}, X6{x6};                                   \
+  X3.val.grad = 1;                                                    \
+  X6.grad.val = 1;                                                    \
+  autodiff::dual2nd res{ FUN( x1, x2, X3, x4, x5, X6 ) };             \
+  return res.grad.grad;                                               \
+}                                                                     \
+                                                                      \
+INLINE real_type                                                      \
+CLASS PREFIX##D_4_4( real_type const x1, real_type const x2,          \
+                     real_type const x3, real_type const x4,          \
+                     real_type const x5, real_type const x6 ) CONST { \
+  autodiff::dual2nd X4{x4};                                           \
+  X4.val.grad = 1;                                                    \
+  X4.grad.val = 1;                                                    \
+  autodiff::dual2nd res{ FUN( x1, x2, x3, X4, x5, x6 ) };             \
+  return res.grad.grad;                                               \
+}                                                                     \
+                                                                      \
+INLINE real_type                                                      \
+CLASS PREFIX##D_4_5( real_type const x1, real_type const x2,          \
+                     real_type const x3, real_type const x4,          \
+                     real_type const x5, real_type const x6 ) CONST { \
+  autodiff::dual2nd X4{x4}, X5{x5};                                   \
+  X4.val.grad = 1;                                                    \
+  X5.grad.val = 1;                                                    \
+  autodiff::dual2nd res{ FUN( x1, x2, x3, X4, X5, x6 ) };             \
+  return res.grad.grad;                                               \
+}                                                                     \
+                                                                      \
+INLINE real_type                                                      \
+CLASS PREFIX##D_4_6( real_type const x1, real_type const x2,          \
+                     real_type const x3, real_type const x4,          \
+                     real_type const x5, real_type const x6 ) CONST { \
+  autodiff::dual2nd X4{x4}, X6{x6};                                   \
+  X4.val.grad = 1;                                                    \
+  X6.grad.val = 1;                                                    \
+  autodiff::dual2nd res{ FUN( x1, x2, x3, X4, x5, X6 ) };             \
+  return res.grad.grad;                                               \
+}                                                                     \
+                                                                      \
+INLINE real_type                                                      \
+CLASS PREFIX##D_5_5( real_type const x1, real_type const x2,          \
+                     real_type const x3, real_type const x4,          \
+                     real_type const x5, real_type const x6 ) CONST { \
+  autodiff::dual2nd X5{x5};                                           \
+  X5.val.grad = 1;                                                    \
+  X5.grad.val = 1;                                                    \
+  autodiff::dual2nd res{ FUN( x1, x2, x3, x4, X5, x6 ) };             \
+  return res.grad.grad;                                               \
+}                                                                     \
+                                                                      \
+INLINE real_type                                                      \
+CLASS PREFIX##D_5_6( real_type const x1, real_type const x2,          \
+                     real_type const x3, real_type const x4,          \
+                     real_type const x5, real_type const x6 ) CONST { \
+  autodiff::dual2nd X5{x5}, X6{x6};                                   \
+  X5.val.grad = 1;                                                    \
+  X6.grad.val = 1;                                                    \
+  autodiff::dual2nd res{ FUN( x1, x2, x3, x4, X5, X6 ) };             \
+  return res.grad.grad;                                               \
+}                                                                     \
+                                                                      \
+INLINE real_type                                                      \
+CLASS PREFIX##D_6_6( real_type const x1, real_type const x2,          \
+                     real_type const x3, real_type const x4,          \
+                     real_type const x5, real_type const x6 ) CONST { \
+  autodiff::dual2nd X6{x6};                                           \
+  X6.val.grad = 1;                                                    \
+  X6.grad.val = 1;                                                    \
+  autodiff::dual2nd res{ FUN( x1, x2, x3, x4, x5, X6 ) };             \
+  return res.grad.grad;                                               \
+}
+
 #define UTILS_AUTODIFF_DERIV_1ARG_DEF(PREFIX,CONST) \
-real_type PREFIX##D( real_type const x ) CONST;     \
+real_type PREFIX##D ( real_type const x ) CONST;    \
 real_type PREFIX##DD( real_type const x ) CONST;
 
 #define UTILS_AUTODIFF_DERIV_2ARG_DEF(PREFIX,CONST)                    \
-real_type PREFIX##D_1( real_type const x, real_type const y ) CONST;   \
-real_type PREFIX##D_2( real_type const x, real_type const y ) CONST;   \
+real_type PREFIX##D_1  ( real_type const x, real_type const y ) CONST; \
+real_type PREFIX##D_2  ( real_type const x, real_type const y ) CONST; \
 real_type PREFIX##D_1_1( real_type const x, real_type const y ) CONST; \
 real_type PREFIX##D_1_2( real_type const x, real_type const y ) CONST; \
 real_type PREFIX##D_2_2( real_type const x, real_type const y ) CONST;
@@ -657,6 +1169,58 @@ real_type PREFIX##D_2_4( real_type const x, real_type const y, real_type const z
 real_type PREFIX##D_3_3( real_type const x, real_type const y, real_type const z, real_type const w ) CONST; \
 real_type PREFIX##D_3_4( real_type const x, real_type const y, real_type const z, real_type const w ) CONST; \
 real_type PREFIX##D_4_4( real_type const x, real_type const y, real_type const z, real_type const w ) CONST;
+
+#define UTILS_AUTODIFF_DERIV_5ARG_DEF(PREFIX,CONST)                                                                                  \
+real_type PREFIX##D_1  ( real_type const x1, real_type const x2, real_type const x3, real_type const x4, real_type const x5 ) CONST; \
+real_type PREFIX##D_2  ( real_type const x1, real_type const x2, real_type const x3, real_type const x4, real_type const x5 ) CONST; \
+real_type PREFIX##D_3  ( real_type const x1, real_type const x2, real_type const x3, real_type const x4, real_type const x5 ) CONST; \
+real_type PREFIX##D_4  ( real_type const x1, real_type const x2, real_type const x3, real_type const x4, real_type const x5 ) CONST; \
+real_type PREFIX##D_5  ( real_type const x1, real_type const x2, real_type const x3, real_type const x4, real_type const x5 ) CONST; \
+real_type PREFIX##D_1_1( real_type const x1, real_type const x2, real_type const x3, real_type const x4, real_type const x5 ) CONST; \
+real_type PREFIX##D_1_2( real_type const x1, real_type const x2, real_type const x3, real_type const x4, real_type const x5 ) CONST; \
+real_type PREFIX##D_1_3( real_type const x1, real_type const x2, real_type const x3, real_type const x4, real_type const x5 ) CONST; \
+real_type PREFIX##D_1_4( real_type const x1, real_type const x2, real_type const x3, real_type const x4, real_type const x5 ) CONST; \
+real_type PREFIX##D_1_5( real_type const x1, real_type const x2, real_type const x3, real_type const x4, real_type const x5 ) CONST; \
+real_type PREFIX##D_2_2( real_type const x1, real_type const x2, real_type const x3, real_type const x4, real_type const x5 ) CONST; \
+real_type PREFIX##D_2_3( real_type const x1, real_type const x2, real_type const x3, real_type const x4, real_type const x5 ) CONST; \
+real_type PREFIX##D_2_4( real_type const x1, real_type const x2, real_type const x3, real_type const x4, real_type const x5 ) CONST; \
+real_type PREFIX##D_2_5( real_type const x1, real_type const x2, real_type const x3, real_type const x4, real_type const x5 ) CONST; \
+real_type PREFIX##D_3_3( real_type const x1, real_type const x2, real_type const x3, real_type const x4, real_type const x5 ) CONST; \
+real_type PREFIX##D_3_4( real_type const x1, real_type const x2, real_type const x3, real_type const x4, real_type const x5 ) CONST; \
+real_type PREFIX##D_3_5( real_type const x1, real_type const x2, real_type const x3, real_type const x4, real_type const x5 ) CONST; \
+real_type PREFIX##D_4_4( real_type const x1, real_type const x2, real_type const x3, real_type const x4, real_type const x5 ) CONST; \
+real_type PREFIX##D_4_5( real_type const x1, real_type const x2, real_type const x3, real_type const x4, real_type const x5 ) CONST; \
+real_type PREFIX##D_5_5( real_type const x1, real_type const x2, real_type const x3, real_type const x4, real_type const x5 ) CONST;
+
+
+#define UTILS_AUTODIFF_DERIV_6ARG_DEF(PREFIX,CONST)                                                                                  \
+real_type PREFIX##D_1  ( real_type const x1, real_type const x2, real_type const x3, real_type const x4, real_type const x5, real_type const x6 ) CONST; \
+real_type PREFIX##D_2  ( real_type const x1, real_type const x2, real_type const x3, real_type const x4, real_type const x5, real_type const x6 ) CONST; \
+real_type PREFIX##D_3  ( real_type const x1, real_type const x2, real_type const x3, real_type const x4, real_type const x5, real_type const x6 ) CONST; \
+real_type PREFIX##D_4  ( real_type const x1, real_type const x2, real_type const x3, real_type const x4, real_type const x5, real_type const x6 ) CONST; \
+real_type PREFIX##D_5  ( real_type const x1, real_type const x2, real_type const x3, real_type const x4, real_type const x5, real_type const x6 ) CONST; \
+real_type PREFIX##D_6  ( real_type const x1, real_type const x2, real_type const x3, real_type const x4, real_type const x5, real_type const x6 ) CONST; \
+real_type PREFIX##D_1_1( real_type const x1, real_type const x2, real_type const x3, real_type const x4, real_type const x5, real_type const x6 ) CONST; \
+real_type PREFIX##D_1_2( real_type const x1, real_type const x2, real_type const x3, real_type const x4, real_type const x5, real_type const x6 ) CONST; \
+real_type PREFIX##D_1_3( real_type const x1, real_type const x2, real_type const x3, real_type const x4, real_type const x5, real_type const x6 ) CONST; \
+real_type PREFIX##D_1_4( real_type const x1, real_type const x2, real_type const x3, real_type const x4, real_type const x5, real_type const x6 ) CONST; \
+real_type PREFIX##D_1_5( real_type const x1, real_type const x2, real_type const x3, real_type const x4, real_type const x5, real_type const x6 ) CONST; \
+real_type PREFIX##D_1_6( real_type const x1, real_type const x2, real_type const x3, real_type const x4, real_type const x5, real_type const x6 ) CONST; \
+real_type PREFIX##D_2_2( real_type const x1, real_type const x2, real_type const x3, real_type const x4, real_type const x5, real_type const x6 ) CONST; \
+real_type PREFIX##D_2_3( real_type const x1, real_type const x2, real_type const x3, real_type const x4, real_type const x5, real_type const x6 ) CONST; \
+real_type PREFIX##D_2_4( real_type const x1, real_type const x2, real_type const x3, real_type const x4, real_type const x5, real_type const x6 ) CONST; \
+real_type PREFIX##D_2_5( real_type const x1, real_type const x2, real_type const x3, real_type const x4, real_type const x5, real_type const x6 ) CONST; \
+real_type PREFIX##D_2_6( real_type const x1, real_type const x2, real_type const x3, real_type const x4, real_type const x5, real_type const x6 ) CONST; \
+real_type PREFIX##D_3_3( real_type const x1, real_type const x2, real_type const x3, real_type const x4, real_type const x5, real_type const x6 ) CONST; \
+real_type PREFIX##D_3_4( real_type const x1, real_type const x2, real_type const x3, real_type const x4, real_type const x5, real_type const x6 ) CONST; \
+real_type PREFIX##D_3_5( real_type const x1, real_type const x2, real_type const x3, real_type const x4, real_type const x5, real_type const x6 ) CONST; \
+real_type PREFIX##D_3_6( real_type const x1, real_type const x2, real_type const x3, real_type const x4, real_type const x5, real_type const x6 ) CONST; \
+real_type PREFIX##D_4_4( real_type const x1, real_type const x2, real_type const x3, real_type const x4, real_type const x5, real_type const x6 ) CONST; \
+real_type PREFIX##D_4_5( real_type const x1, real_type const x2, real_type const x3, real_type const x4, real_type const x5, real_type const x6 ) CONST; \
+real_type PREFIX##D_4_6( real_type const x1, real_type const x2, real_type const x3, real_type const x4, real_type const x5, real_type const x6 ) CONST; \
+real_type PREFIX##D_5_5( real_type const x1, real_type const x2, real_type const x3, real_type const x4, real_type const x5, real_type const x6 ) CONST; \
+real_type PREFIX##D_5_6( real_type const x1, real_type const x2, real_type const x3, real_type const x4, real_type const x5, real_type const x6 ) CONST; \
+real_type PREFIX##D_6_6( real_type const x1, real_type const x2, real_type const x3, real_type const x4, real_type const x5, real_type const x6 ) CONST;
 
 #endif
 

@@ -190,7 +190,8 @@ namespace GC_namespace {
 
   int32_t
   GenericContainer::serialize( std::vector<uint8_t> & buffer ) const {
-    int32_t const sz{ static_cast<int32_t>(buffer.size()) };
+    int32_t const sz{ static_cast<int32_t>(mem_size()) };
+    buffer.resize( static_cast<std::size_t>(sz) );
     return this->serialize( sz, buffer.data() );
   }
 

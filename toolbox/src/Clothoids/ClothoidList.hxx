@@ -103,35 +103,35 @@ namespace G2lib {
 
     void
     evalA(
-      real_type   alpha,
-      real_type   L,
-      real_type & A
+      real_type const alpha,
+      real_type const L,
+      real_type     & A
     ) const;
 
     void
     evalA(
-      real_type   alpha,
-      real_type   L,
-      real_type & A,
-      real_type & A_1,
-      real_type & A_2
+      real_type const alpha,
+      real_type const L,
+      real_type     & A,
+      real_type     & A_1,
+      real_type     & A_2
     ) const;
 
     void
     evalG(
-      real_type alpha,
-      real_type L,
-      real_type th,
-      real_type k,
-      real_type G[2]
+      real_type const alpha,
+      real_type const L,
+      real_type const th,
+      real_type const k,
+      real_type       G[2]
     ) const;
 
     void
     evalG(
-      real_type alpha,
-      real_type L,
-      real_type th,
-      real_type k,
+      real_type const alpha,
+      real_type const L,
+      real_type const th,
+      real_type const k,
       real_type G[2],
       real_type G_1[2],
       real_type G_2[2]
@@ -182,19 +182,19 @@ namespace G2lib {
     //!
     int
     build(
-      real_type x0, real_type y0, real_type theta0, real_type kappa0,
-      real_type x1, real_type y1, real_type theta1, real_type kappa1
+      real_type const x0, real_type const y0, real_type const theta0, real_type const kappa0,
+      real_type const x1, real_type const y1, real_type const theta1, real_type const kappa1
     );
 
     //!
     //! Fix tolerance for the \f$ G^2 \f$ problem
     //!
-    void set_tolerance( real_type tol );
+    void set_tolerance( real_type const tol );
 
     //!
     //! Fix maximum number of iteration for the \f$ G^2 \f$ problem
     //!
-    void set_max_iter( integer miter );
+    void set_max_iter( integer const miter );
 
     //!
     //! Solve the \f$ G^2 \f$ problem
@@ -214,8 +214,8 @@ namespace G2lib {
     ClothoidCurve const & S1() const { return m_S1; }
 
     #ifdef CLOTHOIDS_BACK_COMPATIBILITY
-    void setTolerance( real_type tol ) { set_tolerance( tol ); }
-    void setMaxIter( integer miter ) { set_max_iter( miter ); }
+    void setTolerance( real_type const tol ) { set_tolerance( tol ); }
+    void setMaxIter( integer const miter ) { set_max_iter( miter ); }
     #endif
 
   };
@@ -328,19 +328,19 @@ namespace G2lib {
     //!
     int
     build(
-      real_type x0, real_type y0, real_type theta0, real_type kappa0,
-      real_type x1, real_type y1, real_type theta1, real_type kappa1
+      real_type const x0, real_type const y0, real_type const theta0, real_type const kappa0,
+      real_type const x1, real_type const y1, real_type const theta1, real_type const kappa1
     );
 
     //!
     //! Fix tolerance for the \f$ G^2 \f$ problem
     //!
-    void set_tolerance( real_type tol );
+    void set_tolerance( real_type const tol );
 
     //!
     //! Fix maximum number of iteration for the \f$ G^2 \f$ problem
     //!
-    void set_max_iter( integer miter );
+    void set_max_iter( integer const miter );
 
     //!
     //! Solve the \f$ G^2 \f$ problem
@@ -367,8 +367,8 @@ namespace G2lib {
     void save( ostream_type & stream ) const;
 
     #ifdef CLOTHOIDS_BACK_COMPATIBILITY
-    void setTolerance( real_type tol ) { set_tolerance( tol ); }
-    void setMaxIter( integer miter ) { set_max_iter( miter ); }
+    void setTolerance( real_type const tol ) { set_tolerance( tol ); }
+    void setMaxIter( integer const miter ) { set_max_iter( miter ); }
     #endif
 
   };
@@ -479,9 +479,9 @@ namespace G2lib {
 
     void evalF( real_type const vars[2], real_type F[2] ) const;
 
-    void build_solution( real_type sM, real_type thM );
+    void build_solution( real_type const sM, real_type const thM );
 
-    int solve( real_type sM_guess, real_type thM_guess );
+    int solve( real_type const sM_guess, real_type const thM_guess );
 
   public:
 
@@ -494,12 +494,12 @@ namespace G2lib {
     //!
     //! Fix tolerance for the \f$ G^2 \f$ problem
     //!
-    void set_tolerance( real_type tol );
+    void set_tolerance( real_type const tol );
 
     //!
     //! Fix maximum number of iteration for the \f$ G^2 \f$ problem
     //!
-    void set_max_iter( integer miter );
+    void set_max_iter( integer const miter );
 
     //!
     //! Compute the 3 arc clothoid spline that fit the data
@@ -549,16 +549,16 @@ namespace G2lib {
     //!
     int
     build_fixed_length(
-      real_type s0,
-      real_type x0,
-      real_type y0,
-      real_type theta0,
-      real_type kappa0,
-      real_type s1,
-      real_type x1,
-      real_type y1,
-      real_type theta1,
-      real_type kappa1
+      real_type const s0,
+      real_type const x0,
+      real_type const y0,
+      real_type const theta0,
+      real_type const kappa0,
+      real_type const s1,
+      real_type const x1,
+      real_type const y1,
+      real_type const theta1,
+      real_type const kappa1
     );
 
     //!
@@ -662,32 +662,32 @@ namespace G2lib {
     //!
     //! Return angle as a function of curvilinear coordinate
     //!
-    real_type theta( real_type s ) const;
+    real_type theta( real_type const s ) const;
 
     //!
     //! Return angle derivative (curvature) as a function of curvilinear coordinate
     //!
-    real_type theta_D( real_type s ) const;
+    real_type theta_D( real_type const s ) const;
 
     //!
     //! Return angle second derivative (curvature derivative) as a function of curvilinear coordinate
     //!
-    real_type theta_DD( real_type s ) const;
+    real_type theta_DD( real_type const s ) const;
 
     //!
     //! Return angle third derivative as a function of curvilinear coordinate
     //!
-    real_type theta_DDD( real_type s ) const;
+    real_type theta_DDD( real_type const s ) const;
 
     //!
     //! Return \f$x\f$-coordinate of the arc clothoid as a function of curvilinear coordinate
     //!
-    real_type X( real_type s ) const;
+    real_type X( real_type const s ) const;
 
     //!
     //! Return \f$y\f$-coordinate of the arc clothoid as a function of curvilinear coordinate
     //!
-    real_type Y( real_type s ) const;
+    real_type Y( real_type const s ) const;
 
     //!
     //! Return initial \f$x\f$-coordinate of the 3 arc clothoid
@@ -740,52 +740,52 @@ namespace G2lib {
     //!
     void
     eval(
-      real_type   s,
-      real_type & theta,
-      real_type & kappa,
-      real_type & x,
-      real_type & y
+      real_type const s,
+      real_type     & theta,
+      real_type     & kappa,
+      real_type     & x,
+      real_type     & y
     ) const;
 
     //!
     //! x and \f$y\f$-coordinate at curvilinear coordinate \f$s\f$
     //!
-    void eval( real_type s, real_type & x, real_type & y ) const;
+    void eval( real_type const s, real_type & x, real_type & y ) const;
 
     //!
     //! x and \f$y\f$-coordinate derivative at curvilinear coordinate \f$s\f$
     //!
-    void eval_D( real_type s, real_type & x_D, real_type & y_D ) const;
+    void eval_D( real_type const s, real_type & x_D, real_type & y_D ) const;
 
     //!
     //! x and \f$y\f$-coordinate second derivative at curvilinear coordinate \f$s\f$
     //!
-    void eval_DD( real_type s, real_type & x_DD, real_type & y_DD ) const;
+    void eval_DD( real_type const s, real_type & x_DD, real_type & y_DD ) const;
 
     //!
     //! x and \f$y\f$-coordinate third derivative at curvilinear coordinate \f$s\f$
     //!
-    void eval_DDD( real_type s, real_type & x_DDD, real_type & y_DDD ) const;
+    void eval_DDD( real_type const s, real_type & x_DDD, real_type & y_DDD ) const;
 
     //!
     //! x and \f$y\f$-coordinate at curvilinear coordinate \f$s\f$ with offset
     //!
-    void eval_ISO( real_type s, real_type offs, real_type & x, real_type & y ) const;
+    void eval_ISO( real_type const s, real_type offs, real_type & x, real_type & y ) const;
 
     //!
     //! x and \f$y\f$-coordinate derivative at curvilinear coordinate \f$s\f$ with offset
     //!
-    void eval_ISO_D( real_type s, real_type offs, real_type & x_D, real_type & y_D ) const;
+    void eval_ISO_D( real_type const s, real_type offs, real_type & x_D, real_type & y_D ) const;
 
     //!
     //! x and \f$y\f$-coordinate second derivative at curvilinear coordinate \f$s\f$ with offset
     //!
-    void eval_ISO_DD( real_type s, real_type offs, real_type & x_DD, real_type & y_DD ) const;
+    void eval_ISO_DD( real_type const s, real_type offs, real_type & x_DD, real_type & y_DD ) const;
 
     //!
     //! x and \f$y\f$-coordinate third derivative at curvilinear coordinate \f$s\f$ with offset
     //!
-    void eval_ISO_DDD( real_type s, real_type offs, real_type & x_DDD, real_type & y_DDD ) const;
+    void eval_ISO_DDD( real_type const s, real_type offs, real_type & x_DDD, real_type & y_DDD ) const;
 
     //!
     //! Rotate curve by angle \f$ \theta \f$ centered at point \f$ (c_x,c_y) \f$
@@ -795,7 +795,7 @@ namespace G2lib {
     //! \param[in] cy    \f$ c_y \f$
     //!
     void
-    rotate( real_type angle, real_type cx, real_type cy ) {
+    rotate( real_type const angle, real_type const cx, real_type const cy ) {
       m_S0.rotate( angle, cx, cy );
       m_S1.rotate( angle, cx, cy );
       m_SM.rotate( angle, cx, cy );
@@ -805,7 +805,7 @@ namespace G2lib {
     //! Translate curve by \f$ (t_x,t_y) \f$
     //!
     void
-    translate( real_type tx, real_type ty ){
+    translate( real_type const tx, real_type const ty ){
       m_S0.translate( tx, ty );
       m_S1.translate( tx, ty );
       m_SM.translate( tx, ty );
@@ -898,13 +898,13 @@ namespace G2lib {
 
     integer
     closest_point_internal(
-      real_type   qx,
-      real_type   qy,
-      real_type   offs,
-      real_type & x,
-      real_type & y,
-      real_type & s,
-      real_type & DST
+      real_type const qx,
+      real_type const qy,
+      real_type const offs,
+      real_type      & x,
+      real_type      & y,
+      real_type      & s,
+      real_type      & DST
     ) const;
 
   public:
@@ -944,7 +944,7 @@ namespace G2lib {
     //!
     //! Reserve memory for `n` clothoid
     //!
-    void reserve( integer n );
+    void reserve( integer const n );
 
     //!
     //! Build a clothoid list copying an existing one
@@ -1107,12 +1107,12 @@ namespace G2lib {
     //!
     void
     push_back(
-      real_type x0,
-      real_type y0,
-      real_type theta0,
-      real_type kappa0,
-      real_type dkappa,
-      real_type L
+      real_type const x0,
+      real_type const y0,
+      real_type const theta0,
+      real_type const kappa0,
+      real_type const dkappa,
+      real_type const L
     );
 
     //!
@@ -1125,9 +1125,9 @@ namespace G2lib {
     //!
     void
     push_back_G1(
-      real_type x1,
-      real_type y1,
-      real_type theta1
+      real_type const x1,
+      real_type const y1,
+      real_type const theta1
     );
 
     //!
@@ -1144,12 +1144,12 @@ namespace G2lib {
     //!
     void
     push_back_G1(
-      real_type x0,
-      real_type y0,
-      real_type theta0,
-      real_type x1,
-      real_type y1,
-      real_type theta1
+      real_type const x0,
+      real_type const y0,
+      real_type const theta0,
+      real_type const x1,
+      real_type const y1,
+      real_type const theta1
     );
 
     //!
@@ -1196,7 +1196,7 @@ namespace G2lib {
     //! \return true if curve is closed
     //!
     bool
-    closure_check( real_type tol_xy = 1e-6, real_type tol_tg = 1e-6 ) const {
+    closure_check( real_type const tol_xy = 1e-6, real_type const tol_tg = 1e-6 ) const {
       return std::abs(closure_gap_x())  < tol_xy &&
              std::abs(closure_gap_y())  < tol_xy &&
              std::abs(closure_gap_tx()) < tol_tg &&
@@ -1216,7 +1216,7 @@ namespace G2lib {
     //!
     bool
     build_G1(
-      integer         n,
+      integer   const n,
       real_type const x[],
       real_type const y[]
     );
@@ -1234,7 +1234,7 @@ namespace G2lib {
     //!
     bool
     build_G1(
-      integer         n,
+      integer   const n,
       real_type const x[],
       real_type const y[],
       real_type const theta[]
@@ -1269,9 +1269,9 @@ namespace G2lib {
     //!
     bool
     smooth_quasi_G2(
-      integer     max_iter,
-      real_type   epsi,
-      real_type & max_dK
+      integer   const max_iter,
+      real_type const epsi,
+      real_type     & max_dK
     );
 
     //!
@@ -1290,10 +1290,10 @@ namespace G2lib {
     //!
     bool
     build(
-      real_type       x0,
-      real_type       y0,
-      real_type       theta0,
-      integer         n,
+      real_type const x0,
+      real_type const y0,
+      real_type const theta0,
+      integer   const n,
       real_type const s[],
       real_type const kappa[]
     );
@@ -1313,9 +1313,9 @@ namespace G2lib {
     //!
     bool
     build(
-      real_type                 x0,
-      real_type                 y0,
-      real_type                 theta0,
+      real_type         const   x0,
+      real_type         const   y0,
+      real_type         const   theta0,
       vector<real_type> const & s,
       vector<real_type> const & kappa
     ) {
@@ -1341,7 +1341,7 @@ namespace G2lib {
     //!
     bool
     build_raw(
-      integer         n,
+      integer   const n,
       real_type const x[],
       real_type const y[],
       real_type const abscissa[],
@@ -1382,12 +1382,12 @@ namespace G2lib {
     //!
     //! Get the `idx`-th clothoid of the list
     //!
-    ClothoidCurve const & get( integer idx ) const;
+    ClothoidCurve const & get( integer const idx ) const;
 
     //!
     //! Get the `idx`-th clothoid of the list where `idx` is the clothoid at parameter `s`
     //!
-    ClothoidCurve const & get_at_s( real_type s ) const;
+    ClothoidCurve const & get_at_s( real_type const s ) const;
 
     //!
     //! Return the numbber of clothoid of the list
@@ -1409,25 +1409,25 @@ namespace G2lib {
     // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 
     real_type length() const override;
-    real_type length_ISO( real_type offs ) const override;
+    real_type length_ISO( real_type const offs ) const override;
 
     //!
     //! Return the length of the `nseg`-th clothoid of the list
     //!
     real_type
-    segment_length( integer nseg ) const;
+    segment_length( integer const nseg ) const;
 
     //!
     //! Return the length of the `nseg`-th clothoid of the list with offset
     //!
     real_type
-    segment_length_ISO( integer nseg, real_type offs ) const;
+    segment_length_ISO( integer const nseg, real_type const offs ) const;
 
     //!
     //! Return the length of the `nseg`-th clothoid of the list with offset
     //!
     real_type
-    segment_length_SAE( integer nseg, real_type offs ) const
+    segment_length_SAE( integer const nseg, real_type const offs ) const
     { return segment_length_ISO( nseg, -offs ); }
 
     /*\
@@ -1441,27 +1441,27 @@ namespace G2lib {
     void
     bb_triangles(
       vector<Triangle2D> & tvec,
-      real_type            max_angle = Utils::m_pi/6, // 30 degree
-      real_type            max_size  = 1e100,
-      integer              icurve    = 0
+      real_type const      max_angle = Utils::m_pi/6, // 30 degree
+      real_type const      max_size  = 1e100,
+      integer   const      icurve    = 0
     ) const override;
 
     void
     bb_triangles_ISO(
-      real_type            offs,
+      real_type const      offs,
       vector<Triangle2D> & tvec,
-      real_type            max_angle = Utils::m_pi/6, // 30 degree
-      real_type            max_size  = 1e100,
-      integer              icurve    = 0
+      real_type const      max_angle = Utils::m_pi/6, // 30 degree
+      real_type const      max_size  = 1e100,
+      integer   const      icurve    = 0
     ) const override;
 
     void
     bb_triangles_SAE(
-      real_type            offs,
+      real_type const      offs,
       vector<Triangle2D> & tvec,
-      real_type            max_angle = Utils::m_pi/6, // 30 degree
-      real_type            max_size  = 1e100,
-      integer              icurve    = 0
+      real_type const      max_angle = Utils::m_pi/6, // 30 degree
+      real_type const      max_size  = 1e100,
+      integer   const      icurve    = 0
     ) const override {
       this->bb_triangles_ISO( -offs, tvec, max_angle, max_size, icurve );
     }
@@ -1469,9 +1469,9 @@ namespace G2lib {
     #ifndef DOXYGEN_SHOULD_SKIP_THIS
     void
     build_AABBtree_ISO(
-      real_type offs,
-      real_type max_angle = Utils::m_pi/6, // 30 degree
-      real_type max_size  = 1e100
+      real_type const offs,
+      real_type const max_angle = Utils::m_pi/6, // 30 degree
+      real_type const max_size  = 1e100
     ) const;
     #endif
 
@@ -1495,11 +1495,11 @@ namespace G2lib {
 
     void
     bbox_ISO(
-      real_type   offs,
-      real_type & xmin,
-      real_type & ymin,
-      real_type & xmax,
-      real_type & ymax
+      real_type const offs,
+      real_type     & xmin,
+      real_type     & ymin,
+      real_type     & xmax,
+      real_type     & ymax
     ) const override;
 
     /*\
@@ -1511,77 +1511,24 @@ namespace G2lib {
      |              |___/
     \*/
 
-    real_type
-    theta_begin() const override
-    { return m_clothoid_list.front().theta_begin(); }
-
-    real_type
-    theta_end() const override
-    { return m_clothoid_list.back().theta_end(); }
-
-    real_type
-    x_begin() const override
-    { return m_clothoid_list.front().x_begin(); }
-
-    real_type
-    y_begin() const override
-    { return m_clothoid_list.front().y_begin(); }
-
-    real_type
-    x_end() const override
-    { return m_clothoid_list.back().x_end(); }
-
-    real_type
-    y_end() const override
-    { return m_clothoid_list.back().y_end(); }
-
-    real_type
-    x_begin_ISO( real_type offs ) const override
-    { return m_clothoid_list.front().x_begin_ISO( offs ); }
-
-    real_type
-    y_begin_ISO( real_type offs ) const override
-    { return m_clothoid_list.front().y_begin_ISO( offs ); }
-
-    real_type
-    x_end_ISO( real_type offs ) const override
-    { return m_clothoid_list.back().x_end_ISO( offs ); }
-
-    real_type
-    y_end_ISO( real_type offs ) const override
-    { return m_clothoid_list.back().y_end_ISO( offs ); }
-
-    real_type
-    tx_begin() const override
-    { return m_clothoid_list.front().tx_begin(); }
-
-    real_type
-    ty_begin() const override
-    { return m_clothoid_list.front().ty_begin(); }
-
-    real_type
-    tx_end() const override
-    { return m_clothoid_list.back().tx_end(); }
-
-    real_type
-    ty_end() const override
-    { return m_clothoid_list.back().ty_end(); }
-
-    real_type
-    nx_begin_ISO() const override
-    { return m_clothoid_list.front().nx_begin_ISO(); }
-
-    real_type
-    ny_begin_ISO() const override
-    { return m_clothoid_list.front().ny_begin_ISO(); }
-
-    real_type
-    nx_end_ISO() const override
-    { return m_clothoid_list.back().nx_end_ISO(); }
-
-    real_type
-    ny_end_ISO() const override
-    { return m_clothoid_list.back().ny_end_ISO(); }
+    real_type theta_begin() const override { return m_clothoid_list.front().theta_begin(); }
+    real_type theta_end()   const override { return m_clothoid_list.back().theta_end(); }
+    real_type x_begin()     const override { return m_clothoid_list.front().x_begin(); }
+    real_type y_begin()     const override { return m_clothoid_list.front().y_begin(); }
+    real_type x_end()       const override { return m_clothoid_list.back().x_end(); }
+    real_type y_end()       const override { return m_clothoid_list.back().y_end(); }
+    real_type x_begin_ISO( real_type const offs ) const override { return m_clothoid_list.front().x_begin_ISO( offs ); }
+    real_type y_begin_ISO( real_type const offs ) const override { return m_clothoid_list.front().y_begin_ISO( offs ); }
+    real_type x_end_ISO  ( real_type const offs ) const override { return m_clothoid_list.back().x_end_ISO( offs ); }
+    real_type y_end_ISO  ( real_type const offs ) const override { return m_clothoid_list.back().y_end_ISO( offs ); }
+    real_type tx_begin()     const override { return m_clothoid_list.front().tx_begin(); }
+    real_type ty_begin()     const override { return m_clothoid_list.front().ty_begin(); }
+    real_type tx_end()       const override { return m_clothoid_list.back().tx_end(); }
+    real_type ty_end()       const override { return m_clothoid_list.back().ty_end(); }
+    real_type nx_begin_ISO() const override { return m_clothoid_list.front().nx_begin_ISO(); }
+    real_type ny_begin_ISO() const override { return m_clothoid_list.front().ny_begin_ISO(); }
+    real_type nx_end_ISO()   const override { return m_clothoid_list.back().nx_end_ISO(); }
+    real_type ny_end_ISO()   const override { return m_clothoid_list.back().ny_end_ISO(); }
 
     /*\
      |  _   _          _
@@ -1591,10 +1538,12 @@ namespace G2lib {
      |  \__|_| |_|\___|\__\__,_|
     \*/
 
-    real_type theta    ( real_type s ) const override;
-    real_type theta_D  ( real_type s ) const override;
-    real_type theta_DD ( real_type s ) const override;
-    real_type theta_DDD( real_type s ) const override;
+    real_type theta    ( real_type const s ) const override;
+    real_type theta_D  ( real_type const s ) const override;
+    real_type theta_DD ( real_type const s ) const override;
+    real_type theta_DDD( real_type const s ) const override;
+
+    G2LIB_DEFINE_1ARG_AUTODIFF( theta )
 
     /*\
      |  _____                   _   _   _
@@ -1604,107 +1553,113 @@ namespace G2lib {
      |   |_|    \__,_|_| |_|\__,_| |_| \_|
     \*/
 
-    real_type tx    ( real_type s ) const override;
-    real_type ty    ( real_type s ) const override;
-    real_type tx_D  ( real_type s ) const override;
-    real_type ty_D  ( real_type s ) const override;
-    real_type tx_DD ( real_type s ) const override;
-    real_type ty_DD ( real_type s ) const override;
-    real_type tx_DDD( real_type s ) const override;
-    real_type ty_DDD( real_type s ) const override;
+    real_type tx    ( real_type const s ) const override;
+    real_type ty    ( real_type const s ) const override;
+    real_type tx_D  ( real_type const s ) const override;
+    real_type ty_D  ( real_type const s ) const override;
+    real_type tx_DD ( real_type const s ) const override;
+    real_type ty_DD ( real_type const s ) const override;
+    real_type tx_DDD( real_type const s ) const override;
+    real_type ty_DDD( real_type const s ) const override;
+
+    G2LIB_DEFINE_1ARG_AUTODIFF( tx )
+    G2LIB_DEFINE_1ARG_AUTODIFF( ty )
 
     // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 
     void
     tg(
-      real_type   s,
-      real_type & tg_x,
-      real_type & tg_y
+      real_type const s,
+      real_type     & tg_x,
+      real_type     & tg_y
     ) const override;
 
     void
     tg_D(
-      real_type   s,
-      real_type & tg_x_D,
-      real_type & tg_y_D
+      real_type const s,
+      real_type     & tg_x_D,
+      real_type     & tg_y_D
     ) const override;
 
     void
     tg_DD(
-      real_type   s,
-      real_type & tg_x_DD,
-      real_type & tg_y_DD
+      real_type const s,
+      real_type     & tg_x_DD,
+      real_type     & tg_y_DD
     ) const override;
 
     void
     tg_DDD(
-      real_type   s,
-      real_type & tg_x_DDD,
-      real_type & tg_y_DDD
+      real_type const s,
+      real_type     & tg_x_DDD,
+      real_type     & tg_y_DDD
     ) const override;
 
     // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 
     void
     evaluate(
-      real_type   s,
-      real_type & th,
-      real_type & k,
-      real_type & x,
-      real_type & y
+      real_type const s,
+      real_type     & th,
+      real_type     & k,
+      real_type     & x,
+      real_type     & y
     ) const override;
 
     // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 
     void
     evaluate_ISO(
-      real_type   s,
-      real_type   offs,
-      real_type & th,
-      real_type & k,
-      real_type & x,
-      real_type & y
+      real_type const s,
+      real_type const offs,
+      real_type     & th,
+      real_type     & k,
+      real_type     & x,
+      real_type     & y
     ) const override;
 
     // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 
-    real_type X    ( real_type s ) const override;
-    real_type Y    ( real_type s ) const override;
-    real_type X_D  ( real_type s ) const override;
-    real_type Y_D  ( real_type s ) const override;
-    real_type X_DD ( real_type s ) const override;
-    real_type Y_DD ( real_type s ) const override;
-    real_type X_DDD( real_type s ) const override;
-    real_type Y_DDD( real_type s ) const override;
+    real_type X    ( real_type const s ) const override;
+    real_type Y    ( real_type const s ) const override;
+    real_type X_D  ( real_type const s ) const override;
+    real_type Y_D  ( real_type const s ) const override;
+    real_type X_DD ( real_type const s ) const override;
+    real_type Y_DD ( real_type const s ) const override;
+    real_type X_DDD( real_type const s ) const override;
+    real_type Y_DDD( real_type const s ) const override;
+
+    G2LIB_DEFINE_1ARG_AUTODIFF( X )
+    G2LIB_DEFINE_1ARG_AUTODIFF( Y )
 
     // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 
     void
     eval(
-      real_type   s,
-      real_type & x,
-      real_type & y
+      real_type const s,
+      real_type     & x,
+      real_type     & y
     ) const override;
 
     void
     eval_D(
-      real_type   s,
-      real_type & x_D,
-      real_type & y_D
+      real_type const s,
+      real_type     & x_D,
+      real_type     & y_D
     ) const override;
 
     void
     eval_DD(
-      real_type   s,
-      real_type & x_DD,
-      real_type & y_DD
+      real_type const s,
+      real_type     & x_DD,
+      real_type     & y_DD
     ) const override;
 
     void
     eval_DDD(
-      real_type   s,
-      real_type & x_DDD,
-      real_type & y_DDD
+      real_type const s,
+      real_type     & x_DDD,
+      real_type     & y_DDD
     ) const override;
 
     /*\
@@ -1715,47 +1670,50 @@ namespace G2lib {
      |  \___/|_| |_| |___/\___|\__|
     \*/
 
-    real_type X_ISO    ( real_type s, real_type offs ) const override;
-    real_type Y_ISO    ( real_type s, real_type offs ) const override;
-    real_type X_ISO_D  ( real_type s, real_type offs ) const override;
-    real_type Y_ISO_D  ( real_type s, real_type offs ) const override;
-    real_type X_ISO_DD ( real_type s, real_type offs ) const override;
-    real_type Y_ISO_DD ( real_type s, real_type offs ) const override;
-    real_type X_ISO_DDD( real_type s, real_type offs ) const override;
-    real_type Y_ISO_DDD( real_type s, real_type offs ) const override;
+    real_type X_ISO    ( real_type const s, real_type const offs ) const override;
+    real_type Y_ISO    ( real_type const s, real_type const offs ) const override;
+    real_type X_ISO_D  ( real_type const s, real_type const offs ) const override;
+    real_type Y_ISO_D  ( real_type const s, real_type const offs ) const override;
+    real_type X_ISO_DD ( real_type const s, real_type const offs ) const override;
+    real_type Y_ISO_DD ( real_type const s, real_type const offs ) const override;
+    real_type X_ISO_DDD( real_type const s, real_type const offs ) const override;
+    real_type Y_ISO_DDD( real_type const s, real_type const offs ) const override;
+
+    G2LIB_DEFINE_1ARG_1PAR_AUTODIFF( X_ISO )
+    G2LIB_DEFINE_1ARG_1PAR_AUTODIFF( Y_ISO )
 
     // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 
     void
     eval_ISO(
-      real_type   s,
-      real_type   offs,
-      real_type & x,
-      real_type & y
+      real_type const s,
+      real_type const offs,
+      real_type     & x,
+      real_type     & y
     ) const override;
 
     void
     eval_ISO_D(
-      real_type   s,
-      real_type   offs,
-      real_type & x_D,
-      real_type & y_D
+      real_type const s,
+      real_type const offs,
+      real_type     & x_D,
+      real_type     & y_D
     ) const override;
 
     void
     eval_ISO_DD(
-      real_type   s,
-      real_type   offs,
-      real_type & x_DD,
-      real_type & y_DD
+      real_type const s,
+      real_type const offs,
+      real_type     & x_DD,
+      real_type     & y_DD
     ) const override;
 
     void
     eval_ISO_DDD(
-      real_type   s,
-      real_type   offs,
-      real_type & x_DDD,
-      real_type & y_DDD
+      real_type const s,
+      real_type const offs,
+      real_type     & x_DDD,
+      real_type     & y_DDD
     ) const override;
 
     /*\
@@ -1766,13 +1724,13 @@ namespace G2lib {
      |  \__|_|  \__,_|_| |_|___/_|  \___/|_|  |_| |_| |_|
     \*/
 
-    void translate( real_type tx, real_type ty ) override;
-    void rotate( real_type angle, real_type cx, real_type cy ) override;
-    void scale( real_type sc ) override;
+    void translate( real_type const tx, real_type const ty ) override;
+    void rotate( real_type const angle, real_type const cx, real_type const cy ) override;
+    void scale( real_type const sc ) override;
     void reverse() override;
-    void change_origin( real_type newx0, real_type newy0 ) override;
-    void trim( real_type s_begin, real_type s_end ) override;
-    void trim( real_type s_begin, real_type s_end, ClothoidList & newCL ) const;
+    void change_origin( real_type const newx0, real_type const newy0 ) override;
+    void trim( real_type const s_begin, real_type const s_end ) override;
+    void trim( real_type const s_begin, real_type const s_end, ClothoidList & newCL ) const;
 
     /*\
      |      _ _     _
@@ -1795,13 +1753,13 @@ namespace G2lib {
     //!
     integer
     closest_point_ISO(
-      real_type   qx,
-      real_type   qy,
-      real_type & x,
-      real_type & y,
-      real_type & s,
-      real_type & t,
-      real_type & dst
+      real_type const qx,
+      real_type const qy,
+      real_type     & x,
+      real_type     & y,
+      real_type     & s,
+      real_type     & t,
+      real_type     & dst
     ) const override;
 
     //!
@@ -1818,14 +1776,14 @@ namespace G2lib {
     //!
     integer
     closest_point_ISO(
-      real_type   qx,
-      real_type   qy,
-      real_type   offs,
-      real_type & x,
-      real_type & y,
-      real_type & s,
-      real_type & t,
-      real_type & dst
+      real_type const qx,
+      real_type const qy,
+      real_type const offs,
+      real_type     & x,
+      real_type     & y,
+      real_type     & s,
+      real_type     & t,
+      real_type     & dst
     ) const override;
 
     //!
@@ -1842,12 +1800,12 @@ namespace G2lib {
     //!
     real_type
     closest_point_by_sample(
-      real_type   ds,
-      real_type   qx,
-      real_type   qy,
-      real_type & X,
-      real_type & Y,
-      real_type & S
+      real_type const ds,
+      real_type const qx,
+      real_type const qy,
+      real_type     & X,
+      real_type     & Y,
+      real_type     & S
     ) const;
 
     /*\
@@ -1883,16 +1841,16 @@ namespace G2lib {
     //!
     integer
     closest_point_in_range_ISO(
-      real_type   qx,
-      real_type   qy,
-      integer     icurve_begin,
-      integer     icurve_end,
-      real_type & x,
-      real_type & y,
-      real_type & s,
-      real_type & t,
-      real_type & dst,
-      integer   & icurve
+      real_type const qx,
+      real_type const qy,
+      integer   const icurve_begin,
+      integer   const icurve_end,
+      real_type     & x,
+      real_type     & y,
+      real_type     & s,
+      real_type     & t,
+      real_type     & dst,
+      integer       & icurve
     ) const;
 
     //!
@@ -1912,16 +1870,16 @@ namespace G2lib {
     //!
     integer
     closest_point_in_range_SAE(
-      real_type   qx,
-      real_type   qy,
-      integer     icurve_begin,
-      integer     icurve_end,
-      real_type & x,
-      real_type & y,
-      real_type & s,
-      real_type & t,
-      real_type & dst,
-      integer   & icurve
+      real_type const qx,
+      real_type const qy,
+      integer   const icurve_begin,
+      integer   const icurve_end,
+      real_type     & x,
+      real_type     & y,
+      real_type     & s,
+      real_type     & t,
+      real_type     & dst,
+      integer       & icurve
     ) const {
       integer res = this->closest_point_in_range_ISO(
         qx, qy, icurve_begin, icurve_end, x, y, s, t, dst, icurve
@@ -1946,16 +1904,16 @@ namespace G2lib {
     //!
     integer
     closest_point_in_s_range_ISO(
-      real_type   qx,
-      real_type   qy,
-      real_type   s_begin,
-      real_type   s_end,
-      real_type & x,
-      real_type & y,
-      real_type & s,
-      real_type & t,
-      real_type & dst,
-      integer   & icurve
+      real_type const qx,
+      real_type const qy,
+      real_type const s_begin,
+      real_type const s_end,
+      real_type     & x,
+      real_type     & y,
+      real_type     & s,
+      real_type     & t,
+      real_type     & dst,
+      integer       & icurve
     ) const;
 
     //!
@@ -1974,16 +1932,16 @@ namespace G2lib {
     //!
     integer
     closest_point_in_s_range_SAE(
-      real_type   qx,
-      real_type   qy,
-      real_type   s_begin,
-      real_type   s_end,
-      real_type & x,
-      real_type & y,
-      real_type & s,
-      real_type & t,
-      real_type & dst,
-      integer   & icurve
+      real_type const qx,
+      real_type const qy,
+      real_type const s_begin,
+      real_type const s_end,
+      real_type     & x,
+      real_type     & y,
+      real_type     & s,
+      real_type     & t,
+      real_type     & dst,
+      integer       & icurve
     ) const {
       integer res = this->closest_point_in_s_range_ISO(
         qx, qy, s_begin, s_end, x, y, s, t, dst, icurve
@@ -2087,10 +2045,10 @@ namespace G2lib {
     //!
     integer
     findST1(
-      real_type   x,
-      real_type   y,
-      real_type & s,
-      real_type & t
+      real_type const x,
+      real_type const y,
+      real_type     & s,
+      real_type     & t
     ) const;
 
     //!
@@ -2107,12 +2065,12 @@ namespace G2lib {
     //!
     integer
     findST1(
-      integer     ibegin,
-      integer     iend,
-      real_type   x,
-      real_type   y,
-      real_type & s,
-      real_type & t
+      integer   const ibegin,
+      integer   const iend,
+      real_type const x,
+      real_type const y,
+      real_type     & s,
+      real_type     & t
     ) const;
 
     /*\
@@ -2140,9 +2098,9 @@ namespace G2lib {
     //!
     bool
     collision_ISO(
-      real_type            offs,
+      real_type    const   offs,
       ClothoidList const & CL,
-      real_type            offs_C
+      real_type    const   offs_C
     ) const;
 
     bool
@@ -2150,9 +2108,9 @@ namespace G2lib {
 
     bool
     collision_ISO(
-      real_type         offs,
+      real_type const   offs,
       BaseCurve const * pC,
-      real_type         offs_C
+      real_type const   offs_C
     ) const override;
 
     /*\
@@ -2187,9 +2145,9 @@ namespace G2lib {
     //!
     void
     intersect_ISO(
-      real_type            offs,
+      real_type    const   offs,
       ClothoidList const & CL,
-      real_type            offs_obj,
+      real_type    const   offs_obj,
       IntersectList      & ilist
     ) const;
 
@@ -2201,9 +2159,9 @@ namespace G2lib {
 
     void
     intersect_ISO(
-      real_type         offs,
+      real_type const   offs,
       BaseCurve const * pC,
-      real_type         offs_LS,
+      real_type const   offs_LS,
       IntersectList   & ilist
     ) const override;
 
@@ -2245,7 +2203,7 @@ namespace G2lib {
     //!       ...
     //!       xn yn thetan kappan
     //!
-    void load( istream_type & stream, real_type epsi = 1e-8 );
+    void load( istream_type & stream, real_type const epsi = 1e-8 );
 
 #ifdef CLOTHOIDS_BACK_COMPATIBILITY
 #include "ClothoidList_compatibility.hxx"
@@ -2331,7 +2289,7 @@ namespace G2lib {
     ~ClothoidSplineG2() = default;
 
     void
-    setP1( real_type theta0, real_type thetaN ) {
+    setP1( real_type const theta0, real_type const thetaN ) {
       m_tt      = TargetType::P1;
       m_theta_I = theta0;
       m_theta_F = thetaN;
@@ -2350,7 +2308,7 @@ namespace G2lib {
     build(
       real_type const xvec[],
       real_type const yvec[],
-      integer         npts
+      integer   const npts
     );
 
     integer numPnts() const { return m_npts; }
@@ -2364,32 +2322,23 @@ namespace G2lib {
       real_type theta_max[]
     ) const;
 
-    bool
-    objective( real_type const theta[], real_type & f ) const;
+    bool objective( real_type const theta[], real_type & f ) const;
 
-    bool
-    gradient( real_type const theta[], real_type g[] ) const;
+    bool gradient( real_type const theta[], real_type g[] ) const;
 
-    bool
-    constraints( real_type const theta[], real_type c[] ) const;
+    bool constraints( real_type const theta[], real_type c[] ) const;
 
-    integer
-    jacobian_nnz() const;
+    integer jacobian_nnz() const;
 
-    bool
-    jacobian_pattern( integer i[], integer j[] ) const;
+    bool jacobian_pattern( integer i[], integer j[] ) const;
 
-    bool
-    jacobian_pattern_matlab( real_type i[], real_type j[] ) const;
+    bool jacobian_pattern_matlab( real_type i[], real_type j[] ) const;
 
-    bool
-    jacobian( real_type const theta[], real_type vals[] ) const;
+    bool jacobian( real_type const theta[], real_type vals[] ) const;
 
     string info() const;
 
-    void
-    info( ostream_type & stream ) const
-    { stream << this->info(); }
+    void info( ostream_type & stream ) const { stream << this->info(); }
 
     friend
     ostream_type &

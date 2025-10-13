@@ -33,11 +33,12 @@
 #include "Utils.hh"
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
-#include "Utils/3rd/fmt/printf.h"
-#include "Utils/3rd/fmt/chrono.h"
-#include "Utils/3rd/fmt/ostream.h"
-#include "Utils/3rd/fmt/color.h"
-#include "Utils/3rd/fmt/std.h"
+#include "Utils/3rd/spdlog/spdlog.h"
+#include "Utils/3rd/spdlog/fmt/bundled/printf.h"
+#include "Utils/3rd/spdlog/fmt/bundled/chrono.h"
+#include "Utils/3rd/spdlog/fmt/bundled/ostream.h"
+#include "Utils/3rd/spdlog/fmt/bundled/color.h"
+#include "Utils/3rd/spdlog/fmt/bundled/std.h"
 #endif
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS

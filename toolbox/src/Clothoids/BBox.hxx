@@ -74,12 +74,12 @@ namespace G2lib {
     //! \param[in] ipos ranking position of the box
     //!
     BBox(
-      real_type xmin,
-      real_type ymin,
-      real_type xmax,
-      real_type ymax,
-      integer   id,
-      integer   ipos
+      real_type const xmin,
+      real_type const ymin,
+      real_type const xmax,
+      real_type const ymax,
+      integer   const id,
+      integer   const ipos
     ) {
       m_bbox[0] = xmin;
       m_bbox[1] = ymin;
@@ -98,8 +98,8 @@ namespace G2lib {
     //!
     BBox(
       real_type const bbox[4],
-      integer         id,
-      integer         ipos
+      integer   const id,
+      integer   const ipos
     ) {
       std::copy_n( bbox, 4, m_bbox );
       m_id   = id;
@@ -117,8 +117,8 @@ namespace G2lib {
     BBox(
       real_type const bbox_min[2],
       real_type const bbox_max[2],
-      integer         id,
-      integer         ipos
+      integer   const id,
+      integer   const ipos
     ) {
       std::copy_n( bbox_min, 2, m_bbox   );
       std::copy_n( bbox_max, 2, m_bbox+2 );
@@ -135,8 +135,8 @@ namespace G2lib {
     //!
     BBox(
       vector<PtrBBox> const & bboxes,
-      integer                 id,
-      integer                 ipos
+      integer         const   id,
+      integer         const   ipos
     ) {
       m_id   = id;
       m_ipos = ipos;
@@ -194,13 +194,13 @@ namespace G2lib {
     //! distance of the point `(x,y)` to the bbox
     //!
     real_type
-    distance( real_type x, real_type y ) const;
+    distance( real_type const x, real_type const y ) const;
 
     //!
     //! Maximum distance of the point `(x,y)` to the point of bbox
     //!
     real_type
-    max_distance( real_type x, real_type y ) const;
+    max_distance( real_type const x, real_type const y ) const;
 
     //!
     //! Pretty print a bbox

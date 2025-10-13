@@ -410,21 +410,21 @@ namespace GC_namespace {
   string
   compare_vector( string_view const who, vector<TYPE> const * A, vector<TYPE> const * B ) {
     ostringstream data;
-    if ( A->size() == B->size() ) {
-      // controllo valori
+    // controllo valori
+    if ( A->size() != B->size() ) {
+      data << who << " size: " << A->size() << " <> " << B->size() << '\n';
+    } else {
       auto it1 = A->begin();
       auto it2 = B->begin();
       int i{0};
-      while ( it1 != A->end() ) {
+      while ( it1 != A->end() && it2 != B->end() ) {
         if ( *it1 != *it2 ) {
           data << who << " at " << i << " values "
                << *it1 << " <> " << *it2 << '\n';
           break;
         }
-        ++i;
+        ++i; ++it1; ++it2;
       }
-    } else {
-      data << who << " size: " << A->size() << " <> " << B->size() << '\n';
     }
     return data.str();
   }

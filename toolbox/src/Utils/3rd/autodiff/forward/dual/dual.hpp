@@ -1602,9 +1602,9 @@ AUTODIFF_DEVICE_FUNC constexpr void apply(Dual<T, G>& self, CoshOp)
 template<typename T, typename G>
 AUTODIFF_DEVICE_FUNC constexpr void apply(Dual<T, G>& self, TanhOp)
 {
-    const T aux = One<T>() / cosh(self.val);
+    
     self.val = tanh(self.val);
-    self.grad *= aux * aux;
+    self.grad *=  1 - self.val * self.val;
 }
 
 template<typename T, typename G>

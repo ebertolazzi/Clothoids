@@ -56,6 +56,28 @@ if( EXISTS "${CMAKE_CURRENT_LIST_DIR}/../CMakeLists-customize.txt" )
   include(${CMAKE_CURRENT_LIST_DIR}/../CMakeLists-customize.txt)
 endif()
 
+#
+#  ___ ____            _
+# |_ _|  _ \ ___  ___ | |_   _____ _ __
+#  | || |_) / __|/ _ \| \ \ / / _ \ '__|
+#  | ||  __/\__ \ (_) | |\ V /  __/ |
+# |___|_|   |___/\___/|_| \_/ \___|_|
+# 
+
+include(FetchContent)
+
+# Optionally specify a custom path to fetch content to
+set(FETCHCONTENT_BASE_DIR "${CMAKE_CURRENT_SOURCE_DIR}/lib3rd/IPsolver")
+fetchcontent_declare(
+  IPsolver
+  GIT_REPOSITORY https://github.com/StoccoDavide/IPsolver.git
+  GIT_SHALLOW    TRUE
+  GIT_TAG        main
+)
+fetchcontent_makeavailable(IPsolver)
+#target_link_libraries(${PROJECT_NAME} PRIVATE IPsolver::IPsolver)
+include_directories( ${FETCHCONTENT_BASE_DIR}/ipsolver-src/include )
+
 message( STATUS "Compiler used: ${CMAKE_CXX_COMPILER_ID}" )
 message( STATUS "BASE SUFFIXES = ${ARTIFACTS_STATIC_SUFFIX} ${ARTIFACTS_DYNAMIC_SUFFIX}" )
 
@@ -138,11 +160,11 @@ if ( UTILS_BUILD_SHARED )
     "${SOURCE_DIR}"
     "${PUBLIC_HEADERS}"
   )
-  target_link_libraries( ${UTILS_NAMESPACE}_${PROJECT_NAME} ${UTILS_MODULE_LIBS} )
+  target_link_libraries( ${UTILS_NAMESPACE}_${PROJECT_NAME} ${UTILS_MODULE_LIBS} PRIVATE IPsolver::IPsolver )
 endif()
 
 if ( UTILS_DEPEND_TARGETS )
-  add_dependencies( ${UTILS_NAMESPACE}_${PROJECT_NAME}_Static ${UTILS_DEPEND_TARGETS} )
+  add_dependencies( ${UTILS_NAMESPACE}_${PROJECT_NAME}_Static ${UTILS_DEPEND_TARGETS} IPsolver::IPsolver )
 endif()
 
 #   _____       _
@@ -154,7 +176,7 @@ if ( UTILS_ENABLE_TESTS )
 
   enable_testing()
 
-  set( LIBS ${UTILS_NAMESPACE}_${PROJECT_NAME}_Static ${ROOTS} ${GC} ${UTILS} ${CMAKE_DL_LIBS} )
+  set( LIBS ${UTILS_NAMESPACE}_${PROJECT_NAME}_Static ${ROOTS} ${GC} ${UTILS} IPsolver::IPsolver ${CMAKE_DL_LIBS} )
 
   if( UNIX )
     if ( NOT APPLE )

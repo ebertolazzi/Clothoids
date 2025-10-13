@@ -559,7 +559,7 @@ void
 printStatsFinal(
   Eigen::MatrixXd & times,
   Eigen::MatrixXd & ith_num,
-  Eigen::MatrixXd & thetaM
+  Eigen::MatrixXd & /* thetaM */
 ) {
   fmt::print("---------------------------------------------\n");
   fmt::print(

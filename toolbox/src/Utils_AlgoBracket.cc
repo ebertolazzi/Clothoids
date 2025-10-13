@@ -299,7 +299,8 @@ namespace Utils {
       //
       // While f(left) or f(right) are infinite perform bisection
       //
-      while ( !( is_finite(fa) && is_finite(fb) ) ) {
+      bool ffa, ffb;
+      while ( (ffa=!is_finite(fa)) || (ffb=!is_finite(fb)) ) {
 
         UTILS_ASSERT(
           ++m_iteration_count <= m_max_iteration,
@@ -309,8 +310,13 @@ namespace Utils {
           a, fa,
           b, fb
         );
+        
+        // tale "mid-point" close to infinite point
+        Real c;
+        if      ( ffa ) c = (15*a+b)/16;
+        else if ( ffb ) c = (15*b+a)/16;
+        else            c = (a+b)/2;
 
-        Real c  { (a+b)/2           };
         Real fc { this->evaluate(c) };
 
         UTILS_ASSERT( !is_NaN( fc ), "AlgoBracket::eval()\nc = {}, fc = {}\n", c, fc );
@@ -320,8 +326,8 @@ namespace Utils {
 
         check( c, fc );
 
-        if ( m_fa*fc < 0 ) { b = c; fb = fc; } // --> [a,c]
-        else               { a = c; fa = fc; } // --> [c,b]
+        if ( fa*fc < 0 ) { b = c; fb = fc; } // --> [a,c]
+        else             { a = c; fa = fc; } // --> [c,b]
 
         Real abs_fa{ abs(fa) };
         Real abs_fb{ abs(fb) };

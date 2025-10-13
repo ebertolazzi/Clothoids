@@ -280,8 +280,8 @@ namespace Utils {
 
     using Integer = int;
 
-    Real m_tolerance_x{ 100*machine_eps<Real>() };
-    Real m_tolerance_f{ 100*machine_eps<Real>() };
+    Real m_tolerance_x{ 10*machine_eps<Real>() };
+    Real m_tolerance_f{ 10*machine_eps<Real>() };
     bool m_converged{ false };
 
     Real   m_a{0}, m_fa{0};

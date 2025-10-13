@@ -219,7 +219,7 @@ namespace GC_namespace {
     }
 
     //!
-    //! Copies the specified column of the matrix to a vector.
+    //! Copy the specified column of the matrix to a vector.
     //!
     //! \param nc The index of the column to be copied (0-based).
     //! \param C The vector that will be filled with the column elements.
@@ -248,7 +248,7 @@ namespace GC_namespace {
     { this->get_column( nc, C ); }
 
     //!
-    //! Copies the specified row of the matrix to a vector.
+    //! Copy the specified row of the matrix to a vector.
     //!
     //! \param nr The index of the row to be copied (0-based).
     //! \param R The vector that will be filled with the row elements.
@@ -603,7 +603,7 @@ namespace GC_namespace {
   //! ### Example:
   //! \code
   //! GenericContainer gc;
-  //! gc.set_integer(42);  // Store an integer
+  //! gc.set_int(42);  // Store an integer
   //! gc.set_string("Hello, World!");  // Store a string
   //!
   //! GenericContainer vec_gc;
@@ -817,6 +817,27 @@ namespace GC_namespace {
     void erase( string_view name ) const;
 
     //!
+    //! \brief Checks whether the `GenericContainer` is empty.
+    //!
+    //! Returns `true` if the container does not hold any data (i.e. its type is `NOTYPE`),
+    //! and `false` otherwise.
+    //!
+    //! This method is useful to quickly verify if the container has been cleared or not
+    //! initialized yet.
+    //!
+    //! ### Example:
+    //! \code
+    //! gc.set_integer(42);    // Store an integer
+    //! if (!gc.empty()) {     // Check if container is not empty
+    //!     std::cout << "Container holds data.\n";
+    //! }
+    //! gc.clear();            // Clear the container
+    //! assert(gc.empty());    // Now it's empty
+    //! \endcode
+    //!
+    bool empty() const { return this->m_data_type == GC_type::NOTYPE; }
+
+    //!
     //! \name Methods for Initializing Simple Data Types
     //!
     //! This group of methods allows setting simple data types (e.g., pointer, boolean, integer, etc.) within a `GenericContainer`.
@@ -992,9 +1013,9 @@ namespace GC_namespace {
     //! (representing the real and imaginary components), stores the complex number, and returns a reference
     //! to the stored complex value.
     //!
-    //! \param r The real part of the complex number.
-    //! \param i The imaginary part of the complex number.
-    //! \return A reference to the stored complex value.
+    //! \param re The real part of the complex number.
+    //! \param im The imaginary part of the complex number.
+    //! \return   A reference to the stored complex value.
     //!
     //! ### Example:
     //! \code
@@ -3980,7 +4001,7 @@ namespace GC_namespace {
     //! The data stored musty be a `map`.
     //! Search the
     //! \param[in] `vs` vector of string with the keys to be searched
-    //! \param[in]  where position added to the error message
+    //! \param[in]  where error message if fails
     //!
     string must_exists( vec_string_type const & vs, string_view const where ) const;
 
@@ -4083,11 +4104,31 @@ namespace GC_namespace {
     ///@{
 
     //!
-    //! Print the contents of the object in a human readable way (without data)
+    //! \brief Prints the structure of the `GenericContainer` in a human-readable form.
     //!
-    //! \param[in] stream output stream
-    //! \param[in] prefix strig to be prepended to any field of the `GenericContainer`
-    //! \param[in] indent indentation
+    //! This function outputs the container’s content types (schema/structure) without
+    //! printing the actual stored data values. It is useful for debugging or inspecting
+    //! the layout of the container in a concise way.
+    //!
+    //! \param[in] stream  Output stream where the formatted description will be written.
+    //! \param[in] prefix  Optional string prepended to each field (e.g., for labeling or nesting).
+    //! \param[in] indent  Indentation string used to format nested structures (default: four spaces).
+    //!
+    //! ### Example:
+    //! \code
+    //! GenericContainer gc;
+    //! gc.set_map();
+    //! gc["id"].set_integer(42);
+    //! gc["name"].set_string("Alice");
+    //! gc.print_content_types(std::cout, ">> ", "  ");
+    //! \endcode
+    //!
+    //! ### Output:
+    //!
+    //! \verbatim
+    //! >> id: int
+    //! >> name: string
+    //! \endverbatim
     //!
     void
     print_content_types(
@@ -4097,20 +4138,59 @@ namespace GC_namespace {
     ) const;
 
     //!
-    //! Compare the contents of the object with `gc`
+    //! \brief Compares the contents of this `GenericContainer` with another.
     //!
-    //! \param[in] gc to object to compare
-    //! \return a string with the first difference found
+    //! This method performs a deep comparison between the current container and
+    //! the one provided as argument. If a difference is found, a descriptive
+    //! string indicating the mismatch is returned; otherwise, an empty string
+    //! is returned to indicate that the two containers are identical.
+    //!
+    //! \param[in] gc   The container to compare against.
+    //! \param[in] from An optional prefix or context message that will be included
+    //!                 in the error description (useful for debugging and tracing).
+    //! \return A string describing the first difference found.
+    //!         Returns an empty string if the two containers are identical.
+    //!
+    //! ### Example:
+    //! \code
+    //! GenericContainer a, b;
+    //! a.set_integer(42);
+    //! b.set_integer(43);
+    //!
+    //! std::string diff = a.compare_content(b, "TestCase1");
+    //! if (!diff.empty()) {
+    //!     std::cerr << "Difference found: " << diff << "\n";
+    //! }
+    //! \endcode
     //!
     string
     compare_content( GenericContainer const & gc, string_view from = "" ) const;
 
     //!
-    //! Dump the contents of the object in a human readable way
+    //! \brief Dumps the full contents of the `GenericContainer` in a human-readable format.
     //!
-    //! \param[in] stream output stream
-    //! \param[in] prefix strig to be prepended to any field of the `GenericContainer`
-    //! \param[in] indent indentation
+    //! This function prints both the structure and the actual data stored in the container.
+    //! It is useful for debugging or inspecting the contents of the container in a readable way.
+    //!
+    //! \param[in] stream  Output stream where the formatted data will be written.
+    //! \param[in] prefix  Optional string to prepend to each field (e.g., for labeling or nesting).
+    //! \param[in] indent  String used for indentation of nested structures (default: four spaces).
+    //!
+    //! ### Example:
+    //!
+    //! \code
+    //! GenericContainer gc;
+    //! gc["id"].set_int(42);
+    //! gc["name"].set_string("Alice");
+    //! gc.dump(std::cout, ">> ", "  ");
+    //! \endcode
+    //!
+    //! ### Output:
+    //!
+    //! \verbatim
+    //! >> id: 42
+    //! >> name: "Alice"
+    //! \endverbatim
     //!
     void
     dump(
@@ -4120,11 +4200,30 @@ namespace GC_namespace {
     ) const;
 
     //!
-    //! Dump the contents of the object in a human readable way (aliad of dump)
+    //! \brief Prints the contents of the `GenericContainer` in a human-readable format.
     //!
-    //! \param[in] stream output stream
-    //! \param[in] prefix strig to be prepended to any field of the `GenericContainer`
-    //! \param[in] indent indentation
+    //! This is an alias for \ref dump(), providing the same functionality. It outputs
+    //! both the structure and the data of the container to the specified stream.
+    //!
+    //! \param[in] stream  Output stream where the formatted content will be written.
+    //! \param[in] prefix  Optional string to prepend to each field (useful for labeling or nesting).
+    //! \param[in] indent  String used for indentation of nested structures (default: four spaces).
+    //!
+    //! ### Example:
+    //!
+    //! \code
+    //! GenericContainer gc;
+    //! gc["id"].set_int(42);
+    //! gc["name"].set_string("Alice");
+    //! gc.print(std::cout, ">> ", "  ");
+    //! \endcode
+    //!
+    //! ### Output:
+    //!
+    //! \verbatim
+    //! >> id: 42
+    //! >> name: "Alice"
+    //! \endverbatim
     //!
     void
     print(
@@ -4136,10 +4235,32 @@ namespace GC_namespace {
     }
 
     //!
-    //! Dump the contents of the object in a human readable way (aliad of dump)
+    //! \brief Returns a human-readable string representation of the `GenericContainer`.
     //!
-    //! \param[in] prefix strig to be prepended to any field of the `GenericContainer`
-    //! \param[in] indent indentation
+    //! This is a convenience overload of \ref print() that captures the output into
+    //! a `string_type` instead of writing to a stream. It includes both the structure
+    //! and the data of the container in a readable format.
+    //!
+    //! \param[in] prefix Optional string to prepend to each field (useful for labeling or nesting).
+    //! \param[in] indent String used for indentation of nested structures (default: four spaces).
+    //! \return A `string_type` containing the formatted content of the container.
+    //!
+    //! ### Example:
+    //!
+    //! \code
+    //! GenericContainer gc;
+    //! gc["id"].set_int(42);
+    //! gc["name"].set_string("Alice");
+    //! std::string output = gc.print(">> ", "  ");
+    //! std::cout << output;
+    //! \endcode
+    //!
+    //! ### Output:
+    //!
+    //! \verbatim
+    //! >> id: 42
+    //! >> name: "Alice"
+    //! \endverbatim
     //!
     string_type
     print(
@@ -4153,83 +4274,342 @@ namespace GC_namespace {
     }
 
     //!
-    //! Copy the contents of the object into another object
+    //! \brief Copies the contents of this `GenericContainer` into another container.
     //!
-    //! \param[out] gc output `GenericContainer`
+    //! This method performs a deep copy of the current container’s data and structure
+    //! into the provided `GenericContainer` object.
+    //!
+    //! \param[out] gc  The target container where the contents will be copied.
+    //!
+    //! ### Example:
+    //! \code
+    //! GenericContainer source, target;
+    //! source.set_int(42);
+    //! source.to_gc(target);
+    //! assert(target.compare_content(source).empty()); // containers are identical
+    //! \endcode
     //!
     void to_gc( GenericContainer & gc ) const;
 
     //!
-    //! Copy the contents of the object into another object
+    //! \brief Copies the contents from another `GenericContainer` into this object.
     //!
-    //! \param[in] gc input `GenericContainer`
+    //! This method performs a deep copy of the provided container’s data and structure
+    //! into the current `GenericContainer` instance.
+    //!
+    //! \param[in] gc  The source container from which to copy the contents.
+    //!
+    //! ### Example:
+    //! \code
+    //! GenericContainer source, target;
+    //! source.set_int(42);
+    //! target.from_gc(source);
+    //! assert(target.compare_content(source).empty()); // containers are identical
+    //! \endcode
     //!
     void from_gc( GenericContainer const & gc );
 
     //!
-    //! Merge two generic container
+    //! \brief Merges the contents of another `GenericContainer` into this one.
     //!
-    //! \param[in] gc    input `GenericContainer`
-    //! \param[in] where position added to the error message
+    //! This method combines the data and structure of the provided container with
+    //! the current container. In case of conflicts or errors during the merge,
+    //! the `where` parameter is used to provide context in the error messages.
+    //!
+    //! \param[in] gc     The container whose contents will be merged into this one.
+    //! \param[in] where  Context string to indicate the position or source for error reporting.
+    //!
+    //! ### Example:
+    //! \code
+    //! GenericContainer a, b;
+    //! a["id"].set_int(42);
+    //! b["name"].set_string("Alice");
+    //! a.merge(b, "failed to merge a with b");
+    //! // Now 'a' contains both "id" and "name" fields
+    //! \endcode
     //!
     void merge( GenericContainer const & gc, string_view const where );
 
     //!
-    //! Read the contents of stream from a file (YAML,JSON or TOML)
+    //! \brief Loads the contents of the `GenericContainer` from a file.
     //!
-    //! \param[in] file_name file name of the data
-    //! \return true if conversion successful
+    //! The file can be in YAML, JSON, or TOML format. This function reads the file,
+    //! parses its content, and populates the container accordingly.
+    //!
+    //! \param[in] file_name  The path to the file to be read.
+    //! \return `true` if the file was successfully read and parsed; `false` otherwise.
+    //!
+    //! ### Example:
+    //! \code
+    //! GenericContainer gc;
+    //! if (gc.from_file("config.yaml")) {
+    //!     std::cout << "File loaded successfully.\n";
+    //! } else {
+    //!     std::cerr << "Failed to load file.\n";
+    //! }
+    //! \endcode
     //!
     bool from_file( string_view file_name );
 
     //!
-    //! Print the contents of the object in YAML syntax
+    //! \brief Serializes the contents of the `GenericContainer` into YAML format
+    //!        and writes it to the provided output stream.
     //!
-    //! \param[in] stream output stream
-    //! \param[in] prefix string to be prepended to any field of the `GenericContainer`
+    //! This function outputs the container’s structure and data in valid YAML syntax.
+    //! It is useful for exporting the container for configuration, debugging, or
+    //! interoperability with other tools that support YAML.
+    //!
+    //! \param[in] stream  Output stream where the YAML content will be written.
+    //! \param[in] prefix  Optional string to prepend to each field (useful for nesting or labeling).
+    //!
+    //! ### Example:
+    //! \code
+    //! GenericContainer gc;
+    //! gc["id"].set_int(42);
+    //! gc["name"].set_string("Alice");
+    //! gc.to_yaml(std::cout);
+    //! \endcode
     //!
     void to_yaml( ostream_type & stream, string_view prefix = "" ) const;
+    
+    //!
+    //! \brief Returns a string containing the contents of the `GenericContainer` in YAML format.
+    //!
+    //! This is a convenience overload that captures the YAML output into a `string`
+    //! instead of writing to a stream.
+    //!
+    //! \param[in] prefix Optional string to prepend to each field (useful for nesting or labeling).
+    //! \return A string containing the YAML representation of the container.
+    //!
+    //! ### Example:
+    //! \code
+    //! GenericContainer gc;
+    //! gc["id"].set_int(42);
+    //! gc["name"].set_string("Alice");
+    //! std::string yaml_str = gc.to_yaml();
+    //! std::cout << yaml_str;
+    //! \endcode
+    //!
+    string
+    to_yaml( string_view prefix = "" ) const
+    { ostringstream ss; this->to_yaml( ss, prefix ); return ss.str(); }
 
     //!
-    //! Read the contents of stream in YAML syntax
+    //! \brief Loads the contents of the `GenericContainer` from a YAML-formatted stream.
     //!
-    //! \param[in] stream input stream
-    //! \return true if conversion successful
+    //! This function parses the YAML data from the provided input stream and populates
+    //! the container with the corresponding structure and values.
+    //!
+    //! \param[in] stream  Input stream containing YAML data.
+    //! \return `true` if the data was successfully parsed and loaded; `false` otherwise.
+    //!
+    //! ### Example:
+    //! \code
+    //! GenericContainer gc;
+    //! std::ifstream file("config.yaml");
+    //! if (gc.from_yaml(file)) {
+    //!     std::cout << "YAML loaded successfully.\n";
+    //! } else {
+    //!     std::cerr << "Failed to load YAML.\n";
+    //! }
+    //! \endcode
     //!
     bool from_yaml( istream_type & stream );
 
     //!
-    //! Print the contents of the object in JSON syntax
+    //! \brief Loads the contents of the `GenericContainer` from a YAML-formatted string.
     //!
-    //! \param[in] stream output stream
-    //! \param[in] prefix strig to be prepended to any field of the `GenericContainer`
+    //! This is a convenience overload that parses YAML data directly from a `std::string`
+    //! by internally using an `istringstream`.
+    //!
+    //! \param[in] data  String containing YAML-formatted data.
+    //! \return `true` if the data was successfully parsed and loaded; `false` otherwise.
+    //!
+    //! ### Example:
+    //! \code
+    //! GenericContainer gc;
+    //! std::string yaml_data = "id: 42\nname: Alice\n";
+    //! if (gc.from_yaml(yaml_data)) {
+    //!     std::cout << "YAML loaded successfully.\n";
+    //! }
+    //! \endcode
+    //!
+    bool from_yaml( string const & data ) { istringstream ss(data); return this->from_yaml( ss ); }
+
+    //!
+    //! \brief Creates a GenericContainer object from a JSON string.
+    //!
+    //! This static function allows you to obtain a GenericContainer object
+    //! populated with the data contained in the provided JSON string.
+    //!
+    //! \param json The string containing the JSON representation of the object.
+    //! \return GenericContainer The GenericContainer object populated with the JSON data.
+    //!
+    //! \note Being static, it can be called without an instance of GenericContainer.
+    //! \code
+    //! GenericContainer gc = GenericContainer::from_json(json_string);
+    //! \endcode
+    //!
+    static
+    GenericContainer gc_from_yaml( string const & yaml ) {
+      GenericContainer gc;
+      gc.from_yaml(yaml);
+      return gc;
+    }
+
+    //!
+    //! \brief Serializes the contents of the `GenericContainer` into JSON format
+    //!        and writes it to the provided output stream.
+    //!
+    //! This function outputs the container’s structure and data in valid JSON syntax.
+    //! It is useful for exporting the container for configuration, debugging, or
+    //! interoperability with other tools that support JSON.
+    //!
+    //! \param[in] stream  Output stream where the JSON content will be written.
+    //! \param[in] prefix  Optional string to prepend to each field (useful for nesting or labeling).
+    //!
+    //! ### Example:
+    //! \code
+    //! GenericContainer gc;
+    //! gc["id"].set_int(42);
+    //! gc["name"].set_string("Alice");
+    //! gc.to_json(std::cout);
+    //! \endcode
     //!
     void to_json( ostream_type & stream, string_view prefix = "" ) const;
 
+    string
+    to_json( string_view prefix = "" ) const
+    { ostringstream ss; this->to_json( ss, prefix ); return ss.str();}
+
     //!
-    //! Read the contents of stream in JSON syntax
+    //! \brief Returns a string containing the contents of the `GenericContainer` in JSON format.
     //!
-    //! \param[in] stream input stream
-    //! \return true if conversion successful
+    //! This is a convenience overload that captures the JSON output into a `string`
+    //! instead of writing to a stream.
+    //!
+    //! \param[in] prefix Optional string to prepend to each field (useful for nesting or labeling).
+    //! \return A string containing the JSON representation of the container.
+    //!
+    //! ### Example:
+    //! \code
+    //! GenericContainer gc;
+    //! gc["id"].set_int(42);
+    //! gc["name"].set_string("Alice");
+    //! std::string json_str = gc.to_json(">> ");
+    //! std::cout << json_str;
+    //! \endcode
     //!
     bool from_json( istream_type & stream );
     bool from_json2( istream_type & stream );
 
+    bool from_json( string const & data ) { istringstream ss(data); return this->from_json( ss ); }
+
     //!
-    //! Print the contents of the object in TOML syntax
+    //! \brief Creates a GenericContainer object from a JSON string.
     //!
-    //! \param[in] stream output stream
-    //! \param[in] prefix strig to be prepended to any field of the `GenericContainer`
+    //! This static function constructs and returns a GenericContainer object
+    //! populated with the data contained in the provided JSON string.
+    //!
+    //! \param json The string containing the JSON representation of the object.
+    //! \return GenericContainer A GenericContainer object populated with the JSON data.
+    //!
+    //! \note This is a static function, so it can be called without an instance
+    //! of GenericContainer.
+    //! \code
+    //! GenericContainer gc = GenericContainer::from_json(json_string);
+    //! \endcode
+    //!
+    static
+    GenericContainer gc_from_json( string const & json ) {
+      GenericContainer gc;
+      gc.from_json(json);
+      return gc;
+    }
+
+    //!
+    //! \brief Serializes the contents of the `GenericContainer` into TOML format
+    //!        and writes it to the provided output stream.
+    //!
+    //! This function outputs the container’s structure and data in valid TOML syntax.
+    //! It is useful for exporting configuration or interoperability with TOML-compatible tools.
+    //!
+    //! \param[in] stream  Output stream where the TOML content will be written.
+    //! \return `true` if the serialization was successful; `false` otherwise.
+    //!
+    //! ### Example:
+    //! \code
+    //! GenericContainer gc;
+    //! gc["id"].set_int(42);
+    //! gc["name"].set_string("Alice");
+    //! gc.to_toml(std::cout);
+    //! \endcode
     //!
     bool to_toml( ostream_type & stream ) const;
 
+    string
+    to_toml() const
+    { ostringstream ss; this->to_toml( ss ); return ss.str();}
+
     //!
-    //! Read the contents of stream in JSON syntax
+    //! \brief Returns a string containing the contents of the `GenericContainer` in TOML format.
     //!
-    //! \param[in] stream input stream
-    //! \return true if conversion successful
+    //! This is a convenience overload that captures the TOML output into a `string`
+    //! instead of writing to a stream.
+    //!
+    //! \return A string containing the TOML representation of the container.
+    //!
+    //! ### Example:
+    //! \code
+    //! GenericContainer gc;
+    //! gc["id"].set_int(42);
+    //! gc["name"].set_string("Alice");
+    //! std::string toml_str = gc.to_toml();
+    //! std::cout << toml_str;
+    //! \endcode
     //!
     bool from_toml( istream_type & stream );
+    
+    //!
+    //! \brief Loads the contents of the `GenericContainer` from a TOML-formatted stream.
+    //!
+    //! This function parses TOML data from the provided input stream and populates
+    //! the container with the corresponding structure and values.
+    //!
+    //! \param[in] stream  Input stream containing TOML data.
+    //! \return `true` if the data was successfully parsed and loaded; `false` otherwise.
+    //!
+    //! ### Example:
+    //! \code
+    //! GenericContainer gc;
+    //! std::ifstream file("config.toml");
+    //! if (gc.from_toml(file)) {
+    //!     std::cout << "TOML loaded successfully.\n";
+    //! }
+    //! \endcode
+    //!
+    bool from_toml( string const & data ) { istringstream ss(data); return this->from_toml( ss ); }
+
+    //!
+    //! \brief Creates a GenericContainer object from a TOML string.
+    //!
+    //! This static function allows you to obtain a GenericContainer object
+    //! populated with the data contained in the provided TOML string.
+    //!
+    //! \param toml The string containing the TOML representation of the object.
+    //! \return GenericContainer The GenericContainer object populated with the TOML data.
+    //!
+    //! \note Being static, it can be called without an instance of GenericContainer.
+    //! \code
+    //! GenericContainer gc = GenericContainer::from_toml(toml_string);
+    //! \endcode
+    //!
+    static
+    GenericContainer gc_from_toml( string const & toml ) {
+      GenericContainer gc;
+      gc.from_toml(toml);
+      return gc;
+    }
 
     //!
     //! Collapse heterogeneous vectors into a unified type.
@@ -4430,40 +4810,110 @@ namespace GC_namespace {
     int32_t mem_size() const;
 
     //!
-    //! Serializes the GenericContainer into the provided buffer.
-    //! The buffer must have enough space to store the serialized data (use \ref mem_size() to determine the required size).
+    //! \brief Serializes the contents of the `GenericContainer` into a raw memory buffer.
     //!
-    //! \param buffer_dim Size of the provided buffer, in bytes.
+    //! This method writes the serialized representation of the container into the
+    //! user-provided buffer. The buffer must be large enough to hold the data;
+    //! use \ref mem_size() to query the exact number of bytes required.
+    //!
+    //! \param buffer_dim The size of the provided buffer, in bytes.
     //! \param buffer Pointer to the buffer where the serialized data will be written.
-    //! \return The number of bytes written into the buffer, or -1 if an error occurs (e.g., insufficient buffer size).
+    //! \return The number of bytes successfully written, or -1 if serialization fails
+    //!         (for example, if the buffer size is insufficient).
+    //!
+    //! ### Example:
+    //! \code
+    //! std::vector<uint8_t> buf(gc.mem_size());
+    //! int32_t written = gc.serialize(buf.size(), buf.data());
+    //! if (written < 0) {
+    //!     std::cerr << "Serialization failed.\n";
+    //! }
+    //! \endcode
     //!
     int32_t serialize( int32_t buffer_dim, uint8_t * buffer ) const;
 
     //!
-    //! Serializes the GenericContainer into the provided vector buffer.
-    //! The buffer will be resized if necessary to accommodate the serialized data.
+    //! \brief Serializes the contents of the `GenericContainer` into a byte vector.
     //!
-    //! \param buffer A vector of bytes that will be filled with the serialized data.
-    //! \return The number of bytes written into the buffer.
+    //! This method produces a serialized representation of the container and writes it
+    //! into the provided `std::vector<uint8_t>`. If the current capacity of the vector
+    //! is insufficient, it will be automatically resized to fit the serialized data.
+    //!
+    //! \param buffer Reference to a vector of bytes that will receive the serialized data.
+    //!               Its contents will be overwritten.
+    //! \return The number of bytes written into the vector.
+    //!
+    //! ### Example:
+    //! \code
+    //! std::vector<uint8_t> buf;
+    //! int32_t written = gc.serialize(buf);
+    //! std::cout << "Serialized size: " << written << " bytes\n";
+    //! \endcode
     //!
     int32_t serialize( vector<uint8_t> & buffer ) const;
 
     //!
-    //! Deserializes the GenericContainer from the provided buffer.
-    //! Reconstructs the container from its serialized version contained within the buffer.
+    //! \brief Serializes the contents of the `GenericContainer` and returns a byte vector.
     //!
-    //! \param buffer_dim Size of the buffer containing the serialized data, in bytes.
-    //! \param buffer Pointer to the buffer containing the serialized data.
-    //! \return The number of bytes readed from the buffer.
+    //! This convenience overload creates a `std::vector<uint8_t>`, resizes it to the exact
+    //! number of bytes required (using \ref mem_size()), and fills it with the serialized data.
+    //!
+    //! \return A `std::vector<uint8_t>` containing the serialized representation of the container.
+    //!
+    //! ### Example:
+    //! \code
+    //! GenericContainer gc;
+    //! gc.set_integer(123);
+    //! std::vector<uint8_t> data = gc.serialize();
+    //! // 'data' now holds the serialized form of 'gc'
+    //! \endcode
+    //!
+    std::vector<uint8_t>
+    serialize() const {
+      std::vector<uint8_t> buffer( static_cast<std::size_t>(mem_size()) ); // allocate required space
+      serialize(static_cast<int32_t>(buffer.size()), buffer.data());
+      return buffer;
+    }
+
+    //!
+    //! \brief Deserializes a `GenericContainer` from a raw memory buffer.
+    //!
+    //! This method reconstructs the contents of the container from its serialized
+    //! binary representation stored in the provided buffer.
+    //!
+    //! \param buffer_dim The size of the buffer containing the serialized data, in bytes.
+    //! \param buffer Pointer to the buffer holding the serialized data.
+    //! \return The number of bytes successfully read from the buffer.
+    //!
+    //! ### Example:
+    //! \code
+    //! std::vector<uint8_t> buf;
+    //! gc.serialize(buf);             // First serialize
+    //! GenericContainer gc2;
+    //! int32_t used = gc2.de_serialize(buf.size(), buf.data());
+    //! assert(used > 0);
+    //! \endcode
     //!
     int32_t de_serialize( int32_t buffer_dim, uint8_t const * buffer );
 
     //!
-    //! Deserializes the GenericContainer from the provided vector buffer.
-    //! Reconstructs the container from its serialized version contained within the vector.
+    //! \brief Deserializes a `GenericContainer` from a byte vector.
+    //!
+    //! This method reconstructs the contents of the container from its serialized
+    //! binary representation stored in the provided `std::vector<uint8_t>`.
     //!
     //! \param buffer A vector of bytes containing the serialized data.
-    //! \return  The number of bytes readed from the buffer.
+    //!               Its content must match the format produced by \ref serialize().
+    //! \return The number of bytes successfully read from the vector.
+    //!
+    //! ### Example:
+    //! \code
+    //! std::vector<uint8_t> buf;
+    //! gc.serialize(buf);             // Serialize into vector
+    //! GenericContainer gc2;
+    //! int32_t used = gc2.de_serialize(buf);
+    //! assert(used > 0);
+    //! \endcode
     //!
     int32_t de_serialize( vector<uint8_t> const & buffer );
 
