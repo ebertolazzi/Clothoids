@@ -66,20 +66,21 @@ endif()
 
 include(FetchContent)
 
-# Optionally specify a custom path to fetch content to
-set(FETCHCONTENT_BASE_DIR "${CMAKE_CURRENT_SOURCE_DIR}/lib3rd/IPsolver")
-fetchcontent_declare(
-  IPsolver
-  GIT_REPOSITORY https://github.com/StoccoDavide/IPsolver.git
-  GIT_SHALLOW    TRUE
-  GIT_TAG        main
-)
-fetchcontent_makeavailable(IPsolver)
-#target_link_libraries(${PROJECT_NAME} PRIVATE IPsolver::IPsolver)
-include_directories( ${FETCHCONTENT_BASE_DIR}/ipsolver-src/include )
+set(FETCHCONTENT_BASE_DIR "${CMAKE_CURRENT_SOURCE_DIR}/lib3rd/PIPAL")
 
-message( STATUS "Compiler used: ${CMAKE_CXX_COMPILER_ID}" )
-message( STATUS "BASE SUFFIXES = ${ARTIFACTS_STATIC_SUFFIX} ${ARTIFACTS_DYNAMIC_SUFFIX}" )
+FetchContent_Declare(
+  PIPAL
+  GIT_REPOSITORY https://github.com/ebertolazzi/PIPAL.git
+  GIT_SHALLOW TRUE
+  GIT_TAG enrico
+)
+FetchContent_MakeAvailable(PIPAL)
+
+# Copia gli header in lib3rd/include
+set(PIPAL_INCLUDE_SRC  "${FETCHCONTENT_BASE_DIR}/PIPAL-src/include/")
+set(PIPAL_INCLUDE_DEST "${CMAKE_CURRENT_SOURCE_DIR}/lib3rd/include/")
+
+file(COPY ${PIPAL_INCLUDE_SRC} DESTINATION ${PIPAL_INCLUDE_DEST})
 
 #   ___
 #  / __| ___ _  _ _ _ __ ___ ___
@@ -135,6 +136,8 @@ message( STATUS "UTILS = ${UTILS}" )
 message( STATUS "ROOTS = ${ROOTS}" )
 message( STATUS "GC    = ${GC}" )
 message( STATUS "----------------------------------------------------------------" )
+message( STATUS "Compiler used: ${CMAKE_CXX_COMPILER_ID}" )
+message( STATUS "BASE SUFFIXES = ${ARTIFACTS_STATIC_SUFFIX} ${ARTIFACTS_DYNAMIC_SUFFIX}" )
 
 #   _____                  _
 #  |_   _|_ _ _ _ __ _ ___| |_ ___
@@ -160,11 +163,11 @@ if ( UTILS_BUILD_SHARED )
     "${SOURCE_DIR}"
     "${PUBLIC_HEADERS}"
   )
-  target_link_libraries( ${UTILS_NAMESPACE}_${PROJECT_NAME} ${UTILS_MODULE_LIBS} PRIVATE IPsolver::IPsolver )
+  target_link_libraries( ${UTILS_NAMESPACE}_${PROJECT_NAME} ${UTILS_MODULE_LIBS} )
 endif()
 
 if ( UTILS_DEPEND_TARGETS )
-  add_dependencies( ${UTILS_NAMESPACE}_${PROJECT_NAME}_Static ${UTILS_DEPEND_TARGETS} IPsolver::IPsolver )
+  add_dependencies( ${UTILS_NAMESPACE}_${PROJECT_NAME}_Static ${UTILS_DEPEND_TARGETS} )
 endif()
 
 #   _____       _
@@ -176,7 +179,7 @@ if ( UTILS_ENABLE_TESTS )
 
   enable_testing()
 
-  set( LIBS ${UTILS_NAMESPACE}_${PROJECT_NAME}_Static ${ROOTS} ${GC} ${UTILS} IPsolver::IPsolver ${CMAKE_DL_LIBS} )
+  set( LIBS ${UTILS_NAMESPACE}_${PROJECT_NAME}_Static ${ROOTS} ${GC} ${UTILS} ${CMAKE_DL_LIBS} )
 
   if( UNIX )
     if ( NOT APPLE )

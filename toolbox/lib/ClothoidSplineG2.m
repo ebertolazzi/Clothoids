@@ -28,7 +28,7 @@ classdef ClothoidSplineG2 < matlab.mixin.Copyable
   properties (SetAccess = private, Hidden = true)
     m_objectHandle; % Handle to the underlying C++ class instance
     m_call_delete;
-    m_use_Ipopt;
+    m_use_PIPAL;
     m_iter_opt;
     m_is_octave;
     m_theta_lb;
@@ -99,7 +99,7 @@ classdef ClothoidSplineG2 < matlab.mixin.Copyable
       [ theta_guess, theta_min, theta_max ] = self.guess();
       [~,nc] = self.dims();
 
-      if self.m_use_Ipopt
+      if self.m_use_PIPAL
 
         options = {};
 
@@ -220,7 +220,7 @@ classdef ClothoidSplineG2 < matlab.mixin.Copyable
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     function self = ClothoidSplineG2()
       self.m_objectHandle = ClothoidSplineG2MexWrapper( 'new' );
-      self.m_use_Ipopt    = true;
+      self.m_use_PIPAL    = true;
       self.m_iter_opt     = 'iter';
       self.m_is_octave    = exist('OCTAVE_VERSION', 'builtin') ~= 0;
     end
@@ -243,7 +243,7 @@ classdef ClothoidSplineG2 < matlab.mixin.Copyable
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     function ipopt( self, yesno )
-      self.m_use_Ipopt = yesno;
+      self.m_use_PIPAL = yesno;
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     function [n,nc] = dims( self )

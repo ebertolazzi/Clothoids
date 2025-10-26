@@ -2279,9 +2279,8 @@ namespace G2lib {
     mutable real_type * m_dk_2{nullptr};
 
     real_type
-    diff2pi( real_type in ) const {
-      return in-Utils::m_2pi*round(in/Utils::m_2pi);
-    }
+    diff2pi( real_type in ) const
+    { return in-Utils::m_2pi*round(in/Utils::m_2pi); }
 
   public:
 
@@ -2304,11 +2303,20 @@ namespace G2lib {
     void setP8() { m_tt = TargetType::P8; }
     void setP9() { m_tt = TargetType::P9; }
 
+    // vecchio da rimnuovere
     void
     build(
       real_type const xvec[],
       real_type const yvec[],
       integer   const npts
+    );
+
+    void
+    build(
+      integer   const npts,
+      real_type const xvec[],
+      real_type const yvec[],
+      real_type       theta[]
     );
 
     integer numPnts() const { return m_npts; }

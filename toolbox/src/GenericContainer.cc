@@ -3879,30 +3879,6 @@ namespace GC_namespace {
         (*this)[fst].from_gc(snd);
     }
   }
-  
-  bool
-  GenericContainer::from_file( string_view file_name ) {
-    std::ifstream file(file_name.data());
-    if ( !file.is_open() ) return false;
-
-    // Utility to check file extension
-    auto ends_with = []( string_view str, string_view suffix ) -> bool {
-      return str.size() >= suffix.size() &&
-             str.compare(str.size() - suffix.size(), suffix.size(), suffix) == 0;
-    };
-
-    bool success{ false };
-    if ( ends_with( file_name, ".yaml" ) ||
-         ends_with( file_name, ".yml"  ) ) {
-      success = this->from_yaml(file);
-    } else if ( ends_with(file_name, ".json" ) ) {
-      success = this->from_json(file);
-    } else if (ends_with(file_name, ".toml")) {
-      success = this->from_toml(file);
-    }
-    file.close();
-    return success;
-  }
 
   void
   GenericContainer::exception( string_view const where ) {
