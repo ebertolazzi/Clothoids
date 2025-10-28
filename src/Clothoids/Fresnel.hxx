@@ -440,11 +440,40 @@ namespace G2lib {
       real_type const y1,
       real_type const theta1,
       real_type const tol,
+      real_type     & L
+    );
+
+    int
+    build_G1_D(
+      real_type const x0,
+      real_type const y0,
+      real_type const theta0,
+      real_type const x1,
+      real_type const y1,
+      real_type const theta1,
+      real_type const tol,
       real_type     & L,
-      bool      compute_deriv = false,
-      real_type L_D[2]        = nullptr,
-      real_type k_D[2]        = nullptr,
-      real_type dk_D[2]       = nullptr
+      real_type       L_D[2],
+      real_type       k_D[2],
+      real_type       dk_D[2]
+    );
+
+    int
+    build_G1_DD(
+      real_type const x0,
+      real_type const y0,
+      real_type const theta0,
+      real_type const x1,
+      real_type const y1,
+      real_type const theta1,
+      real_type const tol,
+      real_type     & L,
+      real_type       L_D[2],
+      real_type       k_D[2],
+      real_type       dk_D[2],
+      real_type       L_DD[3],
+      real_type       k_DD[3],
+      real_type       dk_DD[3]
     );
 
     bool

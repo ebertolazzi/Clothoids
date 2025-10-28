@@ -229,7 +229,7 @@ namespace G2lib {
   ) {
     m_aabb_done = false;
     m_aabb_triangles.clear();
-    return m_CD.build_G1( x0, y0, theta0, x1, y1, theta1, tol, m_L, true, L_D, k_D, dk_D );
+    return m_CD.build_G1_D( x0, y0, theta0, x1, y1, theta1, tol, m_L, L_D, k_D, dk_D );
   }
 
   // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
