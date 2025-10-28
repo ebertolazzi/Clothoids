@@ -31,6 +31,9 @@ project(
   HOMEPAGE_URL "https://ebertolazzi.github.io/Clothoids/"
 )
 
+# Pulisce la directory (cross-platform)
+file(REMOVE_RECURSE ${CMAKE_SOURCE_DIR}/lib3rd/PIPAL)
+
 if (APPLE)
   #set( CMAKE_OSX_DEPLOYMENT_TARGET "13.3" )
   execute_process( COMMAND uname -m COMMAND tr -d '\n' OUTPUT_VARIABLE ARCHITECTURE )

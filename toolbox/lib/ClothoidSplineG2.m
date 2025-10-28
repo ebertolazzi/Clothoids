@@ -220,7 +220,7 @@ classdef ClothoidSplineG2 < matlab.mixin.Copyable
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     function self = ClothoidSplineG2()
       self.m_objectHandle = ClothoidSplineG2MexWrapper( 'new' );
-      self.m_use_PIPAL    = true;
+      self.m_use_PIPAL    = false;
       self.m_iter_opt     = 'iter';
       self.m_is_octave    = exist('OCTAVE_VERSION', 'builtin') ~= 0;
     end
