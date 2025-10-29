@@ -25,6 +25,7 @@ Y = [-1.707808758,-1.707808758,-2.367185958,-2.582810358,-2.582810358, ...
 
 
 S = ClothoidSplineG2();
+S.use_pipal(true);
 SL = S.buildP4( X, Y );
 
 subplot(2,1,1);

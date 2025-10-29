@@ -2292,6 +2292,13 @@ namespace G2lib {
     void evaluate_for_NLP_D( real_type const theta[] ) const;
     void evaluate_for_NLP_DD( real_type const theta[] ) const;
 
+    void evaluate_for_NLP_BC( real_type const theta[] ) const;
+    void evaluate_for_NLP_D_BC( real_type const theta[] ) const;
+    void evaluate_for_NLP_DD_BC( real_type const theta[] ) const;
+
+    bool jacobian( real_type const theta[], Pipal::SparseMatrix<real_type> & J ) const;
+    bool lagrangian_hessian( real_type const theta[], real_type const lambda[], Pipal::SparseMatrix<real_type> & H ) const;
+
     real_type
     diff2pi( real_type in ) const
     { return in-Utils::m_2pi*round(in/Utils::m_2pi); }

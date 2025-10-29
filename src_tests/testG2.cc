@@ -94,15 +94,17 @@ main() {
     -3.178123242, -3.178123242, -1.707808758
   };
 
-  Eigen::VectorXd THETA;
-  THETA.resize(27);
+  for ( int i{0}; i < 100; ++i ) {
+    Eigen::VectorXd THETA;
+    THETA.resize(27);
 
-  g2spline.setP4();
-  g2spline.build( N, X, Y, THETA.data() );
+    g2spline.setP4();
+    g2spline.build( N, X, Y, THETA.data() );
   
-  std::cout << THETA.transpose() << '\n';
+    std::cout << THETA.transpose() << '\n';
   
-  g2spline.info( std::cout );
+    g2spline.info( std::cout );
+  }
 
   fmt::print( "\n\nALL DONE FOLKS!!!\n" );
 

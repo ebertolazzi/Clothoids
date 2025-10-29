@@ -24,7 +24,7 @@
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
 #define A_THRESOLD   0.01
-#define A_SERIE_SIZE 3
+#define A_SERIE_SIZE 5
 #endif
 
 #ifdef __GNUC__
@@ -383,8 +383,8 @@ namespace G2lib {
   ) {
 
     UTILS_ASSERT(
-      nk < 4 && nk > 0,
-      "In evalXYaLarge first argument nk must be in 1..3, nk {}\n", nk
+      nk <= 5 && nk > 0,
+      "In evalXYaLarge first argument nk must be in 1..5, nk {}\n", nk
     );
 
     real_type const s    { static_cast<real_type>(a > 0 ? +1 : -1) };
@@ -604,10 +604,10 @@ namespace G2lib {
     real_type       intC[],
     real_type       intS[]
   ) {
-    UTILS_ASSERT( nk > 0 && nk < 4, "nk = {} must be in 1..3\n", nk );
+    UTILS_ASSERT( nk > 0 && nk <= 5, "nk = {} must be in 1..5\n", nk );
 
     if ( abs(a) < A_THRESOLD ) evalXYaSmall( nk, a, b, A_SERIE_SIZE, intC, intS );
-    else                       evalXYaLarge( nk, a, b, intC, intS );
+    else                       evalXYaLarge( nk, a, b,               intC, intS );
 
     real_type const cosc{ cos(c) };
     real_type const sinc{ sin(c) };
@@ -1547,8 +1547,8 @@ namespace G2lib {
     k_D[1]  = kappa__R;
     dk_D[1] = dk__R;
 
-    Eigen::Matrix<real_type, 3, 2> rhs2;
-    Eigen::Matrix<real_type, 3, 2> sol2;
+    Eigen::Matrix<real_type, 3, 3> rhs2;
+    Eigen::Matrix<real_type, 3, 3> sol2;
 
     {
       real_type t8  = X__4*L;
@@ -1577,9 +1577,11 @@ namespace G2lib {
       rhs2(0,0) = L__L*Y__2*A__L+2.0*L__L*Y__1*B__L+2.0*L__L*Y__0+t9*t8/4.0+X__3*B__L*t12+A__L*t15+t17*t15+2.0*L*X__1*B__L+L*X__0;
       rhs2(0,1) = 2.0*Y__1*t24+Y__2*t27+t29*t15+t32*t31+t34*t8/4.0;
       rhs2(0,2) = t65;
+
       rhs2(1,0) = -A__L*t66-2.0*B__L*t68-2.0*L__L*X__0+t9*t73/4.0+t76*t12+A__L*t78+t17*t78+2.0*B__L*t81+L*Y__0;
       rhs2(1,1) = -2.0*X__1*t24-X__2*t27+t29*t78+t32*L*Y__3+t34*t73/4.0;
       rhs2(1,2) = t117;
+
       rhs2(2,0) = 0.0;
       rhs2(2,1) = 0.0;
       rhs2(2,2) = 0.0;

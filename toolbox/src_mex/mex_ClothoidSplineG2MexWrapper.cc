@@ -130,6 +130,34 @@ namespace G2lib {
 
   static
   void
+  do_pipal(
+    int nlhs, mxArray       *plhs[],
+    int nrhs, mxArray const *prhs[]
+  ) {
+    #define CMD "ClothoidSplineG2MexWrapper('pipal',OBJ,x,y): "
+
+    UTILS_MEX_ASSERT( nrhs == 4, CMD "expected 4 inputs, nrhs = {}\n", nrhs );
+    UTILS_MEX_ASSERT( nlhs == 1, CMD "expected 1 output, nlhs = {}\n", nlhs );
+
+    ClothoidSplineG2 * ptr = Utils::mex_convert_mx_to_ptr<ClothoidSplineG2>(arg_in_1);
+
+    mwSize nx, ny;
+    real_type const * x = Utils::mex_vector_pointer( arg_in_2, nx, CMD "Error in reading x" );
+    real_type const * y = Utils::mex_vector_pointer( arg_in_3, ny, CMD "Error in reading y" );
+
+    UTILS_MEX_ASSERT( nx == ny, CMD "length(x) = {} must be equal to size(y) = {}\n", nx, ny );
+
+    real_type * theta = Utils::mex_create_matrix_value( arg_out_0, nx, 1 );
+
+    ptr->build( nx, x, y, theta );
+
+    #undef CMD
+  }
+
+  // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+  static
+  void
   do_target(
     int nlhs, mxArray       *[],
     int nrhs, mxArray const *prhs[]
@@ -416,6 +444,7 @@ namespace G2lib {
     {"new",do_new},
     {"delete",do_delete},
     {"build",do_build},
+    {"pipal",do_pipal},
     {"target",do_target},
     {"guess",do_guess},
     {"objective",do_objective},

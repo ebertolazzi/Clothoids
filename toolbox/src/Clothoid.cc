@@ -955,7 +955,7 @@ namespace G2lib {
     s = (s_begin + s_end)/2;
     integer nout{0};
     integer n_ok{0};
-    for ( integer iter = 0; iter < m_max_iter; ++iter ) {
+    for ( integer iter{0}; iter < m_max_iter; ++iter ) {
       // osculating circle
       m_CD.eval_ISO( s, offs, x, y );
       real_type const th = m_CD.theta( s );

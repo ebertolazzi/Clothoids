@@ -31,8 +31,6 @@ classdef ClothoidSplineG2 < matlab.mixin.Copyable
     m_use_PIPAL;
     m_iter_opt;
     m_is_octave;
-    m_theta_lb;
-    m_theta_ub;
   end
 
   methods(Access = protected)
@@ -92,61 +90,16 @@ classdef ClothoidSplineG2 < matlab.mixin.Copyable
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     function clots = build_internal( self, x, y, varargin )
-      %
-      % Compute guess angles
-      %
-      self.build( x, y );
-      [ theta_guess, theta_min, theta_max ] = self.guess();
-      [~,nc] = self.dims();
-
       if self.m_use_PIPAL
-
-        options = {};
-
-        self.m_theta_ub = theta_max;
-        self.m_theta_lb = theta_min;
-        n = length(theta_min);
-
-        % The callback functions.
-        f_orig = @(theta) ClothoidSplineG2MexWrapper( 'objective', self.m_objectHandle, theta );
-        g_orig = @(theta) ClothoidSplineG2MexWrapper( 'gradient',  self.m_objectHandle, theta );
-        c_orig = @(theta) self.ip_constraint( theta );
-        J_orig = @(theta) self.ip_constraint_jacobian( theta );
-        H_orig = @(theta,lambda) zeros( n, n );
-        
-        outfile   = 'ClothoidSplineG2.txt';
-        algorithm = 'PIPAL_Default';
-        name      = 'ClothoidSplineG2';
-        
-        % --- bounds, limiti dei vincoli (cl, cu)
-        l  = [];
-        cl = zeros(n,1);
-        cu = zeros(n,1);
-
-        % --- istanzia e lancia
-        P = Pipal( name,        ...
-                   f_orig,      ...
-                   c_orig,      ...
-                   g_orig,      ...
-                   J_orig,      ...
-                   H_orig,      ...
-                   theta_guess, ...
-                   theta_min,   ...
-                   theta_max,   ...
-                   l,           ...
-                   cl,          ...
-                   cu,          ...
-                   outfile, algorithm );
-
-        tic;
-        P.optimize();
-        stats.elapsed = toc;
-
-        % --- risultati e diagnostica finale (senza accedere a proprietà private)
-        x_opt = P.getSolution();
-        theta = x_opt.x;
-
+        theta = ClothoidSplineG2MexWrapper( 'pipal', self.m_objectHandle, x, y, varargin{:} );
       else
+        %
+        % Compute guess angles
+        %
+        self.build( x, y );
+        [ theta_guess, theta_min, theta_max ] = self.guess();
+        [~,nc] = self.dims();
+
         % 'interior-point'
         if self.m_is_octave
           options.TolX   = 1e-10;
@@ -178,6 +131,7 @@ classdef ClothoidSplineG2 < matlab.mixin.Copyable
       for j=1:N-1
         clots.push_back_G1( x(j), y(j), theta(j), x(j+1), y(j+1), theta(j+1) );
       end
+      theta.'
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     function clots = build_internal2( self, x, y, varargin )
@@ -242,7 +196,7 @@ classdef ClothoidSplineG2 < matlab.mixin.Copyable
       end
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-    function ipopt( self, yesno )
+    function use_pipal( self, yesno )
       self.m_use_PIPAL = yesno;
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -260,9 +214,7 @@ classdef ClothoidSplineG2 < matlab.mixin.Copyable
     %> with initial angle theta0 (radiants) and final angle theta1 (radiants)
     %>
     function clots = buildP1( self, x, y, theta0, theta1 )
-      ClothoidSplineG2MexWrapper( ...
-        'target', self.m_objectHandle, 'P1', theta0, theta1 ...
-      );
+      ClothoidSplineG2MexWrapper( 'target', self.m_objectHandle, 'P1', theta0, theta1 );
       %clots = self.build_internal2( x, y );
       clots = self.build_internal( x, y );
     end

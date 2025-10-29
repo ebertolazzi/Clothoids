@@ -42,14 +42,19 @@
   #include "Utils_autodiff.hh"
   #include "Utils_AABB_tree.hh"
   #include "Utils_eigen.hh"
+  #include "Utils/3rd/Eigen/SparseCholesky"
 #else
   #include <Utils.hh>
   #include <Utils_autodiff.hh>
   #include <Utils_AABB_tree.hh>
   #include <Utils_eigen.hh>
+  #include <Utils/3rd/Eigen/SparseCholesky>
 #endif
 
 #include "GenericContainer/GenericContainer.hh"
+
+#define PIPAL_EIGEN_EXTERNAL
+#include "Pipal.hh"
 
 #include <string>
 #include <string_view>
