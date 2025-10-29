@@ -41,10 +41,12 @@
   #include "Utils.hh"
   #include "Utils_autodiff.hh"
   #include "Utils_AABB_tree.hh"
+  #include "Utils_eigen.hh"
 #else
   #include <Utils.hh>
   #include <Utils_autodiff.hh>
   #include <Utils_AABB_tree.hh>
+  #include <Utils_eigen.hh>
 #endif
 
 #include "GenericContainer/GenericContainer.hh"

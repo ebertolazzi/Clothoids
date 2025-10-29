@@ -2257,26 +2257,29 @@ namespace G2lib {
 
   private:
 
-    Utils::Malloc<real_type> real_values{"ClothoidSplineG2"};
-
-    real_type * m_x{nullptr};
-    real_type * m_y{nullptr};
-    TargetType  m_tt{TargetType::P1};
-    real_type   m_theta_I{real_type(0)};
-    real_type   m_theta_F{real_type(0)};
-    integer     m_npts{0};
+    TargetType m_tt{TargetType::P1};
+    real_type  m_theta_I{real_type(0)};
+    real_type  m_theta_F{real_type(0)};
+    integer    m_npts{0};
 
     // work vector
-    mutable real_type * m_k{nullptr};
-    mutable real_type * m_dk{nullptr};
-    mutable real_type * m_L{nullptr};
-    mutable real_type * m_kL{nullptr};
-    mutable real_type * m_L_1{nullptr};
-    mutable real_type * m_L_2{nullptr};
-    mutable real_type * m_k_1{nullptr};
-    mutable real_type * m_k_2{nullptr};
-    mutable real_type * m_dk_1{nullptr};
-    mutable real_type * m_dk_2{nullptr};
+            Eigen::Vector<real_type,Eigen::Dynamic> m_x;
+            Eigen::Vector<real_type,Eigen::Dynamic> m_y;
+    mutable Eigen::Vector<real_type,Eigen::Dynamic> m_k;
+    mutable Eigen::Vector<real_type,Eigen::Dynamic> m_dk;
+    mutable Eigen::Vector<real_type,Eigen::Dynamic> m_L;
+    mutable Eigen::Vector<real_type,Eigen::Dynamic> m_kL;
+    mutable Eigen::Vector<real_type,Eigen::Dynamic> m_L_1;
+    mutable Eigen::Vector<real_type,Eigen::Dynamic> m_L_2;
+    mutable Eigen::Vector<real_type,Eigen::Dynamic> m_k_1;
+    mutable Eigen::Vector<real_type,Eigen::Dynamic> m_k_2;
+    mutable Eigen::Vector<real_type,Eigen::Dynamic> m_dk_1;
+    mutable Eigen::Vector<real_type,Eigen::Dynamic> m_dk_2;
+
+    //mutable Eigen::Vector<real_type,Eigen::Dynamic>   m_vec_k1;
+    //mutable Eigen::Matrix<real_type,Eigen::Dynamic,6> m_vec_L;
+    //mutable Eigen::Matrix<real_type,Eigen::Dynamic,6> m_vec_k0;
+    //mutable Eigen::Matrix<real_type,Eigen::Dynamic,6> m_vec_dk;
 
     real_type
     diff2pi( real_type in ) const

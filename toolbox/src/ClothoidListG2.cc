@@ -20,7 +20,6 @@
 #include "Clothoids.hh"
 #include "Clothoids_fmt.hh"
 
-#include "Utils_eigen.hh"
 #include "Utils/3rd/Eigen/SparseCholesky"
 
 #define PIPAL_EIGEN_EXTERNAL
@@ -54,22 +53,21 @@ namespace G2lib {
     integer   const n
   ) {
     m_npts = n;
-    real_values.reallocate( 2*n + 10 * (n-1) );
 
-    m_x    = real_values( n );
-    m_y    = real_values( n );
-    m_k    = real_values( n-1 );
-    m_dk   = real_values( n-1 );
-    m_L    = real_values( n-1 );
-    m_kL   = real_values( n-1 );
-    m_L_1  = real_values( n-1 );
-    m_L_2  = real_values( n-1 );
-    m_k_1  = real_values( n-1 );
-    m_k_2  = real_values( n-1 );
-    m_dk_1 = real_values( n-1 );
-    m_dk_2 = real_values( n-1 );
-    std::copy_n( xvec, n, m_x );
-    std::copy_n( yvec, n, m_y );
+    m_x    . resize( n   );
+    m_y    . resize( n   );
+    m_k    . resize( n-1 );
+    m_dk   . resize( n-1 );
+    m_L    . resize( n-1 );
+    m_kL   . resize( n-1 );
+    m_L_1  . resize( n-1 );
+    m_L_2  . resize( n-1 );
+    m_k_1  . resize( n-1 );
+    m_k_2  . resize( n-1 );
+    m_dk_1 . resize( n-1 );
+    m_dk_2 . resize( n-1 );
+    std::copy_n( xvec, n, m_x.data() );
+    std::copy_n( yvec, n, m_y.data() );
   }
 
   /*\
@@ -87,11 +85,9 @@ namespace G2lib {
     real_type theta_min[],
     real_type theta_max[]
   ) const {
-    Utils::Malloc<real_type> mem( "ClothoidSplineG2::guess" );
-    mem.allocate( 2*m_npts );
-    real_type * omega { mem(m_npts) };
-    real_type * len   { mem(m_npts) };
-    G2lib::xy_to_guess_angle( m_npts, m_x, m_y, theta_guess, theta_min, theta_max, omega, len );
+    Eigen::Vector<real_type,Eigen::Dynamic> omega( m_npts );
+    Eigen::Vector<real_type,Eigen::Dynamic> len( m_npts );
+    G2lib::xy_to_guess_angle( m_npts, m_x.data(), m_y.data(), theta_guess, theta_min, theta_max, omega.data(), len.data() );
   }
 
   void
@@ -107,22 +103,21 @@ namespace G2lib {
     using Indices      = Pipal::Indices;
   
     m_npts = n;
-    real_values.reallocate( 2*n + 10 * (n-1) );
 
-    m_x    = real_values( n   );
-    m_y    = real_values( n   );
-    m_k    = real_values( n-1 );
-    m_dk   = real_values( n-1 );
-    m_L    = real_values( n-1 );
-    m_kL   = real_values( n-1 );
-    m_L_1  = real_values( n-1 );
-    m_L_2  = real_values( n-1 );
-    m_k_1  = real_values( n-1 );
-    m_k_2  = real_values( n-1 );
-    m_dk_1 = real_values( n-1 );
-    m_dk_2 = real_values( n-1 );
-    std::copy_n( xvec, n, m_x );
-    std::copy_n( yvec, n, m_y );
+    m_x    . resize( n   );
+    m_y    . resize( n   );
+    m_k    . resize( n-1 );
+    m_dk   . resize( n-1 );
+    m_L    . resize( n-1 );
+    m_kL   . resize( n-1 );
+    m_L_1  . resize( n-1 );
+    m_L_2  . resize( n-1 );
+    m_k_1  . resize( n-1 );
+    m_k_2  . resize( n-1 );
+    m_dk_1 . resize( n-1 );
+    m_dk_2 . resize( n-1 );
+    std::copy_n( xvec, n, m_x.data() );
+    std::copy_n( yvec, n, m_y.data() );
     
     Vector theta_guess( m_npts ), theta_min( m_npts ), theta_max( m_npts ), theta_sol( m_npts );
     this->guess( theta_guess.data(), theta_min.data(), theta_max.data() );
@@ -499,7 +494,7 @@ namespace G2lib {
 
     integer kk{0};
     for ( integer j{0}; j < ne1; ++j ) {
-      ii[kk] = j; jj[kk] = j; ++kk;
+      ii[kk] = j; jj[kk] = j;   ++kk;
       ii[kk] = j; jj[kk] = j+1; ++kk;
       ii[kk] = j; jj[kk] = j+2; ++kk;
     }
@@ -507,15 +502,15 @@ namespace G2lib {
     switch (m_tt) {
     case TargetType::P1:
       ii[kk] = ne1; jj[kk] = 0; ++kk;
-      ii[kk] = ne; jj[kk] = ne; // ++kk;
+      ii[kk] = ne;  jj[kk] = ne; // ++kk;
       break;
     case TargetType::P2:
-      ii[kk] = ne1; jj[kk] = 0; ++kk;
-      ii[kk] = ne1; jj[kk] = 1; ++kk;
+      ii[kk] = ne1; jj[kk] = 0;   ++kk;
+      ii[kk] = ne1; jj[kk] = 1;   ++kk;
       ii[kk] = ne1; jj[kk] = ne1; ++kk;
-      ii[kk] = ne1; jj[kk] = ne; ++kk;
-      ii[kk] = ne; jj[kk] = 0; ++kk;
-      ii[kk] = ne; jj[kk] = ne; // ++kk;
+      ii[kk] = ne1; jj[kk] = ne;  ++kk;
+      ii[kk] = ne;  jj[kk] = 0;   ++kk;
+      ii[kk] = ne;  jj[kk] = ne; // ++kk;
       break;
     default:
       break;
