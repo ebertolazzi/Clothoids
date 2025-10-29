@@ -54,20 +54,111 @@ namespace G2lib {
   ) {
     m_npts = n;
 
-    m_x    . resize( n   );
-    m_y    . resize( n   );
-    m_k    . resize( n-1 );
-    m_dk   . resize( n-1 );
-    m_L    . resize( n-1 );
-    m_kL   . resize( n-1 );
-    m_L_1  . resize( n-1 );
-    m_L_2  . resize( n-1 );
-    m_k_1  . resize( n-1 );
-    m_k_2  . resize( n-1 );
-    m_dk_1 . resize( n-1 );
-    m_dk_2 . resize( n-1 );
+    m_x . resize( n );
+    m_y . resize( n );
+
+    m_L  . resize( n-1 );
+    m_k0 . resize( n-1 );
+    m_k1 . resize( n-1 );
+    m_dk . resize( n-1 );
+
+    m_L__L  . resize( n-1 );
+    m_L__R  . resize( n-1 );
+    m_L__LL . resize( n-1 );
+    m_L__LR . resize( n-1 );
+    m_L__RR . resize( n-1 );
+
+    m_k__L  . resize( n-1 );
+    m_k__R  . resize( n-1 );
+    m_k__LL . resize( n-1 );
+    m_k__LR . resize( n-1 );
+    m_k__RR . resize( n-1 );
+
+    m_dk__L . resize( n-1 );
+    m_dk__R . resize( n-1 );
+    m_dk__LL . resize( n-1 );
+    m_dk__LR . resize( n-1 );
+    m_dk__RR . resize( n-1 );
+
     std::copy_n( xvec, n, m_x.data() );
     std::copy_n( yvec, n, m_y.data() );
+  }
+
+
+  void
+  ClothoidSplineG2::evaluate_for_NLP( real_type const theta[] ) const {
+    ClothoidCurve cc{"ClothoidSplineG2::evaluate_for_NLP temporary cc"};
+    integer const ne{ m_npts - 1 };
+    for ( integer j{0}; j < ne; ++j ) {
+      cc.build_G1( m_x(j),   m_y(j),   theta[j],
+                   m_x(j+1), m_y(j+1), theta[j+1] );
+      m_k0[j] = cc.kappa_begin();
+      m_dk[j] = cc.dkappa();
+      m_L[j]  = cc.length();
+      m_k1[j] = cc.kappa_end(); // m_k0[j]+m_dk[j]*m_L[j];
+    }
+  }
+
+  void
+  ClothoidSplineG2::evaluate_for_NLP_D( real_type const theta[] ) const {
+    ClothoidCurve cc{"ClothoidSplineG2::evaluate_for_NLP_D temporary cc"};
+    integer const ne{ m_npts - 1 };
+    real_type L_D[2], k_D[2], dk_D[2];
+    for ( integer j{0}; j < ne; ++j ) {
+      cc.build_G1_D( m_x(j),   m_y(j),   theta[j],
+                     m_x(j+1), m_y(j+1), theta[j+1],
+                     L_D, k_D, dk_D );
+      m_k0[j] = cc.kappa_begin();
+      m_dk[j] = cc.dkappa();
+      m_L[j]  = cc.length();
+      m_k1[j] = cc.kappa_end();
+
+      m_L__L[j] = L_D[0];
+      m_L__R[j] = L_D[1];
+
+      m_k__L[j] = k_D[0];
+      m_k__R[j] = k_D[1];
+
+      m_dk__L[j] = dk_D[0];
+      m_dk__R[j] = dk_D[1];
+
+    }
+  }
+
+  void
+  ClothoidSplineG2::evaluate_for_NLP_DD( real_type const theta[] ) const {
+    ClothoidCurve cc{"ClothoidSplineG2::evaluate_for_NLP_DD temporary cc"};
+    integer const ne{ m_npts - 1 };
+    real_type L_D[2], k_D[2], dk_D[2];
+    real_type L_DD[3], k_DD[3], dk_DD[3];
+    for ( integer j{0}; j < ne; ++j ) {
+      cc.build_G1_DD( m_x(j),   m_y(j),   theta[j],
+                      m_x(j+1), m_y(j+1), theta[j+1],
+                      L_D, k_D, dk_D, L_DD, k_DD, dk_DD );
+      m_k0[j] = cc.kappa_begin();
+      m_dk[j] = cc.dkappa();
+      m_L[j]  = cc.length();
+      m_k1[j] = cc.kappa_end();
+
+      m_L__L[j]  = L_D[0];
+      m_L__R[j]  = L_D[1];
+      m_L__LL[j] = L_DD[0];
+      m_L__LR[j] = L_DD[1];
+      m_L__RR[j] = L_DD[2];
+
+      m_k__L[j]  = k_D[0];
+      m_k__R[j]  = k_D[1];
+      m_k__LL[j] = k_DD[0];
+      m_k__LR[j] = k_DD[1];
+      m_k__RR[j] = k_DD[2];
+
+      m_dk__L[j]  = dk_D[0];
+      m_dk__R[j]  = dk_D[1];
+      m_dk__LL[j] = dk_DD[0];
+      m_dk__LR[j] = dk_DD[1];
+      m_dk__RR[j] = dk_DD[2];
+
+    }
   }
 
   /*\
@@ -102,22 +193,7 @@ namespace G2lib {
     using SparseMatrix = Pipal::SparseMatrix<real_type>;
     using Indices      = Pipal::Indices;
   
-    m_npts = n;
-
-    m_x    . resize( n   );
-    m_y    . resize( n   );
-    m_k    . resize( n-1 );
-    m_dk   . resize( n-1 );
-    m_L    . resize( n-1 );
-    m_kL   . resize( n-1 );
-    m_L_1  . resize( n-1 );
-    m_L_2  . resize( n-1 );
-    m_k_1  . resize( n-1 );
-    m_k_2  . resize( n-1 );
-    m_dk_1 . resize( n-1 );
-    m_dk_2 . resize( n-1 );
-    std::copy_n( xvec, n, m_x.data() );
-    std::copy_n( yvec, n, m_y.data() );
+    build( xvec, yvec, n );
     
     Vector theta_guess( m_npts ), theta_min( m_npts ), theta_max( m_npts ), theta_sol( m_npts );
     this->guess( theta_guess.data(), theta_min.data(), theta_max.data() );
@@ -439,19 +515,13 @@ namespace G2lib {
     real_type const theta[],
     real_type       c[]
   ) const {
-    ClothoidCurve cc{"ClothoidSplineG2::constraints temporary cc"};
+
     integer const ne  { m_npts - 1 };
     integer const ne1 { m_npts - 2 };
 
-    for ( integer j{0}; j < ne; ++j ) {
-      cc.build_G1( m_x[j], m_y[j], theta[j], m_x[j+1], m_y[j+1], theta[j+1] );
-      m_k[j]  = cc.kappa_begin();
-      m_dk[j] = cc.dkappa();
-      m_L[j]  = cc.length();
-      m_kL[j] = m_k[j]+m_dk[j]*m_L[j];
-    }
+    evaluate_for_NLP( theta );
 
-    for ( integer j{0}; j < ne1; ++j ) c[j] = m_kL[j]-m_k[j+1];
+    for ( integer j{0}; j < ne1; ++j ) c[j] = m_k1[j]-m_k0[j+1];
 
     switch (m_tt) {
     case TargetType::P1:
@@ -459,7 +529,7 @@ namespace G2lib {
       c[ne]  = diff2pi( theta[ne] - m_theta_F );
       break;
     case TargetType::P2:
-      c[ne1] = m_kL[ne1] - m_k[0];
+      c[ne1] = m_k1[ne1] - m_k0[0];
       c[ne]  = diff2pi( theta[0] - theta[ne] );
       break;
     default:
@@ -564,31 +634,16 @@ namespace G2lib {
     real_type const theta[],
     real_type       vals[]
   ) const {
-    ClothoidCurve cc{"ClothoidSplineG2::jacobian temporary cc"};
     integer const ne  { m_npts - 1 };
     integer const ne1 { m_npts - 2 };
 
-    for ( integer j{0}; j < ne; ++j ) {
-      real_type L_D[2], k_D[2], dk_D[2];
-      cc.build_G1_D(
-        m_x[j],   m_y[j],   theta[j],
-        m_x[j+1], m_y[j+1], theta[j+1],
-        L_D, k_D, dk_D
-      );
-      m_k[j]    = cc.kappa_begin();
-      m_dk[j]   = cc.dkappa();
-      m_L[j]    = cc.length();
-      m_kL[j]   = m_k[j]+m_dk[j]*m_L[j];
-      m_L_1[j]  = L_D[0];  m_L_2[j]  = L_D[1];
-      m_k_1[j]  = k_D[0];  m_k_2[j]  = k_D[1];
-      m_dk_1[j] = dk_D[0]; m_dk_2[j] = dk_D[1];
-    }
+    evaluate_for_NLP_D( theta );
 
     integer kk{0};
     for ( integer j{0}; j < ne1; ++j ) {
-      vals[kk++] =  m_k_1[j] + m_dk_1[j]*m_L[j] + m_dk[j]*m_L_1[j];
-      vals[kk++] =  m_k_2[j] + m_dk_2[j]*m_L[j] + m_dk[j]*m_L_2[j] - m_k_1[j+1];
-      vals[kk++] = -m_k_2[j+1];
+      vals[kk++] =  m_k__L[j] + m_dk__L[j]*m_L[j] + m_dk[j]*m_L__L[j];
+      vals[kk++] =  m_k__R[j] + m_dk__R[j]*m_L[j] + m_dk[j]*m_L__R[j] - m_k__L[j+1];
+      vals[kk++] = -m_k__R[j+1];
     }
 
     switch (m_tt) {
@@ -597,10 +652,10 @@ namespace G2lib {
       vals[kk++] = 1;
       break;
     case TargetType::P2:
-      vals[kk++] = -m_k_1[0];
-      vals[kk++] = -m_k_2[0];
-      vals[kk++] = m_k_1[ne1]+m_L_1[ne1]*m_dk[ne1]+m_L[ne1]*m_dk_1[ne1];
-      vals[kk++] = m_k_2[ne1]+m_L_2[ne1]*m_dk[ne1]+m_L[ne1]*m_dk_2[ne1];
+      vals[kk++] = -m_k__L[0];
+      vals[kk++] = -m_k__R[0];
+      vals[kk++] = m_k__L[ne1]+m_L__L[ne1]*m_dk[ne1]+m_L[ne1]*m_dk__L[ne1];
+      vals[kk++] = m_k__R[ne1]+m_L__R[ne1]*m_dk[ne1]+m_L[ne1]*m_dk__R[ne1];
       vals[kk++] = 1;
       vals[kk++] = -1;
       break;

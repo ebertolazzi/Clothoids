@@ -2265,21 +2265,32 @@ namespace G2lib {
     // work vector
             Eigen::Vector<real_type,Eigen::Dynamic> m_x;
             Eigen::Vector<real_type,Eigen::Dynamic> m_y;
-    mutable Eigen::Vector<real_type,Eigen::Dynamic> m_k;
-    mutable Eigen::Vector<real_type,Eigen::Dynamic> m_dk;
     mutable Eigen::Vector<real_type,Eigen::Dynamic> m_L;
-    mutable Eigen::Vector<real_type,Eigen::Dynamic> m_kL;
-    mutable Eigen::Vector<real_type,Eigen::Dynamic> m_L_1;
-    mutable Eigen::Vector<real_type,Eigen::Dynamic> m_L_2;
-    mutable Eigen::Vector<real_type,Eigen::Dynamic> m_k_1;
-    mutable Eigen::Vector<real_type,Eigen::Dynamic> m_k_2;
-    mutable Eigen::Vector<real_type,Eigen::Dynamic> m_dk_1;
-    mutable Eigen::Vector<real_type,Eigen::Dynamic> m_dk_2;
+    mutable Eigen::Vector<real_type,Eigen::Dynamic> m_k0;
+    mutable Eigen::Vector<real_type,Eigen::Dynamic> m_k1;
+    mutable Eigen::Vector<real_type,Eigen::Dynamic> m_dk;
 
-    //mutable Eigen::Vector<real_type,Eigen::Dynamic>   m_vec_k1;
-    //mutable Eigen::Matrix<real_type,Eigen::Dynamic,6> m_vec_L;
-    //mutable Eigen::Matrix<real_type,Eigen::Dynamic,6> m_vec_k0;
-    //mutable Eigen::Matrix<real_type,Eigen::Dynamic,6> m_vec_dk;
+    mutable Eigen::Vector<real_type,Eigen::Dynamic> m_L__L;
+    mutable Eigen::Vector<real_type,Eigen::Dynamic> m_L__R;
+    mutable Eigen::Vector<real_type,Eigen::Dynamic> m_L__LL;
+    mutable Eigen::Vector<real_type,Eigen::Dynamic> m_L__LR;
+    mutable Eigen::Vector<real_type,Eigen::Dynamic> m_L__RR;
+
+    mutable Eigen::Vector<real_type,Eigen::Dynamic> m_k__L;
+    mutable Eigen::Vector<real_type,Eigen::Dynamic> m_k__R;
+    mutable Eigen::Vector<real_type,Eigen::Dynamic> m_k__LL;
+    mutable Eigen::Vector<real_type,Eigen::Dynamic> m_k__LR;
+    mutable Eigen::Vector<real_type,Eigen::Dynamic> m_k__RR;
+
+    mutable Eigen::Vector<real_type,Eigen::Dynamic> m_dk__L;
+    mutable Eigen::Vector<real_type,Eigen::Dynamic> m_dk__R;
+    mutable Eigen::Vector<real_type,Eigen::Dynamic> m_dk__LL;
+    mutable Eigen::Vector<real_type,Eigen::Dynamic> m_dk__LR;
+    mutable Eigen::Vector<real_type,Eigen::Dynamic> m_dk__RR;
+
+    void evaluate_for_NLP( real_type const theta[] ) const;
+    void evaluate_for_NLP_D( real_type const theta[] ) const;
+    void evaluate_for_NLP_DD( real_type const theta[] ) const;
 
     real_type
     diff2pi( real_type in ) const

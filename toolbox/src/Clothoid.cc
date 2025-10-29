@@ -234,6 +234,29 @@ namespace G2lib {
 
   // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 
+  int
+  ClothoidCurve::build_G1_DD(
+    real_type const x0,
+    real_type const y0,
+    real_type const theta0,
+    real_type const x1,
+    real_type const y1,
+    real_type const theta1,
+    real_type       L_D[2],
+    real_type       k_D[2],
+    real_type       dk_D[2],
+    real_type       L_DD[3],
+    real_type       k_DD[3],
+    real_type       dk_DD[3],
+    real_type const tol
+  ) {
+    m_aabb_done = false;
+    m_aabb_triangles.clear();
+    return m_CD.build_G1_DD( x0, y0, theta0, x1, y1, theta1, tol, m_L, L_D, k_D, dk_D, L_DD, k_DD, dk_DD );
+  }
+
+  // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
   bool
   ClothoidCurve::build_forward(
     real_type const x0,

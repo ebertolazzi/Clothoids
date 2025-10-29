@@ -298,6 +298,41 @@ namespace G2lib {
     );
 
     //!
+    //! Build a clothoid by solving the hermite \f$ G^1 \f$ problem.
+    //!
+    //! \param[in]  x0     initial x position \f$ x_0      \f$
+    //! \param[in]  y0     initial y position \f$ y_0      \f$
+    //! \param[in]  theta0 initial angle      \f$ \theta_0 \f$
+    //! \param[in]  x1     final x position   \f$ x_1      \f$
+    //! \param[in]  y1     final y position   \f$ y_1      \f$
+    //! \param[in]  theta1 final angle        \f$ \theta_1 \f$
+    //! \param[out] L_D    derivative of the length \f$ L(\theta_0,\theta_1) \f$
+    //! \param[out] k_D    derivative of the curvature \f$ \kappa(\theta_0,\theta_1) \f$
+    //! \param[out] dk_D   derivative of the curvature variation \f$ \kappa'(\theta_0,\theta_1) \f$
+    //! \param[out] L_D    second derivative of the length \f$ L(\theta_0,\theta_1) \f$
+    //! \param[out] k_D    second derivative of the curvature \f$ \kappa(\theta_0,\theta_1) \f$
+    //! \param[out] dk_D   second derivative of the curvature variation \f$ \kappa'(\theta_0,\theta_1) \f$
+    //! \param[out] tol = \f$10^{-12}\f$
+    //! \return number of iteration performed
+    //!
+    int
+    build_G1_DD(
+      real_type const x0,
+      real_type const y0,
+      real_type const theta0,
+      real_type const x1,
+      real_type const y1,
+      real_type const theta1,
+      real_type       L_D[2],
+      real_type       k_D[2],
+      real_type       dk_D[2],
+      real_type       L_DD[3],
+      real_type       k_DD[3],
+      real_type       dk_DD[3],
+      real_type const tol = 1e-12
+    );
+
+    //!
     //! Build a clothoid by solving the forward problem.
     //!
     //! \param[in] x0     initial \f$x\f$-position \f$ x_0 \f$
