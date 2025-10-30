@@ -657,6 +657,72 @@ namespace G2lib {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   bool
+  ClothoidList::build_G2(
+    integer   const n,
+    real_type const x[],
+    real_type const y[],
+    real_type const theta_init,
+    real_type const kappa_init,
+    real_type const theta_end,
+    real_type const kappa_end
+  ) {
+  
+    using Vector = Pipal::Vector<real_type>;
+
+    UTILS_ASSERT0( n > 1, "ClothoidList::build_G2, at least 2 points are necessary\n" );
+    
+    integer iter, nm1{ n - 1 };
+
+    // fit G2 without curvature continuty
+    ClothoidSplineG2 G2_list;
+    G2solve3arc      G2_3arc;
+    
+    #if 0
+    Vector theta( n );
+    G2_list.build( n, x, y, theta.data() );
+    #else
+    Vector theta( n ), theta_min( n ), theta_max( n ), omega( n ), len( n );
+    G2lib::xy_to_guess_angle( n, x, y, theta.data(), theta_min.data(), theta_max.data(), omega.data(), len.data() );
+    #endif
+
+    ClothoidCurve c{"ClothoidList::build_G2 temporary c"};
+
+    init();
+    reserve( n+3 );
+
+    // calcolo primi tre archi
+    c.build_G1( x[0], y[0], theta[0], x[1], y[1], theta[1] );
+    iter = G2_3arc.build( x[0], y[0], theta_init,    kappa_init,
+                          x[1], y[1], c.theta_end(), c.kappa_end() );
+                          
+    if ( iter < 0 ) return false;
+
+    push_back( G2_3arc.S0() );
+    push_back( G2_3arc.SM() );
+    push_back( G2_3arc.S1() );
+
+    for ( integer k{2}; k < nm1; ++k ) {
+      c.build_G1( x[k-1], y[k-1], theta[k-1], x[k], y[k], theta[k] );
+      m_clothoid_list.emplace_back(c);
+    }
+    
+    auto const & ce{ m_clothoid_list.back() };
+
+    iter = G2_3arc.build( ce.x_end(), ce.y_end(), ce.theta_end(), ce.kappa_end(),
+                          x[nm1],     y[nm1],     theta_end,      kappa_end );
+
+    if ( iter < 0 ) return false;
+
+    push_back( G2_3arc.S0() );
+    push_back( G2_3arc.SM() );
+    push_back( G2_3arc.S1() );
+
+    return true;
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  bool
   ClothoidList::smooth_quasi_G2(
     integer   const max_iter,
     real_type const epsi,

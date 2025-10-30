@@ -239,9 +239,7 @@ namespace G2lib {
     real_type theta_min[],
     real_type theta_max[]
   ) const {
-    Eigen::Vector<real_type,Eigen::Dynamic> omega, len;
-    omega.resize( m_npts );
-    len.resize( m_npts );
+    Eigen::Vector<real_type,Eigen::Dynamic> omega( m_npts ), len( m_npts );
     G2lib::xy_to_guess_angle( m_npts, m_x.data(), m_y.data(), theta_guess, theta_min, theta_max, omega.data(), len.data() );
   }
 
@@ -255,9 +253,6 @@ namespace G2lib {
   
     using Vector       = Pipal::Vector<real_type>;
     using SparseMatrix = Pipal::SparseMatrix<real_type>;
-    
-    for ( integer i{0}; i < n; ++i )
-      std::cout << fmt::format( "x[{}] = {}, y[{}] = {}\n", i, xvec[i], i, yvec[i] );
   
     allocate( n );
 

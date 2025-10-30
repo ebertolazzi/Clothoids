@@ -24,9 +24,13 @@ Y = [-1.707808758,-1.707808758,-2.367185958,-2.582810358,-2.582810358, ...
      2.953123242,0.925003242,-0.915616758,-2.989063158,-3.178123242,-3.178123242, -1.707808758 ];
 
 
-S = ClothoidSplineG2();
-S.use_pipal(true);
-SL = S.buildP4( X, Y );
+%S = ClothoidSplineG2();
+%S.use_pipal(true);
+%SL = S.buildP4( X, Y );
+
+SL = ClothoidList();
+SL.build_G2( X, Y, 0, 0, 0, 0 );
+
 
 subplot(2,1,1);
 

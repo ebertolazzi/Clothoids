@@ -1224,24 +1224,6 @@ namespace G2lib {
     //!
     //! Build clothoid list passing to a list of points
     //! solving a series of \f$ G^1 \f$ fitting problems.
-    //! The angle at points are estimated using the routine `xy_to_guess_angle`
-    //!
-    //! \param[in] n number of points
-    //! \param[in] x \f$x\f$-coordinates
-    //! \param[in] y \f$y\f$-coordinates
-    //!
-    //! \return false if routine fails
-    //!
-    bool
-    build_G2(
-      integer   const n,
-      real_type const x[],
-      real_type const y[]
-    );
-
-    //!
-    //! Build clothoid list passing to a list of points
-    //! solving a series of \f$ G^1 \f$ fitting problems.
     //!
     //! \param[in] n     number of points
     //! \param[in] x     \f$x\f$-coordinates
@@ -1256,6 +1238,31 @@ namespace G2lib {
       real_type const x[],
       real_type const y[],
       real_type const theta[]
+    );
+
+    //!
+    //! Build clothoid list passing to a list of points
+    //! with \f$ G^2 \f$ continuity.
+    //!
+    //! \param[in] n          number of points
+    //! \param[in] x          \f$x\f$-coordinates
+    //! \param[in] y          \f$y\f$-coordinates
+    //! \param[in] theta_init \f$\theta_i\f$ initial angle
+    //! \param[in] kappa_init \f$\kappa_i\f$ initial curvature
+    //! \param[in] theta_end  \f$\theta_e\f$ final angle
+    //! \param[in] kappa_end  \f$\kappa_e\f$ final curvature
+    //!
+    //! \return false if routine fails
+    //!
+    bool
+    build_G2(
+      integer   const n,
+      real_type const x[],
+      real_type const y[],
+      real_type const theta_init,
+      real_type const kappa_init,
+      real_type const theta_end,
+      real_type const kappa_end
     );
 
     //!

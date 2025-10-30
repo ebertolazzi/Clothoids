@@ -40,39 +40,20 @@ namespace G2lib {
   // vecchio per testare
 
   void
+  ClothoidSplineG2::allocate( integer const n ) {
+    m_npts = n;
+    m_x.resize( n );
+    m_y.resize( n );
+    m_G1_vec.resize( n-1 );
+  }
+
+  void
   ClothoidSplineG2::build(
     real_type const xvec[],
     real_type const yvec[],
     integer   const n
   ) {
-    m_npts = n;
-
-    m_x . resize( n );
-    m_y . resize( n );
-
-    m_L  . resize( n-1 );
-    m_k0 . resize( n-1 );
-    m_k1 . resize( n-1 );
-    m_dk . resize( n-1 );
-
-    m_L__L  . resize( n-1 );
-    m_L__R  . resize( n-1 );
-    m_L__LL . resize( n-1 );
-    m_L__LR . resize( n-1 );
-    m_L__RR . resize( n-1 );
-
-    m_k__L  . resize( n-1 );
-    m_k__R  . resize( n-1 );
-    m_k__LL . resize( n-1 );
-    m_k__LR . resize( n-1 );
-    m_k__RR . resize( n-1 );
-
-    m_dk__L  . resize( n-1 );
-    m_dk__R  . resize( n-1 );
-    m_dk__LL . resize( n-1 );
-    m_dk__LR . resize( n-1 );
-    m_dk__RR . resize( n-1 );
-
+    allocate( n );
     std::copy_n( xvec, n, m_x.data() );
     std::copy_n( yvec, n, m_y.data() );
   }
@@ -82,12 +63,13 @@ namespace G2lib {
     ClothoidCurve cc{"ClothoidSplineG2::evaluate_for_NLP temporary cc"};
     integer const ne{ m_npts - 1 };
     for ( integer j{0}; j < ne; ++j ) {
-      cc.build_G1( m_x(j),   m_y(j),   theta[j],
-                   m_x(j+1), m_y(j+1), theta[j+1] );
-      m_k0[j] = cc.kappa_begin();
-      m_dk[j] = cc.dkappa();
-      m_L[j]  = cc.length();
-      m_k1[j] = cc.kappa_end(); // m_k0[j]+m_dk[j]*m_L[j];
+      cc.build_G1( m_x[j],   m_y[j],   theta[j],
+                   m_x[j+1], m_y[j+1], theta[j+1] );
+      auto & G{ m_G1_vec[j] };
+      G.k0 = cc.kappa_begin();
+      G.dk = cc.dkappa();
+      G.L  = cc.length();
+      G.k1 = cc.kappa_end();
     }
   }
 
@@ -97,22 +79,25 @@ namespace G2lib {
     integer const ne{ m_npts - 1 };
     real_type L_D[2], k_D[2], dk_D[2];
     for ( integer j{0}; j < ne; ++j ) {
-      cc.build_G1_D( m_x(j),   m_y(j),   theta[j],
-                     m_x(j+1), m_y(j+1), theta[j+1],
+      cc.build_G1_D( m_x[j],   m_y[j],   theta[j],
+                     m_x[j+1], m_y[j+1], theta[j+1],
                      L_D, k_D, dk_D );
-      m_k0[j] = cc.kappa_begin();
-      m_dk[j] = cc.dkappa();
-      m_L[j]  = cc.length();
-      m_k1[j] = cc.kappa_end();
 
-      m_L__L[j] = L_D[0];
-      m_L__R[j] = L_D[1];
+      auto & G{ m_G1_vec[j] };
 
-      m_k__L[j] = k_D[0];
-      m_k__R[j] = k_D[1];
+      G.k0 = cc.kappa_begin();
+      G.dk = cc.dkappa();
+      G.L  = cc.length();
+      G.k1 = cc.kappa_end();
 
-      m_dk__L[j] = dk_D[0];
-      m_dk__R[j] = dk_D[1];
+      G.L__L = L_D[0];
+      G.L__R = L_D[1];
+
+      G.k__L = k_D[0];
+      G.k__R = k_D[1];
+
+      G.dk__L = dk_D[0];
+      G.dk__R = dk_D[1];
 
     }
   }
@@ -124,31 +109,34 @@ namespace G2lib {
     real_type L_D[2], k_D[2], dk_D[2];
     real_type L_DD[3], k_DD[3], dk_DD[3];
     for ( integer j{0}; j < ne; ++j ) {
-      cc.build_G1_DD( m_x(j),   m_y(j),   theta[j],
-                      m_x(j+1), m_y(j+1), theta[j+1],
+      cc.build_G1_DD( m_x[j],   m_y[j],   theta[j],
+                      m_x[j+1], m_y[j+1], theta[j+1],
                       L_D, k_D, dk_D, L_DD, k_DD, dk_DD );
-      m_k0[j] = cc.kappa_begin();
-      m_dk[j] = cc.dkappa();
-      m_L[j]  = cc.length();
-      m_k1[j] = cc.kappa_end();
 
-      m_L__L[j]  = L_D[0];
-      m_L__R[j]  = L_D[1];
-      m_L__LL[j] = L_DD[0];
-      m_L__LR[j] = L_DD[1];
-      m_L__RR[j] = L_DD[2];
+      auto & G{ m_G1_vec[j] };
 
-      m_k__L[j]  = k_D[0];
-      m_k__R[j]  = k_D[1];
-      m_k__LL[j] = k_DD[0];
-      m_k__LR[j] = k_DD[1];
-      m_k__RR[j] = k_DD[2];
+      G.k0 = cc.kappa_begin();
+      G.dk = cc.dkappa();
+      G.L  = cc.length();
+      G.k1 = cc.kappa_end();
 
-      m_dk__L[j]  = dk_D[0];
-      m_dk__R[j]  = dk_D[1];
-      m_dk__LL[j] = dk_DD[0];
-      m_dk__LR[j] = dk_DD[1];
-      m_dk__RR[j] = dk_DD[2];
+      G.L__L  = L_D[0];
+      G.L__R  = L_D[1];
+      G.L__LL = L_DD[0];
+      G.L__LR = L_DD[1];
+      G.L__RR = L_DD[2];
+
+      G.k__L  = k_D[0];
+      G.k__R  = k_D[1];
+      G.k__LL = k_DD[0];
+      G.k__LR = k_DD[1];
+      G.k__RR = k_DD[2];
+
+      G.dk__L  = dk_D[0];
+      G.dk__R  = dk_D[1];
+      G.dk__LL = dk_DD[0];
+      G.dk__LR = dk_DD[1];
+      G.dk__RR = dk_DD[2];
 
     }
   }
@@ -158,12 +146,15 @@ namespace G2lib {
     ClothoidCurve cc{"ClothoidSplineG2::evaluate_for_NLP_BC temporary cc"};
     integer const N[]{ 0, m_npts-2 };
     for ( integer j : N ) {
-      cc.build_G1( m_x(j),   m_y(j),   theta[j],
-                   m_x(j+1), m_y(j+1), theta[j+1] );
-      m_k0[j] = cc.kappa_begin();
-      m_dk[j] = cc.dkappa();
-      m_L[j]  = cc.length();
-      m_k1[j] = cc.kappa_end(); // m_k0[j]+m_dk[j]*m_L[j];
+      cc.build_G1( m_x[j],   m_y[j],   theta[j],
+                   m_x[j+1], m_y[j+1], theta[j+1] );
+
+      auto & G{ m_G1_vec[j] };
+
+      G.k0 = cc.kappa_begin();
+      G.dk = cc.dkappa();
+      G.L  = cc.length();
+      G.k1 = cc.kappa_end(); // m_k0[j]+m_dk[j]*m_L[j];
     }
   }
 
@@ -173,22 +164,25 @@ namespace G2lib {
     real_type L_D[2], k_D[2], dk_D[2];
     integer const N[]{ 0, m_npts-2 };
     for ( integer j : N ) {
-      cc.build_G1_D( m_x(j),   m_y(j),   theta[j],
-                     m_x(j+1), m_y(j+1), theta[j+1],
+      cc.build_G1_D( m_x[j],   m_y[j],   theta[j],
+                     m_x[j+1], m_y[j+1], theta[j+1],
                      L_D, k_D, dk_D );
-      m_k0[j] = cc.kappa_begin();
-      m_dk[j] = cc.dkappa();
-      m_L[j]  = cc.length();
-      m_k1[j] = cc.kappa_end();
 
-      m_L__L[j] = L_D[0];
-      m_L__R[j] = L_D[1];
+      auto & G{ m_G1_vec[j] };
 
-      m_k__L[j] = k_D[0];
-      m_k__R[j] = k_D[1];
+      G.k0 = cc.kappa_begin();
+      G.dk = cc.dkappa();
+      G.L  = cc.length();
+      G.k1 = cc.kappa_end();
 
-      m_dk__L[j] = dk_D[0];
-      m_dk__R[j] = dk_D[1];
+      G.L__L = L_D[0];
+      G.L__R = L_D[1];
+
+      G.k__L = k_D[0];
+      G.k__R = k_D[1];
+
+      G.dk__L = dk_D[0];
+      G.dk__R = dk_D[1];
     }
   }
 
@@ -199,31 +193,34 @@ namespace G2lib {
     real_type L_DD[3], k_DD[3], dk_DD[3];
     integer const N[]{ 0, m_npts-2 };
     for ( integer j : N ) {
-      cc.build_G1_DD( m_x(j),   m_y(j),   theta[j],
-                      m_x(j+1), m_y(j+1), theta[j+1],
+      cc.build_G1_DD( m_x[j],   m_y[j],   theta[j],
+                      m_x[j+1], m_y[j+1], theta[j+1],
                       L_D, k_D, dk_D, L_DD, k_DD, dk_DD );
-      m_k0[j] = cc.kappa_begin();
-      m_dk[j] = cc.dkappa();
-      m_L[j]  = cc.length();
-      m_k1[j] = cc.kappa_end();
 
-      m_L__L[j]  = L_D[0];
-      m_L__R[j]  = L_D[1];
-      m_L__LL[j] = L_DD[0];
-      m_L__LR[j] = L_DD[1];
-      m_L__RR[j] = L_DD[2];
+      auto & G{ m_G1_vec[j] };
 
-      m_k__L[j]  = k_D[0];
-      m_k__R[j]  = k_D[1];
-      m_k__LL[j] = k_DD[0];
-      m_k__LR[j] = k_DD[1];
-      m_k__RR[j] = k_DD[2];
+      G.k0 = cc.kappa_begin();
+      G.dk = cc.dkappa();
+      G.L  = cc.length();
+      G.k1 = cc.kappa_end();
 
-      m_dk__L[j]  = dk_D[0];
-      m_dk__R[j]  = dk_D[1];
-      m_dk__LL[j] = dk_DD[0];
-      m_dk__LR[j] = dk_DD[1];
-      m_dk__RR[j] = dk_DD[2];
+      G.L__L  = L_D[0];
+      G.L__R  = L_D[1];
+      G.L__LL = L_DD[0];
+      G.L__LR = L_DD[1];
+      G.L__RR = L_DD[2];
+
+      G.k__L  = k_D[0];
+      G.k__R  = k_D[1];
+      G.k__LL = k_DD[0];
+      G.k__LR = k_DD[1];
+      G.k__RR = k_DD[2];
+
+      G.dk__L  = dk_D[0];
+      G.dk__R  = dk_D[1];
+      G.dk__LL = dk_DD[0];
+      G.dk__LR = dk_DD[1];
+      G.dk__RR = dk_DD[2];
 
     }
   }
@@ -242,8 +239,7 @@ namespace G2lib {
     real_type theta_min[],
     real_type theta_max[]
   ) const {
-    Eigen::Vector<real_type,Eigen::Dynamic> omega( m_npts );
-    Eigen::Vector<real_type,Eigen::Dynamic> len( m_npts );
+    Eigen::Vector<real_type,Eigen::Dynamic> omega( m_npts ), len( m_npts );
     G2lib::xy_to_guess_angle( m_npts, m_x.data(), m_y.data(), theta_guess, theta_min, theta_max, omega.data(), len.data() );
   }
 
@@ -258,7 +254,10 @@ namespace G2lib {
     using Vector       = Pipal::Vector<real_type>;
     using SparseMatrix = Pipal::SparseMatrix<real_type>;
   
-    build( xvec, yvec, n );
+    allocate( n );
+
+    std::copy_n( xvec, n, m_x.data() );
+    std::copy_n( yvec, n, m_y.data() );
     
     Vector theta_guess( m_npts ),
            theta_min( m_npts ),
@@ -267,7 +266,7 @@ namespace G2lib {
 
     this->guess( theta_guess.data(), theta_min.data(), theta_max.data() );
 
-    Pipal::Solver<real_type> solver("ClothoidSplineG2::build",
+    auto solver = std::make_unique<Pipal::Solver<real_type>>("ClothoidSplineG2::build",
       // Objective function
       [this] ( Vector const & theta, real_type & f ) -> bool
       { return this->objective( theta.data(), f ); },
@@ -313,11 +312,11 @@ namespace G2lib {
       [this] ( Vector & out ) -> bool
       { out.resize( this->numConstraints() ); out.setZero(); return true; }
     );
-    solver.algorithm(Pipal::Algorithm::CONSERVATIVE);
-    solver.verbose_mode(VERBOSE);
-    solver.tolerance(SOLVER_TOLERANCE);
-    solver.max_iterations(MAX_ITERATIONS);
-    bool ok{ solver.optimize( theta_guess, theta_sol ) };
+    solver->algorithm(Pipal::Algorithm::CONSERVATIVE);
+    solver->verbose_mode(VERBOSE);
+    solver->tolerance(SOLVER_TOLERANCE);
+    solver->max_iterations(MAX_ITERATIONS);
+    bool ok{ solver->optimize( theta_guess, theta_sol ) };
     UTILS_ASSERT( ok, "ClothoidSplineG2::build( n={}, x, y ) failed PIPAL solver", m_npts );
     
     std::copy_n( theta_sol.data(), n, theta );
@@ -343,10 +342,7 @@ namespace G2lib {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   bool
-  ClothoidSplineG2::objective(
-    real_type const theta[],
-    real_type     & f
-  ) const {
+  ClothoidSplineG2::objective( real_type const theta[], real_type & f ) const {
     integer const ne  { m_npts - 1 };
     integer const ne1 { m_npts - 2 };
     switch (m_tt) {
@@ -357,45 +353,49 @@ namespace G2lib {
     case TargetType::P3:
       // forward target
       break;
-    case TargetType::P4:
-      evaluate_for_NLP_BC(theta);
-      f = m_dk[0]*m_dk[0]+m_dk[ne1]*m_dk[ne1];
+    case TargetType::P4: {
+        evaluate_for_NLP_BC(theta);
+        auto const & G0{ m_G1_vec[0] };
+        auto const & GE{ m_G1_vec[ne1] };
+        f = G0.dk*G0.dk+GE.dk*GE.dk;
+      }
       break;
-    case TargetType::P5:
-      evaluate_for_NLP_BC(theta);
-      f = m_L[0]+m_L[ne1];
+    case TargetType::P5: {
+        evaluate_for_NLP_BC(theta);
+        auto const & G0{ m_G1_vec[0] };
+        auto const & GE{ m_G1_vec[ne1] };
+        f = G0.L+GE.L;
+      }
       break;
     case TargetType::P6:
       f = 0;
       evaluate_for_NLP(theta);
-      for ( integer j{0}; j < ne; ++j ) f += m_L[j];
+      for ( integer j{0}; j < ne; ++j ) f += m_G1_vec[j].L;
       break;
     case TargetType::P7:
       f = 0;
       evaluate_for_NLP(theta);
       for ( integer j{0}; j < ne; ++j ) {
-        real_type const L   { m_L[j] };
-        real_type const kur { m_k0[j] };
-        real_type const dk  { m_dk[j] };
-        f = f + L * ( L* ( dk*( (dk*L)/3 + kur) ) + kur*kur );
+        auto const & G{ m_G1_vec[j] };
+        f = f + G.L * ( G.L* ( G.dk*( (G.dk*G.L)/3 + G.k0) ) + G.k0*G.k0 );
       }
       break;
     case TargetType::P8:
       f = 0;
       evaluate_for_NLP(theta);
       for ( integer j{0}; j < ne; ++j ) {
-        real_type const L  { m_L[j] };
-        real_type const dk { m_dk[j] };
-        f += L*dk*dk;
+        auto const & G{ m_G1_vec[j] };
+        f += G.L*G.dk*G.dk;
       }
       break;
     case TargetType::P9:
       f = 0;
       evaluate_for_NLP(theta);
       for ( integer j{0}; j < ne; ++j ) {
-        real_type const L    { m_L[j] };
-        real_type const kur  { m_k0[j] };
-        real_type const dk   { m_dk[j] };
+        auto const & G{ m_G1_vec[j] };
+        real_type const L    { G.L };
+        real_type const kur  { G.k0 };
+        real_type const dk   { G.dk };
         real_type const k2   { kur*kur };
         real_type const k3   { k2*kur };
         real_type const k4   { k2*k2 };
@@ -427,47 +427,48 @@ namespace G2lib {
     case TargetType::P4:
       evaluate_for_NLP_D_BC(theta);
       {
-        real_type const dkL    { m_dk[0] };
-        real_type const dkL__L { m_dk__L[0] };
-        real_type const dkL__R { m_dk__R[0] };
-        real_type const dkR    { m_dk[ne1] };
-        real_type const dkR__L { m_dk__L[ne1] };
-        real_type const dkR__R { m_dk__R[ne1] };
-        g[0]   = 2*dkL*dkL__L;
-        g[1]   = 2*dkL*dkL__R;
-        g[ne1] = 2*dkR*dkR__L;
-        g[ne]  = 2*dkR*dkR__R;
+        auto const & G0{ m_G1_vec[0] };
+        auto const & GE{ m_G1_vec[ne1] };
+        g[0]   = 2*G0.dk*G0.dk__L;
+        g[1]   = 2*G0.dk*G0.dk__R;
+        g[ne1] = 2*GE.dk*GE.dk__L;
+        g[ne]  = 2*GE.dk*GE.dk__R;
       }
       break;
-    case TargetType::P5:
-      evaluate_for_NLP_D_BC(theta);
-      g[0]   = m_L__L[0];
-      g[1]   = m_L__R[0];
-      g[ne1] = m_L__L[ne1];
-      g[ne]  = m_L__R[ne1];
+    case TargetType::P5: {
+        evaluate_for_NLP_D_BC(theta);
+        auto const & G0{ m_G1_vec[0] };
+        auto const & GE{ m_G1_vec[ne1] };
+        g[0]   = G0.L__L;
+        g[1]   = G0.L__R;
+        g[ne1] = GE.L__L;
+        g[ne]  = GE.L__R;
+      }
       break;
     case TargetType::P6:
       evaluate_for_NLP_D(theta);
       for ( integer j{0}; j < ne; ++j ) {
-        g[j]   += m_L__L[j];
-        g[j+1] += m_L__R[j];
+        auto const & G{ m_G1_vec[j] };
+        g[j]   += G.L__L;
+        g[j+1] += G.L__R;
       }
       break;
     case TargetType::P7:
       evaluate_for_NLP_D(theta);
       for ( integer j{0}; j < ne; ++j ) {
-        real_type const L     { m_L[j] };
-        real_type const L__L  { m_L__L[j] };
-        real_type const L__R  { m_L__R[j] };
+        auto const & G{ m_G1_vec[j] };
+        real_type const L     { G.L };
+        real_type const L__L  { G.L__L };
+        real_type const L__R  { G.L__R };
         real_type const L2    { L*L };
         real_type const L3    { L*L2 };
-        real_type const kur   { m_k0[j] };
-        real_type const k__L  { m_k__L[j] };
-        real_type const k__R  { m_k__R[j] };
+        real_type const kur   { G.k0 };
+        real_type const k__L  { G.k__L };
+        real_type const k__R  { G.k__R };
         real_type const k2    { kur*kur };
-        real_type const dk    { m_dk[j] };
-        real_type const dk__L { m_dk__L[j] };
-        real_type const dk__R { m_dk__R[j] };
+        real_type const dk    { G.dk };
+        real_type const dk__L { G.dk__L };
+        real_type const dk__R { G.dk__R };
         real_type const dk2   { dk*dk };
         g[j]   += 2*(dk*dk__L*L3)/3
                   + (dk2*L2*L__L)
@@ -488,30 +489,26 @@ namespace G2lib {
     case TargetType::P8:
       evaluate_for_NLP_D(theta);
       for ( integer j{0}; j < ne; ++j ) {
-        real_type const L     { m_L[j]     };
-        real_type const L__L  { m_L__L[j]  };
-        real_type const L__R  { m_L__R[j]  };
-        real_type const dk    { m_dk[j]    };
-        real_type const dk__L { m_dk__L[j] };
-        real_type const dk__R { m_dk__R[j] };
-        g[j]   += (2*L*dk__L + L__L*dk)*dk;
-        g[j+1] += (2*L*dk__R + L__R*dk)*dk;
+        auto const & G{ m_G1_vec[j] };
+        g[j]   += (2*G.L*G.dk__L + G.L__L*G.dk)*G.dk;
+        g[j+1] += (2*G.L*G.dk__R + G.L__R*G.dk)*G.dk;
       }
       break;
     case TargetType::P9:
       evaluate_for_NLP_D(theta);
       for ( integer j{0}; j < ne; ++j ) {
-        real_type const L     { m_L[j] };
-        real_type const L__L  { m_L__L[j] };
-        real_type const L__R  { m_L__R[j] };
-        real_type const kur   { m_k0[j] };
-        real_type const k__L  { m_k__L[j] };
-        real_type const k__R  { m_k__R[j] };
+        auto const & G{ m_G1_vec[j] };
+        real_type const L     { G.L };
+        real_type const L__L  { G.L__L };
+        real_type const L__R  { G.L__R };
+        real_type const kur   { G.k0 };
+        real_type const k__L  { G.k__L };
+        real_type const k__R  { G.k__R };
         real_type const k2    { kur*kur };
         real_type const k3    { kur*k2 };
-        real_type const dk    { m_dk[j] };
-        real_type const dk__L { m_dk__L[j] };
-        real_type const dk__R { m_dk__R[j] };
+        real_type const dk    { G.dk };
+        real_type const dk__L { G.dk__L };
+        real_type const dk__R { G.dk__R };
         real_type const dk2   { dk*dk };
         real_type const dkL   { dk*L };
         real_type const A     { ( ( (dkL+4*kur)*dkL + 6*k2)*dkL + 4*k3) * dkL + dk2 + k2*k2 };
@@ -538,7 +535,7 @@ namespace G2lib {
 
     evaluate_for_NLP( theta );
 
-    for ( integer j{0}; j < ne1; ++j ) c[j] = m_k1[j]-m_k0[j+1];
+    for ( integer j{0}; j < ne1; ++j ) c[j] = m_G1_vec[j].k1-m_G1_vec[j+1].k0;
 
     switch (m_tt) {
     case TargetType::P1:
@@ -546,8 +543,12 @@ namespace G2lib {
       c[ne]  = diff2pi( theta[ne] - m_theta_F );
       break;
     case TargetType::P2:
-      c[ne1] = m_k1[ne1] - m_k0[0];
-      c[ne]  = diff2pi( theta[0] - theta[ne] );
+      {
+        auto const & G0{ m_G1_vec[0]   };
+        auto const & GE{ m_G1_vec[ne1] };
+        c[ne1] = GE.k1 - G0.k0;
+        c[ne]  = diff2pi( theta[0] - theta[ne] );
+      }
       break;
     default:
       break;
@@ -657,9 +658,11 @@ namespace G2lib {
 
     integer kk{0};
     for ( integer j{0}; j < ne1; ++j ) {
-      vals[kk++] =  m_k__L[j] + m_dk__L[j]*m_L[j] + m_dk[j]*m_L__L[j];
-      vals[kk++] =  m_k__R[j] + m_dk__R[j]*m_L[j] + m_dk[j]*m_L__R[j] - m_k__L[j+1];
-      vals[kk++] = -m_k__R[j+1];
+      auto const & G  { m_G1_vec[j]   };
+      auto const & G1 { m_G1_vec[j+1] };
+      vals[kk++] =  G.k__L + G.dk__L * G.L + G.dk * G.L__L;
+      vals[kk++] =  G.k__R + G.dk__R * G.L + G.dk * G.L__R - G1.k__L;
+      vals[kk++] = -G1.k__R;
     }
 
     switch (m_tt) {
@@ -667,13 +670,16 @@ namespace G2lib {
       vals[kk++] = 1;
       vals[kk++] = 1;
       break;
-    case TargetType::P2:
-      vals[kk++] = -m_k__L[0];
-      vals[kk++] = -m_k__R[0];
-      vals[kk++] = m_k__L[ne1]+m_L__L[ne1]*m_dk[ne1]+m_L[ne1]*m_dk__L[ne1];
-      vals[kk++] = m_k__R[ne1]+m_L__R[ne1]*m_dk[ne1]+m_L[ne1]*m_dk__R[ne1];
-      vals[kk++] = 1;
-      vals[kk++] = -1;
+    case TargetType::P2: {
+        auto const & G0 { m_G1_vec[0]   };
+        auto const & GE { m_G1_vec[ne1] };
+        vals[kk++] = -G0.k__L;
+        vals[kk++] = -G0.k__R;
+        vals[kk++] = GE.k__L + GE.L__L * GE.dk + GE.L * GE.dk__L;
+        vals[kk++] = GE.k__R + GE.L__R * GE.dk + GE.L * GE.dk__R;
+        vals[kk++] = 1;
+        vals[kk++] = -1;
+      }
       break;
     default:
       break;
@@ -700,13 +706,14 @@ namespace G2lib {
     evaluate_for_NLP_D( theta );
 
     for ( integer j{0}; j < ne1; ++j ) {
-      real_type const A{  m_k__L[j] + m_dk__L[j]*m_L[j] + m_dk[j]*m_L__L[j] };
-      real_type const B{  m_k__R[j] + m_dk__R[j]*m_L[j] + m_dk[j]*m_L__R[j] - m_k__L[j+1] };
-      real_type const C{ -m_k__R[j+1] };
+      auto const & G  { m_G1_vec[j] };
+      auto const & G1 { m_G1_vec[j+1] };
+      real_type const A{ G.k__L + G.dk__L * G.L + G.dk * G.L__L };
+      real_type const B{ G.k__R + G.dk__R * G.L + G.dk * G.L__R - G1.k__L };
+      real_type const C{                                        - G1.k__R };
       triplets.emplace_back(j, j,   A );
       triplets.emplace_back(j, j+1, B );
       triplets.emplace_back(j, j+2, C );
-
     }
 
     switch (m_tt) {
@@ -715,12 +722,16 @@ namespace G2lib {
       triplets.emplace_back( ne,  ne, 1 );
       break;
     case TargetType::P2:
-      triplets.emplace_back( ne1, 0,   -m_k__L[0] );
-      triplets.emplace_back( ne1, 1,   -m_k__R[0] );
-      triplets.emplace_back( ne1, ne1, m_k__L[ne1]+m_L__L[ne1]*m_dk[ne1]+m_L[ne1]*m_dk__L[ne1] );
-      triplets.emplace_back( ne1, ne,  m_k__R[ne1]+m_L__R[ne1]*m_dk[ne1]+m_L[ne1]*m_dk__R[ne1] );
-      triplets.emplace_back( ne,  0,   1 );
-      triplets.emplace_back( ne,  ne, -1 );
+      {
+        auto const & G0 { m_G1_vec[0]   };
+        auto const & GE { m_G1_vec[ne1] };
+        triplets.emplace_back( ne1, 0,   -G0.k__L );
+        triplets.emplace_back( ne1, 1,   -G0.k__R );
+        triplets.emplace_back( ne1, ne1, GE.k__L + GE.L__L * GE.dk + GE.L * GE.dk__L );
+        triplets.emplace_back( ne1, ne,  GE.k__R + GE.L__R * GE.dk + GE.L * GE.dk__R );
+        triplets.emplace_back( ne,  0,   1 );
+        triplets.emplace_back( ne,  ne, -1 );
+      }
       break;
     default:
       break;
@@ -753,83 +764,68 @@ namespace G2lib {
       break;
     case TargetType::P4:
       {
-        real_type const dk     { m_dk[0] };
-        real_type const dk__L  { m_dk__L[0] };
-        real_type const dk__R  { m_dk__R[0] };
-        real_type const dk__LL { m_dk__LL[0] };
-        real_type const dk__LR { m_dk__LR[0] };
-        real_type const dk__RR { m_dk__RR[0] };
-        real_type const tmp    { 2*(dk__L*dk__R+dk*dk__LR) };
-        triplets.emplace_back(0, 0, 2*(dk__L*dk__L+dk*dk__LL) );
+        auto const & G { m_G1_vec[0]   };
+        real_type const tmp{ 2*(G.dk__L*G.dk__R+G.dk*G.dk__LR) };
+        triplets.emplace_back(0, 0, 2*(G.dk__L*G.dk__L+G.dk*G.dk__LL) );
         triplets.emplace_back(0, 1, tmp );
         triplets.emplace_back(1, 0, tmp );
-        triplets.emplace_back(1, 1, 2*(dk__R*dk__R+dk*dk__RR) );
+        triplets.emplace_back(1, 1, 2*(G.dk__R*G.dk__R+G.dk*G.dk__RR) );
       }
       {
-        real_type const dk     { m_dk[ne1] };
-        real_type const dk__L  { m_dk__L[ne1] };
-        real_type const dk__R  { m_dk__R[ne1] };
-        real_type const dk__LL { m_dk__LL[ne1] };
-        real_type const dk__LR { m_dk__LR[ne1] };
-        real_type const dk__RR { m_dk__RR[ne1] };
-        real_type const tmp    { 2*(dk__L*dk__R+dk*dk__LR) };
-        triplets.emplace_back(ne1, ne1, 2*(dk__L*dk__L+dk*dk__LL) );
+        auto const & G { m_G1_vec[ne1] };
+        real_type const tmp { 2*(G.dk__L*G.dk__R+G.dk*G.dk__LR) };
+        triplets.emplace_back(ne1, ne1, 2*(G.dk__L*G.dk__L+G.dk*G.dk__LL) );
         triplets.emplace_back(ne1, ne,  tmp );
         triplets.emplace_back(ne,  ne1, tmp );
-        triplets.emplace_back(ne,  ne,  2*(dk__R*dk__R+dk*dk__RR) );
+        triplets.emplace_back(ne,  ne,  2*(G.dk__R*G.dk__R+G.dk*G.dk__RR) );
       }
       break;
     case TargetType::P5:
       {
-        real_type const L__LL { m_L__LL[0] };
-        real_type const L__LR { m_L__LR[0] };
-        real_type const L__RR { m_L__RR[0] };
-        triplets.emplace_back(0, 0, L__LL );
-        triplets.emplace_back(0, 1, L__LR );
-        triplets.emplace_back(1, 0, L__LR );
-        triplets.emplace_back(1, 1, L__RR );
+        auto const & G { m_G1_vec[0]   };
+        triplets.emplace_back(0, 0, G.L__LL );
+        triplets.emplace_back(0, 1, G.L__LR );
+        triplets.emplace_back(1, 0, G.L__LR );
+        triplets.emplace_back(1, 1, G.L__RR );
       }
       {
-        real_type const L__LL { m_L__LL[ne1] };
-        real_type const L__LR { m_L__LR[ne1] };
-        real_type const L__RR { m_L__RR[ne1] };
-        triplets.emplace_back(ne1, ne1, L__LL );
-        triplets.emplace_back(ne1, ne,  L__LR );
-        triplets.emplace_back(ne,  ne1, L__LR );
-        triplets.emplace_back(ne,  ne,  L__RR );
+        auto const & G { m_G1_vec[ne1] };
+        triplets.emplace_back(ne1, ne1, G.L__LL );
+        triplets.emplace_back(ne1, ne,  G.L__LR );
+        triplets.emplace_back(ne,  ne1, G.L__LR );
+        triplets.emplace_back(ne,  ne,  G.L__RR );
       }
       break;
     case TargetType::P6:
       for ( integer j{0}; j < ne; ++j ) {
-        real_type const L__LL { m_L__LL[j] };
-        real_type const L__LR { m_L__LR[j] };
-        real_type const L__RR { m_L__RR[j] };
-        triplets.emplace_back( j,   j,   L__LL );
-        triplets.emplace_back( j,   j+1, L__LR );
-        triplets.emplace_back( j+1, j,   L__LR );
-        triplets.emplace_back( j+1, j+1, L__RR );
+        auto const & G { m_G1_vec[j] };
+        triplets.emplace_back( j,   j,   G.L__LL );
+        triplets.emplace_back( j,   j+1, G.L__LR );
+        triplets.emplace_back( j+1, j,   G.L__LR );
+        triplets.emplace_back( j+1, j+1, G.L__RR );
       }
       break;
     case TargetType::P7:
       for ( integer j{0}; j < ne; ++j ) {
-        real_type const L      { m_L[j] };
-        real_type const L__L   { m_L__L[j] };
-        real_type const L__R   { m_L__R[j] };
-        real_type const L__LL  { m_L__LL[j] };
-        real_type const L__LR  { m_L__LR[j] };
-        real_type const L__RR  { m_L__RR[j] };
-        real_type const k0     { m_k0[j] };
-        real_type const k__L   { m_k__L[j] };
-        real_type const k__R   { m_k__R[j] };
-        real_type const k__LL  { m_k__LL[j] };
-        real_type const k__LR  { m_k__LR[j] };
-        real_type const k__RR  { m_k__RR[j] };
-        real_type const dk     { m_dk[j] };
-        real_type const dk__L  { m_dk__L[j] };
-        real_type const dk__R  { m_dk__R[j] };
-        real_type const dk__LL { m_dk__LL[j] };
-        real_type const dk__LR { m_dk__LR[j] };
-        real_type const dk__RR { m_dk__RR[j] };
+        auto const & G { m_G1_vec[j] };
+        real_type const L      { G.L };
+        real_type const L__L   { G.L__L };
+        real_type const L__R   { G.L__R };
+        real_type const L__LL  { G.L__LL };
+        real_type const L__LR  { G.L__LR };
+        real_type const L__RR  { G.L__RR };
+        real_type const k0     { G.k0 };
+        real_type const k__L   { G.k__L };
+        real_type const k__R   { G.k__R };
+        real_type const k__LL  { G.k__LL };
+        real_type const k__LR  { G.k__LR };
+        real_type const k__RR  { G.k__RR };
+        real_type const dk     { G.dk };
+        real_type const dk__L  { G.dk__L };
+        real_type const dk__R  { G.dk__R };
+        real_type const dk__LL { G.dk__LL };
+        real_type const dk__LR { G.dk__LR };
+        real_type const dk__RR { G.dk__RR };
         real_type const t2  = dk__L*dk__L;
         real_type const t4  = L*L;
         real_type const t5  = t4*L;
@@ -852,18 +848,19 @@ namespace G2lib {
       break;
     case TargetType::P8:
       for ( integer j{0}; j < ne; ++j ) {
-        real_type const L      { m_L[j] };
-        real_type const L__L   { m_L__L[j] };
-        real_type const L__R   { m_L__R[j] };
-        real_type const L__LL  { m_L__LL[j] };
-        real_type const L__LR  { m_L__LR[j] };
-        real_type const L__RR  { m_L__RR[j] };
-        real_type const dk     { m_dk[j] };
-        real_type const dk__L  { m_dk__L[j] };
-        real_type const dk__R  { m_dk__R[j] };
-        real_type const dk__LL { m_dk__LL[j] };
-        real_type const dk__LR { m_dk__LR[j] };
-        real_type const dk__RR { m_dk__RR[j] };
+        auto const & G { m_G1_vec[j] };
+        real_type const L      { G.L };
+        real_type const L__L   { G.L__L };
+        real_type const L__R   { G.L__R };
+        real_type const L__LL  { G.L__LL };
+        real_type const L__LR  { G.L__LR };
+        real_type const L__RR  { G.L__RR };
+        real_type const dk     { G.dk };
+        real_type const dk__L  { G.dk__L };
+        real_type const dk__R  { G.dk__R };
+        real_type const dk__LL { G.dk__LL };
+        real_type const dk__LR { G.dk__LR };
+        real_type const dk__RR { G.dk__RR };
         real_type const t1 = dk*L;
         real_type const t4 = dk__L*dk__L;
         real_type const t10 = dk*dk;
@@ -880,24 +877,25 @@ namespace G2lib {
       break;
     case TargetType::P9:
       for ( integer j{0}; j < ne; ++j ) {
-        real_type const L      { m_L[j] };
-        real_type const L__L   { m_L__L[j] };
-        real_type const L__R   { m_L__R[j] };
-        real_type const L__LL  { m_L__LL[j] };
-        real_type const L__LR  { m_L__LR[j] };
-        real_type const L__RR  { m_L__RR[j] };
-        real_type const k0     { m_k0[j] };
-        real_type const k__L   { m_k__L[j] };
-        real_type const k__R   { m_k__R[j] };
-        real_type const k__LL  { m_k__LL[j] };
-        real_type const k__LR  { m_k__LR[j] };
-        real_type const k__RR  { m_k__RR[j] };
-        real_type const dk     { m_dk[j] };
-        real_type const dk__L  { m_dk__L[j] };
-        real_type const dk__R  { m_dk__R[j] };
-        real_type const dk__LL { m_dk__LL[j] };
-        real_type const dk__LR { m_dk__LR[j] };
-        real_type const dk__RR { m_dk__RR[j] };
+        auto const & G { m_G1_vec[j] };
+        real_type const L      { G.L };
+        real_type const L__L   { G.L__L };
+        real_type const L__R   { G.L__R };
+        real_type const L__LL  { G.L__LL };
+        real_type const L__LR  { G.L__LR };
+        real_type const L__RR  { G.L__RR };
+        real_type const k0     { G.k0 };
+        real_type const k__L   { G.k__L };
+        real_type const k__R   { G.k__R };
+        real_type const k__LL  { G.k__LL };
+        real_type const k__LR  { G.k__LR };
+        real_type const k__RR  { G.k__RR };
+        real_type const dk     { G.dk };
+        real_type const dk__L  { G.dk__L };
+        real_type const dk__R  { G.dk__R };
+        real_type const dk__LL { G.dk__LL };
+        real_type const dk__LR { G.dk__LR };
+        real_type const dk__RR { G.dk__RR };
         real_type const t1 = dk*dk;
         real_type const t2 = t1*dk;
         real_type const t4 = dk__L*dk__L;
@@ -969,24 +967,26 @@ t1*t45*t221+dk*(12.0*k__R*t45*L__R+2.0*t75*L__RR+dk__RR)+2.0*t75*(t247+k__RR)+
       break;
     }
     for ( integer j{0}; j < ne1; ++j ) {
-      real_type const L      { m_L[j] };
-      real_type const L__L   { m_L__L[j] };
-      real_type const L__R   { m_L__R[j] };
-      real_type const L__LL  { m_L__LL[j] };
-      real_type const L__LR  { m_L__LR[j] };
-      real_type const L__RR  { m_L__RR[j] };
-      real_type const k__LL  { m_k__LL[j] };
-      real_type const k__LR  { m_k__LR[j] };
-      real_type const k__RR  { m_k__RR[j] };
-      real_type const k1__LL { m_k__LL[j+1] };
-      real_type const k1__LR { m_k__LR[j+1] };
-      real_type const k1__RR { m_k__RR[j+1] };
-      real_type const dk     { m_dk[j] };
-      real_type const dk__L  { m_dk__L[j] };
-      real_type const dk__R  { m_dk__R[j] };
-      real_type const dk__LL { m_dk__LL[j] };
-      real_type const dk__LR { m_dk__LR[j] };
-      real_type const dk__RR { m_dk__RR[j] };
+      auto const & G  { m_G1_vec[j] };
+      auto const & G1 { m_G1_vec[j+1] };
+      real_type const L      { G.L };
+      real_type const L__L   { G.L__L };
+      real_type const L__R   { G.L__R };
+      real_type const L__LL  { G.L__LL };
+      real_type const L__LR  { G.L__LR };
+      real_type const L__RR  { G.L__RR };
+      real_type const k__LL  { G.k__LL };
+      real_type const k__LR  { G.k__LR };
+      real_type const k__RR  { G.k__RR };
+      real_type const k1__LL { G1.k__LL };
+      real_type const k1__LR { G1.k__LR };
+      real_type const k1__RR { G1.k__RR };
+      real_type const dk     { G.dk };
+      real_type const dk__L  { G.dk__L };
+      real_type const dk__R  { G.dk__R };
+      real_type const dk__LL { G.dk__LL };
+      real_type const dk__LR { G.dk__LR };
+      real_type const dk__RR { G.dk__RR };
 
       real_type m00 = dk__LL*L+2.0*L__L*dk__L+L__LL*dk+k__LL;
       real_type m01 = L*dk__LR+L__L*dk__R+L__LR*dk+L__R*dk__L+k__LR;

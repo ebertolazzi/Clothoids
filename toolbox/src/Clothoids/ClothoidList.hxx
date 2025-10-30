@@ -1241,6 +1241,31 @@ namespace G2lib {
     );
 
     //!
+    //! Build clothoid list passing to a list of points
+    //! with \f$ G^2 \f$ continuity.
+    //!
+    //! \param[in] n          number of points
+    //! \param[in] x          \f$x\f$-coordinates
+    //! \param[in] y          \f$y\f$-coordinates
+    //! \param[in] theta_init \f$\theta_i\f$ initial angle
+    //! \param[in] kappa_init \f$\kappa_i\f$ initial curvature
+    //! \param[in] theta_end  \f$\theta_e\f$ final angle
+    //! \param[in] kappa_end  \f$\kappa_e\f$ final curvature
+    //!
+    //! \return false if routine fails
+    //!
+    bool
+    build_G2(
+      integer   const n,
+      real_type const x[],
+      real_type const y[],
+      real_type const theta_init,
+      real_type const kappa_init,
+      real_type const theta_end,
+      real_type const kappa_end
+    );
+
+    //!
     //! \brief Smooths a G1 spline of clothoids to minimize jumps in curvature.
     //!
     //! This function applies a smoothing algorithm to reduce discontinuities
@@ -2254,6 +2279,31 @@ namespace G2lib {
       }
       return "";
     };
+    
+    using G1derivative = struct {
+      real_type L;
+      real_type k0;
+      real_type k1;
+      real_type dk;
+
+      real_type L__L;
+      real_type L__R;
+      real_type L__LL;
+      real_type L__LR;
+      real_type L__RR;
+
+      real_type k__L;
+      real_type k__R;
+      real_type k__LL;
+      real_type k__LR;
+      real_type k__RR;
+
+      real_type dk__L;
+      real_type dk__R;
+      real_type dk__LL;
+      real_type dk__LR;
+      real_type dk__RR;
+    };
 
   private:
 
@@ -2265,6 +2315,8 @@ namespace G2lib {
     // work vector
             Eigen::Vector<real_type,Eigen::Dynamic> m_x;
             Eigen::Vector<real_type,Eigen::Dynamic> m_y;
+    mutable vector<G1derivative> m_G1_vec;
+    /*
     mutable Eigen::Vector<real_type,Eigen::Dynamic> m_L;
     mutable Eigen::Vector<real_type,Eigen::Dynamic> m_k0;
     mutable Eigen::Vector<real_type,Eigen::Dynamic> m_k1;
@@ -2287,6 +2339,7 @@ namespace G2lib {
     mutable Eigen::Vector<real_type,Eigen::Dynamic> m_dk__LL;
     mutable Eigen::Vector<real_type,Eigen::Dynamic> m_dk__LR;
     mutable Eigen::Vector<real_type,Eigen::Dynamic> m_dk__RR;
+    */
 
     void evaluate_for_NLP( real_type const theta[] ) const;
     void evaluate_for_NLP_D( real_type const theta[] ) const;
@@ -2302,6 +2355,9 @@ namespace G2lib {
     real_type
     diff2pi( real_type in ) const
     { return in-Utils::m_2pi*round(in/Utils::m_2pi); }
+
+    // vecchio da rimnuovere
+    void allocate( integer const npts );
 
   public:
 

@@ -749,10 +749,10 @@ namespace G2lib {
               X1[3],  Y1[3],
               XMp[3], YMp[3],
               XMm[3], YMm[3];
-    GeneralizedFresnelCS( 3, dK0,  m_K0, m_th0, X0,  Y0);
-    GeneralizedFresnelCS( 3, dK1, -m_K1, m_th1, X1,  Y1);
-    GeneralizedFresnelCS( 3, dKM,    KM,   thM, XMp, YMp);
-    GeneralizedFresnelCS( 3, dKM,   -KM,   thM, XMm, YMm);
+    GeneralizedFresnelCS( 3, dK0,  m_K0, m_th0, X0,  Y0  );
+    GeneralizedFresnelCS( 3, dK1, -m_K1, m_th1, X1,  Y1  );
+    GeneralizedFresnelCS( 3, dKM,    KM,   thM, XMp, YMp );
+    GeneralizedFresnelCS( 3, dKM,   -KM,   thM, XMm, YMm );
 
     // in the standard problem dx = 2, dy = 0
     real_type const t0 { XMp[0]+XMm[0] };
