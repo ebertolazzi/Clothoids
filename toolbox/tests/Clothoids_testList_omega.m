@@ -29,18 +29,21 @@ Y = [-1.707808758,-1.707808758,-2.367185958,-2.582810358,-2.582810358, ...
 %SL = S.buildP4( X, Y );
 
 SL = ClothoidList();
-SL.build_G2( X, Y, 0, 0, 0, 0 );
+SL.build_G2_cyclic( X, Y );
 
 
-subplot(2,1,1);
+subplot(3,1,1);
 
 SL.plot();
 SL.deltaTheta()
 SL.deltaKappa()
 axis equal
 
-subplot(2,1,2);
+subplot(3,1,2);
 SL.plotCurvature(1000);
+
+subplot(3,1,3);
+SL.plotAngle(1000);
 
 
 axis equal

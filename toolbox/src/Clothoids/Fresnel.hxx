@@ -128,6 +128,12 @@ namespace G2lib {
     real_type m_dk{0};     //!< curvature derivative
 
     ClothoidData() = default;
+    
+    void
+    theta_adjust( real_type const th ) {
+      while ( m_theta0 > th+Utils::m_pi ) m_theta0 -= Utils::m_2pi;
+      while ( m_theta0 < th-Utils::m_pi ) m_theta0 += Utils::m_2pi;
+    }
 
     real_type delta_theta( real_type const s ) const { return s*(m_kappa0 + 0.5*s*m_dk); }
     dual1st   delta_theta( dual1st const & s ) const { return s*(m_kappa0 + 0.5*s*m_dk); }

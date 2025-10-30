@@ -335,6 +335,19 @@ namespace G2lib {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   void
+  ClothoidList::adjust() {
+    if ( !m_clothoid_list.empty() ) {
+      integer const N{ num_segments() };
+      for ( integer k{1}; k < N; ++k ) {
+        real_type const theta_end{ m_clothoid_list[k-1].theta_end() };
+        m_clothoid_list[k].theta_adjust( theta_end );
+      }
+    }
+  }
+  
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  void
   ClothoidList::push_back( CircleArc const & c ) {
     if ( m_clothoid_list.empty() ) {
       m_s0.emplace_back(0);
@@ -628,6 +641,7 @@ namespace G2lib {
       c.build_G1( x[n-2], y[n-2], theta0, x[n-1], y[n-1], theta1 );
       this->push_back(c);
     }
+    this->adjust();
     return true;
   }
 
@@ -651,6 +665,9 @@ namespace G2lib {
       c.build_G1( x[k-1], y[k-1], theta[k-1], x[k], y[k], theta[k] );
       this->push_back(c);
     }
+
+    this->adjust();
+
     return true;
   }
 
@@ -677,13 +694,8 @@ namespace G2lib {
     ClothoidSplineG2 G2_list;
     G2solve3arc      G2_3arc;
     
-    #if 0
     Vector theta( n );
-    G2_list.build( n, x, y, theta.data() );
-    #else
-    Vector theta( n ), theta_min( n ), theta_max( n ), omega( n ), len( n );
-    G2lib::xy_to_guess_angle( n, x, y, theta.data(), theta_min.data(), theta_max.data(), omega.data(), len.data() );
-    #endif
+    G2_list.build_P1( n, x, y, theta.data(), theta_init, theta_end );
 
     ClothoidCurve c{"ClothoidList::build_G2 temporary c"};
 
@@ -703,7 +715,7 @@ namespace G2lib {
 
     for ( integer k{2}; k < nm1; ++k ) {
       c.build_G1( x[k-1], y[k-1], theta[k-1], x[k], y[k], theta[k] );
-      m_clothoid_list.emplace_back(c);
+      push_back(c);
     }
     
     auto const & ce{ m_clothoid_list.back() };
@@ -716,6 +728,61 @@ namespace G2lib {
     push_back( G2_3arc.S0() );
     push_back( G2_3arc.SM() );
     push_back( G2_3arc.S1() );
+
+    this->adjust();
+
+    return true;
+  }
+
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  bool
+  ClothoidList::build_G2_cyclic(
+    integer   const n,
+    real_type const x[],
+    real_type const y[]
+  ) {
+  
+    using Vector = Pipal::Vector<real_type>;
+
+    UTILS_ASSERT0( n > 1, "ClothoidList::build_G2_cyclic, at least 2 points are necessary\n" );
+    
+    integer iter, nm1{ n - 1 };
+
+    // fit G2 without curvature continuty
+    ClothoidSplineG2 G2_list;
+    G2solve3arc      G2_3arc;
+    
+    Vector theta( n );
+    G2_list.build_P2( n, x, y, theta.data() );
+
+    ClothoidCurve c{"ClothoidList::build_G2_cyclic temporary c"};
+
+    init();
+    reserve( n+1 );
+
+    // i primi N-1 archi vanno bene
+    for ( integer k{1}; k < nm1; ++k ) {
+      c.build_G1( x[k-1], y[k-1], theta[k-1], x[k], y[k], theta[k] );
+      push_back(c);
+    }
+    
+    auto const & ce{ m_clothoid_list.back() };
+    
+    real_type const theta0{ m_clothoid_list.front().theta_begin() };
+    real_type const kappa0{ m_clothoid_list.front().kappa_begin() };
+
+    iter = G2_3arc.build( ce.x_end(), ce.y_end(), ce.theta_end(), ce.kappa_end(),
+                          x[nm1],     y[nm1],     theta0,         kappa0 );
+
+    if ( iter < 0 ) return false;
+
+    push_back( G2_3arc.S0() );
+    push_back( G2_3arc.SM() );
+    push_back( G2_3arc.S1() );
+
+    this->adjust();
 
     return true;
   }

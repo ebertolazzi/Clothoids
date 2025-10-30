@@ -745,6 +745,20 @@ namespace G2lib {
 
     // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 
+    //! \brief Adjusts the current angle to be as close as possible to a reference angle.
+    //!
+    //! This method adds or subtracts multiples of \f$ 2\pi \f$ (specifically ±2π)
+    //! to the current internal angle so that the adjusted angle differs from
+    //! the reference angle \p th by less than \f$ \pi \f$ (i.e., within one full revolution).
+    //!
+    //! This is useful to ensure angular continuity when comparing or interpolating
+    //! orientations that may wrap around the ±π discontinuity.
+    //!
+    //! \param th Reference angle [radians].
+    void theta_adjust( real_type const th ) { return m_CD.theta_adjust(th); }
+
+    // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
     //!
     //! Get clothoid angle at curvilinear cooordinate `s`.
     //!

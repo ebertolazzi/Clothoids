@@ -370,6 +370,34 @@ namespace G2lib {
 
   static
   void
+  do_build_G2_cyclic(
+    int nlhs, mxArray       *plhs[],
+    int nrhs, mxArray const *prhs[]
+  ) {
+
+    #define CMD "ClothoidListMexWrapper('build_G2_cyclic', OBJ, x, y): "
+
+    UTILS_MEX_ASSERT( nlhs == 1, CMD "expected 1 output, nlhs = {}\n", nlhs );
+    UTILS_MEX_ASSERT( nrhs == 4, CMD "expected 4 input, nrhs = {}\n", nrhs );
+
+    ClothoidList * ptr = Utils::mex_convert_mx_to_ptr<ClothoidList>(arg_in_1);
+
+    mwSize nx, ny;
+    real_type const * x = Utils::mex_vector_pointer( arg_in_2, nx, CMD "Error in reading x" );
+    real_type const * y = Utils::mex_vector_pointer( arg_in_3, ny, CMD "Error in reading y" );
+
+    UTILS_MEX_ASSERT( nx == ny, CMD "length(x) = {} != length(y) = {}\n", nx, ny );
+
+    bool ok{ ptr->build_G2_cyclic( nx, x, y ) };
+
+    Utils::mex_set_scalar_bool( arg_out_0, ok );
+    #undef CMD
+  }
+
+  // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+  static
+  void
   do_smooth_quasi_G2(
     int nlhs, mxArray       *plhs[],
     int nrhs, mxArray const *prhs[]
@@ -1213,6 +1241,7 @@ namespace G2lib {
     {"get_XY",do_get_XY},
     {"build_G1",do_build_G1},
     {"build_G2",do_build_G2},
+    {"build_G2_cyclic",do_build_G2_cyclic},
     {"smooth_quasi_G2",do_smooth_quasi_G2},
     {"build_raw",do_build_raw},
     {"build_3arcG2",do_build_3arcG2},

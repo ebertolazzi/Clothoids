@@ -42,12 +42,16 @@
   #include "Utils_autodiff.hh"
   #include "Utils_AABB_tree.hh"
   #include "Utils_eigen.hh"
+  #include "Utils/3rd/Eigen/SparseLU"
+  #include "Utils/3rd/Eigen/SparseQR"
   #include "Utils/3rd/Eigen/SparseCholesky"
 #else
   #include <Utils.hh>
   #include <Utils_autodiff.hh>
   #include <Utils_AABB_tree.hh>
   #include <Utils_eigen.hh>
+  #include <Utils/3rd/Eigen/SparseLU>
+  #include <Utils/3rd/Eigen/SparseQR>
   #include <Utils/3rd/Eigen/SparseCholesky>
 #endif
 

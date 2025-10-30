@@ -907,6 +907,9 @@ namespace G2lib {
       real_type      & DST
     ) const;
 
+    // mette a posto gli angoli delle clotoidi in modo che differiscano meno di 2*pi!
+    void adjust();
+
   public:
 
     #include "BaseCurve_using.hxx"
@@ -1241,18 +1244,31 @@ namespace G2lib {
     );
 
     //!
-    //! Build clothoid list passing to a list of points
-    //! with \f$ G^2 \f$ continuity.
+    //! \brief
+    //! Builds a sequence of clothoid (Cornu) arcs interpolating a given set of
+    //! points with \f$ G^2 \f$ (curvature) continuity between segments.
     //!
-    //! \param[in] n          number of points
-    //! \param[in] x          \f$x\f$-coordinates
-    //! \param[in] y          \f$y\f$-coordinates
-    //! \param[in] theta_init \f$\theta_i\f$ initial angle
-    //! \param[in] kappa_init \f$\kappa_i\f$ initial curvature
-    //! \param[in] theta_end  \f$\theta_e\f$ final angle
-    //! \param[in] kappa_end  \f$\kappa_e\f$ final curvature
+    //! \details
+    //! Constructs a smooth open curve passing through the specified points,
+    //! starting with a given orientation and curvature, and ending with the
+    //! prescribed final orientation and curvature. The resulting clothoid list
+    //! ensures continuous position, tangent, and curvature along the entire path.
     //!
-    //! \return false if routine fails
+    //! \param[in] n           Number of points to interpolate.
+    //! \param[in] x           Array of point \f$x_i\f$ coordinates.
+    //! \param[in] y           Array of point \f$y_i\f$ coordinates.
+    //! \param[in] theta_init  Initial angle \f$\theta_i\f$ (radians).
+    //! \param[in] kappa_init  Initial curvature \f$\kappa_i\f$ (1/length units).
+    //! \param[in] theta_end   Final angle \f$\theta_e\f$ (radians).
+    //! \param[in] kappa_end   Final curvature \f$\kappa_e\f$ (1/length units).
+    //!
+    //! \return
+    //! `true` if the \f$ G^2 \f$ clothoid construction succeeds,
+    //! `false` otherwise (e.g., degenerate or inconsistent input data).
+    //!
+    //! \note
+    //! - Arrays `x[]` and `y[]` must have the same length `n`.
+    //! - The function does not modify the input arrays.
     //!
     bool
     build_G2(
@@ -1263,6 +1279,33 @@ namespace G2lib {
       real_type const kappa_init,
       real_type const theta_end,
       real_type const kappa_end
+    );
+    
+    //!
+    //! \brief
+    //! Builds a cyclic list of clothoid (Cornu) arcs interpolating a set of points
+    //! with \f$ G^2 \f$ geometric continuity.
+    //!
+    //! \details
+    //! Creates a closed sequence of clothoid segments ensuring continuous
+    //! position, tangent, and curvature between consecutive points.
+    //!
+    //! \param[in] n  Number of points (must be ≥ 3 for a closed curve).
+    //! \param[in] x  Array of \f$x_i\f$ coordinates.
+    //! \param[in] y  Array of \f$y_i\f$ coordinates.
+    //!
+    //! \return
+    //! `true` if the cyclic \f$ G^2 \f$ clothoid construction succeeds,
+    //! `false` otherwise.
+    //!
+    //! \note
+    //! The input arrays `x[]` and `y[]` must have the same length and are not modified.
+    //!
+    bool
+    build_G2_cyclic(
+      integer   const n,
+      real_type const x[],
+      real_type const y[]
     );
 
     //!
@@ -2255,6 +2298,10 @@ namespace G2lib {
     //!
     using TargetType = enum class TargetType : integer
     { P1, P2, P3, P4, P5, P6, P7, P8, P9 };
+    
+    integer   m_max_iter{150};
+    real_type m_tolerance{1e-10};
+    real_type m_dump_min{0.1};
 
     //!
     //! Convert `TargetType` to string
@@ -2316,30 +2363,6 @@ namespace G2lib {
             Eigen::Vector<real_type,Eigen::Dynamic> m_x;
             Eigen::Vector<real_type,Eigen::Dynamic> m_y;
     mutable vector<G1derivative> m_G1_vec;
-    /*
-    mutable Eigen::Vector<real_type,Eigen::Dynamic> m_L;
-    mutable Eigen::Vector<real_type,Eigen::Dynamic> m_k0;
-    mutable Eigen::Vector<real_type,Eigen::Dynamic> m_k1;
-    mutable Eigen::Vector<real_type,Eigen::Dynamic> m_dk;
-
-    mutable Eigen::Vector<real_type,Eigen::Dynamic> m_L__L;
-    mutable Eigen::Vector<real_type,Eigen::Dynamic> m_L__R;
-    mutable Eigen::Vector<real_type,Eigen::Dynamic> m_L__LL;
-    mutable Eigen::Vector<real_type,Eigen::Dynamic> m_L__LR;
-    mutable Eigen::Vector<real_type,Eigen::Dynamic> m_L__RR;
-
-    mutable Eigen::Vector<real_type,Eigen::Dynamic> m_k__L;
-    mutable Eigen::Vector<real_type,Eigen::Dynamic> m_k__R;
-    mutable Eigen::Vector<real_type,Eigen::Dynamic> m_k__LL;
-    mutable Eigen::Vector<real_type,Eigen::Dynamic> m_k__LR;
-    mutable Eigen::Vector<real_type,Eigen::Dynamic> m_k__RR;
-
-    mutable Eigen::Vector<real_type,Eigen::Dynamic> m_dk__L;
-    mutable Eigen::Vector<real_type,Eigen::Dynamic> m_dk__R;
-    mutable Eigen::Vector<real_type,Eigen::Dynamic> m_dk__LL;
-    mutable Eigen::Vector<real_type,Eigen::Dynamic> m_dk__LR;
-    mutable Eigen::Vector<real_type,Eigen::Dynamic> m_dk__RR;
-    */
 
     void evaluate_for_NLP( real_type const theta[] ) const;
     void evaluate_for_NLP_D( real_type const theta[] ) const;
@@ -2390,6 +2413,24 @@ namespace G2lib {
 
     void
     build(
+      integer   const npts,
+      real_type const xvec[],
+      real_type const yvec[],
+      real_type       theta[]
+    );
+
+    bool
+    build_P1(
+      integer   const npts,
+      real_type const xvec[],
+      real_type const yvec[],
+      real_type       theta[],
+      real_type       theta_init,
+      real_type       theta_end
+    );
+
+    bool
+    build_P2(
       integer   const npts,
       real_type const xvec[],
       real_type const yvec[],

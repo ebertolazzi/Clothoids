@@ -44,9 +44,9 @@ main() {
   G2lib::ClothoidCurve const & S1 = g2solve3arc.S1();
   G2lib::ClothoidCurve const & SM = g2solve3arc.SM();
 
-  fmt::print( "\n\nS0 (NEW)\n {}\n", S0 );
-  fmt::print( "\n\nSM (NEW)\n {}\n", SM );
-  fmt::print( "\n\nS1 (NEW)\n {}\n", S1 );
+  fmt::print( "\n\nS0 (NEW)\n{}\n", S0 );
+  fmt::print( "\n\nSM (NEW)\n{}\n", SM );
+  fmt::print( "\n\nS1 (NEW)\n{}\n", S1 );
 
   fmt::print(
     "\n"
@@ -94,9 +94,10 @@ main() {
     -3.178123242, -3.178123242, -1.707808758
   };
   
-  S.build_G2( N, X, Y, 0, 0, 0, 0 );
+  S.build_G2( N, X, Y, 3.1415/2, 0, 3.1415/2, 0 );
+  S.build_G2_cyclic( N, X, Y );
 
-  for ( int i{0}; i < 100; ++i ) {
+  for ( int i{0}; i < 0; ++i ) {
     Eigen::VectorXd THETA;
     THETA.resize(27);
 
