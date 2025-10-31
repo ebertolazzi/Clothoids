@@ -227,9 +227,9 @@ classdef ClothoidSplineG2 < matlab.mixin.Copyable
     %> - kappa(1) = kappa(end)
     %>
     function clots = buildP2( self, x, y )
-      ClothoidSplineG2MexWrapper( 'target', self.m_objectHandle, 'P2' );
-      %clots = self.build_internal2( x, y );
-      clots = self.build_internal( x, y );
+      S = ClothoidList();
+      S.build_G2_cyclic( x, y );
+      clots = S;
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     %>

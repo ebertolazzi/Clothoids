@@ -1323,9 +1323,12 @@ namespace G2lib {
     real_type const x1,
     real_type const y1,
     real_type const theta1,
-    real_type const tol,
-    real_type &     L
+    G2derivative &  G,
+    real_type const tol
   ) {
+  
+    auto & L { G.L };
+
     static constexpr real_type CF[]{
       2.989696028701907,   0.716228953608281,
       -0.458969738821509, -0.502821153340377,
@@ -1396,19 +1399,22 @@ namespace G2lib {
     real_type const x1,
     real_type const y1,
     real_type const theta1,
-    real_type const tol,
-    real_type &     L,
-    real_type       L_D[2],
-    real_type       k_D[2],
-    real_type       dk_D[2]
+    G2derivative &  G,
+    real_type const tol
   ) {
   
     real_type intC[3], intS[3];
   
-    int niter{ build_G1( x0, y0, theta0, x1, y1, theta1, tol, L ) };
+    int niter{ build_G1( x0, y0, theta0, x1, y1, theta1, G, tol ) };
+    
+    auto const & L{ G.L };
 
-    real_type A{ m_dk*L*L };
-    real_type B{ m_kappa0*L };
+    G.dk = m_dk;
+    G.k0 = m_kappa0;
+    G.k1 = m_kappa0+G.dk*G.L;
+
+    real_type A{ G.dk*G.L*G.L };
+    real_type B{ G.k0*G.L };
 
     GeneralizedFresnelCS( 3, A, B, m_theta0, intC, intS );
 
@@ -1428,14 +1434,14 @@ namespace G2lib {
     real_type const & dk    { m_dk };
     
     // Costruzione matrice
-    mat << X__0, -L*Y__1, -L*Y__2/2.0,
-           Y__0,  L*X__1,  L*X__2/2.0,
-           0,     1,       0.5;
+    mat << X__0, -G.L*Y__1, -0.5*G.L*Y__2,
+           Y__0,  G.L*X__1,  0.5*G.L*X__2,
+           0,     1,         0.5;
 
     // Costruzione RHS come matrice 3x2 (due colonne → due sistemi)
-    rhs <<  L * Y__0, 0,
-           -L * X__0, 0,
-           -1,        1;
+    rhs <<  G.L * Y__0, 0,
+           -G.L * X__0, 0,
+           -1,          1;
 
     // Fattorizzazione una sola volta (molto più efficiente)
     Eigen::ColPivHouseholderQR<Eigen::Matrix<real_type,3,3>> solver(mat);
@@ -1450,13 +1456,13 @@ namespace G2lib {
     real_type const B__R{ sol(1,1) };
     real_type const A__R{ sol(2,1) };
 
-    L_D[0]  = L__L;
-    k_D[0]  = (B__L   - kappa*L__L )/L;
-    dk_D[0] = (A__L/L - 2*dk*L__L  )/L;
+    G.L__L  = L__L;
+    G.k__L  = (B__L   - kappa*L__L )/L;
+    G.dk__L = (A__L/L - 2*dk*L__L  )/L;
 
-    L_D[1]  = L__R;
-    k_D[1]  = (B__R   - kappa*L__R )/L;
-    dk_D[1] = (A__R/L - 2*dk*L__R  )/L;
+    G.L__R  = L__R;
+    G.k__R  = (B__R   - kappa*L__R )/L;
+    G.dk__R = (A__R/L - 2*dk*L__R  )/L;
 
     return niter;
   }
@@ -1471,20 +1477,16 @@ namespace G2lib {
     real_type const x1,
     real_type const y1,
     real_type const theta1,
-    real_type const tol,
-    real_type &     L,
-    real_type       L_D[2],
-    real_type       k_D[2],
-    real_type       dk_D[2],
-    real_type       L_DD[3],
-    real_type       k_DD[3],
-    real_type       dk_DD[3]
+    G2derivative &  G,
+    real_type const tol
   ) {
   
     real_type intC[5], intS[5];
   
-    int niter{ build_G1( x0, y0, theta0, x1, y1, theta1, tol, L ) };
+    int niter{ build_G1( x0, y0, theta0, x1, y1, theta1, G, tol ) };
 
+    auto const & L{ G.L };
+ 
     real_type A{ m_dk*L*L };
     real_type B{ m_kappa0*L };
 
@@ -1511,8 +1513,8 @@ namespace G2lib {
     real_type const & dk    { m_dk };
     
     // Costruzione matrice
-    mat << X__0, -L*Y__1, -L*Y__2/2.0,
-           Y__0,  L*X__1,  L*X__2/2.0,
+    mat << X__0, -L*Y__1, -0.5*L*Y__2,
+           Y__0,  L*X__1,  0.5*L*X__2,
            0,     1,       0.5;
 
     // Costruzione RHS come matrice 3x2 (due colonne → due sistemi)
@@ -1539,49 +1541,49 @@ namespace G2lib {
     real_type kappa__R { (B__R   - kappa*L__R )/L };
     real_type dk__R    { (A__R/L - 2*dk*L__R  )/L };
 
-    L_D[0]  = L__L;
-    k_D[0]  = kappa__L;
-    dk_D[0] = dk__L;
+    G.L__L  = L__L;
+    G.k__L  = kappa__L;
+    G.dk__L = dk__L;
 
-    L_D[1]  = L__R;
-    k_D[1]  = kappa__R;
-    dk_D[1] = dk__R;
+    G.L__R  = L__R;
+    G.k__R  = kappa__R;
+    G.dk__R = dk__R;
 
     Eigen::Matrix<real_type, 3, 3> rhs2;
     Eigen::Matrix<real_type, 3, 3> sol2;
 
     {
-      real_type t8  = X__4*L;
+      real_type t1  = Y__2*L__L;
+      real_type t3  = Y__1*L__L;
+      real_type t8  = L*X__4;
       real_type t9  = A__L*A__L;
       real_type t12 = L*A__L;
+      real_type t13 = X__3*B__L;
       real_type t15 = L*X__2;
       real_type t17 = B__L*B__L;
-      real_type t24 = L__R*B__R;
-      real_type t27 = L__R*A__R;
+      real_type t19 = L*X__1;
       real_type t29 = B__R*B__R;
-      real_type t31 = L*X__3;
-      real_type t32 = A__R*B__R;
-      real_type t34 = A__R*A__R;
-      real_type t38 = B__L*L__R;
-      real_type t40 = A__L*L__R;
-      real_type t65 = Y__1*t38+Y__2*t40/2.0+B__L*A__R*t31/2.0+A__L*A__R*t8/4.0+B__L*B__R*t15+A__L*B__R*t31/2.0+L__L*A__R*Y__2/2.0+A__R*X__2*L/2.0+L__L*B__R*Y__1+B__R*X__1*L+L__R*Y__0;
-      real_type t66 = L__L*X__2;
-      real_type t68 = X__1*L__L;
-      real_type t73 = Y__4*L;
-      real_type t76 = Y__3*B__L;
-      real_type t78 = L*Y__2;
-      real_type t81 = L*Y__1;
-      real_type t98 = L*A__R;
-      real_type t104 = L*B__R;
-      real_type t117 = -X__1*t38-X__2*t40/2.0+t76*t98/2.0+A__L*Y__4*t98/4.0+B__L*Y__2*t104+A__L*Y__3*t104/2.0+A__R*t78/2.0-A__R*t66/2.0+B__R*t81-B__R*t68-L__R*X__0;
-      rhs2(0,0) = L__L*Y__2*A__L+2.0*L__L*Y__1*B__L+2.0*L__L*Y__0+t9*t8/4.0+X__3*B__L*t12+A__L*t15+t17*t15+2.0*L*X__1*B__L+L*X__0;
-      rhs2(0,1) = 2.0*Y__1*t24+Y__2*t27+t29*t15+t32*t31+t34*t8/4.0;
-      rhs2(0,2) = t65;
+      real_type t33 = B__R*A__R;
+      real_type t35 = A__R*A__R;
+      real_type t39 = L__R*B__L;
+      real_type t41 = A__L*L__R;
+      real_type t44 = L*A__R;
+      real_type t50 = B__R*L;
+      real_type t63 = Y__1*t39+Y__2*t41/2.0+t13*t44/2.0+A__L*X__4*t44/4.0+B__L*X__2*t50+A__L*X__3*t50/2.0+A__R*t1/2.0+A__R*t15/2.0+B__R*t3+B__R*t19+L__R*Y__0;
+      real_type t64 = X__2*L__L;
+      real_type t71 = L*Y__4;
+      real_type t76 = L*Y__2;
+      real_type t79 = L*Y__1;
+      real_type t84 = B__R*X__1;
+      real_type t90 = L*Y__3;
+      real_type t116 = -X__1*t39-X__2*t41/2.0+B__L*A__R*t90/2.0+A__L*A__R*t71/4.0+B__L*B__R*t76+A__L*B__R*t90/2.0+A__R*t76/2.0-A__R*t64/2.0+B__R*t79-L__L*t84-L__R*X__0;
 
-      rhs2(1,0) = -A__L*t66-2.0*B__L*t68-2.0*L__L*X__0+t9*t73/4.0+t76*t12+A__L*t78+t17*t78+2.0*B__L*t81+L*Y__0;
-      rhs2(1,1) = -2.0*X__1*t24-X__2*t27+t29*t78+t32*L*Y__3+t34*t73/4.0;
-      rhs2(1,2) = t117;
-
+      rhs2(0,0) = A__L*t1+2.0*B__L*t3+2.0*L__L*Y__0+t9*t8/4.0+t13*t12+A__L*t15+t17*t15+2.0*B__L*t19+L*X__0;
+      rhs2(0,1) = 2.0*Y__1*B__R*L__R+Y__2*L__R*A__R+X__2*t29*L+t33*L*X__3+t35*t8/4.0;
+      rhs2(0,2) = t63;
+      rhs2(1,0) = -A__L*t64-2.0*L__L*X__1*B__L-2.0*L__L*X__0+t9*t71/4.0+Y__3*B__L*t12+A__L*t76+t17*t76+2.0*B__L*t79+L*Y__0;
+      rhs2(1,1) = -2.0*L__R*t84-X__2*L__R*A__R+t29*t76+t33*t90+t35*t71/4.0;
+      rhs2(1,2) = t116;
       rhs2(2,0) = 0.0;
       rhs2(2,1) = 0.0;
       rhs2(2,2) = 0.0;
@@ -1603,19 +1605,19 @@ namespace G2lib {
     real_type const A__LR{ sol2(2,2) };
     
     // LL
-    L_DD[0]  = L__LL;
-    k_DD[0]  = (-2.0*kappa__L*L__L-kappa*L__LL+B__LL)/L;
-    dk_DD[0] = (-4.0*L__L*dk__L-2.0*L__LL*dk)/L+(-2.0*dk*L__L*L__L+A__LL)/(L*L);
+    G.L__LL  = L__LL;
+    G.k__LL  = (B__LL-2*kappa__L*L__L-kappa*L__LL)/L;
+    G.dk__LL = ( (A__LL - 2*dk*L__L*L__L)/L - 4*L__L*dk__L - 2*L__LL*dk ) / L;
 
     // LR
-    L_DD[1]  = L__LR;
-    k_DD[1]  = (-kappa__R*L__L-kappa*L__LR-kappa__L*L__R+B__LR)/L;
-    dk_DD[1] = (-2.0*L__L*dk__R-2.0*L__LR*dk-2.0*L__R*dk__L)/L+(-2.0*dk*L__R*L__L+A__LR)/(L*L);
+    G.L__LR  = L__LR;
+    G.k__LR  = (B__LR-kappa__R*L__L-kappa__L*L__R-kappa*L__LR)/L;
+    G.dk__LR = ( (A__LR - 2*dk*L__R*L__L)/L - 2*(L__L*dk__R+L__LR*dk+L__R*dk__L) )/L;
 
     // RR
-    L_DD[2]  = L__RR;
-    k_DD[2]  = (-2.0*kappa__R*L__R-kappa*L__RR+B__RR)/L;
-    dk_DD[2] = (-4.0*L__R*dk__R-2.0*L__RR*dk)/L+(-2.0*dk*L__R*L__R+A__RR)/(L*L);
+    G.L__RR  = L__RR;
+    G.k__RR  = (B__RR-2*kappa__R*L__R-kappa*L__RR)/L;
+    G.dk__RR = ( (A__RR - 2*dk*L__R*L__R)/L - 4*L__R*dk__R - 2*L__RR*dk )/L;
 
     return niter;
   }
@@ -1726,20 +1728,17 @@ namespace G2lib {
     real_type th{ theta_guess( th0, max(min(k0,Kmax),Kmin), ok ) };
     if ( ok ) {
       for ( integer iter = 0; iter < 20; ++iter ) {
-        real_type LL, L_D[2], k_D[2], dk_D[2];
-        build_G1_D(
-          0, 0, th0,
-          1, 0, th,
-          tol, LL,
-          L_D, k_D, dk_D
-        );
-        real_type const f   { m_kappa0 - k0 }; // use kappa0 of the class
-        real_type const df  { k_D[1] };
+        G2derivative G;
+        build_G1_D( 0, 0, th0, 1, 0, th, G, tol );
+        real_type const f   { m_kappa0 - G.k0 }; // use kappa0 of the class
+        real_type const df  { G.k__R };
         real_type const dth { f/df };
         th -= dth;
         if ( abs(dth) < tol && abs(f) < tol ) {
           // transform solution
-          build_G1( x0, y0, theta0, x1, y1, arot + th, tol, L );
+          G2derivative G;
+          build_G1( x0, y0, theta0, x1, y1, arot + th, G, tol );
+          L = G.L;
           return true;
         }
       }

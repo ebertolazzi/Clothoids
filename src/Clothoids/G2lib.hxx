@@ -145,6 +145,32 @@ namespace G2lib {
   yesAABBtree()
   { intersect_with_AABBtree = true; }
 
+
+  using G2derivative = struct {
+    real_type L;
+    real_type k0;
+    real_type k1;
+    real_type dk;
+
+    real_type L__L;
+    real_type L__R;
+    real_type L__LL;
+    real_type L__LR;
+    real_type L__RR;
+
+    real_type k__L;
+    real_type k__R;
+    real_type k__LL;
+    real_type k__LR;
+    real_type k__RR;
+
+    real_type dk__L;
+    real_type dk__R;
+    real_type dk__LL;
+    real_type dk__LR;
+    real_type dk__RR;
+  };
+
   /*
    * sin(x)/x
    */

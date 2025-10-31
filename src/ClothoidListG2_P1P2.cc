@@ -83,13 +83,15 @@ namespace G2lib {
           if ( norm_d1 <= norm_d0*(1-alpha/2) || norm_f1 < 0.99 * norm_f0 ) break;
         }
       } while ( alpha > dump_min );
-      fmt::print( "it:{:2} α={} ‖f‖:{}\n", iter, alpha, norm_f0 );
+      // fmt::print( "it:{:2} α={} ‖f‖:{}\n", iter, alpha, norm_f0 );
       x0 = x1;
       converged = norm_f0 < tolerance;
     }
     std::copy_n( x0.data(), n, theta );
     return converged;
   };
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   bool
   ClothoidSplineG2::build_P1(
@@ -156,6 +158,7 @@ namespace G2lib {
 
   }
 
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   bool
   ClothoidSplineG2::build_P2(

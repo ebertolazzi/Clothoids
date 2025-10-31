@@ -445,8 +445,8 @@ namespace G2lib {
       real_type const x1,
       real_type const y1,
       real_type const theta1,
-      real_type const tol,
-      real_type     & L
+      G2derivative  & G,
+      real_type const tol
     );
 
     int
@@ -457,11 +457,8 @@ namespace G2lib {
       real_type const x1,
       real_type const y1,
       real_type const theta1,
-      real_type const tol,
-      real_type     & L,
-      real_type       L_D[2],
-      real_type       k_D[2],
-      real_type       dk_D[2]
+      G2derivative  & G,
+      real_type const tol
     );
 
     int
@@ -472,14 +469,8 @@ namespace G2lib {
       real_type const x1,
       real_type const y1,
       real_type const theta1,
-      real_type const tol,
-      real_type     & L,
-      real_type       L_D[2],
-      real_type       k_D[2],
-      real_type       dk_D[2],
-      real_type       L_DD[3],
-      real_type       k_DD[3],
-      real_type       dk_DD[3]
+      G2derivative  & G,
+      real_type const tol
     );
 
     bool

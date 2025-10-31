@@ -48,7 +48,6 @@
 "  - Build:\n" \
 "    ClothoidCurveMexWrapper( 'build', OBJ, x0, y0, theta0, k0, dk, L );\n" \
 "    ClothoidCurveMexWrapper( 'build_G1', OBJ, x0, y0, theta0, x1, y1, theta1 );\n" \
-"    [ L_D, k_D, dk_D ] = ClothoidCurveMexWrapper( 'build_G1_D', OBJ, x0, y0, theta0, x1, y1, theta1 );\n" \
 "    res = ClothoidCurveMexWrapper( 'build_forward', OBJ,x0,y0,theta0,k0,x1,y1 );\n" \
 "    res = ClothoidCurveMexWrapper( 'copy', OBJ );\n" \
 "\n" \
@@ -266,49 +265,6 @@ namespace G2lib {
 
     integer iter = ptr->build_G1( x0, y0, theta0, x1, y1, theta1 );
     if ( nlhs == 1 ) Utils::mex_set_scalar_int32( arg_out_0, iter );
-
-    #undef CMD
-  }
-
-  // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
-
-  static
-  void
-  do_build_G1_D(
-    int nlhs, mxArray       *plhs[],
-    int nrhs, mxArray const *prhs[]
-  ) {
-
-    #define CMD "ClothoidCurveMexWrapper('build_G1_D',OBJ,x0,y0,theta0,x1,y1,theta1): "
-    UTILS_MEX_ASSERT(
-      nlhs == 3 || nlhs == 4,
-      CMD "expected 3 or 4 output, nlhs = {}\n", nlhs
-    );
-    UTILS_MEX_ASSERT(
-      nrhs == 8,
-      CMD "expected 8 inputs, nrhs = {}\n", nrhs
-    );
-
-    ClothoidCurve * ptr = Utils::mex_convert_mx_to_ptr<ClothoidCurve>(arg_in_1);
-
-    real_type x0(0), y0(0), theta0(0), x1(0), y1(0), theta1(0);
-
-    x0     = Utils::mex_get_scalar_value( arg_in_2, CMD "Error in reading x0" );
-    y0     = Utils::mex_get_scalar_value( arg_in_3, CMD "Error in reading y0" );
-    theta0 = Utils::mex_get_scalar_value( arg_in_4, CMD "Error in reading theta0" );
-    x1     = Utils::mex_get_scalar_value( arg_in_5, CMD "Error in reading x1" );
-    y1     = Utils::mex_get_scalar_value( arg_in_6, CMD "Error in reading y1" );
-    theta1 = Utils::mex_get_scalar_value( arg_in_7, CMD "Error in reading theta1" );
-
-    UTILS_MEX_ASSERT(
-      nlhs == 3 || nlhs == 4,
-      CMD "expected 3 or 4 outputs, nlhs = {}\n", nlhs
-    );
-    real_type * L_D  = Utils::mex_create_matrix_value( arg_out_0, 2, 1 );
-    real_type * k_D  = Utils::mex_create_matrix_value( arg_out_1, 2, 1 );
-    real_type * dk_D = Utils::mex_create_matrix_value( arg_out_2, 2, 1 );
-    integer iter = ptr->build_G1_D( x0, y0, theta0, x1, y1, theta1, L_D, k_D, dk_D );
-    if ( nlhs == 4 ) Utils::mex_set_scalar_int32( arg_out_3, iter );
 
     #undef CMD
   }
@@ -567,7 +523,6 @@ namespace G2lib {
     {"new",do_new},
     {"build",do_build},
     {"build_G1",do_build_G1},
-    {"build_G1_D",do_build_G1_D},
     {"build_forward",do_build_forward},
     {"change_curvilinear_origin",do_change_curvilinear_origin},
     {"dkappa",do_dkappa},

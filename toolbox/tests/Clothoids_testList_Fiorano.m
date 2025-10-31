@@ -11,8 +11,6 @@
 
 close all;
 
-use_ipopt = true;
-
 XY = [ ...
 -0.475412514	8.65E-05	; ...
 -4.920298721	-7.74E-05	; ...
@@ -601,7 +599,6 @@ XY = [ ...
 ];
 
 S = ClothoidSplineG2();
-S.ipopt(use_ipopt);
 
 X = [XY(1:4:end,1); XY(1,1)];
 Y = [XY(1:4:end,2); XY(1,2)];

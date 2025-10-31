@@ -25,6 +25,36 @@ namespace G2lib {
 
   using std::vector;
 
+  //!
+  //! Type of Spline list to be build
+  //!
+  using TargetType = enum class TargetType : integer
+  { P1, P2, P3, P4, P5, P6, P7, P8, P9 };
+
+  //!
+  //! Convert `TargetType` to string
+  //!
+  //! \param[in] n the target type
+  //! \return a string with the name of the target
+  //!
+  static
+  inline
+  string_view
+  to_string( TargetType n ) {
+    switch ( n ) {
+    case TargetType::P1: return "P1";
+    case TargetType::P2: return "P2";
+    case TargetType::P3: return "P3";
+    case TargetType::P4: return "P4";
+    case TargetType::P5: return "P5";
+    case TargetType::P6: return "P6";
+    case TargetType::P7: return "P7";
+    case TargetType::P8: return "P8";
+    case TargetType::P9: return "P9";
+    }
+    return "";
+  };
+    
   /*\
    |    ____ ____            _           ____
    |   / ___|___ \ ___  ___ | |_   _____|___ \ __ _ _ __ ___
@@ -908,7 +938,7 @@ namespace G2lib {
     ) const;
 
     // mette a posto gli angoli delle clotoidi in modo che differiscano meno di 2*pi!
-    void adjust();
+    void adjust_angles();
 
   public:
 
@@ -2293,76 +2323,20 @@ namespace G2lib {
   //!
   class ClothoidSplineG2 {
   public:
-    //!
-    //! Type of Spline list to be build
-    //!
-    using TargetType = enum class TargetType : integer
-    { P1, P2, P3, P4, P5, P6, P7, P8, P9 };
     
-    integer   m_max_iter{150};
+    integer   m_max_iter{50};
     real_type m_tolerance{1e-10};
     real_type m_dump_min{0.1};
-
-    //!
-    //! Convert `TargetType` to string
-    //!
-    //! \param[in] n the target type
-    //! \return a string with the name of the target
-    //!
-    static
-    inline
-    string_view
-    to_string( TargetType n ) {
-      switch ( n ) {
-      case TargetType::P1: return "P1";
-      case TargetType::P2: return "P2";
-      case TargetType::P3: return "P3";
-      case TargetType::P4: return "P4";
-      case TargetType::P5: return "P5";
-      case TargetType::P6: return "P6";
-      case TargetType::P7: return "P7";
-      case TargetType::P8: return "P8";
-      case TargetType::P9: return "P9";
-      }
-      return "";
-    };
-    
-    using G1derivative = struct {
-      real_type L;
-      real_type k0;
-      real_type k1;
-      real_type dk;
-
-      real_type L__L;
-      real_type L__R;
-      real_type L__LL;
-      real_type L__LR;
-      real_type L__RR;
-
-      real_type k__L;
-      real_type k__R;
-      real_type k__LL;
-      real_type k__LR;
-      real_type k__RR;
-
-      real_type dk__L;
-      real_type dk__R;
-      real_type dk__LL;
-      real_type dk__LR;
-      real_type dk__RR;
-    };
 
   private:
 
     TargetType m_tt{TargetType::P1};
-    real_type  m_theta_I{real_type(0)};
-    real_type  m_theta_F{real_type(0)};
     integer    m_npts{0};
 
     // work vector
             Eigen::Vector<real_type,Eigen::Dynamic> m_x;
             Eigen::Vector<real_type,Eigen::Dynamic> m_y;
-    mutable vector<G1derivative> m_G1_vec;
+    mutable vector<G2derivative> m_G1_vec;
 
     void evaluate_for_NLP( real_type const theta[] ) const;
     void evaluate_for_NLP_D( real_type const theta[] ) const;
@@ -2371,9 +2345,6 @@ namespace G2lib {
     void evaluate_for_NLP_BC( real_type const theta[] ) const;
     void evaluate_for_NLP_D_BC( real_type const theta[] ) const;
     void evaluate_for_NLP_DD_BC( real_type const theta[] ) const;
-
-    bool jacobian( real_type const theta[], Pipal::SparseMatrix<real_type> & J ) const;
-    bool lagrangian_hessian( real_type const theta[], real_type const lambda[], Pipal::SparseMatrix<real_type> & H ) const;
 
     real_type
     diff2pi( real_type in ) const
@@ -2387,15 +2358,6 @@ namespace G2lib {
     ClothoidSplineG2() = default;
     ~ClothoidSplineG2() = default;
 
-    void
-    setP1( real_type const theta0, real_type const thetaN ) {
-      m_tt      = TargetType::P1;
-      m_theta_I = theta0;
-      m_theta_F = thetaN;
-    }
-
-    void setP2() { m_tt = TargetType::P2; }
-    void setP3() { m_tt = TargetType::P3; }
     void setP4() { m_tt = TargetType::P4; }
     void setP5() { m_tt = TargetType::P5; }
     void setP6() { m_tt = TargetType::P6; }
@@ -2403,7 +2365,7 @@ namespace G2lib {
     void setP8() { m_tt = TargetType::P8; }
     void setP9() { m_tt = TargetType::P9; }
 
-    // vecchio da rimnuovere
+    // vecchio da rimuovere
     void
     build(
       real_type const xvec[],
@@ -2417,7 +2379,9 @@ namespace G2lib {
       real_type const xvec[],
       real_type const yvec[],
       real_type       theta[]
-    );
+    ) {
+      build_PN( npts, xvec, yvec, theta, TargetType::P4 );
+    }
 
     bool
     build_P1(
@@ -2437,6 +2401,15 @@ namespace G2lib {
       real_type       theta[]
     );
 
+    bool
+    build_PN(
+      integer   const npts,
+      real_type const xvec[],
+      real_type const yvec[],
+      real_type       theta[],
+      TargetType      tt
+    );
+
     integer numPnts() const { return m_npts; }
     integer numTheta() const;
     integer numConstraints() const;
@@ -2448,19 +2421,13 @@ namespace G2lib {
       real_type theta_max[]
     ) const;
 
-    bool objective( real_type const theta[], real_type & f ) const;
+    bool objective   ( real_type const theta[], real_type & f ) const;
+    bool gradient    ( real_type const theta[], Pipal::Vector<real_type> & g ) const;
+    bool constraints ( real_type const theta[], Pipal::Vector<real_type> & c ) const;
 
-    bool gradient( real_type const theta[], real_type g[] ) const;
+    bool jacobian ( real_type const theta[], Pipal::SparseMatrix<real_type> & J ) const;
 
-    bool constraints( real_type const theta[], real_type c[] ) const;
-
-    integer jacobian_nnz() const;
-
-    bool jacobian_pattern( integer i[], integer j[] ) const;
-
-    bool jacobian_pattern_matlab( real_type i[], real_type j[] ) const;
-
-    bool jacobian( real_type const theta[], real_type vals[] ) const;
+    bool lagrangian_hessian ( real_type const theta[], real_type const lambda[], Pipal::SparseMatrix<real_type> & H ) const;
 
     string info() const;
 

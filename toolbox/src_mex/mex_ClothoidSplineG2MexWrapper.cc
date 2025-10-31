@@ -50,7 +50,6 @@
 "    g           = ClothoidSplineG2MexWrapper('gradient',OBJ,theta);\n" \
 "    c           = ClothoidSplineG2MexWrapper('constraints',OBJ,theta);\n" \
 "    jac         = ClothoidSplineG2MexWrapper('jacobian',OBJ,theta);\n" \
-"    jac_pattern = ClothoidSplineG2MexWrapper('jacobian_pattern',OBJ);\n" \
 "    [n,nc]      = ClothoidSplineG2MexWrapper('dims',OBJ);\n" \
 "\n" \
 "=====================================================================================\n" \
@@ -163,7 +162,7 @@ namespace G2lib {
     int nrhs, mxArray const *prhs[]
   ) {
 
-    #define CMD "ClothoidSplineG2MexWrapper('target',OBJ,target[,theta0,theta1]): "
+    #define CMD "ClothoidSplineG2MexWrapper('target',OBJ,target): "
 
     UTILS_MEX_ASSERT( nrhs >= 3, CMD "expected at least 3 inputs, nrhs = {}\n", nrhs );
     UTILS_MEX_ASSERT( nlhs == 0, CMD "expected no output, nlhs = {}\n", nlhs );
@@ -173,24 +172,14 @@ namespace G2lib {
     UTILS_MEX_ASSERT0( mxIsChar(arg_in_2), CMD "Third argument must be a string" );
     string obj = mxArrayToString(arg_in_2);
 
-    if ( obj == "P1" ) {
-      UTILS_MEX_ASSERT( nrhs == 5, CMD "expected at 5 inputs, nrhs = {}\n", nrhs );
-      real_type theta0 = Utils::mex_get_scalar_value( arg_in_3, CMD "Error in reading theta0" );
-      real_type theta1 = Utils::mex_get_scalar_value( arg_in_4, CMD "Error in reading theta1" );
-      ptr->setP1( theta0, theta1 );
-    } else {
-      UTILS_MEX_ASSERT( nrhs == 3, CMD "expected 3 inputs, nrhs = {}\n", nrhs );
-      if      ( obj == "P2" ) ptr->setP2();
-      else if ( obj == "P3" ) ptr->setP3();
-      else if ( obj == "P4" ) ptr->setP4();
-      else if ( obj == "P5" ) ptr->setP5();
-      else if ( obj == "P6" ) ptr->setP6();
-      else if ( obj == "P7" ) ptr->setP7();
-      else if ( obj == "P8" ) ptr->setP8();
-      else if ( obj == "P9" ) ptr->setP9();
-      else {
-        UTILS_MEX_ASSERT( false, CMD "Unknown target {}\n", obj );
-      }
+    if      ( obj == "P4" ) ptr->setP4();
+    else if ( obj == "P5" ) ptr->setP5();
+    else if ( obj == "P6" ) ptr->setP6();
+    else if ( obj == "P7" ) ptr->setP7();
+    else if ( obj == "P8" ) ptr->setP8();
+    else if ( obj == "P9" ) ptr->setP9();
+    else {
+      UTILS_MEX_ASSERT( false, CMD "Unknown target {}\n", obj );
     }
     #undef CMD
   }
@@ -274,7 +263,11 @@ namespace G2lib {
       CMD "length(theta) = {} must be {}\n", ntheta, ptr->numPnts()
     );
     double * g = Utils::mex_create_matrix_value( arg_out_0, ntheta, 1 );
-    bool ok = ptr->gradient( theta, g );
+
+    Pipal::Vector<real_type> g_vec;
+    bool ok = ptr->gradient( theta, g_vec );
+    std::copy_n( g_vec.data(), ntheta, g );
+
     UTILS_MEX_ASSERT0( ok, CMD "bad gradient computation");
 
     #undef CMD
@@ -303,7 +296,11 @@ namespace G2lib {
       CMD "length(theta) = {} must be {}\n", ntheta, ptr->numPnts()
     );
     double * c = Utils::mex_create_matrix_value( arg_out_0, ptr->numConstraints(), 1 );
-    bool ok = ptr->constraints( theta, c );
+
+    Pipal::Vector<real_type> c_vec;
+    bool ok = ptr->constraints( theta, c_vec );
+    std::copy_n( c_vec.data(), ptr->numConstraints(), c );
+
     UTILS_MEX_ASSERT0( ok, CMD "bad constraints computation");
 
     #undef CMD
@@ -331,58 +328,32 @@ namespace G2lib {
       ntheta == static_cast<mwSize>(ptr->numPnts()),
       CMD "length(theta) = {} must be {}\n", ntheta, ptr->numPnts()
     );
-
-    integer n   = ptr->numConstraints();
-    integer m   = ptr->numTheta();
-    integer nnz = ptr->jacobian_nnz();
-
-    mxArray *args[5];
-
-    real_type * I = Utils::mex_create_matrix_value( args[0], 1, nnz );
-    real_type * J = Utils::mex_create_matrix_value( args[1], 1, nnz );
-    real_type * V = Utils::mex_create_matrix_value( args[2], 1, nnz );
-    Utils::mex_set_scalar_value( args[3], n );
-    Utils::mex_set_scalar_value( args[4], m );
-
-    ptr->jacobian_pattern_matlab( I, J );
-    ptr->jacobian( theta, V );
-
-    int ok = mexCallMATLAB( nlhs, plhs, 5, args, "sparse" );
-    UTILS_MEX_ASSERT0( ok == 0, CMD "failed the call sparse(...)" );
-
-    #undef CMD
-  }
-
-  // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
-
-  static
-  void
-  do_jacobian_pattern(
-    int nlhs, mxArray       *plhs[],
-    int nrhs, mxArray const *prhs[]
-  ) {
-
-    #define CMD "ClothoidSplineG2MexWrapper('jacobian_pattern',OBJ): "
-
-    UTILS_MEX_ASSERT( nrhs == 2, CMD "expected 2 inputs, nrhs = {}\n", nrhs );
-    UTILS_MEX_ASSERT( nlhs == 1, CMD "expected 1 outputs, nlhs = {}\n", nlhs );
-
-    ClothoidSplineG2 * ptr = Utils::mex_convert_mx_to_ptr<ClothoidSplineG2>(arg_in_1);
-
-    integer n   = ptr->numConstraints();
-    integer m   = ptr->numTheta();
-    integer nnz = ptr->jacobian_nnz();
+    
+    
+    Pipal::SparseMatrix<real_type> Jac;
+    ptr->jacobian( theta, Jac );
 
     mxArray *args[5];
 
-    real_type * I = Utils::mex_create_matrix_value( args[0], 1, nnz );
-    real_type * J = Utils::mex_create_matrix_value( args[1], 1, nnz );
-    real_type * V = Utils::mex_create_matrix_value( args[2], 1, nnz );
-    Utils::mex_set_scalar_value( args[3], n );
-    Utils::mex_set_scalar_value( args[4], m );
-
-    ptr->jacobian_pattern_matlab( I, J );
-    std::fill( V, V+nnz, 1 );
+    real_type * I = Utils::mex_create_matrix_value( args[0], 1, Jac.nonZeros() );
+    real_type * J = Utils::mex_create_matrix_value( args[1], 1, Jac.nonZeros() );
+    real_type * V = Utils::mex_create_matrix_value( args[2], 1, Jac.nonZeros() );
+    Utils::mex_set_scalar_value( args[3], Jac.rows() );
+    Utils::mex_set_scalar_value( args[4], Jac.cols() );
+    
+    // Riempimento dai dati Eigen (formato CSC di default)
+    const int       * outer = Jac.outerIndexPtr();
+    const int       * inner = Jac.innerIndexPtr();
+    const real_type * val   = Jac.valuePtr();
+    
+    mwSize pos = 0;
+    for ( int col = 0; col < Jac.outerSize(); ++col) {
+      for ( int k = outer[col]; k < outer[col + 1]; ++k, ++pos) {
+        I[pos] = static_cast<real_type>(inner[k] + 1); // MATLAB usa 1-based
+        J[pos] = static_cast<real_type>(col + 1);
+        V[pos] = val[k];
+      }
+    }
 
     int ok = mexCallMATLAB( nlhs, plhs, 5, args, "sparse" );
     UTILS_MEX_ASSERT0( ok == 0, CMD "failed the call sparse(...)" );
@@ -451,7 +422,6 @@ namespace G2lib {
     {"gradient",do_gradient},
     {"constraints",do_constraints},
     {"jacobian",do_jacobian},
-    {"jacobian_pattern",do_jacobian_pattern},
     {"dims",do_dims},
     {"info",do_info},
   };

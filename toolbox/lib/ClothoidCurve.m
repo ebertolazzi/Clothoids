@@ -68,16 +68,8 @@ classdef ClothoidCurve < CurveBase
     %> - `x1`, `y1`: coordinate of final point
     %> - `theta1`:   orientation of the clothoid at final point
     %>
-    function varargout = build_G1( self, x0, y0, theta0, x1, y1, theta1 )
-      if nargout > 1
-        [ varargout{1:nargout} ] = ClothoidCurveMexWrapper( ...
-          'build_G1_D', self.objectHandle, x0, y0, theta0, x1, y1, theta1 ...
-        );
-      else
-        [ varargout{1:nargout} ] = ClothoidCurveMexWrapper( ...
-          'build_G1', self.objectHandle, x0, y0, theta0, x1, y1, theta1 ...
-        );
-      end
+    function iter = build_G1( self, x0, y0, theta0, x1, y1, theta1 )
+      iter = ClothoidCurveMexWrapper( 'build_G1', self.objectHandle, x0, y0, theta0, x1, y1, theta1 );
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     %> Build the interpolating clothoid arc fixing initial position angle and curvature
@@ -102,9 +94,7 @@ classdef ClothoidCurve < CurveBase
     %> - `ok`: true iff the interpolation was successful
     %>
     function ok = build_forward( self, x0, y0, theta0, k0, x1, y1 )
-      ok = ClothoidCurveMexWrapper( ...
-        'build_forward', self.objectHandle, x0, y0, theta0, k0, x1, y1 ...
-      );
+      ok = ClothoidCurveMexWrapper( 'build_forward', self.objectHandle, x0, y0, theta0, k0, x1, y1 );
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     %> Find the closest point to a clothoid curve using the

@@ -335,7 +335,7 @@ namespace G2lib {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   void
-  ClothoidList::adjust() {
+  ClothoidList::adjust_angles() {
     if ( !m_clothoid_list.empty() ) {
       integer const N{ num_segments() };
       for ( integer k{1}; k < N; ++k ) {
@@ -641,7 +641,7 @@ namespace G2lib {
       c.build_G1( x[n-2], y[n-2], theta0, x[n-1], y[n-1], theta1 );
       this->push_back(c);
     }
-    this->adjust();
+    this->adjust_angles();
     return true;
   }
 
@@ -666,7 +666,7 @@ namespace G2lib {
       this->push_back(c);
     }
 
-    this->adjust();
+    this->adjust_angles();
 
     return true;
   }
@@ -729,7 +729,7 @@ namespace G2lib {
     push_back( G2_3arc.SM() );
     push_back( G2_3arc.S1() );
 
-    this->adjust();
+    this->adjust_angles();
 
     return true;
   }
@@ -782,7 +782,7 @@ namespace G2lib {
     push_back( G2_3arc.SM() );
     push_back( G2_3arc.S1() );
 
-    this->adjust();
+    this->adjust_angles();
 
     return true;
   }
@@ -909,6 +909,7 @@ namespace G2lib {
       real_type const L  = pa[1]-pa[0];
       this->push_back( *px, *py, *pt, *pk, dk, L );
     }
+
     return true;
   }
 

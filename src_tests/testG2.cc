@@ -94,20 +94,17 @@ main() {
     -3.178123242, -3.178123242, -1.707808758
   };
   
+  Utils::TicToc tictoc;
+  tictoc.tic();
   S.build_G2( N, X, Y, 3.1415/2, 0, 3.1415/2, 0 );
+  tictoc.toc();
+  fmt::print( "build_G2 elapsed = {} [ms]\n", tictoc.elapsed_ms() );
+
+  tictoc.tic();
   S.build_G2_cyclic( N, X, Y );
+  tictoc.toc();
+  fmt::print( "build_G2_cyclic elapsed = {} [ms]\n", tictoc.elapsed_ms() );
 
-  for ( int i{0}; i < 0; ++i ) {
-    Eigen::VectorXd THETA;
-    THETA.resize(27);
-
-    g2spline.setP4();
-    g2spline.build( N, X, Y, THETA.data() );
-  
-    std::cout << THETA.transpose() << '\n';
-  
-    g2spline.info( std::cout );
-  }
 
   fmt::print( "\n\nALL DONE FOLKS!!!\n" );
 
