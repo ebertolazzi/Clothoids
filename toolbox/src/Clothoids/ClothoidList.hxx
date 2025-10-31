@@ -2334,9 +2334,10 @@ namespace G2lib {
     integer    m_npts{0};
 
     // work vector
-            Eigen::Vector<real_type,Eigen::Dynamic> m_x;
-            Eigen::Vector<real_type,Eigen::Dynamic> m_y;
-    mutable vector<G2derivative> m_G1_vec;
+    Eigen::Vector<real_type,Eigen::Dynamic> m_x;
+    Eigen::Vector<real_type,Eigen::Dynamic> m_y;
+
+    mutable vector<G2derivative> m_G2_vec;
 
     void evaluate_for_NLP( real_type const theta[] ) const;
     void evaluate_for_NLP_D( real_type const theta[] ) const;
@@ -2364,6 +2365,8 @@ namespace G2lib {
     void setP7() { m_tt = TargetType::P7; }
     void setP8() { m_tt = TargetType::P8; }
     void setP9() { m_tt = TargetType::P9; }
+
+    TargetType get_target() const { return m_tt; }
 
     // vecchio da rimuovere
     void

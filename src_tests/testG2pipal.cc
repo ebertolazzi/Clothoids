@@ -51,9 +51,11 @@ main() {
                                G2lib::TargetType::P5,
                                G2lib::TargetType::P4 };
 
-  //for ( auto const & PN : targets ) {
+  //G2lib::TargetType targets[]{ G2lib::TargetType::P9 };
+
+  for ( auto const & PN : targets ) {
   
-    auto PN{ G2lib::TargetType::P4 };
+    //auto PN{ G2lib::TargetType::P4 };
 
     Eigen::VectorXd THETA;
     THETA.resize(N);
@@ -67,7 +69,7 @@ main() {
     fmt::print( "build_G2 elapsed = {} [ms]\n", tictoc.elapsed_ms() );
     std::cout << THETA.transpose() << '\n';
     g2spline.info( std::cout );
-  //}
+  }
 
   fmt::print( "\n\nALL DONE FOLKS!!!\n" );
 

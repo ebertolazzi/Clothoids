@@ -446,7 +446,7 @@ namespace G2lib {
       real_type const y1,
       real_type const theta1,
       G2derivative  & G,
-      real_type const tol
+      real_type const tol = 1e-12
     );
 
     int
@@ -458,7 +458,7 @@ namespace G2lib {
       real_type const y1,
       real_type const theta1,
       G2derivative  & G,
-      real_type const tol
+      real_type const tol = 1e-12
     );
 
     int
@@ -470,7 +470,7 @@ namespace G2lib {
       real_type const y1,
       real_type const theta1,
       G2derivative  & G,
-      real_type const tol
+      real_type const tol = 1e-12
     );
 
     bool

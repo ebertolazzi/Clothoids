@@ -112,11 +112,11 @@ namespace G2lib {
     UTILS_MEX_ASSERT( nrhs == 4, CMD "expected 4 inputs, nrhs = {}\n", nrhs );
     UTILS_MEX_ASSERT( nlhs == 0, CMD "expected no output, nlhs = {}\n", nlhs );
 
-    ClothoidSplineG2 * ptr = Utils::mex_convert_mx_to_ptr<ClothoidSplineG2>(arg_in_1);
+    ClothoidSplineG2 * ptr{ Utils::mex_convert_mx_to_ptr<ClothoidSplineG2>(arg_in_1) };
 
     mwSize nx, ny;
-    real_type const * x = Utils::mex_vector_pointer( arg_in_2, nx, CMD "Error in reading x" );
-    real_type const * y = Utils::mex_vector_pointer( arg_in_3, ny, CMD "Error in reading y" );
+    real_type const * x{ Utils::mex_vector_pointer( arg_in_2, nx, CMD "Error in reading x" ) };
+    real_type const * y{ Utils::mex_vector_pointer( arg_in_3, ny, CMD "Error in reading y" ) };
 
     UTILS_MEX_ASSERT( nx == ny, CMD "length(x) = {} must be equal to size(y) = {}\n", nx, ny );
 
@@ -138,17 +138,17 @@ namespace G2lib {
     UTILS_MEX_ASSERT( nrhs == 4, CMD "expected 4 inputs, nrhs = {}\n", nrhs );
     UTILS_MEX_ASSERT( nlhs == 1, CMD "expected 1 output, nlhs = {}\n", nlhs );
 
-    ClothoidSplineG2 * ptr = Utils::mex_convert_mx_to_ptr<ClothoidSplineG2>(arg_in_1);
+    ClothoidSplineG2 * ptr{ Utils::mex_convert_mx_to_ptr<ClothoidSplineG2>(arg_in_1) };
 
     mwSize nx, ny;
-    real_type const * x = Utils::mex_vector_pointer( arg_in_2, nx, CMD "Error in reading x" );
-    real_type const * y = Utils::mex_vector_pointer( arg_in_3, ny, CMD "Error in reading y" );
+    real_type const * x{ Utils::mex_vector_pointer( arg_in_2, nx, CMD "Error in reading x" ) };
+    real_type const * y{ Utils::mex_vector_pointer( arg_in_3, ny, CMD "Error in reading y" ) };
 
     UTILS_MEX_ASSERT( nx == ny, CMD "length(x) = {} must be equal to size(y) = {}\n", nx, ny );
 
-    real_type * theta = Utils::mex_create_matrix_value( arg_out_0, nx, 1 );
+    real_type * theta{ Utils::mex_create_matrix_value( arg_out_0, nx, 1 ) };
 
-    ptr->build( nx, x, y, theta );
+    ptr->build_PN( nx, x, y, theta, ptr->get_target() );
 
     #undef CMD
   }
@@ -167,7 +167,7 @@ namespace G2lib {
     UTILS_MEX_ASSERT( nrhs >= 3, CMD "expected at least 3 inputs, nrhs = {}\n", nrhs );
     UTILS_MEX_ASSERT( nlhs == 0, CMD "expected no output, nlhs = {}\n", nlhs );
 
-    ClothoidSplineG2 * ptr = Utils::mex_convert_mx_to_ptr<ClothoidSplineG2>(arg_in_1);
+    ClothoidSplineG2 * ptr{ Utils::mex_convert_mx_to_ptr<ClothoidSplineG2>(arg_in_1) };
 
     UTILS_MEX_ASSERT0( mxIsChar(arg_in_2), CMD "Third argument must be a string" );
     string obj = mxArrayToString(arg_in_2);
@@ -198,13 +198,13 @@ namespace G2lib {
     UTILS_MEX_ASSERT( nrhs == 2, CMD "expected 2 inputs, nrhs = {}\n", nrhs );
     UTILS_MEX_ASSERT( nlhs == 3, CMD "expected 3 outputs, nlhs = {}\n", nlhs );
 
-    ClothoidSplineG2 * ptr = Utils::mex_convert_mx_to_ptr<ClothoidSplineG2>(arg_in_1);
+    ClothoidSplineG2 * ptr{ Utils::mex_convert_mx_to_ptr<ClothoidSplineG2>(arg_in_1) };
 
     integer N = ptr->numPnts();
 
-    real_type * theta_guess = Utils::mex_create_matrix_value( arg_out_0, N, 1 );
-    real_type * theta_min   = Utils::mex_create_matrix_value( arg_out_1, N, 1 );
-    real_type * theta_max   = Utils::mex_create_matrix_value( arg_out_2, N, 1 );
+    real_type * theta_guess { Utils::mex_create_matrix_value( arg_out_0, N, 1 ) };
+    real_type * theta_min   { Utils::mex_create_matrix_value( arg_out_1, N, 1 ) };
+    real_type * theta_max   { Utils::mex_create_matrix_value( arg_out_2, N, 1 ) };
 
     ptr->guess( theta_guess, theta_min, theta_max );
 
@@ -225,16 +225,16 @@ namespace G2lib {
     UTILS_MEX_ASSERT( nrhs == 3, CMD "expected 3 inputs, nrhs = {}\n", nrhs );
     UTILS_MEX_ASSERT( nlhs == 1, CMD "expected 1 outputs, nlhs = {}\n", nlhs );
 
-    ClothoidSplineG2 * ptr = Utils::mex_convert_mx_to_ptr<ClothoidSplineG2>(arg_in_1);
+    ClothoidSplineG2 * ptr{ Utils::mex_convert_mx_to_ptr<ClothoidSplineG2>(arg_in_1) };
 
     mwSize ntheta;
-    real_type const * theta = Utils::mex_vector_pointer( arg_in_2, ntheta, CMD "Error in reading theta" );
+    real_type const * theta{ Utils::mex_vector_pointer( arg_in_2, ntheta, CMD "Error in reading theta" ) };
     UTILS_MEX_ASSERT(
       ntheta == static_cast<mwSize>(ptr->numPnts()),
       CMD "length(theta) = {} must be {}\n", ntheta, ptr->numPnts()
     );
     real_type f;
-    bool ok = ptr->objective( theta, f );
+    bool ok{ ptr->objective( theta, f ) };
     if ( ok ) Utils::mex_set_scalar_value( arg_out_0, f );
 
     #undef CMD
@@ -254,18 +254,18 @@ namespace G2lib {
     UTILS_MEX_ASSERT( nrhs == 3, CMD "expected 3 inputs, nrhs = {}\n", nrhs );
     UTILS_MEX_ASSERT( nlhs == 1, CMD "expected 1 outputs, nlhs = {}\n", nlhs );
 
-    ClothoidSplineG2 * ptr = Utils::mex_convert_mx_to_ptr<ClothoidSplineG2>(arg_in_1);
+    ClothoidSplineG2 * ptr{ Utils::mex_convert_mx_to_ptr<ClothoidSplineG2>(arg_in_1) };
 
     mwSize ntheta;
-    real_type const * theta = Utils::mex_vector_pointer( arg_in_2, ntheta, CMD "Error in reading theta" );
+    real_type const * theta{ Utils::mex_vector_pointer( arg_in_2, ntheta, CMD "Error in reading theta" ) };
     UTILS_MEX_ASSERT(
       ntheta == static_cast<mwSize>(ptr->numPnts()),
       CMD "length(theta) = {} must be {}\n", ntheta, ptr->numPnts()
     );
-    double * g = Utils::mex_create_matrix_value( arg_out_0, ntheta, 1 );
+    double * g{ Utils::mex_create_matrix_value( arg_out_0, ntheta, 1 ) };
 
     Pipal::Vector<real_type> g_vec;
-    bool ok = ptr->gradient( theta, g_vec );
+    bool ok{ ptr->gradient( theta, g_vec ) };
     std::copy_n( g_vec.data(), ntheta, g );
 
     UTILS_MEX_ASSERT0( ok, CMD "bad gradient computation");
@@ -287,7 +287,7 @@ namespace G2lib {
     UTILS_MEX_ASSERT( nrhs == 3, CMD "expected 3 inputs, nrhs = {}\n", nrhs );
     UTILS_MEX_ASSERT( nlhs == 1, CMD "expected 1 outputs, nlhs = {}\n", nlhs );
 
-    ClothoidSplineG2 * ptr = Utils::mex_convert_mx_to_ptr<ClothoidSplineG2>(arg_in_1);
+    ClothoidSplineG2 * ptr{ Utils::mex_convert_mx_to_ptr<ClothoidSplineG2>(arg_in_1) };
 
     mwSize ntheta;
     real_type const * theta = Utils::mex_vector_pointer( arg_in_2, ntheta, CMD "Error in reading theta" );
@@ -295,10 +295,10 @@ namespace G2lib {
       ntheta == static_cast<mwSize>(ptr->numPnts()),
       CMD "length(theta) = {} must be {}\n", ntheta, ptr->numPnts()
     );
-    double * c = Utils::mex_create_matrix_value( arg_out_0, ptr->numConstraints(), 1 );
+    double * c{ Utils::mex_create_matrix_value( arg_out_0, ptr->numConstraints(), 1 ) };
 
     Pipal::Vector<real_type> c_vec;
-    bool ok = ptr->constraints( theta, c_vec );
+    bool ok{ ptr->constraints( theta, c_vec ) };
     std::copy_n( c_vec.data(), ptr->numConstraints(), c );
 
     UTILS_MEX_ASSERT0( ok, CMD "bad constraints computation");
@@ -320,16 +320,15 @@ namespace G2lib {
     UTILS_MEX_ASSERT( nrhs == 3, CMD "expected 3 inputs, nrhs = {}\n", nrhs );
     UTILS_MEX_ASSERT( nlhs == 1, CMD "expected 1 outputs, nlhs = {}\n", nlhs );
 
-    ClothoidSplineG2 * ptr = Utils::mex_convert_mx_to_ptr<ClothoidSplineG2>(arg_in_1);
+    ClothoidSplineG2 * ptr{ Utils::mex_convert_mx_to_ptr<ClothoidSplineG2>(arg_in_1) };
 
     mwSize ntheta;
-    real_type const * theta = Utils::mex_vector_pointer( arg_in_2, ntheta, CMD "Error in reading theta" );
+    real_type const * theta{ Utils::mex_vector_pointer( arg_in_2, ntheta, CMD "Error in reading theta" ) };
     UTILS_MEX_ASSERT(
       ntheta == static_cast<mwSize>(ptr->numPnts()),
       CMD "length(theta) = {} must be {}\n", ntheta, ptr->numPnts()
     );
-    
-    
+
     Pipal::SparseMatrix<real_type> Jac;
     ptr->jacobian( theta, Jac );
 
@@ -365,6 +364,67 @@ namespace G2lib {
 
   static
   void
+  do_lagrangian_hessian(
+    int nlhs, mxArray       *plhs[],
+    int nrhs, mxArray const *prhs[]
+  ) {
+
+    #define CMD "ClothoidSplineG2MexWrapper('lagrangian_hessian',OBJ,theta,lambda): "
+
+    UTILS_MEX_ASSERT( nrhs == 4, CMD "expected 4 inputs, nrhs = {}\n", nrhs );
+    UTILS_MEX_ASSERT( nlhs == 1, CMD "expected 1 outputs, nlhs = {}\n", nlhs );
+
+    ClothoidSplineG2 * ptr{ Utils::mex_convert_mx_to_ptr<ClothoidSplineG2>(arg_in_1) };
+
+    mwSize ntheta;
+    real_type const * theta{ Utils::mex_vector_pointer( arg_in_2, ntheta, CMD "Error in reading theta" ) };
+    UTILS_MEX_ASSERT(
+      ntheta == static_cast<mwSize>(ptr->numPnts()),
+      CMD "length(theta) = {} must be {}\n", ntheta, ptr->numPnts()
+    );
+
+    mwSize nlambda;
+    real_type const * lambda{ Utils::mex_vector_pointer( arg_in_3, nlambda, CMD "Error in reading lambda" ) };
+    UTILS_MEX_ASSERT(
+      nlambda == static_cast<mwSize>(ptr->numConstraints()),
+      CMD "length(lambda) = {} must be {}\n", nlambda, ptr->numConstraints()
+    );
+
+    Pipal::SparseMatrix<real_type> H;
+    ptr->lagrangian_hessian( theta, lambda, H );
+
+    mxArray *args[5];
+
+    real_type * I = Utils::mex_create_matrix_value( args[0], 1, H.nonZeros() );
+    real_type * J = Utils::mex_create_matrix_value( args[1], 1, H.nonZeros() );
+    real_type * V = Utils::mex_create_matrix_value( args[2], 1, H.nonZeros() );
+    Utils::mex_set_scalar_value( args[3], H.rows() );
+    Utils::mex_set_scalar_value( args[4], H.cols() );
+    
+    // Riempimento dai dati Eigen (formato CSC di default)
+    const int       * outer = H.outerIndexPtr();
+    const int       * inner = H.innerIndexPtr();
+    const real_type * val   = H.valuePtr();
+    
+    mwSize pos = 0;
+    for ( int col = 0; col < H.outerSize(); ++col) {
+      for ( int k = outer[col]; k < outer[col + 1]; ++k, ++pos) {
+        I[pos] = static_cast<real_type>(inner[k] + 1); // MATLAB usa 1-based
+        J[pos] = static_cast<real_type>(col + 1);
+        V[pos] = val[k];
+      }
+    }
+
+    int ok = mexCallMATLAB( nlhs, plhs, 5, args, "sparse" );
+    UTILS_MEX_ASSERT0( ok == 0, CMD "failed the call sparse(...)" );
+
+    #undef CMD
+  }
+
+  // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+  static
+  void
   do_dims(
     int nlhs, mxArray       *plhs[],
     int nrhs, mxArray const *prhs[]
@@ -375,7 +435,7 @@ namespace G2lib {
     UTILS_MEX_ASSERT( nrhs == 2, CMD "expected 2 inputs, nrhs = {}\n", nrhs );
     UTILS_MEX_ASSERT( nlhs == 2, CMD "expected 2 outputs, nlhs = {}\n", nlhs );
 
-    ClothoidSplineG2 * ptr = Utils::mex_convert_mx_to_ptr<ClothoidSplineG2>(arg_in_1);
+    ClothoidSplineG2 * ptr{ Utils::mex_convert_mx_to_ptr<ClothoidSplineG2>(arg_in_1) };
 
     integer m = ptr->numTheta();
     integer n = ptr->numConstraints();
@@ -400,7 +460,7 @@ namespace G2lib {
     UTILS_MEX_ASSERT( nrhs == 2, CMD "expected 2 inputs, nrhs = {}\n", nrhs );
     UTILS_MEX_ASSERT( nlhs == 0, CMD "expected NO outputs, nlhs = {}\n", nlhs );
 
-    ClothoidSplineG2 * ptr = Utils::mex_convert_mx_to_ptr<ClothoidSplineG2>(arg_in_1);
+    ClothoidSplineG2 * ptr{ Utils::mex_convert_mx_to_ptr<ClothoidSplineG2>(arg_in_1) };
 
     ptr->info( std::cout );
 
@@ -422,6 +482,7 @@ namespace G2lib {
     {"gradient",do_gradient},
     {"constraints",do_constraints},
     {"jacobian",do_jacobian},
+    {"lagrangian_hessian",do_lagrangian_hessian},
     {"dims",do_dims},
     {"info",do_info},
   };
@@ -439,10 +500,7 @@ namespace G2lib {
     if ( nrhs == 0 ) { mexErrMsgTxt(MEX_ERROR_MESSAGE); return; }
 
     try {
-      UTILS_MEX_ASSERT0(
-        mxIsChar(arg_in_0),
-        "ClothoidListMexWrapper: First argument must be a string"
-      );
+      UTILS_MEX_ASSERT0( mxIsChar(arg_in_0), "ClothoidListMexWrapper: First argument must be a string" );
       mxGetString( arg_in_0, cmd, 256 );
       cmd_to_fun.at(cmd)( nlhs, plhs, nrhs, prhs );
     } catch ( std::exception const & e ) {

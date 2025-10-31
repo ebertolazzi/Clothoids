@@ -15,8 +15,8 @@ classdef Parameter < handle
   % Class properties (constant)
   properties (Constant)
     
-    opt_err_tol   = 1e-10; % 1e-06;   % Default optimality tolerance
-    iter_max      = 10000; % 1e+03;   % Default iteration limit
+    opt_err_tol   = 1e-6;    % Default optimality tolerance
+    iter_max      = 100;     % Default iteration limit
     rhs_bnd       = 1e+18;   % Max absolute value allowed for constraint right-hand side
     grad_max      = 1e+02;   % Gradient norm limit for scaling
     infeas_max    = 1e+02;   % Infeasibility limit for penalty parameter update

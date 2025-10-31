@@ -235,13 +235,13 @@ namespace Pipal {
     const Integer cols{static_cast<Integer>(mat_dense.cols())}, rows{static_cast<Integer>(mat_dense.rows())};
     for (Integer r{0}; r < rows; ++r) {
       for (Integer c{0}; c < cols; ++c) {
-        if constexpr (CheckZero) {
-          if (mat_dense(r, c) != static_cast<Real>(0.0)) {
-            mat_sparse.coeffRef(r + row_offset, c + col_offset) = mat_dense(r, c);
-          }
-        } else {
-          mat_sparse.coeffRef(r + row_offset, c + col_offset) = mat_dense(r, c);
-        }
+        //if constexpr (CheckZero) {
+        //  if (mat_dense(r, c) != static_cast<Real>(0.0)) {
+        //    mat_sparse.coeffRef(r + row_offset, c + col_offset) = mat_dense(r, c);
+        //  }
+        //} else {
+        mat_sparse.coeffRef(r + row_offset, c + col_offset) = mat_dense(r, c);
+        //}
       }
     }
   }

@@ -152,6 +152,20 @@ namespace G2lib {
     real_type k1;
     real_type dk;
 
+    real_type A;
+    real_type A__L;
+    real_type A__R;
+    real_type A__LL;
+    real_type A__LR;
+    real_type A__RR;
+
+    real_type B;
+    real_type B__L;
+    real_type B__R;
+    real_type B__LL;
+    real_type B__LR;
+    real_type B__RR;
+
     real_type L__L;
     real_type L__R;
     real_type L__LL;

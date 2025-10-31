@@ -121,7 +121,7 @@ namespace G2lib {
 
     auto F = [this,&ne,&ne1,&theta_init,&theta_end]( Vector const & theta, Vector & F ) -> bool {
       this->evaluate_for_NLP( theta.data() );
-      for ( integer j{0}; j < ne1; ++j ) F[j] = m_G1_vec[j].k1-m_G1_vec[j+1].k0;
+      for ( integer j{0}; j < ne1; ++j ) F[j] = m_G2_vec[j].k1-m_G2_vec[j+1].k0;
       F[ne1] = diff2pi( theta[0]  - theta_init );
       F[ne]  = diff2pi( theta[ne] - theta_end );
       return F.allFinite();;
@@ -132,15 +132,15 @@ namespace G2lib {
       JF.resize( m_npts, m_npts );
 
       this->evaluate_for_NLP_D( theta.data() );
-      for ( integer j{0}; j < ne1; ++j ) F[j] = m_G1_vec[j].k1 - m_G1_vec[j+1].k0;
+      for ( integer j{0}; j < ne1; ++j ) F[j] = m_G2_vec[j].k1 - m_G2_vec[j+1].k0;
       F[ne1] = diff2pi( theta[0]  - theta_init );
       F[ne]  = diff2pi( theta[ne] - theta_end );
 
       vector<Eigen::Triplet<real_type>> triplets;
       triplets.reserve(3*ne+3);
       for ( integer j{0}; j < ne1; ++j ) {
-        auto const & G  { m_G1_vec[j] };
-        auto const & G1 { m_G1_vec[j+1] };
+        auto const & G  { m_G2_vec[j] };
+        auto const & G1 { m_G2_vec[j+1] };
         triplets.emplace_back(j, j,   G.k__L + G.dk__L * G.L + G.dk * G.L__L           );
         triplets.emplace_back(j, j+1, G.k__R + G.dk__R * G.L + G.dk * G.L__R - G1.k__L );
         triplets.emplace_back(j, j+2,                                        - G1.k__R );
@@ -186,9 +186,9 @@ namespace G2lib {
 
     auto F = [this,&ne,&ne1]( Vector const & theta, Vector & F ) -> bool {
       this->evaluate_for_NLP( theta.data() );
-      for ( integer j{0}; j < ne1; ++j ) F[j] = m_G1_vec[j].k1-m_G1_vec[j+1].k0;
+      for ( integer j{0}; j < ne1; ++j ) F[j] = m_G2_vec[j].k1-m_G2_vec[j+1].k0;
       F[ne1] = diff2pi( theta[0] - theta[ne] );
-      F[ne]  = m_G1_vec[ne1].k1-m_G1_vec[0].k0;
+      F[ne]  = m_G2_vec[ne1].k1-m_G2_vec[0].k0;
       return F.allFinite();;
     };
 
@@ -197,15 +197,15 @@ namespace G2lib {
       JF.resize( m_npts, m_npts );
 
       this->evaluate_for_NLP_D( theta.data() );
-      for ( integer j{0}; j < ne1; ++j ) F[j] = m_G1_vec[j].k1 - m_G1_vec[j+1].k0;
+      for ( integer j{0}; j < ne1; ++j ) F[j] = m_G2_vec[j].k1 - m_G2_vec[j+1].k0;
       F[ne1] = diff2pi( theta[0] - theta[ne] );
-      F[ne]  = m_G1_vec[ne1].k1-m_G1_vec[0].k0;
+      F[ne]  = m_G2_vec[ne1].k1-m_G2_vec[0].k0;
 
       vector<Eigen::Triplet<real_type>> triplets;
       triplets.reserve(3*ne+4);
       for ( integer j{0}; j < ne1; ++j ) {
-        auto const & G  { m_G1_vec[j] };
-        auto const & G1 { m_G1_vec[j+1] };
+        auto const & G  { m_G2_vec[j] };
+        auto const & G1 { m_G2_vec[j+1] };
         triplets.emplace_back(j, j,   G.k__L + G.dk__L * G.L + G.dk * G.L__L           );
         triplets.emplace_back(j, j+1, G.k__R + G.dk__R * G.L + G.dk * G.L__R - G1.k__L );
         triplets.emplace_back(j, j+2,                                        - G1.k__R );
@@ -213,8 +213,8 @@ namespace G2lib {
       triplets.emplace_back( ne1, 0,   1 );
       triplets.emplace_back( ne1, ne, -1 );
       {
-        auto const & G  { m_G1_vec[ne1] };
-        auto const & G1 { m_G1_vec[0]   };
+        auto const & G  { m_G2_vec[ne1] };
+        auto const & G1 { m_G2_vec[0]   };
         triplets.emplace_back(ne, ne1, G.k__L + G.dk__L * G.L + G.dk * G.L__L );
         triplets.emplace_back(ne, ne,  G.k__R + G.dk__R * G.L + G.dk * G.L__R );
         triplets.emplace_back(ne, 0,   - G1.k__L );

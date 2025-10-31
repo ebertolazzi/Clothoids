@@ -44,31 +44,56 @@ classdef ClothoidSplineG2 < matlab.mixin.Copyable
 
   methods (Hidden = true)
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    function o = objective( self, theta )
+      o = ClothoidSplineG2MexWrapper( 'objective', self.m_objectHandle, theta );
+    end
+    % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    function g = gradient( self, theta )
+      g = ClothoidSplineG2MexWrapper( 'gradient',  self.m_objectHandle, theta );
+    end
+    % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    function ceq = constraints( self, theta )
+      ceq = ClothoidSplineG2MexWrapper( 'constraints', self.m_objectHandle, theta );
+    end
+    % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    function jaceq = jacobian( self, theta )
+      jaceq = ClothoidSplineG2MexWrapper( 'jacobian', self.m_objectHandle, theta );
+    end
+    % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    function H = lagrangian_hessian( self, theta, lambda )
+      H = ClothoidSplineG2MexWrapper( 'lagrangian_hessian', self.m_objectHandle, theta, lambda );
+    end
+    % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     function [ceq,jaceq] = nlsys( self, theta )
-      ceq   = ClothoidSplineG2MexWrapper( 'constraints', self.m_objectHandle, theta );
-      jaceq = ClothoidSplineG2MexWrapper( 'jacobian',    self.m_objectHandle, theta );
+      ceq   = self.constraints( theta );
+      jaceq = self.jacobian( theta );
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     function [c,ceq,jac,jaceq] = con( self, theta )
       c     = zeros(0,0);
-      ceq   = ClothoidSplineG2MexWrapper( 'constraints', self.m_objectHandle, theta );
+      ceq   = self.constraints( theta );
       jac   = sparse(0,0);
-      jaceq = ClothoidSplineG2MexWrapper( 'jacobian', self.m_objectHandle, theta ).'; %'
+      jaceq = self.jacobian( theta ).'; %'
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     function [o,g] = obj( self, theta )
-      o = ClothoidSplineG2MexWrapper( 'objective', self.m_objectHandle, theta );
-      g = ClothoidSplineG2MexWrapper( 'gradient',  self.m_objectHandle, theta );
+      o = self.objective( theta );
+      g = self.gradient( theta );
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-    function res = ip_constraint( self, theta )
-      ceq = ClothoidSplineG2MexWrapper( 'constraints', self.m_objectHandle, theta );
-      res = [ceq;-ceq];
+    function [f,g] = checkcheck( self, x )
+      f = self.objective( x );
+      if nargout > 1
+        g = self.gradient( x );
+      end
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-    function J = ip_constraint_jacobian( self, theta )
-      Jeq = ClothoidSplineG2MexWrapper( 'jacobian', self.m_objectHandle, theta );
-      J   = [Jeq;-Jeq];
+    function [f,g] = checkcheck2( self, x )
+      f = self.gradient( x );
+      if nargout > 1
+        lambda = zeros( length(x)-2, 1 );
+        g = full(self.lagrangian_hessian( x, lambda ));
+      end
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     %>
@@ -91,7 +116,45 @@ classdef ClothoidSplineG2 < matlab.mixin.Copyable
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     function clots = build_internal( self, x, y, varargin )
       if self.m_use_PIPAL
-        theta = ClothoidSplineG2MexWrapper( 'pipal', self.m_objectHandle, x, y, varargin{:} );
+        if false
+          theta = ClothoidSplineG2MexWrapper( 'pipal', self.m_objectHandle, x, y, varargin{:} );
+        else
+          % --- obiettivo
+          f_orig = @(x) self.objective( x );
+
+          % gradiente obiettivo
+          g_orig = @(x) self.gradient( x );
+
+          % --- vincoli in forma c(x) <= 0
+          c_orig = @(x) self.constraints( x );
+
+          % Jacobiano dei vincoli (righe = grad c_i^T)
+          J_orig = @(x) self.jacobian( x );
+
+          % Hessiano del lagrangiano: H = Hf + sum_i lambda_i * H(ci)
+          H_orig = @(x,lambda) self.lagrangian_hessian( x, -lambda );
+
+          % --- bounds, iniziale, e limiti dei vincoli (cl, cu)
+          self.build( x, y );
+          [ theta_guess, theta_min, theta_max ] = self.guess();
+
+          l     = [];
+          czero = zeros( length(theta_guess) - 2, 1 );
+
+          outfile   = 'PIPAL-iter.txt';
+          algorithm = 'PIPAL_Default';
+
+          % --- istanzia e lancia
+          P = Pipal( 'PIPAL.txt', f_orig, c_orig, g_orig, J_orig, H_orig, ...
+                     theta_guess, theta_min, theta_max, l, czero, czero, outfile, algorithm );
+
+          P.optimize();
+
+          % --- risultati e diagnostica finale (senza accedere a proprietà private)
+          x_opt = P.getSolution();
+          theta = x_opt.x;
+        end
+
       else
         %
         % Compute guess angles
@@ -99,6 +162,15 @@ classdef ClothoidSplineG2 < matlab.mixin.Copyable
         self.build( x, y );
         [ theta_guess, theta_min, theta_max ] = self.guess();
         [~,nc] = self.dims();
+        
+        fun = @(x) self.checkcheck( x );
+        valid = checkGradients(fun,theta_guess,Display="on");
+
+        fun2 = @(x) self.checkcheck2( x );
+        valid = checkGradients(fun2,theta_guess,Display="on");
+        
+        % Hessiano del lagrangiano: H = Hf + sum_i lambda_i * H(ci)
+        H_orig = @(x,lambda) self.lagrangian_hessian( x, lambda.eqnonlin );
 
         % 'interior-point'
         if self.m_is_octave
@@ -106,12 +178,14 @@ classdef ClothoidSplineG2 < matlab.mixin.Copyable
           options.TolFun = 1e-20;
         else
           options = optimoptions(...
-            'fmincon','Display',self.m_iter_opt, ...
+            'fmincon',...
+            'Display',self.m_iter_opt, ...
+            'Algorithm','interior-point',...
             'CheckGradients',false, ...
             'FiniteDifferenceType','central', ...
-            'Algorithm','sqp',...
             'SpecifyConstraintGradient',true,...
             'SpecifyObjectiveGradient',true,...
+            'HessianFcn', H_orig, ...
             'OptimalityTolerance',1e-20,...
             'ConstraintTolerance',1e-10 ...
           );
