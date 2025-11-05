@@ -748,8 +748,6 @@ namespace G2lib {
 
     UTILS_ASSERT0( n > 1, "ClothoidList::build_G2_cyclic, at least 2 points are necessary\n" );
     
-    integer iter, nm1{ n - 1 };
-
     // fit G2 without curvature continuty
     ClothoidSplineG2 G2_list;
     G2solve3arc      G2_3arc;
@@ -762,28 +760,11 @@ namespace G2lib {
     init();
     reserve( n+1 );
 
-    // i primi N-1 archi vanno bene
-    for ( integer k{1}; k < nm1; ++k ) {
+    for ( integer k{1}; k < n; ++k ) {
       c.build_G1( x[k-1], y[k-1], theta[k-1], x[k], y[k], theta[k] );
       push_back(c);
     }
     
-    auto const & ce{ m_clothoid_list.back() };
-    
-    real_type const theta0{ m_clothoid_list.front().theta_begin() };
-    real_type const kappa0{ m_clothoid_list.front().kappa_begin() };
-
-    iter = G2_3arc.build( ce.x_end(), ce.y_end(), ce.theta_end(), ce.kappa_end(),
-                          x[nm1],     y[nm1],     theta0,         kappa0 );
-
-    if ( iter < 0 ) return false;
-
-    push_back( G2_3arc.S0() );
-    push_back( G2_3arc.SM() );
-    push_back( G2_3arc.S1() );
-
-    this->adjust_angles();
-
     return true;
   }
 
