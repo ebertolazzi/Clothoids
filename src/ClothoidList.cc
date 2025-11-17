@@ -684,7 +684,7 @@ namespace G2lib {
     real_type const kappa_end
   ) {
   
-    using Vector = Pipal::Vector<real_type>;
+    using Vector = Eigen::Matrix<real_type, Eigen::Dynamic, 1>;
 
     UTILS_ASSERT0( n > 1, "ClothoidList::build_G2, at least 2 points are necessary\n" );
     
@@ -734,6 +734,42 @@ namespace G2lib {
     return true;
   }
 
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  bool
+  ClothoidList::build_G2(
+    integer   const n,
+    real_type const x[],
+    real_type const y[],
+    real_type const theta_init,
+    real_type const theta_end
+  ) {
+  
+    using Vector = Eigen::Matrix<real_type, Eigen::Dynamic, 1>;
+
+    UTILS_ASSERT0( n > 1, "ClothoidList::build_G2, at least 2 points are necessary\n" );
+
+    // fit G2 without curvature continuty
+    ClothoidSplineG2 G2_list;
+    
+    Vector theta( n );
+    G2_list.build_P1( n, x, y, theta.data(), theta_init, theta_end );
+
+    ClothoidCurve c{"ClothoidList::build_G2 temporary c"};
+
+    init();
+    reserve( n );
+
+    for ( integer k{1}; k < n; ++k ) {
+      c.build_G1( x[k-1], y[k-1], theta[k-1], x[k], y[k], theta[k] );
+      push_back(c);
+    }
+    
+    this->adjust_angles();
+
+    return true;
+  }
+
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
@@ -744,7 +780,7 @@ namespace G2lib {
     real_type const y[]
   ) {
   
-    using Vector = Pipal::Vector<real_type>;
+    using Vector = Eigen::Matrix<real_type, Eigen::Dynamic, 1>;
 
     UTILS_ASSERT0( n > 1, "ClothoidList::build_G2_cyclic, at least 2 points are necessary\n" );
     
@@ -758,13 +794,17 @@ namespace G2lib {
     ClothoidCurve c{"ClothoidList::build_G2_cyclic temporary c"};
 
     init();
-    reserve( n+1 );
+    reserve( n );
 
     for ( integer k{1}; k < n; ++k ) {
       c.build_G1( x[k-1], y[k-1], theta[k-1], x[k], y[k], theta[k] );
       push_back(c);
     }
     
+    this->adjust_angles();
+
+    make_closed();
+  
     return true;
   }
 

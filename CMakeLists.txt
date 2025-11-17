@@ -32,7 +32,7 @@ project(
 )
 
 # Pulisce la directory (cross-platform)
-file(REMOVE_RECURSE ${CMAKE_SOURCE_DIR}/lib3rd/PIPAL)
+# file(REMOVE_RECURSE ${CMAKE_SOURCE_DIR}/lib3rd/PIPAL)
 
 if (APPLE)
   #set( CMAKE_OSX_DEPLOYMENT_TARGET "13.3" )
@@ -67,23 +67,23 @@ endif()
 # |___|_|   |___/\___/|_| \_/ \___|_|
 # 
 
-include(FetchContent)
-
-set(FETCHCONTENT_BASE_DIR "${CMAKE_CURRENT_SOURCE_DIR}/lib3rd/PIPAL")
-
-FetchContent_Declare(
-  PIPAL
-  GIT_REPOSITORY https://github.com/ebertolazzi/PIPAL.git
-  GIT_SHALLOW TRUE
-  GIT_TAG enrico
-)
-FetchContent_MakeAvailable(PIPAL)
-
-# Copia gli header in lib3rd/include
-set(PIPAL_INCLUDE_SRC  "${FETCHCONTENT_BASE_DIR}/PIPAL-src/include/")
-set(PIPAL_INCLUDE_DEST "${CMAKE_CURRENT_SOURCE_DIR}/lib3rd/include/")
-
-file(COPY ${PIPAL_INCLUDE_SRC} DESTINATION ${PIPAL_INCLUDE_DEST})
+# include(FetchContent)
+# 
+# set(FETCHCONTENT_BASE_DIR "${CMAKE_CURRENT_SOURCE_DIR}/lib3rd/PIPAL")
+# 
+# FetchContent_Declare(
+#   PIPAL
+#   GIT_REPOSITORY https://github.com/ebertolazzi/PIPAL.git
+#   GIT_SHALLOW TRUE
+#   GIT_TAG enrico
+# )
+# FetchContent_MakeAvailable(PIPAL)
+# 
+# # Copia gli header in lib3rd/include
+# set(PIPAL_INCLUDE_SRC  "${FETCHCONTENT_BASE_DIR}/PIPAL-src/include/")
+# set(PIPAL_INCLUDE_DEST "${CMAKE_CURRENT_SOURCE_DIR}/lib3rd/include/")
+# 
+# file(COPY ${PIPAL_INCLUDE_SRC} DESTINATION ${PIPAL_INCLUDE_DEST})
 
 #   ___
 #  / __| ___ _  _ _ _ __ ___ ___

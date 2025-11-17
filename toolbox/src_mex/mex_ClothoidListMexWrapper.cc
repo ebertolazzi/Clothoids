@@ -398,6 +398,148 @@ namespace G2lib {
 
   static
   void
+  do_build_G2_with_target(
+    int nlhs, mxArray       *plhs[],
+    int nrhs, mxArray const *prhs[]
+  ) {
+
+    #define CMD "ClothoidListMexWrapper('build_G2_with_target', OBJ, x, y, w_min, w_max, theta0, theta1, target): "
+
+    UTILS_MEX_ASSERT( nlhs == 1, CMD "expected 1 output, nlhs = {}\n", nlhs );
+    UTILS_MEX_ASSERT( nrhs == 9, CMD "expected 9 input, nrhs = {}\n", nrhs );
+
+    ClothoidList * ptr = Utils::mex_convert_mx_to_ptr<ClothoidList>(arg_in_1);
+
+    mwSize nx, ny;
+    real_type const * x     = Utils::mex_vector_pointer( arg_in_2, nx, CMD "Error in reading x" );
+    real_type const * y     = Utils::mex_vector_pointer( arg_in_3, ny, CMD "Error in reading y" );
+    UTILS_MEX_ASSERT( nx == ny, CMD "length(x) = {} != length(y) = {}\n", nx, ny );
+    real_type const * w_min = Utils::mex_vector_pointer( arg_in_4, ny, CMD "Error in reading w_min" );
+    UTILS_MEX_ASSERT( nx == ny, CMD "length(x) = {} != length(w_min) = {}\n", nx, ny );
+    real_type const * w_max = Utils::mex_vector_pointer( arg_in_5, ny, CMD "Error in reading w_max" );
+    UTILS_MEX_ASSERT( nx == ny, CMD "length(x) = {} != length(w_max) = {}\n", nx, ny );
+
+    real_type theta0 = Utils::mex_get_scalar_value( arg_in_6, CMD "Error in reading `theta0`" );
+    real_type theta1 = Utils::mex_get_scalar_value( arg_in_7, CMD "Error in reading `theta1`" );
+
+    UTILS_MEX_ASSERT0( mxIsChar(arg_in_8), CMD "target must be a string" );
+    string target = mxArrayToString(arg_in_8);
+    
+    vector<real_type> theta( nx );
+    bool ok = build_guess_theta( nx, x, y, theta.data() );
+    
+    if ( ok ) {
+      if ( target == "lenght" ) {
+        auto target_fun = []( ClothoidList const & lst ) -> real_type {
+          real_type res{ 0 };
+          for ( auto const & c : lst.get_list() ) res += c.length();
+          return res;
+        };
+        ok = ptr->build_G2_with_target( nx, x, y, theta.data(), w_min, w_max, theta0, theta1, target_fun );
+      } else if ( target == "curvature" ) {
+        auto target_fun = []( ClothoidList const & lst ) -> real_type {
+          real_type res{ 0 };
+          real_type len{ 0 };
+          for ( auto const & c : lst.get_list() ) {
+            len += c.length();
+            res += c.integral_curvature2();
+          }
+          return res/len;
+        };
+        ok = ptr->build_G2_with_target( nx, x, y, theta.data(), w_min, w_max, theta0, theta1, target_fun );
+      } else if ( target == "jerk" ) {
+        auto target_fun = []( ClothoidList const & lst ) -> real_type {
+          real_type res{ 0 };
+          real_type len{ 0 };
+          for ( auto const & c : lst.get_list() ) {
+            len += c.length();
+            res += c.integral_jerk2();
+          }
+          return res/len;
+        };
+        ok = ptr->build_G2_with_target( nx, x, y, theta.data(), w_min, w_max, theta0, theta1, target_fun );
+      } else {
+        UTILS_MEX_ASSERT0( false, CMD "target must be in 'length', 'curvature', 'jerk'" );
+      }
+    }
+
+    Utils::mex_set_scalar_bool( arg_out_0, ok );
+    #undef CMD
+  }
+
+  // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+  static
+  void
+  do_build_G2_cyclic_with_target(
+    int nlhs, mxArray       *plhs[],
+    int nrhs, mxArray const *prhs[]
+  ) {
+
+    #define CMD "ClothoidListMexWrapper('build_G2_cyclic_with_target', OBJ, x, y, w_min, w_max, target): "
+
+    UTILS_MEX_ASSERT( nlhs == 1, CMD "expected 1 output, nlhs = {}\n", nlhs );
+    UTILS_MEX_ASSERT( nrhs == 7, CMD "expected 7 input, nrhs = {}\n", nrhs );
+
+    ClothoidList * ptr = Utils::mex_convert_mx_to_ptr<ClothoidList>(arg_in_1);
+
+    mwSize nx, ny;
+    real_type const * x     = Utils::mex_vector_pointer( arg_in_2, nx, CMD "Error in reading x" );
+    real_type const * y     = Utils::mex_vector_pointer( arg_in_3, ny, CMD "Error in reading y" );
+    UTILS_MEX_ASSERT( nx == ny, CMD "length(x) = {} != length(y) = {}\n", nx, ny );
+    real_type const * w_min = Utils::mex_vector_pointer( arg_in_4, ny, CMD "Error in reading w_min" );
+    UTILS_MEX_ASSERT( nx == ny, CMD "length(x) = {} != length(w_min) = {}\n", nx, ny );
+    real_type const * w_max = Utils::mex_vector_pointer( arg_in_5, ny, CMD "Error in reading w_max" );
+    UTILS_MEX_ASSERT( nx == ny, CMD "length(x) = {} != length(w_max) = {}\n", nx, ny );
+    
+    UTILS_MEX_ASSERT0( mxIsChar(arg_in_6), CMD "target must be a string" );
+    string target = mxArrayToString(arg_in_6);
+
+    vector<real_type> theta( nx );
+    bool ok = build_guess_theta( nx, x, y, theta.data() );
+    
+    if ( ok ) {
+      if ( target == "lenght" ) {
+        auto target_fun = []( ClothoidList const & lst ) -> real_type {
+          real_type res{ 0 };
+          for ( auto const & c : lst.get_list() ) res += c.length();
+          return res;
+        };
+        ok = ptr->build_G2_cyclic_with_target( nx, x, y, theta.data(), w_min, w_max, target_fun );
+      } else if ( target == "curvature" ) {
+        auto target_fun = []( ClothoidList const & lst ) -> real_type {
+          real_type res{ 0 };
+          real_type len{ 0 };
+          for ( auto const & c : lst.get_list() ) {
+            len += c.length();
+            res += c.integral_curvature2();
+          }
+          return res/len;
+        };
+        ok = ptr->build_G2_cyclic_with_target( nx, x, y, theta.data(), w_min, w_max, target_fun );
+      } else if ( target == "jerk" ) {
+        auto target_fun = []( ClothoidList const & lst ) -> real_type {
+          real_type res{ 0 };
+          real_type len{ 0 };
+          for ( auto const & c : lst.get_list() ) {
+            len += c.length();
+            res += c.integral_jerk2();
+          }
+          return res/len;
+        };
+        ok = ptr->build_G2_cyclic_with_target( nx, x, y, theta.data(), w_min, w_max, target_fun );
+      } else {
+        UTILS_MEX_ASSERT0( false, CMD "target must be in 'length', 'curvature', 'jerk'" );
+      }
+    }
+    Utils::mex_set_scalar_bool( arg_out_0, ok );
+    #undef CMD
+  }
+
+  // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+  static
+  void
   do_smooth_quasi_G2(
     int nlhs, mxArray       *plhs[],
     int nrhs, mxArray const *prhs[]
@@ -1242,6 +1384,8 @@ namespace G2lib {
     {"build_G1",do_build_G1},
     {"build_G2",do_build_G2},
     {"build_G2_cyclic",do_build_G2_cyclic},
+    {"build_G2_with_target",do_build_G2_with_target},
+    {"build_G2_cyclic_with_target",do_build_G2_cyclic_with_target},
     {"smooth_quasi_G2",do_smooth_quasi_G2},
     {"build_raw",do_build_raw},
     {"build_3arcG2",do_build_3arcG2},

@@ -10,7 +10,6 @@ FileUtils.cp_r  "../submodules/quarticRootsFlocke/src/.",   "./src";
 FileUtils.cp_r  "../submodules/UtilsLite/src/.",            "./src";
 FileUtils.cp_r  "../submodules/GenericContainer/src/.",     "./src";
 FileUtils.cp_r  "../submodules/GenericContainer/include/.", "./src";
-FileUtils.cp_r  "../lib3rd/PIPAL/pipal-src/include/.",      "./src";
 
 # elimino dipendenze da Eigen
 # FileUtils.rm_rf "./src/Eigen";

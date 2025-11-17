@@ -54,825 +54,14 @@ namespace G2lib {
     }
     return "";
   };
-    
-  /*\
-   |    ____ ____            _           ____
-   |   / ___|___ \ ___  ___ | |_   _____|___ \ __ _ _ __ ___
-   |  | |  _  __) / __|/ _ \| \ \ / / _ \ __) / _` | '__/ __|
-   |  | |_| |/ __/\__ \ (_) | |\ V /  __// __/ (_| | | | (__
-   |   \____|_____|___/\___/|_| \_/ \___|_____\__,_|_|  \___|
-  \*/
+}
 
+#include "ClothoidList_G2solve2arc.hxx"
+#include "ClothoidList_G2solveCLC.hxx"
+#include "ClothoidList_G2solve3arc.hxx"
+#include "ClothoidList_ClothoidSplineG2.hxx"
 
-  //!
-  //! Construct a piecewise clothoids \f$ G(s) \f$ composed by
-  //! two clothoids arc that solve the \f$ G^2 \f$ problem
-  //!
-  //! \f[
-  //! \begin{array}{ll}
-  //! \textrm{endpoints:}\quad &
-  //! \left\{
-  //! \begin{array}{r@{~}c@{~}l}
-  //!   G(0) &=& \mathbf{p}_0 \\[0.5em]
-  //!   G(L) &=& \mathbf{p}_1
-  //! \end{array}
-  //! \right.
-  //! \\[1em]
-  //! \textrm{angles:}\quad &
-  //! \left\{
-  //! \begin{array}{r@{~}c@{~}l}
-  //!   \theta(0) &=& \theta_0 \\[0.5em]
-  //!   \theta(L) &=& \theta_1
-  //! \end{array}
-  //! \right.
-  //! \\[1em]
-  //! \textrm{curvature:}\quad &
-  //! \left\{
-  //! \begin{array}{r@{~}c@{~}l}
-  //!   \kappa(0) &=& \kappa_0 \\[0.5em]
-  //!   \kappa(L) &=& \kappa_1
-  //! \end{array}
-  //! \right.
-  //! \end{array}
-  //! \f]
-  //!
-  //! **note**
-  //!
-  //! The solution do not exist for all the combination of points/angle/curvature
-  //!
-  //!
-  class G2solve2arc {
-
-    real_type m_tolerance{real_type(1e-10)};
-    integer   m_max_iter{20};
-
-    real_type m_x0{real_type(0)};
-    real_type m_y0{real_type(0)};
-    real_type m_theta0{real_type(0)};
-    real_type m_kappa0{real_type(0)};
-
-    real_type m_x1{real_type(0)};
-    real_type m_y1{real_type(0)};
-    real_type m_theta1{real_type(0)};
-    real_type m_kappa1{real_type(0)};
-
-    // standard problem
-    real_type m_lambda{real_type(0)};
-    real_type m_phi{real_type(0)};
-    real_type m_xbar{real_type(0)};
-    real_type m_ybar{real_type(0)};
-    real_type m_th0{real_type(0)};
-    real_type m_th1{real_type(0)};
-    real_type m_k0{real_type(0)};
-    real_type m_k1{real_type(0)};
-    real_type m_DeltaK{real_type(0)};
-    real_type m_DeltaTheta{real_type(0)};
-
-    ClothoidCurve m_S0{"G2solve2arc_S0"};
-    ClothoidCurve m_S1{"G2solve2arc_S1"};
-
-    void
-    evalA(
-      real_type const alpha,
-      real_type const L,
-      real_type     & A
-    ) const;
-
-    void
-    evalA(
-      real_type const alpha,
-      real_type const L,
-      real_type     & A,
-      real_type     & A_1,
-      real_type     & A_2
-    ) const;
-
-    void
-    evalG(
-      real_type const alpha,
-      real_type const L,
-      real_type const th,
-      real_type const k,
-      real_type       G[2]
-    ) const;
-
-    void
-    evalG(
-      real_type const alpha,
-      real_type const L,
-      real_type const th,
-      real_type const k,
-      real_type G[2],
-      real_type G_1[2],
-      real_type G_2[2]
-    ) const;
-
-    void evalF( real_type const vars[2], real_type F[2] ) const;
-
-    void
-    evalFJ(
-      real_type const vars[2],
-      real_type       F[2],
-      real_type       J[2][2]
-    ) const;
-
-    void build_solution( real_type alpha, real_type L );
-
-  public:
-
-    //!
-    //! Build an empty clothoid list
-    //!
-    G2solve2arc() = default;
-
-    ~G2solve2arc() = default;
-
-    //void setup( GenericContainer const & gc );
-
-    //!
-    //! Construct a piecewise clothoids \f$ G(s) \f$ composed by
-    //! two clothoids arc that solve the \f$ G^2 \f$ problem, with data
-    //!
-    //! \f[
-    //!   \mathbf{p}_0 = (x_0,y_0)^T, \qquad \mathbf{p}_1 = (x_1,y_1)^T
-    //! \f]
-    //! \f[
-    //!   \theta_0, \qquad \theta_1, \qquad \kappa_0, \qquad \kappa_1
-    //! \f]
-    //!
-    //! \param[in] x0     \f$ x_0      \f$
-    //! \param[in] y0     \f$ y_0      \f$
-    //! \param[in] theta0 \f$ \theta_0 \f$
-    //! \param[in] kappa0 \f$ \kappa_0 \f$
-    //! \param[in] x1     \f$ x_1      \f$
-    //! \param[in] y1     \f$ y_1      \f$
-    //! \param[in] theta1 \f$ \theta_1 \f$
-    //! \param[in] kappa1 \f$ \kappa_1 \f$
-    //! \return number of iterations of -1 if failed
-    //!
-    int
-    build(
-      real_type const x0, real_type const y0, real_type const theta0, real_type const kappa0,
-      real_type const x1, real_type const y1, real_type const theta1, real_type const kappa1
-    );
-
-    //!
-    //! Fix tolerance for the \f$ G^2 \f$ problem
-    //!
-    void set_tolerance( real_type const tol );
-
-    //!
-    //! Fix maximum number of iteration for the \f$ G^2 \f$ problem
-    //!
-    void set_max_iter( integer const miter );
-
-    //!
-    //! Solve the \f$ G^2 \f$ problem
-    //!
-    //! \return number of iterations of -1 if failed
-    //!
-    int solve();
-
-    //!
-    //! Return the first clothoid of the \f$ G^2 \f$ clothoid list
-    //!
-    ClothoidCurve const & S0() const { return m_S0; }
-
-    //!
-    //! Return the second clothoid of the \f$ G^2 \f$ clothoid list
-    //!
-    ClothoidCurve const & S1() const { return m_S1; }
-
-    #ifdef CLOTHOIDS_BACK_COMPATIBILITY
-    void setTolerance( real_type const tol ) { set_tolerance( tol ); }
-    void setMaxIter( integer const miter ) { set_max_iter( miter ); }
-    #endif
-
-  };
-
-  /*\
-   |    ____ ____            _            ____ _     ____
-   |   / ___|___ \ ___  ___ | |_   _____ / ___| |   / ___|
-   |  | |  _  __) / __|/ _ \| \ \ / / _ \ |   | |  | |
-   |  | |_| |/ __/\__ \ (_) | |\ V /  __/ |___| |__| |___
-   |   \____|_____|___/\___/|_| \_/ \___|\____|_____\____|
-  \*/
-
-  //!
-  //! Construct a piecewise clothoids \f$ G(s) \f$ composed by
-  //! 2 clothoid and one line segment that solve the \f$ G^2 \f$ problem
-  //!
-  //! \f[
-  //! \begin{array}{ll}
-  //! \textrm{endpoints:}\quad &
-  //! \left\{
-  //! \begin{array}{r@{~}c@{~}l}
-  //!   G(0) &=& \mathbf{p}_0 \\[0.5em]
-  //!   G(L) &=& \mathbf{p}_1
-  //! \end{array}
-  //! \right.
-  //! \\[1em]
-  //! \textrm{angles:}\quad &
-  //! \left\{
-  //! \begin{array}{r@{~}c@{~}l}
-  //!   \theta(0) &=& \theta_0 \\[0.5em]
-  //!   \theta(L) &=& \theta_1
-  //! \end{array}
-  //! \right.
-  //! \\[1em]
-  //! \textrm{curvature:}\quad &
-  //! \left\{
-  //! \begin{array}{r@{~}c@{~}l}
-  //!   \kappa(0) &=& \kappa_0 \\[0.5em]
-  //!   \kappa(L) &=& \kappa_1
-  //! \end{array}
-  //! \right.
-  //! \end{array}
-  //! \f]
-  //!
-  //! **note**
-  //!
-  //! The solution do not exist for all the combination of points/angle/curvature
-  //!
-  class G2solveCLC {
-
-    real_type m_tolerance{real_type(1e-10)};
-    int       m_max_iter{20};
-
-    real_type m_x0{real_type(0)};
-    real_type m_y0{real_type(0)};
-    real_type m_theta0{real_type(0)};
-    real_type m_kappa0{real_type(0)};
-    real_type m_x1{real_type(0)};
-    real_type m_y1{real_type(0)};
-    real_type m_theta1{real_type(0)};
-    real_type m_kappa1{real_type(0)};
-
-    // standard problem
-    real_type m_lambda{real_type(0)};
-    real_type m_phi{real_type(0)};
-    real_type m_xbar{real_type(0)};
-    real_type m_ybar{real_type(0)};
-    real_type m_th0{real_type(0)};
-    real_type m_th1{real_type(0)};
-    real_type m_k0{real_type(0)};
-    real_type m_k1{real_type(0)};
-
-    ClothoidCurve m_S0{"G2solveCLC_S0"};
-    ClothoidCurve m_SM{"G2solveCLC_SM"};
-    ClothoidCurve m_S1{"G2solveCLC_S1"};
-
-    bool build_solution( real_type sM, real_type thM );
-
-  public:
-
-    //!
-    //! Build an empty clothoid list
-    //!
-    G2solveCLC() = default;
-
-    ~G2solveCLC() = default;
-
-    //void setup( GenericContainer const & gc );
-
-    //!
-    //! Construct a piecewise clothoids \f$ G(s) \f$ composed by
-    //! two clothoids and one line segment that solve the \f$ G^2 \f$ problem, with data
-    //!
-    //! \f[
-    //!   \mathbf{p}_0 = (x_0,y_0)^T, \qquad \mathbf{p}_1 = (x_1,y_1)^T
-    //! \f]
-    //! \f[
-    //!   \theta_0, \qquad \theta_1, \qquad \kappa_0, \qquad \kappa_1
-    //! \f]
-    //!
-    //! \param[in] x0     \f$ x_0      \f$
-    //! \param[in] y0     \f$ y_0      \f$
-    //! \param[in] theta0 \f$ \theta_0 \f$
-    //! \param[in] kappa0 \f$ \kappa_0 \f$
-    //! \param[in] x1     \f$ x_1      \f$
-    //! \param[in] y1     \f$ y_1      \f$
-    //! \param[in] theta1 \f$ \theta_1 \f$
-    //! \param[in] kappa1 \f$ \kappa_1 \f$
-    //! \return number of iterations of -1 if failed
-    //!
-    int
-    build(
-      real_type const x0, real_type const y0, real_type const theta0, real_type const kappa0,
-      real_type const x1, real_type const y1, real_type const theta1, real_type const kappa1
-    );
-
-    //!
-    //! Fix tolerance for the \f$ G^2 \f$ problem
-    //!
-    void set_tolerance( real_type const tol );
-
-    //!
-    //! Fix maximum number of iteration for the \f$ G^2 \f$ problem
-    //!
-    void set_max_iter( integer const miter );
-
-    //!
-    //! Solve the \f$ G^2 \f$ problem
-    //!
-    //! \return number of iterations of -1 if failed
-    //!
-    int solve();
-
-    //!
-    //! Return the first clothoid of the \f$ G^2 \f$ clothoid list
-    //!
-    ClothoidCurve const & S0() const { return m_S0; }
-
-    //!
-    //! Return the second segment (the line) as a clothoid
-    //!
-    ClothoidCurve const & SM() const { return m_SM; }
-
-    //!
-    //! Return the third clothoid of the \f$ G^2 \f$ clothoid list
-    //!
-    ClothoidCurve const & S1() const { return m_S1; }
-
-    void save( ostream_type & stream ) const;
-
-    #ifdef CLOTHOIDS_BACK_COMPATIBILITY
-    void setTolerance( real_type const tol ) { set_tolerance( tol ); }
-    void setMaxIter( integer const miter ) { set_max_iter( miter ); }
-    #endif
-
-  };
-
-  /*\
-   |    ____ ____            _           _____
-   |   / ___|___ \ ___  ___ | |_   _____|___ /  __ _ _ __ ___
-   |  | |  _  __) / __|/ _ \| \ \ / / _ \ |_ \ / _` | '__/ __|
-   |  | |_| |/ __/\__ \ (_) | |\ V /  __/___) | (_| | | | (__
-   |   \____|_____|___/\___/|_| \_/ \___|____/ \__,_|_|  \___|
-  \*/
-
-  //!
-  //! Construct a piecewise clothoids \f$ G(s) \f$ composed by
-  //! 3 clothoid and one line segment that solve the \f$ G^2 \f$ problem
-  //!
-  //! **match**
-  //!
-  //! \f[
-  //! \begin{array}{ll}
-  //! \textrm{endpoints:}\quad&
-  //! \left\{
-  //! \begin{array}{r@{~}c@{~}l}
-  //!   G(0) &=& \mathbf{p}_0 \\[0.5em]
-  //!   G(L) &=& \mathbf{p}_1
-  //! \end{array}
-  //! \right.
-  //! \\[1em]
-  //! \textrm{angles:}\quad&
-  //! \left\{
-  //! \begin{array}{r@{~}c@{~}l}
-  //!   \theta(0) &=& \theta_0 \\[0.5em]
-  //!   \theta(L) &=& \theta_1
-  //! \end{array}
-  //! \right.
-  //! \\[1em]
-  //! \textrm{curvature:}\quad&
-  //! \left\{
-  //! \begin{array}{r@{~}c@{~}l}
-  //!   \kappa(0) &=& \kappa_0 \\[0.5em]
-  //!   \kappa(L) &=& \kappa_1
-  //! \end{array}
-  //! \right.
-  //! \end{array}
-  //! \f]
-  //!
-  //! **Reference**
-  //!
-  //! The solution algorithm is described in
-  //!
-  //! - **E.Bertolazzi, M.Frego**, On the \f$ G^2 \f$ Hermite Interpolation Problem with clothoids
-  //!   Journal of Computational and Applied Mathematics, vol 341, pp. 99-116, 2018
-  //!
-  //! @html_image{G2problem3arc.png,width=60%}
-  //!
-  class G2solve3arc {
-
-    ClothoidCurve m_S0{"G2solve3arc_S0"};
-    ClothoidCurve m_SM{"G2solve3arc_SM"};
-    ClothoidCurve m_S1{"G2solve3arc_S1"};
-
-    real_type m_tolerance{real_type(1e-10)};
-    int       m_max_iter{100};
-
-    // \f$ G^2 \f$ interpolation data
-    real_type m_x0{real_type(0)};
-    real_type m_y0{real_type(0)};
-    real_type m_theta0{real_type(0)};
-    real_type m_kappa0{real_type(0)};
-    real_type m_x1{real_type(0)};
-    real_type m_y1{real_type(0)};
-    real_type m_theta1{real_type(0)};
-    real_type m_kappa1{real_type(0)};
-
-    // standard scaled problem
-    real_type m_phi{real_type(0)};
-    real_type m_Lscale{real_type(0)};
-    real_type m_th0{real_type(0)};
-    real_type m_th1{real_type(0)};
-    real_type m_s0{real_type(0)};
-    real_type m_s1{real_type(0)};
-
-    // precomputed values
-    real_type m_K0{real_type(0)},
-              m_K1{real_type(0)},
-              m_c0{real_type(0)},
-              m_c1{real_type(0)},
-              m_c2{real_type(0)},
-              m_c3{real_type(0)},
-              m_c4{real_type(0)},
-              m_c5{real_type(0)},
-              m_c6{real_type(0)},
-              m_c7{real_type(0)},
-              m_c8{real_type(0)},
-              m_c9{real_type(0)},
-              m_c10{real_type(0)},
-              m_c11{real_type(0)},
-              m_c12{real_type(0)},
-              m_c13{real_type(0)},
-              m_c14{real_type(0)};
-
-    void
-    evalFJ(
-      real_type const vars[2],
-      real_type       F[2],
-      real_type       J[2][2]
-    ) const;
-
-    void evalF( real_type const vars[2], real_type F[2] ) const;
-
-    void build_solution( real_type const sM, real_type const thM );
-
-    int solve( real_type const sM_guess, real_type const thM_guess );
-
-  public:
-
-    G2solve3arc() = default;
-
-    ~G2solve3arc() = default;
-
-    //void setup( GenericContainer const & gc );
-
-    //!
-    //! Fix tolerance for the \f$ G^2 \f$ problem
-    //!
-    void set_tolerance( real_type const tol );
-
-    //!
-    //! Fix maximum number of iteration for the \f$ G^2 \f$ problem
-    //!
-    void set_max_iter( integer const miter );
-
-    //!
-    //! Compute the 3 arc clothoid spline that fit the data
-    //!
-    //! \param[in] x0      initial `x` position
-    //! \param[in] y0      initial `y` position
-    //! \param[in] theta0  initial angle
-    //! \param[in] kappa0  initial curvature
-    //! \param[in] x1      final `x` position
-    //! \param[in] y1      final `y` position
-    //! \param[in] theta1  final angle
-    //! \param[in] kappa1  final curvature
-    //! \param[in] Dmax    rough desidered maximum angle variation, if 0 computed automatically
-    //! \param[in] dmax    rough desidered maximum angle divergence from guess, if 0 computed automatically
-    //! \return number of iteration, -1 if fails
-    //!
-    //!
-    int
-    build(
-      real_type x0,
-      real_type y0,
-      real_type theta0,
-      real_type kappa0,
-      real_type x1,
-      real_type y1,
-      real_type theta1,
-      real_type kappa1,
-      real_type Dmax = 0,
-      real_type dmax = 0
-    );
-
-    //!
-    //! Compute the 3 arc clothoid spline that fit the data
-    //!
-    //! \param[in] s0      length of the first segment
-    //! \param[in] x0      initial `x` position
-    //! \param[in] y0      initial `y` position
-    //! \param[in] theta0  initial angle
-    //! \param[in] kappa0  initial curvature
-    //! \param[in] s1      length of the last segment
-    //! \param[in] x1      final `x` position
-    //! \param[in] y1      final `y` position
-    //! \param[in] theta1  final angle
-    //! \param[in] kappa1  final curvature
-    //! \return number of iteration, -1 if fails
-    //!
-    //!
-    int
-    build_fixed_length(
-      real_type const s0,
-      real_type const x0,
-      real_type const y0,
-      real_type const theta0,
-      real_type const kappa0,
-      real_type const s1,
-      real_type const x1,
-      real_type const y1,
-      real_type const theta1,
-      real_type const kappa1
-    );
-
-    //!
-    //! \return get the first clothoid for the 3 arc \f$ G^2 \f$ fitting
-    //!
-    ClothoidCurve const & S0() const { return m_S0; }
-
-    //!
-    //! \return get the last clothoid for the 3 arc \f$ G^2 \f$ fitting
-    //!
-    ClothoidCurve const & S1() const { return m_S1; }
-
-    //!
-    //! \return get the middle clothoid for the 3 arc \f$ G^2 \f$ fitting
-    //!
-    ClothoidCurve const & SM() const { return m_SM; }
-
-    //!
-    //! \return get the length of the 3 arc \f$ G^2 \f$ fitting
-    //!
-    real_type
-    total_length() const {
-      return m_S0.length() +
-             m_S1.length() +
-             m_SM.length();
-    }
-
-
-    //!
-    //! \return get the total angle variation of the 3 arc \f$ G^2 \f$ fitting
-    //!
-    real_type
-    theta_total_variation() const {
-      return m_S0.theta_total_variation() +
-             m_S1.theta_total_variation() +
-             m_SM.theta_total_variation();
-    }
-
-    //!
-    //! \return get the total curvature variation of the 3 arc \f$ G^2 \f$ fitting
-    //!
-    real_type
-    curvature_total_variation() const {
-      return m_S0.curvature_total_variation() +
-             m_S1.curvature_total_variation() +
-             m_SM.curvature_total_variation();
-    }
-
-    //!
-    //! \return get the integral of the curvature squared of the 3 arc \f$ G^2 \f$ fitting
-    //!
-    real_type
-    integral_curvature2() const {
-      return m_S0.integral_curvature2() +
-             m_S1.integral_curvature2() +
-             m_SM.integral_curvature2();
-    }
-
-    //!
-    //! \return get the integral of the jerk squared of the 3 arc \f$ G^2 \f$ fitting
-    //!
-    real_type
-    integral_jerk2() const {
-      return m_S0.integral_jerk2() +
-             m_S1.integral_jerk2() +
-             m_SM.integral_jerk2();
-    }
-
-    //!
-    //! \return get the integral of the snap squared of the 3 arc \f$ G^2 \f$ fitting
-    //!
-    real_type
-    integral_snap2() const {
-      return m_S0.integral_snap2() +
-             m_S1.integral_snap2() +
-             m_SM.integral_snap2();
-    }
-
-    //!
-    //! \param[out] thMin minimum angle in the 3 arc \f$ G^2 \f$ fitting curve
-    //! \param[out] thMax maximum angle in the 3 arc \f$ G^2 \f$ fitting curve
-    //! \return the difference of `thMax` and `thMin`
-    //!
-    real_type
-    theta_min_max( real_type & thMin, real_type & thMax ) const;
-
-    //!
-    //! Return the difference of maximum-minimum angle in the 3 arc \f$ G^2 \f$ fitting curve
-    //!
-    real_type
-    delta_theta() const
-    { real_type thMin, thMax; return theta_min_max( thMin, thMax ); }
-
-    //!
-    //! \param[out] kMin minimum curvature in the 3 arc \f$ G^2 \f$ fitting curve
-    //! \param[out] kMax maximum curvature in the 3 arc \f$ G^2 \f$ fitting curve
-    //! \return the difference of `kMax` and `kMin`
-    //!
-    real_type curvature_min_max( real_type & kMin, real_type & kMax ) const;
-
-    //!
-    //! Return angle as a function of curvilinear coordinate
-    //!
-    real_type theta( real_type const s ) const;
-
-    //!
-    //! Return angle derivative (curvature) as a function of curvilinear coordinate
-    //!
-    real_type theta_D( real_type const s ) const;
-
-    //!
-    //! Return angle second derivative (curvature derivative) as a function of curvilinear coordinate
-    //!
-    real_type theta_DD( real_type const s ) const;
-
-    //!
-    //! Return angle third derivative as a function of curvilinear coordinate
-    //!
-    real_type theta_DDD( real_type const s ) const;
-
-    //!
-    //! Return \f$x\f$-coordinate of the arc clothoid as a function of curvilinear coordinate
-    //!
-    real_type X( real_type const s ) const;
-
-    //!
-    //! Return \f$y\f$-coordinate of the arc clothoid as a function of curvilinear coordinate
-    //!
-    real_type Y( real_type const s ) const;
-
-    //!
-    //! Return initial \f$x\f$-coordinate of the 3 arc clothoid
-    //!
-    real_type x_begin() const { return m_S0.x_begin(); }
-
-    //!
-    //! Return initial \f$y\f$-coordinate of the 3 arc clothoid
-    //!
-    real_type y_begin() const { return m_S0.y_begin(); }
-
-    //!
-    //! Return initial curvature of the 3 arc clothoid
-    //!
-    real_type kappa_begin() const { return m_S0.kappa_begin(); }
-
-    //!
-    //! Return initial angle of the 3 arc clothoid
-    //!
-    real_type theta_begin() const { return m_S0.theta_begin(); }
-
-    //!
-    //! Return final \f$x\f$-coordinate of the 3 arc clothoid
-    //!
-    real_type x_end()const { return m_S1.x_end(); }
-
-    //!
-    //! Return final \f$y\f$-coordinate of the 3 arc clothoid
-    //!
-    real_type y_end() const { return m_S1.y_end(); }
-
-    //!
-    //! Return final curvature of the 3 arc clothoid
-    //!
-    real_type kappa_end() const { return m_S1.kappa_end(); }
-
-    //!
-    //! Return final angle of the 3 arc clothoid
-    //!
-    real_type theta_end() const { return m_S1.theta_end(); }
-
-    //!
-    //! Compute parameters of 3 arc clothoid at curvilinear coordinate \f$s\f$
-    //!
-    //! \param[in]  s     curvilinear coordinate of where curve is computed
-    //! \param[out] theta the curve angle
-    //! \param[out] kappa the curve curvature
-    //! \param[out] x     the curve \f$x\f$-coordinate
-    //! \param[out] y     the curve \f$y\f$-coordinate
-    //!
-    void
-    eval(
-      real_type const s,
-      real_type     & theta,
-      real_type     & kappa,
-      real_type     & x,
-      real_type     & y
-    ) const;
-
-    //!
-    //! x and \f$y\f$-coordinate at curvilinear coordinate \f$s\f$
-    //!
-    void eval( real_type const s, real_type & x, real_type & y ) const;
-
-    //!
-    //! x and \f$y\f$-coordinate derivative at curvilinear coordinate \f$s\f$
-    //!
-    void eval_D( real_type const s, real_type & x_D, real_type & y_D ) const;
-
-    //!
-    //! x and \f$y\f$-coordinate second derivative at curvilinear coordinate \f$s\f$
-    //!
-    void eval_DD( real_type const s, real_type & x_DD, real_type & y_DD ) const;
-
-    //!
-    //! x and \f$y\f$-coordinate third derivative at curvilinear coordinate \f$s\f$
-    //!
-    void eval_DDD( real_type const s, real_type & x_DDD, real_type & y_DDD ) const;
-
-    //!
-    //! x and \f$y\f$-coordinate at curvilinear coordinate \f$s\f$ with offset
-    //!
-    void eval_ISO( real_type const s, real_type offs, real_type & x, real_type & y ) const;
-
-    //!
-    //! x and \f$y\f$-coordinate derivative at curvilinear coordinate \f$s\f$ with offset
-    //!
-    void eval_ISO_D( real_type const s, real_type offs, real_type & x_D, real_type & y_D ) const;
-
-    //!
-    //! x and \f$y\f$-coordinate second derivative at curvilinear coordinate \f$s\f$ with offset
-    //!
-    void eval_ISO_DD( real_type const s, real_type offs, real_type & x_DD, real_type & y_DD ) const;
-
-    //!
-    //! x and \f$y\f$-coordinate third derivative at curvilinear coordinate \f$s\f$ with offset
-    //!
-    void eval_ISO_DDD( real_type const s, real_type offs, real_type & x_DDD, real_type & y_DDD ) const;
-
-    //!
-    //! Rotate curve by angle \f$ \theta \f$ centered at point \f$ (c_x,c_y) \f$
-    //!
-    //! \param[in] angle angle \f$ \theta \f$
-    //! \param[in] cx    \f$ c_x \f$
-    //! \param[in] cy    \f$ c_y \f$
-    //!
-    void
-    rotate( real_type const angle, real_type const cx, real_type const cy ) {
-      m_S0.rotate( angle, cx, cy );
-      m_S1.rotate( angle, cx, cy );
-      m_SM.rotate( angle, cx, cy );
-    }
-
-    //!
-    //! Translate curve by \f$ (t_x,t_y) \f$
-    //!
-    void
-    translate( real_type const tx, real_type const ty ){
-      m_S0.translate( tx, ty );
-      m_S1.translate( tx, ty );
-      m_SM.translate( tx, ty );
-    }
-
-    //!
-    //! Reverse curve parameterization
-    //!
-    void
-    reverse() {
-      ClothoidCurve tmp(m_S0); m_S1 = m_S0; m_S0 = tmp;
-      m_S0.reverse();
-      m_S1.reverse();
-      m_SM.reverse();
-    }
-
-    friend
-    ostream_type &
-    operator << ( ostream_type & stream, ClothoidCurve const & c );
-
-    //! save clothoid list of a file stream
-    void save( ostream_type & stream ) const;
-
-    // BACK COMPATIBILITY
-    #ifdef CLOTHOIDS_BACK_COMPATIBILITY
-    void setTolerance( real_type tol ) { set_tolerance( tol ); }
-    void setMaxIter( integer miter ) { set_max_iter( miter ); }
-    real_type thetaTotalVariation() const { return theta_total_variation(); }
-    real_type thetaMinMax( real_type & thMin, real_type & thMax ) const { return theta_min_max(thMin,thMax); }
-    real_type totalLength() const { return total_length(); }
-    real_type integralCurvature2() const { return integral_curvature2(); }
-    real_type integralJerk2() const { return integral_jerk2(); }
-    real_type integralSnap2() const { return integral_snap2(); }
-    real_type deltaTheta() const { return delta_theta(); }
-    #endif
-
-  };
+namespace G2lib {
 
   /*\
    |   ____ _       _   _           _     _ _     _     _
@@ -983,6 +172,11 @@ namespace G2lib {
     //! Build a clothoid list copying an existing one
     //!
     void copy( ClothoidList const & L );
+    
+    //!
+    //! Return the internal list of clothoids
+    //!
+    vector<ClothoidCurve> const & get_list() const { return m_clothoid_list; }
 
     //!
     //! Copy an existing clothoid list
@@ -1310,7 +504,54 @@ namespace G2lib {
       real_type const theta_end,
       real_type const kappa_end
     );
-    
+
+    //!
+    //! \brief
+    //! Builds a sequence of clothoid (Cornu) arcs interpolating a given set of
+    //! points with \f$ G^2 \f$ (curvature) continuity between segments.
+    //!
+    //! \details
+    //! Constructs a smooth open curve passing through the specified points,
+    //! starting with a given orientation and curvature, and ending with the
+    //! prescribed final orientation and curvature. The resulting clothoid list
+    //! ensures continuous position, tangent, and curvature along the entire path.
+    //!
+    //! \param[in] n           Number of points to interpolate.
+    //! \param[in] x           Array of point \f$x_i\f$ coordinates.
+    //! \param[in] y           Array of point \f$y_i\f$ coordinates.
+    //! \param[in] theta_init  Initial angle \f$\theta_i\f$ (radians).
+    //! \param[in] theta_end   Final angle \f$\theta_e\f$ (radians).
+    //!
+    //! \return
+    //! `true` if the \f$ G^2 \f$ clothoid construction succeeds,
+    //! `false` otherwise (e.g., degenerate or inconsistent input data).
+    //!
+    //! \note
+    //! - Arrays `x[]` and `y[]` must have the same length `n`.
+    //! - The function does not modify the input arrays.
+    //!
+    bool
+    build_G2(
+      integer   const n,
+      real_type const x[],
+      real_type const y[],
+      real_type const theta_init,
+      real_type const theta_end
+    );
+
+    bool
+    build_G2_with_target(
+      integer   const n,
+      real_type const x[],
+      real_type const y[],
+      real_type const theta[],
+      real_type const wL[],
+      real_type const wR[],
+      real_type const theta_init,
+      real_type const theta_end,
+      std::function<real_type(ClothoidList const & lst)> const & target
+    );
+
     //!
     //! \brief
     //! Builds a cyclic list of clothoid (Cornu) arcs interpolating a set of points
@@ -1336,6 +577,17 @@ namespace G2lib {
       integer   const n,
       real_type const x[],
       real_type const y[]
+    );
+
+    bool
+    build_G2_cyclic_with_target(
+      integer   const n,
+      real_type const x[],
+      real_type const y[],
+      real_type const theta[],
+      real_type const wL[],
+      real_type const wR[],
+      std::function<real_type(ClothoidList const & lst)> const & target
     );
 
     //!
@@ -2306,139 +1558,6 @@ namespace G2lib {
 #ifdef CLOTHOIDS_BACK_COMPATIBILITY
 #include "ClothoidList_compatibility.hxx"
 #endif
-
-  };
-
-  /*\
-   |
-   |    ___ _     _   _        _    _ ___      _ _           ___ ___
-   |   / __| |___| |_| |_  ___(_)__| / __|_ __| (_)_ _  ___ / __|_  )
-   |  | (__| / _ \  _| ' \/ _ \ / _` \__ \ '_ \ | | ' \/ -_) (_ |/ /
-   |   \___|_\___/\__|_||_\___/_\__,_|___/ .__/_|_|_||_\___|\___/___|
-   |                                     |_|
-  \*/
-
-  //!
-  //! Class for the computation of \f$ G^2 \f$ spljne of clothoids
-  //!
-  class ClothoidSplineG2 {
-  public:
-    
-    integer   m_max_iter{50};
-    real_type m_tolerance{1e-10};
-    real_type m_dump_min{0.1};
-
-  private:
-
-    TargetType m_tt{TargetType::P1};
-    integer    m_npts{0};
-
-    // work vector
-    Eigen::Vector<real_type,Eigen::Dynamic> m_x;
-    Eigen::Vector<real_type,Eigen::Dynamic> m_y;
-
-    mutable vector<G2derivative> m_G2_vec;
-
-    void evaluate_for_NLP( real_type const theta[] ) const;
-    void evaluate_for_NLP_D( real_type const theta[] ) const;
-    void evaluate_for_NLP_DD( real_type const theta[] ) const;
-
-    void evaluate_for_NLP_BC( real_type const theta[] ) const;
-    void evaluate_for_NLP_D_BC( real_type const theta[] ) const;
-    void evaluate_for_NLP_DD_BC( real_type const theta[] ) const;
-
-    real_type
-    diff2pi( real_type in ) const
-    { return in-Utils::m_2pi*round(in/Utils::m_2pi); }
-
-    // vecchio da rimnuovere
-    void allocate( integer const npts );
-
-  public:
-
-    ClothoidSplineG2() = default;
-    ~ClothoidSplineG2() = default;
-
-    void setP4() { m_tt = TargetType::P4; }
-    void setP5() { m_tt = TargetType::P5; }
-    void setP6() { m_tt = TargetType::P6; }
-    void setP7() { m_tt = TargetType::P7; }
-    void setP8() { m_tt = TargetType::P8; }
-    void setP9() { m_tt = TargetType::P9; }
-
-    TargetType get_target() const { return m_tt; }
-
-    // vecchio da rimuovere
-    void
-    build(
-      real_type const xvec[],
-      real_type const yvec[],
-      integer   const npts
-    );
-
-    void
-    build(
-      integer   const npts,
-      real_type const xvec[],
-      real_type const yvec[],
-      real_type       theta[]
-    ) {
-      build_PN( npts, xvec, yvec, theta, TargetType::P4 );
-    }
-
-    bool
-    build_P1(
-      integer   const npts,
-      real_type const xvec[],
-      real_type const yvec[],
-      real_type       theta[],
-      real_type       theta_init,
-      real_type       theta_end
-    );
-
-    bool
-    build_P2(
-      integer   const npts,
-      real_type const xvec[],
-      real_type const yvec[],
-      real_type       theta[]
-    );
-
-    bool
-    build_PN(
-      integer   const npts,
-      real_type const xvec[],
-      real_type const yvec[],
-      real_type       theta[],
-      TargetType      tt
-    );
-
-    integer numPnts() const { return m_npts; }
-    integer numTheta() const;
-    integer numConstraints() const;
-
-    void
-    guess(
-      real_type theta_guess[],
-      real_type theta_min[],
-      real_type theta_max[]
-    ) const;
-
-    bool objective   ( real_type const theta[], real_type & f ) const;
-    bool gradient    ( real_type const theta[], Pipal::Vector<real_type> & g ) const;
-    bool constraints ( real_type const theta[], Pipal::Vector<real_type> & c ) const;
-
-    bool jacobian ( real_type const theta[], Pipal::SparseMatrix<real_type> & J ) const;
-
-    bool lagrangian_hessian ( real_type const theta[], real_type const lambda[], Pipal::SparseMatrix<real_type> & H ) const;
-
-    string info() const;
-
-    void info( ostream_type & stream ) const { stream << this->info(); }
-
-    friend
-    ostream_type &
-    operator << ( ostream_type & stream, ClothoidSplineG2 const & c );
 
   };
 
