@@ -191,6 +191,29 @@ namespace Utils {
   inline string fmt_table_middle_row ( unsigned width, unsigned N, string_view fill = "─" ) { return fmt_table_row( width, "├", "┼", "┤\n", fill, N ); }
   inline string fmt_table_bottom_row ( unsigned width, unsigned N, string_view fill = "─" ) { return fmt_table_row( width, "└", "┴", "┘\n", fill, N ); }
 
+  // Helper for vector formatting
+  template <typename Scalar>
+  inline
+  string
+  format_index_vector( vector<Scalar> const & v, size_t max_size = 20 ) {
+    string tmp{"["};
+    size_t v_size = v.size();
+    if ( v_size <= max_size ) {
+      for ( size_t i = 0; i < v_size; ++i)
+        tmp += fmt::format("{}, ", v[i]);
+    } else {
+      for ( size_t i{0}; i < max_size-3; ++i)
+        tmp += fmt::format("{}, ", v[i]);
+      tmp.pop_back();
+      tmp += "..., ";
+      for ( size_t i{v_size-3}; i < v_size; ++i )
+        tmp += fmt::format("{}, ", v[i]);
+    }
+    tmp.pop_back();
+    tmp.pop_back();
+    tmp += "]";
+    return tmp;
+  }
 }
 
 #endif
