@@ -25,7 +25,8 @@
 // https://stackoverflow.com/questions/53849/how-do-i-tokenize-a-string-in-c
 //
 
-namespace Utils {
+namespace Utils
+{
 
   using std::size_t;
   using std::string;
@@ -39,10 +40,10 @@ namespace Utils {
   //!!
   //! \brief A utility class for tokenizing strings.
   //!
-  //! The `Tokenizer` class provides a simple and efficient mechanism for breaking
-  //! a string into smaller components (tokens) based on specified delimiter(s).
-  //! It facilitates sequential token extraction from the input string and
-  //! supports custom delimiters.
+  //! The `Tokenizer` class provides a simple and efficient mechanism for
+  //! breaking a string into smaller components (tokens) based on specified
+  //! delimiter(s). It facilitates sequential token extraction from the input
+  //! string and supports custom delimiters.
   //!
   //! **Usage Example:**
   //! \code{cpp}
@@ -52,7 +53,8 @@ namespace Utils {
   //! }
   //! \endcode
   //!
-  class Tokenizer {
+  class Tokenizer
+  {
   protected:
     size_t       m_offset;      //!< Current position in the string.
     string const m_string;      //!< The original string to tokenize.
@@ -65,31 +67,32 @@ namespace Utils {
     //! \param str The input string to tokenize.
     //! \param delimiters A string containing delimiter characters.
     //!
-    Tokenizer(
-      string str,
-      string delimiters
-    )
-    : m_offset(0)
-    , m_string(std::move(str))
-    , m_delimiters(std::move(delimiters))
-    { }
+    Tokenizer( string str, string delimiters )
+      : m_offset( 0 ), m_string( std::move( str ) ), m_delimiters( std::move( delimiters ) )
+    {
+    }
 
     //!
     //! Retrieves the last extracted token.
     //!
     //! \return The last token that was retrieved using `next_token()`.
     //!
-    string const & get_token() const { return m_token; }
+    string const &
+    get_token() const
+    {
+      return m_token;
+    }
 
     //!
     //! Advances the tokenizer to the next token in the string.
     //!
-    //! This function searches the string for the next token, updating the internal
-    //! state of the `Tokenizer` object. If a token is found, it sets the `m_token`
-    //! member variable to the new token and returns `true`. If no more tokens are
-    //! available, it returns `false`.
+    //! This function searches the string for the next token, updating the
+    //! internal state of the `Tokenizer` object. If a token is found, it sets
+    //! the `m_token` member variable to the new token and returns `true`. If no
+    //! more tokens are available, it returns `false`.
     //!
-    //! \return `true` if a new token was found; `false` if no more tokens are available.
+    //! \return `true` if a new token was found; `false` if no more tokens are
+    //! available.
     //!
     bool next_token();
   };
@@ -104,19 +107,16 @@ namespace Utils {
   //! \param sep A string containing delimiter characters.
   //! \param arr A vector that will be filled with the resulting tokens.
   //!
-  //! \note The resulting tokens are stored in the provided vector, and the vector
-  //!       will be resized to accommodate all tokens extracted from the input string.
+  //! \note The resulting tokens are stored in the provided vector, and the
+  //! vector
+  //!       will be resized to accommodate all tokens extracted from the input
+  //!       string.
   //!
-  void
-  split_string(
-    string const   & str,
-    string const   & sep,
-    vector<string> & arr
-  );
+  void split_string( string const & str, string const & sep, vector<string> & arr );
 
   /*! @} */
 
-}
+}  // namespace Utils
 
 //
 // eof: Token.hxx

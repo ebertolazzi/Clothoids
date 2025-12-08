@@ -24,7 +24,8 @@
 #include "Utils.hh"
 #include "Utils_fmt.hh"
 
-namespace Utils {
+namespace Utils
+{
 
   using std::ceil;
   using std::floor;
@@ -33,81 +34,141 @@ namespace Utils {
   //!
   //! \brief Generates a text-based progress bar as a string.
   //!
-  //! This function creates a progress bar in the form of a string representation,
-  //! which visually indicates the progress of a task. The progress is shown using
-  //! equal signs, a greater-than symbol for the current position, and underscores
-  //! for the remaining part of the bar.
+  //! This function creates a progress bar in the form of a string
+  //! representation, which visually indicates the progress of a task. The
+  //! progress is shown using equal signs, a greater-than symbol for the current
+  //! position, and underscores for the remaining part of the bar.
   //!
-  //! \param progress A value between 0.0 and 1.0 representing the progress of the task.
-  //! \param width    The total width of the progress bar (number of characters).
+  //! \param progress A value between 0.0 and 1.0 representing the progress of
+  //! the task.
+  //! \param width    The total width of the progress bar (number of
+  //! characters).
   //!
-  //! \return A string representing the progress bar along with the percentage completed.
+  //! \return A string representing the progress bar along with the percentage
+  //! completed.
   //!
   string
-  progress_bar( double const progress, int const width ) {
-    string res{"["};
-    int const pos{ static_cast<int>(width * progress) };
-    for ( int i{0}; i < width; ++i ) {
-      if      (i  < pos) res += '=';
-      else if (i == pos) res += '>';
-      else               res += '_';
+  progress_bar( double const progress, int const width )
+  {
+    string    res{ "[" };
+    int const pos{ static_cast<int>( width * progress ) };
+    for ( int i{ 0 }; i < width; ++i )
+    {
+      if ( i < pos )
+        res += '=';
+      else if ( i == pos )
+        res += '>';
+      else
+        res += '_';
     }
-    res += fmt::format( "] {:3.0f}%", ceil(100*progress) );
+    res += fmt::format( "] {:3.0f}%", ceil( 100 * progress ) );
+    return res;
+  }
+
+  //!
+  //! \brief Outputs an enhanced text-based progress bar to the specified output
+  //! stream.
+  //!
+  //! This function generates a more detailed progress bar using various
+  //! characters to represent different levels of completion. It outputs the
+  //! progress bar directly to the provided output stream, including a
+  //! percentage and an optional message.
+  //!
+  //! \param s        The output stream where the progress bar will be
+  //! displayed.
+  //! \param progress A value between 0.0 and 1.0 representing the progress of
+  //! the task.
+  //! \param width    The total width of the progress bar (number of
+  //! characters).
+  //! \param msg      An optional message to display alongside the progress bar.
+  //!
+  string
+  progress_bar2( double const progress, int const width, string_view const msg )
+  {
+    vector<string> const ch{ ".", "▏", "▎", "▍", "▌", "▋", "▊", "▉", "█" };
+    string               res = "[";
+    double const         ww{ width * progress };
+    int const            pos{ static_cast<int>( floor( ww ) ) };
+    int const            frac8{ static_cast<int>( round( 8 * ( ww - pos ) ) ) };
+    for ( int i{ 0 }; i < width; ++i )
+    {
+      if ( i < pos )
+        res += ch.back();
+      else if ( i > pos )
+        res += ch.front();
+      else
+        res += ch[frac8];
+    }
+    res += "] ";
+    res += fmt::format( "{:3.0f}% {}", ceil( 100 * progress ), msg );
     return res;
   }
 
   //!
   //! \brief Outputs a text-based progress bar to the specified output stream.
   //!
-  //! This function generates a progress bar and outputs it directly to the provided
-  //! output stream, indicating the current progress of a task. The visual representation
-  //! uses filled and unfilled squares to indicate progress and includes a percentage
-  //! along with an optional message.
+  //! This function generates a progress bar and outputs it directly to the
+  //! provided output stream, indicating the current progress of a task. The
+  //! visual representation uses filled and unfilled squares to indicate
+  //! progress and includes a percentage along with an optional message.
   //!
-  //! \param s        The output stream where the progress bar will be displayed.
-  //! \param progress A value between 0.0 and 1.0 representing the progress of the task.
-  //! \param width    The total width of the progress bar (number of characters).
+  //! \param s        The output stream where the progress bar will be
+  //! displayed.
+  //! \param progress A value between 0.0 and 1.0 representing the progress of
+  //! the task.
+  //! \param width    The total width of the progress bar (number of
+  //! characters).
   //! \param msg      An optional message to display alongside the progress bar.
   //!
   void
-  progress_bar( ostream_type & s, double const progress, int const width, string_view const msg ) {
+  progress_bar( ostream_type & s, double const progress, int const width, string_view const msg )
+  {
     s << "[";
-    int const pos{ static_cast<int>(width * progress) };
-    for ( int i{0}; i < width; ++i )
-      s << (i<pos? u8"\u25A0":u8"\u25A1");
-    fmt::print( s, "] {:3.0f}% {}\r", ceil(100*progress), msg );
+    int const pos{ static_cast<int>( width * progress ) };
+    for ( int i{ 0 }; i < width; ++i ) s << ( i < pos ? u8"\u25A0" : u8"\u25A1" );
+    fmt::print( s, "] {:3.0f}% {}\r", ceil( 100 * progress ), msg );
     s << std::flush;
   }
 
   //!
-  //! \brief Outputs an enhanced text-based progress bar to the specified output stream.
+  //! \brief Outputs an enhanced text-based progress bar to the specified output
+  //! stream.
   //!
-  //! This function generates a more detailed progress bar using various characters to
-  //! represent different levels of completion. It outputs the progress bar directly to
-  //! the provided output stream, including a percentage and an optional message.
+  //! This function generates a more detailed progress bar using various
+  //! characters to represent different levels of completion. It outputs the
+  //! progress bar directly to the provided output stream, including a
+  //! percentage and an optional message.
   //!
-  //! \param s        The output stream where the progress bar will be displayed.
-  //! \param progress A value between 0.0 and 1.0 representing the progress of the task.
-  //! \param width    The total width of the progress bar (number of characters).
+  //! \param s        The output stream where the progress bar will be
+  //! displayed.
+  //! \param progress A value between 0.0 and 1.0 representing the progress of
+  //! the task.
+  //! \param width    The total width of the progress bar (number of
+  //! characters).
   //! \param msg      An optional message to display alongside the progress bar.
   //!
   void
-  progress_bar2( ostream_type & s, double const progress, int const width, string_view const msg ) {
-    vector<string> const ch{"_", "▏", "▎", "▍", "▌", "▋", "▊", "▉", "█"};
+  progress_bar2( ostream_type & s, double const progress, int const width, string_view const msg )
+  {
+    vector<string> const ch{ "░", "▏", "▎", "▍", "▌", "▋", "▊", "▉", "█" };
     s << "[";
-    double const ww    { width * progress };
-    int    const pos   { static_cast<int>(floor(ww)) };
-    int    const frac8 { static_cast<int>(round(8 * (ww - pos))) };
-    for ( int i{0}; i < width; ++i ) {
-      if      (i < pos) s << ch.back();
-      else if (i > pos) s << ' ';
-      else              s << ch[frac8];
+    double const ww{ width * progress };
+    int const    pos{ static_cast<int>( floor( ww ) ) };
+    int const    frac8{ static_cast<int>( round( 8 * ( ww - pos ) ) ) };
+    for ( int i{ 0 }; i < width; ++i )
+    {
+      if ( i < pos )
+        s << ch.back();
+      else if ( i > pos )
+        s << ch.front();
+      else
+        s << ch[frac8];
     }
-    fmt::print( s, "] {:3.0f}% {}\r", ceil(100*progress), msg );
+    fmt::print( s, "] {:3.0f}% {}\r", ceil( 100 * progress ), msg );
     s << std::flush;
   }
 
-}
+}  // namespace Utils
 
 //
 // eof: Utils_progress_bar.c

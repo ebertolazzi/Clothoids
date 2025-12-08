@@ -51,8 +51,8 @@
 #endif
 
 #include "Utils.hh"
-#include "Utils_fmt.hh"
 #include "Utils/mex_utils.hxx"
+#include "Utils_fmt.hh"
 
 #ifdef __clang__
 #pragma clang diagnostic pop

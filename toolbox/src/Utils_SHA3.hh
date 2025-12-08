@@ -1,15 +1,35 @@
+/*--------------------------------------------------------------------------*\
+ |                                                                          |
+ |  Copyright (C) 2025                                                      |
+ |                                                                          |
+ |         , __                 , __                                        |
+ |        /|/  \               /|/  \                                       |
+ |         | __/ _   ,_         | __/ _   ,_                                |
+ |         |   \|/  /  |  |   | |   \|/  /  |  |   |                        |
+ |         |(__/|__/   |_/ \_/|/|(__/|__/   |_/ \_/|/                       |
+ |                           /|                   /|                        |
+ |                           \|                   \|                        |
+ |                                                                          |
+ |      Enrico Bertolazzi                                                   |
+ |      Dipartimento di Ingegneria Industriale                              |
+ |      Università degli Studi di Trento                                    |
+ |      email: enrico.bertolazzi@unitn.it                                   |
+ |                                                                          |
+\*--------------------------------------------------------------------------*/
+
 #pragma once
 
 #ifndef UTILS_SHA3_HH
 #define UTILS_SHA3_HH
 
+#include <cstdint>
+#include <iostream>
+#include <string>
+
 #include "Utils.hh"
 
-#include <string>
-#include <iostream>
-#include <cstdint>
-
-namespace Utils {
+namespace Utils
+{
 
   //!
   //! \brief SHA-3 winning hash algorithm Keccak
@@ -24,21 +44,22 @@ namespace Utils {
   //!
   //! Ported to C++ by Enrico Bertolazzi
   //!
-  class SHA3 {
-
+  class SHA3
+  {
     using uint8_t  = std::uint8_t;
     using uint64_t = std::uint64_t;
 
     // Round state
-    uint8_t  *m_buffer_location{nullptr}; // used for writing and to know when to flush the buffer
-    uint64_t m_state[5][5];
-    uint64_t m_message_buffer_64[1600/8];  // rate bits wide, defined during construction
+    uint8_t * m_buffer_location{ nullptr };  // used for writing and to know when to flush the buffer
+    uint64_t  m_state[5][5];
+    uint64_t  m_message_buffer_64[1600 / 8];  // rate bits wide, defined during
+                                              // construction
 
-    int m_digest_size{0}; // bytes
+    int m_digest_size{ 0 };  // bytes
 
     // Digest-length specific Values
-    int m_sponge_capacity{0};
-    int m_sponge_rate{0};
+    int m_sponge_capacity{ 0 };
+    int m_sponge_rate{ 0 };
 
     void m_reset();
     void m_perform_rounds( int rounds );
@@ -49,18 +70,18 @@ namespace Utils {
     void m_print_sponge( ostream_type & stream ) const;
 
   public:
-
     //!
     //! \brief Constructor for the SHA3 class
     //!
     //! Initializes the SHA3 hashing algorithm with the specified digest size.
     //!
-    //! \param digest_size The size of the desired hash output in bytes (e.g., 224, 256, 384, or 512).
+    //! \param digest_size The size of the desired hash output in bytes (e.g.,
+    //! 224, 256, 384, or 512).
     //!
     explicit SHA3( int digest_size );
 
     //! \brief Destructor for the SHA3 class.
-    ~SHA3() { }
+    ~SHA3() {}
 
     //!
     //! \brief Adds an entire string to the message.
@@ -78,7 +99,8 @@ namespace Utils {
     //! This method appends the given hexadecimal string to the internal
     //! message buffer. Each pair of hex digits is converted to a byte.
     //!
-    //! \param str The null-terminated hexadecimal string of bytes to add to the hash.
+    //! \param str The null-terminated hexadecimal string of bytes to add to the
+    //! hash.
     //!
     void hash_hex_string( string_view str );
 
@@ -101,7 +123,11 @@ namespace Utils {
     //!
     //! \return The size of the digest in bytes.
     //!
-    int digest_size() const { return m_digest_size; }
+    int
+    digest_size() const
+    {
+      return m_digest_size;
+    }
 
     //!
     //! \brief Hash a specified number of bytes.
@@ -122,6 +148,6 @@ namespace Utils {
     //!
     void digest( uint8_t * d );
   };
-}
+}  // namespace Utils
 
 #endif

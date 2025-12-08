@@ -26,18 +26,19 @@
 #ifndef UTILS_ZEROS_dot_HH
 #define UTILS_ZEROS_dot_HH
 
+#include <algorithm>
+#include <cmath>
 #include <iostream>
 #include <sstream>
 #include <string>
-#include <algorithm>
-#include <cmath>
 
 #include "Utils.hh"
 
-namespace Utils {
+namespace Utils
+{
 
-  using std::pow;
   using std::abs;
+  using std::pow;
 
   /*!
    * \addtogroup Zeros
@@ -54,24 +55,28 @@ namespace Utils {
   //!
   //! \ingroup Zeros
   //! \class Zeros_base_fun
-  //! \brief Abstract base class for defining mathematical functions used in root-finding algorithms.
+  //! \brief Abstract base class for defining mathematical functions used in
+  //! root-finding algorithms.
   //!
-  //! This class serves as a base interface for user-defined functions that can be evaluated
-  //! and differentiated. It allows for the implementation of various numerical methods to
-  //! find the roots of the equation \f$ f(x) = 0 \f$. Users must inherit from this class and
-  //! implement the virtual methods to define their specific functions.
+  //! This class serves as a base interface for user-defined functions that can
+  //! be evaluated and differentiated. It allows for the implementation of
+  //! various numerical methods to find the roots of the equation \f$ f(x) = 0
+  //! \f$. Users must inherit from this class and implement the virtual methods
+  //! to define their specific functions.
   //!
-  //! The class provides methods to evaluate the function itself as well as its first,
-  //! second, and third derivatives, which are essential for many root-finding algorithms
-  //! such as Newton-Raphson and Halley methods.
+  //! The class provides methods to evaluate the function itself as well as its
+  //! first, second, and third derivatives, which are essential for many
+  //! root-finding algorithms such as Newton-Raphson and Halley methods.
   //!
   //! **Template Parameter:**
-  //! - `Real`: A numeric type representing the data type of the function's input and output,
+  //! - `Real`: A numeric type representing the data type of the function's
+  //! input and output,
   //!   such as `float`, `double`, etc.
   //!
   //! **Usage Example:**
-  //! To create a custom function, derive from this class and implement the required methods.
-  //! Here is an example for the function \f$ f(x) = x^2 - 2 \f$:
+  //! To create a custom function, derive from this class and implement the
+  //! required methods. Here is an example for the function \f$ f(x) = x^2 - 2
+  //! \f$:
   //!
   //! \code{cpp}
   //! class Fun1 : public Zeros_base_fun<double> {
@@ -84,9 +89,9 @@ namespace Utils {
   //! \endcode
 
   template <typename Real>
-  class Zeros_base_fun {
+  class Zeros_base_fun
+  {
   public:
-
     //!
     //! Evaluate the function \f$ f(x) \f$
     //!
@@ -128,7 +133,11 @@ namespace Utils {
     //! \param[in] x the point to evaluate \f$ f(x) \f$
     //! \return the value of \f$ f(x) \f$
     //!
-    Real operator () ( Real x ) const { return this->eval(x); }
+    Real
+    operator()( Real x ) const
+    {
+      return this->eval( x );
+    }
 
     //!
     //! Evaluate the first derivative of \f$ f(x) \f$
@@ -139,7 +148,11 @@ namespace Utils {
     //! \param[in] x the point to evaluate \f$ f'(x) \f$
     //! \return the value of \f$ f'(x) \f$
     //!
-    Real D( Real x ) const { return this->eval_D(x); }
+    Real
+    D( Real x ) const
+    {
+      return this->eval_D( x );
+    }
 
     //!
     //! Evaluate the second derivative of \f$ f(x) \f$
@@ -150,7 +163,11 @@ namespace Utils {
     //! \param[in] x the point to evaluate \f$ f''(x) \f$
     //! \return the value of \f$ f''(x) \f$
     //!
-    Real DD( Real x ) const { return this->eval_DD(x); }
+    Real
+    DD( Real x ) const
+    {
+      return this->eval_DD( x );
+    }
 
     //!
     //! Evaluate the third derivative of \f$ f(x) \f$
@@ -161,36 +178,50 @@ namespace Utils {
     //! \param[in] x the point to evaluate \f$ f'''(x) \f$
     //! \return the value of \f$ f'''(x) \f$
     //!
-    Real DDD( Real x ) const { return this->eval_DDD(x); }
+    Real
+    DDD( Real x ) const
+    {
+      return this->eval_DDD( x );
+    }
   };
 
   //!
   //! \class Zeros
-  //! \brief Class for solving the equation \f$ f(x) = 0 \f$ using various numerical methods.
+  //! \brief Class for solving the equation \f$ f(x) = 0 \f$ using various
+  //! numerical methods.
   //!
-  //! This class implements multiple solvers to find the roots of a given function. The available methods include:
+  //! This class implements multiple solvers to find the roots of a given
+  //! function. The available methods include:
   //!
-  //! - **Newton-Raphson Method**: A widely used iterative method for finding successively better approximations to the roots of a real-valued function.
+  //! - **Newton-Raphson Method**: A widely used iterative method for finding
+  //! successively better approximations to the roots of a real-valued function.
   //!   [Learn more](https://en.wikipedia.org/wiki/Newton%27s_method).
-  //! - **Chebyshev Method**: A higher-order root-finding method that offers faster convergence compared to the Newton-Raphson method.
-  //! - **Halley Method**: An iterative method that is a generalization of the Newton-Raphson method and provides faster convergence.
+  //! - **Chebyshev Method**: A higher-order root-finding method that offers
+  //! faster convergence compared to the Newton-Raphson method.
+  //! - **Halley Method**: An iterative method that is a generalization of the
+  //! Newton-Raphson method and provides faster convergence.
   //!   [Learn more](https://en.wikipedia.org/wiki/Halley%27s_method).
-  //! - **Methods by Juan Luis Varona**: A series of methods developed for enhanced convergence properties:
+  //! - **Methods by Juan Luis Varona**: A series of methods developed for
+  //! enhanced convergence properties:
   //!   - Order 4 method
   //!   - Order 8 method
   //!   - Order 16 method
   //!   - Order 32 method
   //!
   //! For a detailed exploration of these methods, refer to the paper:
-  //! - *An Optimal Thirty-Second-Order Iterative Method for Solving Nonlinear Equations and a Conjecture*,
+  //! - *An Optimal Thirty-Second-Order Iterative Method for Solving Nonlinear
+  //! Equations and a Conjecture*,
   //!   **Juan Luis Varona**, Qualitative Theory of Dynamical Systems (2022).
-  //!   [Link to the paper](https://link.springer.com/article/10.1007/s12346-022-00572-3).
+  //!   [Link to the
+  //!   paper](https://link.springer.com/article/10.1007/s12346-022-00572-3).
   //!
-  //! \note This class is designed to work with user-defined functions that extend from `Utils::Zeros_base_fun`.
+  //! \note This class is designed to work with user-defined functions that
+  //! extend from `Utils::Zeros_base_fun`.
   //!
   //! **Usage Example**
   //!
-  //! To use this class, first wrap your function in a derived class. For instance, for the function \f$ f(x) = x^2 - 2 \f$, you can define:
+  //! To use this class, first wrap your function in a derived class. For
+  //! instance, for the function \f$ f(x) = x^2 - 2 \f$, you can define:
   //!
   //! \code{cpp}
   //! class Fun1 : public Utils::Zeros_base_fun<real_type> {
@@ -202,7 +233,8 @@ namespace Utils {
   //! };
   //! \endcode
   //!
-  //! Next, instantiate the function and the solver. Then, call the desired method to find the root:
+  //! Next, instantiate the function and the solver. Then, call the desired
+  //! method to find the root:
   //!
   //! \code{cpp}
   //! Zeros<real_type> solver;
@@ -214,67 +246,81 @@ namespace Utils {
   //! If the method converges, `x_solution` will contain the computed solution.
 
   template <typename Real>
-  class Zeros {
-
+  class Zeros
+  {
     using Integer = int;
 
-    Integer m_max_fun_evaluation{200};  //< max number of function evaluations
-    Integer m_max_iteration{100};       //< max number of iterations
-    Real    m_tolerance{pow(machine_eps<Real>(),Real(2./3.))};
-    bool    m_converged{false};
+    Integer m_max_fun_evaluation{ 200 };  //< max number of function evaluations
+    Integer m_max_iteration{ 100 };       //< max number of iterations
+    Real    m_tolerance{ pow( machine_eps<Real>(), Real( 2. / 3. ) ) };
+    bool    m_converged{ false };
 
-    mutable Integer m_iteration_count{0};    // explore iteration counter
-    mutable Integer m_fun_evaluation_count{0};
+    mutable Integer m_iteration_count{ 0 };  // explore iteration counter
+    mutable Integer m_fun_evaluation_count{ 0 };
 
-    //static Real Q( Real t ) { return 1/(1-2*t); }
-    static Real Q( Real t ) { return 1+2*t; }
-
-    static Real W( Real t, Real s ) {
-      Real t2{t*t};
-      return t2*(1-4*t)+(4*s+2)*t+s+1;
+    // static Real Q( Real t ) { return 1/(1-2*t); }
+    static Real
+    Q( Real t )
+    {
+      return 1 + 2 * t;
     }
 
-    static Real H( Real t, Real s, Real u ) {
-      Real t1  = t*t;
-      Real t2  = t1*t1;
-      Real t8  = s*s;
-      Real t17 = s*t8;
-      Real t23 = 2*u;
-      return ( (8*u+6*t2+4)*s-(6*t8+4*(s+u+1))*t1 + 2*t8 - 4*t17 + t23 + 2 )*t +
-               t1*(t8+s+u+1) + (1-3*t2+t23)*s + u - t17 + 1;
+    static Real
+    W( Real t, Real s )
+    {
+      Real t2{ t * t };
+      return t2 * ( 1 - 4 * t ) + ( 4 * s + 2 ) * t + s + 1;
     }
 
-    static Real J( Real t, Real s, Real u, Real v ) {
-      Real t1  = s*s;
-      Real t2  = t1*t1;
-      Real t17 = t*t;
-      Real t22 = u*u;
-      Real t32 = t17*t17;
-      Real t34 = t*t32;
-      Real t37 = t*t17;
-      Real t46 = 1+v;
-      Real t65 = u+1+v;
-      Real t76 = (2-2*t22+u+4*v)*u;
+    static Real
+    H( Real t, Real s, Real u )
+    {
+      Real t1  = t * t;
+      Real t2  = t1 * t1;
+      Real t8  = s * s;
+      Real t17 = s * t8;
+      Real t23 = 2 * u;
+      return ( ( 8 * u + 6 * t2 + 4 ) * s - ( 6 * t8 + 4 * ( s + u + 1 ) ) * t1 + 2 * t8 - 4 * t17 + t23 + 2 ) * t +
+             t1 * ( t8 + s + u + 1 ) + ( 1 - 3 * t2 + t23 ) * s + u - t17 + 1;
+    }
 
-      constexpr Real r1_2{ static_cast<Real>(1.0/2.0) };
-      constexpr Real r1_4{ static_cast<Real>(1.0/4.0) };
-      constexpr Real r2_3{ static_cast<Real>(2.0/3.0) };
-      constexpr Real r3_2{ static_cast<Real>(3.0/2.0) };
-      constexpr Real r3_4{ static_cast<Real>(3.0/4.0) };
-      constexpr Real r3_8{ static_cast<Real>(3.0/8.0) };
-      constexpr Real r5_8{ static_cast<Real>(5.0/8.0) };
-      return (2*t-1)*(2+5*t)*u*t*t2 +
-             (4*t+1)*u*s*t2+
-             (u*t22-2*u*v-u-v-1)*(4*t17+3*t+1)*(t-1)-
-             8*(t22*(t17/2-r1_4)+u*(t17*t32-r5_8*t34-r3_4*t32+
-             r3_8*t37+r3_4*t17-t/8-r1_4)+r3_4*t46*(t+r1_2)*(t-r2_3))*t*t1+
-             4*(t22*(-r3_2*t-r1_4)+u*(t34-t32-r3_2*t37+t17/4-t-r1_4)-
-             t46*(t+r3_4))*s*t1+(1+v+t65*t17-4*t65*t37-3*t65*t32+6*t65*t34+t76+4*(1+v+t76)*t)*s;
+    static Real
+    J( Real t, Real s, Real u, Real v )
+    {
+      Real t1  = s * s;
+      Real t2  = t1 * t1;
+      Real t17 = t * t;
+      Real t22 = u * u;
+      Real t32 = t17 * t17;
+      Real t34 = t * t32;
+      Real t37 = t * t17;
+      Real t46 = 1 + v;
+      Real t65 = u + 1 + v;
+      Real t76 = ( 2 - 2 * t22 + u + 4 * v ) * u;
+
+      constexpr Real r1_2{ static_cast<Real>( 1.0 / 2.0 ) };
+      constexpr Real r1_4{ static_cast<Real>( 1.0 / 4.0 ) };
+      constexpr Real r2_3{ static_cast<Real>( 2.0 / 3.0 ) };
+      constexpr Real r3_2{ static_cast<Real>( 3.0 / 2.0 ) };
+      constexpr Real r3_4{ static_cast<Real>( 3.0 / 4.0 ) };
+      constexpr Real r3_8{ static_cast<Real>( 3.0 / 8.0 ) };
+      constexpr Real r5_8{ static_cast<Real>( 5.0 / 8.0 ) };
+      return ( 2 * t - 1 ) * ( 2 + 5 * t ) * u * t * t2 + ( 4 * t + 1 ) * u * s * t2 +
+             ( u * t22 - 2 * u * v - u - v - 1 ) * ( 4 * t17 + 3 * t + 1 ) * ( t - 1 ) -
+             8 *
+                 ( t22 * ( t17 / 2 - r1_4 ) +
+                   u * ( t17 * t32 - r5_8 * t34 - r3_4 * t32 + r3_8 * t37 + r3_4 * t17 - t / 8 - r1_4 ) +
+                   r3_4 * t46 * ( t + r1_2 ) * ( t - r2_3 ) ) *
+                 t * t1 +
+             4 *
+                 ( t22 * ( -r3_2 * t - r1_4 ) + u * ( t34 - t32 - r3_2 * t37 + t17 / 4 - t - r1_4 ) -
+                   t46 * ( t + r3_4 ) ) *
+                 s * t1 +
+             ( 1 + v + t65 * t17 - 4 * t65 * t37 - 3 * t65 * t32 + 6 * t65 * t34 + t76 + 4 * ( 1 + v + t76 ) * t ) * s;
     }
 
   public:
-
-    Zeros() = default;
+    Zeros()  = default;
     ~Zeros() = default;
 
     //!
@@ -302,7 +348,8 @@ namespace Utils {
     //! starting from guess value `x_guess`
     //!
     //! \param x_guess starting value for iterative method
-    //! \param fun     the pointer to base class `Zeros_base_fun<Real>` wrapping the user function
+    //! \param fun     the pointer to base class `Zeros_base_fun<Real>` wrapping
+    //! the user function
     //!
     Real solve_Newton( Real x_guess, Zeros_base_fun<Real> * fun );
     //!
@@ -310,7 +357,8 @@ namespace Utils {
     //! starting from guess value `x_guess`.
     //!
     //! \param x_guess starting value for iterative method
-    //! \param fun     the pointer to base class `Zeros_base_fun<Real>` wrapping the user function
+    //! \param fun     the pointer to base class `Zeros_base_fun<Real>` wrapping
+    //! the user function
     //!
     Real solve_Chebyshev( Real x_guess, Zeros_base_fun<Real> * fun );
     //!
@@ -318,7 +366,8 @@ namespace Utils {
     //! starting from guess value `x_guess`
     //!
     //! \param x_guess starting value for iterative method
-    //! \param fun     the pointer to base class `Zeros_base_fun<Real>` wrapping the user function
+    //! \param fun     the pointer to base class `Zeros_base_fun<Real>` wrapping
+    //! the user function
     //!
     Real solve_Halley( Real x_guess, Zeros_base_fun<Real> * fun );
     //!
@@ -326,7 +375,8 @@ namespace Utils {
     //! starting from guess value `x_guess`
     //!
     //! \param x_guess starting value for iterative method
-    //! \param fun     the pointer to base class `Zeros_base_fun<Real>` wrapping the user function
+    //! \param fun     the pointer to base class `Zeros_base_fun<Real>` wrapping
+    //! the user function
     //!
     Real solve_Order4( Real x_guess, Zeros_base_fun<Real> * fun );
     //!
@@ -334,7 +384,8 @@ namespace Utils {
     //! starting from guess value `x_guess`
     //!
     //! \param x_guess starting value for iterative method
-    //! \param fun     the pointer to base class `Zeros_base_fun<Real>` wrapping the user function
+    //! \param fun     the pointer to base class `Zeros_base_fun<Real>` wrapping
+    //! the user function
     //!
     Real solve_Order8( Real x_guess, Zeros_base_fun<Real> * fun );
     //!
@@ -342,7 +393,8 @@ namespace Utils {
     //! starting from guess value `x_guess`
     //!
     //! \param x_guess starting value for iterative method
-    //! \param fun     the pointer to base class `Zeros_base_fun<Real>` wrapping the user function
+    //! \param fun     the pointer to base class `Zeros_base_fun<Real>` wrapping
+    //! the user function
     //!
     Real solve_Order16( Real x_guess, Zeros_base_fun<Real> * fun );
     //!
@@ -350,35 +402,51 @@ namespace Utils {
     //! starting from guess value `x_guess`
     //!
     //! \param x_guess starting value for iterative method
-    //! \param fun     the pointer to base class `Zeros_base_fun<Real>` wrapping the user function
+    //! \param fun     the pointer to base class `Zeros_base_fun<Real>` wrapping
+    //! the user function
     //!
     Real solve_Order32( Real x_guess, Zeros_base_fun<Real> * fun );
 
     //!
     //! \return the number of iterations used in the last computation
     //!
-    Integer used_iter() const { return m_iteration_count; }
+    Integer
+    used_iter() const
+    {
+      return m_iteration_count;
+    }
     //!
     //! \return the number of evaluation used in the last computation
     //!
-    Integer num_fun_eval() const { return m_fun_evaluation_count; }
+    Integer
+    num_fun_eval() const
+    {
+      return m_fun_evaluation_count;
+    }
     //!
     //! \return the tolerance set for computation
     //!
-    Real tolerance() const { return m_tolerance; }
+    Real
+    tolerance() const
+    {
+      return m_tolerance;
+    }
     //!
     //! \return true if the last computation was successfull
     //!
-    bool converged() const { return m_converged; }
-
+    bool
+    converged() const
+    {
+      return m_converged;
+    }
   };
 
-  #ifndef UTILS_OS_WINDOWS
+#ifndef UTILS_OS_WINDOWS
   extern template class Zeros<float>;
   extern template class Zeros<double>;
-  #endif
+#endif
 
-}
+}  // namespace Utils
 
 #endif
 

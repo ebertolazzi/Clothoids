@@ -22,10 +22,11 @@
 //
 
 #ifdef UTILS_OS_LINUX
-  #include <pthread.h>
+#include <pthread.h>
 #endif
 
-namespace Utils {
+namespace Utils
+{
 
   /*!
    * \addtogroup THREAD
@@ -50,23 +51,21 @@ namespace Utils {
   //!  It is primarily used for testing or environments where
   //!  threading is not needed.
   //!
-  class ThreadPool0 : public ThreadPoolBase {
+  class ThreadPool0 : public ThreadPoolBase
+  {
     using ThreadPoolBase::FUN;
-    unsigned n_thread{1};
+    unsigned n_thread{ 1 };
 
   public:
-
     //!
-    //!  \brief Constructs a fake thread pool with a specified number of threads.
+    //!  \brief Constructs a fake thread pool with a specified number of
+    //!  threads.
     //!
     //!  This constructor initializes the thread pool with a specified number
     //!  of threads, although it does not actually create any threads.
     //!  The specified number is ignored.
     //!
-    explicit
-    ThreadPool0( unsigned n )
-    : ThreadPoolBase(), n_thread{n}
-    {}
+    explicit ThreadPool0( unsigned n ) : ThreadPoolBase(), n_thread{ n } {}
 
     //! Destructor.
     virtual ~ThreadPool0() = default;
@@ -79,7 +78,11 @@ namespace Utils {
     //!
     //! \param fun The function to be executed.
     //!
-    void exec( FUN && fun ) override { fun(); }
+    void
+    exec( FUN && fun ) override
+    {
+      fun();
+    }
 
     //!
     //! \brief No-op method to wait for all tasks to complete.
@@ -87,7 +90,10 @@ namespace Utils {
     //! This method does not perform any actions, as there are no
     //! threads or tasks to wait for.
     //!
-    void wait() override { }
+    void
+    wait() override
+    {
+    }
 
     //!
     //! \brief Returns the number of threads in the pool.
@@ -97,7 +103,11 @@ namespace Utils {
     //!
     //! \return Always returns 1.
     //!
-    unsigned thread_count() const override { return n_thread; }
+    unsigned
+    thread_count() const override
+    {
+      return n_thread;
+    }
 
     //!
     //! \brief Returns the name of the thread pool.
@@ -106,14 +116,22 @@ namespace Utils {
     //!
     //! \return A string indicating that this is a "ThreadPool0 (fake thread)".
     //!
-    static char const * Name() { return "ThreadPool0 (fake thread)"; }
+    static char const *
+    Name()
+    {
+      return "ThreadPool0 (fake thread)";
+    }
 
-    char const * name() const override { return Name(); }
+    char const *
+    name() const override
+    {
+      return Name();
+    }
   };
 
   /*! @} */
 
-}
+}  // namespace Utils
 
 //
 // eof: ThreadPool0.hxx

@@ -29,19 +29,20 @@
 :|:   \____||_|   |_| |_|_| |_|\__\___|_|  |_|  \__,_|\___\___|
 \*/
 
-namespace Utils {
+namespace Utils
+{
 
   /*!
    * \addtogroup Malloc
    * @{
    */
 
-  #ifndef DOXYGEN_SHOULD_SKIP_THIS
+#ifndef DOXYGEN_SHOULD_SKIP_THIS
   using std::int64_t;
-  using std::string;
   using std::mutex;
   using std::size_t;
-  #endif
+  using std::string;
+#endif
 
   //! Global mutex for thread-safe memory operations.
   extern std::mutex MallocMutex;
@@ -56,7 +57,8 @@ namespace Utils {
   //! Utility function to convert byte size into a human-readable format.
   /*!
    * \param nb The number of bytes.
-   * \return A string representing the size in human-readable format (KB, MB, etc.).
+   * \return A string representing the size in human-readable format (KB, MB,
+   * etc.).
    */
   string out_bytes( size_t nb );
 
@@ -76,18 +78,18 @@ namespace Utils {
    * \tparam T The type of objects to allocate.
    */
   template <typename T>
-  class Malloc {
+  class Malloc
+  {
   public:
     //! Type alias for the type of objects managed by this allocator.
     using valueType = T;
 
   private:
-
-    string m_name;                   //!< Name identifier for the allocated memory.
-    size_t m_num_total_values{0};    //!< Total number of objects allocated.
-    size_t m_num_total_reserved{0};  //!< Total reserved space.
-    size_t m_num_allocated{0};       //!< Number of currently allocated objects.
-    valueType * m_p_memory{nullptr};      //!< Pointer to the allocated memory.
+    string      m_name;                     //!< Name identifier for the allocated memory.
+    size_t      m_num_total_values{ 0 };    //!< Total number of objects allocated.
+    size_t      m_num_total_reserved{ 0 };  //!< Total reserved space.
+    size_t      m_num_allocated{ 0 };       //!< Number of currently allocated objects.
+    valueType * m_p_memory{ nullptr };      //!< Pointer to the allocated memory.
 
     //! Internal method to allocate memory for a specified number of objects.
     void allocate_internal( size_t n );
@@ -99,21 +101,17 @@ namespace Utils {
     void pop_exausted( size_t sz );
 
   public:
-
     //! Copy constructor is deleted.
     Malloc( Malloc<T> const & ) = delete;
 
     //! Assignment operator is deleted.
-    Malloc<T> const & operator = ( Malloc<T> const & ) const = delete;
+    Malloc<T> const & operator=( Malloc<T> const & ) const = delete;
 
     //! Constructor.
     /*!
      * \param name A string identifier for the allocated memory block.
      */
-    explicit
-    Malloc( string name )
-    : m_name(std::move(name))
-    { }
+    explicit Malloc( string name ) : m_name( std::move( name ) ) {}
 
     //! Destructor.
     /*!
@@ -129,9 +127,10 @@ namespace Utils {
 
     template <typename T2>
     void
-    allocate(T2 n) {
-      static_assert(std::is_integral<T2>::value, "allocate() accepts only integral types!");
-      allocate(static_cast<size_t>(n));
+    allocate( T2 n )
+    {
+      static_assert( std::is_integral<T2>::value, "allocate() accepts only integral types!" );
+      allocate( static_cast<size_t>( n ) );
     }
 
     //! Reallocate memory for `n` objects, even if already allocated.
@@ -142,13 +141,18 @@ namespace Utils {
 
     template <typename T2>
     void
-    reallocate(T2 n) {
-      static_assert(std::is_integral<T2>::value, "reallocate() accepts only integral types!");
-      reallocate(static_cast<size_t>(n));
+    reallocate( T2 n )
+    {
+      static_assert( std::is_integral<T2>::value, "reallocate() accepts only integral types!" );
+      reallocate( static_cast<size_t>( n ) );
     }
 
     //! Free memory without deallocating the pointer.
-    void free() { m_num_total_values = m_num_allocated = 0; }
+    void
+    free()
+    {
+      m_num_total_values = m_num_allocated = 0;
+    }
 
     //! Free memory and deallocate the pointer.
     void hard_free();
@@ -157,14 +161,20 @@ namespace Utils {
     /*!
      * \return Number of currently allocated objects.
      */
-    size_t size() const { return m_num_total_values; }
+    size_t
+    size() const
+    {
+      return m_num_total_values;
+    }
 
     //! Allocate memory for `sz` objects and return the pointer.
     /*!
      * \param sz Number of objects to allocate.
      * \return Pointer to the allocated memory.
      */
-    T * operator () ( size_t sz ) {
+    T *
+    operator()( size_t sz )
+    {
       size_t offs = m_num_allocated;
       m_num_allocated += sz;
       if ( m_num_allocated > m_num_total_values ) memory_exausted( sz );
@@ -172,25 +182,29 @@ namespace Utils {
     }
 
     template <typename T2>
-    T* operator() ( T2 sz ) {
-      static_assert(std::is_integral<T2>::value, "operator() accepts only integral types!");
-      return (*this)(static_cast<size_t>(sz));
+    T *
+    operator()( T2 sz )
+    {
+      static_assert( std::is_integral<T2>::value, "operator() accepts only integral types!" );
+      return ( *this )( static_cast<size_t>( sz ) );
     }
     //! Free memory for `sz` objects.
     /*!
      * \param sz Number of objects to free.
      */
     void
-    pop( size_t sz ) {
+    pop( size_t sz )
+    {
       if ( sz > m_num_allocated ) pop_exausted( sz );
       m_num_allocated -= sz;
     }
 
     template <typename T2>
     void
-    pop( T2 n ) {
-      static_assert(std::is_integral<T2>::value, "pop() accepts only integral types!");
-      pop(static_cast<size_t>(n));
+    pop( T2 n )
+    {
+      static_assert( std::is_integral<T2>::value, "pop() accepts only integral types!" );
+      pop( static_cast<size_t>( n ) );
     }
 
     //! Allocate memory for `n` objects.
@@ -202,9 +216,10 @@ namespace Utils {
 
     template <typename T2>
     T *
-    malloc( T2 n ) {
-      static_assert(std::is_integral<T2>::value, "malloc() accepts only integral types!");
-      return malloc(static_cast<size_t>(n));
+    malloc( T2 n )
+    {
+      static_assert( std::is_integral<T2>::value, "malloc() accepts only integral types!" );
+      return malloc( static_cast<size_t>( n ) );
     }
 
     //! Reallocate memory for `n` objects.
@@ -216,16 +231,21 @@ namespace Utils {
 
     template <typename T2>
     T *
-    realloc( T2 n ) {
-      static_assert(std::is_integral<T2>::value, "realloc() accepts only integral types!");
-      return realloc(static_cast<size_t>(n));
+    realloc( T2 n )
+    {
+      static_assert( std::is_integral<T2>::value, "realloc() accepts only integral types!" );
+      return realloc( static_cast<size_t>( n ) );
     }
 
     //! Check if the memory is fully allocated.
     /*!
      * \return `true` if all memory is allocated, `false` otherwise.
      */
-    bool is_empty() const { return m_num_allocated >= m_num_total_values; }
+    bool
+    is_empty() const
+    {
+      return m_num_allocated >= m_num_total_values;
+    }
 
     //! Ensure that memory is fully used.
     /*!
@@ -239,7 +259,6 @@ namespace Utils {
      * \return A string containing information about memory allocation.
      */
     string info( string_view where ) const;
-
   };
 
   extern template class Malloc<char>;
@@ -252,16 +271,16 @@ namespace Utils {
   extern template class Malloc<float>;
   extern template class Malloc<double>;
 
-  extern template class Malloc<void*>;
-  extern template class Malloc<char*>;
-  extern template class Malloc<uint16_t*>;
-  extern template class Malloc<int16_t*>;
-  extern template class Malloc<uint32_t*>;
-  extern template class Malloc<int32_t*>;
-  extern template class Malloc<uint64_t*>;
-  extern template class Malloc<int64_t*>;
-  extern template class Malloc<float*>;
-  extern template class Malloc<double*>;
+  extern template class Malloc<void *>;
+  extern template class Malloc<char *>;
+  extern template class Malloc<uint16_t *>;
+  extern template class Malloc<int16_t *>;
+  extern template class Malloc<uint32_t *>;
+  extern template class Malloc<int32_t *>;
+  extern template class Malloc<uint64_t *>;
+  extern template class Malloc<int64_t *>;
+  extern template class Malloc<float *>;
+  extern template class Malloc<double *>;
 
   /*\
   :|:   __  __       _ _            _____ _              _
@@ -279,52 +298,56 @@ namespace Utils {
    * \tparam mem_size The fixed size of memory to allocate.
    */
   template <typename T, std::size_t mem_size>
-  class MallocFixed {
+  class MallocFixed
+  {
   public:
     //! Type alias for the type of objects managed by this allocator.
     using valueType = T;
 
   private:
-
-    string    m_name;             //!< Name identifier for the allocated memory.
-    size_t    m_num_allocated{0}; //!< Number of currently allocated objects.
-    valueType m_data[mem_size];   //!< Array to store objects of type `T`.
+    string    m_name;                //!< Name identifier for the allocated memory.
+    size_t    m_num_allocated{ 0 };  //!< Number of currently allocated objects.
+    valueType m_data[mem_size];      //!< Array to store objects of type `T`.
 
   public:
-
     //! Copy constructor is deleted.
-    MallocFixed(MallocFixed<T,mem_size> const &) = delete; // blocco costruttore di copia
+    MallocFixed( MallocFixed<T, mem_size> const & ) = delete;  // blocco costruttore di copia
 
     //! Assignment operator is deleted.
-    MallocFixed<T,mem_size> const & operator = (MallocFixed<T,mem_size> const &) const = delete; // blocco copia
+    MallocFixed<T, mem_size> const & operator=( MallocFixed<T, mem_size> const & ) const = delete;  // blocco copia
 
     //! Constructor.
     /*!
      * \param name A string identifier for the allocated memory block.
      */
-    explicit
-    MallocFixed( string name )
-    : m_name(std::move(name))
-    {}
+    explicit MallocFixed( string name ) : m_name( std::move( name ) ) {}
 
     //! Destructor.
     ~MallocFixed() = default;
 
     //! Free memory without deallocating the pointer.
-    void free() { m_num_allocated = 0; }
+    void
+    free()
+    {
+      m_num_allocated = 0;
+    }
 
     //! Get the number of allocated objects.
     /*!
      * \return Number of objects that can be allocated.
      */
-    static size_t size() { return mem_size; }
+    static size_t
+    size()
+    {
+      return mem_size;
+    }
 
     //! Allocate memory for `sz` objects and return the pointer.
     /*!
      * \param sz Number of objects to allocate.
      * \return Pointer to the allocated memory.
      */
-    T * operator () ( size_t sz );
+    T * operator()( size_t sz );
 
     //! Free memory for `sz` objects.
     /*!
@@ -336,13 +359,16 @@ namespace Utils {
     /*!
      * \return `true` if all memory is allocated, `false` otherwise.
      */
-    bool is_empty() const { return m_num_allocated >= mem_size; }
-
+    bool
+    is_empty() const
+    {
+      return m_num_allocated >= mem_size;
+    }
   };
 
   /*! @} */
 
-}
+}  // namespace Utils
 
 //
 // eof: Malloc.hxx

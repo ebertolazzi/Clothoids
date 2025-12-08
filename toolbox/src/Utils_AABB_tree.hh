@@ -27,19 +27,20 @@
 #ifndef UTILS_AABB_TREE_dot_HH
 #define UTILS_AABB_TREE_dot_HH
 
-#include "Utils.hh"
-
+#include <map>
+#include <set>
 #include <string>
 #include <vector>
-#include <set>
-#include <map>
 
-namespace Utils {
+#include "Utils.hh"
 
+namespace Utils
+{
+
+  using std::map;
+  using std::set;
   using std::string;
   using std::vector;
-  using std::set;
-  using std::map;
 
   /*\
    |      _        _    ____  ____  _
@@ -60,49 +61,49 @@ namespace Utils {
   //! \tparam Real Type of the real numbers (e.g., float, double).
   //!
   template <typename Real>
-  class AABBtree {
+  class AABBtree
+  {
   public:
-
-    using integer  = int;                   //!< Integer type.
-    using AABB_SET = set<integer>;          //!< Set of integers representing bounding box indices.
-    using AABB_MAP = map<integer,AABB_SET>; //!< Map for bounding box indices and their overlaps.
+    using integer  = int;                     //!< Integer type.
+    using AABB_SET = set<integer>;            //!< Set of integers representing bounding box indices.
+    using AABB_MAP = map<integer, AABB_SET>;  //!< Map for bounding box indices
+                                              //!< and their overlaps.
 
   private:
-
-    Malloc<Real>    m_rmem{"AABBtree_real"};
-    Malloc<integer> m_imem{"AABBtree_integer"};
+    Malloc<Real>    m_rmem{ "AABBtree_real" };
+    Malloc<integer> m_imem{ "AABBtree_integer" };
 
     // AABBtree structure
-    integer m_dim{0};
-    integer m_2dim{0};
-    integer m_num_objects{0};
-    integer m_num_tree_nodes{0};
+    integer m_dim{ 0 };
+    integer m_2dim{ 0 };
+    integer m_num_objects{ 0 };
+    integer m_num_tree_nodes{ 0 };
 
-    integer * m_father{nullptr};    // m_nmax
-    integer * m_child{nullptr};     // m_nmax
-    integer * m_ptr_nodes{nullptr}; // m_nmax
-    integer * m_num_nodes{nullptr}; // m_nmax
-    integer * m_id_nodes{nullptr};  // m_num_objects
-    Real    * m_bbox_tree{nullptr}; // m_nmax*m_2dim
-    Real    * m_bbox_objs{nullptr}; // m_num_objects*m_2dim
+    integer * m_father{ nullptr };     // m_nmax
+    integer * m_child{ nullptr };      // m_nmax
+    integer * m_ptr_nodes{ nullptr };  // m_nmax
+    integer * m_num_nodes{ nullptr };  // m_nmax
+    integer * m_id_nodes{ nullptr };   // m_num_objects
+    Real *    m_bbox_tree{ nullptr };  // m_nmax*m_2dim
+    Real *    m_bbox_objs{ nullptr };  // m_num_objects*m_2dim
 
     mutable vector<integer> m_stack;
 
-    integer m_nmax{0};
+    integer m_nmax{ 0 };
 
     // parameters
-    integer m_max_num_objects_per_node{16};
-    Real    m_bbox_long_edge_ratio{Real(0.8)};
-    Real    m_bbox_overlap_tolerance{Real(0.1)};
-    Real    m_bbox_min_size_tolerance{Real(0)};
+    integer m_max_num_objects_per_node{ 16 };
+    Real    m_bbox_long_edge_ratio{ Real( 0.8 ) };
+    Real    m_bbox_overlap_tolerance{ Real( 0.1 ) };
+    Real    m_bbox_min_size_tolerance{ Real( 0 ) };
 
     // statistic
     mutable integer m_num_check = 0;
 
-    using OVERLAP_FUN = bool (*) ( Real const bbox1[], Real const bbox2[], integer dim );
+    using OVERLAP_FUN = bool ( * )( Real const bbox1[], Real const bbox2[], integer dim );
 
-    OVERLAP_FUN m_check_overlap{nullptr};
-    OVERLAP_FUN m_check_overlap_with_point{nullptr};
+    OVERLAP_FUN m_check_overlap{ nullptr };
+    OVERLAP_FUN m_check_overlap_with_point{ nullptr };
 
     static bool overlap1( Real const bbox1[], Real const bbox2[], integer dim );
     static bool overlap2( Real const bbox1[], Real const bbox2[], integer dim );
@@ -128,7 +129,6 @@ namespace Utils {
     Real max_bbox_distance( Real const bbox[], Real const pnt[] ) const;
 
   public:
-
     //! Default constructor.
     AABBtree() = default;
 
@@ -183,11 +183,7 @@ namespace Utils {
     //! \param bb_max Maximum corners of bounding boxes.
     //! \param ldim1 Leading dimension for the maximum corners.
     //!
-    void
-    add_bboxes(
-      Real const bb_min[], integer ldim0,
-      Real const bb_max[], integer ldim1
-    );
+    void add_bboxes( Real const bb_min[], integer ldim0, Real const bb_max[], integer ldim1 );
 
     //!
     //! \brief Replaces a bounding box at a specific position.
@@ -196,12 +192,7 @@ namespace Utils {
     //! \param bbox_max New maximum corner of the bounding box.
     //! \param ipos Index of the bounding box to replace.
     //!
-    void
-    replace_bbox(
-      Real const bbox_min[],
-      Real const bbox_max[],
-      integer    ipos
-    );
+    void replace_bbox( Real const bbox_min[], Real const bbox_max[], integer ipos );
 
     //!
     //! \brief Builds the AABB tree.
@@ -219,12 +210,8 @@ namespace Utils {
     //! \param dim    Dimension of the bounding boxes.
     //!
     void
-    build(
-      Real const bb_min[], integer ldim0,
-      Real const bb_max[], integer ldim1,
-      integer nbox,
-      integer dim
-    ) {
+    build( Real const bb_min[], integer ldim0, Real const bb_max[], integer ldim1, integer nbox, integer dim )
+    {
       allocate( nbox, dim );
       add_bboxes( bb_min, ldim0, bb_max, ldim1 );
       build();
@@ -273,7 +260,8 @@ namespace Utils {
 
 
     //!
-    //! \brief Intersects the tree with another AABB tree and refines the search.
+    //! \brief Intersects the tree with another AABB tree and refines the
+    //! search.
     //!
     //! \param aabb The other AABB tree to intersect with.
     //! \param bb_index Map to store indices of intersecting bounding boxes.
@@ -289,7 +277,8 @@ namespace Utils {
     void min_distance_candidates( Real const pnt[], AABB_SET & bb_index ) const;
 
     //!
-    //! \brief Calculates minimum and maximum distance from a point to a bounding box.
+    //! \brief Calculates minimum and maximum distance from a point to a
+    //! bounding box.
     //!
     //! \param pnt The point.
     //! \param bbox The bounding box.
@@ -303,28 +292,44 @@ namespace Utils {
     //!
     //! \return Dimension of the bounding boxes.
     //!
-    integer dim() const { return m_dim; }
+    integer
+    dim() const
+    {
+      return m_dim;
+    }
 
     //!
     //! \brief Returns the number of objects (bounding boxes).
     //!
     //! \return Number of objects.
     //!
-    integer num_objects() const { return m_num_objects; }
+    integer
+    num_objects() const
+    {
+      return m_num_objects;
+    }
 
     //!
     //! \brief Returns the number of tree nodes.
     //!
     //! \return Number of tree nodes.
     //!
-    integer num_tree_nodes() const { return m_num_tree_nodes; }
+    integer
+    num_tree_nodes() const
+    {
+      return m_num_tree_nodes;
+    }
 
     //!
     //! \brief Returns the number of overlap checks performed.
     //!
     //! \return Number of checks.
     //!
-    integer num_check() const { return m_num_check; }
+    integer
+    num_check() const
+    {
+      return m_num_check;
+    }
 
     //!
     //! \brief Returns the number of tree nodes with at least nmin objects.
@@ -351,12 +356,7 @@ namespace Utils {
     //! \param ldim1 Leading dimension for maximum corners.
     //! \param nmin Minimum number of objects in a node.
     //!
-    void
-    get_bboxes_of_the_tree(
-      Real bb_min[], integer ldim0,
-      Real bb_max[], integer ldim1,
-      integer nmin
-    ) const;
+    void get_bboxes_of_the_tree( Real bb_min[], integer ldim0, Real bb_max[], integer ldim1, integer nmin ) const;
 
     //!
     //! \brief Gets the indices of bounding boxes in a specific tree node.
@@ -378,12 +378,12 @@ namespace Utils {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   */
 
-  #ifndef UTILS_OS_WINDOWS
+#ifndef UTILS_OS_WINDOWS
   extern template class AABBtree<float>;
   extern template class AABBtree<double>;
-  #endif
+#endif
 
-}
+}  // namespace Utils
 
 #endif
 

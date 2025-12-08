@@ -23,7 +23,8 @@
 
 #include "3rd/task_thread_pool.hpp"
 
-namespace Utils {
+namespace Utils
+{
 
   /*!
    * \addtogroup THREAD
@@ -48,23 +49,22 @@ namespace Utils {
   //! This class extends `ThreadPoolBase` and supports task execution, joining,
   //! and resizing of worker threads.
   //!
-  class ThreadPool4 : public ThreadPoolBase {
-
+  class ThreadPool4 : public ThreadPoolBase
+  {
     task_thread_pool::task_thread_pool m_pool;
 
   public:
-
     //!
-    //! \brief Constructs a new ThreadPool5 instance with a specified number of threads.
+    //! \brief Constructs a new ThreadPool5 instance with a specified number of
+    //! threads.
     //!
-    //! \param nthread The number of threads to create in the pool. Defaults to the maximum hardware threads available.
+    //! \param nthread The number of threads to create in the pool. Defaults to
+    //! the maximum hardware threads available.
     //!
-    ThreadPool4(
-      unsigned nthread = std::max(
-        unsigned(1),
-        unsigned(std::thread::hardware_concurrency()-1)
-      )
-    ) : m_pool( nthread ) {}
+    ThreadPool4( unsigned nthread = std::max( unsigned( 1 ), unsigned( std::thread::hardware_concurrency() - 1 ) ) )
+      : m_pool( nthread )
+    {
+    }
 
     //!
     //! \brief Destructor for the ThreadPool5 class.
@@ -78,34 +78,53 @@ namespace Utils {
     //!
     //! \param fun The function to be executed as a task.
     //!
-    void exec( FUN && fun ) override { m_pool.submit_detach( std::move(fun) ); }
+    void
+    exec( FUN && fun ) override
+    {
+      m_pool.submit_detach( std::move( fun ) );
+    }
 
     //!
     //! \brief Waits for all tasks to be completed.
     //!
-    void wait() override { m_pool.wait_for_tasks(); }
+    void
+    wait() override
+    {
+      m_pool.wait_for_tasks();
+    }
 
     //!
     //! \brief Gets the current number of threads in the pool.
     //!
     //! \return The number of threads in the pool.
     //!
-    unsigned thread_count() const override { return unsigned( m_pool.get_num_threads() ); }
+    unsigned
+    thread_count() const override
+    {
+      return unsigned( m_pool.get_num_threads() );
+    }
 
     //!
     //! \brief Gets the name of the thread pool implementation.
     //!
     //! \return A constant character pointer to the name of the thread pool.
     //!
-    static char const * Name() { return "ThreadPool4 [task-tp]"; }
+    static char const *
+    Name()
+    {
+      return "ThreadPool4 [task-tp]";
+    }
 
-    char const * name() const override { return Name(); }
-
+    char const *
+    name() const override
+    {
+      return Name();
+    }
   };
 
   /*! @} */
 
-}
+}  // namespace Utils
 
 //
 // eof: ThreadPool4.hxx

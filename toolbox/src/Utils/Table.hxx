@@ -43,13 +43,15 @@
 
 \*/
 
-namespace Utils {
+namespace Utils
+{
 
   using std::string;
   using std::string_view;
   using std::vector;
 
-  namespace Table {
+  namespace Table
+  {
 
     class Table;
 
@@ -64,114 +66,270 @@ namespace Utils {
     using Alignment = enum class Table_align : integer { LEFT, RIGHT, CENTER };
 
     //!
-    //! \brief Defines the style and structure of table borders, padding, and alignment.
+    //! \brief Defines the style and structure of table borders, padding, and
+    //! alignment.
     //!
-    //! The `Style` class configures visual properties of the table, including border
-    //! characters (for all edges and dividers), cell padding, and alignment of text.
+    //! The `Style` class configures visual properties of the table, including
+    //! border characters (for all edges and dividers), cell padding, and
+    //! alignment of text.
     //!
-    class Style {
+    class Style
+    {
     private:
-
-      char m_border_top          = '-';
-      char m_border_top_mid      = '+';
-      char m_border_top_left     = '+';
-      char m_border_top_right    = '+';
+      char m_border_top       = '-';
+      char m_border_top_mid   = '+';
+      char m_border_top_left  = '+';
+      char m_border_top_right = '+';
 
       char m_border_bottom       = '-';
       char m_border_bottom_mid   = '+';
       char m_border_bottom_left  = '+';
       char m_border_bottom_right = '+';
 
-      char m_border_left         = '|';
-      char m_border_left_mid     = '+';
+      char m_border_left     = '|';
+      char m_border_left_mid = '+';
 
-      char m_border_mid          = '-';
-      char m_border_mid_mid      = '+';
+      char m_border_mid     = '-';
+      char m_border_mid_mid = '+';
 
-      char m_border_right        = '|';
-      char m_border_right_mid    = '+';
+      char m_border_right     = '|';
+      char m_border_right_mid = '+';
 
-      char m_border_middle       = '|';
+      char m_border_middle = '|';
 
-      integer m_padding_left     = 1;
-      integer m_padding_right    = 1;
+      integer m_padding_left  = 1;
+      integer m_padding_right = 1;
 
       Alignment m_Align = Alignment::LEFT;
 
       integer m_Width = 0;
 
     public:
-
       //!
-      //! \brief Default constructor initializing the table style with default borders.
+      //! \brief Default constructor initializing the table style with default
+      //! borders.
       //!
       Style() = default;
 
-      char border_top() const { return m_border_top; }
-      void border_top( char borderStyle ) { m_border_top = borderStyle; }
+      char
+      border_top() const
+      {
+        return m_border_top;
+      }
+      void
+      border_top( char borderStyle )
+      {
+        m_border_top = borderStyle;
+      }
 
-      char border_top_mid() const { return m_border_top_mid; }
-      void border_top_mid( char borderStyle ) { m_border_top_mid = borderStyle; }
+      char
+      border_top_mid() const
+      {
+        return m_border_top_mid;
+      }
+      void
+      border_top_mid( char borderStyle )
+      {
+        m_border_top_mid = borderStyle;
+      }
 
-      char border_top_left() const { return m_border_top_left; }
-      void border_top_left( char borderStyle ) { m_border_top_left = borderStyle; }
+      char
+      border_top_left() const
+      {
+        return m_border_top_left;
+      }
+      void
+      border_top_left( char borderStyle )
+      {
+        m_border_top_left = borderStyle;
+      }
 
-      char border_top_right() const { return m_border_top_right; }
-      void border_top_right( char borderStyle ) { m_border_top_right = borderStyle; }
+      char
+      border_top_right() const
+      {
+        return m_border_top_right;
+      }
+      void
+      border_top_right( char borderStyle )
+      {
+        m_border_top_right = borderStyle;
+      }
 
-      char border_bottom() const { return m_border_bottom; }
-      void border_bottom( char borderStyle ) { m_border_bottom = borderStyle; }
+      char
+      border_bottom() const
+      {
+        return m_border_bottom;
+      }
+      void
+      border_bottom( char borderStyle )
+      {
+        m_border_bottom = borderStyle;
+      }
 
-      char border_bottom_mid() const { return m_border_bottom_mid; }
-      void border_bottom_mid( char borderStyle ) { m_border_bottom_mid = borderStyle; }
+      char
+      border_bottom_mid() const
+      {
+        return m_border_bottom_mid;
+      }
+      void
+      border_bottom_mid( char borderStyle )
+      {
+        m_border_bottom_mid = borderStyle;
+      }
 
-      char border_bottom_left() const { return m_border_bottom_left; }
-      void border_bottom_left( char borderStyle ) { m_border_bottom_left = borderStyle; }
+      char
+      border_bottom_left() const
+      {
+        return m_border_bottom_left;
+      }
+      void
+      border_bottom_left( char borderStyle )
+      {
+        m_border_bottom_left = borderStyle;
+      }
 
-      char border_bottom_right() const { return m_border_bottom_right; }
-      void border_bottom_right( char borderStyle) { m_border_bottom_right = borderStyle; }
+      char
+      border_bottom_right() const
+      {
+        return m_border_bottom_right;
+      }
+      void
+      border_bottom_right( char borderStyle )
+      {
+        m_border_bottom_right = borderStyle;
+      }
 
-      char border_left() const { return m_border_left; }
-      void border_left( char borderStyle ) { m_border_left = borderStyle; }
+      char
+      border_left() const
+      {
+        return m_border_left;
+      }
+      void
+      border_left( char borderStyle )
+      {
+        m_border_left = borderStyle;
+      }
 
-      char border_left_mid() const { return m_border_left_mid; }
-      void border_left_mid( char borderStyle ) { m_border_left_mid = borderStyle; }
+      char
+      border_left_mid() const
+      {
+        return m_border_left_mid;
+      }
+      void
+      border_left_mid( char borderStyle )
+      {
+        m_border_left_mid = borderStyle;
+      }
 
-      char border_mid() const { return m_border_mid; }
-      void border_mid( char borderStyle ) { m_border_mid = borderStyle; }
+      char
+      border_mid() const
+      {
+        return m_border_mid;
+      }
+      void
+      border_mid( char borderStyle )
+      {
+        m_border_mid = borderStyle;
+      }
 
-      char border_mid_mid() const { return m_border_mid_mid; }
-      void border_mid_mid( char borderStyle ) { m_border_mid_mid = borderStyle; }
+      char
+      border_mid_mid() const
+      {
+        return m_border_mid_mid;
+      }
+      void
+      border_mid_mid( char borderStyle )
+      {
+        m_border_mid_mid = borderStyle;
+      }
 
-      char border_right() const { return m_border_right; }
-      void border_right( char borderStyle ) { m_border_right = borderStyle; }
+      char
+      border_right() const
+      {
+        return m_border_right;
+      }
+      void
+      border_right( char borderStyle )
+      {
+        m_border_right = borderStyle;
+      }
 
-      char border_right_mid() const { return m_border_right_mid; }
-      void border_right_mid( char borderStyle ) { m_border_right_mid = borderStyle; }
+      char
+      border_right_mid() const
+      {
+        return m_border_right_mid;
+      }
+      void
+      border_right_mid( char borderStyle )
+      {
+        m_border_right_mid = borderStyle;
+      }
 
-      char border_middle() const { return m_border_middle; }
-      void border_middle( char borderStyle ) { m_border_middle = borderStyle; }
+      char
+      border_middle() const
+      {
+        return m_border_middle;
+      }
+      void
+      border_middle( char borderStyle )
+      {
+        m_border_middle = borderStyle;
+      }
 
-      integer padding_left() const { return m_padding_left; }
-      void    padding_left( integer padding ) { m_padding_left = padding; }
+      integer
+      padding_left() const
+      {
+        return m_padding_left;
+      }
+      void
+      padding_left( integer padding )
+      {
+        m_padding_left = padding;
+      }
 
-      integer padding_right() const { return m_padding_right; }
-      void    padding_right( integer padding ) { m_padding_right = padding; }
+      integer
+      padding_right() const
+      {
+        return m_padding_right;
+      }
+      void
+      padding_right( integer padding )
+      {
+        m_padding_right = padding;
+      }
 
-      Alignment alignment() const { return m_Align; }
-      void      alignment( Alignment align ) { m_Align = align; }
+      Alignment
+      alignment() const
+      {
+        return m_Align;
+      }
+      void
+      alignment( Alignment align )
+      {
+        m_Align = align;
+      }
 
-      integer width() const { return m_Width; }
-      void    width( integer width ) { m_Width = width; }
+      integer
+      width() const
+      {
+        return m_Width;
+      }
+      void
+      width( integer width )
+      {
+        m_Width = width;
+      }
     };
 
     //!
-    //! \brief Represents a cell in a table with alignment, content, and optional column span.
+    //! \brief Represents a cell in a table with alignment, content, and
+    //! optional column span.
     //!
-    //! The `Cell` class manages the content of a single cell in the table. It allows
-    //! specification of alignment, column span, and other properties.
+    //! The `Cell` class manages the content of a single cell in the table. It
+    //! allows specification of alignment, column span, and other properties.
     //!
-    class Cell {
+    class Cell
+    {
     private:
       Table *   m_Table    = nullptr;
       string    m_Value    = "";
@@ -180,7 +338,6 @@ namespace Utils {
       integer   m_Width    = 0;
 
     public:
-
       //!
       //! \brief Default constructor for an empty cell.
       //!
@@ -193,29 +350,48 @@ namespace Utils {
       //! \param val The string value to be displayed in the cell.
       //! \param col_span The number of columns the cell should span.
       //!
-      explicit
-      Cell(
-        Table*      table,
-        string_view val      = "",
-        integer     col_span = 1
-      );
+      explicit Cell( Table * table, string_view val = "", integer col_span = 1 );
 
-      string_view value() const { return m_Value; }
-      void value( string_view val ) { m_Value = val; }
+      string_view
+      value() const
+      {
+        return m_Value;
+      }
+      void
+      value( string_view val )
+      {
+        m_Value = val;
+      }
 
-      Alignment alignment() const { return m_Align; }
-      void alignment( Alignment const & align ) { m_Align = align; }
+      Alignment
+      alignment() const
+      {
+        return m_Align;
+      }
+      void
+      alignment( Alignment const & align )
+      {
+        m_Align = align;
+      }
 
-      integer col_span() const { return m_col_span; }
-      void col_span( integer col_span ) { m_col_span = col_span; }
+      integer
+      col_span() const
+      {
+        return m_col_span;
+      }
+      void
+      col_span( integer col_span )
+      {
+        m_col_span = col_span;
+      }
 
       integer width( integer col ) const;
       integer height() const;
 
       integer maximum_line_width() const;
 
-      string line( integer idx ) const;
-      static void trim_line( std::string & line ) ;
+      string      line( integer idx ) const;
+      static void trim_line( std::string & line );
 
       string render( integer line, integer col ) const;
     };
@@ -223,10 +399,12 @@ namespace Utils {
     //!
     //! \brief Represents a row in a table consisting of multiple cells.
     //!
-    //! The `Row` class manages a collection of cells that form a single row in the table.
-    //! Each cell in the row can be accessed, modified, and rendered individually.
+    //! The `Row` class manages a collection of cells that form a single row in
+    //! the table. Each cell in the row can be accessed, modified, and rendered
+    //! individually.
     //!
-    class Row {
+    class Row
+    {
     protected:
       using vecCell = vector<Cell>;
       using vecstr  = vector<string>;
@@ -235,7 +413,6 @@ namespace Utils {
       vecCell m_Cells;
 
     public:
-
       //!
       //! \brief Default constructor for an empty row.
       //!
@@ -247,40 +424,53 @@ namespace Utils {
       //! \param table Pointer to the table containing the row.
       //! \param cells A vector of strings representing initial cell values.
       //!
-      explicit
-      Row(
-        Table *        table,
-        vecstr const & cells = vecstr()
-      );
+      explicit Row( Table * table, vecstr const & cells = vecstr() );
 
-      Table const * table() const { return m_Table; }
+      Table const *
+      table() const
+      {
+        return m_Table;
+      }
 
-      //vecCell & cells() { return m_Cells; }
+      // vecCell & cells() { return m_Cells; }
       void cells( vecstr const & cells );
 
-      integer num_cells() const { return integer(m_Cells.size()); }
+      integer
+      num_cells() const
+      {
+        return integer( m_Cells.size() );
+      }
       integer cell_width( integer idx ) const;
-      void cell_col_span( integer idx, integer span );
+      void    cell_col_span( integer idx, integer span );
 
       void cell( string_view value );
-      //Cell& cell( integer idx ) { return m_Cells[idx]; }
+      // Cell& cell( integer idx ) { return m_Cells[idx]; }
 
-      Cell const & operator [] ( integer idx ) const { return m_Cells[idx]; }
-      Cell       & operator [] ( integer idx )       { return m_Cells[idx]; }
+      Cell const &
+      operator[]( integer idx ) const
+      {
+        return m_Cells[idx];
+      }
+      Cell &
+      operator[]( integer idx )
+      {
+        return m_Cells[idx];
+      }
 
       integer height() const;
 
       string render() const;
     };
 
-   //!
-   //! \brief The main class for creating and managing a table.
-   //!
-   //! The `Table` class represents a 2D table structure that supports rows, cells,
-   //! and table styles. It provides methods for rendering, alignment, and other
-   //! table-related operations.
-   //!
-    class Table {
+    //!
+    //! \brief The main class for creating and managing a table.
+    //!
+    //! The `Table` class represents a 2D table structure that supports rows,
+    //! cells, and table styles. It provides methods for rendering, alignment,
+    //! and other table-related operations.
+    //!
+    class Table
+    {
     public:
       using vecRow    = std::vector<Row>;
       using vecCell   = std::vector<Cell>;
@@ -303,25 +493,20 @@ namespace Utils {
       //!
       //! \brief Constructs a table with a given style and initial rows.
       //!
-      //! \param style The style object to customize the table's borders and alignment.
+      //! \param style The style object to customize the table's borders and
+      //! alignment.
       //! \param rows A 2D vector of strings representing the table's content.
       //!
-      explicit
-      Table(
-        Style     const & style,
-        vecvecstr const & rows = vecvecstr()
-      )
-      : m_Style(style) {
-        this->rows(rows);
+      explicit Table( Style const & style, vecvecstr const & rows = vecvecstr() ) : m_Style( style )
+      {
+        this->rows( rows );
       }
 
       void
-      setup(
-        Style     const & style,
-        vecvecstr const & rows = vecvecstr()
-      ) {
+      setup( Style const & style, vecvecstr const & rows = vecvecstr() )
+      {
         m_Style = style;
-        this->rows(rows);
+        this->rows( rows );
       }
 
       void align_column( integer n, Alignment align );
@@ -334,58 +519,93 @@ namespace Utils {
       integer column_width( integer n ) const;
       integer num_columns() const;
 
-      Style const & style() const { return m_Style; }
+      Style const &
+      style() const
+      {
+        return m_Style;
+      }
 
-      void style( Style const & style ) { m_Style = style; }
+      void
+      style( Style const & style )
+      {
+        m_Style = style;
+      }
 
-      string_view title() const { return m_Title; }
+      string_view
+      title() const
+      {
+        return m_Title;
+      }
 
-      void title( string_view title ) { m_Title = title; }
+      void
+      title( string_view title )
+      {
+        m_Title = title;
+      }
 
-      Row const & headings() const { return m_Headings; }
+      Row const &
+      headings() const
+      {
+        return m_Headings;
+      }
 
       void headings( vecstr const & headings );
 
-      Row       & row( integer n );
+      Row &       row( integer n );
       Row const & row( integer n ) const;
 
-      Row       & operator [] ( integer n )       { return this->row(n); }
-      Row const & operator [] ( integer n ) const { return this->row(n); }
+      Row &
+      operator[]( integer n )
+      {
+        return this->row( n );
+      }
+      Row const &
+      operator[]( integer n ) const
+      {
+        return this->row( n );
+      }
 
-      Cell       & operator () ( integer i, integer j )       { return (*this)[i][j]; }
-      Cell const & operator () ( integer i, integer j ) const { return (*this)[i][j]; }
+      Cell &
+      operator()( integer i, integer j )
+      {
+        return ( *this )[i][j];
+      }
+      Cell const &
+      operator()( integer i, integer j ) const
+      {
+        return ( *this )[i][j];
+      }
 
-      vecRow const & rows() const { return m_Rows; }
+      vecRow const &
+      rows() const
+      {
+        return m_Rows;
+      }
       void rows( vecvecstr const & rows );
 
-      std::string
-      render_separator(
-        char left,
-        char mid,
-        char right,
-        char sep
-      ) const;
+      std::string render_separator( char left, char mid, char right, char sep ) const;
 
       std::string render() const;
     };
-  }
-}
+  }  // namespace Table
+}  // namespace Utils
 
 //!
-//! \brief Stream insertion operator for rendering a table row to an output stream.
+//! \brief Stream insertion operator for rendering a table row to an output
+//! stream.
 //!
-inline
-Utils::ostream_type&
-operator << ( Utils::ostream_type& stream, Utils::Table::Row const & row ) {
+inline Utils::ostream_type &
+operator<<( Utils::ostream_type & stream, Utils::Table::Row const & row )
+{
   return stream << row.render();
 }
 
 //!
 //! \brief Stream insertion operator for rendering a table to an output stream.
 //!
-inline
-Utils::ostream_type&
-operator << ( Utils::ostream_type& stream, Utils::Table::Table const & table ) {
+inline Utils::ostream_type &
+operator<<( Utils::ostream_type & stream, Utils::Table::Table const & table )
+{
   return stream << table.render();
 }
 

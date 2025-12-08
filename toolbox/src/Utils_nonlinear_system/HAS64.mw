@@ -1,0 +1,398 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Worksheet>
+<Version major="2024" minor="2"/>
+<Label-Scheme value="2" prefix=""/>
+<View-Properties presentation="true" autoexpanding_sections="true" UserProfileName="Maple Default Profile" NumericFormat-ApplyInteger="true" NumericFormat-ApplyRational="true" NumericFormat-ApplyExponent="false" editable="true">
+</View-Properties>
+<MapleNet-Properties prettyprint="3" warnlevel="3" compactdisplay="false" preplot="" helpbrowser="standard" displayprecision="-1" echo="1" scientificx="true" unitattributes="&quot;fontweight&quot; = &quot;bold&quot;" imaginaryunit="I" longdelim="true" elisiontermsthreshold="10000" elisiondigitsafter="100" elisiondigitsbefore="100" plotdevice="inline" errorbreak="1" plotoptions="" plotdriver="opengl" quiet="false" elisiontermsbefore="100" elisiontermsafter="100" historytimestamp="false" screenwidth="79" indentamount="4" plotoutput="terminal" screenpixelheight="1117" rtablesize="[10, 10]" useclientjvm="true" format="document" labelwidth="20" postplot="" typesetting="extended" ansi="false" ansicolor="[]" elisiondigitsthreshold="10000" showassumed="1" ansilprint="false" trailingsemicolon="true" errorcursor="false" labelling="true" screenheight="25" prompt="&gt; " verboseproc="1" latexwidth="8.0" ShowLabels="true"/>
+<Styles>
+<Font name="Heading 1" background="[255,255,255]" bold="true" executable="false" family="Times New Roman" foreground="[0,0,0]" italic="false" opaque="false" readonly="false" size="18" subscript="false" superscript="false" underline="false" strikethrough="false" placeholder="false"/>
+<Font name="Warning" background="[255,255,255]" bold="false" executable="false" family="Courier New" foreground="[0,0,255]" italic="false" opaque="false" readonly="true" size="12" subscript="false" superscript="false" underline="false" strikethrough="false" placeholder="false"/>
+<Font name="2D Output" background="[255,255,255]" bold="false" executable="false" family="Times New Roman" foreground="[0,0,255]" italic="false" opaque="false" readonly="true" size="12" subscript="false" superscript="false" underline="false" strikethrough="false" placeholder="false"/>
+<Font name="Heading 4" background="[255,255,255]" bold="false" executable="false" family="Times New Roman" foreground="[0,0,0]" italic="true" opaque="false" readonly="false" size="12" subscript="false" superscript="false" underline="false" strikethrough="false" placeholder="false"/>
+<Font name="Line Printed Output" background="[255,255,255]" bold="false" executable="false" family="Courier New" foreground="[0,0,255]" italic="false" opaque="false" readonly="true" size="12" subscript="false" superscript="false" underline="false" strikethrough="false" placeholder="false"/>
+<Font name="Heading 2" background="[255,255,255]" bold="true" executable="false" family="Times New Roman" foreground="[0,0,0]" italic="false" opaque="false" readonly="false" size="16" subscript="false" superscript="false" underline="false" strikethrough="false" placeholder="false"/>
+<Font name="Maple Output" background="[255,255,255]" bold="false" executable="false" family="Times New Roman" foreground="[0,0,0]" italic="false" opaque="false" readonly="false" size="12" subscript="false" superscript="false" underline="false" strikethrough="false" placeholder="false"/>
+<Font name="2D Inert Output" background="[255,255,255]" bold="false" executable="true" family="Times New Roman" foreground="[144,144,144]" italic="false" opaque="false" readonly="false" size="12" subscript="false" superscript="false" underline="false" strikethrough="false" placeholder="false"/>
+<Font name="Heading 3" background="[255,255,255]" bold="true" executable="false" family="Times New Roman" foreground="[0,0,0]" italic="true" opaque="false" readonly="false" size="14" subscript="false" superscript="false" underline="false" strikethrough="false" placeholder="false"/>
+<Font name="Diagnostic" background="[255,255,255]" bold="false" executable="false" family="Courier New" foreground="[40,120,40]" italic="false" opaque="false" readonly="true" size="12" subscript="false" superscript="false" underline="false" strikethrough="false" placeholder="false"/>
+<Font name="Ordered List 1" background="[255,255,255]" bold="false" executable="false" family="Times New Roman" foreground="[0,0,0]" italic="false" opaque="false" readonly="false" size="12" subscript="false" superscript="false" underline="false" strikethrough="false" placeholder="false"/>
+<Font name="Maple Input" background="[255,255,255]" bold="true" executable="true" family="Courier New" foreground="[120,0,14]" italic="false" opaque="false" readonly="false" size="12" subscript="false" superscript="false" underline="false" strikethrough="false" placeholder="false"/>
+<Font name="Text Output" background="[255,255,255]" bold="false" executable="false" family="Courier New" foreground="[0,0,255]" italic="false" opaque="false" readonly="true" size="12" subscript="false" superscript="false" underline="false" strikethrough="false" placeholder="false"/>
+<Font name="Ordered List 2" background="[255,255,255]" bold="false" executable="false" family="Times New Roman" foreground="[0,0,0]" italic="false" opaque="false" readonly="false" size="12" subscript="false" superscript="false" underline="false" strikethrough="false" placeholder="false"/>
+<Font name="Ordered List 3" background="[255,255,255]" bold="false" executable="false" family="Times New Roman" foreground="[0,0,0]" italic="false" opaque="false" readonly="false" size="12" subscript="false" superscript="false" underline="false" strikethrough="false" placeholder="false"/>
+<Font name="Ordered List 4" background="[255,255,255]" bold="false" executable="false" family="Times New Roman" foreground="[0,0,0]" italic="false" opaque="false" readonly="false" size="12" subscript="false" superscript="false" underline="false" strikethrough="false" placeholder="false"/>
+<Font name="Ordered List 5" background="[255,255,255]" bold="false" executable="false" family="Times New Roman" foreground="[0,0,0]" italic="false" opaque="false" readonly="false" size="12" subscript="false" superscript="false" underline="false" strikethrough="false" placeholder="false"/>
+<Font name="Annotation Title" background="[255,255,255]" bold="true" executable="false" family="Times New Roman" foreground="[0,0,0]" italic="false" opaque="false" readonly="false" size="18" subscript="false" superscript="false" underline="false" strikethrough="false" placeholder="false"/>
+<Font name="Header and Footer" background="[255,255,255]" bold="false" executable="false" family="Times New Roman" foreground="[0,0,0]" italic="false" opaque="false" readonly="false" size="10" subscript="false" superscript="false" underline="false" strikethrough="false" placeholder="false"/>
+<Font name="HyperlinkError" background="[255,255,255]" bold="false" executable="false" family="Courier New" foreground="[255,0,255]" italic="false" opaque="false" readonly="true" size="12" subscript="false" superscript="false" underline="true" strikethrough="false" placeholder="false"/>
+<Font name="Atomic Variable" background="[255,255,255]" bold="false" executable="false" family="Times New Roman" foreground="[175,0,175]" italic="true" opaque="false" readonly="false" size="12" subscript="false" superscript="false" underline="false" strikethrough="false" placeholder="false"/>
+<Font name="HyperlinkWarning" background="[255,255,255]" bold="false" executable="false" family="Courier New" foreground="[0,0,255]" italic="false" opaque="false" readonly="true" size="12" subscript="false" superscript="false" underline="true" strikethrough="false" placeholder="false"/>
+<Font name="Dictionary Hyperlink" background="[255,255,255]" bold="false" executable="false" family="Times New Roman" foreground="[147,0,15]" italic="false" opaque="false" readonly="false" size="12" subscript="false" superscript="false" underline="true" strikethrough="false" placeholder="false"/>
+<Font name="2D Math" background="[255,255,255]" bold="false" executable="true" family="Times New Roman" foreground="[0,0,0]" italic="false" opaque="false" readonly="false" size="12" subscript="false" superscript="false" underline="false" strikethrough="false" placeholder="false"/>
+<Font name="Bullet Item" background="[255,255,255]" bold="false" executable="false" family="Times New Roman" foreground="[0,0,0]" italic="false" opaque="false" readonly="false" size="12" subscript="false" superscript="false" underline="false" strikethrough="false" placeholder="false"/>
+<Font name="Maple Plot" background="[255,255,255]" bold="false" executable="false" family="Times New Roman" foreground="[0,0,0]" italic="false" opaque="false" readonly="false" size="12" subscript="false" superscript="false" underline="false" strikethrough="false" placeholder="false"/>
+<Font name="Annotation Text" background="[255,255,255]" bold="false" executable="false" family="Times New Roman" foreground="[0,0,0]" italic="false" opaque="false" readonly="false" size="12" subscript="false" superscript="false" underline="false" strikethrough="false" placeholder="false"/>
+<Font name="List Item" background="[255,255,255]" bold="false" executable="false" family="Times New Roman" foreground="[0,0,0]" italic="false" opaque="false" readonly="false" size="12" subscript="false" superscript="false" underline="false" strikethrough="false" placeholder="false"/>
+<Font name="Dash Item" background="[255,255,255]" bold="false" executable="false" family="Times New Roman" foreground="[0,0,0]" italic="false" opaque="false" readonly="false" size="12" subscript="false" superscript="false" underline="false" strikethrough="false" placeholder="false"/>
+<Font name="2D Input" background="[255,255,255]" bold="false" executable="true" family="Times New Roman" foreground="[0,0,0]" italic="false" opaque="false" readonly="false" size="12" subscript="false" superscript="false" underline="false" strikethrough="false" placeholder="false"/>
+<Font name="Error" background="[255,255,255]" bold="false" executable="false" family="Courier New" foreground="[255,0,255]" italic="false" opaque="false" readonly="true" size="12" subscript="false" superscript="false" underline="false" strikethrough="false" placeholder="false"/>
+<Font name="Title" background="[255,255,255]" bold="true" executable="false" family="Times New Roman" foreground="[0,0,0]" italic="false" opaque="false" readonly="false" size="18" subscript="false" superscript="false" underline="false" strikethrough="false" placeholder="false"/>
+<Font name="Text" background="[255,255,255]" bold="false" executable="false" family="Times New Roman" foreground="[0,0,0]" italic="false" opaque="false" readonly="false" size="12" subscript="false" superscript="false" underline="false" strikethrough="false" placeholder="false"/>
+<Font name="Normal" background="[255,255,255]" bold="false" executable="false" family="Times New Roman" foreground="[0,0,0]" italic="false" opaque="false" readonly="false" size="12" subscript="false" superscript="false" underline="false" strikethrough="false" placeholder="false"/>
+<Font name="Caption Reference" background="[255,255,255]" bold="true" executable="false" family="Times New Roman" foreground="[0,0,0]" italic="false" opaque="false" readonly="false" size="12" subscript="false" superscript="false" underline="false" strikethrough="false" placeholder="false"/>
+<Font name="Code" background="[255,255,255]" bold="false" executable="false" family="Courier New" foreground="[255,0,0]" italic="false" opaque="false" readonly="false" size="12" subscript="false" superscript="false" underline="false" strikethrough="false" placeholder="false"/>
+<Font name="Maple Input Placeholder" background="[255,255,255]" bold="true" executable="true" family="Courier New" foreground="[200,0,200]" italic="false" opaque="false" readonly="false" size="12" subscript="false" superscript="false" underline="false" strikethrough="false" placeholder="true"/>
+<Font name="Equation Label" background="[255,255,255]" bold="true" executable="false" family="Times New Roman" foreground="[0,0,0]" italic="false" opaque="false" readonly="false" size="12" subscript="false" superscript="false" underline="false" strikethrough="false" placeholder="false"/>
+<Font name="Author" background="[255,255,255]" bold="false" executable="false" family="Times New Roman" foreground="[0,0,0]" italic="false" opaque="false" readonly="false" size="12" subscript="false" superscript="false" underline="false" strikethrough="false" placeholder="false"/>
+<Font name="Hyperlink" background="[255,255,255]" bold="false" executable="false" family="Times New Roman" foreground="[0,128,128]" italic="false" opaque="false" readonly="false" size="12" subscript="false" superscript="false" underline="true" strikethrough="false" placeholder="false"/>
+<Font name="Caption Text" background="[255,255,255]" bold="true" executable="false" family="Times New Roman" foreground="[0,0,0]" italic="false" opaque="false" readonly="false" size="12" subscript="false" superscript="false" underline="false" strikethrough="false" placeholder="false"/>
+<Layout name="Heading 1" alignment="left" bullet="none" firstindent="0" leftmargin="0" rightmargin="0" linespacing="0.0" spaceabove="8" spacebelow="4" linebreak="space" pagebreak-before="false" initial="0" bulletsuffix=""/>
+<Layout name="Warning" alignment="left" bullet="none" firstindent="0" leftmargin="0" rightmargin="0" linespacing="0.0" spaceabove="0" spacebelow="0" linebreak="space" pagebreak-before="false" initial="0" bulletsuffix=""/>
+<Layout name="Heading 4" alignment="left" bullet="none" firstindent="0" leftmargin="0" rightmargin="0" linespacing="0.0" spaceabove="0" spacebelow="0" linebreak="space" pagebreak-before="false" initial="0" bulletsuffix=""/>
+<Layout name="Line Printed Output" alignment="left" bullet="none" firstindent="0" leftmargin="0" rightmargin="0" linespacing="0.0" spaceabove="0" spacebelow="0" linebreak="any" pagebreak-before="false" initial="0" bulletsuffix=""/>
+<Layout name="Heading 2" alignment="left" bullet="none" firstindent="0" leftmargin="0" rightmargin="0" linespacing="0.0" spaceabove="8" spacebelow="2" linebreak="space" pagebreak-before="false" initial="0" bulletsuffix=""/>
+<Layout name="Maple Output" alignment="centred" bullet="none" firstindent="0" leftmargin="0" rightmargin="0" linespacing="0.3" spaceabove="0" spacebelow="0" linebreak="space" pagebreak-before="false" initial="0" bulletsuffix=""/>
+<Layout name="Heading 3" alignment="left" bullet="none" firstindent="0" leftmargin="0" rightmargin="0" linespacing="0.0" spaceabove="0" spacebelow="0" linebreak="space" pagebreak-before="false" initial="0" bulletsuffix=""/>
+<Layout name="Diagnostic" alignment="left" bullet="none" firstindent="0" leftmargin="0" rightmargin="0" linespacing="0.0" spaceabove="0" spacebelow="0" linebreak="any" pagebreak-before="false" initial="0" bulletsuffix=""/>
+<Layout name="Ordered List 1" alignment="left" bullet="numeric" firstindent="0" leftmargin="0" rightmargin="0" linespacing="0.0" spaceabove="3" spacebelow="3" linebreak="space" pagebreak-before="false" initial="-1" bulletsuffix="."/>
+<Layout name="Text Output" alignment="left" bullet="none" firstindent="0" leftmargin="0" rightmargin="0" linespacing="0.0" spaceabove="0" spacebelow="0" linebreak="newline" pagebreak-before="false" initial="0" bulletsuffix=""/>
+<Layout name="Ordered List 2" alignment="left" bullet="alphabetic" firstindent="0" leftmargin="36" rightmargin="0" linespacing="0.0" spaceabove="3" spacebelow="3" linebreak="space" pagebreak-before="false" initial="-1" bulletsuffix="."/>
+<Layout name="Ordered List 3" alignment="left" bullet="roman" firstindent="0" leftmargin="72" rightmargin="0" linespacing="0.0" spaceabove="3" spacebelow="3" linebreak="space" pagebreak-before="false" initial="-1" bulletsuffix="."/>
+<Layout name="Ordered List 4" alignment="left" bullet="ALPHABETIC" firstindent="0" leftmargin="108" rightmargin="0" linespacing="0.0" spaceabove="3" spacebelow="3" linebreak="space" pagebreak-before="false" initial="-1" bulletsuffix="."/>
+<Layout name="Ordered List 5" alignment="left" bullet="ROMAN" firstindent="0" leftmargin="144" rightmargin="0" linespacing="0.0" spaceabove="3" spacebelow="3" linebreak="space" pagebreak-before="false" initial="-1" bulletsuffix="."/>
+<Layout name="Annotation Title" alignment="centred" bullet="none" firstindent="0" leftmargin="0" rightmargin="0" linespacing="0.0" spaceabove="12" spacebelow="12" linebreak="space" pagebreak-before="false" initial="0" bulletsuffix=""/>
+<Layout name="HyperlinkError" alignment="left" bullet="none" firstindent="0" leftmargin="0" rightmargin="0" linespacing="0.0" spaceabove="0" spacebelow="0" linebreak="space" pagebreak-before="false" initial="0" bulletsuffix=""/>
+<Layout name="HyperlinkWarning" alignment="left" bullet="none" firstindent="0" leftmargin="0" rightmargin="0" linespacing="0.0" spaceabove="0" spacebelow="0" linebreak="space" pagebreak-before="false" initial="0" bulletsuffix=""/>
+<Layout name="Bullet Item" alignment="left" bullet="dot" firstindent="0" leftmargin="0" rightmargin="0" linespacing="0.0" spaceabove="3" spacebelow="3" linebreak="space" pagebreak-before="false" initial="0" bulletsuffix=""/>
+<Layout name="Maple Plot" alignment="centred" bullet="none" firstindent="0" leftmargin="0" rightmargin="0" linespacing="0.0" spaceabove="0" spacebelow="0" linebreak="space" pagebreak-before="false" initial="0" bulletsuffix=""/>
+<Layout name="List Item" alignment="left" bullet="indent" firstindent="0" leftmargin="0" rightmargin="0" linespacing="0.0" spaceabove="3" spacebelow="3" linebreak="space" pagebreak-before="false" initial="0" bulletsuffix=""/>
+<Layout name="Dash Item" alignment="left" bullet="dash" firstindent="0" leftmargin="0" rightmargin="0" linespacing="0.0" spaceabove="3" spacebelow="3" linebreak="space" pagebreak-before="false" initial="0" bulletsuffix=""/>
+<Layout name="Error" alignment="left" bullet="none" firstindent="0" leftmargin="0" rightmargin="0" linespacing="0.0" spaceabove="0" spacebelow="0" linebreak="space" pagebreak-before="false" initial="0" bulletsuffix=""/>
+<Layout name="Title" alignment="centred" bullet="none" firstindent="0" leftmargin="0" rightmargin="0" linespacing="0.0" spaceabove="12" spacebelow="12" linebreak="space" pagebreak-before="false" initial="0" bulletsuffix=""/>
+<Layout name="Normal" alignment="left" bullet="none" firstindent="0" leftmargin="0" rightmargin="0" linespacing="0.0" spaceabove="0" spacebelow="0" linebreak="space" pagebreak-before="false" initial="0" bulletsuffix=""/>
+<Layout name="Author" alignment="centred" bullet="none" firstindent="0" leftmargin="0" rightmargin="0" linespacing="0.0" spaceabove="8" spacebelow="8" linebreak="space" pagebreak-before="false" initial="0" bulletsuffix=""/>
+<Pencil-style name="Pencil 1" pen-color="[0,0,0]" pen-height="1.0" pen-width="1.0" pen-opacity="1.0"/>
+<Pencil-style name="Pencil 2" pen-color="[0,0,255]" pen-height="1.0" pen-width="1.0" pen-opacity="1.0"/>
+<Pencil-style name="Pencil 3" pen-color="[0,0,0]" pen-height="3.0" pen-width="3.0" pen-opacity="1.0"/>
+<Pencil-style name="Pencil 4" pen-color="[0,0,255]" pen-height="3.0" pen-width="3.0" pen-opacity="1.0"/>
+<Pencil-style name="Pencil 5" pen-color="[255,0,0]" pen-height="5.0" pen-width="5.0" pen-opacity="1.0"/>
+<Highlighter-style name="Highlighter 5" pen-color="[255,255,0]" pen-height="48.0" pen-width="48.0" pen-opacity="0.8"/>
+<Highlighter-style name="Highlighter 3" pen-color="[51,255,0]" pen-height="24.0" pen-width="24.0" pen-opacity="0.8"/>
+<Highlighter-style name="Highlighter 4" pen-color="[0,255,255]" pen-height="32.0" pen-width="32.0" pen-opacity="0.8"/>
+<Highlighter-style name="Highlighter 1" pen-color="[255,153,255]" pen-height="12.0" pen-width="8.0" pen-opacity="0.8"/>
+<Highlighter-style name="Highlighter 2" pen-color="[255,204,0]" pen-height="14.0" pen-width="14.0" pen-opacity="0.8"/>
+</Styles>
+<Startup-Code startupcode=""/>
+<Task-table>
+	<Task-category name="&lt;default&gt;"/>
+</Task-table>
+<Task/><Presentation-Block>
+<Group view="presentation" inline-output="false" labelreference="L8" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field style="Text" layout="Normal"><Equation executable="true" style="2D Math" input-equation="" display="LUklbXJvd0c2Iy9JK21vZHVsZW5hbWVHNiJJLFR5cGVzZXR0aW5nR0koX3N5c2xpYkdGJzYlLUkjbW9HRiQ2LlEifkYnLyUsbWF0aHZhcmlhbnRHUSdub3JtYWxGJy8lJmZlbmNlR1EmZmFsc2VGJy8lKnNlcGFyYXRvckdGNC8lKXN0cmV0Y2h5R0Y0LyUqc3ltbWV0cmljR0Y0LyUobGFyZ2VvcEdGNC8lLm1vdmFibGVsaW1pdHNHRjQvJSdhY2NlbnRHRjQvJSdsc3BhY2VHUSYwLjBlbUYnLyUncnNwYWNlR0ZDLyUpZXF1YWxpdHlHRjQvJStleGVjdXRhYmxlR0Y0Ri8=">LUklbXJvd0c2Iy9JK21vZHVsZW5hbWVHNiJJLFR5cGVzZXR0aW5nR0koX3N5c2xpYkdGJzYlLUkjbW9HRiQ2LlEifkYnLyUsbWF0aHZhcmlhbnRHUSdub3JtYWxGJy8lJmZlbmNlR1EmZmFsc2VGJy8lKnNlcGFyYXRvckdGNC8lKXN0cmV0Y2h5R0Y0LyUqc3ltbWV0cmljR0Y0LyUobGFyZ2VvcEdGNC8lLm1vdmFibGVsaW1pdHNHRjQvJSdhY2NlbnRHRjQvJSdsc3BhY2VHUSYwLjBlbUYnLyUncnNwYWNlR0ZDLyUpZXF1YWxpdHlHRjQvJStleGVjdXRhYmxlR0Y0Ri8=</Equation></Text-field>
+</Input>
+</Group>
+<Group view="code" hide-input="false" labelreference="L11" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">restart;
+with(LinearAlgebra):
+with(Optimization):
+Digits := 100;</Text-field>
+</Input>
+<Output><Text-field style="2D Output" layout="Maple Output"><Equation executable="false" style="2D Output" display="LUklbXJvd0c2Iy9JK21vZHVsZW5hbWVHNiJJLFR5cGVzZXR0aW5nR0koX3N5c2xpYkdGJzYmLUkjbWlHRiQ2JVEnRGlnaXRzRicvJSdpdGFsaWNHUSV0cnVlRicvJSxtYXRodmFyaWFudEdRJ2l0YWxpY0YnLUkjbW9HRiQ2LlEpJkFzc2lnbjtGJy9GM1Enbm9ybWFsRicvJSZmZW5jZUdRJmZhbHNlRicvJSpzZXBhcmF0b3JHRj0vJSlzdHJldGNoeUdGPS8lKnN5bW1ldHJpY0dGPS8lKGxhcmdlb3BHRj0vJS5tb3ZhYmxlbGltaXRzR0Y9LyUnYWNjZW50R0Y9LyUnbHNwYWNlR1EsMC4yNzc3Nzc4ZW1GJy8lJ3JzcGFjZUdGTC8lKWVxdWFsaXR5R0Y9LUkjbW5HRiQ2JFEkMTAwRidGOUY5">LV9JLFR5cGVzZXR0aW5nRzYkJSpwcm90ZWN0ZWRHSShfc3lzbGliRzYiSSxtcHJpbnRzbGFzaEdGKDYkNyM+SSdEaWdpdHNHRigiJCsiNyNGLg==</Equation></Text-field>
+</Output>
+</Group>
+<Group view="code" labelreference="L34" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal"># HAS64 Function Definition
+HAS64 := proc(x1, x2, x3, x4, x5, x6, x7, tau)
+local main_obj, penalty_term1, penalty_term2, penalty_term3, penalty_term4, penalty;
+    
+    # Main objective terms
+    main_obj := 5*x1 + 50000/x1 + 20*x2 + 72000/x2 + 10*x3 + 144000/x3;
+    
+    # Penalty terms
+    penalty_term1 := 1 - 4/x1 - 32/x2 - 120/x3 - x4^2;
+    penalty_term2 := x1 - 1e-5 - x5^2;
+    penalty_term3 := x2 - 1e-5 - x6^2;
+    penalty_term4 := x3 - 1e-5 - x7^2;
+    
+    penalty := penalty_term1^2 + penalty_term2^2 + penalty_term3^2 + penalty_term4^2;
+    
+    # Total function
+    main_obj + tau * penalty;
+end proc:</Text-field>
+</Input>
+</Group>
+<Group view="code" labelreference="L35" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal"># Gradient of HAS64 Function
+Gradient_HAS64 := proc(x1, x2, x3, x4, x5, x6, x7, tau)
+local P1, P2, P3, P4, grad;
+    
+    # Penalty terms
+    P1 := 1 - 4/x1 - 32/x2 - 120/x3 - x4^2;
+    P2 := x1 - 1e-5 - x5^2;
+    P3 := x2 - 1e-5 - x6^2;
+    P4 := x3 - 1e-5 - x7^2;
+    
+    # Gradient components
+    grad := Vector(7):
+    
+    # df/dx1
+    grad[1] := 5 - 50000/(x1^2) + tau * (2 * P1 * (4/(x1^2)) + 2 * P2 * 1);
+    
+    # df/dx2  
+    grad[2] := 20 - 72000/(x2^2) + tau * (2 * P1 * (32/(x2^2)) + 2 * P3 * 1);
+    
+    # df/dx3
+    grad[3] := 10 - 144000/(x3^2) + tau * (2 * P1 * (120/(x3^2)) + 2 * P4 * 1);
+    
+    # df/dx4
+    grad[4] := tau * (2 * P1 * (-2*x4));
+    
+    # df/dx5
+    grad[5] := tau * (2 * P2 * (-2*x5));
+    
+    # df/dx6
+    grad[6] := tau * (2 * P3 * (-2*x6));
+    
+    # df/dx7
+    grad[7] := tau * (2 * P4 * (-2*x7));
+    
+    return convert(grad,list);
+end proc:</Text-field>
+</Input>
+</Group>
+<Group view="code" labelreference="L38" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal"># Hessian Matrix of HAS64 Function
+Hessian_HAS64 := proc(x1, x2, x3, x4, x5, x6, x7, tau)
+local P1, P2, P3, P4, H;
+    
+    P1 := 1 - 4/x1 - 32/x2 - 120/x3 - x4^2;
+    P2 := x1 - 1e-5 - x5^2;
+    P3 := x2 - 1e-5 - x6^2;
+    P4 := x3 - 1e-5 - x7^2;
+    
+    H := Matrix(7,7):
+    
+    # Diagonal elements
+    H[1,1] := 100000/(x1^3) + tau*(2*(4/(x1^2))^2 + 2*P1*(-8/(x1^3)) + 2);
+    H[2,2] := 144000/(x2^3) + tau*(2*(32/(x2^2))^2 + 2*P1*(-64/(x2^3)) + 2);
+    H[3,3] := 288000/(x3^3) + tau*(2*(120/(x3^2))^2 + 2*P1*(-240/(x3^3)) + 2);
+    H[4,4] := tau*(2*(-2*x4)^2 + 2*P1*(-2));
+    H[5,5] := tau*(2*(-2*x5)^2 + 2*P2*(-2));
+    H[6,6] := tau*(2*(-2*x6)^2 + 2*P3*(-2));
+    H[7,7] := tau*(2*(-2*x7)^2 + 2*P4*(-2));
+    
+    # Off-diagonal elements (symmetric)
+    H[1,2] := tau*(2*(4/(x1^2))*(32/(x2^2)));
+    H[2,1] := H[1,2];
+    
+    H[1,3] := tau*(2*(4/(x1^2))*(120/(x3^2)));
+    H[3,1] := H[1,3];
+    
+    H[1,4] := tau*(2*(4/(x1^2))*(-2*x4));
+    H[4,1] := H[1,4];
+    
+    H[1,5] := tau*(2*1*(-2*x5));
+    H[5,1] := H[1,5];
+    
+    H[2,3] := tau*(2*(32/(x2^2))*(120/(x3^2)));
+    H[3,2] := H[2,3];
+    
+    H[2,4] := tau*(2*(32/(x2^2))*(-2*x4));
+    H[4,2] := H[2,4];
+    
+    H[2,6] := tau*(2*1*(-2*x6));
+    H[6,2] := H[2,6];
+    
+    H[3,4] := tau*(2*(120/(x3^2))*(-2*x4));
+    H[4,3] := H[3,4];
+    
+    H[3,7] := tau*(2*1*(-2*x7));
+    H[7,3] := H[3,7];
+    
+    return H;
+end proc:</Text-field>
+</Input>
+</Group>
+<Group view="code" hide-input="false" labelreference="L46" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal"><Font encoding="UTF-8">tau_values := [1e2, 1e4, 1e6, 1e8, 1e10]:
+for tau in tau_values do
+  printf(&quot;====================================================\134n&quot;):
+  printf(&quot;Starting optimization for tau = %a\134n&quot;, tau):
+
+  objective := HAS64(seq(x[i],i=1..7), tau):
+
+  x0 := Vector([1.0, 1.0, 1.0, -10.0, -10.0, -10.0, -10.0]):
+
+  bounds := [x[1] &gt;= 0.001, x[2] &gt;= 0.001, x[3] &gt;= 0.001, 
+             x[4] &gt;= -100, x[5] &gt;= -100, x[6] &gt;= -100, x[7] &gt;= -100,
+             x[1] &lt;= 1000, x[2] &lt;= 1000, x[3] &lt;= 1000,
+             x[4] &lt;= 100, x[5] &lt;= 100, x[6] &lt;= 100, x[7] &lt;= 100]:
+
+  printf(&quot;Calling NLPSolve...\134n&quot;):
+  result := NLPSolve(
+    objective,
+    bounds,
+    initialpoint = {x[1]=x0[1], x[2]=x0[2], x[3]=x0[3], 
+                    x[4]=x0[4], x[5]=x0[5], x[6]=x0[6], x[7]=x0[7]},
+    method = sqp
+  );  optimal_f := result[1];
+  optimal_x := result[2];
+
+  printf(&quot;Optimal solution found:\134n&quot;);  print( </Font>optimal_x );  grad := subs( [seq(x||i=subs(optimal_x,x[i]),i=1..7)],Gradient_HAS64( x1, x2, x3, x4, x5, x6, x7, tau ));<Font encoding="UTF-8">
+
+  printf(&quot;Optimal objective value: %.10f\134n&quot;, optimal_f);
+  printf(&quot;Optimal gradient value: %a\134n&quot;, </Font>grad);
+<Font encoding="UTF-8">
+  printf(&quot;----------------------------------------------------\134n\134n&quot;);
+
+end do:</Font></Text-field>
+</Input>
+<Output><Text-field style="Line Printed Output" layout="Line Printed Output">====================================================
+Starting optimization for tau = .1e3
+Calling NLPSolve...
+</Text-field>
+</Output>
+<Output><Text-field style="HyperlinkWarning" layout="HyperlinkWarning"><Hyperlink linktarget="http://www.maplesoft.com/support/help/errors/view.aspx?path=Warning,%20limiting%20number%20of%20major%20iterations%20has%20been%20reached" hyperlink="true"><Font style="HyperlinkWarning">Warning, limiting number of major iterations has been reached</Font></Hyperlink></Text-field>
+</Output>
+<Output><Text-field style="Line Printed Output" layout="Line Printed Output">Optimal solution found:
+</Text-field>
+</Output>
+<Output><Text-field style="2D Output" layout="Maple Output"><Equation executable="false" style="2D Output" display="LUkobWZlbmNlZEc2Iy9JK21vZHVsZW5hbWVHNiJJLFR5cGVzZXR0aW5nR0koX3N5c2xpYkdGJzYmLUklbXJvd0dGJDYyLUYsNiYtSSVtc3ViR0YkNiUtSSNtaUdGJDYlUSJ4RicvJSdpdGFsaWNHUSV0cnVlRicvJSxtYXRodmFyaWFudEdRJ2l0YWxpY0YnLUkjbW5HRiQ2JFEiMUYnL0Y7USdub3JtYWxGJy8lL3N1YnNjcmlwdHNoaWZ0R1EiMEYnLUkjbW9HRiQ2LlEpJmVxdWFscztGJ0ZBLyUmZmVuY2VHUSZmYWxzZUYnLyUqc2VwYXJhdG9yR0ZMLyUpc3RyZXRjaHlHRkwvJSpzeW1tZXRyaWNHRkwvJShsYXJnZW9wR0ZMLyUubW92YWJsZWxpbWl0c0dGTC8lJ2FjY2VudEdGTC8lJ2xzcGFjZUdRLDAuMjc3Nzc3OGVtRicvJSdyc3BhY2VHRmVuLyUpZXF1YWxpdHlHRkwtRj42JFFgcTI0My41NDExNDQ2OTQ2NjI3OTE0NTAwNjAwNTAyMjk3NjI4MzI0MjQ5OTc0MTcwMTI1NzU2MjE3NzUwMjQyNjM1NzI0NTMwMzQwNjE1Nzk1ODU5ODI0NTk0ODI2Njg2MDM4NTc2RidGQUZBLUZHNi5RIixGJ0ZBRkovRk5GOUZPRlFGU0ZVRlcvRlpRJjAuMGVtRicvRmduUSwwLjMzMzMzMzNlbUYnRmhuLUYsNiYtRjE2JUYzLUY+NiRRIjJGJ0ZBRkNGRi1GPjYkUWBxNTIuNDAyNTM2Mzg4NzY3NTA4NTkyMDQ3MzA4MjIzNzU3ODUzNjc0OTMzODA5NjUyMjQ0MTE3MjY0OTQwNjYzMjk3NzIxMjM4NzY0NTE3ODI1OTk5MTI1NDEzNDgzNDUyMzkzNTJGJ0ZBRkFGXW8tRiw2Ji1GMTYlRjMtRj42JFEiM0YnRkFGQ0ZGLUY+NiRRYHE5OC4yMDIwMTE0NjE0MTYzNTg0ODkwNDgwMjM3OTgxMDM2NTcwNzcwMDczODcxMDc5NzE5MTc1NjEyODI5NDYzNjI3Mjg2NTI4MTMyNjA2OTQxNzM4ODIwODU0MjE5NDYyMDA4NkYnRkFGQUZdby1GLDYmLUYxNiVGMy1GPjYkUSI0RidGQUZDRkYtRj42JFFbciZ1bWludXMwOzAuMDU4NDcyMjUxODg3NjMzOTc0MzA5MjQ0MTI2NTMyODA1NTAwOTkwNDE1MTU0NTA0NzQ2MDAzMDEyNDI0MDMyMjQxNDk4ODEzNjM1Mjc1Mzk2NjYzNjUxOTcxNTM1MTIyNzcwNTlGJ0ZBRkFGXW8tRiw2Ji1GMTYlRjMtRj42JFEiNUYnRkFGQ0ZGLUY+NiRRYHExNS42MTI2OTkwNTY3NTQ1ODI3MjE2OTUxODc3MjY4NTE3NTgzMjM3NTg5MTY5MTc0MDUyNDg0NzY3OTE5NTk0ODUzMzE1NDkwOTQ2ODU4ODk0ODk2OTM4MjE3MzY3MjkyMTIyNUYnRkFGQUZdby1GLDYmLUYxNiVGMy1GPjYkUSI2RidGQUZDRkYtRj42JFFgcTcuMjE5MDYyMjIxNDI5MjIzNTM0MDUxMDkyMzI3MzcyODQyMjkyNzk5NDgyNDE1MDMyNzg2MzM3NDIyMTc4ODgyMjY5OTMwODI2NTUzOTA3NzE0ODU4ODU1ODA1MTEzNzA2ODU1RidGQUZBRl1vLUYsNiYtRjE2JUYzLUY+NiRRIjdGJ0ZBRkNGRi1GPjYkUWBxOS45MjA1NDQ1MDI3NTM5OTkzNzg3NzIwMTg0NTQ5NDk1NzkwNzg2NjA2NDg4NDY0NzM4Mjk5Nzk3NTUzMzI1OTE2NDQyNjk3NjMyNDgzMzAwMDcyMTk3MTk3NjMyNDA5NDcxMDJGJ0ZBRkEvJStmb3JlZ3JvdW5kR1EoWzAsMCwwXUYnLyUpcmVhZG9ubHlHRkxGQUZBLyUlb3BlbkdRJyZsc3FiO0YnLyUmY2xvc2VHUScmcnNxYjtGJw==">NykvJkkieEc2IjYjIiIiJCJfcXcmUWdvRVtmQylmZXo6MU1JWHNORUNdeEBjZDdxVCgqXFVLR3dILTBnK1giemlZcFc2YVYjISMoKi8mRiU2IyIiIyQiX3FfJFJfTVs4YTcqKmYjeV5rKFE3cyhIajElXEU8VENfJzRRJFxuYHl2QiMzdC8jZjN2dylRT0RTXyEjKSovJkYlNiMiIiQkIl9xJzM/WT5VJjMjKVE8JXBnSyJHbEdGT1lIR2h2Ij4oejUoUTJxMmRPNSl6QiFbISpbZWpUaDksLSMpKkYyLyZGJTYjIiIlJCFfcWZxRjdOOig+bGptUnZfajgpKVxUQS5DQywuZ3UvWDo6Lyo0XTBHYEVUQzRWKFJqKCk9RHMlZSEkLCIvJkYlNiMiIiYkIl9xRDcjSG50QFFwKlsqKWVvJTRcOkwmW2Y+enclW19TPHAiKmVQS2U8Jm9zKD0mcEBGZWFuMCpwN2MiRjIvJkYlNiMiIickIl9xYm9xOF4hZSYpZVtyMlJiRTMkKnBBKSl5QFVQanlLXVQjWyp6I0hVR1BGQjReU2BCI0g5QWkhPnMhIyoqLyZGJTYjIiIoJCJfcS1yJTRDaig+KD5zK0kkW0t3cFVrImZLYHZ6KkhRWlkpWzFteSF6JlxcWD0/eHkkKipSdi1YYT8qKkZM</Equation></Text-field>
+</Output>
+<Output><Text-field style="Line Printed Output" layout="Line Printed Output">Optimal objective value: 6383.6349692399
+Optimal gradient value: [-38.90192212346238511940540311100848785069011548621915807213094854923278726766652952759758921331757, 49.32689124721106564427095976296115063058310285367085296928726399783703193326176948082479220934054, -50.09401884414767292152489089688961829597724092148328459571083431925923790609329608320761613140375, -19.93837586596677370998757158066749381235237571630991602765546991631529595021141832796098798190821877, 1344.173090318712283879155936362706967062761799981902594290734243833422089462727203876372578467465930, -830.6744809385068842119928389058209299785917617298091807679555007457107858729785685440891577600960792, 853.9674933768618039630763218552182696034804249872358903415475016714468551300989117923428307113931752]
+----------------------------------------------------
+
+====================================================
+Starting optimization for tau = .1e5
+Calling NLPSolve...
+</Text-field>
+</Output>
+<Output><Text-field style="HyperlinkWarning" layout="HyperlinkWarning"><Hyperlink linktarget="http://www.maplesoft.com/support/help/errors/view.aspx?path=Warning,%20limiting%20number%20of%20major%20iterations%20has%20been%20reached" hyperlink="true"><Font style="HyperlinkWarning">Warning, limiting number of major iterations has been reached</Font></Hyperlink></Text-field>
+</Output>
+<Output><Text-field style="Line Printed Output" layout="Line Printed Output">Optimal solution found:
+</Text-field>
+</Output>
+<Output><Text-field style="2D Output" layout="Maple Output"><Equation executable="false" style="2D Output" display="LUkobWZlbmNlZEc2Iy9JK21vZHVsZW5hbWVHNiJJLFR5cGVzZXR0aW5nR0koX3N5c2xpYkdGJzYmLUklbXJvd0dGJDYyLUYsNiYtSSVtc3ViR0YkNiUtSSNtaUdGJDYlUSJ4RicvJSdpdGFsaWNHUSV0cnVlRicvJSxtYXRodmFyaWFudEdRJ2l0YWxpY0YnLUkjbW5HRiQ2JFEiMUYnL0Y7USdub3JtYWxGJy8lL3N1YnNjcmlwdHNoaWZ0R1EiMEYnLUkjbW9HRiQ2LlEpJmVxdWFscztGJ0ZBLyUmZmVuY2VHUSZmYWxzZUYnLyUqc2VwYXJhdG9yR0ZMLyUpc3RyZXRjaHlHRkwvJSpzeW1tZXRyaWNHRkwvJShsYXJnZW9wR0ZMLyUubW92YWJsZWxpbWl0c0dGTC8lJ2FjY2VudEdGTC8lJ2xzcGFjZUdRLDAuMjc3Nzc3OGVtRicvJSdyc3BhY2VHRmVuLyUpZXF1YWxpdHlHRkwtRj42JFFgcTQwLjM0MDI5NDMyNDQ1NTkzODc5MzU0MTExMDE1NzYxNTkwNDQ5MzYxMzk1NzcxNDY1MTg1NjE1NTUwNjAxNTQxMzA1MjUyMjIwNjQzNjczMDM4MzI4NjcxMjMzNzkwNDU5MDc4RidGQUZBLUZHNi5RIixGJ0ZBRkovRk5GOUZPRlFGU0ZVRlcvRlpRJjAuMGVtRicvRmduUSwwLjMzMzMzMzNlbUYnRmhuLUYsNiYtRjE2JUYzLUY+NiRRIjJGJ0ZBRkNGRi1GPjYkUWBxODYuMzM2OTAyMTMyNTcxMzUyMTQzMTM5ODUzMjgwMjYxMDkwNDg0NDM4NzU2Mjc1ODMyMzg4OTIwNjMwOTMzMDg1MzczODExNDUxMDYzMjc3MDEzNzY4MjE2ODYyNzc1MjUyMjdGJ0ZBRkFGXW8tRiw2Ji1GMTYlRjMtRj42JFEiM0YnRkFGQ0ZGLUY+NiRRYHExOTEuNTEzMTI0OTkwMjcwMTQxMjI3OTA4OTQyMDY1NjQwMzUwNDAxODU4ODIwMjAwNzUzODc5NjQyNDAxNjMzMjU3OTQ3MzA4MjYzODQzMzI4MDI4NzQ5MTY3OTIwMDk0MDAxMkYnRkFGQUZdby1GLDYmLUYxNiVGMy1GPjYkUSI0RidGQUZDRkYtRj42JFFicTAuMDk4MzI4ODI4NTgzNTcxNDkyMjMyNjM2NzcwNDEzMjY4MTA4ODA0MDU1NTEwNTExNjMyNzg1ODEwNDYzNTEwNTIyMzQ5NDA0MzAwNzQyMTk4MzU5NDM5MDMyNjExMDUzNjEyOTdGJ0ZBRkFGXW8tRiw2Ji1GMTYlRjMtRj42JFEiNUYnRkFGQ0ZGLUY+NiRRYHE2LjM1NjE2NTQ0NDE4NDAzNzA5NDUyOTQ4MzQzMDAzMTg3NTY2MTI4NTQ5Nzk2ODYxMDA0OTQ1NDk0MjA1MTMxODMyMzc1NzcxMTg3NTQ5OTUyMDAxNzk2ODA4MzU2NTk3OTcwMkYnRkFGQUZdby1GLDYmLUYxNiVGMy1GPjYkUSI2RidGQUZDRkYtRj42JFFgcTkuMjkxMzgwNjg3MjkyNzg1MjA3Nzc0NDYwMTUyMTk2NDIyMDA2OTIwMjA5NTg5NzIxNjU2MzEwNjE2ODk4MjU4NDg4MTM1NzY2NTYxMTYyNTA0ODcwMzQ4MDAwMzIxODc2MzYwRidGQUZBRl1vLUYsNiYtRjE2JUYzLUY+NiRRIjdGJ0ZBRkNGRi1GPjYkUWBxMTMuODM4NTEyMDI2NzY5MDIyODYxODE2MzcwNjY5Mzc2Nzc2NDIxMTIxMzQyOTE3MDk0NzQ2ODg1NDk2MDMwNDk2OTcxNTUyMzQ1NjY0ODU4Nzg0OTIwODYyOTA5Mjk4NjYzMzRGJ0ZBRkEvJStmb3JlZ3JvdW5kR1EoWzAsMCwwXUYnLyUpcmVhZG9ubHlHRkxGQUZBLyUlb3BlbkdRJyZsc3FiO0YnLyUmY2xvc2VHUScmcnNxYjtGJw==">NykvJkkieEc2IjYjIiIiJCJfcXkhZi96TDduRyRRSW5WMUFfX0lUOmddYmgmPWw5eCZSaCRcL2ZoZCw2VE56UWZYQ1ZIUy4lISMpKi8mRiU2IyIiIyQiX3FGX194aW9Ab1AseEsxXjkiUVAmM0w0aj8qKVFLZUZjKFFXWyE0aC1HYClSSjlfOGRLQCFwTCcpRisvJkYlNiMiIiQkIl9xNyslND96O1woRyFHTCVRRTN0JXpETDtTVSd6UXYrLSMpZT1TXS5rbD8lKjN6QVQsRiEqXDc4Oj4hIygqLyZGJTYjIiIlJCJfcShIaGA1aEshUiVmJCk+VTJJLyVcQl81Tlk1ZXlLO141YjAvKTMib0tUcW5qS0Fcck5lRylHJCkqISQsIi8mRiU2IyIiJiQiX3EtKHpmYyQzb3osPyYqXHY9cmRQSz04MFVcWFwraG96XCZHaGMoPS5JTVtIWDRQUz1XYTtjaiEjKiovJkYlNiMiIickIl9xZ2ooPUsrIVsuKFtdaTZjbWQ4KVtlIykqb2g1amxAKCplNC0jcCtBaz5fLFl1eD8meSNIKG8hUSJIKkZGLyZGJTYjIiIoJCJfcU1qJylINEgnMyNceWVbbVhCYnJwXElnXCYpb3UlNDxITUA2VXduUHAxUDs9J0ctcG4tNyZRUSJGKw==</Equation></Text-field>
+</Output>
+<Output><Text-field style="Line Printed Output" layout="Line Printed Output">Optimal objective value: 6819.2869909402
+Optimal gradient value: [-1242.0352483497275577415372647266266399968072182836839721723999058054151013636800900130660202972372, 143.976164484901093937546991640160540075109891541966602387247174114320566111424410000474093782500, 173.131597348628340489110917434766343004951503154814739940797689115382127507256822461974728510468, 417.1303884338702850112749666718581212090544935744434769895452194215242144383650434136967066652551868, 15395.86056018844074390105786102941343300826339673863413034219350525720923406495652266292923441901093, -2652.524310301077050288637403408846165316936010163940591692418442787965343178999745874124447768125747, -4815.733125191323937817608509507927664096172986727392823571357411984383940625595652424207704427201088]
+----------------------------------------------------
+
+====================================================
+Starting optimization for tau = .1e7
+Calling NLPSolve...
+</Text-field>
+</Output>
+<Output><Text-field style="HyperlinkWarning" layout="HyperlinkWarning"><Hyperlink linktarget="http://www.maplesoft.com/support/help/errors/view.aspx?path=Warning,%20limiting%20number%20of%20major%20iterations%20has%20been%20reached" hyperlink="true"><Font style="HyperlinkWarning">Warning, limiting number of major iterations has been reached</Font></Hyperlink></Text-field>
+</Output>
+<Output><Text-field style="Line Printed Output" layout="Line Printed Output">Optimal solution found:
+</Text-field>
+</Output>
+<Output><Text-field style="2D Output" layout="Maple Output"><Equation executable="false" style="2D Output" display="LUkobWZlbmNlZEc2Iy9JK21vZHVsZW5hbWVHNiJJLFR5cGVzZXR0aW5nR0koX3N5c2xpYkdGJzYmLUklbXJvd0dGJDYyLUYsNiYtSSVtc3ViR0YkNiUtSSNtaUdGJDYlUSJ4RicvJSdpdGFsaWNHUSV0cnVlRicvJSxtYXRodmFyaWFudEdRJ2l0YWxpY0YnLUkjbW5HRiQ2JFEiMUYnL0Y7USdub3JtYWxGJy8lL3N1YnNjcmlwdHNoaWZ0R1EiMEYnLUkjbW9HRiQ2LlEpJmVxdWFscztGJ0ZBLyUmZmVuY2VHUSZmYWxzZUYnLyUqc2VwYXJhdG9yR0ZMLyUpc3RyZXRjaHlHRkwvJSpzeW1tZXRyaWNHRkwvJShsYXJnZW9wR0ZMLyUubW92YWJsZWxpbWl0c0dGTC8lJ2FjY2VudEdGTC8lJ2xzcGFjZUdRLDAuMjc3Nzc3OGVtRicvJSdyc3BhY2VHRmVuLyUpZXF1YWxpdHlHRkwtRj42JFFgcTM5LjczOTM1NjIxOTEwNjc4MjI3NDIxODYzMzM2MDE4MjMwMjg2NzExMzUzOTU0MjEwOTM4MzI5NjI2NzYyODEwMDg1NTYxMTg1Mzc4OTA4MTgxOTcwNTA2NzMxOTk5NjE5NDgzRidGQUZBLUZHNi5RIixGJ0ZBRkovRk5GOUZPRlFGU0ZVRlcvRlpRJjAuMGVtRicvRmduUSwwLjMzMzMzMzNlbUYnRmhuLUYsNiYtRjE2JUYzLUY+NiRRIjJGJ0ZBRkNGRi1GPjYkUWBxOTQuMTk4MDk4MTI1OTE2NDg0OTc0MzE5OTM1OTAwMDYwNjcwODM0ODc4NDY5MTc5MDc1OTQ2MzEwODk1MzI3NjE3NDY1NzI5MjI2Nzc3OTUwMDA3MTY0MzM2NTk5OTE4NTcxMjNGJ0ZBRkFGXW8tRiw2Ji1GMTYlRjMtRj42JFEiM0YnRkFGQ0ZGLUY+NiRRYHExNjkuNDA2NjUyNTg3NDk3ODgyOTg1NzMxMzMyNzU0NTUwOTY3MjY2ODk4OTgzNDA3MzY5NTIwODA4MzYyNzg0NDI5NTU2OTkzNDkzNDIwODU1NDc1MTQwNjMzMjQ0MTkyMzA1M0YnRkFGQUZdby1GLDYmLUYxNiVGMy1GPjYkUSI0RidGQUZDRkYtRj42JFFicTAuMDM3MzAxNjAwNDgzNDU3MTIxMDU4MDM3NTAzNjc3MDYzODkyNjA1MTY3MzI0MTI4OTUzMzA2MzY2MjA0NDkwNTgyMzcxMTkzMjQxMzk1MDY5MjQwNjUyNzczMzYwOTAzMjUyMThGJ0ZBRkFGXW8tRiw2Ji1GMTYlRjMtRj42JFEiNUYnRkFGQ0ZGLUY+NiRRYHE2LjMwNTk1NjUwNTU4NjAwNjEyNTkwNTQyMDQ5NDI3MDE2MjkxOTkwMTAwOTc5MjA2Nzg4NjQyNzczODUwODU3Mjg5OTk5MjY5NDAxNTc3OTU4NTM1NDAxNTQ3MTc3NTk4NDg2OEYnRkFGQUZdby1GLDYmLUYxNiVGMy1GPjYkUSI2RidGQUZDRkYtRj42JFFgcTkuNzA1NTQzMzM5MDMyODM3ODI0OTc1MzEzODcxMDQ5MTI0NjQyNjIwOTgwOTM5Njg4Njc0MDA4NDYwMjc3NzczNDQyMjg2Nzk0NDQ5OTIzODkwODIxNTg0NDYzNDk1OTczOTA1RidGQUZBRl1vLUYsNiYtRjE2JUYzLUY+NiRRIjdGJ0ZBRkNGRi1GPjYkUWBxMTMuMDE1OTQzMjgzMjgwMDcyNzgyMTY2MzExNDI1ODU3NzA1MDg0ODMwOTkwMDE3OTcxMDk4OTEzNzgwNzE3OTE3NTc4OTE0MDM1NzE2MzA2MzE5ODQ0MDc5ODg5ODgxMTM4NTNGJ0ZBRkEvJStmb3JlZ3JvdW5kR1EoWzAsMCwwXUYnLyUpcmVhZG9ubHlHRkxGQUZBLyUlb3BlbkdRJyZsc3FiO0YnLyUmY2xvc2VHUScmcnNxYjtGJw==">NykvJkkieEc2IjYjIiIiJCJfcSRbPicqKj50MTAoPj0zKnlgPWhiMzVHd0UnSCRRNEBhUk42bkdJIz1nTGo9VUYjeTEiPmlOUihSISMpKi8mRiU2IyIiIyQiX3FCciY9KipmT1Y7MismenhFI0hkWTx3SyYqM0pZZjJ6InAleVskM25nKyFmJCo+VihcWztmNyk0KT4lKkYrLyZGJTYjIiIkJCJfcWBJIz5XS2pTXlpiM1UkXCQqcGJIV3lpJDMzX3B0UyQpKikqb0VuNGJhRkxKZClIKXlcKGVfbVNwIiEjKCovJkYlNiMiIiUkIl9xPV9LITRPdEZsUyNwXVJUSz5yQmUhXC9pTzFMJipHVEtuXmcjKlExeE9dUCFlNTdkTVsrO0lQISQsIi8mRiU2IyIiJiQiX3FvWylmeHJhLGFgZXpkLCVwIyoqKipHZDMmUXhVJyl5MSN6NDUhKj5IO3FVXD9hIWY3MWdlMGwmZkknISMqKi8mRiU2IyIiJyQiX3EwUihmXGpXZUAzKlEjKlxXeidHVU14eC1ZM1NuKW9SNCk0aVVZN1w1KFFKdlwjeSRHLlJMYTAoKkZGLyZGJTYjIiIoJCJfcWBRNikpKikpelMlKT5qSTtkLjkqeXYienIheTgqKTRyeiwhKjQkWzMweCZlVTZqOyN5cytHJEdWZiw4Ris=</Equation></Text-field>
+</Output>
+<Output><Text-field style="Line Printed Output" layout="Line Printed Output">Optimal objective value: 29911.8826046411
+Optimal gradient value: [-52269.55969923279600987307897493237266132741765338539848430791377453696157820609089061693508099256, -37.5787896648882398029330411916988603944837678663708588232351401459897884002900889028305570074, -17524.2992290434613846231142195929525992948337843899549622159394443044715570236690527618176342425, 22397.61468115121228432891795922253804595263479544730847294139166640105690887392189459472402616059243, 649292.3382899983422188193442214074855714383851531692482921624839836721166318964995592961805292542120, -20056.31398660621801993787383574059456219668548774042998411378340704362223638712034721816901547120975, 423641.1552395228205200395758591143977690530587419230906374803761326560148068286202093960031692412652]
+----------------------------------------------------
+
+====================================================
+Starting optimization for tau = .1e9
+Calling NLPSolve...
+</Text-field>
+</Output>
+<Output><Text-field style="HyperlinkWarning" layout="HyperlinkWarning"><Hyperlink linktarget="http://www.maplesoft.com/support/help/errors/view.aspx?path=Warning,%20limiting%20number%20of%20major%20iterations%20has%20been%20reached" hyperlink="true"><Font style="HyperlinkWarning">Warning, limiting number of major iterations has been reached</Font></Hyperlink></Text-field>
+</Output>
+<Output><Text-field style="Line Printed Output" layout="Line Printed Output">Optimal solution found:
+</Text-field>
+</Output>
+<Output><Text-field style="2D Output" layout="Maple Output"><Equation executable="false" style="2D Output" display="LUkobWZlbmNlZEc2Iy9JK21vZHVsZW5hbWVHNiJJLFR5cGVzZXR0aW5nR0koX3N5c2xpYkdGJzYmLUklbXJvd0dGJDYyLUYsNiYtSSVtc3ViR0YkNiUtSSNtaUdGJDYlUSJ4RicvJSdpdGFsaWNHUSV0cnVlRicvJSxtYXRodmFyaWFudEdRJ2l0YWxpY0YnLUkjbW5HRiQ2JFEiMUYnL0Y7USdub3JtYWxGJy8lL3N1YnNjcmlwdHNoaWZ0R1EiMEYnLUkjbW9HRiQ2LlEpJmVxdWFscztGJ0ZBLyUmZmVuY2VHUSZmYWxzZUYnLyUqc2VwYXJhdG9yR0ZMLyUpc3RyZXRjaHlHRkwvJSpzeW1tZXRyaWNHRkwvJShsYXJnZW9wR0ZMLyUubW92YWJsZWxpbWl0c0dGTC8lJ2FjY2VudEdGTC8lJ2xzcGFjZUdRLDAuMjc3Nzc3OGVtRicvJSdyc3BhY2VHRmVuLyUpZXF1YWxpdHlHRkwtRj42JFFgcTMxLjYxNjAzNTAxMTQxNzk1MDEzNjY1NDY2MjY1ODkyMjg3ODE4NDQ2MjMxNTA4Nzc2OTYzMTk2MzM5NDcwNDMwNDc1NDk0Mjg2NTM4Mjk5NTAzODI3OTY5Njg1NTcxMTAzOTQ1RidGQUZBLUZHNi5RIixGJ0ZBRkovRk5GOUZPRlFGU0ZVRlcvRlpRJjAuMGVtRicvRmduUSwwLjMzMzMzMzNlbUYnRmhuLUYsNiYtRjE2JUYzLUY+NiRRIjJGJ0ZBRkNGRi1GPjYkUWBxOTEuOTMxODU0MjgzNjg2OTI4MzU0NzE5MDkxNDgwMDI0ODQzMTUyMDI3MDM3NDQwODkyNDkxMzM3Njg1OTkxMTM4MDQwNDg5NjEyMjU1NDkxODc5OTI2NTA5MDQ0NjE3NjA3NTRGJ0ZBRkFGXW8tRiw2Ji1GMTYlRjMtRj42JFEiM0YnRkFGQ0ZGLUY+NiRRYHExODQuODMyNjEwNDQxNzUyMzM0MTQzMzk0Njc2NzA1MzY5NzczODU4MDE2MTkxNTg4NTYyMzIzOTk3MjA0MzU1NjAxOTYyNTczNDc1MDEwMzE3NjQyMzQ1MTY1NzgxMTAyOTk1MEYnRkFGQUZdby1GLDYmLUYxNiVGMy1GPjYkUSI0RidGQUZDRkYtRj42JFFicTAuMDY0MDQyNTMwNzczOTk2Mzk2Mzg2ODI1NDI2NTE5MTkyNDA2OTIyNjQwNTI4Nzk4OTk3ODAzMzQ1MzQ2MjU4NzUyMDkxMjMxMjI1MTg5ODExMjkwNzY5Mzc0Nzc4MTA2Mjk3MTNGJ0ZBRkFGXW8tRiw2Ji1GMTYlRjMtRj42JFEiNUYnRkFGQ0ZGLUY+NiRRYHE1LjYyMjY2NDAyNDg3ODU0OTI1NTE3NDA4MTIzNjY4MDEzMzAzOTY3MTI5OTQwMDM1MTU3MzQzNjQ3MjE5NjAwMjU0Njc0Mjk0ODUzMTUxMTE4NjgwMTY0NDkwNzAwMTQ1OTEwMEYnRkFGQUZdby1GLDYmLUYxNiVGMy1GPjYkUSI2RidGQUZDRkYtRj42JFFgcTkuNTg4NDA5MTM2MTI3NDgxMzc3Njk1MDczOTI3NzUyNTk2MzM0OTE0MjM3NDgwOTg2NDU1MjY5NDg5MjE5MjAxNjM5MDYyMjE0NDkzNTM4MzcyOTYyMDM1OTUzMDAyNjYyMTMwRidGQUZBRl1vLUYsNiYtRjE2JUYzLUY+NiRRIjdGJ0ZBRkNGRi1GPjYkUWBxMTMuNTk1OTIyNjUyODExNzQ3NjQ4NTkyNDA3ODYzMTEwODM4MDE2NzE3OTcwNzAzMzk4MzUwMTMwNjA4NzI3OTk4MDI5NjA0Njk1MTI1NTkyNDA0ODQwNDkzMjk3NjA4NzUxMzdGJ0ZBRkEvJStmb3JlZ3JvdW5kR1EoWzAsMCwwXUYnLyUpcmVhZG9ubHlHRkxGQUZBLyUlb3BlbkdRJyZsc3FiO0YnLyUmY2xvc2VHUScmcnNxYjtGJw==">NykvJkkieEc2IjYjIiIiJCJfcVhSNXJib3B6I1FdKkhRbEclXHYvVnElUmo+anB4MzpCWSU9eUcjKmVFbWFtOF16VDZdLjs7JCEjKSovJkYlNiMiIiMkIl9xYTJ3aFchNGwjKno9XGJBaCpbUyFRNipmb1A4XCMqM1dQcS1fSiVbLSFbIjQ+Wk5HcG8kR2E9JD4qRisvJkYlNiMiIiQkIl9xXSpINSJ5bF5NVXdKNV1adEQnPmdiVj8oKlJLaSYpZSI+OyFlUXhwYHF3WVJWVExfPFc1RSRbPSEjKCovJkYlNiMiIiUkIl9xOChIMSJ5WlBwMkg2KSo9RDdCIjRfKGVpTVhMIXkqKil6RzBrQXBTIz4+bFVEb1EnUicqUnhJRC9rISQsIi8mRiU2IyIiJiQiX3ErImY5KzJcayxvPTY6YFtIdVlEKyc+c2tWdDpOKyUqSHInUkk4IW9PNzN1XkRcJnlbLWtFaSYhIyoqLyZGJTYjIiInJCJfcUlAbS1JJmYuaUhQUU5cOUExUjs/PiMqW3BfWCcpNFtQVSJcTCdmX3gjUjImcHg4W0ZoODQlKWUqRkYvJkYlNiMiIigkIl9xUF4oM3dIJFxTW1MjZkRecC8nSCEpKnpzMzE4XSQpUi4yKHpyOyFRMzZqeVMjZlt3dTZHbEFmZjhGKw==</Equation></Text-field>
+</Output>
+<Output><Text-field style="Line Printed Output" layout="Line Printed Output">Optimal objective value: 1674688.1012267863
+Optimal gradient value: [232414.655473343870285596257322240458515058236700738862884163660802651814326834459371731606283089, -1245968.27175062467067995363649764896050656271356981713982906717892870471769104380484668514113294, -3392341.22617029679573131265364482604218130159801299934073335882103334110574794516314213922815386, 3277428.383875711844494390140526644621911859972345724342990338401381630202111450411445121425972727618, -3765553.771962506224415358995968355196298487620418206238185443363829390271662053330114469112394946216, 22035997.82858629748329866842483759011137433294646920152260879800888709117717314513600380365459024820, 89800196.19449523840375866621935988419852409746241703876807634404145635801329671985356469365703703164]
+----------------------------------------------------
+
+====================================================
+Starting optimization for tau = .1e11
+Calling NLPSolve...
+</Text-field>
+</Output>
+<Output><Text-field style="HyperlinkWarning" layout="HyperlinkWarning"><Hyperlink linktarget="http://www.maplesoft.com/support/help/errors/view.aspx?path=Warning,%20limiting%20number%20of%20major%20iterations%20has%20been%20reached" hyperlink="true"><Font style="HyperlinkWarning">Warning, limiting number of major iterations has been reached</Font></Hyperlink></Text-field>
+</Output>
+<Output><Text-field style="Line Printed Output" layout="Line Printed Output">Optimal solution found:
+</Text-field>
+</Output>
+<Output><Text-field style="2D Output" layout="Maple Output"><Equation executable="false" style="2D Output" display="LUkobWZlbmNlZEc2Iy9JK21vZHVsZW5hbWVHNiJJLFR5cGVzZXR0aW5nR0koX3N5c2xpYkdGJzYmLUklbXJvd0dGJDYyLUYsNiYtSSVtc3ViR0YkNiUtSSNtaUdGJDYlUSJ4RicvJSdpdGFsaWNHUSV0cnVlRicvJSxtYXRodmFyaWFudEdRJ2l0YWxpY0YnLUkjbW5HRiQ2JFEiMUYnL0Y7USdub3JtYWxGJy8lL3N1YnNjcmlwdHNoaWZ0R1EiMEYnLUkjbW9HRiQ2LlEpJmVxdWFscztGJ0ZBLyUmZmVuY2VHUSZmYWxzZUYnLyUqc2VwYXJhdG9yR0ZMLyUpc3RyZXRjaHlHRkwvJSpzeW1tZXRyaWNHRkwvJShsYXJnZW9wR0ZMLyUubW92YWJsZWxpbWl0c0dGTC8lJ2FjY2VudEdGTC8lJ2xzcGFjZUdRLDAuMjc3Nzc3OGVtRicvJSdyc3BhY2VHRmVuLyUpZXF1YWxpdHlHRkwtRj42JFFgcTUyLjIxMDIzNTE0NDAzMDg5MDY3NDU0OTA4MDQ2NzQ3MzY2MDMxNzIwMzkzNDU0NzAyOTg5Mjc4ODg1MDc0NjY5NDYzODA0NDY4NDE4MDYwMDU1NjAxMzM0MjYxMzk1NzM0MDg0RidGQUZBLUZHNi5RIixGJ0ZBRkovRk5GOUZPRlFGU0ZVRlcvRlpRJjAuMGVtRicvRmduUSwwLjMzMzMzMzNlbUYnRmhuLUYsNiYtRjE2JUYzLUY+NiRRIjJGJ0ZBRkNGRi1GPjYkUWBxMTIyLjU0MTM1MzQ5MTQ3OTMzODY5NDg5MDk4NjQxMjg1NDMxMjQyOTMzOTM4ODU4MTY0NzI0ODI2NDg4NjYyMTAzMzA2MTM5MjU2NTA4NDI1ODkxNDQ2MzQ0NDc4MjQ2NzA5ODBGJ0ZBRkFGXW8tRiw2Ji1GMTYlRjMtRj42JFEiM0YnRkFGQ0ZGLUY+NiRRYHExODIuODUzNTc0NjkxMDYyMTkxNDU5NTI4NjA3NDUxOTg2MTQwMDc4OTA1MTEzMzE3NTUxNzczNjI3NzI5ODk4ODYwNDA3ODAyMzY3OTU0NjU5OTQ1ODA0OTk1MzU4NTkyMzYwOEYnRkFGQUZdby1GLDYmLUYxNiVGMy1GPjYkUSI0RidGQUZDRkYtRj42JFFicTAuMDc3MTc5MDgxMzY1NzQ1ODg4ODA0NDMzMzM2ODQ2NDI3MjYxNDczNDY2ODk3MTUxNjc2NjQ2MDA0MTUyODI4NDg0NDk0MzE3MjQ2NDI5ODA1Mzg1MjcwMjQzODc2OTAwOTY0MjJGJ0ZBRkFGXW8tRiw2Ji1GMTYlRjMtRj42JFEiNUYnRkFGQ0ZGLUY+NiRRYHE3LjIyNTY2NTk4MzgzOTM0NTM2MTUwODAyMjYyMzY5NjI3MTA4NzA4ODU0MTg2ODY1OTY0NTg5NDI4OTEyMzkyMjA1NTQyNjAzMDI1MzAxNDQxMzQ3NzUyMzUxNDE5MDQyNTUxN0YnRkFGQUZdby1GLDYmLUYxNiVGMy1GPjYkUSI2RidGQUZDRkYtRj42JFFgcTExLjA2OTgzOTIxMDY4MjI3OTk5MjQ5NTgwODM5NDA5NTk3NjA5NDEzMTc1MTc0NzIxNzk5MDA5MTA2NTUwODc3OTc3NzM5MzM2NDYwMTIzMjA1NTgxOTE2MjM1NDI0NzE4MjExRidGQUZBRl1vLUYsNiYtRjE2JUYzLUY+NiRRIjdGJ0ZBRkNGRi1GPjYkUWBxMTMuNTIyMzM3NDQ2MDA1MTY3MDM0NDM1NzUyMDAxNjkwMjYzNjMyMDQ3MjU2NjAyMTU2MDA0NzIzMDU4Njc3Njk4ODEzNDM1MjE3ODY0MTk5MjQ4MDg2OTA4OTE0NDcwOTU4MTNGJ0ZBRkEvJStmb3JlZ3JvdW5kR1EoWzAsMCwwXUYnLyUpcmVhZG9ubHlHRkxGQUZBLyUlb3BlbkdRJyZsc3FiO0YnLyUmY2xvc2VHUScmcnNxYjtGJw==">NykvJkkieEc2IjYjIiIiJCJfcSUzTWRSaFVMLGMwZyE9JW9XIVFZcFkyJikpeSMqKUhxYU1SPzwubXR1WSEzXFhuISozLldeQjVBJiEjKSovJkYlNiMiIiMkIl9xISk0bkN5V01ZOSplVTNsRFJoSS5AbSlbRVtzayJlKVFSJEhDSmFHVCcpNCpbcFEkejlcYDhhQSIhIygqLyZGJTYjIiIkJCJfcTNPI2ZlYCpcIWUlKmZZJnpPLXlTZykpKilIeGl0PGI8TDYwKnkrOScpPlgyJ0cmZjk+aTVwdU4mRz1GMi8mRiU2IyIiJSQiX3FBazQhcChRQ3FfUTApSGtDPFZcJVtHRzovZ2t3OzooKm9ZdDlFRmslb0xMVyEpKSlldWw4M3pyKCEkLCIvJkYlNiMiIiYkIl9xPGJVIT45Tl94TVQ5SURJZ1ViPyNSNypHJSpla2Ynbz1hKTMoM3JpcEJFLTM6T1gkUlEpZm1EcyEjKiovJkYlNiMiIickIl9xNiM9WlVOaSI+ZTBLN2drTFJ4KHooM2IxIjQhKnpAWjx2SlQ0d2Y0JVIzZVwjKip6QW81I1IpcDUiRisvJkYlNiMiIigkIl9xOGU0WjkqM3AzWyMqPmt5QE5NIikpcHgnZUlzL2c6LW1EWj9qai1wLD92Tlcubl4rWXVMQU4iRis=</Equation></Text-field>
+</Output>
+<Output><Text-field style="Line Printed Output" layout="Line Printed Output">Optimal objective value: 6909.0037862069
+Optimal gradient value: [-474425.618709231801735179253752800593921903857323376297781828998618205842404966902570152298518, 68155.320493333722434766523126628455546247334296202488590536230716274844852308457849414873274, -904026.473376742116257913395249317696588587973252406341037161278397112419434018071910048064200, -95447.27707461521827547842629282634512023724576894144767703143770801524847017848400287027785752174468, 6869001.944256608321487472912334235877213641472166324520332901100961905791447734661525276919572437252, -1479426.648800769921968805706320857170234080982558175153126685951953872622302730054249073787048835632, 24509275.21483781107705597575969885794557562653957204350648625243684839766449879200971071408305946491]
+----------------------------------------------------
+
+</Text-field>
+</Output>
+</Group>
+<Group view="code" hide-input="false" labelreference="L40" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal"># Alternative: Solve gradient = 0 directly using fsolve
+<Font encoding="UTF-8">printf(&quot;\134n=== Solving gradient = 0 directly ===\134n&quot;);
+</Font>
+for tau in tau_values do
+<Font encoding="UTF-8">  printf(&quot;\134nSolving gradient system for tau = %a\134n&quot;, tau);</Font>
+  # Initial guess
+  initial_guess := {x1=1.0, x2=1.0, x3=1.0, x4=-10.0, x5=-10.0, x6=-10.0, x7=-10.0};  sys := Gradient_HAS64(x1, x2, x3, x4, x5, x6, x7, tau);  solution := fsolve( sys, initial_guess);
+<Font encoding="UTF-8">  printf(&quot;Solution found:\134n&quot;);
+  printf(&quot;%a\134n&quot;, evalf(solution,25));
+  print( subs(solution,sys) );</Font>
+end do:</Text-field>
+</Input>
+<Output><Text-field style="Line Printed Output" layout="Line Printed Output">
+=== Solving gradient = 0 directly ===
+
+Solving gradient system for tau = .1e3
+Solution found:
+{x1 = 6.681814179997021692636660, x2 = 9.074510495626874674434075, x3 = 12.99535539607610906540018, x4 = 0., x5 = 0., x6 = 0., x7 = 0.}
+</Text-field>
+</Output>
+<Output><Text-field style="2D Output" layout="Maple Output"><Equation executable="false" style="2D Output" display="LUkobWZlbmNlZEc2Iy9JK21vZHVsZW5hbWVHNiJJLFR5cGVzZXR0aW5nR0koX3N5c2xpYkdGJzYmLUklbXJvd0dGJDYyLUkjbW5HRiQ2JFEjMC5GJy8lLG1hdGh2YXJpYW50R1Enbm9ybWFsRictSSNtb0dGJDYuUSIsRidGMi8lJmZlbmNlR1EmZmFsc2VGJy8lKnNlcGFyYXRvckdRJXRydWVGJy8lKXN0cmV0Y2h5R0Y7LyUqc3ltbWV0cmljR0Y7LyUobGFyZ2VvcEdGOy8lLm1vdmFibGVsaW1pdHNHRjsvJSdhY2NlbnRHRjsvJSdsc3BhY2VHUSYwLjBlbUYnLyUncnNwYWNlR1EsMC4zMzMzMzMzZW1GJy8lKWVxdWFsaXR5R0Y7Ri5GNS1GLDYmLUYvNiRRIzQuRidGMi1GNjYuUSgmdGltZXM7RidGMkY5L0Y9RjtGP0ZBRkNGRUZHL0ZKUSwwLjIyMjIyMjJlbUYnL0ZNRmVuRk8tSSVtc3VwR0YkNiYtRi82JFEjMTBGJ0YyLUYvNiRRLCZ1bWludXMwOzk2RidGMi8lMXN1cGVyc2NyaXB0c2hpZnRHUSIwRicvSSttc2VtYW50aWNzR0YkUSJeRidGMkY1Ri5GNS1GLzYkUSwmdW1pbnVzMDswLkYnRjJGNUZmb0Y1RmZvLyUrZm9yZWdyb3VuZEdRKFswLDAsMF1GJy8lKXJlYWRvbmx5R0Y7RjJGMi8lJW9wZW5HUScmbHNxYjtGJy8lJmNsb3NlR1EnJnJzcWI7Ric=">NykkIiIhRiRGIyQiIiUhIycqRiMkISIhRiRGKEYo</Equation></Text-field>
+</Output>
+<Output><Text-field style="Line Printed Output" layout="Line Printed Output">
+Solving gradient system for tau = .1e5
+Solution found:
+{x1 = 3.900157915419476405557408, x2 = 7.709248543842730875537744, x3 = 11.96290763014932833437156, x4 = 0., x5 = 0., x6 = 0., x7 = 0.}
+</Text-field>
+</Output>
+<Output><Text-field style="2D Output" layout="Maple Output"><Equation executable="false" style="2D Output" display="LUkobWZlbmNlZEc2Iy9JK21vZHVsZW5hbWVHNiJJLFR5cGVzZXR0aW5nR0koX3N5c2xpYkdGJzYmLUklbXJvd0dGJDYyLUYsNiYtSSNtbkdGJDYkUSMzLkYnLyUsbWF0aHZhcmlhbnRHUSdub3JtYWxGJy1JI21vR0YkNi5RKCZ0aW1lcztGJ0Y0LyUmZmVuY2VHUSZmYWxzZUYnLyUqc2VwYXJhdG9yR0Y9LyUpc3RyZXRjaHlHRj0vJSpzeW1tZXRyaWNHRj0vJShsYXJnZW9wR0Y9LyUubW92YWJsZWxpbWl0c0dGPS8lJ2FjY2VudEdGPS8lJ2xzcGFjZUdRLDAuMjIyMjIyMmVtRicvJSdyc3BhY2VHRkwvJSllcXVhbGl0eUdGPS1JJW1zdXBHRiQ2Ji1GMTYkUSMxMEYnRjQtRjE2JFEsJnVtaW51czA7OTVGJ0Y0LyUxc3VwZXJzY3JpcHRzaGlmdEdRIjBGJy9JK21zZW1hbnRpY3NHRiRRIl5GJ0Y0LUY4Ni5RIixGJ0Y0RjsvRj9RJXRydWVGJ0ZARkJGREZGRkgvRktRJjAuMGVtRicvRk5RLDAuMzMzMzMzM2VtRidGTy1GLDYmLUYxNiRRLCZ1bWludXMwOzEuRidGNEY3LUZSNiZGVC1GMTYkUSwmdW1pbnVzMDs5NEYnRjRGWkZnbkY0RmpuRmNvRmpuLUYxNiRRIzAuRidGNEZqbi1GMTYkUSwmdW1pbnVzMDswLkYnRjRGam5GYHBGam5GYHAvJStmb3JlZ3JvdW5kR1EoWzAsMCwwXUYnLyUpcmVhZG9ubHlHRj1GNEY0LyUlb3BlbkdRJyZsc3FiO0YnLyUmY2xvc2VHUScmcnNxYjtGJw==">NykkIiIkISMmKiQhIiIhIyUqRiYkIiIhRiokISIhRipGK0Yr</Equation></Text-field>
+</Output>
+<Output><Text-field style="Line Printed Output" layout="Line Printed Output">
+Solving gradient system for tau = .1e7
+Solution found:
+{x1 = 3.847831075410325147818366, x2 = 7.694733977443614783484512, x3 = 11.95451849301910537037961, x4 = 0., x5 = 0., x6 = 0., x7 = 0.}
+</Text-field>
+</Output>
+<Output><Text-field style="2D Output" layout="Maple Output"><Equation executable="false" style="2D Output" display="LUkobWZlbmNlZEc2Iy9JK21vZHVsZW5hbWVHNiJJLFR5cGVzZXR0aW5nR0koX3N5c2xpYkdGJzYmLUklbXJvd0dGJDYyLUYsNiYtSSNtbkdGJDYkUSwmdW1pbnVzMDszLkYnLyUsbWF0aHZhcmlhbnRHUSdub3JtYWxGJy1JI21vR0YkNi5RKCZ0aW1lcztGJ0Y0LyUmZmVuY2VHUSZmYWxzZUYnLyUqc2VwYXJhdG9yR0Y9LyUpc3RyZXRjaHlHRj0vJSpzeW1tZXRyaWNHRj0vJShsYXJnZW9wR0Y9LyUubW92YWJsZWxpbWl0c0dGPS8lJ2FjY2VudEdGPS8lJ2xzcGFjZUdRLDAuMjIyMjIyMmVtRicvJSdyc3BhY2VHRkwvJSllcXVhbGl0eUdGPS1JJW1zdXBHRiQ2Ji1GMTYkUSMxMEYnRjQtRjE2JFEsJnVtaW51czA7OTNGJ0Y0LyUxc3VwZXJzY3JpcHRzaGlmdEdRIjBGJy9JK21zZW1hbnRpY3NHRiRRIl5GJ0Y0LUY4Ni5RIixGJ0Y0RjsvRj9RJXRydWVGJ0ZARkJGREZGRkgvRktRJjAuMGVtRicvRk5RLDAuMzMzMzMzM2VtRidGTy1GLDYmLUYxNiRRLCZ1bWludXMwOzEuRidGNEY3LUZSNiZGVC1GMTYkUSwmdW1pbnVzMDs5MkYnRjRGWkZnbkY0RmpuLUYsNiZGMEY3RmhvRjRGam4tRjE2JFEjMC5GJ0Y0RmpuLUYxNiRRLCZ1bWludXMwOzAuRidGNEZqbkZicEZqbkZicC8lK2ZvcmVncm91bmRHUShbMCwwLDBdRicvJSlyZWFkb25seUdGPUY0RjQvJSVvcGVuR1EnJmxzcWI7RicvJSZjbG9zZUdRJyZyc3FiO0Yn">NykkISIkISMkKiQhIiIhIyMqJEYkRigkIiIhRiskISIhRitGLEYs</Equation></Text-field>
+</Output>
+<Output><Text-field style="Line Printed Output" layout="Line Printed Output">
+Solving gradient system for tau = .1e9
+Solution found:
+{x1 = 3.847300847063338217370019, x2 = 7.694589110936489763239095, x3 = 11.95443542298989582053078, x4 = 0., x5 = 0., x6 = 0., x7 = 0.}
+</Text-field>
+</Output>
+<Output><Text-field style="2D Output" layout="Maple Output"><Equation executable="false" style="2D Output" display="LUkobWZlbmNlZEc2Iy9JK21vZHVsZW5hbWVHNiJJLFR5cGVzZXR0aW5nR0koX3N5c2xpYkdGJzYmLUklbXJvd0dGJDYyLUYsNiYtSSNtbkdGJDYkUSMyLkYnLyUsbWF0aHZhcmlhbnRHUSdub3JtYWxGJy1JI21vR0YkNi5RKCZ0aW1lcztGJ0Y0LyUmZmVuY2VHUSZmYWxzZUYnLyUqc2VwYXJhdG9yR0Y9LyUpc3RyZXRjaHlHRj0vJSpzeW1tZXRyaWNHRj0vJShsYXJnZW9wR0Y9LyUubW92YWJsZWxpbWl0c0dGPS8lJ2FjY2VudEdGPS8lJ2xzcGFjZUdRLDAuMjIyMjIyMmVtRicvJSdyc3BhY2VHRkwvJSllcXVhbGl0eUdGPS1JJW1zdXBHRiQ2Ji1GMTYkUSMxMEYnRjQtRjE2JFEsJnVtaW51czA7OTFGJ0Y0LyUxc3VwZXJzY3JpcHRzaGlmdEdRIjBGJy9JK21zZW1hbnRpY3NHRiRRIl5GJ0Y0LUY4Ni5RIixGJ0Y0RjsvRj9RJXRydWVGJ0ZARkJGREZGRkgvRktRJjAuMGVtRicvRk5RLDAuMzMzMzMzM2VtRidGTy1GLDYmLUYxNiRRIzEuRidGNEY3LUZSNiZGVC1GMTYkUSwmdW1pbnVzMDs5MEYnRjRGWkZnbkY0RmpuLUYsNiYtRjE2JFEjNC5GJ0Y0RjdGaG9GNEZqbi1GMTYkUSMwLkYnRjRGam4tRjE2JFEsJnVtaW51czA7MC5GJ0Y0RmpuRmVwRmpuRmVwLyUrZm9yZWdyb3VuZEdRKFswLDAsMF1GJy8lKXJlYWRvbmx5R0Y9RjRGNC8lJW9wZW5HUScmbHNxYjtGJy8lJmNsb3NlR1EnJnJzcWI7Ric=">NykkIiIjISMiKiQiIiIhIyEqJCIiJUYoJCIiIUYsJCEiIUYsRi1GLQ==</Equation></Text-field>
+</Output>
+<Output><Text-field style="Line Printed Output" layout="Line Printed Output">
+Solving gradient system for tau = .1e11
+Solution found:
+{x1 = 3.847295544068686165133049, x2 = 7.694587662301036484281052, x3 = 11.95443459237430425571666, x4 = 0., x5 = 0., x6 = 0., x7 = 0.}
+</Text-field>
+</Output>
+<Output><Text-field style="2D Output" layout="Maple Output"><Equation executable="false" style="2D Output" display="LUkobWZlbmNlZEc2Iy9JK21vZHVsZW5hbWVHNiJJLFR5cGVzZXR0aW5nR0koX3N5c2xpYkdGJzYmLUklbXJvd0dGJDYyLUkjbW5HRiQ2JFEjMC5GJy8lLG1hdGh2YXJpYW50R1Enbm9ybWFsRictSSNtb0dGJDYuUSIsRidGMi8lJmZlbmNlR1EmZmFsc2VGJy8lKnNlcGFyYXRvckdRJXRydWVGJy8lKXN0cmV0Y2h5R0Y7LyUqc3ltbWV0cmljR0Y7LyUobGFyZ2VvcEdGOy8lLm1vdmFibGVsaW1pdHNHRjsvJSdhY2NlbnRHRjsvJSdsc3BhY2VHUSYwLjBlbUYnLyUncnNwYWNlR1EsMC4zMzMzMzMzZW1GJy8lKWVxdWFsaXR5R0Y7LUYsNiYtRi82JFEsJnVtaW51czA7MS5GJ0YyLUY2Ni5RKCZ0aW1lcztGJ0YyRjkvRj1GO0Y/RkFGQ0ZFRkcvRkpRLDAuMjIyMjIyMmVtRicvRk1GZW5GTy1JJW1zdXBHRiQ2Ji1GLzYkUSMxMEYnRjItRi82JFEsJnVtaW51czA7ODhGJ0YyLyUxc3VwZXJzY3JpcHRzaGlmdEdRIjBGJy9JK21zZW1hbnRpY3NHRiRRIl5GJ0YyRjUtRiw2Ji1GLzYkUSwmdW1pbnVzMDszLkYnRjJGVkZnbkYyRjVGLkY1LUYvNiRRLCZ1bWludXMwOzAuRidGMkY1RltwRjVGW3AvJStmb3JlZ3JvdW5kR1EoWzAsMCwwXUYnLyUpcmVhZG9ubHlHRjtGMkYyLyUlb3BlbkdRJyZsc3FiO0YnLyUmY2xvc2VHUScmcnNxYjtGJw==">NykkIiIhRiQkISIiISMpKSQhIiRGJ0YjJCEiIUYkRipGKg==</Equation></Text-field>
+</Output>
+</Group>
+<Group view="code" labelreference="L43" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal"></Text-field>
+</Input>
+</Group>
+<Group labelreference="L33" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal"></Text-field>
+</Input>
+</Group></Presentation-Block>
+</Worksheet>

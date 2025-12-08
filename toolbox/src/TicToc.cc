@@ -30,66 +30,78 @@
 
 #include <windows.h>
 
-namespace Utils {
+namespace Utils
+{
 
-  TicToc::TicToc() : m_elapsed_time(0) {
+  TicToc::TicToc() : m_elapsed_time( 0 )
+  {
     LARGE_INTEGER frequency;
-    QueryPerformanceFrequency(&frequency);
+    QueryPerformanceFrequency( &frequency );
     m_frequency = frequency.QuadPart;
     tic();
   }
 
   void
-  TicToc::tic() {
+  TicToc::tic()
+  {
     LARGE_INTEGER t1;
-    QueryPerformanceCounter(&t1);
+    QueryPerformanceCounter( &t1 );
     m_t1 = t1.QuadPart;
   }
 
   void
-  TicToc::toc() {
+  TicToc::toc()
+  {
     LARGE_INTEGER t2;
-    QueryPerformanceCounter(&t2);
+    QueryPerformanceCounter( &t2 );
     m_t2           = t2.QuadPart;
-    m_elapsed_time = (m_t2 - m_t1) * 1000.0 / m_frequency;
+    m_elapsed_time = ( m_t2 - m_t1 ) * 1000.0 / m_frequency;
   }
 
   BOOLEAN
-  nanosleep( LONGLONG ns100 ) {
-    LARGE_INTEGER li;    // Time defintion
+  nanosleep( LONGLONG ns100 )
+  {
+    LARGE_INTEGER li;  // Time defintion
     // Create timer
-    HANDLE timer = CreateWaitableTimerW(NULL, TRUE, NULL);
+    HANDLE timer = CreateWaitableTimerW( NULL, TRUE, NULL );
     if ( !timer ) return FALSE;
     // Set timer properties
     li.QuadPart = -ns100;
-    if ( !SetWaitableTimer(timer, &li, 0, NULL, NULL, FALSE) ) {
-      CloseHandle(timer);
+    if ( !SetWaitableTimer( timer, &li, 0, NULL, NULL, FALSE ) )
+    {
+      CloseHandle( timer );
       return FALSE;
     }
-    WaitForSingleObject(timer, INFINITE); // Start & wait for timer
-    CloseHandle(timer);                   // Clean resources
-    return TRUE;                          // Slept without problems
+    WaitForSingleObject( timer, INFINITE );  // Start & wait for timer
+    CloseHandle( timer );                    // Clean resources
+    return TRUE;                             // Slept without problems
   }
 
   void
   sleep_for_seconds( unsigned s )
-  { Sleep(DWORD(s) * 1000); }
+  {
+    Sleep( DWORD( s ) * 1000 );
+  }
 
   void
   sleep_for_milliseconds( unsigned ms )
-  { Sleep(DWORD(ms)); }
-
-  void
-  sleep_for_microseconds( unsigned mus ) {
-    nanosleep( LONGLONG(mus*10) );
+  {
+    Sleep( DWORD( ms ) );
   }
 
   void
-  sleep_for_nanoseconds( unsigned ns ) {
-    nanosleep( LONGLONG(ns/100) );
+  sleep_for_microseconds( unsigned mus )
+  {
+    nanosleep( LONGLONG( mus * 10 ) );
   }
 
-}
+  void
+  sleep_for_nanoseconds( unsigned ns )
+  {
+    nanosleep( LONGLONG( ns / 100 ) );
+  }
+
+}  // namespace Utils
 
 #endif
 

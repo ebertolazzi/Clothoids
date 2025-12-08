@@ -12,17 +12,19 @@
 #include <cstring>
 #include <iostream>
 
-namespace rang {
+namespace rang
+{
 
-  #ifndef DOXYGEN_SHOULD_SKIP_THIS
+#ifndef DOXYGEN_SHOULD_SKIP_THIS
   using std::ostream;
-  #endif
+#endif
 
   /* For better compability with most of terminals do not use any style settings
    * except of reset, bold and reversed.
    * Note that on Windows terminals bold style is same as fgB color.
    */
-  enum class style {
+  enum class style
+  {
     reset     = 0,
     bold      = 1,
     dim       = 2,
@@ -35,7 +37,8 @@ namespace rang {
     crossed   = 9
   };
 
-  enum class fg {
+  enum class fg
+  {
     black   = 30,
     red     = 31,
     green   = 32,
@@ -47,7 +50,8 @@ namespace rang {
     reset   = 39
   };
 
-  enum class bg {
+  enum class bg
+  {
     black   = 40,
     red     = 41,
     green   = 42,
@@ -59,7 +63,8 @@ namespace rang {
     reset   = 49
   };
 
-  enum class fgB {
+  enum class fgB
+  {
     black   = 90,
     red     = 91,
     green   = 92,
@@ -70,7 +75,8 @@ namespace rang {
     gray    = 97
   };
 
-  enum class bgB {
+  enum class bgB
+  {
     black   = 100,
     red     = 101,
     green   = 102,
@@ -81,24 +87,27 @@ namespace rang {
     gray    = 107
   };
 
-  enum class control { // Behaviour of rang function calls
-    Off   = 0,         // toggle off rang style/color calls
-    Auto  = 1,         // (Default) autodect terminal and colorize if needed
-    Force = 2          // force ansi color output to non terminal streams
+  enum class control
+  {             // Behaviour of rang function calls
+    Off   = 0,  // toggle off rang style/color calls
+    Auto  = 1,  // (Default) autodect terminal and colorize if needed
+    Force = 2   // force ansi color output to non terminal streams
   };
   // Use rang::setControlMode to set rang control mode
 
-  enum class winTerm { // Windows Terminal Mode
-    Auto   = 0,        // (Default) automatically detects wheter Ansi or Native API
-    Ansi   = 1,        // Force use Ansi API
-    Native = 2         // Force use Native API
+  enum class winTerm
+  {              // Windows Terminal Mode
+    Auto   = 0,  // (Default) automatically detects wheter Ansi or Native API
+    Ansi   = 1,  // Force use Ansi API
+    Native = 2   // Force use Native API
   };
   // Use rang::setWinTermMode to explicitly set terminal API for Windows
   // Calling rang::setWinTermMode have no effect on other OS
 
-  #ifndef DOXYGEN_SHOULD_SKIP_THIS
+#ifndef DOXYGEN_SHOULD_SKIP_THIS
 
-  namespace rang_implementation {
+  namespace rang_implementation
+  {
 
     using std::atomic;
     using std::enable_if;
@@ -106,106 +115,104 @@ namespace rang {
     using std::ostream;
     using std::streambuf;
 
-    inline
-    std::atomic<control> &
-    controlMode() noexcept {
-      static std::atomic<control> value(control::Auto);
+    inline std::atomic<control> &
+    controlMode() noexcept
+    {
+      static std::atomic<control> value( control::Auto );
       return value;
     }
 
-    inline
-    std::atomic<winTerm> &
-    winTermMode() noexcept {
-      static std::atomic<winTerm> termMode(winTerm::Auto);
+    inline std::atomic<winTerm> &
+    winTermMode() noexcept
+    {
+      static std::atomic<winTerm> termMode( winTerm::Auto );
       return termMode;
     }
 
     template <typename T>
-    using enableStd = typename enable_if<
-      is_same<T, rang::style>::value ||
-      is_same<T, rang::fg>::value    ||
-      is_same<T, rang::bg>::value    ||
-      is_same<T, rang::fgB>::value   ||
-      is_same<T, rang::bgB>::value,
-      ostream &
-    >::type;
+    using enableStd = typename enable_if<is_same<T, rang::style>::value || is_same<T, rang::fg>::value ||
+                                             is_same<T, rang::bg>::value || is_same<T, rang::fgB>::value ||
+                                             is_same<T, rang::bgB>::value,
+                                         ostream &>::type;
 
     extern bool isTerminal( streambuf const * ) noexcept;
     extern bool supportsAnsi( streambuf const * ) noexcept;
     extern bool supportsColor() noexcept;
 
-    #ifdef UTILS_OS_WINDOWS
-  	template <typename T>
-    inline
-    void
-    setWinColorAnsi( ostream &os, T const value )	{
-      os << "\033[" << static_cast<int>(value) << "m";
+#ifdef UTILS_OS_WINDOWS
+    template <typename T>
+    inline void
+    setWinColorAnsi( ostream & os, T const value )
+    {
+      os << "\033[" << static_cast<int>( value ) << "m";
     }
 
-  	void setWinColorNative( ostream &os, enum rang::style value );
-  	void setWinColorNative( ostream &os, enum rang::bg    value );
-  	void setWinColorNative( ostream &os, enum rang::fg    value );
-  	void setWinColorNative( ostream &os, enum rang::bgB   value );
-  	void setWinColorNative( ostream &os, enum rang::fgB   value );
+    void setWinColorNative( ostream & os, enum rang::style value );
+    void setWinColorNative( ostream & os, enum rang::bg value );
+    void setWinColorNative( ostream & os, enum rang::fg value );
+    void setWinColorNative( ostream & os, enum rang::bgB value );
+    void setWinColorNative( ostream & os, enum rang::fgB value );
 
-  	template <typename T>
-    inline
-    enableStd<T>
-    setColor( ostream &os, T const value ) {
-      if (winTermMode() == winTerm::Auto) {
-        if (supportsAnsi(os.rdbuf())) {
-          setWinColorAnsi(os, value);
-        } else {
-          setWinColorNative(os, value);
+    template <typename T>
+    inline enableStd<T>
+    setColor( ostream & os, T const value )
+    {
+      if ( winTermMode() == winTerm::Auto )
+      {
+        if ( supportsAnsi( os.rdbuf() ) ) { setWinColorAnsi( os, value ); }
+        else
+        {
+          setWinColorNative( os, value );
         }
-      } else if (winTermMode() == winTerm::Ansi) {
-        setWinColorAnsi(os, value);
-      } else {
-        setWinColorNative(os, value);
+      }
+      else if ( winTermMode() == winTerm::Ansi ) { setWinColorAnsi( os, value ); }
+      else
+      {
+        setWinColorNative( os, value );
       }
       return os;
     }
-    #else
+#else
     template <typename T>
-    inline
-    enableStd<T>
-    setColor( ostream &os, T const value ) {
-      return os << "\033[" << static_cast<int>(value) << "m";
+    inline enableStd<T>
+    setColor( ostream & os, T const value )
+    {
+      return os << "\033[" << static_cast<int>( value ) << "m";
     }
-    #endif
+#endif
 
   }  // namespace rang_implementation
 
   template <typename T>
-  inline
-  rang_implementation::enableStd<T>
-  operator << ( ostream &os, T const value ) {
+  inline rang_implementation::enableStd<T>
+  operator<<( ostream & os, T const value )
+  {
     control const option = rang_implementation::controlMode();
-    switch (option) {
+    switch ( option )
+    {
       case control::Auto:
-        return rang_implementation::supportsColor()
-               && rang_implementation::isTerminal(os.rdbuf())
-               ? rang_implementation::setColor(os, value)
-               : os;
+        return rang_implementation::supportsColor() && rang_implementation::isTerminal( os.rdbuf() )
+                   ? rang_implementation::setColor( os, value )
+                   : os;
       case control::Force:
-        return rang_implementation::setColor(os, value);
+        return rang_implementation::setColor( os, value );
       default:
         return os;
     }
   }
 
-  inline
-  void
-  setWinTermMode( rang::winTerm const value ) noexcept {
+  inline void
+  setWinTermMode( rang::winTerm const value ) noexcept
+  {
     rang_implementation::winTermMode() = value;
   }
 
-  inline
-  void
-  setControlMode( control const value ) noexcept {
+  inline void
+  setControlMode( control const value ) noexcept
+  {
     rang_implementation::controlMode() = value;
   }
-  #endif
+#endif
 
 }  // namespace rang
 

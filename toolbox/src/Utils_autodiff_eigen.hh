@@ -1,6 +1,6 @@
 /*--------------------------------------------------------------------------*\
  |                                                                          |
- |  Copyright (C) 2017                                                      |
+ |  Copyright (C) 2025                                                      |
  |                                                                          |
  |         , __                 , __                                        |
  |        /|/  \               /|/  \                                       |
@@ -28,8 +28,8 @@
 #define UTILS_AUTODIFF_dot_HH
 
 #include "Utils.hh"
-#include "Utils_fmt.hh"
 #include "Utils/3rd/autodiff/forward/dual/eigen.hpp"
+#include "Utils_fmt.hh"
 
 #endif
 

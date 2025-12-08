@@ -23,7 +23,7 @@
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
 
-#if defined(__llvm__) || defined(__clang__)
+#if defined( __llvm__ ) || defined( __clang__ )
 #pragma clang diagnostic ignored "-Wexit-time-destructors"
 #pragma clang diagnostic ignored "-Wduplicate-enum"
 #pragma clang diagnostic ignored "-Wpoison-system-directories"
@@ -32,7 +32,8 @@
 #include "Utils.hh"
 #include "Utils_fmt.hh"
 
-namespace Utils {
+namespace Utils
+{
 
   //============================================================================
   /*    __                       _ _   _       _   _
@@ -43,18 +44,18 @@ namespace Utils {
   */
   //! check if the vector `pv` os size `DIM` contains only regular floats
   bool
-  found_NaN( double const * pv, int const DIM ) {
-    for ( int i{0}; i < DIM; ++i )
-      if ( !is_finite(pv[i]) )
-        return true;
+  found_NaN( double const * pv, int const DIM )
+  {
+    for ( int i{ 0 }; i < DIM; ++i )
+      if ( !is_finite( pv[i] ) ) return true;
     return false;
   }
 
   bool
-  found_NaN( float const * pv, int const DIM ) {
-    for ( int i{0}; i < DIM; ++i )
-      if ( !is_finite(pv[i]) )
-        return true;
+  found_NaN( float const * pv, int const DIM )
+  {
+    for ( int i{ 0 }; i < DIM; ++i )
+      if ( !is_finite( pv[i] ) ) return true;
     return false;
   }
 
@@ -65,65 +66,48 @@ namespace Utils {
   //  \___|_| |_|\___|\___|_|\_\_| \_|\__,_|_| \_|
   */
 
-  #define LINE_LINE_LINE_LINE "--------------------------------------------------------------------------------"
+#define LINE_LINE_LINE_LINE                                                                                            \
+  "--------------------------------------------------------------------------"                                         \
+  "------"
 
-  //! check if the vector `pv` os size `DIM` contains only regular floats. If not an error is issued
+  //! check if the vector `pv` os size `DIM` contains only regular floats. If
+  //! not an error is issued
   void
-  check_NaN(
-    double      const pv[],
-    string_view const v_name,
-    int         const DIM,
-    int         const line,
-    string_view const file
-  ) {
-    for ( int i{0}; i < DIM; ++i ) {
-      if ( is_infinite(pv[i]) ) {
-        UTILS_ERROR(
-          "{}\n({}):{}) found Infinity at {}[{}]\n{}\n",
-          LINE_LINE_LINE_LINE,
-          Utils::get_basename(file), line, v_name, i,
-          LINE_LINE_LINE_LINE
-        );
+  check_NaN( double const pv[], string_view const v_name, int const DIM, int const line, string_view const file )
+  {
+    for ( int i{ 0 }; i < DIM; ++i )
+    {
+      if ( is_infinite( pv[i] ) )
+      {
+        UTILS_ERROR( "{}\n({}):{}) found Infinity at {}[{}]\n{}\n", LINE_LINE_LINE_LINE, Utils::get_basename( file ),
+                     line, v_name, i, LINE_LINE_LINE_LINE );
       }
-      if ( is_NaN(pv[i]) ) {
-        UTILS_ERROR(
-          "{}\n({}):{}) found NaN at {}[{}]\n{}\n",
-          LINE_LINE_LINE_LINE,
-          Utils::get_basename(file), line, v_name, i,
-          LINE_LINE_LINE_LINE
-        );
+      if ( is_NaN( pv[i] ) )
+      {
+        UTILS_ERROR( "{}\n({}):{}) found NaN at {}[{}]\n{}\n", LINE_LINE_LINE_LINE, Utils::get_basename( file ), line,
+                     v_name, i, LINE_LINE_LINE_LINE );
       }
     }
   }
 
   void
-  check_NaN(
-    float       const pv[],
-    string_view const v_name,
-    int         const DIM,
-    int         const line,
-    string_view const file
-  ) {
-    for ( int i = 0; i < DIM; ++i ) {
-      if ( is_infinite(pv[i]) ) {
-        UTILS_ERROR(
-          "{}\n({}):{}) found Infinity at {}[{}]\n{}\n",
-          LINE_LINE_LINE_LINE,
-          Utils::get_basename(file), line, v_name, i,
-          LINE_LINE_LINE_LINE
-        );
+  check_NaN( float const pv[], string_view const v_name, int const DIM, int const line, string_view const file )
+  {
+    for ( int i = 0; i < DIM; ++i )
+    {
+      if ( is_infinite( pv[i] ) )
+      {
+        UTILS_ERROR( "{}\n({}):{}) found Infinity at {}[{}]\n{}\n", LINE_LINE_LINE_LINE, Utils::get_basename( file ),
+                     line, v_name, i, LINE_LINE_LINE_LINE );
       }
-      if ( is_NaN(pv[i]) ) {
-        UTILS_ERROR(
-          "{}\n({}):{}) found NaN at {}[{}]\n{}\n",
-          LINE_LINE_LINE_LINE,
-          Utils::get_basename(file), line, v_name, i,
-          LINE_LINE_LINE_LINE
-        );
+      if ( is_NaN( pv[i] ) )
+      {
+        UTILS_ERROR( "{}\n({}):{}) found NaN at {}[{}]\n{}\n", LINE_LINE_LINE_LINE, Utils::get_basename( file ), line,
+                     v_name, i, LINE_LINE_LINE_LINE );
       }
     }
   }
-}
+}  // namespace Utils
 
 #endif
 

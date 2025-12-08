@@ -1,40 +1,59 @@
+/*--------------------------------------------------------------------------*\
+ |                                                                          |
+ |  Copyright (C) 2025                                                      |
+ |                                                                          |
+ |         , __                 , __                                        |
+ |        /|/  \               /|/  \                                       |
+ |         | __/ _   ,_         | __/ _   ,_                                |
+ |         |   \|/  /  |  |   | |   \|/  /  |  |   |                        |
+ |         |(__/|__/   |_/ \_/|/|(__/|__/   |_/ \_/|/                       |
+ |                           /|                   /|                        |
+ |                           \|                   \|                        |
+ |                                                                          |
+ |      Enrico Bertolazzi                                                   |
+ |      Dipartimento di Ingegneria Industriale                              |
+ |      Università degli Studi di Trento                                    |
+ |      email: enrico.bertolazzi@unitn.it                                   |
+ |                                                                          |
+\*--------------------------------------------------------------------------*/
+
+#pragma once
+
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
 
-//#include <stdio.h>
-#include <string.h>
-#include <net/if_dl.h>
-#include <net/if.h>
-#include <ifaddrs.h>
-#include <netdb.h>
+// #include <stdio.h>
 #include <cstdio>
-#include <unistd.h>
-
-#include <sys/types.h>
-#include <sys/stat.h>
-
-#include <fstream>
 #include <dirent.h>
-
+#include <fstream>
+#include <ifaddrs.h>
 #include <mach-o/dyld.h>
-
-#include <string>
-#include <vector>
 #include <map>
+#include <net/if.h>
+#include <net/if_dl.h>
+#include <netdb.h>
+#include <string.h>
+#include <string>
+#include <sys/stat.h>
+#include <sys/types.h>
+#include <unistd.h>
+#include <vector>
 
-namespace Utils {
+namespace Utils
+{
 
+  using std::map;
   using std::string;
   using std::vector;
-  using std::map;
 
   /*
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   */
   bool
-  get_environment( string_view ename, string & res ) {
-    char const * RES = getenv(ename.data());
+  get_environment( string_view ename, string & res )
+  {
+    char const * RES = getenv( ename.data() );
     if ( RES == nullptr ) return false;
-    res = string{RES};
+    res = string{ RES };
     return true;
   }
 
@@ -42,7 +61,8 @@ namespace Utils {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   */
   void
-  set_environment( string_view ename, string_view newval, bool overwrite ) {
+  set_environment( string_view ename, string_view newval, bool overwrite )
+  {
     int res = setenv( ename.data(), newval.data(), overwrite ? 1 : 0 );
     UTILS_ASSERT( res == 0, "set_environment({},{},{}) faled\n", ename, newval, overwrite );
   }
@@ -51,43 +71,41 @@ namespace Utils {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   */
   string
-  get_host_name() {
+  get_host_name()
+  {
     char szHostName[1024];
     bool ok = gethostname( szHostName, 1024 ) == 0;
-    if ( ok ) return string{szHostName};
-    return string{""};
+    if ( ok ) return string{ szHostName };
+    return string{ "" };
   }
 
   /*
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   */
   void
-  get_MAC_address( map<string,string> & addr ) {
+  get_MAC_address( map<string, string> & addr )
+  {
     struct ifaddrs *ifap, *ifaptr;
 
-    int ier = getifaddrs(&ifap);
-    UTILS_ASSERT(
-      ier >= 0,
-      "No network interface found for licence managing, getifaddrs return = {}\n", ier
-    );
+    int ier = getifaddrs( &ifap );
+    UTILS_ASSERT( ier >= 0,
+                  "No network interface found for licence managing, getifaddrs "
+                  "return = {}\n",
+                  ier );
 
     addr.clear();
-    for ( ifaptr = ifap;
-          ifaptr != nullptr;
-          ifaptr = ifaptr->ifa_next ) {
-      if ( strncmp( "en", ifaptr->ifa_name, 2 ) == 0 &&
-           ifaptr->ifa_addr->sa_family == AF_LINK ) {
-        char saddr[100];
-        struct sockaddr_dl * tmp = reinterpret_cast<struct sockaddr_dl *>((ifaptr)->ifa_addr);
-        unsigned char * ptr = reinterpret_cast<unsigned char *>(LLADDR(tmp));
-        snprintf(
-          saddr, 100, "%02x:%02x:%02x:%02x:%02x:%02x",
-          ptr[0], ptr[1], ptr[2], ptr[3], ptr[4], ptr[5]
-        );
+    for ( ifaptr = ifap; ifaptr != nullptr; ifaptr = ifaptr->ifa_next )
+    {
+      if ( strncmp( "en", ifaptr->ifa_name, 2 ) == 0 && ifaptr->ifa_addr->sa_family == AF_LINK )
+      {
+        char                 saddr[100];
+        struct sockaddr_dl * tmp = reinterpret_cast<struct sockaddr_dl *>( ( ifaptr )->ifa_addr );
+        unsigned char *      ptr = reinterpret_cast<unsigned char *>( LLADDR( tmp ) );
+        snprintf( saddr, 100, "%02x:%02x:%02x:%02x:%02x:%02x", ptr[0], ptr[1], ptr[2], ptr[3], ptr[4], ptr[5] );
         addr[ifaptr->ifa_name] = saddr;
       }
     }
-    freeifaddrs(ifap);
+    freeifaddrs( ifap );
   }
 
   /*
@@ -95,23 +113,28 @@ namespace Utils {
   */
   // Fetches the IP address
   void
-  get_IP_address( vector<string> & addr ) {
-    addr.clear ();
+  get_IP_address( vector<string> & addr )
+  {
+    addr.clear();
     char szHostName[128];
-    if( gethostname(szHostName, 128) == 0 ) {
+    if ( gethostname( szHostName, 128 ) == 0 )
+    {
       // Get host adresses
       struct hostent * pHost;
-      pHost = gethostbyname(szHostName);
+      pHost = gethostbyname( szHostName );
 
-      for( int i = 0; pHost!= nullptr && pHost->h_addr_list[i]!= nullptr; i++ ) {
-        unsigned char * h = reinterpret_cast<unsigned char*>(pHost->h_addr_list[i]);
-        string str{""};
-        for( int j = 0; j < pHost->h_length; j++ ) {
-          if( j > 0 ) str += '.';
-          str += fmt::format("{}",h[j]);
+      for ( int i = 0; pHost != nullptr && pHost->h_addr_list[i] != nullptr; i++ )
+      {
+        unsigned char * h = reinterpret_cast<unsigned char *>( pHost->h_addr_list[i] );
+        string          str{ "" };
+        for ( int j = 0; j < pHost->h_length; j++ )
+        {
+          if ( j > 0 ) str += '.';
+          str += fmt::format( "{}", h[j] );
         }
         addr.emplace_back( str );
-        // str now contains one local IP address - do whatever you want to do with it (probably add it to a list)
+        // str now contains one local IP address - do whatever you want to do
+        // with it (probably add it to a list)
       }
     }
   }
@@ -120,54 +143,60 @@ namespace Utils {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   */
   string
-  get_user_name() {
-    char const * USER = getenv("USER");
+  get_user_name()
+  {
+    char const * USER = getenv( "USER" );
     UTILS_ASSERT( USER != nullptr, "get_user_name, undefined enviroment `USER`" );
-    return string{USER};
+    return string{ USER };
   }
 
   /*
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   */
   string
-  get_home_directory() {
-    char const * HOME = getenv("HOME");
+  get_home_directory()
+  {
+    char const * HOME = getenv( "HOME" );
     UTILS_ASSERT( HOME != nullptr, "get_home_directory, undefined enviroment `HOME`" );
-    return string{HOME};
+    return string{ HOME };
   }
 
   /*
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   */
   std::string
-  get_executable_path_name() {
+  get_executable_path_name()
+  {
     uint32_t pathNameSize = 0;
     _NSGetExecutablePath( nullptr, &pathNameSize );
-    std::vector<char> res(pathNameSize+1);
-    std::fill(res.begin(),res.end(),'\0');
-    if ( _NSGetExecutablePath( res.data(), &pathNameSize) != 0 ) return "NOT FOUND";
-    return std::string{res.data()};
+    std::vector<char> res( pathNameSize + 1 );
+    std::fill( res.begin(), res.end(), '\0' );
+    if ( _NSGetExecutablePath( res.data(), &pathNameSize ) != 0 ) return "NOT FOUND";
+    return std::string{ res.data() };
   }
 
   /*
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   */
   bool
-  check_if_file_exists( string_view fname ) {
+  check_if_file_exists( string_view fname )
+  {
     struct stat buffer;
-    return (stat (fname.data(), &buffer) == 0);
+    return ( stat( fname.data(), &buffer ) == 0 );
   }
 
   /*
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   */
   bool
-  check_if_dir_exists( string_view dirname ) {
-    DIR *pDir = opendir(dirname.data());
-    bool bExists = false;
-    if ( pDir != nullptr ) {
+  check_if_dir_exists( string_view dirname )
+  {
+    DIR * pDir    = opendir( dirname.data() );
+    bool  bExists = false;
+    if ( pDir != nullptr )
+    {
       bExists = true;
-      (void) closedir (pDir);
+      (void) closedir( pDir );
     }
     return bExists;
   }
@@ -176,12 +205,13 @@ namespace Utils {
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   */
   bool
-  make_directory( string_view dirname, unsigned mode ) {
+  make_directory( string_view dirname, unsigned mode )
+  {
     bool ok = check_if_dir_exists( dirname );
-    if ( !ok ) ok = mkdir( dirname.data(), mode_t(mode) ) == 0;
+    if ( !ok ) ok = mkdir( dirname.data(), mode_t( mode ) ) == 0;
     return ok;
   }
 
-}
+}  // namespace Utils
 
 #endif

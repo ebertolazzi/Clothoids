@@ -19,9 +19,10 @@
 
 #include "Clothoids.hh"
 #include "Clothoids_fmt.hh"
-#include "Utils_LBFGS.hh"
-#include "Utils_MADS.hh"
-#include "Utils_NelderMead.hh"
+#include "Utils_minimize_LBFGS.hh"
+#include "Utils_minimize_BOBYQA.hh"
+#include "Utils_minimize_MADS.hh"
+#include "Utils_minimize_NelderMead.hh"
 
 
 #ifdef __GNUC__
@@ -44,6 +45,59 @@ namespace G2lib {
     if (a * b <= 0) return 0;
     return (a > 0) ? std::min(a, b) : std::max(a, b);
   };
+
+  #if 1
+  bool
+  ClothoidList::build_G2_with_target(
+    integer   const n,
+    real_type const x[],
+    real_type const y[],
+    real_type const theta[],
+    real_type const w_min[],
+    real_type const w_max[],
+    real_type const theta_init,
+    real_type const theta_end,
+    std::function<real_type( ClothoidList const & lst )> const & target
+  ) {
+    using Vector    = Eigen::Matrix<real_type, Eigen::Dynamic, 1>;
+    using OPTIMIZER = Utils::BOBYQA_minimizer<real_type>;
+
+    OPTIMIZER minimizer;
+
+    Vector nx( n ), ny( n );
+    Eigen::Map<Vector const> THETA( theta, n );
+    Eigen::Map<Vector const> X0( x, n );
+    Eigen::Map<Vector const> Y0( y, n );
+    Eigen::Map<Vector const> WMAX( w_max, n );
+    Eigen::Map<Vector const> WMIN( w_min, n );
+    nx = -THETA.array().sin();
+    ny =  THETA.array().cos();
+    real_type w_h{ (WMAX-WMIN).maxCoeff()*h_fraction };
+    
+    auto TARGET = [&] (Vector const & offs) -> real_type {
+      // Prepara X, Y originali
+      Vector X = X0 + offs.cwiseProduct(nx);
+      Vector Y = Y0 + offs.cwiseProduct(ny);
+
+      // Clotoide centrale
+      ClothoidList tmp("tmp");
+      tmp.build_G2(n, X.data(), Y.data(), theta_init, theta_end);
+      return target(tmp);
+    };
+
+    Vector offs(n);
+    offs.setZero();
+
+    auto iter_data = minimizer.minimize( offs.size(), 2*offs.size()+1, TARGET, offs, WMIN, WMAX );
+      Vector X( n ), Y( n );
+      X = X0.array() + offs.array() * nx.array();
+      Y = Y0.array() + offs.array() * ny.array();
+      // costruisco clotoide G2
+      bool ok = this->build_G2( n, X.data(), Y.data(), theta_init, theta_end );
+    return ok;
+  }
+
+  #else
 
   bool
   ClothoidList::build_G2_with_target(
@@ -120,7 +174,7 @@ namespace G2lib {
           tmp_p.build_G2(n, Xp.data(), Yp.data(), theta_init, theta_end);
           real_type vp = target(tmp_p);
 
-          // – perturbazione
+          // perturbazione
           Xm[i] -= w_h * nx[i];
           Ym[i] -= w_h * ny[i];
 
@@ -135,6 +189,39 @@ namespace G2lib {
 
       // Aspetta tutti i thread
       for (auto& t : tasks) t.get();
+
+      return value;
+    };
+
+    auto TARGET_old = [ &n, &X0, &Y0, &nx, &ny, &target, &w_h, &theta_init, &theta_end]( Vector const & offs, Vector * grad ) -> real_type {
+      // costruisco punti offsettati
+      Vector X( n ), Y( n );
+      X = X0.array() + offs.array() * nx.array();
+      Y = Y0.array() + offs.array() * ny.array();
+      // costruisco clotoide G2
+      ClothoidList tmp("temporary");
+      ClothoidList tmp1("temporary");
+      ClothoidList tmp2("temporary");
+      bool ok{ tmp.build_G2( n, X.data(), Y.data(), theta_init, theta_end ) };
+
+      real_type value{ target(tmp) };
+      if ( grad != nullptr ) {
+        for ( integer i{0}; i < n; ++i ) {
+          real_type x_save{ X.coeff(i) };
+          real_type y_save{ Y.coeff(i) };
+          real_type nx_save{ nx.coeff(i) };
+          real_type ny_save{ ny.coeff(i) };
+          X.coeffRef(i) = x_save + w_h * nx_save;
+          Y.coeffRef(i) = y_save + w_h * ny_save;
+          ok = tmp1.build_G2( n, X.data(), Y.data(), theta_init, theta_end );
+          real_type vp{ target(tmp1) };
+          X.coeffRef(i) = x_save - w_h * nx_save;
+          Y.coeffRef(i) = y_save - w_h * ny_save;
+          ok = tmp2.build_G2( n, X.data(), Y.data(), theta_init, theta_end );
+          real_type vm{ target(tmp2) };
+          grad->coeffRef(i) = (vp-vm)/(2*w_h); // minmod( vp - value, value - vm)/w_h;
+        }
+      }
 
       return value;
     };
@@ -166,6 +253,8 @@ namespace G2lib {
     //}
     return ok;
   }
+
+  #endif
 
   bool
   ClothoidList::build_G2_cyclic_with_target(

@@ -21,7 +21,8 @@
 // file: ThreadPool2.hxx
 //
 
-namespace Utils {
+namespace Utils
+{
 
   /*!
    * \addtogroup THREAD
@@ -40,20 +41,21 @@ namespace Utils {
   //! \brief Manages a pool of worker threads for concurrent task execution.
   //!
   //! The `ThreadPool2` class is derived from `ThreadPoolBase` and provides
-  //! functionality to execute tasks concurrently using a pool of worker threads.
-  //! Based on tghe code from https://github.com/nbsdx/ThreadPool/tree/master
+  //! functionality to execute tasks concurrently using a pool of worker
+  //! threads. Based on tghe code from
+  //! https://github.com/nbsdx/ThreadPool/tree/master
   //!
-  class ThreadPool2 : public ThreadPoolBase {
+  class ThreadPool2 : public ThreadPoolBase
+  {
+    using TYPE = std::function<void( void )>;
 
-    using TYPE = std::function<void(void)>;
+    std::atomic_int  m_jobs_left{ 0 };
+    std::atomic_bool m_running{ true };
 
-    std::atomic_int          m_jobs_left{0};
-    std::atomic_bool         m_running{true};
-
-    std::condition_variable  m_job_available_var;
-    std::condition_variable  m_wait_var;
-    std::mutex               m_wait_mutex;
-    std::mutex               m_queue_mutex;
+    std::condition_variable m_job_available_var;
+    std::condition_variable m_wait_var;
+    std::mutex              m_wait_mutex;
+    std::mutex              m_queue_mutex;
 
     std::list<TYPE>          m_queue;
     std::vector<std::thread> m_threads;
@@ -63,13 +65,15 @@ namespace Utils {
      *  Notify the main thread that a job has completed.
      */
     void
-    Task() {
+    Task()
+    {
       TYPE job;
-      while( m_running ) {
+      while ( m_running )
+      {
         {
           std::unique_lock<std::mutex> lock( m_queue_mutex );
           while ( m_queue.empty() ) m_job_available_var.wait( lock );
-          job = std::move(m_queue.front());
+          job = std::move( m_queue.front() );
           m_queue.pop_front();
         }
         job();
@@ -81,28 +85,30 @@ namespace Utils {
     }
 
     void
-    close_all() { 
+    close_all()
+    {
       wait();
       // note that we're done, and wake up any thread that's
       // waiting for a new job
       m_running = false;
-      for( unsigned i{unsigned(m_threads.size())}; i > 0; --i ) exec( [](){} );
-      for( auto & t : m_threads ) if( t.joinable() ) t.join();
+      for ( unsigned i{ unsigned( m_threads.size() ) }; i > 0; --i ) exec( []() {} );
+      for ( auto & t : m_threads )
+        if ( t.joinable() ) t.join();
     }
 
   public:
-
     //!
     //! \brief Constructs a new ThreadPool1 with a specified number of threads.
     //!
-    //! \param nthread Number of threads to create (default: hardware concurrency - 1).
+    //! \param nthread Number of threads to create (default: hardware
+    //! concurrency - 1).
     //!
-    explicit
-    ThreadPool2( unsigned nthread = std::max( unsigned(1), unsigned(std::thread::hardware_concurrency()-1) )) {
+    explicit ThreadPool2( unsigned nthread = std::max( unsigned( 1 ),
+                                                       unsigned( std::thread::hardware_concurrency() - 1 ) ) )
+    {
       m_threads.clear();
-      m_threads.reserve(nthread);
-      for( unsigned i{0}; i < nthread; ++i )
-        m_threads.emplace_back( [this]{ this->Task(); } );
+      m_threads.reserve( nthread );
+      for ( unsigned i{ 0 }; i < nthread; ++i ) m_threads.emplace_back( [this] { this->Task(); } );
     }
 
     //!
@@ -116,15 +122,17 @@ namespace Utils {
     //! \param job The function to be executed.
     //!
     void
-    exec( FUN && fun ) override {
+    exec( FUN && fun ) override
+    {
       std::unique_lock<std::mutex> lock( m_queue_mutex );
       ++m_jobs_left;
-      m_queue.emplace_back( std::move(fun) );
+      m_queue.emplace_back( std::move( fun ) );
       m_job_available_var.notify_one();
     }
 
     void
-    wait() override {
+    wait() override
+    {
       std::unique_lock<std::mutex> lock( m_wait_mutex );
       while ( m_jobs_left > 0 ) m_wait_var.wait( lock );
     }
@@ -134,17 +142,28 @@ namespace Utils {
     //!
     //! \return The number of threads.
     //!
-    unsigned thread_count() const override { return unsigned(m_threads.size()); }
+    unsigned
+    thread_count() const override
+    {
+      return unsigned( m_threads.size() );
+    }
 
-    static char const * Name() { return "ThreadPool2"; } //!< Returns the name of the thread pool
+    static char const *
+    Name()
+    {
+      return "ThreadPool2";
+    }  //!< Returns the name of the thread pool
 
-    char const * name() const override { return Name(); }
-
+    char const *
+    name() const override
+    {
+      return Name();
+    }
   };
 
   /*! @} */
 
-}
+}  // namespace Utils
 
 //
 // eof: ThreadPool2.hxx

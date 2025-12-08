@@ -16,6 +16,7 @@
  |      email: enrico.bertolazzi@unitn.it                                   |
  |                                                                          |
 \*--------------------------------------------------------------------------*/
+
 #pragma once
 
 #ifndef UTILS_CPU_INFO_dot_HH
@@ -23,12 +24,13 @@
 
 #include <string>
 
-namespace Utils {
+namespace Utils
+{
 
-  #ifndef DOXYGEN_SHOULD_SKIP_THIS
+#ifndef DOXYGEN_SHOULD_SKIP_THIS
   using std::string;
   void cpuId( unsigned long CPUInfo[4], unsigned long l );
-  #endif
+#endif
 
   /*!
    * Get info of Intel CPU
@@ -47,39 +49,36 @@ namespace Utils {
    * \param[out] b3Dnow    booelan, support 3Dnow instruction set
    * \param[out] b3DnowExt booelan, support 3DnowExt instruction set
    */
-  void
-  info(
-    bool & bMMX,
-    bool & bMMXplus,
-    bool & bSSE,
-    bool & bSSE2,
-    bool & bSSE3,
-    bool & bSSSE3,
-    bool & bSSE41,
-    bool & bSSE42,
-    bool & bSSE4a,
-    bool & bSSE5,
-    bool & b3Dnow,
-    bool & b3DnowExt
-  );
+  void info( bool & bMMX,
+             bool & bMMXplus,
+             bool & bSSE,
+             bool & bSSE2,
+             bool & bSSE3,
+             bool & bSSSE3,
+             bool & bSSE41,
+             bool & bSSE42,
+             bool & bSSE4a,
+             bool & bSSE5,
+             bool & b3Dnow,
+             bool & b3DnowExt );
 
-  bool has_MMX();      //!< check if CPU support MMX instruction set
-  bool has_MMXplus();  //!< check if CPU support MMXplus instruction set
-  bool has_SSE();      //!< check if CPU support SSE instruction set
-  bool has_SSE2();     //!< check if CPU support SSE2 instruction set
-  bool has_SSE3();     //!< check if CPU support SSE3 instruction set
-  bool has_SSSE3();    //!< check if CPU support SSSE3 instruction set
-  bool has_SSE41();    //!< check if CPU support SSE41 instruction set
-  bool has_SSE42();    //!< check if CPU support SSE42 instruction set
-  bool has_SSE4a();    //!< check if CPU support SSE4a instruction set
-  bool has_SSE5();     //!< check if CPU support SSE5 instruction set
-  bool has_3Dnow();    //!< check if CPU support 3Dnow instruction set
-  bool has_3DnowExt(); //!< check if CPU support 3DnowExt instruction set
+  bool has_MMX();       //!< check if CPU support MMX instruction set
+  bool has_MMXplus();   //!< check if CPU support MMXplus instruction set
+  bool has_SSE();       //!< check if CPU support SSE instruction set
+  bool has_SSE2();      //!< check if CPU support SSE2 instruction set
+  bool has_SSE3();      //!< check if CPU support SSE3 instruction set
+  bool has_SSSE3();     //!< check if CPU support SSSE3 instruction set
+  bool has_SSE41();     //!< check if CPU support SSE41 instruction set
+  bool has_SSE42();     //!< check if CPU support SSE42 instruction set
+  bool has_SSE4a();     //!< check if CPU support SSE4a instruction set
+  bool has_SSE5();      //!< check if CPU support SSE5 instruction set
+  bool has_3Dnow();     //!< check if CPU support 3Dnow instruction set
+  bool has_3DnowExt();  //!< check if CPU support 3DnowExt instruction set
 
   //!
   //! Return a string describing the CPU.
   //!
   string cpuInfo();
-}
+}  // namespace Utils
 
 #endif

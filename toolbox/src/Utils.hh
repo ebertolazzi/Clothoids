@@ -27,7 +27,7 @@
 #ifndef UTILS_dot_HH
 #define UTILS_dot_HH
 
-#if defined(__llvm__) || defined(__clang__)
+#if defined( __llvm__ ) || defined( __clang__ )
 #pragma clang diagnostic ignored "-Wc++98-compat-pedantic"
 #pragma clang diagnostic ignored "-Wc++98-compat"
 #pragma clang diagnostic ignored "-Wdocumentation-unknown-command"
@@ -55,15 +55,15 @@
 #endif
 
 #ifdef _MSC_VER
-  #pragma warning ( push )
-  #pragma warning ( disable : 4244 )
-  #pragma warning ( disable : 4127 )
+#pragma warning( push )
+#pragma warning( disable : 4244 )
+#pragma warning( disable : 4127 )
 #endif
 
 #include "Utils/Utils.hxx"
 
 #ifdef _MSC_VER
-  #pragma warning ( pop )
+#pragma warning( pop )
 #endif
 
 #ifdef __clang__

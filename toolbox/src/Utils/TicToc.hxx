@@ -25,13 +25,14 @@
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
 
 #ifndef UTILS_OS_WINDOWS
-  #include <chrono>
-  #include <thread>
+#include <chrono>
+#include <thread>
 #endif
 
 #endif
 
-namespace Utils {
+namespace Utils
+{
 
   //!
   //! \brief A class for timing code execution.
@@ -60,18 +61,17 @@ namespace Utils {
   //!
 
 #ifdef UTILS_OS_WINDOWS
-  class TicToc {
-
+  class TicToc
+  {
     using real_type = double;
-    int64_t   m_frequency{0};   // ticks per second
-    int64_t   m_t1{0}, m_t2{0};    // ticks
-    real_type m_elapsed_time{0};
+    int64_t   m_frequency{ 0 };      // ticks per second
+    int64_t   m_t1{ 0 }, m_t2{ 0 };  // ticks
+    real_type m_elapsed_time{ 0 };
 
-    TicToc( TicToc const & ) = delete;
-    TicToc const & operator = ( TicToc const & ) const = delete;
+    TicToc( TicToc const & )                         = delete;
+    TicToc const & operator=( TicToc const & ) const = delete;
 
   public:
-
     //!
     //! \brief Constructs a TicToc object and starts the timer.
     //!
@@ -84,15 +84,16 @@ namespace Utils {
     //!
     //! \brief Start timing.
     //!
-    //! This function captures the current time point, marking the start of the timing.
+    //! This function captures the current time point, marking the start of the
+    //! timing.
     //!
     void tic();
 
     //!
     //! \brief End timing.
     //!
-    //! This function captures the current time point, marking the end of the timing
-    //! and calculates the elapsed time.
+    //! This function captures the current time point, marking the end of the
+    //! timing and calculates the elapsed time.
     //!
     void toc();
 
@@ -101,29 +102,44 @@ namespace Utils {
     //!
     //! \return The elapsed time in seconds as a double.
     //!
-    real_type elapsed_s()  const { return 1e-3*m_elapsed_time; }
+    real_type
+    elapsed_s() const
+    {
+      return 1e-3 * m_elapsed_time;
+    }
 
     //!
     //! \brief Return elapsed time (between tic-toc) in milliseconds.
     //!
     //! \return The elapsed time in milliseconds as a double.
     //!
-    real_type elapsed_ms() const { return m_elapsed_time; }
+    real_type
+    elapsed_ms() const
+    {
+      return m_elapsed_time;
+    }
 
     //!
     //! \brief Return elapsed time (between tic-toc) in microseconds.
     //!
     //! \return The elapsed time in microseconds as a double.
     //!
-    real_type elapsed_mus() const { return 1000*m_elapsed_time; }
+    real_type
+    elapsed_mus() const
+    {
+      return 1000 * m_elapsed_time;
+    }
 
     //!
     //! \brief Return elapsed time (between tic-toc) in nanoseconds.
     //!
     //! \return The elapsed time in nanoseconds as a double.
     //!
-    real_type elapsed_ns() const { return 1e6*m_elapsed_time; }
-
+    real_type
+    elapsed_ns() const
+    {
+      return 1e6 * m_elapsed_time;
+    }
   };
 
   //!
@@ -167,8 +183,8 @@ namespace Utils {
   void sleep_for_nanoseconds( unsigned ns );
 
 #else
-  class TicToc {
-
+  class TicToc
+  {
     using real_type          = double;
     using clock              = std::chrono::high_resolution_clock;
     using elapsed_resolution = std::chrono::microseconds;
@@ -176,12 +192,11 @@ namespace Utils {
     clock::time_point m_start_time;
     clock::time_point m_stop_time;
 
-    elapsed_resolution m_elapsed_time{0};
+    elapsed_resolution m_elapsed_time{ 0 };
 
-   public:
-
-    TicToc( TicToc const & ) = delete;
-    TicToc const & operator = ( TicToc const & ) const = delete;
+  public:
+    TicToc( TicToc const & )                         = delete;
+    TicToc const & operator=( TicToc const & ) const = delete;
 
     //!
     //! \brief Constructs a TicToc object and starts the timer.
@@ -196,22 +211,26 @@ namespace Utils {
     //!
     //! \brief Start timing.
     //!
-    //! This function captures the current time point, marking the start of the timing.
+    //! This function captures the current time point, marking the start of the
+    //! timing.
     //!
     void
     tic()
-    { m_start_time = clock::now(); }
+    {
+      m_start_time = clock::now();
+    }
 
     //!
     //! \brief End timing.
     //!
-    //! This function captures the current time point, marking the end of the timing
-    //! and calculates the elapsed time.
+    //! This function captures the current time point, marking the end of the
+    //! timing and calculates the elapsed time.
     //!
     void
-    toc() {
+    toc()
+    {
       m_stop_time    = clock::now();
-      m_elapsed_time = std::chrono::duration_cast<elapsed_resolution>(m_stop_time - m_start_time);
+      m_elapsed_time = std::chrono::duration_cast<elapsed_resolution>( m_stop_time - m_start_time );
     }
 
     //!
@@ -219,28 +238,44 @@ namespace Utils {
     //!
     //! \return The elapsed time in seconds as a double.
     //!
-    real_type elapsed_s() const { return real_type(1e-6*m_elapsed_time.count()); }
+    real_type
+    elapsed_s() const
+    {
+      return real_type( 1e-6 * m_elapsed_time.count() );
+    }
 
     //!
     //! \brief Return elapsed time (between tic-toc) in milliseconds.
     //!
     //! \return The elapsed time in milliseconds as a double.
     //!
-    real_type elapsed_ms() const { return real_type(1e-3*m_elapsed_time.count()); }
+    real_type
+    elapsed_ms() const
+    {
+      return real_type( 1e-3 * m_elapsed_time.count() );
+    }
 
     //!
     //! \brief Return elapsed time (between tic-toc) in microseconds.
     //!
     //! \return The elapsed time in microseconds as a double.
     //!
-    real_type elapsed_mus() const { return real_type(m_elapsed_time.count()); }
+    real_type
+    elapsed_mus() const
+    {
+      return real_type( m_elapsed_time.count() );
+    }
 
     //!
     //! \brief Return elapsed time (between tic-toc) in nanoseconds.
     //!
     //! \return The elapsed time in nanoseconds as a double.
     //!
-    real_type elapsed_ns() const { return real_type(1e3*m_elapsed_time.count()); }
+    real_type
+    elapsed_ns() const
+    {
+      return real_type( 1e3 * m_elapsed_time.count() );
+    }
   };
 
   //!
@@ -251,10 +286,11 @@ namespace Utils {
   //!
   //! \param s The number of seconds to sleep.
   //!
-  inline
-  void
+  inline void
   sleep_for_seconds( unsigned s )
-  { std::this_thread::sleep_for(std::chrono::seconds(s)); }
+  {
+    std::this_thread::sleep_for( std::chrono::seconds( s ) );
+  }
 
   //!
   //! \brief Sleep for a specified number of milliseconds.
@@ -264,10 +300,11 @@ namespace Utils {
   //!
   //! \param ms The number of milliseconds to sleep.
   //!
-  inline
-  void
+  inline void
   sleep_for_milliseconds( unsigned ms )
-  {  std::this_thread::sleep_for(std::chrono::milliseconds(ms)); }
+  {
+    std::this_thread::sleep_for( std::chrono::milliseconds( ms ) );
+  }
 
   //!
   //! \brief Sleep for a specified number of microseconds.
@@ -277,10 +314,11 @@ namespace Utils {
   //!
   //! \param mus The number of microseconds to sleep.
   //!
-  inline
-  void
+  inline void
   sleep_for_microseconds( unsigned mus )
-  {  std::this_thread::sleep_for(std::chrono::microseconds(mus)); }
+  {
+    std::this_thread::sleep_for( std::chrono::microseconds( mus ) );
+  }
 
   //!
   //! \brief Sleep for a specified number of nanoseconds.
@@ -290,14 +328,15 @@ namespace Utils {
   //!
   //! \param ns The number of nanoseconds to sleep.
   //!
-  inline
-  void
+  inline void
   sleep_for_nanoseconds( unsigned ns )
-  {  std::this_thread::sleep_for(std::chrono::nanoseconds(ns)); }
+  {
+    std::this_thread::sleep_for( std::chrono::nanoseconds( ns ) );
+  }
 
 #endif
 
-}
+}  // namespace Utils
 
 //
 // eof: TicToc.hxx
