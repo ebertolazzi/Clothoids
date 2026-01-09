@@ -12,14 +12,14 @@
  | - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 \*/
 
-#define SHEKEL_BIBTEX                                                                                                  \
-  "@book{brent2013,\n"                                                                                                 \
-  "  author    = {Brent, R.P.},\n"                                                                                     \
-  "  title     = {Algorithms for Minimization Without Derivatives},\n"                                                 \
-  "  isbn      = {9780486143682},\n"                                                                                   \
-  "  series    = {Dover Books on Mathematics},\n"                                                                      \
-  "  year      = {2013},\n"                                                                                            \
-  "  publisher = {Dover Publications}\n"                                                                               \
+#define SHEKEL_BIBTEX                                                  \
+  "@book{brent2013,\n"                                                 \
+  "  author    = {Brent, R.P.},\n"                                     \
+  "  title     = {Algorithms for Minimization Without Derivatives},\n" \
+  "  isbn      = {9780486143682},\n"                                   \
+  "  series    = {Dover Books on Mathematics},\n"                      \
+  "  year      = {2013},\n"                                            \
+  "  publisher = {Dover Publications}\n"                               \
   "}\n"
 
 class ShekelSQRN5 : public NonlinearSystem
@@ -63,8 +63,7 @@ public:
     c[4]    = 0.6;
   }
 
-  virtual void
-  evaluate( Vector const & x, Vector & f ) const override
+  virtual void evaluate( Vector const & x, Vector & f ) const override
   {
     f( 0 ) = f( 1 ) = f( 2 ) = f( 3 ) = 0;
     for ( integer k = 0; k < n; ++k )
@@ -78,8 +77,7 @@ public:
     }
   }
 
-  virtual void
-  jacobian( Vector const & x, SparseMatrix & J ) const override
+  virtual void jacobian( Vector const & x, SparseMatrix & J ) const override
   {
     Matrix J_full( n, n );
     J_full.setZero();
@@ -100,8 +98,7 @@ public:
     J = J_full.sparseView();
   }
 
-  virtual void
-  exact_solution( vector<Vector> & x_vec ) const override
+  virtual void exact_solution( vector<Vector> & x_vec ) const override
   {
     x_vec.resize( 1 );
     auto & x0{ x_vec[0] };
@@ -109,8 +106,7 @@ public:
     x0.fill( 4 );
   }
 
-  virtual void
-  initial_points( vector<Vector> & x_vec ) const override
+  virtual void initial_points( vector<Vector> & x_vec ) const override
   {
     x_vec.resize( 1 );
     auto & x0{ x_vec[0] };
@@ -174,8 +170,7 @@ public:
     c[6]    = 0.3;
   }
 
-  virtual void
-  evaluate( Vector const & x, Vector & f ) const override
+  virtual void evaluate( Vector const & x, Vector & f ) const override
   {
     f( 0 ) = f( 1 ) = f( 2 ) = f( 3 ) = 0;
     for ( integer k = 0; k < n; ++k )
@@ -189,8 +184,7 @@ public:
     }
   }
 
-  virtual void
-  jacobian( Vector const & x, SparseMatrix & J ) const override
+  virtual void jacobian( Vector const & x, SparseMatrix & J ) const override
   {
     Matrix J_full( n, n );
     J_full.setZero();
@@ -211,8 +205,7 @@ public:
     J = J_full.sparseView();
   }
 
-  virtual void
-  exact_solution( vector<Vector> & x_vec ) const override
+  virtual void exact_solution( vector<Vector> & x_vec ) const override
   {
     x_vec.resize( 1 );
     auto & x0{ x_vec[0] };
@@ -220,8 +213,7 @@ public:
     x0.fill( 4 );
   }
 
-  virtual void
-  initial_points( vector<Vector> & x_vec ) const override
+  virtual void initial_points( vector<Vector> & x_vec ) const override
   {
     x_vec.resize( 1 );
     auto & x0{ x_vec[0] };
@@ -300,8 +292,7 @@ public:
     c[9]    = 0.5;
   }
 
-  virtual void
-  evaluate( Vector const & x, Vector & f ) const override
+  virtual void evaluate( Vector const & x, Vector & f ) const override
   {
     f( 0 ) = f( 1 ) = f( 2 ) = f( 3 ) = 0;
     for ( integer k = 0; k < n; ++k )
@@ -315,8 +306,7 @@ public:
     }
   }
 
-  virtual void
-  jacobian( Vector const & x, SparseMatrix & J ) const override
+  virtual void jacobian( Vector const & x, SparseMatrix & J ) const override
   {
     Matrix J_full( n, n );
     J_full.setZero();
@@ -337,8 +327,7 @@ public:
     J = J_full.sparseView();
   }
 
-  virtual void
-  exact_solution( vector<Vector> & x_vec ) const override
+  virtual void exact_solution( vector<Vector> & x_vec ) const override
   {
     x_vec.resize( 1 );
     auto & x0{ x_vec[0] };
@@ -346,8 +335,7 @@ public:
     x0.fill( 4 );
   }
 
-  virtual void
-  initial_points( vector<Vector> & x_vec ) const override
+  virtual void initial_points( vector<Vector> & x_vec ) const override
   {
     x_vec.resize( 1 );
     auto & x0{ x_vec[0] };

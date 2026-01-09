@@ -17,43 +17,43 @@ class CombustionApplication : public NonlinearSystem
 public:
   // sum log(xi-2)^2+log(xi-10)^2 - prod( xi) ^(1/5)
   CombustionApplication()
-    : NonlinearSystem( "Combustion Application",
-                       "@article{Grosan:2012,\n"
-                       "  title   = {SOLVING POLYNOMIAL SYSTEMS USING A MODIFIED LINE "
-                       "SEARCH APPROACH},\n"
-                       "  author  = {Crina Grosan and Ajith Abraham and Vaclav Snasel},\n"
-                       "  journal = {International Journal of Innovative Computing, "
-                       "Information and Control},\n"
-                       "  volume  = {8},\n"
-                       "  number  = {1},\n"
-                       "  year    = {2012}\n"
-                       "}\n\n"
-                       "@book{Morgan:2009,\n"
-                       "  author = {Morgan, A.},\n"
-                       "  title  = {Solving Polynomial Systems Using Continuation for\n"
-                       "            Engineering and Scientific Problems},\n"
-                       "  publisher = {Society for Industrial and Applied Mathematics},\n"
-                       "  year = {2009},\n"
-                       "  doi = {10.1137/1.9780898719031},\n"
-                       "}\n\n"
-                       "@article{Hentenryck:1997,\n"
-                       "  author  = {Van Hentenryck, P. and McAllester, D. and Kapur, "
-                       "D.},\n"
-                       "  title   = {Solving Polynomial Systems Using a Branch and Prune "
-                       "Approach},\n"
-                       "  journal = {SIAM Journal on Numerical Analysis},\n"
-                       "  year    = {1997},\n"
-                       "  volume  = {34},\n"
-                       "  number  = {2},\n"
-                       "  pages   = {797-827},\n"
-                       "  doi     = {10.1137/S0036142995281504}\n"
-                       "}\n",
-                       10 )
+    : NonlinearSystem(
+        "Combustion Application",
+        "@article{Grosan:2012,\n"
+        "  title   = {SOLVING POLYNOMIAL SYSTEMS USING A MODIFIED LINE "
+        "SEARCH APPROACH},\n"
+        "  author  = {Crina Grosan and Ajith Abraham and Vaclav Snasel},\n"
+        "  journal = {International Journal of Innovative Computing, "
+        "Information and Control},\n"
+        "  volume  = {8},\n"
+        "  number  = {1},\n"
+        "  year    = {2012}\n"
+        "}\n\n"
+        "@book{Morgan:2009,\n"
+        "  author = {Morgan, A.},\n"
+        "  title  = {Solving Polynomial Systems Using Continuation for\n"
+        "            Engineering and Scientific Problems},\n"
+        "  publisher = {Society for Industrial and Applied Mathematics},\n"
+        "  year = {2009},\n"
+        "  doi = {10.1137/1.9780898719031},\n"
+        "}\n\n"
+        "@article{Hentenryck:1997,\n"
+        "  author  = {Van Hentenryck, P. and McAllester, D. and Kapur, "
+        "D.},\n"
+        "  title   = {Solving Polynomial Systems Using a Branch and Prune "
+        "Approach},\n"
+        "  journal = {SIAM Journal on Numerical Analysis},\n"
+        "  year    = {1997},\n"
+        "  volume  = {34},\n"
+        "  number  = {2},\n"
+        "  pages   = {797-827},\n"
+        "  doi     = {10.1137/S0036142995281504}\n"
+        "}\n",
+        10 )
   {
   }
 
-  virtual void
-  evaluate( Vector const & x, Vector & f ) const override
+  virtual void evaluate( Vector const & x, Vector & f ) const override
   {
     f( 0 ) = x( 1 ) + 2 * x( 5 ) + x( 8 ) + 2 * x( 9 ) - 1e-5;
     f( 1 ) = x( 2 ) + x( 7 ) - 3e-5;
@@ -67,8 +67,7 @@ public:
     f( 9 ) = 0.2089296e-14 * x( 9 ) - x( 0 ) * x( 1 );
   }
 
-  virtual void
-  jacobian( Vector const & x, SparseMatrix & J ) const override
+  virtual void jacobian( Vector const & x, SparseMatrix & J ) const override
   {
     J.resize( n, n );
     J.setZero();
@@ -115,8 +114,7 @@ public:
     J.makeCompressed();
   }
 
-  virtual void
-  initial_points( vector<Vector> & x_vec ) const override
+  virtual void initial_points( vector<Vector> & x_vec ) const override
   {
     x_vec.resize( 1 );
     auto & x0{ x_vec[0] };

@@ -16,24 +16,24 @@ class ShenYpma5 : public NonlinearSystem
 {
 public:
   ShenYpma5()
-    : NonlinearSystem( "Shen-Ypma Example N.5",
-                       "@article{,\n"
-                       "  Author = {Yun-Qiu Shen and Tjalling J. Ypma},\n"
-                       "  Doi = {10.1016/j.apnum.2004.09.029},\n"
-                       "  Journal = {Applied Numerical Mathematics},\n"
-                       "  Number = {2},\n"
-                       "  Pages = {256 - 265},\n"
-                       "  Title = {Newton's method for singular nonlinear equations using "
-                       "approximate left and right nullspaces of the Jacobian},\n"
-                       "  Volume = {54},\n"
-                       "  Year = {2005},\n"
-                       "}\n",
-                       2 )
+    : NonlinearSystem(
+        "Shen-Ypma Example N.5",
+        "@article{,\n"
+        "  Author = {Yun-Qiu Shen and Tjalling J. Ypma},\n"
+        "  Doi = {10.1016/j.apnum.2004.09.029},\n"
+        "  Journal = {Applied Numerical Mathematics},\n"
+        "  Number = {2},\n"
+        "  Pages = {256 - 265},\n"
+        "  Title = {Newton's method for singular nonlinear equations using "
+        "approximate left and right nullspaces of the Jacobian},\n"
+        "  Volume = {54},\n"
+        "  Year = {2005},\n"
+        "}\n",
+        2 )
   {
   }
 
-  virtual void
-  evaluate( Vector const & x, Vector & f ) const override
+  virtual void evaluate( Vector const & x, Vector & f ) const override
   {
     real_type x0 = x( 0 );
     real_type x1 = x( 1 );
@@ -41,8 +41,7 @@ public:
     f( 1 )       = x0 * x0 + x1 * x1 * ( 3 * x0 - 2 );
   }
 
-  virtual void
-  jacobian( Vector const & x, SparseMatrix & J ) const override
+  virtual void jacobian( Vector const & x, SparseMatrix & J ) const override
   {
     J.resize( n, n );
     J.setZero();
@@ -55,8 +54,7 @@ public:
     J.makeCompressed();
   }
 
-  virtual void
-  exact_solution( vector<Vector> & x_vec ) const override
+  virtual void exact_solution( vector<Vector> & x_vec ) const override
   {
     x_vec.resize( 1 );
     auto & x0{ x_vec[0] };
@@ -64,8 +62,7 @@ public:
     x0.setZero();
   }
 
-  virtual void
-  initial_points( vector<Vector> & x_vec ) const override
+  virtual void initial_points( vector<Vector> & x_vec ) const override
   {
     x_vec.resize( 2 );
     auto & x0{ x_vec[0] };
@@ -86,24 +83,24 @@ class ShenYpma7 : public NonlinearSystem
 {
 public:
   ShenYpma7()
-    : NonlinearSystem( "Shen-Ypma Example N.7",
-                       "@article{,\n"
-                       "  Author = {Yun-Qiu Shen and Tjalling J. Ypma},\n"
-                       "  Doi = {10.1016/j.apnum.2004.09.029},\n"
-                       "  Journal = {Applied Numerical Mathematics},\n"
-                       "  Number = {2},\n"
-                       "  Pages = {256 - 265},\n"
-                       "  Title = {Newton's method for singular nonlinear equations using "
-                       "approximate left and right nullspaces of the Jacobian},\n"
-                       "  Volume = {54},\n"
-                       "  Year = {2005},\n"
-                       "}\n",
-                       2 )
+    : NonlinearSystem(
+        "Shen-Ypma Example N.7",
+        "@article{,\n"
+        "  Author = {Yun-Qiu Shen and Tjalling J. Ypma},\n"
+        "  Doi = {10.1016/j.apnum.2004.09.029},\n"
+        "  Journal = {Applied Numerical Mathematics},\n"
+        "  Number = {2},\n"
+        "  Pages = {256 - 265},\n"
+        "  Title = {Newton's method for singular nonlinear equations using "
+        "approximate left and right nullspaces of the Jacobian},\n"
+        "  Volume = {54},\n"
+        "  Year = {2005},\n"
+        "}\n",
+        2 )
   {
   }
 
-  virtual void
-  evaluate( Vector const & x, Vector & f ) const override
+  virtual void evaluate( Vector const & x, Vector & f ) const override
   {
     real_type x0 = x( 0 );
     real_type x1 = x( 1 );
@@ -111,8 +108,7 @@ public:
     f( 1 )       = 3 * ( x0 * x0 - x1 * x1 );
   }
 
-  virtual void
-  jacobian( Vector const & x, SparseMatrix & J ) const override
+  virtual void jacobian( Vector const & x, SparseMatrix & J ) const override
   {
     J.resize( n, n );
     J.setZero();
@@ -125,8 +121,7 @@ public:
     J.makeCompressed();
   }
 
-  virtual void
-  exact_solution( vector<Vector> & x_vec ) const override
+  virtual void exact_solution( vector<Vector> & x_vec ) const override
   {
     x_vec.resize( 1 );
     auto & x0{ x_vec[0] };
@@ -134,8 +129,7 @@ public:
     x0.setZero();
   }
 
-  virtual void
-  initial_points( vector<Vector> & x_vec ) const override
+  virtual void initial_points( vector<Vector> & x_vec ) const override
   {
     x_vec.resize( 2 );
     auto & x0{ x_vec[0] };
@@ -156,24 +150,24 @@ class ShenYpma8 : public NonlinearSystem
 {
 public:
   ShenYpma8()
-    : NonlinearSystem( "Shen-Ypma Example N.8",
-                       "@article{,\n"
-                       "  Author = {Yun-Qiu Shen and Tjalling J. Ypma},\n"
-                       "  Doi = {10.1016/j.apnum.2004.09.029},\n"
-                       "  Journal = {Applied Numerical Mathematics},\n"
-                       "  Number = {2},\n"
-                       "  Pages = {256 - 265},\n"
-                       "  Title = {Newton's method for singular nonlinear equations using "
-                       "approximate left and right nullspaces of the Jacobian},\n"
-                       "  Volume = {54},\n"
-                       "  Year = {2005},\n"
-                       "}\n",
-                       5 )
+    : NonlinearSystem(
+        "Shen-Ypma Example N.8",
+        "@article{,\n"
+        "  Author = {Yun-Qiu Shen and Tjalling J. Ypma},\n"
+        "  Doi = {10.1016/j.apnum.2004.09.029},\n"
+        "  Journal = {Applied Numerical Mathematics},\n"
+        "  Number = {2},\n"
+        "  Pages = {256 - 265},\n"
+        "  Title = {Newton's method for singular nonlinear equations using "
+        "approximate left and right nullspaces of the Jacobian},\n"
+        "  Volume = {54},\n"
+        "  Year = {2005},\n"
+        "}\n",
+        5 )
   {
   }
 
-  virtual void
-  evaluate( Vector const & x, Vector & f ) const override
+  virtual void evaluate( Vector const & x, Vector & f ) const override
   {
     real_type x1 = x( 0 );
     real_type x2 = x( 1 );
@@ -188,8 +182,7 @@ public:
     ;
   }
 
-  virtual void
-  jacobian( Vector const & x, SparseMatrix & J ) const override
+  virtual void jacobian( Vector const & x, SparseMatrix & J ) const override
   {
     // real_type x1 = x(0);
     // real_type x2 = x(1);
@@ -233,8 +226,7 @@ public:
     J.makeCompressed();
   }
 
-  virtual void
-  exact_solution( vector<Vector> & x_vec ) const override
+  virtual void exact_solution( vector<Vector> & x_vec ) const override
   {
     x_vec.resize( 1 );
     auto & x0{ x_vec[0] };
@@ -242,8 +234,7 @@ public:
     x0.fill( 1 );
   }
 
-  virtual void
-  initial_points( vector<Vector> & x_vec ) const override
+  virtual void initial_points( vector<Vector> & x_vec ) const override
   {
     x_vec.resize( 1 );
     auto & x0{ x_vec[0] };

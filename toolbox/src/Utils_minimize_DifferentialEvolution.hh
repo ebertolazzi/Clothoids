@@ -62,8 +62,7 @@ namespace Utils
   // - Easy integration with existing codebases
   // =============================================================================
 
-  template <typename RealType = double>
-  class DifferentialEvolution
+  template <typename RealType = double> class DifferentialEvolution
   {
   public:
     using integer   = Eigen::Index;
@@ -185,8 +184,7 @@ namespace Utils
     // =========================================================================
 
     // Hash function for caching
-    size_t
-    hash_vector( const Vector & v ) const
+    size_t hash_vector( const Vector & v ) const
     {
       size_t hash = 0;
       for ( integer i = 0; i < v.size(); ++i )
@@ -197,16 +195,14 @@ namespace Utils
     }
 
     // Generate random permutation
-    void
-    generate_permutation( std::vector<integer> & perm )
+    void generate_permutation( std::vector<integer> & perm )
     {
       std::iota( perm.begin(), perm.end(), 0 );
       std::shuffle( perm.begin(), perm.end(), m_random_engine );
     }
 
     // Apply boundary constraints with multiple methods
-    void
-    apply_boundary_constraints( Vector & individual, const Vector & original )
+    void apply_boundary_constraints( Vector & individual, const Vector & original )
     {
       if ( !m_use_bounds ) return;
 
@@ -253,7 +249,7 @@ namespace Utils
             {
               // Transform to [-pi/2, pi/2] range
               real_type transformed = std::asin(
-                  2.0 * ( value - m_lower_bounds[j] ) / ( m_upper_bounds[j] - m_lower_bounds[j] ) - 1.0 );
+                2.0 * ( value - m_lower_bounds[j] ) / ( m_upper_bounds[j] - m_lower_bounds[j] ) - 1.0 );
               // Add small random perturbation
               transformed += ( m_uniform_dist( m_random_engine ) - 0.5 ) * 0.1;
               // Transform back
@@ -298,8 +294,7 @@ namespace Utils
     }
 
     // Calculate population diversity
-    real_type
-    calculate_diversity() const
+    real_type calculate_diversity() const
     {
       if ( m_population_size <= 1 ) return 0.0;
 
@@ -312,8 +307,7 @@ namespace Utils
     }
 
     // Adapt parameters based on success (JADE style)
-    void
-    adapt_parameters( real_type F, real_type CR, bool success )
+    void adapt_parameters( real_type F, real_type CR, bool success )
     {
       if ( !m_use_parameter_adaptation ) return;
 
@@ -349,8 +343,7 @@ namespace Utils
     }
 
     // Generate F and CR values (adapted or fixed)
-    void
-    generate_parameters( real_type & F, real_type & CR )
+    void generate_parameters( real_type & F, real_type & CR )
     {
       if ( m_use_parameter_adaptation )
       {
@@ -373,17 +366,16 @@ namespace Utils
     }
 
     // Reduce population size (L-SHADE style)
-    void
-    reduce_population()
+    void reduce_population()
     {
       if ( !m_use_population_reduction ) return;
 
       if ( m_current_iteration > m_max_iterations / 2 )
       {
-        integer new_size = std::max( m_min_population_size,
-                                     static_cast<integer>(
-                                         m_initial_population_size *
-                                         ( 1.0 - static_cast<real_type>( m_current_iteration ) / m_max_iterations ) ) );
+        integer new_size = std::max(
+          m_min_population_size,
+          static_cast<integer>(
+            m_initial_population_size * ( 1.0 - static_cast<real_type>( m_current_iteration ) / m_max_iterations ) ) );
 
         if ( new_size < m_population_size )
         {
@@ -391,8 +383,10 @@ namespace Utils
           std::vector<integer> indices( m_population_size );
           std::iota( indices.begin(), indices.end(), 0 );
 
-          std::sort( indices.begin(), indices.end(),
-                     [this]( integer a, integer b ) { return m_fitness[a] < m_fitness[b]; } );
+          std::sort(
+            indices.begin(),
+            indices.end(),
+            [this]( integer a, integer b ) { return m_fitness[a] < m_fitness[b]; } );
 
           Matrix new_population( m_dimension, new_size );
           Vector new_fitness( new_size );
@@ -411,8 +405,7 @@ namespace Utils
     }
 
     // Add to archive
-    void
-    add_to_archive( const Vector & individual )
+    void add_to_archive( const Vector & individual )
     {
       if ( !m_use_archive || m_current_archive_size >= m_archive_capacity ) return;
 
@@ -427,9 +420,11 @@ namespace Utils
     }
 
     // Simple local search (gradient-free)
-    template <typename ObjectiveFunction>
-    void
-    local_search( Vector & solution, real_type & fitness, ObjectiveFunction && objective, integer max_iterations = 100 )
+    template <typename ObjectiveFunction> void local_search(
+      Vector &             solution,
+      real_type &          fitness,
+      ObjectiveFunction && objective,
+      integer              max_iterations = 100 )
     {
       real_type step_size    = 0.01;
       Vector    best         = solution;
@@ -508,45 +503,26 @@ namespace Utils
     // Parameter setters
     // =========================================================================
 
-    void
-    set_dimension( integer dim )
-    {
-      m_dimension = dim;
-    }
+    void set_dimension( integer dim ) { m_dimension = dim; }
 
-    void
-    set_population_size( integer np )
+    void set_population_size( integer np )
     {
       m_population_size         = std::max( np, static_cast<integer>( 5 ) );
       m_initial_population_size = m_population_size;
     }
 
-    void
-    set_max_iterations( integer max_iter )
-    {
-      m_max_iterations = max_iter;
-    }
+    void set_max_iterations( integer max_iter ) { m_max_iterations = max_iter; }
 
-    void
-    set_strategy( Strategy strategy )
-    {
-      m_strategy = strategy;
-    }
+    void set_strategy( Strategy strategy ) { m_strategy = strategy; }
 
-    void
-    set_weight( real_type F )
-    {
-      m_weight = std::max<real_type>( 0.0, std::min<real_type>( 2.0, F ) );
-    }
+    void set_weight( real_type F ) { m_weight = std::max<real_type>( 0.0, std::min<real_type>( 2.0, F ) ); }
 
-    void
-    set_crossover_rate( real_type CR )
+    void set_crossover_rate( real_type CR )
     {
       m_crossover_rate = std::max<real_type>( 0.0, std::min<real_type>( 1.0, CR ) );
     }
 
-    void
-    set_bounds( const Vector & lower, const Vector & upper )
+    void set_bounds( const Vector & lower, const Vector & upper )
     {
       if ( lower.size() != m_dimension || upper.size() != m_dimension )
       {
@@ -557,51 +533,25 @@ namespace Utils
       m_use_bounds   = true;
     }
 
-    void
-    set_constraint_method( ConstraintMethod method )
-    {
-      m_constraint_method = method;
-    }
+    void set_constraint_method( ConstraintMethod method ) { m_constraint_method = method; }
 
-    void
-    set_tolerance( real_type tol )
-    {
-      m_tolerance = tol;
-    }
+    void set_tolerance( real_type tol ) { m_tolerance = tol; }
 
-    void
-    set_value_to_reach( real_type vtr )
-    {
-      m_value_to_reach = vtr;
-    }
+    void set_value_to_reach( real_type vtr ) { m_value_to_reach = vtr; }
 
-    void
-    set_verbose( bool verbose )
-    {
-      m_verbose = verbose;
-    }
+    void set_verbose( bool verbose ) { m_verbose = verbose; }
 
-    void
-    set_print_interval( integer interval )
-    {
-      m_print_interval = interval;
-    }
+    void set_print_interval( integer interval ) { m_print_interval = interval; }
 
-    void
-    set_seed( unsigned int seed )
-    {
-      m_random_engine.seed( seed );
-    }
+    void set_seed( unsigned int seed ) { m_random_engine.seed( seed ); }
 
-    void
-    set_dither_range( real_type min, real_type max )
+    void set_dither_range( real_type min, real_type max )
     {
       m_dither_min = min;
       m_dither_max = max;
     }
 
-    void
-    enable_parameter_adaptation( bool enable = true )
+    void enable_parameter_adaptation( bool enable = true )
     {
       m_use_parameter_adaptation = enable;
       if ( enable )
@@ -611,51 +561,28 @@ namespace Utils
       }
     }
 
-    void
-    enable_population_reduction( bool enable = true )
-    {
-      m_use_population_reduction = enable;
-    }
+    void enable_population_reduction( bool enable = true ) { m_use_population_reduction = enable; }
 
-    void
-    enable_archive( bool enable = true )
+    void enable_archive( bool enable = true )
     {
       m_use_archive = enable;
       if ( enable ) { m_archive.resize( m_dimension, m_archive_capacity ); }
     }
 
-    void
-    enable_parallel_evaluation( bool enable = true )
-    {
-      m_enable_parallel = enable;
-    }
+    void enable_parallel_evaluation( bool enable = true ) { m_enable_parallel = enable; }
 
-    void
-    enable_local_search( bool enable = true )
-    {
-      m_use_local_search = enable;
-    }
+    void enable_local_search( bool enable = true ) { m_use_local_search = enable; }
 
-    void
-    enable_fitness_cache( bool enable = true )
-    {
-      m_use_cache = enable;
-    }
+    void enable_fitness_cache( bool enable = true ) { m_use_cache = enable; }
 
-    void
-    set_diversity_threshold( real_type threshold )
-    {
-      m_diversity_threshold = threshold;
-    }
+    void set_diversity_threshold( real_type threshold ) { m_diversity_threshold = threshold; }
 
-    void
-    set_iteration_callback( std::function<void( integer, real_type )> callback )
+    void set_iteration_callback( std::function<void( integer, real_type )> callback )
     {
       m_iteration_callback = callback;
     }
 
-    void
-    set_new_best_callback( std::function<void( const Vector &, real_type )> callback )
+    void set_new_best_callback( std::function<void( const Vector &, real_type )> callback )
     {
       m_new_best_callback = callback;
     }
@@ -664,64 +591,22 @@ namespace Utils
     // Getters
     // =========================================================================
 
-    integer
-    get_dimension() const
-    {
-      return m_dimension;
-    }
-    integer
-    get_population_size() const
-    {
-      return m_population_size;
-    }
-    integer
-    get_iteration() const
-    {
-      return m_current_iteration;
-    }
-    integer
-    get_function_evaluations() const
-    {
-      return m_function_evaluations.load();
-    }
-    const Vector &
-    get_best_solution() const
-    {
-      return m_best_solution;
-    }
-    real_type
-    get_best_fitness() const
-    {
-      return m_best_fitness;
-    }
-    bool
-    has_converged() const
-    {
-      return m_converged;
-    }
-    const std::string &
-    get_convergence_reason() const
-    {
-      return m_convergence_reason;
-    }
-    const std::vector<real_type> &
-    get_best_history() const
-    {
-      return m_best_history;
-    }
-    real_type
-    get_diversity() const
-    {
-      return calculate_diversity();
-    }
+    integer                        get_dimension() const { return m_dimension; }
+    integer                        get_population_size() const { return m_population_size; }
+    integer                        get_iteration() const { return m_current_iteration; }
+    integer                        get_function_evaluations() const { return m_function_evaluations.load(); }
+    const Vector &                 get_best_solution() const { return m_best_solution; }
+    real_type                      get_best_fitness() const { return m_best_fitness; }
+    bool                           has_converged() const { return m_converged; }
+    const std::string &            get_convergence_reason() const { return m_convergence_reason; }
+    const std::vector<real_type> & get_best_history() const { return m_best_history; }
+    real_type                      get_diversity() const { return calculate_diversity(); }
 
     // =========================================================================
     // Core algorithm
     // =========================================================================
 
-    template <typename ObjectiveFunction>
-    bool
-    minimize( ObjectiveFunction && objective, Vector & result )
+    template <typename ObjectiveFunction> bool minimize( ObjectiveFunction && objective, Vector & result )
     {
       // Reset state
       initialize();
@@ -794,8 +679,8 @@ namespace Utils
         }
 
         // Print progress
-        if ( m_verbose &&
-             ( m_current_iteration % m_print_interval == 0 || m_current_iteration == m_max_iterations - 1 ) )
+        if (
+          m_verbose && ( m_current_iteration % m_print_interval == 0 || m_current_iteration == m_max_iterations - 1 ) )
         {
           print_progress();
         }
@@ -822,23 +707,16 @@ namespace Utils
       return m_converged;
     }
 
-    template <typename ObjectiveFunction>
-    bool
-    minimize( ObjectiveFunction && objective )
+    template <typename ObjectiveFunction> bool minimize( ObjectiveFunction && objective )
     {
       Vector result( m_dimension );
       return minimize( std::forward<ObjectiveFunction>( objective ), result );
     }
 
     // Benchmark functions for testing
-    static real_type
-    sphere_function( const Vector & x )
-    {
-      return x.squaredNorm();
-    }
+    static real_type sphere_function( const Vector & x ) { return x.squaredNorm(); }
 
-    static real_type
-    rastrigin_function( const Vector & x )
+    static real_type rastrigin_function( const Vector & x )
     {
       const real_type A   = 10.0;
       real_type       sum = A * x.size();
@@ -846,8 +724,7 @@ namespace Utils
       return sum;
     }
 
-    static real_type
-    rosenbrock_function( const Vector & x )
+    static real_type rosenbrock_function( const Vector & x )
     {
       real_type sum = 0.0;
       for ( integer i = 0; i < x.size() - 1; ++i )
@@ -862,8 +739,7 @@ namespace Utils
     // Internal helper methods
     // =========================================================================
 
-    void
-    initialize()
+    void initialize()
     {
       m_current_iteration    = 0;
       m_function_evaluations = 0;
@@ -885,9 +761,7 @@ namespace Utils
       if ( m_use_cache ) { m_fitness_cache.clear(); }
     }
 
-    template <typename ObjectiveFunction>
-    void
-    initialize_population( ObjectiveFunction && objective )
+    template <typename ObjectiveFunction> void initialize_population( ObjectiveFunction && objective )
     {
       if ( m_use_bounds )
       {
@@ -960,8 +834,7 @@ namespace Utils
       }
     }
 
-    void
-    generate_trial_population( Matrix & trial_population )
+    void generate_trial_population( Matrix & trial_population )
     {
       // Prepare permutations
       std::vector<integer> perm1( m_population_size );
@@ -1054,8 +927,11 @@ namespace Utils
             integer              p = std::max<integer>( 2, m_population_size / 10 );
             std::vector<integer> indices( p );
             std::iota( indices.begin(), indices.end(), 0 );
-            std::partial_sort( indices.begin(), indices.begin() + p, indices.end(),
-                               [this]( integer a, integer b ) { return m_fitness[a] < m_fitness[b]; } );
+            std::partial_sort(
+              indices.begin(),
+              indices.begin() + p,
+              indices.end(),
+              [this]( integer a, integer b ) { return m_fitness[a] < m_fitness[b]; } );
 
             integer pbest_idx = indices[static_cast<integer>( m_uniform_dist( m_random_engine ) * p )];
             Vector  ind_pbest = m_population.col( pbest_idx );
@@ -1069,8 +945,11 @@ namespace Utils
             integer              p = std::max<integer>( 2, m_population_size / 10 );
             std::vector<integer> indices( p );
             std::iota( indices.begin(), indices.end(), 0 );
-            std::partial_sort( indices.begin(), indices.begin() + p, indices.end(),
-                               [this]( integer a, integer b ) { return m_fitness[a] < m_fitness[b]; } );
+            std::partial_sort(
+              indices.begin(),
+              indices.begin() + p,
+              indices.end(),
+              [this]( integer a, integer b ) { return m_fitness[a] < m_fitness[b]; } );
 
             integer pbest_idx = indices[static_cast<integer>( m_uniform_dist( m_random_engine ) * p )];
             Vector  ind_pbest = m_population.col( pbest_idx );
@@ -1081,9 +960,9 @@ namespace Utils
             {
               if ( m_uniform_dist( m_random_engine ) < 0.5 )
               {
-                integer archive_idx = static_cast<integer>( m_uniform_dist( m_random_engine ) *
-                                                            m_current_archive_size );
-                ind_r2_used         = m_archive.col( archive_idx );
+                integer archive_idx = static_cast<integer>(
+                  m_uniform_dist( m_random_engine ) * m_current_archive_size );
+                ind_r2_used = m_archive.col( archive_idx );
               }
             }
 
@@ -1092,9 +971,7 @@ namespace Utils
           }
           break;
 
-          default:
-            mutation_vector = ind_r1 + F * ( ind_r2 - ind_r3 );
-            break;
+          default: mutation_vector = ind_r1 + F * ( ind_r2 - ind_r3 ); break;
         }
 
         // Apply boundary constraints to mutation vector
@@ -1118,8 +995,7 @@ namespace Utils
     }
 
     template <typename ObjectiveFunction>
-    void
-    evaluate_trial_population( Matrix & trial_population, Vector & trial_fitness, ObjectiveFunction && objective )
+    void evaluate_trial_population( Matrix & trial_population, Vector & trial_fitness, ObjectiveFunction && objective )
     {
       if ( m_enable_parallel )
       {
@@ -1179,8 +1055,7 @@ namespace Utils
       }
     }
 
-    bool
-    check_convergence()
+    bool check_convergence()
     {
       // Check value to reach
       if ( m_best_fitness <= m_value_to_reach )
@@ -1213,15 +1088,18 @@ namespace Utils
       return false;
     }
 
-    void
-    print_progress()
+    void print_progress()
     {
       real_type diversity = calculate_diversity();
 
       fmt::print(
-          "DE Iteration {:5}: Best = {:.6e}, F = {:.3f}, CR = {:.3f}, NP = "
-          "{:3}, Div = {:.2e}\n",
-          m_current_iteration, m_best_fitness, m_weight, m_crossover_rate, m_population_size, diversity );
+        "DE Iteration {:5}: Best = {:.6e}, F = {:.3f}, CR = {:.3f}, NP = {:3}, Div = {:.2e}\n",
+        m_current_iteration,
+        m_best_fitness,
+        m_weight,
+        m_crossover_rate,
+        m_population_size,
+        diversity );
 
       if ( m_verbose && m_current_iteration % ( m_print_interval * 5 ) == 0 )
       {

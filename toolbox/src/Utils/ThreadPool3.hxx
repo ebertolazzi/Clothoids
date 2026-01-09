@@ -78,48 +78,28 @@ namespace Utils
     //!
     //! \param fun The function to be executed as a task.
     //!
-    void
-    exec( FUN && fun ) override
-    {
-      m_pool.detach_task( std::move( fun ) );
-    }
+    void exec( FUN && fun ) override { m_pool.detach_task( std::move( fun ) ); }
 
     //!
     //! \brief Waits for all tasks to be completed.
     //!
-    void
-    wait() override
-    {
-      m_pool.wait();
-    }
+    void wait() override { m_pool.wait(); }
 
     //!
     //! \brief Gets the current number of threads in the pool.
     //!
     //! \return The number of threads in the pool.
     //!
-    unsigned
-    thread_count() const override
-    {
-      return unsigned( m_pool.get_thread_count() );
-    }
+    unsigned thread_count() const override { return unsigned( m_pool.get_thread_count() ); }
 
     //!
     //! \brief Gets the name of the thread pool implementation.
     //!
     //! \return A constant character pointer to the name of the thread pool.
     //!
-    static char const *
-    Name()
-    {
-      return "ThreadPool3 [BS]";
-    }
+    static char const * Name() { return "ThreadPool3 [BS]"; }
 
-    char const *
-    name() const override
-    {
-      return Name();
-    }
+    char const * name() const override { return Name(); }
   };
 
   /*! @} */

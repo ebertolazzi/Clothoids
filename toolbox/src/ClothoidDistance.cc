@@ -22,43 +22,45 @@
 
 // Workaround for Visual Studio
 #ifdef min
-  #undef min
+#undef min
 #endif
 
 #ifdef max
-  #undef max
+#undef max
 #endif
 
-namespace G2lib {
+namespace G2lib
+{
 
   using std::abs;
-  using std::sqrt;
-  using std::sin;
   using std::cos;
   using std::max;
   using std::min;
+  using std::sin;
+  using std::sqrt;
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  real_type
-  ClothoidCurve::closest_point_by_sample(
+  real_type ClothoidCurve::closest_point_by_sample(
     real_type const ds,
     real_type const qx,
     real_type const qy,
-    real_type     & X,
-    real_type     & Y,
-    real_type     & S
-  ) const {
+    real_type &     X,
+    real_type &     Y,
+    real_type &     S ) const
+  {
     S = 0;
     X = m_CD.m_x0;
     Y = m_CD.m_y0;
-    real_type DST{ hypot( X-qx, Y-qy ) };
+    real_type DST{ hypot( X - qx, Y - qy ) };
     real_type SSS{ ds };
-    while ( SSS <= m_L ) {
+    while ( SSS <= m_L )
+    {
       real_type theta, kappa, XS, YS;
       m_CD.evaluate( SSS, theta, kappa, XS, YS );
-      real_type dst{ hypot( XS-qx, YS-qy ) };
-      if ( dst < DST ) {
+      real_type dst{ hypot( XS - qx, YS - qy ) };
+      if ( dst < DST )
+      {
         DST = dst;
         S   = SSS;
         X   = XS;
@@ -71,142 +73,159 @@ namespace G2lib {
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  #ifndef DOXYGEN_SHOULD_SKIP_THIS
-  static
-  bool
-  closest_point_QC2(
-    real_type    const   epsi,
+#ifndef DOXYGEN_SHOULD_SKIP_THIS
+  static bool closest_point_QC2(
+    real_type const      epsi,
     ClothoidData const & CD,
-    real_type    const   L,
-    real_type    const   qx,
-    real_type    const   qy,
-    real_type          & S
-  ) {
-
+    real_type const      L,
+    real_type const      qx,
+    real_type const      qy,
+    real_type &          S )
+  {
     // S = GUESS
-    integer nb{0};
+    integer   nb{ 0 };
     real_type theta, kappa, dS, dx, dy;
     real_type s = S;
-    for ( integer iter = 0; iter < 20 && nb < 2; ++iter ) {
-      CD.evaluate( s, theta, kappa, dx, dy ); dx -= qx; dy -= qy;
+    for ( integer iter = 0; iter < 20 && nb < 2; ++iter )
+    {
+      CD.evaluate( s, theta, kappa, dx, dy );
+      dx -= qx;
+      dy -= qy;
 
-      real_type const Cs  { cos(theta) };
-      real_type const Ss  { sin(theta) };
-      real_type const a0  { Cs * dy - Ss * dx };
-      real_type const b0  { Ss * dy + Cs * dx };
-      real_type       tmp { a0*kappa };
+      real_type const Cs{ cos( theta ) };
+      real_type const Ss{ sin( theta ) };
+      real_type const a0{ Cs * dy - Ss * dx };
+      real_type const b0{ Ss * dy + Cs * dx };
+      real_type       tmp{ a0 * kappa };
 
       // approx clothoid with a circle
-      if ( 1+2*tmp > 0 ) {
-
-        tmp = b0/(1+tmp);
-        dS = -tmp*Atanc(tmp*kappa);
-
-      } else {
-
-        real_type om{ atan2( b0, a0+1/kappa ) };
-        if ( kappa < 0 ) {
-          if ( om < 0 ) om += Utils::m_pi;
-          else          om -= Utils::m_pi;
+      if ( 1 + 2 * tmp > 0 )
+      {
+        tmp = b0 / ( 1 + tmp );
+        dS  = -tmp * Atanc( tmp * kappa );
+      }
+      else
+      {
+        real_type om{ atan2( b0, a0 + 1 / kappa ) };
+        if ( kappa < 0 )
+        {
+          if ( om < 0 )
+            om += Utils::m_pi;
+          else
+            om -= Utils::m_pi;
         }
 
-        dS = -om/kappa;
+        dS = -om / kappa;
       }
 
       s += dS;
-      if ( abs( dS ) < epsi ) {
-        if ( s < -epsi || s > L+epsi ) return false;
+      if ( abs( dS ) < epsi )
+      {
+        if ( s < -epsi || s > L + epsi ) return false;
         S = s;
         return true;
       }
 
       // check divergence
-      if      ( s < 0 ) { s = 0; ++nb; }
-      else if ( s > L ) { s = L; ++nb; }
-      else              { nb = 0; }
-
+      if ( s < 0 )
+      {
+        s = 0;
+        ++nb;
+      }
+      else if ( s > L )
+      {
+        s = L;
+        ++nb;
+      }
+      else
+      {
+        nb = 0;
+      }
     }
     return false;
   }
-  #endif
+#endif
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  #ifndef DOXYGEN_SHOULD_SKIP_THIS
-  static
-  real_type
-  closest_point_QC1(
-    real_type    const   epsi,
+#ifndef DOXYGEN_SHOULD_SKIP_THIS
+  static real_type closest_point_QC1(
+    real_type const      epsi,
     ClothoidData const & CD,
-    real_type    const   L,
-    real_type    const   qx,
-    real_type    const   qy,
-    real_type          & X,
-    real_type          & Y,
-    real_type          & S
-  ) {
-
+    real_type const      L,
+    real_type const      qx,
+    real_type const      qy,
+    real_type &          X,
+    real_type &          Y,
+    real_type &          S )
+  {
     real_type const phi0{ CD.m_theta0 - atan2( CD.m_y0 - qy, CD.m_x0 - qx ) };
-    bool ok0 = cos(phi0) < 0; // distanza decrescente
+    bool            ok0 = cos( phi0 ) < 0;  // distanza decrescente
 
     real_type theta1, kappa1, x1, y1;
     CD.evaluate( L, theta1, kappa1, x1, y1 );
     real_type const phi1 = theta1 - atan2( y1 - qy, x1 - qx );
-    bool ok1 = cos(phi1) > 0; // distanza crescente
+    bool            ok1  = cos( phi1 ) > 0;  // distanza crescente
 
-    real_type s0 { 0 };
-    real_type x0 { CD.m_x0 };
-    real_type y0 { CD.m_y0 };
+    real_type s0{ 0 };
+    real_type x0{ CD.m_x0 };
+    real_type y0{ CD.m_y0 };
     if ( ok0 ) ok0 = closest_point_QC2( epsi, CD, L, qx, qy, s0 );
     if ( ok0 ) CD.eval( s0, x0, y0 );
-    real_type const d0{ hypot( x0-qx, y0-qy ) };
+    real_type const d0{ hypot( x0 - qx, y0 - qy ) };
 
     real_type s1{ L };
     if ( ok1 ) ok1 = closest_point_QC2( epsi, CD, L, qx, qy, s1 );
     if ( ok1 ) CD.eval( s1, x1, y1 );
-    real_type const d1{ hypot( x1-qx, y1-qy ) };
+    real_type const d1{ hypot( x1 - qx, y1 - qy ) };
 
-    if ( !ok0 && !ok1 ) { // s1 - s0 > 2 * epsi ) { // buoni entrambi estremi
-      S = (s0+s1)/2;
-      if ( closest_point_QC2( epsi, CD, L, qx, qy, S ) ) {
+    if ( !ok0 && !ok1 )
+    {  // s1 - s0 > 2 * epsi ) { // buoni entrambi estremi
+      S = ( s0 + s1 ) / 2;
+      if ( closest_point_QC2( epsi, CD, L, qx, qy, S ) )
+      {
         CD.eval( S, X, Y );
-        real_type dm{ hypot( X-qx, Y-qy ) };
+        real_type dm{ hypot( X - qx, Y - qy ) };
         if ( dm < d0 && dm < d1 ) return dm;
       }
     }
 
-    if ( d0 < d1 ) { S = s0; X = x0; Y = y0; return d0; }
+    if ( d0 < d1 )
+    {
+      S = s0;
+      X = x0;
+      Y = y0;
+      return d0;
+    }
     S = s1;
     X = x1;
     Y = y1;
     return d1;
   }
-  #endif
+#endif
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  #ifndef DOXYGEN_SHOULD_SKIP_THIS
-  static
-  real_type
-  closest_point_QC(
-    real_type    const   epsi,
+#ifndef DOXYGEN_SHOULD_SKIP_THIS
+  static real_type closest_point_QC(
+    real_type const      epsi,
     ClothoidData const & CD,
-    real_type    const   L,
-    real_type    const   qx,
-    real_type    const   qy,
-    real_type          & X,
-    real_type          & Y,
-    real_type          & S
-  ) {
-    real_type const DTheta{ abs( CD.theta(L) - CD.m_theta0 ) };
-    if ( DTheta <= Utils::m_2pi )
-      return closest_point_QC1( epsi, CD, L, qx, qy, X, Y, S );
+    real_type const      L,
+    real_type const      qx,
+    real_type const      qy,
+    real_type &          X,
+    real_type &          Y,
+    real_type &          S )
+  {
+    real_type const DTheta{ abs( CD.theta( L ) - CD.m_theta0 ) };
+    if ( DTheta <= Utils::m_2pi ) return closest_point_QC1( epsi, CD, L, qx, qy, X, Y, S );
 
-    real_type cx { CD.c0x() };
-    real_type cy { CD.c0y() };
+    real_type cx{ CD.c0x() };
+    real_type cy{ CD.c0y() };
 
-    //if ( hypot( CD.x0 - cx, CD.y0 - cy ) <= hypot( qx - cx, qy - cy ) ) {
-    if ( 1 <= abs(CD.m_kappa0) * hypot( qx - cx, qy - cy ) ) {
+    // if ( hypot( CD.x0 - cx, CD.y0 - cy ) <= hypot( qx - cx, qy - cy ) ) {
+    if ( 1 <= abs( CD.m_kappa0 ) * hypot( qx - cx, qy - cy ) )
+    {
       real_type const ell{ CD.aplus( Utils::m_2pi ) };
       return closest_point_QC1( epsi, CD, ell, qx, qy, X, Y, S );
     }
@@ -216,272 +235,311 @@ namespace G2lib {
     cx = CD1.c0x();
     cy = CD1.c0y();
 
-    //if ( hypot( CD1.x0 - cx, CD1.y0 - cy ) >= hypot( qx - cx, qy - cy ) ) {
-    if ( 1 >= abs(CD1.m_kappa0) * hypot( qx - cx, qy - cy ) ) {
-      real_type const ell { CD1.aplus( Utils::m_2pi ) };
-      real_type const d   { closest_point_QC1( epsi, CD1, ell, qx, qy, X, Y, S ) };
+    // if ( hypot( CD1.x0 - cx, CD1.y0 - cy ) >= hypot( qx - cx, qy - cy ) ) {
+    if ( 1 >= abs( CD1.m_kappa0 ) * hypot( qx - cx, qy - cy ) )
+    {
+      real_type const ell{ CD1.aplus( Utils::m_2pi ) };
+      real_type const d{ closest_point_QC1( epsi, CD1, ell, qx, qy, X, Y, S ) };
       S = L - S;
       return d;
     }
 
-    real_type const ell { CD.aplus(DTheta/2) };
-    real_type const d0  { closest_point_QC( epsi, CD, ell, qx, qy, X, Y, S ) };
+    real_type const ell{ CD.aplus( DTheta / 2 ) };
+    real_type const d0{ closest_point_QC( epsi, CD, ell, qx, qy, X, Y, S ) };
 
     CD.eval( ell, CD1 );
 
-    real_type X1, Y1, S1;
-    real_type const d1{ closest_point_QC( epsi, CD1, L-ell, qx, qy, X1, Y1, S1 ) };
+    real_type       X1, Y1, S1;
+    real_type const d1{ closest_point_QC( epsi, CD1, L - ell, qx, qy, X1, Y1, S1 ) };
 
-    if ( d1 < d0 ) { S = ell+S1; X = X1; Y = Y1; return d1; }
+    if ( d1 < d0 )
+    {
+      S = ell + S1;
+      X = X1;
+      Y = Y1;
+      return d1;
+    }
 
     return d0;
-
   }
-  #endif
+#endif
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  #ifndef DOXYGEN_SHOULD_SKIP_THIS
-  static
-  bool
-  closest_point_standard3(
+#ifndef DOXYGEN_SHOULD_SKIP_THIS
+  static bool closest_point_standard3(
     real_type const epsi,
     real_type const a,
     real_type const b,
     real_type const qx,
     real_type const qy,
-    real_type     & S
-  ) {
+    real_type &     S )
+  {
     // S = GUESS
-    integer nb{0};
-    real_type s{S}, dS, dx, dy;
-    for ( integer iter{0}; iter < 20 && nb < 2; ++iter ) {
+    integer   nb{ 0 };
+    real_type s{ S }, dS, dx, dy;
+    for ( integer iter{ 0 }; iter < 20 && nb < 2; ++iter )
+    {
       // approx clothoid with a circle
-      real_type const kappa { Utils::m_pi * s };
-      real_type const theta { 0.5*(kappa*s) };
-      FresnelCS( s, dx, dy ); dx -= qx; dy -= qy;
+      real_type const kappa{ Utils::m_pi * s };
+      real_type const theta{ 0.5 * ( kappa * s ) };
+      FresnelCS( s, dx, dy );
+      dx -= qx;
+      dy -= qy;
 
-      real_type const Cs  { cos(theta) };
-      real_type const Ss  { sin(theta) };
-      real_type const a0  { Cs * dy - Ss * dx };
-      real_type const b0  { Ss * dy + Cs * dx };
-      real_type       tmp { a0*kappa };
+      real_type const Cs{ cos( theta ) };
+      real_type const Ss{ sin( theta ) };
+      real_type const a0{ Cs * dy - Ss * dx };
+      real_type const b0{ Ss * dy + Cs * dx };
+      real_type       tmp{ a0 * kappa };
 
-      if ( 1+2*tmp > 0 ) {
-
-        tmp = b0/(1+tmp);
-        dS = -tmp*Atanc(tmp*kappa);
-
-      } else {
-
-        real_type om{ atan2( b0, a0+1/kappa ) };
-        if ( kappa < 0 ) {
-          if ( om < 0 ) om += Utils::m_pi;
-          else          om -= Utils::m_pi;
+      if ( 1 + 2 * tmp > 0 )
+      {
+        tmp = b0 / ( 1 + tmp );
+        dS  = -tmp * Atanc( tmp * kappa );
+      }
+      else
+      {
+        real_type om{ atan2( b0, a0 + 1 / kappa ) };
+        if ( kappa < 0 )
+        {
+          if ( om < 0 )
+            om += Utils::m_pi;
+          else
+            om -= Utils::m_pi;
         }
 
-        dS = -om/kappa;
+        dS = -om / kappa;
       }
 
       s += dS;
-      if ( abs( dS ) < epsi ) {
-        if ( s < a-epsi|| s > b+epsi ) break;
+      if ( abs( dS ) < epsi )
+      {
+        if ( s < a - epsi || s > b + epsi ) break;
         S = s;
         return true;
       }
 
       // check divergence
-      if      ( s < a ) { s = a; ++nb; }
-      else if ( s > b ) { s = b; ++nb; }
-      else              { nb = 0; }
-
+      if ( s < a )
+      {
+        s = a;
+        ++nb;
+      }
+      else if ( s > b )
+      {
+        s = b;
+        ++nb;
+      }
+      else
+      {
+        nb = 0;
+      }
     }
     return false;
   }
-  #endif
+#endif
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  #ifndef DOXYGEN_SHOULD_SKIP_THIS
-  static
-  real_type
-  closest_point_standard2(
+#ifndef DOXYGEN_SHOULD_SKIP_THIS
+  static real_type closest_point_standard2(
     real_type const epsi,
     real_type const a,
     real_type const b,
     real_type const qx,
     real_type const qy,
-    real_type     & S
-  ) {
-
+    real_type &     S )
+  {
     real_type dx, dy;
-    FresnelCS( a, dx, dy ); dx -= qx; dy -= qy;
-    real_type const phia = Utils::m_pi_2 * (a*a) - atan2( dy, dx );
-    bool ok0{ cos(phia) < 0 }; // distanza decrescente
+    FresnelCS( a, dx, dy );
+    dx -= qx;
+    dy -= qy;
+    real_type const phia = Utils::m_pi_2 * ( a * a ) - atan2( dy, dx );
+    bool            ok0{ cos( phia ) < 0 };  // distanza decrescente
 
-    FresnelCS( b, dx, dy ); dx -= qx; dy -= qy;
-    real_type const phib = Utils::m_pi_2 * (b*b) - atan2( dy, dx );
-    bool ok1{ cos(phib) > 0 }; // distanza crescente
+    FresnelCS( b, dx, dy );
+    dx -= qx;
+    dy -= qy;
+    real_type const phib = Utils::m_pi_2 * ( b * b ) - atan2( dy, dx );
+    bool            ok1{ cos( phib ) > 0 };  // distanza crescente
 
     real_type s0{ a };
     if ( ok0 ) ok0 = closest_point_standard3( epsi, a, b, qx, qy, s0 );
-    FresnelCS( s0, dx, dy ); dx -= qx; dy -= qy;
+    FresnelCS( s0, dx, dy );
+    dx -= qx;
+    dy -= qy;
     real_type const d0 = hypot( dx, dy );
 
     real_type s1{ b };
     if ( ok1 ) ok1 = closest_point_standard3( epsi, a, b, qx, qy, s1 );
-    FresnelCS( s1, dx, dy ); dx -= qx; dy -= qy;
+    FresnelCS( s1, dx, dy );
+    dx -= qx;
+    dy -= qy;
     real_type const d1{ hypot( dx, dy ) };
 
-    if ( !ok0 && !ok1 ) {  // s1 - s0 > 2 * epsi ) { // buoni entrambi estremi
-      S = (s0+s1)/2;
-      if ( closest_point_standard3( epsi, a, b, qx, qy, S ) ) {
-        FresnelCS( S, dx, dy ); dx -= qx; dy -= qy;
+    if ( !ok0 && !ok1 )
+    {  // s1 - s0 > 2 * epsi ) { // buoni entrambi estremi
+      S = ( s0 + s1 ) / 2;
+      if ( closest_point_standard3( epsi, a, b, qx, qy, S ) )
+      {
+        FresnelCS( S, dx, dy );
+        dx -= qx;
+        dy -= qy;
         real_type dm{ hypot( dx, dy ) };
         if ( dm < d0 && dm < d1 ) return dm;
       }
     }
 
-    if ( d0 < d1 ) { S = s0; return d0; }
-    S = s1; return d1;
+    if ( d0 < d1 )
+    {
+      S = s0;
+      return d0;
+    }
+    S = s1;
+    return d1;
   }
-  #endif
+#endif
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  #ifndef DOXYGEN_SHOULD_SKIP_THIS
-  static
-  real_type
-  closest_point_standard(
-    real_type    const   epsi,
+#ifndef DOXYGEN_SHOULD_SKIP_THIS
+  static real_type closest_point_standard(
+    real_type const      epsi,
     ClothoidData const & CD,
-    real_type    const   L,
-    real_type    const   qx,
-    real_type    const   qy,
-    real_type          & S
-  ) {
-
+    real_type const      L,
+    real_type const      qx,
+    real_type const      qy,
+    real_type &          S )
+  {
     // transform to standard clothoid
-    real_type sflex{ -CD.m_kappa0/CD.m_dk };
+    real_type sflex{ -CD.m_kappa0 / CD.m_dk };
 
     UTILS_ASSERT( sflex <= 0, " bad sflex = {}\n", sflex );
 
-    real_type const thflex { CD.m_theta0 + 0.5*CD.m_kappa0*sflex };
-    real_type const ssf    { sin(thflex) };
-    real_type const csf    { cos(thflex) };
-    real_type const gamma  { sqrt(abs(CD.m_dk)/Utils::m_pi) };
-    real_type const a      { -sflex*gamma };
-    real_type const b      { (L-sflex)*gamma };
-    real_type xflex, yflex;
+    real_type const thflex{ CD.m_theta0 + 0.5 * CD.m_kappa0 * sflex };
+    real_type const ssf{ sin( thflex ) };
+    real_type const csf{ cos( thflex ) };
+    real_type const gamma{ sqrt( abs( CD.m_dk ) / Utils::m_pi ) };
+    real_type const a{ -sflex * gamma };
+    real_type const b{ ( L - sflex ) * gamma };
+    real_type       xflex, yflex;
     CD.eval( sflex, xflex, yflex );
     real_type xx{ qx - xflex };
     real_type yy{ qy - yflex };
     // gamma * R^(-1)
-    real_type const qqx{ gamma * (  csf * xx + ssf * yy ) };
+    real_type const qqx{ gamma * ( csf * xx + ssf * yy ) };
     real_type       qqy{ gamma * ( -ssf * xx + csf * yy ) };
     // M^(-1)
     if ( CD.m_dk < 0 ) qqy = -qqy;
 
     // now in standard form
-    if ( b*b-a*a <= 4 ) {
+    if ( b * b - a * a <= 4 )
+    {
       real_type const d = closest_point_standard2( epsi, a, b, qqx, qqy, S );
-      S = sflex + S/gamma;
-      return d/gamma;
+      S                 = sflex + S / gamma;
+      return d / gamma;
     }
 
     FresnelCS( a, xx, yy );
-    real_type const di{ hypot(qqx-0.5,qqy-0.5) };
-    real_type const da{ hypot(xx-0.5,yy-0.5) };
+    real_type const di{ hypot( qqx - 0.5, qqy - 0.5 ) };
+    real_type const da{ hypot( xx - 0.5, yy - 0.5 ) };
 
-    if ( di >= da ) {
-      real_type const La { 4/(a+sqrt(a*a+4)) };
-      real_type const d  { closest_point_standard2( epsi, a, a+La, qqx, qqy, S ) };
-      S = sflex + S/gamma;
-      return d/gamma;
+    if ( di >= da )
+    {
+      real_type const La{ 4 / ( a + sqrt( a * a + 4 ) ) };
+      real_type const d{ closest_point_standard2( epsi, a, a + La, qqx, qqy, S ) };
+      S = sflex + S / gamma;
+      return d / gamma;
     }
 
     FresnelCS( b, xx, yy );
-    real_type db{ hypot(xx-0.5,yy-0.5) };
+    real_type db{ hypot( xx - 0.5, yy - 0.5 ) };
 
-    if ( di <= db ) {
-      real_type const Lb { 4/(b+sqrt(b*b-4)) };
-      real_type const d  { closest_point_standard2( epsi, b-Lb, b, qqx, qqy, S ) };
-      S = sflex + S/gamma;
-      return d/gamma;
+    if ( di <= db )
+    {
+      real_type const Lb{ 4 / ( b + sqrt( b * b - 4 ) ) };
+      real_type const d{ closest_point_standard2( epsi, b - Lb, b, qqx, qqy, S ) };
+      S = sflex + S / gamma;
+      return d / gamma;
     }
 
     real_type ss{ a };
-    bool converged{false};
-    for ( integer iter{0}; iter < 20 && !converged; ++iter ) {
+    bool      converged{ false };
+    for ( integer iter{ 0 }; iter < 20 && !converged; ++iter )
+    {
       FresnelCS( ss, xx, yy );
-      real_type const kappa { Utils::m_pi * ss };
-      real_type const theta { Utils::m_pi_2 * (ss*ss) };
-      real_type const rhox  { xx - 0.5 };
-      real_type const rhoy  { yy - 0.5 };
-      real_type const rho   { hypot( rhox, rhoy ) };
-      real_type const f     { rho - di };
-      //if ( abs(f) < epsi ) break;
-      real_type const tphi  { theta - atan2( rhoy, rhox ) };
-      real_type const df    { cos( tphi ) };
-      real_type const t     { sin( tphi ) };
-      real_type const ddf   { t*(kappa-t/rho) };
-      real_type const ds    { (f*df)/((df*df)-f*ddf/2) };
+      real_type const kappa{ Utils::m_pi * ss };
+      real_type const theta{ Utils::m_pi_2 * ( ss * ss ) };
+      real_type const rhox{ xx - 0.5 };
+      real_type const rhoy{ yy - 0.5 };
+      real_type const rho{ hypot( rhox, rhoy ) };
+      real_type const f{ rho - di };
+      // if ( abs(f) < epsi ) break;
+      real_type const tphi{ theta - atan2( rhoy, rhox ) };
+      real_type const df{ cos( tphi ) };
+      real_type const t{ sin( tphi ) };
+      real_type const ddf{ t * ( kappa - t / rho ) };
+      real_type const ds{ ( f * df ) / ( ( df * df ) - f * ddf / 2 ) };
       ss -= ds;
-      converged = abs(ds) < epsi;
+      converged = abs( ds ) < epsi;
     }
 
     UTILS_ASSERT0( converged, "closest_point_standard not converged\n" );
 
-    real_type const Lp{ min( b-ss, 4/(ss+sqrt(ss*ss+4)) ) };
-    real_type const Lm{ min( ss-a, 4/(ss+sqrt(ss*ss-4)) ) };
+    real_type const Lp{ min( b - ss, 4 / ( ss + sqrt( ss * ss + 4 ) ) ) };
+    real_type const Lm{ min( ss - a, 4 / ( ss + sqrt( ss * ss - 4 ) ) ) };
 
-    real_type sp, sm;
-    real_type const dp{ closest_point_standard2( epsi, ss, ss+Lp, qqx, qqy, sp ) };
-    real_type const dm{ closest_point_standard2( epsi, ss-Lm, ss, qqx, qqy, sm ) };
+    real_type       sp, sm;
+    real_type const dp{ closest_point_standard2( epsi, ss, ss + Lp, qqx, qqy, sp ) };
+    real_type const dm{ closest_point_standard2( epsi, ss - Lm, ss, qqx, qqy, sm ) };
 
-    if ( dp < dm ) { S = sflex + sp/gamma; return dp/gamma; }
-    S = sflex + sm/gamma; return dm/gamma;
+    if ( dp < dm )
+    {
+      S = sflex + sp / gamma;
+      return dp / gamma;
+    }
+    S = sflex + sm / gamma;
+    return dm / gamma;
   }
-  #endif
+#endif
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  #ifndef DOXYGEN_SHOULD_SKIP_THIS
-  static
-  real_type
-  closest_point1(
-    real_type    const   epsi,
+#ifndef DOXYGEN_SHOULD_SKIP_THIS
+  static real_type closest_point1(
+    real_type const      epsi,
     ClothoidData const & CD,
-    real_type    const   L,
-    real_type    const   qx,
-    real_type    const   qy,
-    real_type          & X,
-    real_type          & Y,
-    real_type          & S
-  ) {
-    constexpr real_type NT{ 4 }; // number of turn of the clothid after wich is considered quasi-circular
-    real_type const DK{ sqrt(NT*Utils::m_2pi*abs(CD.m_dk)) };
-    if ( abs(CD.m_kappa0) >= DK ) {
-      return closest_point_QC( epsi, CD, L, qx, qy, X, Y, S );
-    }
+    real_type const      L,
+    real_type const      qx,
+    real_type const      qy,
+    real_type &          X,
+    real_type &          Y,
+    real_type &          S )
+  {
+    constexpr real_type NT{ 4 };  // number of turn of the clothid after wich is considered quasi-circular
+    real_type const     DK{ sqrt( NT * Utils::m_2pi * abs( CD.m_dk ) ) };
+    if ( abs( CD.m_kappa0 ) >= DK ) { return closest_point_QC( epsi, CD, L, qx, qy, X, Y, S ); }
 
-    if ( abs(CD.m_kappa0)+abs(CD.m_dk)*L <= DK ) {
+    if ( abs( CD.m_kappa0 ) + abs( CD.m_dk ) * L <= DK )
+    {
       real_type const d{ closest_point_standard( epsi, CD, L, qx, qy, S ) };
       CD.eval( S, X, Y );
       return d;
     }
 
-    real_type ell{ (DK-abs(CD.m_kappa0))/abs(CD.m_dk) };
+    real_type ell{ ( DK - abs( CD.m_kappa0 ) ) / abs( CD.m_dk ) };
 
     UTILS_ASSERT( ell > 0 && ell < L, "bad ell = {} L = {}\n", ell, L );
 
     ClothoidData CDS;
     CD.eval( ell, CDS );
 
-    real_type S0;
+    real_type       S0;
     real_type const d0{ closest_point_standard( epsi, CD, ell, qx, qy, S0 ) };
-    real_type const d1{ closest_point_QC( epsi, CDS, L-ell, qx, qy, X, Y, S ) };
-    if ( d0 < d1 ) {
+    real_type const d1{ closest_point_QC( epsi, CDS, L - ell, qx, qy, X, Y, S ) };
+    if ( d0 < d1 )
+    {
       S = S0;
       CD.eval( S, X, Y );
       return d0;
@@ -489,47 +547,54 @@ namespace G2lib {
     S += ell;
     return d1;
   }
-  #endif
+#endif
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  integer
-  ClothoidCurve::closest_point_ISO(
+  integer ClothoidCurve::closest_point_ISO(
     real_type const qx,
     real_type const qy,
     real_type &     X,
     real_type &     Y,
     real_type &     S,
     real_type &     T,
-    real_type &     dst
-  ) const {
+    real_type &     dst ) const
+  {
     constexpr real_type epsi{ 1e-10 };
 
     // check if flex is inside curve, if so then split
 
-    if ( m_CD.m_kappa0*m_CD.m_dk >= 0 ) { // flex on the left
+    if ( m_CD.m_kappa0 * m_CD.m_dk >= 0 )
+    {  // flex on the left
       dst = closest_point1( epsi, m_CD, m_L, qx, qy, X, Y, S );
-    } else if ( m_CD.m_dk*m_CD.kappa(m_L) <= 0 ) { // flex on the right, reverse curve
+    }
+    else if ( m_CD.m_dk * m_CD.kappa( m_L ) <= 0 )
+    {  // flex on the right, reverse curve
       ClothoidData CD1;
       m_CD.reverse( m_L, CD1 );
       dst = closest_point1( epsi, CD1, m_L, qx, qy, X, Y, S );
-      S   = m_L-S;
-    } else {
+      S   = m_L - S;
+    }
+    else
+    {
       // flex inside, split clothoid
-      ClothoidData C0, C1;
+      ClothoidData    C0, C1;
       real_type const sflex{ m_CD.split_at_flex( C0, C1 ) };
 
-      real_type const d0{ closest_point1( epsi, C0, m_L-sflex, qx, qy, X, Y, S  ) };
+      real_type const d0{ closest_point1( epsi, C0, m_L - sflex, qx, qy, X, Y, S ) };
       real_type       x1, y1, s1;
       real_type       d1{ closest_point1( epsi, C1, sflex, qx, qy, x1, y1, s1 ) };
 
-      if ( d1 < d0 ) {
+      if ( d1 < d0 )
+      {
         S   = sflex - s1;
         X   = x1;
         Y   = y1;
         dst = d1;
-      } else {
-        S  += sflex;
+      }
+      else
+      {
+        S += sflex;
         dst = d0;
       }
     }
@@ -538,30 +603,27 @@ namespace G2lib {
     nor_ISO( S, nx, ny );
     real_type const qxx{ qx - X };
     real_type const qyy{ qy - Y };
-    T = qxx * nx + qyy * ny; // signed distance
-    real_type const pt{ abs(qxx * ny - qyy * nx) };
-    G2LIB_DEBUG_MESSAGE(
-      "ClothoidCurve::closest_point_ISO: ||P-P0|| = {}, |(P-P0).T| = {}\n",
-      dst, pt
-    );
-    return pt > GLIB2_TOL_ANGLE*dst ? -1 : 1;
+    T = qxx * nx + qyy * ny;  // signed distance
+    real_type const pt{ abs( qxx * ny - qyy * nx ) };
+    G2LIB_DEBUG_MESSAGE( "ClothoidCurve::closest_point_ISO: ‖P-P₀ = {}, |(P-P₀)•T| = {}\n", dst, pt );
+    return pt > GLIB2_TOL_ANGLE * dst ? -1 : 1;
   }
 
-/*
-+      // approx clothoid with a circle
-       real_type theta, kappa;
-       eval( S, theta, kappa, X, Y );
--      real_type dx   = X-x;
--      real_type dy   = Y-y;
--      real_type d    = hypot( dx, dy );
--      real_type tphi = theta - atan2( dy, dx );
--      real_type f    = d*cos(tphi);
--      real_type g    = d*sin(tphi);
--      real_type df   = 1-kappa*g;
--      real_type ddf  = -kappa*f*(dk+kappa);
--
-*/
+  /*
+  +      // approx clothoid with a circle
+         real_type theta, kappa;
+         eval( S, theta, kappa, X, Y );
+  -      real_type dx   = X-x;
+  -      real_type dy   = Y-y;
+  -      real_type d    = hypot( dx, dy );
+  -      real_type tphi = theta - atan2( dy, dx );
+  -      real_type f    = d*cos(tphi);
+  -      real_type g    = d*sin(tphi);
+  -      real_type df   = 1-kappa*g;
+  -      real_type ddf  = -kappa*f*(dk+kappa);
+  -
+  */
 
-}
+}  // namespace G2lib
 
 // EOF: ClothoidDistance.cc

@@ -47,18 +47,13 @@ namespace Utils
       virtual void execute() = 0;
     };
     // Implementazione concreta di Task
-    template <typename Callable>
-    class ConcreteTask : public Task
+    template <typename Callable> class ConcreteTask : public Task
     {
       Callable callable;
 
     public:
       explicit ConcreteTask( Callable && callable ) : callable( std::move( callable ) ) {}
-      void
-      execute() override
-      {
-        callable();
-      }
+      void execute() override { callable(); }
     };
 
     typedef std::function<void( void )> FUN;
@@ -73,12 +68,12 @@ namespace Utils
 
     ThreadPoolBase() = default;
 
+    virtual ~ThreadPoolBase() = default;
+
     // virtual void exec( std::function<void()> && ) = 0;
     virtual void exec( FUN && ) = 0;
 
-    template <typename Func, typename... Args>
-    void
-    run( Func && func, Args &&... args )
+    template <typename Func, typename... Args> void run( Func && func, Args &&... args )
     {
       this->exec( std::bind( std::forward<Func>( func ), std::forward<Args>( args )... ) );
     }
@@ -109,8 +104,7 @@ namespace Utils
       public:
         TaskData( std::function<void()> && f ) : m_fun( std::move( f ) ) {}
         TaskData( std::function<void()> & f ) : m_fun( f ) {}
-        void
-        operator()()
+        void operator()()
         {
           m_fun();
           delete this;
@@ -137,16 +131,14 @@ namespace Utils
       {
       }
 
-      void
-      push( TaskData * task )
+      void push( TaskData * task )
       {
         std::lock_guard<std::mutex> lock( m_mutex );
         m_queue_data[m_push_ptr] = task;
         if ( ++m_push_ptr == m_size ) m_push_ptr = 0;
       }
 
-      TaskData *
-      pop()
+      TaskData * pop()
       {
         std::lock_guard<std::mutex> lock( m_mutex );
         unsigned                    ipos{ m_pop_ptr };
@@ -154,44 +146,35 @@ namespace Utils
         return m_queue_data[ipos];
       }
 
-      unsigned
-      size() const
+      unsigned size() const
       {
         std::lock_guard<std::mutex> lock( m_mutex );
         return ( ( m_push_ptr + m_size ) - m_pop_ptr ) % m_size;
       }
 
-      bool
-      empty() const
+      bool empty() const
       {
         std::lock_guard<std::mutex> lock( m_mutex );
         return m_push_ptr == m_pop_ptr;
       }
 
-      bool
-      is_full() const
+      bool is_full() const
       {
         std::lock_guard<std::mutex> lock( m_mutex );
         unsigned                    sz = ( ( m_push_ptr + m_size ) - m_pop_ptr ) % m_size;
         return sz >= m_capacity;
       }
 
-      unsigned
-      capacity() const
-      {
-        return m_capacity;
-      }
+      unsigned capacity() const { return m_capacity; }
 
       //! clear queue and delete tasks
-      void
-      clear()
+      void clear()
       {
         std::lock_guard<std::mutex> lock( m_mutex );
         while ( m_push_ptr != m_pop_ptr ) delete pop();
       }
 
-      void
-      resize( unsigned capacity )
+      void resize( unsigned capacity )
       {
         std::lock_guard<std::mutex> lock( m_mutex );
         while ( m_push_ptr != m_pop_ptr ) delete pop();

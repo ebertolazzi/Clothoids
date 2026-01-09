@@ -16,28 +16,27 @@ class BurdenAndFaires : public NonlinearSystem
 {
 public:
   BurdenAndFaires()
-    : NonlinearSystem( "Burden and Faires example 1",
-                       "@book{burden2005,\n"
-                       "  author    = {Burden, R. and Faires, J.},\n"
-                       "  title     = {Numerical Analysis},\n"
-                       "  year      = {2005},\n"
-                       "  pages     = {597--640},\n"
-                       "  publisher = {Thomson Brooks/Cole}\n"
-                       "}\n",
-                       3 )
+    : NonlinearSystem(
+        "Burden and Faires example 1",
+        "@book{burden2005,\n"
+        "  author    = {Burden, R. and Faires, J.},\n"
+        "  title     = {Numerical Analysis},\n"
+        "  year      = {2005},\n"
+        "  pages     = {597--640},\n"
+        "  publisher = {Thomson Brooks/Cole}\n"
+        "}\n",
+        3 )
   {
   }
 
-  virtual void
-  evaluate( Vector const & x, Vector & f ) const override
+  virtual void evaluate( Vector const & x, Vector & f ) const override
   {
     f( 0 ) = 3 * x( 0 ) - cos( x( 1 ) * x( 2 ) ) - 0.5;
     f( 1 ) = x( 0 ) * x( 0 ) - 81 * power2( x( 1 ) + 0.1 ) + sin( x( 2 ) ) + 1.06;
     f( 2 ) = exp( -x( 0 ) * x( 1 ) ) + 20 * x( 2 ) + ( 10 * m_pi - 3 ) / 3;
   }
 
-  virtual void
-  jacobian( Vector const & x, SparseMatrix & J ) const override
+  virtual void jacobian( Vector const & x, SparseMatrix & J ) const override
   {
     J.resize( n, n );
     J.setZero();
@@ -57,8 +56,7 @@ public:
     J.makeCompressed();
   }
 
-  virtual void
-  initial_points( vector<Vector> & x_vec ) const override
+  virtual void initial_points( vector<Vector> & x_vec ) const override
   {
     x_vec.resize( 1 );
     auto & x0{ x_vec[0] };

@@ -18,21 +18,21 @@ class Box3 : public NonlinearSystem
 
 public:
   Box3()
-    : NonlinearSystem( "Box3",
-                       "@book{brent2013,\n"
-                       "  author    = {Brent, R.P.},\n"
-                       "  title     = {Algorithms for Minimization Without Derivatives},\n"
-                       "  isbn      = {9780486143682},\n"
-                       "  series    = {Dover Books on Mathematics},\n"
-                       "  year      = {2013},\n"
-                       "  publisher = {Dover Publications}\n"
-                       "}\n",
-                       3 )
+    : NonlinearSystem(
+        "Box3",
+        "@book{brent2013,\n"
+        "  author    = {Brent, R.P.},\n"
+        "  title     = {Algorithms for Minimization Without Derivatives},\n"
+        "  isbn      = {9780486143682},\n"
+        "  series    = {Dover Books on Mathematics},\n"
+        "  year      = {2013},\n"
+        "  publisher = {Dover Publications}\n"
+        "}\n",
+        3 )
   {
   }
 
-  virtual void
-  evaluate( Vector const & x, Vector & f ) const override
+  virtual void evaluate( Vector const & x, Vector & f ) const override
   {
     f( 0 ) = f( 1 ) = f( 2 ) = 0;
     for ( integer i = 0; i < 10; ++i )
@@ -50,8 +50,7 @@ public:
     }
   }
 
-  virtual void
-  jacobian( Vector const & x, SparseMatrix & J ) const override
+  virtual void jacobian( Vector const & x, SparseMatrix & J ) const override
   {
     J.resize( n, n );
     J.setZero();
@@ -87,8 +86,7 @@ public:
     J = J_full.sparseView();
   }
 
-  virtual void
-  exact_solution( vector<Vector> & x_vec ) const override
+  virtual void exact_solution( vector<Vector> & x_vec ) const override
   {
     x_vec.resize( 1 );
     auto & x0{ x_vec[0] };
@@ -96,8 +94,7 @@ public:
     x0 << 1, 10, 1;
   }
 
-  virtual void
-  initial_points( vector<Vector> & x_vec ) const override
+  virtual void initial_points( vector<Vector> & x_vec ) const override
   {
     x_vec.resize( 1 );
     auto & x0{ x_vec[0] };

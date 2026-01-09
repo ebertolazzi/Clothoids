@@ -12,23 +12,23 @@
  | - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 \*/
 
-#define Bohachevsky_BIBTEX                                                                                             \
-  "@book{Michalewicz:1996,\n"                                                                                          \
-  "  author = {Michalewicz, Zbigniew},\n"                                                                              \
-  "  title = {Genetic Algorithms + Data Structures = Evolution Programs (3rd "                                         \
-  "Ed.)},\n"                                                                                                           \
-  "  year = {1996},\n"                                                                                                 \
-  "  isbn = {3-540-60676-9},\n"                                                                                        \
-  "  publisher = {Springer-Verlag},\n"                                                                                 \
-  "  address = {Berlin, Heidelberg},\n"                                                                                \
-  "}\n\n"                                                                                                              \
-  "@book{brent2002algorithms,\n"                                                                                       \
-  "  author={Brent, R.P.},\n"                                                                                          \
-  "  title={Algorithms for Minimization Without Derivatives},\n"                                                       \
-  "  year={2002},\n"                                                                                                   \
-  "  isbn={9780486419985},\n"                                                                                          \
-  "  series={Dover Books on Mathematics},\n"                                                                           \
-  "  publisher={Dover Publications}\n"                                                                                 \
+#define Bohachevsky_BIBTEX                                                     \
+  "@book{Michalewicz:1996,\n"                                                  \
+  "  author = {Michalewicz, Zbigniew},\n"                                      \
+  "  title = {Genetic Algorithms + Data Structures = Evolution Programs (3rd " \
+  "Ed.)},\n"                                                                   \
+  "  year = {1996},\n"                                                         \
+  "  isbn = {3-540-60676-9},\n"                                                \
+  "  publisher = {Springer-Verlag},\n"                                         \
+  "  address = {Berlin, Heidelberg},\n"                                        \
+  "}\n\n"                                                                      \
+  "@book{brent2002algorithms,\n"                                               \
+  "  author={Brent, R.P.},\n"                                                  \
+  "  title={Algorithms for Minimization Without Derivatives},\n"               \
+  "  year={2002},\n"                                                           \
+  "  isbn={9780486419985},\n"                                                  \
+  "  series={Dover Books on Mathematics},\n"                                   \
+  "  publisher={Dover Publications}\n"                                         \
   "}\n"
 
 class BohachevskyN1 : public NonlinearSystem
@@ -36,8 +36,7 @@ class BohachevskyN1 : public NonlinearSystem
 public:
   BohachevskyN1() : NonlinearSystem( "BohachevskyN1", Bohachevsky_BIBTEX, 2 ) {}
 
-  virtual void
-  evaluate( Vector const & x, Vector & f ) const override
+  virtual void evaluate( Vector const & x, Vector & f ) const override
   {
     real_type x1 = x( 0 );
     real_type x2 = x( 1 );
@@ -45,8 +44,7 @@ public:
     f( 1 )       = 4.0 * x2 + 1.6 * m_pi * sin( 4.0 * m_pi * x2 );
   }
 
-  virtual void
-  jacobian( Vector const & x, SparseMatrix & J ) const override
+  virtual void jacobian( Vector const & x, SparseMatrix & J ) const override
   {
     J.resize( n, n );
     J.setZero();
@@ -61,8 +59,7 @@ public:
     J.makeCompressed();
   }
 
-  virtual void
-  exact_solution( vector<Vector> & x_vec ) const override
+  virtual void exact_solution( vector<Vector> & x_vec ) const override
   {
     x_vec.resize( 1 );
     auto & x0{ x_vec[0] };
@@ -70,8 +67,7 @@ public:
     x0.setZero();
   }
 
-  virtual void
-  initial_points( vector<Vector> & x_vec ) const override
+  virtual void initial_points( vector<Vector> & x_vec ) const override
   {
     x_vec.resize( 1 );
     auto & x0{ x_vec[0] };
@@ -89,8 +85,7 @@ class BohachevskyN2 : public NonlinearSystem
 public:
   BohachevskyN2() : NonlinearSystem( "BohachevskyN2", Bohachevsky_BIBTEX, 2 ) {}
 
-  virtual void
-  evaluate( Vector const & x, Vector & f ) const override
+  virtual void evaluate( Vector const & x, Vector & f ) const override
   {
     real_type x1 = x( 0 );
     real_type x2 = x( 1 );
@@ -98,8 +93,7 @@ public:
     f( 1 )       = 4 * x2 + 1.2 * m_pi * cos( 3 * m_pi * x1 ) * sin( 4 * m_pi * x2 );
   }
 
-  virtual void
-  jacobian( Vector const & x, SparseMatrix & J ) const override
+  virtual void jacobian( Vector const & x, SparseMatrix & J ) const override
   {
     J.resize( n, n );
     J.setZero();
@@ -115,8 +109,7 @@ public:
     J.makeCompressed();
   }
 
-  virtual void
-  exact_solution( vector<Vector> & x_vec ) const override
+  virtual void exact_solution( vector<Vector> & x_vec ) const override
   {
     x_vec.resize( 1 );
     auto & x0{ x_vec[0] };
@@ -124,8 +117,7 @@ public:
     x0.setZero();
   }
 
-  virtual void
-  initial_points( vector<Vector> & x_vec ) const override
+  virtual void initial_points( vector<Vector> & x_vec ) const override
   {
     x_vec.resize( 1 );
     auto & x0{ x_vec[0] };
@@ -143,8 +135,7 @@ class BohachevskyN3 : public NonlinearSystem
 public:
   BohachevskyN3() : NonlinearSystem( "BohachevskyN3", Bohachevsky_BIBTEX, 2 ) {}
 
-  virtual void
-  evaluate( Vector const & x, Vector & f ) const override
+  virtual void evaluate( Vector const & x, Vector & f ) const override
   {
     real_type x1 = x( 0 );
     real_type x2 = x( 1 );
@@ -152,8 +143,7 @@ public:
     f( 1 )       = 4.0 * x2 - 4.0 * m_pi * sin( 4 * m_pi * x2 );
   }
 
-  virtual void
-  jacobian( Vector const & x, SparseMatrix & J ) const override
+  virtual void jacobian( Vector const & x, SparseMatrix & J ) const override
   {
     J.resize( n, n );
     J.setZero();
@@ -165,8 +155,7 @@ public:
     J.makeCompressed();
   }
 
-  virtual void
-  exact_solution( vector<Vector> & x_vec ) const override
+  virtual void exact_solution( vector<Vector> & x_vec ) const override
   {
     x_vec.resize( 1 );
     auto & x0{ x_vec[0] };
@@ -174,8 +163,7 @@ public:
     x0.setZero();
   }
 
-  virtual void
-  initial_points( vector<Vector> & x_vec ) const override
+  virtual void initial_points( vector<Vector> & x_vec ) const override
   {
     x_vec.resize( 1 );
     auto & x0{ x_vec[0] };

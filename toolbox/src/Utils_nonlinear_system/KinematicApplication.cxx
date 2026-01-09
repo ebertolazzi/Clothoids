@@ -15,44 +15,45 @@
 class KinematicApplication : public NonlinearSystem
 {
   real_type a1_0, a2_0, a3_0, a4_0, a5_0, a6_0, a7_0, a8_0, a9_0, a10_0, a11_0, a12_0, a13_0, a14_0, a15_0, a16_0,
-      a17_0;
+    a17_0;
 
   real_type a1_1, a2_1, a3_1, a4_1, a5_1, a6_1, a7_1, a8_1, a9_1, a10_1, a11_1, a12_1, a13_1, a14_1, a15_1, a16_1,
-      a17_1;
+    a17_1;
 
   real_type a1_2, a2_2, a3_2, a4_2, a5_2, a6_2, a7_2, a8_2, a9_2, a10_2, a11_2, a12_2, a13_2, a14_2, a15_2, a16_2,
-      a17_2;
+    a17_2;
 
   real_type a1_3, a2_3, a3_3, a4_3, a5_3, a6_3, a7_3, a8_3, a9_3, a10_3, a11_3, a12_3, a13_3, a14_3, a15_3, a16_3,
-      a17_3;
+    a17_3;
 
 public:
   KinematicApplication()
-    : NonlinearSystem( "Kinematic Application",
-                       "@article{Morgan:1987,\n"
-                       "  author  = {Alexander Morgan and Andrew Sommese},\n"
-                       "  title   = {Computing all solutions to polynomial\n"
-                       "             systems using homotopy continuation},\n"
-                       "  journal = {Applied Mathematics and Computation},\n"
-                       "  volume  = {24},\n"
-                       "  number  = {2},\n"
-                       "  pages   = {115--138},\n"
-                       "  year    = {1987},\n"
-                       "  doi     = {10.1016/0096-3003(87)90064-6}\n"
-                       "}\n\n"
-                       "@article{Hentenryck:1997,\n"
-                       "  author  = {Van Hentenryck, P. and McAllester, D. "
-                       "and Kapur, D.},\n"
-                       "  title   = {Solving Polynomial Systems Using a "
-                       "Branch and Prune Approach},\n"
-                       "  journal = {SIAM Journal on Numerical Analysis},\n"
-                       "  year    = {1997},\n"
-                       "  volume  = {34},\n"
-                       "  number  = {2},\n"
-                       "  pages   = {797-827},\n"
-                       "  doi = {10.1137/S0036142995281504}\n"
-                       "}\n",
-                       8 )
+    : NonlinearSystem(
+        "Kinematic Application",
+        "@article{Morgan:1987,\n"
+        "  author  = {Alexander Morgan and Andrew Sommese},\n"
+        "  title   = {Computing all solutions to polynomial\n"
+        "             systems using homotopy continuation},\n"
+        "  journal = {Applied Mathematics and Computation},\n"
+        "  volume  = {24},\n"
+        "  number  = {2},\n"
+        "  pages   = {115--138},\n"
+        "  year    = {1987},\n"
+        "  doi     = {10.1016/0096-3003(87)90064-6}\n"
+        "}\n\n"
+        "@article{Hentenryck:1997,\n"
+        "  author  = {Van Hentenryck, P. and McAllester, D. "
+        "and Kapur, D.},\n"
+        "  title   = {Solving Polynomial Systems Using a "
+        "Branch and Prune Approach},\n"
+        "  journal = {SIAM Journal on Numerical Analysis},\n"
+        "  year    = {1997},\n"
+        "  volume  = {34},\n"
+        "  number  = {2},\n"
+        "  pages   = {797-827},\n"
+        "  doi = {10.1137/S0036142995281504}\n"
+        "}\n",
+        8 )
   {
     a1_0  = -0.249150680;
     a2_0  = +1.609135400;
@@ -127,8 +128,7 @@ public:
     a17_3 = -0.69686809;
   }
 
-  virtual void
-  evaluate( Vector const & x, Vector & f ) const override
+  virtual void evaluate( Vector const & x, Vector & f ) const override
   {
     f( 0 ) = x( 0 ) * x( 0 ) + x( 1 ) * x( 1 ) - 1;
     f( 1 ) = x( 1 ) * x( 1 ) + x( 2 ) * x( 2 ) - 1;
@@ -152,8 +152,7 @@ public:
              a15_3 * x( 6 ) + a16_3 * x( 7 ) + a17_3;
   }
 
-  virtual void
-  jacobian( Vector const & x, SparseMatrix & J ) const override
+  virtual void jacobian( Vector const & x, SparseMatrix & J ) const override
   {
     J.resize( n, n );
     J.setZero();
@@ -213,8 +212,7 @@ public:
     J.makeCompressed();
   }
 
-  virtual void
-  initial_points( vector<Vector> & x_vec ) const override
+  virtual void initial_points( vector<Vector> & x_vec ) const override
   {
     x_vec.resize( 1 );
     auto & x0{ x_vec[0] };
@@ -222,14 +220,12 @@ public:
     x0.fill( 0.5 );
   }
 
-  virtual void
-  check_if_admissible( Vector const & x ) const override
+  virtual void check_if_admissible( Vector const & x ) const override
   {
     for ( integer i = 0; i < n; ++i ) UTILS_ASSERT( std::abs( x( i ) ) < 1000, "Bad range" );
   }
 
-  virtual void
-  bounding_box( Vector & L, Vector & U ) const override
+  virtual void bounding_box( Vector & L, Vector & U ) const override
   {
     U.fill( 1000 );
     L.fill( -10000 );

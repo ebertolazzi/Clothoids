@@ -18,13 +18,8 @@
 \*--------------------------------------------------------------------------*/
 
 //
-// file: ThreadUtils.hxx
+// file: ThreadUtils.hxx (header-only)
 //
-
-#include <functional>
-#include <iostream>
-#include <type_traits>
-#include <utility>
 
 namespace Utils
 {
@@ -39,25 +34,38 @@ namespace Utils
 #define UTILS_MUTEX Utils::WinCriticalSection
 #define UTILS_SPINLOCK Utils::WinCriticalSection
 #define UTILS_BARRIER Utils::WinBarrier
-#else
-#define UTILS_SEMAPHORE Utils::SimpleSemaphore
-#define UTILS_MUTEX std::mutex
-#define UTILS_SPINLOCK Utils::SpinLock
-#define UTILS_BARRIER Utils::Barrier
-#endif
-
-#ifdef UTILS_OS_WINDOWS
 
   class WinMutex
   {
     HANDLE m_mutex;
 
   public:
-    WinMutex();
-    ~WinMutex() { CloseHandle( m_mutex ); }
+    WinMutex() : m_mutex( NULL )
+    {
+      m_mutex = CreateMutex(
+        NULL,   // no security descriptor
+        FALSE,  // mutex not owned
+        NULL    // object name
+      );
+      UTILS_ASSERT( m_mutex != NULL, "WinMutex(): error: {}.\n", GetLastError() );
+    }
 
-    void lock();
-    void unlock();
+    ~WinMutex()
+    {
+      if ( m_mutex ) CloseHandle( m_mutex );
+    }
+
+    void lock()
+    {
+      DWORD res = WaitForSingleObject( m_mutex, INFINITE );
+      UTILS_ASSERT0( res == WAIT_OBJECT_0, "WinMutex::lock, WAIT_TIMEOUT" );
+    }
+
+    void unlock()
+    {
+      DWORD res = ReleaseMutex( m_mutex );
+      UTILS_ASSERT0( res == WAIT_OBJECT_0, "WinMutex::unlock, WAIT_TIMEOUT" );
+    }
   };
 
   class WinCriticalSection
@@ -67,37 +75,16 @@ namespace Utils
   public:
     WinCriticalSection() { InitializeCriticalSection( &m_critical ); }
     ~WinCriticalSection() { DeleteCriticalSection( &m_critical ); }
-    void
-    lock()
-    {
-      EnterCriticalSection( &m_critical );
-    }
-    void
-    unlock()
-    {
-      LeaveCriticalSection( &m_critical );
-    }
-    bool
-    try_lock()
-    {
-      return TryEnterCriticalSection( &m_critical ) ? true : false;
-    }
-    void
-    wait()
+    void lock() { EnterCriticalSection( &m_critical ); }
+    void unlock() { LeaveCriticalSection( &m_critical ); }
+    bool try_lock() { return TryEnterCriticalSection( &m_critical ) ? true : false; }
+    void wait()
     {
       lock();
       unlock();
     }
-    CRITICAL_SECTION const &
-    data() const
-    {
-      return m_critical;
-    }
-    CRITICAL_SECTION &
-    data()
-    {
-      return m_critical;
-    }
+    CRITICAL_SECTION const & data() const { return m_critical; }
+    CRITICAL_SECTION &       data() { return m_critical; }
   };
 
   class WinSemaphore
@@ -108,22 +95,9 @@ namespace Utils
     unsigned           m_waiting_green;
     unsigned           m_waiting_red;
 
-    // void notify_one() noexcept { ReleaseSemaphore( m_semaphore, 1, NULL ); }
-    void
-    notify_one() noexcept
-    {
-      WakeConditionVariable( &m_condition );
-    }
-    void
-    notify_all() noexcept
-    {
-      WakeAllConditionVariable( &m_condition );
-    }
-    void
-    wait_cond() noexcept
-    {
-      SleepConditionVariableCS( &m_condition, &m_critical.data(), INFINITE );
-    }
+    void notify_one() noexcept { WakeConditionVariable( &m_condition ); }
+    void notify_all() noexcept { WakeAllConditionVariable( &m_condition ); }
+    void wait_cond() noexcept { SleepConditionVariableCS( &m_condition, &m_critical.data(), INFINITE ); }
 
   public:
     WinSemaphore() : m_is_red( false ), m_waiting_green( 0 ), m_waiting_red( 0 )
@@ -133,11 +107,7 @@ namespace Utils
 
     ~WinSemaphore() {}
 
-    //!
-    //! unblock semaphore
-    //!
-    void
-    green() noexcept
+    void green() noexcept
     {
       m_critical.lock();
       m_is_red = false;
@@ -148,11 +118,7 @@ namespace Utils
         notify_one();
     }
 
-    //!
-    //! block semaphore
-    //!
-    void
-    red() noexcept
+    void red() noexcept
     {
       m_critical.lock();
       m_is_red = true;
@@ -163,11 +129,7 @@ namespace Utils
         notify_one();
     }
 
-    //!
-    //! wait until m_count <= 0
-    //!
-    void
-    wait()
+    void wait()
     {
       m_critical.lock();
       ++m_waiting_green;
@@ -176,11 +138,7 @@ namespace Utils
       m_critical.unlock();
     }
 
-    //!
-    //! wait until m_count > 0
-    //!
-    void
-    wait_red()
+    void wait_red()
     {
       m_critical.lock();
       ++m_waiting_red;
@@ -196,51 +154,32 @@ namespace Utils
     WinCriticalSection m_critical;
     CONDITION_VARIABLE m_condition;
 
-    // void notify_one() noexcept { WakeConditionVariable( &m_condition ); }
-    void
-    notify_all() noexcept
-    {
-      WakeAllConditionVariable( &m_condition );
-    }
-    void
-    wait_cond() noexcept
-    {
-      SleepConditionVariableCS( &m_condition, &m_critical.data(), INFINITE );
-    }
+    void notify_all() noexcept { WakeAllConditionVariable( &m_condition ); }
+    void wait_cond() noexcept { SleepConditionVariableCS( &m_condition, &m_critical.data(), INFINITE ); }
 
   public:
     WinBarrier() : m_to_be_done( 0 ) {}
 
-    void
-    setup( int nthreads )
-    {
-      m_to_be_done = nthreads;
-    }
+    void setup( int nthreads ) { m_to_be_done = nthreads; }
 
-    void
-    count_down()
+    void count_down()
     {
       m_critical.lock();
-      if ( --m_to_be_done <= 0 ) notify_all();  // wake up all tread
+      if ( --m_to_be_done <= 0 ) notify_all();
       m_critical.unlock();
     }
 
-    void
-    wait()
+    void wait()
     {
       m_critical.lock();
       while ( m_to_be_done > 0 ) wait_cond();
       m_critical.unlock();
     }
 
-    void
-    count_down_and_wait()
+    void count_down_and_wait()
     {
       m_critical.lock();
-      if ( --m_to_be_done <= 0 )
-      {
-        notify_all();  // wake up all tread
-      }
+      if ( --m_to_be_done <= 0 ) { notify_all(); }
       else
       {
         while ( m_to_be_done > 0 ) wait_cond();
@@ -249,6 +188,11 @@ namespace Utils
     }
   };
 
+#else
+#define UTILS_SEMAPHORE Utils::SimpleSemaphore
+#define UTILS_MUTEX std::mutex
+#define UTILS_SPINLOCK Utils::SpinLock
+#define UTILS_BARRIER Utils::Barrier
 #endif
 
   /*\
@@ -269,29 +213,19 @@ namespace Utils
     SpinLock( SpinLock const & ) = delete;
     ~SpinLock()                  = default;
 
-    void
-    wait()
+    void wait()
     {
       while ( m_lock.load( std::memory_order_acquire ) ) std::this_thread::yield();
     }
 
-    void
-    lock()
+    void lock()
     {
       while ( m_lock.exchange( true, std::memory_order_acquire ) ) std::this_thread::yield();
     }
 
-    bool
-    try_lock()
-    {
-      return !m_lock.exchange( true, std::memory_order_acquire );
-    }
+    bool try_lock() { return !m_lock.exchange( true, std::memory_order_acquire ); }
 
-    void
-    unlock()
-    {
-      m_lock.store( false, std::memory_order_release );
-    }
+    void unlock() { m_lock.store( false, std::memory_order_release ); }
   };
 
   /*\
@@ -315,14 +249,9 @@ namespace Utils
 
     explicit SpinLock_barrier() : m_count( 0 ), m_generation( 0 ), m_count_reset_value( 0 ) {}
 
-    void
-    setup( unsigned count )
-    {
-      m_count_reset_value = m_count = count;
-    }
+    void setup( unsigned count ) { m_count_reset_value = m_count = count; }
 
-    void
-    count_down()
+    void count_down()
     {
       unsigned gen = m_generation.load();
       if ( --m_count == 0 )
@@ -332,15 +261,13 @@ namespace Utils
       }
     }
 
-    void
-    wait()
+    void wait()
     {
       unsigned gen = m_generation.load();
       while ( ( gen == m_generation ) && ( m_count != 0 ) ) std::this_thread::yield();
     }
 
-    void
-    count_down_and_wait()
+    void count_down_and_wait()
     {
       unsigned gen = m_generation.load();
       if ( --m_count == 0 )
@@ -368,34 +295,24 @@ namespace Utils
   public:
     Barrier() : m_to_be_done( 0 ) {}
 
-    void
-    setup( int nthreads )
-    {
-      m_to_be_done = nthreads;
-    }
+    void setup( int nthreads ) { m_to_be_done = nthreads; }
 
-    void
-    count_down()
+    void count_down()
     {
       std::unique_lock<std::mutex> lck( m_mtx );
-      if ( --m_to_be_done <= 0 ) m_cond.notify_all();  // wake up all tread
+      if ( --m_to_be_done <= 0 ) m_cond.notify_all();
     }
 
-    void
-    wait()
+    void wait()
     {
       std::unique_lock<std::mutex> lck( m_mtx );
       m_cond.wait( lck, [&]() -> bool { return m_to_be_done <= 0; } );
     }
 
-    void
-    count_down_and_wait()
+    void count_down_and_wait()
     {
       std::unique_lock<std::mutex> lck( m_mtx );
-      if ( --m_to_be_done <= 0 )
-      {
-        m_cond.notify_all();  // wake up all tread
-      }
+      if ( --m_to_be_done <= 0 ) { m_cond.notify_all(); }
       else
       {
         m_cond.wait( lck, [&]() -> bool { return m_to_be_done <= 0; } );
@@ -424,11 +341,7 @@ namespace Utils
   public:
     SimpleSemaphore() noexcept : m_is_red( false ), m_waiting_green( 0 ), m_waiting_red( 0 ) {}
 
-    //!
-    //! unblock semaphore
-    //!
-    void
-    green() noexcept
+    void green() noexcept
     {
       std::unique_lock<std::mutex> lock( m_mutex );
       m_is_red = false;
@@ -438,11 +351,7 @@ namespace Utils
         m_cv_green.notify_one();
     }
 
-    //!
-    //! block semaphore
-    //!
-    void
-    red() noexcept
+    void red() noexcept
     {
       std::unique_lock<std::mutex> lock( m_mutex );
       m_is_red = true;
@@ -452,11 +361,7 @@ namespace Utils
         m_cv_red.notify_one();
     }
 
-    //!
-    //! wait until m_count <= 0
-    //!
-    void
-    wait() noexcept
+    void wait() noexcept
     {
       std::unique_lock<std::mutex> lock( m_mutex );
       ++m_waiting_green;
@@ -464,11 +369,7 @@ namespace Utils
       --m_waiting_green;
     }
 
-    //!
-    //! wait until m_count > 0
-    //!
-    void
-    wait_red() noexcept
+    void wait_red() noexcept
     {
       std::unique_lock<std::mutex> lock( m_mutex );
       ++m_waiting_red;
@@ -496,7 +397,20 @@ namespace Utils
     std::mutex              m_mutex;
     std::condition_variable m_cv;
 
-    void worker_loop();
+    void worker_loop()
+    {
+      while ( m_active )
+      {
+        std::unique_lock lk( m_mutex );
+        m_cv.wait( lk, [this] { return this->m_do_job; } );
+        if ( !m_active ) break;
+        m_running = true;
+        m_job();
+        m_do_job  = false;
+        m_running = false;
+        m_cv.notify_one();
+      }
+    }
 
   public:
     WorkerLoop( WorkerLoop && )                  = delete;
@@ -504,38 +418,56 @@ namespace Utils
     WorkerLoop & operator=( WorkerLoop const & ) = delete;
     WorkerLoop & operator=( WorkerLoop && )      = delete;
 
-    WorkerLoop();
-    ~WorkerLoop();
+    WorkerLoop() : m_active( true ), m_running( false ), m_do_job( false ), m_job( []() -> void {} )
+    {
+      m_running_thread = std::thread( &WorkerLoop::worker_loop, this );
+    }
 
-    void exec( std::function<void()> & fun );
-    void exec();
-    void wait();
+    ~WorkerLoop()
+    {
+      m_active  = false;
+      m_running = true;
+      m_do_job  = true;
+      m_cv.notify_one();
+      m_running_thread.join();
+    }
 
-    template <typename Func, typename... Args>
-    void
-    run( Func && func, Args &&... args )
+    void exec( std::function<void()> & fun )
+    {
+      std::unique_lock lk( m_mutex );
+      m_cv.wait( lk, [this] { return !this->m_do_job; } );
+      m_cv.wait( lk, [this] { return !this->m_running; } );
+      m_job    = fun;
+      m_do_job = true;
+      m_cv.notify_one();
+    }
+
+    void exec()
+    {
+      std::unique_lock lk( m_mutex );
+      m_cv.wait( lk, [this] { return !this->m_do_job; } );
+      m_cv.wait( lk, [this] { return !this->m_running; } );
+      m_do_job = true;
+      m_cv.notify_one();
+    }
+
+    void wait()
+    {
+      std::unique_lock lk( m_mutex );
+      m_cv.wait( lk, [this] { return !this->m_do_job; } );
+      m_cv.notify_one();
+    }
+
+    template <typename Func, typename... Args> void run( Func && func, Args &&... args )
     {
       std::function<void()> f = std::bind( func, std::forward<Args>( args )... );
       this->exec( f );
     }
 
-    std::thread::id
-    get_id() const
-    {
-      return m_running_thread.get_id();
-    }
-    std::thread const &
-    get_thread() const
-    {
-      return m_running_thread;
-    }
-    std::thread &
-    get_thread()
-    {
-      return m_running_thread;
-    }
+    std::thread::id     get_id() const { return m_running_thread.get_id(); }
+    std::thread const & get_thread() const { return m_running_thread; }
+    std::thread &       get_thread() { return m_running_thread; }
   };
-
 
   /*\
    |  __      __    _ _ __      __       _
@@ -547,34 +479,18 @@ namespace Utils
   class WaitWorker
   {
   private:
-#ifdef UTILS_OS_WINDOWS
-    std::atomic<int> n_worker;
-#else
     std::atomic<int> n_worker{ 0 };
-#endif
-  public:
-#ifdef UTILS_OS_WINDOWS
-    WaitWorker() { n_worker = 0; }
-#else
-    WaitWorker() = default;
-#endif
 
-    void
-    wait()
+  public:
+    WaitWorker() = default;
+
+    void wait()
     {
       while ( n_worker.load( std::memory_order_relaxed ) != 0 ) {}
     }
 
-    void
-    enter()
-    {
-      ++n_worker;
-    }
-    void
-    leave()
-    {
-      --n_worker;
-    }
+    void enter() { ++n_worker; }
+    void leave() { --n_worker; }
   };
 
   /*\
@@ -585,8 +501,7 @@ namespace Utils
    |                       |__/
   \*/
 
-  template <typename DATA>
-  class BinarySearch
+  template <typename DATA> class BinarySearch
   {
   private:
     using DATA_TYPE = std::pair<std::thread::id, DATA *>;
@@ -609,8 +524,7 @@ namespace Utils
       m_spin_write.wait();
     }
 
-    void
-    clear()
+    void clear()
     {
       m_spin_write.wait();
       for ( auto const & a : m_data ) delete a.second;
@@ -619,10 +533,9 @@ namespace Utils
       m_spin_write.wait();
     }
 
-    DATA *
-    search( std::thread::id const & id, bool & ok ) const
+    DATA * search( std::thread::id const & id, bool & ok ) const
     {
-      m_spin_write.wait();  // wait writing finished
+      m_spin_write.wait();
       m_worker_read.enter();
       ok = true;
 
@@ -632,9 +545,9 @@ namespace Utils
       {
         m_worker_read.leave();
         m_spin_write.lock();
-        m_worker_read.wait();  // wait all read finished
+        m_worker_read.wait();
         ok = false;
-        U  = m_data.size();  // MAI USATO
+        U  = m_data.size();
         m_data.resize( 1 );
         DATA_TYPE & dL = m_data[0];
         dL.first       = id;
@@ -667,9 +580,8 @@ namespace Utils
       }
       m_worker_read.leave();
 
-      // not found must insert
       m_spin_write.lock();
-      m_worker_read.wait();  // wait all read finished
+      m_worker_read.wait();
       ok = false;
       if ( dL.first < id ) ++L;
       U = m_data.size();
@@ -697,11 +609,7 @@ namespace Utils
    |           |_____|            |_|       |_____|
   \*/
 
-  /**
-   * Call some function at the end of the current block
-   */
-  template <class Destructor>
-  class at_scope_exit_impl
+  template <class Destructor> class at_scope_exit_impl
   {
     Destructor m_destructor;
     bool       m_active;
@@ -725,8 +633,7 @@ namespace Utils
       x.m_active = false;
     }
 
-    at_scope_exit_impl &
-    operator=( at_scope_exit_impl && x )
+    at_scope_exit_impl & operator=( at_scope_exit_impl && x )
     {
       m_destructor = std::move( x.m_destructor );
       m_active     = x.m_active;
@@ -740,134 +647,15 @@ namespace Utils
     }
   };
 
-  /*!
-   * Create a variable that when destructed at the end of the scope
-   * executes a destructor function.
-   *
-   * \tparam Destructor&& destructor
-   *         The destructor function, maybe a lambda function.
-   *
-   * Use like this:
-   *
-   * static int a = 0;
-   *
-   * { // Enter scope
-   *     ++a;
-   *     auto x1 = at_scope_exit([&](){ --a; }
-   *     // Do something, possibly throwing an exception
-   * } // x1 goes out of scope, 'delete a' is called.
-   */
-  template <class Function>
-  auto
-  at_scope_exit( Function && fun ) -> at_scope_exit_impl<Function>
+  template <class Function> auto at_scope_exit( Function && fun ) -> at_scope_exit_impl<Function>
   {
     return at_scope_exit_impl<Function>( std::forward<Function>( fun ) );
   }
 
-  template <class Function>
-  auto
-  at_scope_exit( Function const & fun ) -> at_scope_exit_impl<Function const &>
+  template <class Function> auto at_scope_exit( Function const & fun ) -> at_scope_exit_impl<Function const &>
   {
     return at_scope_exit_impl<Function const &>( fun );
   }
-
-#if 0
-
-  /*!
-   * Create a class that wrap std::function<T> into a non copyable object
-   *
-   */
-
-  // from https://coliru.stacked-crooked.com/a/933248d6a9f07094
-  template<typename T>
-  class unique_function : public std::function<T> {
-    template<typename Fn, typename En = void> struct wrapper;
-
-    // specialization for CopyConstructible Fn
-    template<typename Fn>
-    struct wrapper<Fn, std::enable_if_t< std::is_copy_constructible<Fn>::value >>
-    {
-      Fn fn;
-      template<typename... Args>
-      auto operator()(Args&&... args) { return fn(std::forward<Args>(args)...); }
-    };
-
-    // specialization for MoveConstructible-only Fn
-    template<typename Fn>
-    struct wrapper<Fn, std::enable_if_t< !std::is_copy_constructible<Fn>::value && std::is_move_constructible<Fn>::value >>
-    {
-      Fn fn;
-
-      wrapper(Fn&& fn) : fn(std::forward<Fn>(fn)) { }
-
-      wrapper(wrapper&&) = default;
-      wrapper& operator=(wrapper&&) = default;
-
-      // these two functions are instantiated by std::function
-      // and are never called
-      wrapper(const wrapper& rhs) : fn(const_cast<Fn&&>(rhs.fn)) { throw 0; } // hack to initialize fn for non-DefaultContructible types
-      
-      wrapper& operator=(wrapper&) { throw 0; return *this; }
-
-      template<typename... Args> auto operator()(Args&&... args) { return fn(std::forward<Args>(args)...); }
-    };
-
-    using base = std::function<T>;
-
-  public:
-    unique_function() noexcept = default;
-    unique_function(std::nullptr_t) noexcept : base(nullptr) { }
-
-    template<typename Fn>
-    unique_function(Fn&& f) : base(wrapper<Fn>{ std::forward<Fn>(f) }) { }
-
-    unique_function(unique_function&&) = default;
-    unique_function& operator=(unique_function&&) = default;
-
-    unique_function& operator=(std::nullptr_t) { base::operator=(nullptr); return *this; }
-
-    template<typename Fn>
-    unique_function& operator=(Fn&& f)
-    { base::operator=(wrapper<Fn>{ std::forward<Fn>(f) }); return *this; }
-
-    using base::operator();
-  };
-
-#endif
-
-  /*
-  using std::cout; using std::endl;
-
-  struct move_only {
-    move_only(std::size_t) { }
-
-    move_only(move_only&&) = default;
-    move_only& operator=(move_only&&) = default;
-
-    move_only(move_only const&) = delete;
-    move_only& operator=(move_only const&) = delete;
-
-    void operator()() { cout << "move_only" << endl; }
-  };
-
-  int main()
-  {
-    using fn = unique_function<void()>;
-
-    fn f0;
-    fn f1 { nullptr };
-    fn f2 { [](){ cout << "f2" << endl; } }; f2();
-    fn f3 { move_only(42) }; f3();
-    fn f4 { std::move(f2) }; f4();
-
-    f0 = std::move(f3); f0();
-    f0 = nullptr;
-    f2 = [](){ cout << "new f2" << endl; }; f2();
-    f3 = move_only(69); f3();
-
-    return 0;
-  }
-  */
 
   /*! @} */
 

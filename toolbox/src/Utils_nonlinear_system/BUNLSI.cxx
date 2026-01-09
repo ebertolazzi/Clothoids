@@ -13,17 +13,17 @@
  | - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 \*/
 
-#define BUNLSI_BIBTEX                                                                                                  \
-  "@article{Buzzi:1986,\n"                                                                                             \
-  "  author  = {Guido Buzzi Ferraris and Enrico Tronconi},\n"                                                          \
-  "  title   = {Bunlsi—{A} fortran program for solution of systems\n"                                                  \
-  "             of nonlinear algebraic equations},\n"                                                                  \
-  "  journal = {Computers \\& Chemical Engineering},\n"                                                                \
-  "  volume  = {10},\n"                                                                                                \
-  "  number  = {2},\n"                                                                                                 \
-  "  pages   = {129--141},\n"                                                                                          \
-  "  year    = {1986},\n"                                                                                              \
-  "  doi     = {10.1016/0098-1354(86)85025-6},\n"                                                                      \
+#define BUNLSI_BIBTEX                                                 \
+  "@article{Buzzi:1986,\n"                                            \
+  "  author  = {Guido Buzzi Ferraris and Enrico Tronconi},\n"         \
+  "  title   = {Bunlsi—{A} fortran program for solution of systems\n" \
+  "             of nonlinear algebraic equations},\n"                 \
+  "  journal = {Computers \\& Chemical Engineering},\n"               \
+  "  volume  = {10},\n"                                               \
+  "  number  = {2},\n"                                                \
+  "  pages   = {129--141},\n"                                         \
+  "  year    = {1986},\n"                                             \
+  "  doi     = {10.1016/0098-1354(86)85025-6},\n"                     \
   "}\n"
 
 class BUNLSI5 : public NonlinearSystem
@@ -31,8 +31,7 @@ class BUNLSI5 : public NonlinearSystem
 public:
   BUNLSI5() : NonlinearSystem( "BUNLSI example 5", BUNLSI_BIBTEX, 8 ) {}
 
-  virtual void
-  evaluate( Vector const & x, Vector & f ) const override
+  virtual void evaluate( Vector const & x, Vector & f ) const override
   {
     real_type x1 = x( 0 );
     real_type x2 = x( 1 );
@@ -52,8 +51,7 @@ public:
     f( 7 )       = x8 - x1 - x5 - x6 - x3;
   }
 
-  virtual void
-  jacobian( Vector const & x, SparseMatrix & J ) const override
+  virtual void jacobian( Vector const & x, SparseMatrix & J ) const override
   {
     J.resize( n, n );
     J.setZero();
@@ -105,20 +103,18 @@ public:
     J.makeCompressed();
   }
 
-  virtual void
-  exact_solution( vector<Vector> & x_vec ) const override
+  virtual void exact_solution( vector<Vector> & x_vec ) const override
   {
     x_vec.resize( 1 );
     auto & x0{ x_vec[0] };
     x0.resize( n );
     x0 << 1.000000000000000000000000000000000000000, 18.71828182845904523536028747135266249776,
-        2.028653803092486959006105196343825624600, 279.8410647514915106118923581352729397598,
-        6.876553786347144986146293257311354434906, 976.1568043532779061610180406939220907971,
-        -61079.62412297820687494549945165294788674, 986.0620119427175381061704391475772708566;
+      2.028653803092486959006105196343825624600, 279.8410647514915106118923581352729397598,
+      6.876553786347144986146293257311354434906, 976.1568043532779061610180406939220907971,
+      -61079.62412297820687494549945165294788674, 986.0620119427175381061704391475772708566;
   }
 
-  virtual void
-  initial_points( vector<Vector> & x_vec ) const override
+  virtual void initial_points( vector<Vector> & x_vec ) const override
   {
     x_vec.resize( 1 );
     auto & x0{ x_vec[0] };
@@ -136,8 +132,7 @@ class BUNLSI6 : public NonlinearSystem
 public:
   BUNLSI6() : NonlinearSystem( "BUNLSI example 6", BUNLSI_BIBTEX, 30 ) {}
 
-  virtual void
-  evaluate( Vector const & x, Vector & f ) const override
+  virtual void evaluate( Vector const & x, Vector & f ) const override
   {
     real_type x1  = x( 0 );
     real_type x2  = x( 1 );
@@ -201,8 +196,7 @@ public:
     f( 29 )       = x27 * x28 + x22 + sqrt( x28 ) - x30;
   }
 
-  virtual void
-  jacobian( Vector const & x, SparseMatrix & J ) const override
+  virtual void jacobian( Vector const & x, SparseMatrix & J ) const override
   {
     J.resize( n, n );
     J.setZero();
@@ -372,18 +366,16 @@ public:
     J.makeCompressed();
   }
 
-  virtual void
-  initial_points( vector<Vector> & x_vec ) const override
+  virtual void initial_points( vector<Vector> & x_vec ) const override
   {
     x_vec.resize( 1 );
     auto & x0{ x_vec[0] };
     x0.resize( n );
     x0 << 1.5, 1, 50, 50, 500, 5000, 0, 5000, 0, 5000, 0.5, 50, 5, 0.5, 50, 50, 5, 50, 50, 5, 50, 500, 5, 50, -50, 5000,
-        0.05, 50000, 5, 5000;
+      0.05, 50000, 5, 5000;
   }
 
-  virtual void
-  check_if_admissible( Vector const & x ) const override
+  virtual void check_if_admissible( Vector const & x ) const override
   {
     real_type x1  = x( 0 );
     real_type x4  = x( 3 );
@@ -403,8 +395,7 @@ public:
     UTILS_ASSERT( x28 > 0, "x28" );
   }
 
-  virtual void
-  bounding_box( Vector & L, Vector & U ) const override
+  virtual void bounding_box( Vector & L, Vector & U ) const override
   {
     U.fill( real_max );
     L.fill( -real_max );

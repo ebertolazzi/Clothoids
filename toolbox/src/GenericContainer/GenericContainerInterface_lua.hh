@@ -28,7 +28,8 @@
 
 #include "GenericContainer.hh"
 
-namespace GC_namespace {
+namespace GC_namespace
+{
 
   //!
   //! \addtogroup LUA
@@ -46,12 +47,7 @@ namespace GC_namespace {
   //! @param[in]  global_var Name of the Lua global variable to convert.
   //! @param[out] gc         The resulting `GenericContainer`.
   //!
-  void
-  Lua_global_to_GC(
-    void             * void_L,
-    char const       * global_var,
-    GenericContainer & gc
-  );
+  void Lua_global_to_GC( void * void_L, char const * global_var, GenericContainer & gc );
 
   //!
   //! \brief Convert a `GenericContainer` to a Lua global variable.
@@ -63,12 +59,7 @@ namespace GC_namespace {
   //! \param[in] gc         The `GenericContainer` to be converted.
   //! \param[in] global_var Name of the Lua global variable where the result will be stored.
   //!
-  void
-  Lua_GC_to_global(
-    void                   * void_L,
-    GenericContainer const & gc,
-    char const             * global_var
-  );
+  void Lua_GC_to_global( void * void_L, GenericContainer const & gc, char const * global_var );
 
   //!
   //! \brief A class implementing a simple Lua interpreter.
@@ -76,9 +67,11 @@ namespace GC_namespace {
   //! The `LuaInterpreter` class provides an interface for loading and executing Lua scripts,
   //! as well as interacting with Lua global variables using the `GenericContainer`.
   //!
-  class LuaInterpreter {
+  class LuaInterpreter
+  {
     //! Lua interpreter status (lua_State pointer)
     /* lua_State * */ void * void_L;
+
   public:
     //! Constructor that initializes the Lua interpreter.
     LuaInterpreter();
@@ -123,8 +116,8 @@ namespace GC_namespace {
     //! \param[in] gc         The `GenericContainer` to convert.
     //! \param[in] global_var Name of the Lua global variable.
     //!
-    void
-    GC_to_global( GenericContainer const & gc, char const global_var[] ) {
+    void GC_to_global( GenericContainer const & gc, char const global_var[] )
+    {
       Lua_GC_to_global( void_L, gc, global_var );
     }
 
@@ -136,10 +129,7 @@ namespace GC_namespace {
     //! \param[in]  var Name of the Lua global variable.
     //! \param[out] gc  `GenericContainer` where the Lua variable will be stored.
     //!
-    void
-    global_to_GC( char const var[], GenericContainer & gc ) {
-      Lua_global_to_GC( void_L, var, gc );
-    }
+    void global_to_GC( char const var[], GenericContainer & gc ) { Lua_global_to_GC( void_L, var, gc ); }
 
     //!
     //! \brief Launch an interactive Lua interpreter mode.
@@ -152,19 +142,17 @@ namespace GC_namespace {
     //! \param[in] prompt Prompt string to display for the user.
     //! \return Status code of the interpreter session.
     //!
-    int
-    interactive(
-      int argc,
+    int interactive(
+      int           argc,
       char const ** argv,
       char const ** messages,
-      char const *  prompt
-    ); // launch interpret mode
+      char const *  prompt );  // launch interpret mode
   };
 
   //!
   //! @}
   //!
 
-}
+}  // namespace GC_namespace
 
 #endif

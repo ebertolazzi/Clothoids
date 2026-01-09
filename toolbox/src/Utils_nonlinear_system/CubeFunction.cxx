@@ -16,35 +16,35 @@ class CubeFunction : public NonlinearSystem
 {
 public:
   CubeFunction()
-    : NonlinearSystem( "Cube Function",
-                       "@inbook{Leon:1966,\n"
-                       "  title     = {Recent advances in optimization techniques: "
-                       "proceedings},\n"
-                       "  chapter   = {A comparison Among Eight Known Optimizing "
-                       "Procedures},\n"
-                       "  author    = {Leon, A.},\n"
-                       "  editor    = { Lavi, A. and Vogl, T.P.},\n"
-                       "  year      = {1966},\n"
-                       "  pages     = {28--46’,\n"
-                       "  publisher = {Wiley}\n"
-                       "}\n\n"
-                       "@article{doi:10.1137/0723046,\n"
-                       "  author  = {Grippo, L. and Lampariello, F. and Lucidi, S.},\n"
-                       "  title   = {A Nonmonotone Line Search Technique for Newton’s "
-                       "Method},\n"
-                       "  journal = {SIAM Journal on Numerical Analysis},\n"
-                       "  year    = {1986},\n"
-                       "  volume  = {23},\n"
-                       "  number  = {4},\n"
-                       "  pages   = {707--716},\n"
-                       "  doi     = {10.1137/0723046},\n"
-                       "}\n",
-                       2 )
+    : NonlinearSystem(
+        "Cube Function",
+        "@inbook{Leon:1966,\n"
+        "  title     = {Recent advances in optimization techniques: "
+        "proceedings},\n"
+        "  chapter   = {A comparison Among Eight Known Optimizing "
+        "Procedures},\n"
+        "  author    = {Leon, A.},\n"
+        "  editor    = { Lavi, A. and Vogl, T.P.},\n"
+        "  year      = {1966},\n"
+        "  pages     = {28--46’,\n"
+        "  publisher = {Wiley}\n"
+        "}\n\n"
+        "@article{doi:10.1137/0723046,\n"
+        "  author  = {Grippo, L. and Lampariello, F. and Lucidi, S.},\n"
+        "  title   = {A Nonmonotone Line Search Technique for Newton’s "
+        "Method},\n"
+        "  journal = {SIAM Journal on Numerical Analysis},\n"
+        "  year    = {1986},\n"
+        "  volume  = {23},\n"
+        "  number  = {4},\n"
+        "  pages   = {707--716},\n"
+        "  doi     = {10.1137/0723046},\n"
+        "}\n",
+        2 )
   {
   }
 
-  virtual void
-  evaluate( Vector const & xx, Vector & f ) const override
+  virtual void evaluate( Vector const & xx, Vector & f ) const override
   {
     real_type x  = xx( 0 );
     real_type y  = xx( 1 );
@@ -53,8 +53,7 @@ public:
     f( 1 )       = 200 * ( y - x3 );
   }
 
-  virtual void
-  jacobian( Vector const & xx, SparseMatrix & J ) const override
+  virtual void jacobian( Vector const & xx, SparseMatrix & J ) const override
   {
     J.resize( n, n );
     J.setZero();
@@ -68,8 +67,7 @@ public:
     J.makeCompressed();
   }
 
-  virtual void
-  exact_solution( vector<Vector> & x_vec ) const override
+  virtual void exact_solution( vector<Vector> & x_vec ) const override
   {
     x_vec.resize( 1 );
     auto & x0{ x_vec[0] };
@@ -77,8 +75,7 @@ public:
     x0.fill( 1 );
   }
 
-  virtual void
-  initial_points( vector<Vector> & x_vec ) const override
+  virtual void initial_points( vector<Vector> & x_vec ) const override
   {
     x_vec.resize( 1 );
     auto & x0{ x_vec[0] };

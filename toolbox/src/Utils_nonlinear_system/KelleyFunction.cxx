@@ -16,21 +16,21 @@ class KelleyFunction : public NonlinearSystem
 {
 public:
   KelleyFunction()
-    : NonlinearSystem( "Kelley Function",
-                       "@book{Dennis:1996,\n"
-                       "  author    = {Dennis, J. and Schnabel, R.},\n"
-                       "  title     = {Numerical Methods for Unconstrained\n"
-                       "               Optimization and Nonlinear Equations},\n"
-                       "  publisher = {Society for Industrial and Applied Mathematics},\n"
-                       "  year      = {1996},\n"
-                       "  doi       = {10.1137/1.9781611971200},\n"
-                       "}\n",
-                       2 )
+    : NonlinearSystem(
+        "Kelley Function",
+        "@book{Dennis:1996,\n"
+        "  author    = {Dennis, J. and Schnabel, R.},\n"
+        "  title     = {Numerical Methods for Unconstrained\n"
+        "               Optimization and Nonlinear Equations},\n"
+        "  publisher = {Society for Industrial and Applied Mathematics},\n"
+        "  year      = {1996},\n"
+        "  doi       = {10.1137/1.9781611971200},\n"
+        "}\n",
+        2 )
   {
   }
 
-  virtual void
-  evaluate( Vector const & x_in, Vector & f ) const override
+  virtual void evaluate( Vector const & x_in, Vector & f ) const override
   {
     real_type x = x_in[0];
     real_type y = x_in[1];
@@ -38,8 +38,7 @@ public:
     f( 1 )      = exp( x - 1 ) + y * y - 2;
   }
 
-  virtual void
-  jacobian( Vector const & x_in, SparseMatrix & J ) const override
+  virtual void jacobian( Vector const & x_in, SparseMatrix & J ) const override
   {
     J.resize( n, n );
     J.setZero();
@@ -52,8 +51,7 @@ public:
     J.makeCompressed();
   }
 
-  virtual void
-  exact_solution( vector<Vector> & x_vec ) const override
+  virtual void exact_solution( vector<Vector> & x_vec ) const override
   {
     x_vec.resize( 1 );
     auto & x0{ x_vec[0] };
@@ -61,8 +59,7 @@ public:
     x0.fill( 1 );
   }
 
-  virtual void
-  initial_points( vector<Vector> & x_vec ) const override
+  virtual void initial_points( vector<Vector> & x_vec ) const override
   {
     x_vec.resize( 1 );
     auto & x0{ x_vec[0] };

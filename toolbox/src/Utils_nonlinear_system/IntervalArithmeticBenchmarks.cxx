@@ -19,32 +19,33 @@ class IntervalArithmeticBenchmarks : public NonlinearSystem
 
 public:
   IntervalArithmeticBenchmarks()
-    : NonlinearSystem( "Interval Arithmetic Benchmarks",
-                       "@article{Morgan:1987,\n"
-                       "  author  = {Alexander Morgan and Andrew Sommese},\n"
-                       "  title   = {Computing all solutions to polynomial\n"
-                       "             systems using homotopy continuation},\n"
-                       "  journal = {Applied Mathematics and Computation},\n"
-                       "  volume  = {24},\n"
-                       "  number  = {2},\n"
-                       "  pages   = {115--138},\n"
-                       "  year    = {1987},\n"
-                       "  issn    = {0096-3003},\n"
-                       "  doi     = {10.1016/0096-3003(87)90064-6}\n"
-                       "}\n\n"
-                       "@article{Hentenryck:1997,\n"
-                       "  author  = {Van Hentenryck, P. and McAllester, D. "
-                       "and Kapur, D.},\n"
-                       "  title   = {Solving Polynomial Systems Using a "
-                       "Branch and Prune Approach},\n"
-                       "  journal = {SIAM Journal on Numerical Analysis},\n"
-                       "  year    = {1997},\n"
-                       "  volume  = {34},\n"
-                       "  number  = {2},\n"
-                       "  pages   = {797-827},\n"
-                       "  doi = {10.1137/S0036142995281504}\n"
-                       "}\n",
-                       10 )
+    : NonlinearSystem(
+        "Interval Arithmetic Benchmarks",
+        "@article{Morgan:1987,\n"
+        "  author  = {Alexander Morgan and Andrew Sommese},\n"
+        "  title   = {Computing all solutions to polynomial\n"
+        "             systems using homotopy continuation},\n"
+        "  journal = {Applied Mathematics and Computation},\n"
+        "  volume  = {24},\n"
+        "  number  = {2},\n"
+        "  pages   = {115--138},\n"
+        "  year    = {1987},\n"
+        "  issn    = {0096-3003},\n"
+        "  doi     = {10.1016/0096-3003(87)90064-6}\n"
+        "}\n\n"
+        "@article{Hentenryck:1997,\n"
+        "  author  = {Van Hentenryck, P. and McAllester, D. "
+        "and Kapur, D.},\n"
+        "  title   = {Solving Polynomial Systems Using a "
+        "Branch and Prune Approach},\n"
+        "  journal = {SIAM Journal on Numerical Analysis},\n"
+        "  year    = {1997},\n"
+        "  volume  = {34},\n"
+        "  number  = {2},\n"
+        "  pages   = {797-827},\n"
+        "  doi = {10.1137/S0036142995281504}\n"
+        "}\n",
+        10 )
   {
     a1  = 0.25428722;
     a2  = 0.37842197;
@@ -69,8 +70,7 @@ public:
     b10 = 0.21466544;
   }
 
-  virtual void
-  evaluate( Vector const & x, Vector & f ) const override
+  virtual void evaluate( Vector const & x, Vector & f ) const override
   {
     f( 0 ) = x( 0 ) - a1 - b1 * x( 3 ) * x( 2 ) * x( 8 );
     f( 1 ) = x( 1 ) - a2 - b2 * x( 0 ) * x( 9 ) * x( 5 );
@@ -84,8 +84,7 @@ public:
     f( 9 ) = x( 9 ) - a10 - b10 * x( 3 ) * x( 7 ) * x( 0 );
   }
 
-  virtual void
-  jacobian( Vector const & x, SparseMatrix & J ) const override
+  virtual void jacobian( Vector const & x, SparseMatrix & J ) const override
   {
     J.resize( n, n );
     J.setZero();
@@ -143,8 +142,7 @@ public:
     J.makeCompressed();
   }
 
-  virtual void
-  initial_points( vector<Vector> & x_vec ) const override
+  virtual void initial_points( vector<Vector> & x_vec ) const override
   {
     x_vec.resize( 1 );
     auto & x0{ x_vec[0] };

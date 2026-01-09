@@ -16,21 +16,21 @@ class Hilbert : public NonlinearSystem
 {
 public:
   Hilbert( integer n )
-    : NonlinearSystem( "Hilbert Matrix Function F = x'Ax",
-                       "@book{brent2013,\n"
-                       "  author    = {Brent, R.P.},\n"
-                       "  title     = {Algorithms for Minimization Without Derivatives},\n"
-                       "  isbn      = {9780486143682},\n"
-                       "  series    = {Dover Books on Mathematics},\n"
-                       "  year      = {2013},\n"
-                       "  publisher = {Dover Publications}\n"
-                       "}\n",
-                       n )
+    : NonlinearSystem(
+        "Hilbert Matrix Function F = x'Ax",
+        "@book{brent2013,\n"
+        "  author    = {Brent, R.P.},\n"
+        "  title     = {Algorithms for Minimization Without Derivatives},\n"
+        "  isbn      = {9780486143682},\n"
+        "  series    = {Dover Books on Mathematics},\n"
+        "  year      = {2013},\n"
+        "  publisher = {Dover Publications}\n"
+        "}\n",
+        n )
   {
   }
 
-  virtual void
-  evaluate( Vector const & x, Vector & f ) const override
+  virtual void evaluate( Vector const & x, Vector & f ) const override
   {
     for ( integer i = 0; i < n; ++i )
     {
@@ -39,8 +39,7 @@ public:
     }
   }
 
-  virtual void
-  jacobian( Vector const &, SparseMatrix & J ) const override
+  virtual void jacobian( Vector const &, SparseMatrix & J ) const override
   {
     J.resize( n, n );
     J.setZero();
@@ -50,8 +49,7 @@ public:
     }
   }
 
-  virtual void
-  exact_solution( vector<Vector> & x_vec ) const override
+  virtual void exact_solution( vector<Vector> & x_vec ) const override
   {
     x_vec.resize( 1 );
     auto & x0{ x_vec[0] };
@@ -59,8 +57,7 @@ public:
     x0.setZero();
   }
 
-  virtual void
-  initial_points( vector<Vector> & x_vec ) const override
+  virtual void initial_points( vector<Vector> & x_vec ) const override
   {
     x_vec.resize( 1 );
     auto & x0{ x_vec[0] };

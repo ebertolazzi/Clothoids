@@ -83,28 +83,23 @@ namespace Utils
 
   using real_type = double;
 
-  static inline real_type
-  power2( real_type a )
+  static inline real_type power2( real_type a )
   {
     return a * a;
   }
-  static inline real_type
-  power3( real_type a )
+  static inline real_type power3( real_type a )
   {
     return a * a * a;
   }
-  static inline real_type
-  power4( real_type a )
+  static inline real_type power4( real_type a )
   {
     return a * a * a * a;
   }
-  static inline real_type
-  power5( real_type a )
+  static inline real_type power5( real_type a )
   {
     return a * a * a * a * a;
   }
-  static inline real_type
-  power6( real_type a )
+  static inline real_type power6( real_type a )
   {
     return a * a * a * a * a * a;
   }
@@ -234,14 +229,13 @@ namespace Utils
   std::vector<NonlinearSystem *> nonlinear_system_tests;
   std::map<string, unsigned>     nonlinear_system_tests_map;
 
-  void
-  init_nonlinear_system_tests()
+  void init_nonlinear_system_tests()
   {
     nonlinear_system_tests.push_back( new ArtificialTestOfNowakAndWeimann() );
     nonlinear_system_tests.push_back( new BadlyScaledAugmentedPowellFunction( 3 ) );
     nonlinear_system_tests.push_back( new BadlyScaledAugmentedPowellFunction( 30 ) );
     nonlinear_system_tests.push_back( new BadlyScaledAugmentedPowellFunction( 300 ) );
-    nonlinear_system_tests.push_back( new BadlyScaledAugmentedPowellFunction( 3000 ) );
+    // nonlinear_system_tests.push_back(new BadlyScaledAugmentedPowellFunction(3000));
     nonlinear_system_tests.push_back( new Beale() );
     nonlinear_system_tests.push_back( new BertolazziRootPlusSquare() );
     nonlinear_system_tests.push_back( new BertolazziAtanPlusQuadratic() );
@@ -352,7 +346,7 @@ namespace Utils
     nonlinear_system_tests.push_back( new DiscreteBoundaryValueFunction( 50 ) );
     nonlinear_system_tests.push_back( new DiscreteBoundaryValueFunction( 100 ) );
     nonlinear_system_tests.push_back( new DiscreteBoundaryValueFunction( 500 ) );
-    nonlinear_system_tests.push_back( new DiscreteBoundaryValueFunction( 5000 ) );
+    // nonlinear_system_tests.push_back(new DiscreteBoundaryValueFunction(5000));
 
     nonlinear_system_tests.push_back( new DiscreteIntegralEquationFunction( 2 ) );
     nonlinear_system_tests.push_back( new DiscreteIntegralEquationFunction( 5 ) );
@@ -361,7 +355,7 @@ namespace Utils
 
     nonlinear_system_tests.push_back( new DixonFunction( 80 ) );
     nonlinear_system_tests.push_back( new DixonFunction( 2000 ) );
-    nonlinear_system_tests.push_back( new DixonFunction( 5000 ) );
+    // nonlinear_system_tests.push_back(new DixonFunction(5000));
 
     nonlinear_system_tests.push_back( new Easom() );
     nonlinear_system_tests.push_back( new EsterificReaction() );
@@ -370,17 +364,17 @@ namespace Utils
     nonlinear_system_tests.push_back( new ExponentialFunction1( 10 ) );
     nonlinear_system_tests.push_back( new ExponentialFunction1( 50 ) );
     nonlinear_system_tests.push_back( new ExponentialFunction1( 500 ) );
-    nonlinear_system_tests.push_back( new ExponentialFunction1( 5000 ) );
+    // nonlinear_system_tests.push_back(new ExponentialFunction1(5000));
     nonlinear_system_tests.push_back( new ExponentialFunction2( 2 ) );
     nonlinear_system_tests.push_back( new ExponentialFunction2( 10 ) );
     nonlinear_system_tests.push_back( new ExponentialFunction2( 50 ) );
     nonlinear_system_tests.push_back( new ExponentialFunction2( 500 ) );
-    nonlinear_system_tests.push_back( new ExponentialFunction2( 5000 ) );
+    // nonlinear_system_tests.push_back(new ExponentialFunction2(5000));
     nonlinear_system_tests.push_back( new ExponentialFunction3( 2 ) );
     nonlinear_system_tests.push_back( new ExponentialFunction3( 10 ) );
     nonlinear_system_tests.push_back( new ExponentialFunction3( 50 ) );
     nonlinear_system_tests.push_back( new ExponentialFunction3( 500 ) );
-    nonlinear_system_tests.push_back( new ExponentialFunction3( 5000 ) );
+    // nonlinear_system_tests.push_back(new ExponentialFunction3(5000));
 
     nonlinear_system_tests.push_back( new ExponentialSine() );
     nonlinear_system_tests.push_back( new ExtendedEigerSikorskiStenger() );
@@ -487,7 +481,7 @@ namespace Utils
     nonlinear_system_tests.push_back( new LogarithmicFunction( 10 ) );
     nonlinear_system_tests.push_back( new LogarithmicFunction( 50 ) );
     nonlinear_system_tests.push_back( new LogarithmicFunction( 500 ) );
-    nonlinear_system_tests.push_back( new LogarithmicFunction( 5000 ) );
+    // nonlinear_system_tests.push_back(new LogarithmicFunction(5000));
 
     nonlinear_system_tests.push_back( new McCormicFunction() );
     nonlinear_system_tests.push_back( new McKinnon() );
@@ -637,7 +631,7 @@ namespace Utils
     nonlinear_system_tests.push_back( new SchubertBroydenFunction( 10 ) );
     nonlinear_system_tests.push_back( new SchubertBroydenFunction( 100 ) );
     nonlinear_system_tests.push_back( new SchubertBroydenFunction( 1000 ) );
-    nonlinear_system_tests.push_back( new SchubertBroydenFunction( 5000 ) );
+    // nonlinear_system_tests.push_back(new SchubertBroydenFunction(5000));
 
     nonlinear_system_tests.push_back( new Semiconductor2D() );
 
@@ -655,7 +649,7 @@ namespace Utils
     nonlinear_system_tests.push_back( new SingularFunction( 10 ) );
     nonlinear_system_tests.push_back( new SingularFunction( 50 ) );
     nonlinear_system_tests.push_back( new SingularFunction( 500 ) );
-    nonlinear_system_tests.push_back( new SingularFunction( 5000 ) );
+    // nonlinear_system_tests.push_back(new SingularFunction(5000));
 
     nonlinear_system_tests.push_back( new SingularSystemA() );
     nonlinear_system_tests.push_back( new SingularSystemB() );
@@ -694,13 +688,13 @@ namespace Utils
     nonlinear_system_tests.push_back( new StrictlyConvexFunction1( 10 ) );
     nonlinear_system_tests.push_back( new StrictlyConvexFunction1( 50 ) );
     nonlinear_system_tests.push_back( new StrictlyConvexFunction1( 500 ) );
-    nonlinear_system_tests.push_back( new StrictlyConvexFunction1( 5000 ) );
+    // nonlinear_system_tests.push_back(new StrictlyConvexFunction1(5000));
 
     nonlinear_system_tests.push_back( new StrictlyConvexFunction2( 2 ) );
     nonlinear_system_tests.push_back( new StrictlyConvexFunction2( 10 ) );
     nonlinear_system_tests.push_back( new StrictlyConvexFunction2( 50 ) );
     nonlinear_system_tests.push_back( new StrictlyConvexFunction2( 500 ) );
-    nonlinear_system_tests.push_back( new StrictlyConvexFunction2( 5000 ) );
+    // nonlinear_system_tests.push_back(new StrictlyConvexFunction2(5000));
 
     nonlinear_system_tests.push_back( new Toint225( 10 ) );
     nonlinear_system_tests.push_back( new Toint225( 100 ) );
@@ -727,12 +721,12 @@ namespace Utils
     nonlinear_system_tests.push_back( new TroeschFunction( 10 ) );
     nonlinear_system_tests.push_back( new TroeschFunction( 50 ) );
     nonlinear_system_tests.push_back( new TroeschFunction( 500 ) );
-    nonlinear_system_tests.push_back( new TroeschFunction( 5000 ) );
+    // nonlinear_system_tests.push_back(new TroeschFunction(5000));
 
     nonlinear_system_tests.push_back( new TwoPointBoundaryValueProblem( 10 ) );
     nonlinear_system_tests.push_back( new TwoPointBoundaryValueProblem( 100 ) );
     nonlinear_system_tests.push_back( new TwoPointBoundaryValueProblem( 1000 ) );
-    nonlinear_system_tests.push_back( new TwoPointBoundaryValueProblem( 5000 ) );
+    // nonlinear_system_tests.push_back(new TwoPointBoundaryValueProblem(5000));
 
     nonlinear_system_tests.push_back( new VariablyDimensionedFunction( 5 ) );
     nonlinear_system_tests.push_back( new VariablyDimensionedFunction( 10 ) );

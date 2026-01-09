@@ -16,28 +16,27 @@ class ExponentialSine : public NonlinearSystem
 {
 public:
   ExponentialSine()
-    : NonlinearSystem( "Exponential sine",
-                       "@techreport{Nowak1991,\n"
-                       "  author = {U. Nowak and L. Weimann},\n"
-                       "  title  = {A Family of Newton Codes for Systems of "
-                       "Highly Nonlinear Equations},\n"
-                       "  number = {Technical Report TR-91-10},\n"
-                       "  year   = {1991}\n"
-                       "}\n",
-                       2 )
+    : NonlinearSystem(
+        "Exponential sine",
+        "@techreport{Nowak1991,\n"
+        "  author = {U. Nowak and L. Weimann},\n"
+        "  title  = {A Family of Newton Codes for Systems of "
+        "Highly Nonlinear Equations},\n"
+        "  number = {Technical Report TR-91-10},\n"
+        "  year   = {1991}\n"
+        "}\n",
+        2 )
   {
   }
 
-  virtual void
-  evaluate( Vector const & x, Vector & f ) const override
+  virtual void evaluate( Vector const & x, Vector & f ) const override
   {
     real_type arg = x( 0 ) * x( 0 ) + x( 1 ) * x( 1 );
     f( 0 )        = exp( arg ) - 3.0;
     f( 1 )        = x( 0 ) + x( 1 ) - sin( 2.0 * ( x( 0 ) + x( 1 ) ) );
   }
 
-  virtual void
-  jacobian( Vector const & x, SparseMatrix & J ) const override
+  virtual void jacobian( Vector const & x, SparseMatrix & J ) const override
   {
     J.resize( n, n );
     J.setZero();
@@ -50,8 +49,7 @@ public:
     J.makeCompressed();
   }
 
-  virtual void
-  initial_points( vector<Vector> & x_vec ) const override
+  virtual void initial_points( vector<Vector> & x_vec ) const override
   {
     x_vec.resize( 5 );
     auto & x0{ x_vec[0] };

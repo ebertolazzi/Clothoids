@@ -16,29 +16,28 @@ class Leon : public NonlinearSystem
 {
 public:
   Leon()
-    : NonlinearSystem( "Leon cubic valley function",
-                       "@book{brent2013,\n"
-                       "  author    = {Brent, R.P.},\n"
-                       "  title     = {Algorithms for Minimization Without Derivatives},\n"
-                       "  isbn      = {9780486143682},\n"
-                       "  series    = {Dover Books on Mathematics},\n"
-                       "  year      = {2013},\n"
-                       "  publisher = {Dover Publications}\n"
-                       "}\n",
-                       2 )
+    : NonlinearSystem(
+        "Leon cubic valley function",
+        "@book{brent2013,\n"
+        "  author    = {Brent, R.P.},\n"
+        "  title     = {Algorithms for Minimization Without Derivatives},\n"
+        "  isbn      = {9780486143682},\n"
+        "  series    = {Dover Books on Mathematics},\n"
+        "  year      = {2013},\n"
+        "  publisher = {Dover Publications}\n"
+        "}\n",
+        2 )
   {
   }
 
-  virtual void
-  evaluate( Vector const & x, Vector & f ) const override
+  virtual void evaluate( Vector const & x, Vector & f ) const override
   {
     real_type x0_3 = x( 0 ) * x( 0 ) * x( 0 );
     f( 0 )         = -600.0 * ( x( 1 ) - x0_3 ) * x( 0 ) * x( 0 ) - 2.0 * ( 1.0 - x( 0 ) );
     f( 1 )         = 200.0 * ( x( 1 ) - x0_3 );
   }
 
-  virtual void
-  jacobian( Vector const & x, SparseMatrix & J ) const override
+  virtual void jacobian( Vector const & x, SparseMatrix & J ) const override
   {
     J.resize( n, n );
     J.setZero();
@@ -50,8 +49,7 @@ public:
     J.makeCompressed();
   }
 
-  virtual void
-  exact_solution( vector<Vector> & x_vec ) const override
+  virtual void exact_solution( vector<Vector> & x_vec ) const override
   {
     x_vec.resize( 1 );
     auto & x0{ x_vec[0] };
@@ -59,8 +57,7 @@ public:
     x0.fill( 1 );
   }
 
-  virtual void
-  initial_points( vector<Vector> & x_vec ) const override
+  virtual void initial_points( vector<Vector> & x_vec ) const override
   {
     x_vec.resize( 1 );
     auto & x0{ x_vec[0] };

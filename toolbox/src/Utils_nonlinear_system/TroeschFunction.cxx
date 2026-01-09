@@ -19,24 +19,24 @@ class TroeschFunction : public NonlinearSystem
 
 public:
   TroeschFunction( integer neq )
-    : NonlinearSystem( "Troesch Function",
-                       "@inproceedings{Varadhan2009,\n"
-                       "  author={R. Varadhan and Paul D. Gilbert},\n"
-                       "  title={{BB:} An {R} Package for Solving a Large System of\n"
-                       "         Nonlinear Equations and for Optimizing a "
-                       "High-Dimensional\n"
-                       "         Nonlinear Objective Function},\n"
-                       "  year={2009}\n"
-                       "}\n",
-                       neq )
+    : NonlinearSystem(
+        "Troesch Function",
+        "@inproceedings{Varadhan2009,\n"
+        "  author={R. Varadhan and Paul D. Gilbert},\n"
+        "  title={{BB:} An {R} Package for Solving a Large System of\n"
+        "         Nonlinear Equations and for Optimizing a "
+        "High-Dimensional\n"
+        "         Nonlinear Objective Function},\n"
+        "  year={2009}\n"
+        "}\n",
+        neq )
     , rho( 10 )
     , h( 1.0 / ( neq + 1 ) )
   {
     check_min_equations( n, 1 );
   }
 
-  virtual void
-  evaluate( Vector const & x, Vector & f ) const override
+  virtual void evaluate( Vector const & x, Vector & f ) const override
   {
     real_type bf = rho * h * h;
 
@@ -48,8 +48,7 @@ public:
     for ( integer i = 1; i < n - 1; ++i ) f( i ) -= x( i - 1 ) + x( i + 1 );
   }
 
-  virtual void
-  jacobian( Vector const & x, SparseMatrix & J ) const override
+  virtual void jacobian( Vector const & x, SparseMatrix & J ) const override
   {
     J.resize( n, n );
     J.setZero();
@@ -60,8 +59,7 @@ public:
     J.makeCompressed();
   }
 
-  virtual void
-  initial_points( vector<Vector> & x_vec ) const override
+  virtual void initial_points( vector<Vector> & x_vec ) const override
   {
     x_vec.resize( 1 );
     auto & x0{ x_vec[0] };

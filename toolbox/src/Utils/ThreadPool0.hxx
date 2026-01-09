@@ -78,11 +78,7 @@ namespace Utils
     //!
     //! \param fun The function to be executed.
     //!
-    void
-    exec( FUN && fun ) override
-    {
-      fun();
-    }
+    void exec( FUN && fun ) override { fun(); }
 
     //!
     //! \brief No-op method to wait for all tasks to complete.
@@ -90,10 +86,7 @@ namespace Utils
     //! This method does not perform any actions, as there are no
     //! threads or tasks to wait for.
     //!
-    void
-    wait() override
-    {
-    }
+    void wait() override {}
 
     //!
     //! \brief Returns the number of threads in the pool.
@@ -103,11 +96,7 @@ namespace Utils
     //!
     //! \return Always returns 1.
     //!
-    unsigned
-    thread_count() const override
-    {
-      return n_thread;
-    }
+    unsigned thread_count() const override { return n_thread; }
 
     //!
     //! \brief Returns the name of the thread pool.
@@ -116,17 +105,9 @@ namespace Utils
     //!
     //! \return A string indicating that this is a "ThreadPool0 (fake thread)".
     //!
-    static char const *
-    Name()
-    {
-      return "ThreadPool0 (fake thread)";
-    }
+    static char const * Name() { return "ThreadPool0 (fake thread)"; }
 
-    char const *
-    name() const override
-    {
-      return Name();
-    }
+    char const * name() const override { return Name(); }
   };
 
   /*! @} */

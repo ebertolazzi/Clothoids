@@ -16,32 +16,31 @@ class YixunShi1 : public NonlinearSystem
 {
 public:
   YixunShi1()
-    : NonlinearSystem( "Shi, Yixun Problem N.3",
-                       "@article{YixunShi,\n"
-                       "  Author  = {Shi, Yixun},\n"
-                       "  Title   = {A globalization procedure for solving "
-                       "nonlinear systems of equations},\n"
-                       "  Journal = {Numerical Algorithms},\n"
-                       "  Number  = {2},\n"
-                       "  Pages   = {273--286},\n"
-                       "  Volume  = {12},\n"
-                       "  Year    = {1996},\n"
-                       "  Doi     = {10.1007/BF02142807},\n"
-                       "}\n",
-                       3 )
+    : NonlinearSystem(
+        "Shi, Yixun Problem N.3",
+        "@article{YixunShi,\n"
+        "  Author  = {Shi, Yixun},\n"
+        "  Title   = {A globalization procedure for solving "
+        "nonlinear systems of equations},\n"
+        "  Journal = {Numerical Algorithms},\n"
+        "  Number  = {2},\n"
+        "  Pages   = {273--286},\n"
+        "  Volume  = {12},\n"
+        "  Year    = {1996},\n"
+        "  Doi     = {10.1007/BF02142807},\n"
+        "}\n",
+        3 )
   {
   }
 
-  virtual void
-  evaluate( Vector const & x, Vector & f ) const override
+  virtual void evaluate( Vector const & x, Vector & f ) const override
   {
     f( 0 ) = 3 * x( 0 ) - cos( x( 1 ) * x( 2 ) ) - 0.5;
     f( 1 ) = x( 0 ) * x( 0 ) - 625 * x( 1 ) * x( 1 );
     f( 2 ) = exp( -x( 0 ) * x( 1 ) ) + 20 * x( 2 ) + ( 10 * m_pi - 3 ) / 3;
   }
 
-  virtual void
-  jacobian( Vector const & x, SparseMatrix & J ) const override
+  virtual void jacobian( Vector const & x, SparseMatrix & J ) const override
   {
     J.resize( n, n );
     J.setZero();
@@ -61,8 +60,7 @@ public:
     J.makeCompressed();
   }
 
-  virtual void
-  exact_solution( vector<Vector> & x_vec ) const override
+  virtual void exact_solution( vector<Vector> & x_vec ) const override
   {
     x_vec.resize( 1 );
     auto & x0{ x_vec[0] };
@@ -72,8 +70,7 @@ public:
     x0( 2 ) = -0.5241012469638837054562573412192983462072;
   }
 
-  virtual void
-  initial_points( vector<Vector> & x_vec ) const override
+  virtual void initial_points( vector<Vector> & x_vec ) const override
   {
     x_vec.resize( 3 );
     auto & x0{ x_vec[0] };
@@ -96,24 +93,24 @@ class YixunShi2 : public NonlinearSystem
 {
 public:
   YixunShi2()
-    : NonlinearSystem( "Shi, Yixun Problem N.4",
-                       "@article{YixunShi,\n"
-                       "  Author  = {Shi, Yixun},\n"
-                       "  Title   = {A globalization procedure for solving "
-                       "nonlinear systems of equations},\n"
-                       "  Journal = {Numerical Algorithms},\n"
-                       "  Number  = {2},\n"
-                       "  Pages   = {273--286},\n"
-                       "  Volume  = {12},\n"
-                       "  Year    = {1996},\n"
-                       "  Doi     = {10.1007/BF02142807},\n"
-                       "}\n",
-                       100 )
+    : NonlinearSystem(
+        "Shi, Yixun Problem N.4",
+        "@article{YixunShi,\n"
+        "  Author  = {Shi, Yixun},\n"
+        "  Title   = {A globalization procedure for solving "
+        "nonlinear systems of equations},\n"
+        "  Journal = {Numerical Algorithms},\n"
+        "  Number  = {2},\n"
+        "  Pages   = {273--286},\n"
+        "  Volume  = {12},\n"
+        "  Year    = {1996},\n"
+        "  Doi     = {10.1007/BF02142807},\n"
+        "}\n",
+        100 )
   {
   }
 
-  virtual void
-  evaluate( Vector const & x, Vector & f ) const override
+  virtual void evaluate( Vector const & x, Vector & f ) const override
   {
     f = x.array() * ( 3 - 2 * x.array() ) + 1 + x( 49 ) / 2;
     f( 0 ) -= 2 * x( 1 );
@@ -121,8 +118,7 @@ public:
     for ( integer idx = 1; idx < 99; ++idx ) f( idx ) -= 2 * x( idx + 1 ) + x( idx - 1 );
   }
 
-  virtual void
-  jacobian( Vector const & x, SparseMatrix & J ) const override
+  virtual void jacobian( Vector const & x, SparseMatrix & J ) const override
   {
     J.resize( n, n );
     J.setZero();
@@ -160,8 +156,7 @@ public:
     J.makeCompressed();
   }
 
-  virtual void
-  initial_points( vector<Vector> & x_vec ) const override
+  virtual void initial_points( vector<Vector> & x_vec ) const override
   {
     x_vec.resize( 4 );
     auto & x0{ x_vec[0] };
@@ -187,24 +182,24 @@ class YixunShi3 : public NonlinearSystem
 {
 public:
   YixunShi3()
-    : NonlinearSystem( "Shi, Yixun Problem N.5",
-                       "@article{YixunShi,\n"
-                       "  Author  = {Shi, Yixun},\n"
-                       "  Title   = {A globalization procedure for solving "
-                       "nonlinear systems of equations},\n"
-                       "  Journal = {Numerical Algorithms},\n"
-                       "  Number  = {2},\n"
-                       "  Pages   = {273--286},\n"
-                       "  Volume  = {12},\n"
-                       "  Year    = {1996},\n"
-                       "  Doi     = {10.1007/BF02142807},\n"
-                       "}\n",
-                       100 )
+    : NonlinearSystem(
+        "Shi, Yixun Problem N.5",
+        "@article{YixunShi,\n"
+        "  Author  = {Shi, Yixun},\n"
+        "  Title   = {A globalization procedure for solving "
+        "nonlinear systems of equations},\n"
+        "  Journal = {Numerical Algorithms},\n"
+        "  Number  = {2},\n"
+        "  Pages   = {273--286},\n"
+        "  Volume  = {12},\n"
+        "  Year    = {1996},\n"
+        "  Doi     = {10.1007/BF02142807},\n"
+        "}\n",
+        100 )
   {
   }
 
-  virtual void
-  evaluate( Vector const & x, Vector & f ) const override
+  virtual void evaluate( Vector const & x, Vector & f ) const override
   {
     f = 1 - x( 99 ) + 0.5 * x( 98 ) - x( 97 ) - x( 96 ) + 3 * x( 95 ) + x.array() * ( 3 - 2 * x.array() );
     f( 0 ) -= 2 * x( 1 );
@@ -212,8 +207,7 @@ public:
     for ( integer idx = 1; idx < 99; ++idx ) f( idx ) -= 2 * x( idx + 1 ) + x( idx - 1 );
   }
 
-  virtual void
-  jacobian( Vector const & x, SparseMatrix & J ) const override
+  virtual void jacobian( Vector const & x, SparseMatrix & J ) const override
   {
     J.resize( n, n );
     J.setZero();
@@ -279,8 +273,7 @@ public:
     J.makeCompressed();
   }
 
-  virtual void
-  initial_points( vector<Vector> & x_vec ) const override
+  virtual void initial_points( vector<Vector> & x_vec ) const override
   {
     x_vec.resize( 4 );
     auto & x0{ x_vec[0] };
@@ -308,25 +301,25 @@ class YixunShi4 : public NonlinearSystem
 
 public:
   YixunShi4()
-    : NonlinearSystem( "Shi, Yixun Problem N.6 (Singular Broyden)",
-                       "@article{YixunShi,\n"
-                       "  Author  = {Shi, Yixun},\n"
-                       "  Title   = {A globalization procedure for solving "
-                       "nonlinear systems of equations},\n"
-                       "  Journal = {Numerical Algorithms},\n"
-                       "  Number  = {2},\n"
-                       "  Pages   = {273--286},\n"
-                       "  Volume  = {12},\n"
-                       "  Year    = {1996},\n"
-                       "  Doi     = {10.1007/BF02142807},\n"
-                       "}\n",
-                       100 )
+    : NonlinearSystem(
+        "Shi, Yixun Problem N.6 (Singular Broyden)",
+        "@article{YixunShi,\n"
+        "  Author  = {Shi, Yixun},\n"
+        "  Title   = {A globalization procedure for solving "
+        "nonlinear systems of equations},\n"
+        "  Journal = {Numerical Algorithms},\n"
+        "  Number  = {2},\n"
+        "  Pages   = {273--286},\n"
+        "  Volume  = {12},\n"
+        "  Year    = {1996},\n"
+        "  Doi     = {10.1007/BF02142807},\n"
+        "}\n",
+        100 )
     , h( 0.5 )
   {
   }
 
-  virtual void
-  evaluate( Vector const & x, Vector & f ) const override
+  virtual void evaluate( Vector const & x, Vector & f ) const override
   {
     f = ( 3 - h * x.array() ) * x.array() + 1;
     f( 0 ) -= 2 * x( 1 );
@@ -335,8 +328,7 @@ public:
     f = f.array() * f.array();
   }
 
-  virtual void
-  jacobian( Vector const & x, SparseMatrix & J ) const override
+  virtual void jacobian( Vector const & x, SparseMatrix & J ) const override
   {
     J.resize( n, n );
     J.setZero();
@@ -359,8 +351,7 @@ public:
     J.makeCompressed();
   }
 
-  virtual void
-  initial_points( vector<Vector> & x_vec ) const override
+  virtual void initial_points( vector<Vector> & x_vec ) const override
   {
     x_vec.resize( 6 );
     auto & x0{ x_vec[0] };

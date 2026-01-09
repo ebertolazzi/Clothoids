@@ -16,16 +16,16 @@ class SixHumpCamelBackFunction : public NonlinearSystem
 {
 public:
   SixHumpCamelBackFunction()
-    : NonlinearSystem( "Six Hump Camel Back function",
-                       "Molga M. and Smutnicki C. (2005).\n"
-                       "Test functions for optimization needs,\n"
-                       "http://www.zsd.ict.pwr.wroc.pl/files/docs/functions\n",
-                       2 )
+    : NonlinearSystem(
+        "Six Hump Camel Back function",
+        "Molga M. and Smutnicki C. (2005).\n"
+        "Test functions for optimization needs,\n"
+        "http://www.zsd.ict.pwr.wroc.pl/files/docs/functions\n",
+        2 )
   {
   }
 
-  virtual void
-  evaluate( Vector const & x_in, Vector & f ) const override
+  virtual void evaluate( Vector const & x_in, Vector & f ) const override
   {
     real_type x   = x_in[0];
     real_type y   = x_in[1];
@@ -36,8 +36,7 @@ public:
     f( 1 )        = x - 8.0 * y + 16.0 * t10 * y;
   }
 
-  virtual void
-  jacobian( Vector const & x_in, SparseMatrix & J ) const override
+  virtual void jacobian( Vector const & x_in, SparseMatrix & J ) const override
   {
     J.resize( n, n );
     J.setZero();
@@ -52,8 +51,7 @@ public:
     J.makeCompressed();
   }
 
-  virtual void
-  exact_solution( vector<Vector> & x_vec ) const override
+  virtual void exact_solution( vector<Vector> & x_vec ) const override
   {
     x_vec.resize( 1 );
     auto & x0{ x_vec[0] };
@@ -61,8 +59,7 @@ public:
     x0 << -0.08984, 0.71266;
   }
 
-  virtual void
-  initial_points( vector<Vector> & x_vec ) const override
+  virtual void initial_points( vector<Vector> & x_vec ) const override
   {
     x_vec.resize( 1 );
     auto & x0{ x_vec[0] };

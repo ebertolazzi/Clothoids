@@ -37,26 +37,23 @@
 
 // Print Pipal errors
 #ifndef PIPAL_ERROR
-#define PIPAL_ERROR(MSG)                \
-  {                                     \
-    std::ostringstream os;              \
-    os << MSG;                          \
-    throw std::runtime_error(os.str()); \
+#define PIPAL_ERROR( MSG )                \
+  {                                       \
+    std::ostringstream os;                \
+    os << MSG;                            \
+    throw std::runtime_error( os.str() ); \
   }
 #endif
 
 // Assert for Pipal
 #ifndef PIPAL_ASSERT
-#define PIPAL_ASSERT(COND, MSG) \
-  if (!(COND))                  \
-  {                             \
-    PIPAL_ERROR(MSG);           \
-  }
+#define PIPAL_ASSERT( COND, MSG ) \
+  if ( !( COND ) ) { PIPAL_ERROR( MSG ); }
 #endif
 
 // Warning for Pipal
 #ifndef PIPAL_WARNING
-#define PIPAL_WARNING(MSG)         \
+#define PIPAL_WARNING( MSG )       \
   {                                \
     std::cout << MSG << std::endl; \
   }
@@ -64,11 +61,8 @@
 
 // Warning assert for Pipal
 #ifndef PIPAL_ASSERT_WARNING
-#define PIPAL_ASSERT_WARNING(COND, MSG) \
-  if (!(COND))                          \
-  {                                     \
-    PIPAL_WARNING(MSG);                 \
-  }
+#define PIPAL_ASSERT_WARNING( COND, MSG ) \
+  if ( !( COND ) ) { PIPAL_WARNING( MSG ); }
 #endif
 
 #ifndef PIPAL_DEFAULT_INTEGER_TYPE
@@ -109,10 +103,10 @@ namespace Pipal
    */
   using Integer = PIPAL_DEFAULT_INTEGER_TYPE;
 
-  template<typename Real> using Vector       = Eigen::Vector<Real, Eigen::Dynamic>;
-  template<typename Real> using Matrix       = Eigen::Matrix<Real, Eigen::Dynamic, Eigen::Dynamic>;
-  template<typename Real> using SparseMatrix = Eigen::SparseMatrix<Real>;
-  template<typename Real> using Array        = Eigen::Array<Real, Eigen::Dynamic, 1>;
+  template <typename Real> using Vector       = Eigen::Vector<Real, Eigen::Dynamic>;
+  template <typename Real> using Matrix       = Eigen::Matrix<Real, Eigen::Dynamic, Eigen::Dynamic>;
+  template <typename Real> using SparseMatrix = Eigen::SparseMatrix<Real>;
+  template <typename Real> using Array        = Eigen::Array<Real, Eigen::Dynamic, 1>;
 
   using Indices = Eigen::Array<Integer, Eigen::Dynamic, 1>;
   using Mask    = Eigen::Array<bool, Eigen::Dynamic, 1>;
@@ -123,17 +117,20 @@ namespace Pipal
    * The Algorithm enumeration defines the possible algorithm choices for the solver. The options
    * are \c CONSERVATIVE and \c ADAPTIVE.
    */
-  using Algorithm = enum class Algorithm : Integer {CONSERVATIVE = 0, ADAPTIVE = 1};
+  using Algorithm = enum class Algorithm : Integer { CONSERVATIVE = 0, ADAPTIVE = 1 };
 
   /**
    * \brief Select elements from a vector based on a boolean mask.
    * \param[in] mask The boolean mask.
    * \return The selected elements from the input vector.
    */
-  static Indices find(Mask const & mask)
+  static Indices find( Mask const & mask )
   {
-    Indices out(mask.count());
-    for (Integer i{0}, j{0}; i < mask.size(); ++i) {if (mask[i]) {out[j++] = i;}}
+    Indices out( mask.count() );
+    for ( Integer i{ 0 }, j{ 0 }; i < mask.size(); ++i )
+    {
+      if ( mask[i] ) { out[j++] = i; }
+    }
     return out;
   }
 
@@ -146,34 +143,34 @@ namespace Pipal
    * \param[in] row_offset Row offset in the sparse matrix.
    * \param[in] col_offset Column offset in the sparse matrix.
    */
-  template <typename Real>
-  static void insert_block(SparseMatrix<Real> & mat, SparseMatrix<Real> const & blk,
-    Integer const row_offset, Integer const col_offset)
+  template <typename Real> static void insert_block(
+    SparseMatrix<Real> &       mat,
+    SparseMatrix<Real> const & blk,
+    Integer const              row_offset,
+    Integer const              col_offset )
   {
-    #define CMD "Pipal::Solver::insert_block(...): "
+#define CMD "Pipal::Solver::insert_block(...): "
 
     // Get sizes
-    const Integer mat_cols{static_cast<Integer>(mat.cols())}, mat_rows{static_cast<Integer>(mat.rows())};
-    const Integer blk_cols{static_cast<Integer>(blk.cols())}, blk_rows{static_cast<Integer>(blk.rows())};
+    const Integer mat_cols{ static_cast<Integer>( mat.cols() ) }, mat_rows{ static_cast<Integer>( mat.rows() ) };
+    const Integer blk_cols{ static_cast<Integer>( blk.cols() ) }, blk_rows{ static_cast<Integer>( blk.rows() ) };
 
     // Check dimensions
-    PIPAL_ASSERT(row_offset >= 0,
-      CMD "row offset must be non-negative.");
-    PIPAL_ASSERT(col_offset >= 0,
-      CMD "column offset must be non-negative.");
-    PIPAL_ASSERT(row_offset + blk_rows <= mat_rows,
-      CMD "inserting block exceeds matrix row dimensions.");
-    PIPAL_ASSERT(col_offset + blk_cols <= mat_cols,
-      CMD "inserting block exceeds matrix column dimensions.");
+    PIPAL_ASSERT( row_offset >= 0, CMD "row offset must be non-negative." );
+    PIPAL_ASSERT( col_offset >= 0, CMD "column offset must be non-negative." );
+    PIPAL_ASSERT( row_offset + blk_rows <= mat_rows, CMD "inserting block exceeds matrix row dimensions." );
+    PIPAL_ASSERT( col_offset + blk_cols <= mat_cols, CMD "inserting block exceeds matrix column dimensions." );
 
     // Insert block
-    for (Integer r{0}; r < blk_rows; ++r) {
-      for (Integer c{0}; c < blk_cols; ++c) {
-        if (blk.coeff(r, c) != 0) {mat.coeffRef(r + row_offset, c + col_offset) = blk.coeff(r, c);}
+    for ( Integer r{ 0 }; r < blk_rows; ++r )
+    {
+      for ( Integer c{ 0 }; c < blk_cols; ++c )
+      {
+        if ( blk.coeff( r, c ) != 0 ) { mat.coeffRef( r + row_offset, c + col_offset ) = blk.coeff( r, c ); }
       }
     }
 
-    #undef CMD
+#undef CMD
   }
 
   /**
@@ -187,80 +184,82 @@ namespace Pipal
    * \param[in] row_offset Row offset in the sparse matrix.
    * \param[in] col_offset Column offset in the sparse matrix.
    */
-  template <typename Real>
-  static void insert_block(SparseMatrix<Real> & mat, SparseMatrix<Real> const & blk,
-    Indices const row_index, Indices const col_index, Integer const row_offset, Integer const col_offset)
+  template <typename Real> static void insert_block(
+    SparseMatrix<Real> &       mat,
+    SparseMatrix<Real> const & blk,
+    Indices const              row_index,
+    Indices const              col_index,
+    Integer const              row_offset,
+    Integer const              col_offset )
   {
-    #define CMD "Pipal::Solver::insert_block(...): "
+#define CMD "Pipal::Solver::insert_block(...): "
 
     // Get sizes
-    const Integer mat_cols{static_cast<Integer>(mat.cols())}, mat_rows{static_cast<Integer>(mat.rows())};
-    const Integer idx_rows{static_cast<Integer>(row_index.size())};
-    const Integer idx_cols{static_cast<Integer>(col_index.size())};
+    const Integer mat_cols{ static_cast<Integer>( mat.cols() ) }, mat_rows{ static_cast<Integer>( mat.rows() ) };
+    const Integer idx_rows{ static_cast<Integer>( row_index.size() ) };
+    const Integer idx_cols{ static_cast<Integer>( col_index.size() ) };
 
     // Check dimensions
-    PIPAL_ASSERT(row_offset >= 0,
-      CMD "row offset must be non-negative.");
-    PIPAL_ASSERT(col_offset >= 0,
-      CMD "column offset must be non-negative.");
-    PIPAL_ASSERT(row_offset + idx_rows <= mat_rows,
-      CMD "inserting block exceeds matrix row dimensions.");
-    PIPAL_ASSERT(col_offset + idx_cols <= mat_cols,
-      CMD "inserting block exceeds matrix column dimensions.");
+    PIPAL_ASSERT( row_offset >= 0, CMD "row offset must be non-negative." );
+    PIPAL_ASSERT( col_offset >= 0, CMD "column offset must be non-negative." );
+    PIPAL_ASSERT( row_offset + idx_rows <= mat_rows, CMD "inserting block exceeds matrix row dimensions." );
+    PIPAL_ASSERT( col_offset + idx_cols <= mat_cols, CMD "inserting block exceeds matrix column dimensions." );
 
     // Insert block
-    for (Integer r{0}; r < idx_rows; ++r) {
-      for (Integer c{0}; c < idx_cols; ++c) {
-        if (blk.coeff(row_index(r), col_index(c)) != 0) {
-          mat.coeffRef(r + row_offset, c + col_offset) = blk.coeff(row_index(r), col_index(c));
+    for ( Integer r{ 0 }; r < idx_rows; ++r )
+    {
+      for ( Integer c{ 0 }; c < idx_cols; ++c )
+      {
+        if ( blk.coeff( row_index( r ), col_index( c ) ) != 0 )
+        {
+          mat.coeffRef( r + row_offset, c + col_offset ) = blk.coeff( row_index( r ), col_index( c ) );
         }
       }
     }
 
-    #undef CMD
+#undef CMD
   }
 
   /**
    * \brief Internal parameters for the solver algorithm.
    * \tparam Real The real number type.
    */
-  template<typename Real>
-  struct Parameter
+  template <typename Real> struct Parameter
   {
-    static constexpr Real    rhs_bnd{1.0e+18};       /*!< Maximum absolute value allowed for constraint right-hand side. */
-    static constexpr Real    grad_max{1.0e+02};      /*!< Gradient norm limit for scaling. */
-    static constexpr Real    infeas_max{1.0e+02};    /*!< Infeasibility limit for penalty parameter update. */
-    static constexpr Real    nnz_max{2.0e+04};       /*!< Maximum non-zeros in (upper triangle of) Newton matrix. */
-    static constexpr Integer opt_err_mem{6};         /*!< Optimality error history length. */
-    static constexpr Real    ls_factor{5.0e-01};     /*!< Line search reduction factor. */
-    static constexpr Real    ls_thresh{1.0e-08};     /*!< Line search threshold value. */
-    static constexpr Real    ls_frac{1.0e-02};       /*!< Line search fraction-to-boundary constant. */
-    static constexpr Real    slack_min{1.0e-20};     /*!< Slack variable bound. */
-    static constexpr Real    shift_min{1.0e-12};     /*!< Hessian shift (non-zero) minimum value. */
-    static constexpr Real    shift_factor1{5.0e-01}; /*!< Hessian shift update value (for decreases). */
-    static constexpr Real    shift_factor2{6.0e-01}; /*!< Hessian shift update value (for increases). */
-    static constexpr Real    shift_max{1.0e+08};     /*!< Hessian shift maximum value. */
-    static constexpr Real    rho_init{1.0e-01};      /*!< Penalty parameter initial value. */
-    static constexpr Real    rho_min{1.0e-12};       /*!< Penalty parameter minimum value. */
-    static constexpr Real    rho_factor{5.0e-01};    /*!< Penalty parameter reduction factor. */
-    static constexpr Integer rho_trials{8};          /*!< Penalty parameter number of trial values per iteration. */
-    static constexpr Real    mu_init{1.0e-01};       /*!< Interior-point parameter initial value. */
-    static constexpr Real    mu_min{1.0e-12};        /*!< Interior-point parameter minimum value. */
-    static constexpr Real    mu_factor{1.0e-01};     /*!< Interior-point parameter reduction factor. */
-    static constexpr Real    mu_factor_exp{1.5};     /*!< Interior-point parameter reduction exponent. */
-    static constexpr Integer mu_trials{4};           /*!< Interior-point parameter number of trial values per iteration. */
-    static constexpr Real    mu_max{1.0e-01};        /*!< Interior-point parameter maximum value. */
-    static constexpr Real    mu_max_exp0{0.0};       /*!< Interior-point parameter maximum exponent in increases (default). */
-    static constexpr Real    update_con_1{1.0e-02};  /*!< Steering rule constant 1. */
-    static constexpr Real    update_con_2{1.0e-02};  /*!< Steering rule constant 2. */
-    static constexpr Real    update_con_3{1.01};     /*!< Adaptive interior-point rule constant. */
+    static constexpr Real    rhs_bnd{ 1.0e+18 };  /*!< Maximum absolute value allowed for constraint right-hand side. */
+    static constexpr Real    grad_max{ 1.0e+02 }; /*!< Gradient norm limit for scaling. */
+    static constexpr Real    infeas_max{ 1.0e+02 };    /*!< Infeasibility limit for penalty parameter update. */
+    static constexpr Real    nnz_max{ 2.0e+04 };       /*!< Maximum non-zeros in (upper triangle of) Newton matrix. */
+    static constexpr Integer opt_err_mem{ 6 };         /*!< Optimality error history length. */
+    static constexpr Real    ls_factor{ 5.0e-01 };     /*!< Line search reduction factor. */
+    static constexpr Real    ls_thresh{ 1.0e-08 };     /*!< Line search threshold value. */
+    static constexpr Real    ls_frac{ 1.0e-02 };       /*!< Line search fraction-to-boundary constant. */
+    static constexpr Real    slack_min{ 1.0e-20 };     /*!< Slack variable bound. */
+    static constexpr Real    shift_min{ 1.0e-12 };     /*!< Hessian shift (non-zero) minimum value. */
+    static constexpr Real    shift_factor1{ 5.0e-01 }; /*!< Hessian shift update value (for decreases). */
+    static constexpr Real    shift_factor2{ 6.0e-01 }; /*!< Hessian shift update value (for increases). */
+    static constexpr Real    shift_max{ 1.0e+08 };     /*!< Hessian shift maximum value. */
+    static constexpr Real    rho_init{ 1.0e-01 };      /*!< Penalty parameter initial value. */
+    static constexpr Real    rho_min{ 1.0e-12 };       /*!< Penalty parameter minimum value. */
+    static constexpr Real    rho_factor{ 5.0e-01 };    /*!< Penalty parameter reduction factor. */
+    static constexpr Integer rho_trials{ 8 };          /*!< Penalty parameter number of trial values per iteration. */
+    static constexpr Real    mu_init{ 1.0e-01 };       /*!< Interior-point parameter initial value. */
+    static constexpr Real    mu_min{ 1.0e-12 };        /*!< Interior-point parameter minimum value. */
+    static constexpr Real    mu_factor{ 1.0e-01 };     /*!< Interior-point parameter reduction factor. */
+    static constexpr Real    mu_factor_exp{ 1.5 };     /*!< Interior-point parameter reduction exponent. */
+    static constexpr Integer mu_trials{ 4 };    /*!< Interior-point parameter number of trial values per iteration. */
+    static constexpr Real    mu_max{ 1.0e-01 }; /*!< Interior-point parameter maximum value. */
+    static constexpr Real mu_max_exp0{ 0.0 }; /*!< Interior-point parameter maximum exponent in increases (default). */
+    static constexpr Real update_con_1{ 1.0e-02 }; /*!< Steering rule constant 1. */
+    static constexpr Real update_con_2{ 1.0e-02 }; /*!< Steering rule constant 2. */
+    static constexpr Real update_con_3{ 1.01 };    /*!< Adaptive interior-point rule constant. */
 
-    Real      opt_err_tol{1.0e-6};            /*!< Default optimality tolerance. */
-    Integer   iter_max{1000};                 /*!< Default iteration limit. */
-    Algorithm algorithm{Algorithm::ADAPTIVE}; /*!< Algorithm choice. */
-    Real      mu_max_exp{0.0};                /*!< Interior-point parameter maximum exponent in increases. */
+    Real      opt_err_tol{ 1.0e-6 };            /*!< Default optimality tolerance. */
+    Integer   iter_max{ 1000 };                 /*!< Default iteration limit. */
+    Algorithm algorithm{ Algorithm::ADAPTIVE }; /*!< Algorithm choice. */
+    Real      mu_max_exp{ 0.0 };                /*!< Interior-point parameter maximum exponent in increases. */
 
-    Integer bfgs_update_freq{20}; /*!< BFGS update frequency. */
+    Integer bfgs_update_freq{ 20 }; /*!< BFGS update frequency. */
 
     /**
      * \brief Default constructor.
@@ -270,25 +269,25 @@ namespace Pipal
     /**
      * \brief Delete copy constructor and assignment operator.
      */
-    Parameter(Parameter const &) = delete;
+    Parameter( Parameter const & ) = delete;
 
     /**
      * \brief Delete copy constructor and assignment operator.
      */
-    Parameter & operator=(Parameter const &) = delete;
+    Parameter & operator=( Parameter const & ) = delete;
 
-  }; // struct Parameter
+  };  // struct Parameter
 
   /**
    * \brief Internal counters for solver statistics.
    */
   using Counter = struct Counter
   {
-    Integer f{0}; /*!< Function evaluation counter. */
-    Integer g{0}; /*!< Gradient evaluation counter. */
-    Integer H{0}; /*!< Hessian evaluation counter. */
-    Integer k{0}; /*!< Iteration counter. */
-    Integer M{0}; /*!< Matrix factorization counter. */
+    Integer f{ 0 }; /*!< Function evaluation counter. */
+    Integer g{ 0 }; /*!< Gradient evaluation counter. */
+    Integer H{ 0 }; /*!< Hessian evaluation counter. */
+    Integer k{ 0 }; /*!< Iteration counter. */
+    Integer M{ 0 }; /*!< Matrix factorization counter. */
 
     /**
      * \brief Default constructor.
@@ -298,58 +297,57 @@ namespace Pipal
     /**
      * \brief Delete copy constructor and assignment operator.
      */
-    Counter(Counter const &) = delete;
+    Counter( Counter const & ) = delete;
 
     /**
      * \brief Delete copy constructor and assignment operator.
      */
-    Counter & operator=(Counter const &) = delete;
+    Counter & operator=( Counter const & ) = delete;
 
-  }; // struct Counter
+  };  // struct Counter
 
   /**
    * \brief Input structure holding all the data defining the optimization problem.
    * \tparam Real The real number type.
    */
-  template<typename Real>
-  struct Input
+  template <typename Real> struct Input
   {
-    std::string name; /*!< Problem identity. */
-    Indices       I1; /*!< Indices of free variables. */
-    Indices       I2; /*!< Indices of fixed variables. */
-    Indices       I3; /*!< Indices of lower bounded variables. */
-    Indices       I4; /*!< Indices of upper bounded variables. */
-    Indices       I5; /*!< Indices of lower and upper bounded variables. */
-    Indices       I6; /*!< Indices of equality constraints. */
-    Indices       I7; /*!< Indices of lower bounded constraints. */
-    Indices       I8; /*!< Indices of upper bounded constraints. */
-    Indices       I9; /*!< Indices of lower and upper bounded constraints. */
-    Vector<Real>  x0; /*!< Initial guess for the primal variables. */
-    Vector<Real>  b2; /*!< Right-hand side of fixed variables. */
-    Vector<Real>  l3; /*!< Right-hand side of lower bounded variables. */
-    Vector<Real>  u4; /*!< Right-hand side of upper bounded variables. */
-    Vector<Real>  l5; /*!< Right-hand side of lower half of lower and upper bounded variables. */
-    Vector<Real>  u5; /*!< Right-hand side of upper half of lower and upper bounded variables. */
-    Vector<Real>  b6; /*!< Right-hand side of equality constraints. */
-    Vector<Real>  l7; /*!< Right-hand side of lower bounded constraints. */
-    Vector<Real>  u8; /*!< Right-hand side of upper bounded constraints. */
-    Vector<Real>  l9; /*!< Right-hand side of lower half of lower and upper bounded constraints. */
-    Vector<Real>  u9; /*!< Right-hand side of upper half of lower and upper bounded constraints. */
-    Integer       n0; /*!< Number of original formulation variables. */
-    Integer       n1; /*!< Number of free variables. */
-    Integer       n2; /*!< Number of fixed variables. */
-    Integer       n3; /*!< Number of lower bounded variables. */
-    Integer       n4; /*!< Number of upper bounded variables. */
-    Integer       n5; /*!< Number of lower and upper bounded variables. */
-    Integer       n6; /*!< Number of equality constraints. */
-    Integer       n7; /*!< Number of lower bounded constraints. */
-    Integer       n8; /*!< Number of upper bounded constraints. */
-    Integer       n9; /*!< Number of lower and upper bounded constraints. */
-    Integer       nV; /*!< Number of variables. */
-    Integer       nI; /*!< Number of inequality constraints. */
-    Integer       nE; /*!< Number of equality constraints. */
-    Integer       nA; /*!< Size of primal-dual matrix. */
-    Integer       vi; /*!< Counter for invalid bounds. */
+    std::string  name; /*!< Problem identity. */
+    Indices      I1;   /*!< Indices of free variables. */
+    Indices      I2;   /*!< Indices of fixed variables. */
+    Indices      I3;   /*!< Indices of lower bounded variables. */
+    Indices      I4;   /*!< Indices of upper bounded variables. */
+    Indices      I5;   /*!< Indices of lower and upper bounded variables. */
+    Indices      I6;   /*!< Indices of equality constraints. */
+    Indices      I7;   /*!< Indices of lower bounded constraints. */
+    Indices      I8;   /*!< Indices of upper bounded constraints. */
+    Indices      I9;   /*!< Indices of lower and upper bounded constraints. */
+    Vector<Real> x0;   /*!< Initial guess for the primal variables. */
+    Vector<Real> b2;   /*!< Right-hand side of fixed variables. */
+    Vector<Real> l3;   /*!< Right-hand side of lower bounded variables. */
+    Vector<Real> u4;   /*!< Right-hand side of upper bounded variables. */
+    Vector<Real> l5;   /*!< Right-hand side of lower half of lower and upper bounded variables. */
+    Vector<Real> u5;   /*!< Right-hand side of upper half of lower and upper bounded variables. */
+    Vector<Real> b6;   /*!< Right-hand side of equality constraints. */
+    Vector<Real> l7;   /*!< Right-hand side of lower bounded constraints. */
+    Vector<Real> u8;   /*!< Right-hand side of upper bounded constraints. */
+    Vector<Real> l9;   /*!< Right-hand side of lower half of lower and upper bounded constraints. */
+    Vector<Real> u9;   /*!< Right-hand side of upper half of lower and upper bounded constraints. */
+    Integer      n0;   /*!< Number of original formulation variables. */
+    Integer      n1;   /*!< Number of free variables. */
+    Integer      n2;   /*!< Number of fixed variables. */
+    Integer      n3;   /*!< Number of lower bounded variables. */
+    Integer      n4;   /*!< Number of upper bounded variables. */
+    Integer      n5;   /*!< Number of lower and upper bounded variables. */
+    Integer      n6;   /*!< Number of equality constraints. */
+    Integer      n7;   /*!< Number of lower bounded constraints. */
+    Integer      n8;   /*!< Number of upper bounded constraints. */
+    Integer      n9;   /*!< Number of lower and upper bounded constraints. */
+    Integer      nV;   /*!< Number of variables. */
+    Integer      nI;   /*!< Number of inequality constraints. */
+    Integer      nE;   /*!< Number of equality constraints. */
+    Integer      nA;   /*!< Size of primal-dual matrix. */
+    Integer      vi;   /*!< Counter for invalid bounds. */
 
     /**
      * \brief Default constructor.
@@ -359,21 +357,20 @@ namespace Pipal
     /**
      * \brief Delete copy constructor and assignment operator.
      */
-    Input(Input const &) = delete;
+    Input( Input const & ) = delete;
 
     /**
      * \brief Delete copy constructor and assignment operator.
      */
-    Input & operator=(Input const &) = delete;
+    Input & operator=( Input const & ) = delete;
 
-  }; // struct Input
+  };  // struct Input
 
   /**
    * \brief Class for managing the current iterate of the solver.
    * \tparam Real The real number type.
    */
-  template<typename Real>
-  struct Iterate
+  template <typename Real> struct Iterate
   {
     using LDLT = Eigen::SimplicialLDLT<SparseMatrix<Real>, Eigen::Lower>;
 
@@ -428,21 +425,20 @@ namespace Pipal
     /**
      * \brief Delete copy constructor and assignment operator.
      */
-    Iterate(Iterate const &) = delete;
+    Iterate( Iterate const & ) = delete;
 
     /**
      * \brief Delete copy constructor and assignment operator.
      */
-    Iterate & operator=(Iterate const &) = delete;
+    Iterate & operator=( Iterate const & ) = delete;
 
-  }; // struct Iterate
+  };  // struct Iterate
 
   /**
    * \brief Class for managing the current search direction of the solver.
    * \tparam Real The real number type.
    */
-  template<typename Real>
-  struct Direction
+  template <typename Real> struct Direction
   {
     Vector<Real> x;       /*!< Primal direction. */
     Real         x_norm;  /*!< Primal direction norm value. */
@@ -468,26 +464,25 @@ namespace Pipal
     /**
      * \brief Delete copy constructor and assignment operator.
      */
-    Direction(Direction const &) = delete;
+    Direction( Direction const & ) = delete;
 
     /**
      * \brief Delete copy constructor and assignment operator.
      */
-    Direction & operator=(Direction const &) = delete;
+    Direction & operator=( Direction const & ) = delete;
 
-  }; // struct Direction
+  };  // struct Direction
 
   /**
-    * \brief Class for managing the acceptance criteria of the solver.
-    * \tparam Real The real number type.
-    */
-  template<typename Real>
-  struct Acceptance
+   * \brief Class for managing the acceptance criteria of the solver.
+   * \tparam Real The real number type.
+   */
+  template <typename Real> struct Acceptance
   {
-    Real p0{0.0};  /*!< Fraction-to-the-boundary steplength. */
-    Real p{0.0};   /*!< Primal steplength. */
-    Real d{0.0};   /*!< Dual steplength. */
-    bool s{false}; /*!< Bool for second-order correction. */
+    Real p0{ 0.0 };  /*!< Fraction-to-the-boundary steplength. */
+    Real p{ 0.0 };   /*!< Primal steplength. */
+    Real d{ 0.0 };   /*!< Dual steplength. */
+    bool s{ false }; /*!< Bool for second-order correction. */
 
     /**
      * \brief Default constructor.
@@ -497,15 +492,15 @@ namespace Pipal
     /**
      * \brief Delete copy constructor and assignment operator.
      */
-    Acceptance(Acceptance const &) = delete;
+    Acceptance( Acceptance const & ) = delete;
 
     /**
      * \brief Delete copy constructor and assignment operator.
      */
-    Acceptance & operator=(Acceptance const &) = delete;
+    Acceptance & operator=( Acceptance const & ) = delete;
 
-  }; // struct Acceptance
+  };  // struct Acceptance
 
-} // namespace Pipal
+}  // namespace Pipal
 
-#endif // INCLUDE_PIPAL_DEFINES_HXX
+#endif  // INCLUDE_PIPAL_DEFINES_HXX

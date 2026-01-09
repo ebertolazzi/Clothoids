@@ -20,20 +20,21 @@ class Function15 : public NonlinearSystem
 
 public:
   Function15( integer neq )
-    : NonlinearSystem( "Function 15",
-                       "@article{LaCruz:2003,\n"
-                       "  author    = { William {La Cruz}  and  Marcos Raydan},\n"
-                       "  title     = {Nonmonotone Spectral Methods for Large-Scale "
-                       "Nonlinear Systems},\n"
-                       "  journal   = {Optimization Methods and Software},\n"
-                       "  year      = {2003},\n"
-                       "  volume    = {18},\n"
-                       "  number    = {5},\n"
-                       "  pages     = {583--599},\n"
-                       "  publisher = {Taylor & Francis},\n"
-                       "  doi       = {10.1080/10556780310001610493},\n"
-                       "}\n",
-                       neq )
+    : NonlinearSystem(
+        "Function 15",
+        "@article{LaCruz:2003,\n"
+        "  author    = { William {La Cruz}  and  Marcos Raydan},\n"
+        "  title     = {Nonmonotone Spectral Methods for Large-Scale "
+        "Nonlinear Systems},\n"
+        "  journal   = {Optimization Methods and Software},\n"
+        "  year      = {2003},\n"
+        "  volume    = {18},\n"
+        "  number    = {5},\n"
+        "  pages     = {583--599},\n"
+        "  publisher = {Taylor & Francis},\n"
+        "  doi       = {10.1080/10556780310001610493},\n"
+        "}\n",
+        neq )
   {
     check_min_equations( n, 2 );
     jac_idx_vals.clear();
@@ -56,8 +57,7 @@ public:
     }
   }
 
-  virtual void
-  evaluate( Vector const & x, Vector & f ) const override
+  virtual void evaluate( Vector const & x, Vector & f ) const override
   {
     real_type bf = 3 * x( n - 5 ) - x( n - 4 ) - x( n - 3 ) + 0.5 * x( n - 2 ) - x( n - 1 ) + 1;
     f( 0 )       = -2 * x( 0 ) * x( 0 ) + 3 * x( 0 ) + bf;
@@ -65,8 +65,7 @@ public:
     for ( integer i = 1; i < n - 1; ++i ) f( i ) = -2 * x( i ) * x( i ) + 3 * x( i ) - x( i - 1 ) - 2 * x( i + 1 ) + bf;
   }
 
-  virtual void
-  jacobian( Vector const & x, SparseMatrix & J ) const override
+  virtual void jacobian( Vector const & x, SparseMatrix & J ) const override
   {
     Matrix J_full( n, n );
     J_full.setZero();
@@ -112,8 +111,7 @@ public:
     J = J_full.sparseView();
   }
 
-  virtual void
-  initial_points( vector<Vector> & x_vec ) const override
+  virtual void initial_points( vector<Vector> & x_vec ) const override
   {
     x_vec.resize( 1 );
     auto & x0{ x_vec[0] };

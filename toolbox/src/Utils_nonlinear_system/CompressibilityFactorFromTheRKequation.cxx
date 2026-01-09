@@ -18,18 +18,19 @@ class CompressibilityFactorFromTheRKequation : public NonlinearSystem
 
 public:
   CompressibilityFactorFromTheRKequation()
-    : NonlinearSystem( "Compressibility factor from the RK equation",
-                       "@book{Cutlip:2007,\n"
-                       "  author    = {Cutlip, Michael and Shacham, Mordechai},\n"
-                       "  title     = {Problem Solving in Chemical and Biochemical "
-                       "Engineering\n"
-                       "               with Polymath,\\texttrademark Excel,\n"
-                       "               and Matlab\\textregistered, Second Edition},\n"
-                       "  year      = {2007},\n"
-                       "  isbn      = {9780131482043},\n"
-                       "  publisher = {Prentice Hall Press},\n"
-                       "}\n",
-                       1 )
+    : NonlinearSystem(
+        "Compressibility factor from the RK equation",
+        "@book{Cutlip:2007,\n"
+        "  author    = {Cutlip, Michael and Shacham, Mordechai},\n"
+        "  title     = {Problem Solving in Chemical and Biochemical "
+        "Engineering\n"
+        "               with Polymath,\\texttrademark Excel,\n"
+        "               and Matlab\\textregistered, Second Edition},\n"
+        "  year      = {2007},\n"
+        "  isbn      = {9780131482043},\n"
+        "  publisher = {Prentice Hall Press},\n"
+        "}\n",
+        1 )
   {
     real_type P    = 200;
     real_type Pc   = 33.5;
@@ -43,15 +44,13 @@ public:
     r              = Asqr * B;
   }
 
-  virtual void
-  evaluate( Vector const & x, Vector & f ) const override
+  virtual void evaluate( Vector const & x, Vector & f ) const override
   {
     real_type z = x( 0 );
     f( 0 )      = ( ( z - 1 ) * z - Q ) * z - r;
   }
 
-  virtual void
-  jacobian( Vector const & x, SparseMatrix & J ) const override
+  virtual void jacobian( Vector const & x, SparseMatrix & J ) const override
   {
     real_type z = x( 0 );
     J.resize( n, n );
@@ -59,8 +58,7 @@ public:
     J.makeCompressed();
   }
 
-  virtual void
-  initial_points( vector<Vector> & x_vec ) const override
+  virtual void initial_points( vector<Vector> & x_vec ) const override
   {
     x_vec.resize( 4 );
     x_vec[0].resize( 1 );

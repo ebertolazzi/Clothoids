@@ -23,4 +23,4 @@
 #include "Pipal/Input.hxx"
 #include "Pipal/Iterate.hxx"
 
-#endif // INCLUDE_PIPAL_HH
+#endif  // INCLUDE_PIPAL_HH

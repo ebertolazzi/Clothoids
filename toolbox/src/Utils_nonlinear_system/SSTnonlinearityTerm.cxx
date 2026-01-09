@@ -8,13 +8,11 @@
  |    email: enrico.bertolazzi@unitn.it
 \*/
 
-
 /*\
  | - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 \*/
 
-static inline string
-ini_msg_SSTnonlinearityTerm( int item )
+static inline string ini_msg_SSTnonlinearityTerm( int item )
 {
   return fmt::format( "SST nonlinearity term, N.{}", item );
 }
@@ -27,36 +25,32 @@ class SSTnonlinearityTerm : public NonlinearSystem
 
 public:
   SSTnonlinearityTerm( integer idx_in )
-    : NonlinearSystem( ini_msg_SSTnonlinearityTerm( idx_in ),
-                       "@article{Sincovec:1975,\n"
-                       "  author  = {Sincovec, Richard F. and Madsen, Niel K.},\n"
-                       "  title   = {Software for Nonlinear Partial Differential "
-                       "Equations},\n"
-                       "  journal = {ACM Trans. Math. Softw.},\n"
-                       "  volume  = {1},\n"
-                       "  number  = {3},\n"
-                       "  year    = {1975},\n"
-                       "  pages   = {232--260},\n"
-                       "  doi     = {10.1145/355644.355649}\n"
-                       "}\n",
-                       4 )
+    : NonlinearSystem(
+        ini_msg_SSTnonlinearityTerm( idx_in ),
+        "@article{Sincovec:1975,\n"
+        "  author  = {Sincovec, Richard F. and Madsen, Niel K.},\n"
+        "  title   = {Software for Nonlinear Partial Differential "
+        "Equations},\n"
+        "  journal = {ACM Trans. Math. Softw.},\n"
+        "  volume  = {1},\n"
+        "  number  = {3},\n"
+        "  year    = {1975},\n"
+        "  pages   = {232--260},\n"
+        "  doi     = {10.1145/355644.355649}\n"
+        "}\n",
+        4 )
     , idx( idx_in )
     , SCALE( 1e7 )
   {
     UTILS_ASSERT( idx == 0 || idx == 1, "SSTnonlinearityTerm, idx = {} must be 0 or 1", idx_in );
     switch ( idx )
     {
-      case 0:
-        sst1 = 360;
-        break;
-      case 1:
-        sst1 = 3250;
-        break;
+      case 0: sst1 = 360; break;
+      case 1: sst1 = 3250; break;
     }
   }
 
-  virtual void
-  evaluate( Vector const & x, Vector & f ) const override
+  virtual void evaluate( Vector const & x, Vector & f ) const override
   {
     f( 0 ) = 4E5 - 272.443800016 * x( 0 ) + 0.1e-3 * x( 1 ) + 0.7e-2 * x( 3 ) - 3.67E-16 * x( 0 ) * x( 1 ) -
              4.13E-12 * x( 0 ) * x( 3 );
@@ -67,8 +61,7 @@ public:
     for ( integer i = 0; i < n; ++i ) f( i ) /= SCALE;
   }
 
-  virtual void
-  jacobian( Vector const & x, SparseMatrix & J ) const override
+  virtual void jacobian( Vector const & x, SparseMatrix & J ) const override
   {
     J.resize( n, n );
     J.setZero();
@@ -98,8 +91,7 @@ public:
     J /= SCALE;
   }
 
-  virtual void
-  exact_solution( vector<Vector> & x_vec ) const override
+  virtual void exact_solution( vector<Vector> & x_vec ) const override
   {
     x_vec.resize( 2 );
     auto & x0{ x_vec[0] };
@@ -107,13 +99,12 @@ public:
     x0.resize( n );
     x1.resize( n );
     x0 << 1.264224341494800168746220557617102243320e6, 8.501430437421119197727722658565357159210e11,
-        8.547006912362613482744674003963465220779e10, 3.702993087637386517255325996036534779221e10;
+      8.547006912362613482744674003963465220779e10, 3.702993087637386517255325996036534779221e10;
     x1 << 1.167055115589686729437819269080948198165e6, 3.069755937686399353641443136774453022013e11,
-        2.621168343680655428727664834155029399049e11, 4.100816563193445712723351658449706009508e10;
+      2.621168343680655428727664834155029399049e11, 4.100816563193445712723351658449706009508e10;
   }
 
-  virtual void
-  initial_points( vector<Vector> & x_vec ) const override
+  virtual void initial_points( vector<Vector> & x_vec ) const override
   {
     x_vec.resize( 1 );
     auto & x0{ x_vec[0] };
@@ -121,14 +112,12 @@ public:
     x0 << 1E9, 1E9, 1E13, 1E7;
   }
 
-  virtual void
-  check_if_admissible( Vector const & x ) const override
+  virtual void check_if_admissible( Vector const & x ) const override
   {
     for ( integer i = 0; i < n; ++i ) UTILS_ASSERT( x( i ) > 0, "Bad range" );
   }
 
-  virtual void
-  bounding_box( Vector & L, Vector & U ) const override
+  virtual void bounding_box( Vector & L, Vector & U ) const override
   {
     U.fill( real_max );
     L.setZero();

@@ -8,26 +8,26 @@
  |    email: enrico.bertolazzi@unitn.it
 \*/
 
-#define PENALTY_FUNCTION_BIBTEX                                                                                        \
-  "@techreport{Raydan:2004,\n"                                                                                         \
-  "  author = {William La Cruz and Jose Mario Martinez and Marcos Raydan},\n"                                          \
-  "  title  = {Spectral residual method without gradient\n"                                                            \
-  "             information for solving large-scale nonlinear\n"                                                       \
-  "             systems of equations: Theory and experiments},\n"                                                      \
-  "  number = {Technical Report RT-04-08},\n"                                                                          \
-  "  year   = {2004}\n"                                                                                                \
-  "}\n\n"                                                                                                              \
-  "@article{LaCruz:2003,\n"                                                                                            \
-  "  author    = {William {La Cruz}  and  Marcos Raydan},\n"                                                           \
-  "  title     = {Nonmonotone Spectral Methods for Large-Scale Nonlinear "                                             \
-  "Systems},\n"                                                                                                        \
-  "  journal   = {Optimization Methods and Software},\n"                                                               \
-  "  year      = {2003},\n"                                                                                            \
-  "  volume    = {18},\n"                                                                                              \
-  "  number    = {5},\n"                                                                                               \
-  "  pages     = {583--599},\n"                                                                                        \
-  "  publisher = {Taylor & Francis},\n"                                                                                \
-  "  doi       = {10.1080/10556780310001610493},\n"                                                                    \
+#define PENALTY_FUNCTION_BIBTEX                                               \
+  "@techreport{Raydan:2004,\n"                                                \
+  "  author = {William La Cruz and Jose Mario Martinez and Marcos Raydan},\n" \
+  "  title  = {Spectral residual method without gradient\n"                   \
+  "             information for solving large-scale nonlinear\n"              \
+  "             systems of equations: Theory and experiments},\n"             \
+  "  number = {Technical Report RT-04-08},\n"                                 \
+  "  year   = {2004}\n"                                                       \
+  "}\n\n"                                                                     \
+  "@article{LaCruz:2003,\n"                                                   \
+  "  author    = {William {La Cruz}  and  Marcos Raydan},\n"                  \
+  "  title     = {Nonmonotone Spectral Methods for Large-Scale Nonlinear "    \
+  "Systems},\n"                                                               \
+  "  journal   = {Optimization Methods and Software},\n"                      \
+  "  year      = {2003},\n"                                                   \
+  "  volume    = {18},\n"                                                     \
+  "  number    = {5},\n"                                                      \
+  "  pages     = {583--599},\n"                                               \
+  "  publisher = {Taylor & Francis},\n"                                       \
+  "  doi       = {10.1080/10556780310001610493},\n"                           \
   "}\n"
 
 /*\
@@ -42,8 +42,7 @@ public:
     check_min_equations( n, 2 );
   }
 
-  virtual void
-  evaluate( Vector const & x, Vector & f ) const override
+  virtual void evaluate( Vector const & x, Vector & f ) const override
   {
     real_type sum = 0;
     for ( integer i = 0; i < n; ++i ) sum += x( i ) * x( i );
@@ -51,8 +50,7 @@ public:
     f( n - 1 ) = ( sum / n - 1 ) / 4;
   }
 
-  virtual void
-  jacobian( Vector const & x, SparseMatrix & J ) const override
+  virtual void jacobian( Vector const & x, SparseMatrix & J ) const override
   {
     J.resize( n, n );
     J.setZero();
@@ -61,8 +59,7 @@ public:
     J.makeCompressed();
   }
 
-  virtual void
-  initial_points( vector<Vector> & x_vec ) const override
+  virtual void initial_points( vector<Vector> & x_vec ) const override
   {
     x_vec.resize( 1 );
     auto & x0{ x_vec[0] };
@@ -81,39 +78,37 @@ class PenaltyN1 : public NonlinearSystem
 
 public:
   PenaltyN1( integer neq )
-    : NonlinearSystem( "Penalty Function #1",
-                       "@book{brent2013,\n"
-                       "  author    = {Brent, R.P.},\n"
-                       "  title     = {Algorithms for Minimization Without Derivatives},\n"
-                       "  isbn      = {9780486143682},\n"
-                       "  series    = {Dover Books on Mathematics},\n"
-                       "  year      = {2013},\n"
-                       "  publisher = {Dover Publications}\n"
-                       "}\n",
-                       neq )
+    : NonlinearSystem(
+        "Penalty Function #1",
+        "@book{brent2013,\n"
+        "  author    = {Brent, R.P.},\n"
+        "  title     = {Algorithms for Minimization Without Derivatives},\n"
+        "  isbn      = {9780486143682},\n"
+        "  series    = {Dover Books on Mathematics},\n"
+        "  year      = {2013},\n"
+        "  publisher = {Dover Publications}\n"
+        "}\n",
+        neq )
     , epsilon( 0.00001 )
   {
     check_min_equations( n, 2 );
   }
 
-  real_type
-  sum( Vector const & x ) const
+  real_type sum( Vector const & x ) const
   {
     real_type t1 = 0;
     for ( integer i = 0; i < n; ++i ) t1 += x( i ) * x( i );
     return 4 * t1 - 1;
   }
 
-  virtual void
-  evaluate( Vector const & x, Vector & f ) const override
+  virtual void evaluate( Vector const & x, Vector & f ) const override
   {
     real_type ap = 2 * epsilon;
     real_type t1 = sum( x );
     for ( integer i = 0; i < n; ++i ) f( i ) = ( ap + t1 ) * x( i ) - ap;
   }
 
-  virtual void
-  jacobian( Vector const & x, SparseMatrix & J ) const override
+  virtual void jacobian( Vector const & x, SparseMatrix & J ) const override
   {
     J.resize( n, n );
     J.setZero();
@@ -131,8 +126,7 @@ public:
     J.makeCompressed();
   }
 
-  virtual void
-  initial_points( vector<Vector> & x_vec ) const override
+  virtual void initial_points( vector<Vector> & x_vec ) const override
   {
     x_vec.resize( 1 );
     auto & x0{ x_vec[0] };
@@ -153,23 +147,23 @@ class PenaltyN2 : public NonlinearSystem
 
 public:
   PenaltyN2( integer neq )
-    : NonlinearSystem( "Penalty Function #2",
-                       "@book{brent2013,\n"
-                       "  author    = {Brent, R.P.},\n"
-                       "  title     = {Algorithms for Minimization Without Derivatives},\n"
-                       "  isbn      = {9780486143682},\n"
-                       "  series    = {Dover Books on Mathematics},\n"
-                       "  year      = {2013},\n"
-                       "  publisher = {Dover Publications}\n"
-                       "}\n",
-                       neq )
+    : NonlinearSystem(
+        "Penalty Function #2",
+        "@book{brent2013,\n"
+        "  author    = {Brent, R.P.},\n"
+        "  title     = {Algorithms for Minimization Without Derivatives},\n"
+        "  isbn      = {9780486143682},\n"
+        "  series    = {Dover Books on Mathematics},\n"
+        "  year      = {2013},\n"
+        "  publisher = {Dover Publications}\n"
+        "}\n",
+        neq )
     , epsilon( 0.00001 )
   {
     check_min_equations( n, 2 );
   }
 
-  virtual void
-  evaluate( Vector const & x, Vector & f ) const override
+  virtual void evaluate( Vector const & x, Vector & f ) const override
   {
     real_type ap = epsilon;
 
@@ -195,8 +189,7 @@ public:
     f( 0 ) += 2.0 * ( x( 0 ) - 0.2 );
   }
 
-  virtual void
-  jacobian( Vector const & x, SparseMatrix & J ) const override
+  virtual void jacobian( Vector const & x, SparseMatrix & J ) const override
   {
     Matrix J_full( n, n );
     J_full.setZero();
@@ -236,8 +229,7 @@ public:
     J = J_full.sparseView();
   }
 
-  virtual void
-  initial_points( vector<Vector> & x_vec ) const override
+  virtual void initial_points( vector<Vector> & x_vec ) const override
   {
     x_vec.resize( 1 );
     auto & x0{ x_vec[0] };

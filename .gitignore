@@ -52,3 +52,4 @@ Xcode
 *.csv
 .DS_Store
 include
+.cache

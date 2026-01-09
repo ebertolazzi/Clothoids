@@ -18,20 +18,21 @@ class HanSunHan : public NonlinearSystem
 
 public:
   HanSunHan()
-    : NonlinearSystem( "Han-Sun-Han-SAMPAJO 2005 function test",
-                       "@article{Han:2005,\n"
-                       "  author  = {Qiaoming Han and Wenyu Sun and Jiye Han "
-                       "and Raimudo J. B. Sampaio},\n"
-                       "  title   = {An adaptive conic trust-region method "
-                       "for unconstrained optimization},\n"
-                       "  journal = {Optimization Methods and Software},\n"
-                       "  year    = {2005},\n"
-                       "  volume  = {20},\n"
-                       "  number  = {6},\n"
-                       "  pages   = {665--677},\n"
-                       "  doi = {10.1080/10556780410001697677}\n"
-                       "}\n",
-                       2 )
+    : NonlinearSystem(
+        "Han-Sun-Han-SAMPAJO 2005 function test",
+        "@article{Han:2005,\n"
+        "  author  = {Qiaoming Han and Wenyu Sun and Jiye Han "
+        "and Raimudo J. B. Sampaio},\n"
+        "  title   = {An adaptive conic trust-region method "
+        "for unconstrained optimization},\n"
+        "  journal = {Optimization Methods and Software},\n"
+        "  year    = {2005},\n"
+        "  volume  = {20},\n"
+        "  number  = {6},\n"
+        "  pages   = {665--677},\n"
+        "  doi = {10.1080/10556780410001697677}\n"
+        "}\n",
+        2 )
   {
     for ( integer i = 0; i < 99; ++i )
     {
@@ -40,8 +41,7 @@ public:
     }
   }
 
-  virtual void
-  evaluate( Vector const & x, Vector & f ) const override
+  virtual void evaluate( Vector const & x, Vector & f ) const override
   {
     real_type t1  = x( 0 ) * x( 0 );
     real_type t3  = t1 * t1;
@@ -51,8 +51,7 @@ public:
     f( 1 )        = ( 2 * t1 * x( 1 ) ) + 2 * x( 1 ) * t12;
   }
 
-  virtual void
-  jacobian( Vector const & x, SparseMatrix & J ) const override
+  virtual void jacobian( Vector const & x, SparseMatrix & J ) const override
   {
     J.resize( n, n );
     J.setZero();
@@ -67,8 +66,7 @@ public:
     J.makeCompressed();
   }
 
-  virtual void
-  initial_points( vector<Vector> & x_vec ) const override
+  virtual void initial_points( vector<Vector> & x_vec ) const override
   {
     x_vec.resize( 1 );
     auto & x0{ x_vec[0] };

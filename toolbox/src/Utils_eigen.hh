@@ -65,8 +65,7 @@
 
 namespace fmt
 {
-  template <typename TYPE, int ROW, int COL>
-  struct formatter<Eigen::Matrix<TYPE, ROW, COL>> : ostream_formatter
+  template <typename TYPE, int ROW, int COL> struct formatter<Eigen::Matrix<TYPE, ROW, COL>> : ostream_formatter
   {
   };
 
@@ -75,16 +74,30 @@ namespace fmt
   {
   };
 
-  template <typename MAT>
-  struct formatter<Eigen::Transpose<MAT>> : ostream_formatter
+  template <typename MAT> struct formatter<Eigen::Transpose<MAT>> : ostream_formatter
   {
   };
 
-  template <typename EXPR>
-  struct formatter<Eigen::WithFormat<EXPR>> : ostream_formatter
+  template <typename EXPR> struct formatter<Eigen::WithFormat<EXPR>> : ostream_formatter
   {
   };
 }  // namespace fmt
+
+namespace Utils
+{
+
+  template <typename MatrixType> bool isSymmetric( MatrixType const & A, typename MatrixType::Scalar tolerance = 1e-12 )
+  {
+    // Verifica che la matrice sia quadrata
+    if ( A.rows() != A.cols() ) return false;
+
+    // Calcola la differenza A - A^T
+    MatrixType diff = A - MatrixType( A.transpose() );
+
+    // Controlla se la norma infinito della differenza è sotto la tolleranza
+    return diff.norm() <= tolerance;
+  }
+}  // namespace Utils
 
 #endif
 

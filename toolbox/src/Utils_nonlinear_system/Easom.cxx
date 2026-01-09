@@ -16,29 +16,28 @@ class Easom : public NonlinearSystem
 {
 public:
   Easom()
-    : NonlinearSystem( "Easom Function",
-                       "@book{brent2013,\n"
-                       "  author    = {Brent, R.P.},\n"
-                       "  title     = {Algorithms for Minimization Without Derivatives},\n"
-                       "  isbn      = {9780486143682},\n"
-                       "  series    = {Dover Books on Mathematics},\n"
-                       "  year      = {2013},\n"
-                       "  publisher = {Dover Publications}\n"
-                       "}\n",
-                       2 )
+    : NonlinearSystem(
+        "Easom Function",
+        "@book{brent2013,\n"
+        "  author    = {Brent, R.P.},\n"
+        "  title     = {Algorithms for Minimization Without Derivatives},\n"
+        "  isbn      = {9780486143682},\n"
+        "  series    = {Dover Books on Mathematics},\n"
+        "  year      = {2013},\n"
+        "  publisher = {Dover Publications}\n"
+        "}\n",
+        2 )
   {
   }
 
-  virtual void
-  evaluate( Vector const & x, Vector & f ) const override
+  virtual void evaluate( Vector const & x, Vector & f ) const override
   {
     real_type arg = -power2( x( 0 ) - m_pi ) - power2( x( 1 ) - m_pi );
     f( 0 )        = cos( x( 1 ) ) * ( sin( x( 0 ) ) + 2 * cos( x( 0 ) ) * ( x( 0 ) - m_pi ) ) * exp( arg );
     f( 1 )        = cos( x( 0 ) ) * ( sin( x( 1 ) ) + 2 * cos( x( 1 ) ) * ( x( 1 ) - m_pi ) ) * exp( arg );
   }
 
-  virtual void
-  jacobian( Vector const & x, SparseMatrix & J ) const override
+  virtual void jacobian( Vector const & x, SparseMatrix & J ) const override
   {
     J.resize( n, n );
     J.setZero();
@@ -64,8 +63,7 @@ public:
     J.makeCompressed();
   }
 
-  virtual void
-  exact_solution( vector<Vector> & x_vec ) const override
+  virtual void exact_solution( vector<Vector> & x_vec ) const override
   {
     x_vec.resize( 1 );
     auto & x0{ x_vec[0] };
@@ -73,8 +71,7 @@ public:
     x0.fill( m_pi );
   }
 
-  virtual void
-  initial_points( vector<Vector> & x_vec ) const override
+  virtual void initial_points( vector<Vector> & x_vec ) const override
   {
     x_vec.resize( 1 );
     auto & x0{ x_vec[0] };

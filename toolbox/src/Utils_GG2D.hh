@@ -61,8 +61,7 @@ namespace Utils
   //! \tparam Real The data type used for the point coordinates, typically a
   //! floating-point type (e.g., float, double).
   //!
-  template <typename Real>
-  class Point2D : public Eigen::Matrix<Real, 2, 1>
+  template <typename Real> class Point2D : public Eigen::Matrix<Real, 2, 1>
   {
     using P2D = Eigen::Matrix<Real, 2, 1>;
 
@@ -83,78 +82,37 @@ namespace Utils
     explicit Point2D( P2D const & v ) : P2D( v ) {}
 
     //! Get x-coordinate
-    Real
-    x() const noexcept
-    {
-      return this->coeff( 0 );
-    }
+    Real x() const noexcept { return this->coeff( 0 ); }
 
     //! Get y-coordinate
-    Real
-    y() const noexcept
-    {
-      return this->coeff( 1 );
-    }
+    Real y() const noexcept { return this->coeff( 1 ); }
 
     //! Set x-coordinate
-    void
-    x( Real val ) noexcept
-    {
-      this->coeffRef( 0 ) = val;
-    }
+    void x( Real val ) noexcept { this->coeffRef( 0 ) = val; }
 
     //! Set y-coordinate
-    void
-    y( Real val ) noexcept
-    {
-      this->coeffRef( 1 ) = val;
-    }
+    void y( Real val ) noexcept { this->coeffRef( 1 ) = val; }
 
     //! Convert to const Eigen matrix
-    P2D const &
-    to_eigen() const noexcept
-    {
-      return *static_cast<P2D const *>( this );
-    }
+    P2D const & to_eigen() const noexcept { return *static_cast<P2D const *>( this ); }
 
     //! Convert to Eigen matrix
-    P2D &
-    to_eigen() noexcept
-    {
-      return *static_cast<P2D *>( this );
-    }
+    P2D & to_eigen() noexcept { return *static_cast<P2D *>( this ); }
 
     //! Distance to another point
-    Real
-    distance( Point2D<Real> const & other ) const noexcept
-    {
-      return ( *this - other ).norm();
-    }
+    Real distance( Point2D<Real> const & other ) const noexcept { return ( *this - other ).norm(); }
 
     //! Squared distance to another point (faster, avoids sqrt)
-    Real
-    distance_squared( Point2D<Real> const & other ) const noexcept
-    {
-      return ( *this - other ).squaredNorm();
-    }
+    Real distance_squared( Point2D<Real> const & other ) const noexcept { return ( *this - other ).squaredNorm(); }
 
     //! Dot product with another point
-    Real
-    dot( Point2D<Real> const & other ) const noexcept
-    {
-      return this->x() * other.x() + this->y() * other.y();
-    }
+    Real dot( Point2D<Real> const & other ) const noexcept { return this->x() * other.x() + this->y() * other.y(); }
 
     //! Cross product with another point (returns scalar z-component)
-    Real
-    cross( Point2D<Real> const & other ) const noexcept
-    {
-      return this->x() * other.y() - this->y() * other.x();
-    }
+    Real cross( Point2D<Real> const & other ) const noexcept { return this->x() * other.y() - this->y() * other.x(); }
 
     //! Normalize the point (treat as vector)
-    Point2D<Real>
-    normalized() const
+    Point2D<Real> normalized() const
     {
       Real len = this->norm();
       if ( len < machine_eps<Real>() ) { return Point2D<Real>( 0, 0 ); }
@@ -162,8 +120,7 @@ namespace Utils
     }
 
     //! Rotate point by angle (radians) around origin
-    Point2D<Real>
-    rotate( Real angle ) const noexcept
+    Point2D<Real> rotate( Real angle ) const noexcept
     {
       Real c = std::cos( angle );
       Real s = std::sin( angle );
@@ -171,38 +128,30 @@ namespace Utils
     }
 
     //! Rotate point by angle around a center point
-    Point2D<Real>
-    rotate( Real angle, Point2D<Real> const & center ) const noexcept
+    Point2D<Real> rotate( Real angle, Point2D<Real> const & center ) const noexcept
     {
       Point2D<Real> translated = *this - center;
       return translated.rotate( angle ) + center;
     }
 
     //! Scale point relative to origin
-    Point2D<Real>
-    scale( Real sx, Real sy ) const noexcept
-    {
-      return Point2D<Real>( this->x() * sx, this->y() * sy );
-    }
+    Point2D<Real> scale( Real sx, Real sy ) const noexcept { return Point2D<Real>( this->x() * sx, this->y() * sy ); }
 
     //! Scale point relative to a center point
-    Point2D<Real>
-    scale( Real sx, Real sy, Point2D<Real> const & center ) const noexcept
+    Point2D<Real> scale( Real sx, Real sy, Point2D<Real> const & center ) const noexcept
     {
       Point2D<Real> translated = *this - center;
       return Point2D<Real>( translated.x() * sx, translated.y() * sy ) + center;
     }
 
     //! Check if point is approximately equal to another point
-    bool
-    isApprox( Point2D<Real> const & other, Real prec = machine_eps<Real>() ) const noexcept
+    bool isApprox( Point2D<Real> const & other, Real prec = machine_eps<Real>() ) const noexcept
     {
       return std::abs( this->x() - other.x() ) <= prec && std::abs( this->y() - other.y() ) <= prec;
     }
 
     //! Stream output operator
-    friend std::ostream &
-    operator<<( std::ostream & os, Point2D<Real> const & p )
+    friend std::ostream & operator<<( std::ostream & os, Point2D<Real> const & p )
     {
       os << "(" << p.x() << ", " << p.y() << ")";
       return os;
@@ -226,8 +175,7 @@ namespace Utils
   //!
   //! \tparam Real The data type used for the coordinates of the box's corners.
   //!
-  template <typename Real>
-  class Box2D
+  template <typename Real> class Box2D
   {
     Point2D<Real> m_Pmin;  //!< Minimum corner (bottom-left).
     Point2D<Real> m_Pmax;  //!< Maximum corner (top-right).
@@ -246,44 +194,26 @@ namespace Utils
     explicit Box2D( Point2D<Real> const & p ) noexcept : m_Pmin( p ), m_Pmax( p ) {}
 
     //! Get minimum corner
-    Point2D<Real> const &
-    Pmin() const noexcept
-    {
-      return m_Pmin;
-    }
+    Point2D<Real> const & Pmin() const noexcept { return m_Pmin; }
 
     //! Get maximum corner
-    Point2D<Real> const &
-    Pmax() const noexcept
-    {
-      return m_Pmax;
-    }
+    Point2D<Real> const & Pmax() const noexcept { return m_Pmax; }
 
     //! Set minimum corner
-    void
-    Pmin( Point2D<Real> const & p ) noexcept
-    {
-      m_Pmin = p;
-    }
+    void Pmin( Point2D<Real> const & p ) noexcept { m_Pmin = p; }
 
     //! Set maximum corner
-    void
-    Pmax( Point2D<Real> const & p ) noexcept
-    {
-      m_Pmax = p;
-    }
+    void Pmax( Point2D<Real> const & p ) noexcept { m_Pmax = p; }
 
     //! Set both corners
-    void
-    set( Point2D<Real> const & pmin, Point2D<Real> const & pmax ) noexcept
+    void set( Point2D<Real> const & pmin, Point2D<Real> const & pmax ) noexcept
     {
       m_Pmin = pmin;
       m_Pmax = pmax;
     }
 
     //! Set from coordinates
-    void
-    set( Real xmin, Real ymin, Real xmax, Real ymax ) noexcept
+    void set( Real xmin, Real ymin, Real xmax, Real ymax ) noexcept
     {
       m_Pmin.x( xmin );
       m_Pmin.y( ymin );
@@ -292,93 +222,60 @@ namespace Utils
     }
 
     //! Get width of box
-    Real
-    width() const noexcept
-    {
-      return m_Pmax.x() - m_Pmin.x();
-    }
+    Real width() const noexcept { return m_Pmax.x() - m_Pmin.x(); }
 
     //! Get height of box
-    Real
-    height() const noexcept
-    {
-      return m_Pmax.y() - m_Pmin.y();
-    }
+    Real height() const noexcept { return m_Pmax.y() - m_Pmin.y(); }
 
     //! Get area of box
-    Real
-    area() const noexcept
-    {
-      return width() * height();
-    }
+    Real area() const noexcept { return width() * height(); }
 
     //! Get perimeter of box
-    Real
-    perimeter() const noexcept
-    {
-      return 2 * ( width() + height() );
-    }
+    Real perimeter() const noexcept { return 2 * ( width() + height() ); }
 
     //! Get center of box
-    Point2D<Real>
-    center() const noexcept
+    Point2D<Real> center() const noexcept
     {
       return Point2D<Real>( ( m_Pmin.x() + m_Pmax.x() ) * Real( 0.5 ), ( m_Pmin.y() + m_Pmax.y() ) * Real( 0.5 ) );
     }
 
     //! Get size as a point (width, height)
-    Point2D<Real>
-    size() const noexcept
-    {
-      return Point2D<Real>( width(), height() );
-    }
+    Point2D<Real> size() const noexcept { return Point2D<Real>( width(), height() ); }
 
     //! Check if box is valid (max >= min)
-    bool
-    is_valid() const noexcept
-    {
-      return m_Pmax.x() >= m_Pmin.x() && m_Pmax.y() >= m_Pmin.y();
-    }
+    bool is_valid() const noexcept { return m_Pmax.x() >= m_Pmin.x() && m_Pmax.y() >= m_Pmin.y(); }
 
     //! Check if box is empty (zero area)
-    bool
-    is_empty() const noexcept
-    {
-      return width() <= machine_eps<Real>() || height() <= machine_eps<Real>();
-    }
+    bool is_empty() const noexcept { return width() <= machine_eps<Real>() || height() <= machine_eps<Real>(); }
 
     //! Check if point is inside box (inclusive boundaries)
-    bool
-    contains( Point2D<Real> const & P ) const noexcept
+    bool contains( Point2D<Real> const & P ) const noexcept
     {
       return P.x() >= m_Pmin.x() && P.x() <= m_Pmax.x() && P.y() >= m_Pmin.y() && P.y() <= m_Pmax.y();
     }
 
     //! Check if point is strictly inside box (exclusive boundaries)
-    bool
-    contains_strict( Point2D<Real> const & P ) const noexcept
+    bool contains_strict( Point2D<Real> const & P ) const noexcept
     {
       return P.x() > m_Pmin.x() && P.x() < m_Pmax.x() && P.y() > m_Pmin.y() && P.y() < m_Pmax.y();
     }
 
     //! Check if another box is fully inside this box
-    bool
-    contains( Box2D<Real> const & other ) const noexcept
+    bool contains( Box2D<Real> const & other ) const noexcept
     {
       return contains( other.m_Pmin ) && contains( other.m_Pmax );
     }
 
     //! Check if boxes intersect
-    bool
-    intersects( Box2D<Real> const & other ) const noexcept
+    bool intersects( Box2D<Real> const & other ) const noexcept
     {
-      return !( m_Pmax.x() < other.m_Pmin.x() || m_Pmin.x() > other.m_Pmax.x() || m_Pmax.y() < other.m_Pmin.y() ||
-                m_Pmin.y() > other.m_Pmax.y() );
+      return !(
+        m_Pmax.x() < other.m_Pmin.x() || m_Pmin.x() > other.m_Pmax.x() || m_Pmax.y() < other.m_Pmin.y() ||
+        m_Pmin.y() > other.m_Pmax.y() );
     }
 
     //! Expand box to include point
-    void
-    expand( Point2D<Real> const & P ) noexcept
+    void expand( Point2D<Real> const & P ) noexcept
     {
       m_Pmin.x( std::min( m_Pmin.x(), P.x() ) );
       m_Pmin.y( std::min( m_Pmin.y(), P.y() ) );
@@ -387,8 +284,7 @@ namespace Utils
     }
 
     //! Expand box by a margin in all directions
-    void
-    expand( Real margin ) noexcept
+    void expand( Real margin ) noexcept
     {
       m_Pmin.x( m_Pmin.x() - margin );
       m_Pmin.y( m_Pmin.y() - margin );
@@ -397,8 +293,7 @@ namespace Utils
     }
 
     //! Expand box by different margins in x and y
-    void
-    expand( Real margin_x, Real margin_y ) noexcept
+    void expand( Real margin_x, Real margin_y ) noexcept
     {
       m_Pmin.x( m_Pmin.x() - margin_x );
       m_Pmin.y( m_Pmin.y() - margin_y );
@@ -407,16 +302,14 @@ namespace Utils
     }
 
     //! Expand box to include another box
-    void
-    expand( Box2D<Real> const & other ) noexcept
+    void expand( Box2D<Real> const & other ) noexcept
     {
       expand( other.m_Pmin );
       expand( other.m_Pmax );
     }
 
     //! Compute intersection of two boxes
-    Box2D<Real>
-    intersection( Box2D<Real> const & other ) const
+    Box2D<Real> intersection( Box2D<Real> const & other ) const
     {
       Box2D<Real> result;
       result.m_Pmin.x( std::max( m_Pmin.x(), other.m_Pmin.x() ) );
@@ -434,8 +327,7 @@ namespace Utils
     }
 
     //! Scale box by factor around its center
-    void
-    scale( Real factor ) noexcept
+    void scale( Real factor ) noexcept
     {
       if ( factor <= 0 ) return;
 
@@ -450,8 +342,7 @@ namespace Utils
     }
 
     //! Scale box by different factors in x and y around its center
-    void
-    scale( Real factor_x, Real factor_y ) noexcept
+    void scale( Real factor_x, Real factor_y ) noexcept
     {
       if ( factor_x <= 0 || factor_y <= 0 ) return;
 
@@ -466,16 +357,14 @@ namespace Utils
     }
 
     //! Translate box by a vector
-    void
-    translate( Point2D<Real> const & delta ) noexcept
+    void translate( Point2D<Real> const & delta ) noexcept
     {
       m_Pmin = m_Pmin + delta;
       m_Pmax = m_Pmax + delta;
     }
 
     //! Translate box by coordinates
-    void
-    translate( Real dx, Real dy ) noexcept
+    void translate( Real dx, Real dy ) noexcept
     {
       m_Pmin.x( m_Pmin.x() + dx );
       m_Pmin.y( m_Pmin.y() + dy );
@@ -484,22 +373,19 @@ namespace Utils
     }
 
     //! Get corner points of the box
-    std::array<Point2D<Real>, 4>
-    corners() const noexcept
+    std::array<Point2D<Real>, 4> corners() const noexcept
     {
       return { { m_Pmin, Point2D<Real>( m_Pmax.x(), m_Pmin.y() ), m_Pmax, Point2D<Real>( m_Pmin.x(), m_Pmax.y() ) } };
     }
 
     //! Check if box is approximately equal to another box
-    bool
-    isApprox( Box2D<Real> const & other, Real prec = machine_eps<Real>() ) const noexcept
+    bool isApprox( Box2D<Real> const & other, Real prec = machine_eps<Real>() ) const noexcept
     {
       return m_Pmin.isApprox( other.m_Pmin, prec ) && m_Pmax.isApprox( other.m_Pmax, prec );
     }
 
     //! Stream output operator
-    friend std::ostream &
-    operator<<( std::ostream & os, Box2D<Real> const & box )
+    friend std::ostream & operator<<( std::ostream & os, Box2D<Real> const & box )
     {
       os << "Box[min=" << box.Pmin() << ", max=" << box.Pmax() << ", size=" << box.size() << "]";
       return os;
@@ -527,8 +413,7 @@ namespace Utils
   //! \tparam Real The data type used for the coordinates of the segment's
   //! endpoints, typically a floating-point type (e.g., float, double).
   //!
-  template <typename Real>
-  class Segment2D
+  template <typename Real> class Segment2D
   {
     Point2D<Real> m_Pa;  //!< First endpoint of the segment.
     Point2D<Real> m_Pb;  //!< Second endpoint of the segment.
@@ -536,8 +421,7 @@ namespace Utils
     static constexpr Real DEFAULT_TOLERANCE = Real( 1e-10 );
 
     //! Helper: compute orthogonal normal vector (rotated 90° CCW)
-    Point2D<Real>
-    compute_normal() const noexcept
+    Point2D<Real> compute_normal() const noexcept
     {
       Point2D<Real> BA = m_Pb - m_Pa;
       Point2D<Real> N;
@@ -563,8 +447,7 @@ namespace Utils
     Segment2D( Segment2D<Real> && S ) noexcept : m_Pa( std::move( S.m_Pa ) ), m_Pb( std::move( S.m_Pb ) ) {}
 
     //! Copy assignment
-    Segment2D &
-    operator=( Segment2D<Real> const & S ) noexcept
+    Segment2D & operator=( Segment2D<Real> const & S ) noexcept
     {
       if ( this != &S )
       {
@@ -575,8 +458,7 @@ namespace Utils
     }
 
     //! Move assignment
-    Segment2D &
-    operator=( Segment2D<Real> && S ) noexcept
+    Segment2D & operator=( Segment2D<Real> && S ) noexcept
     {
       if ( this != &S )
       {
@@ -587,16 +469,14 @@ namespace Utils
     }
 
     //! Setup endpoints using Point2D objects
-    void
-    setup( Point2D<Real> const & A, Point2D<Real> const & B ) noexcept
+    void setup( Point2D<Real> const & A, Point2D<Real> const & B ) noexcept
     {
       m_Pa = A;
       m_Pb = B;
     }
 
     //! Setup endpoints using arrays
-    void
-    setup( Real const A[], Real const B[] ) noexcept
+    void setup( Real const A[], Real const B[] ) noexcept
     {
       m_Pa.x( A[0] );
       m_Pa.y( A[1] );
@@ -605,8 +485,7 @@ namespace Utils
     }
 
     //! Setup endpoints using coordinates
-    void
-    setup( Real ax, Real ay, Real bx, Real by ) noexcept
+    void setup( Real ax, Real ay, Real bx, Real by ) noexcept
     {
       m_Pa.x( ax );
       m_Pa.y( ay );
@@ -615,36 +494,19 @@ namespace Utils
     }
 
     //! Check if segment is valid (not degenerate)
-    bool
-    is_valid( Real tol = DEFAULT_TOLERANCE ) const noexcept
-    {
-      return m_Pa.distance_squared( m_Pb ) > tol * tol;
-    }
+    bool is_valid( Real tol = DEFAULT_TOLERANCE ) const noexcept { return m_Pa.distance_squared( m_Pb ) > tol * tol; }
 
     //! Get segment length
-    Real
-    length() const noexcept
-    {
-      return m_Pa.distance( m_Pb );
-    }
+    Real length() const noexcept { return m_Pa.distance( m_Pb ); }
 
     //! Get squared segment length (faster)
-    Real
-    length_squared() const noexcept
-    {
-      return m_Pa.distance_squared( m_Pb );
-    }
+    Real length_squared() const noexcept { return m_Pa.distance_squared( m_Pb ); }
 
     //! Get direction vector (not normalized)
-    Point2D<Real>
-    direction() const noexcept
-    {
-      return m_Pb - m_Pa;
-    }
+    Point2D<Real> direction() const noexcept { return m_Pb - m_Pa; }
 
     //! Get normalized direction vector
-    Point2D<Real>
-    direction_normalized() const
+    Point2D<Real> direction_normalized() const
     {
       Point2D<Real> dir = direction();
       Real          len = dir.norm();
@@ -653,15 +515,10 @@ namespace Utils
     }
 
     //! Get normal vector (rotated 90° CCW, not normalized)
-    Point2D<Real>
-    normal() const noexcept
-    {
-      return compute_normal();
-    }
+    Point2D<Real> normal() const noexcept { return compute_normal(); }
 
     //! Get normalized normal vector
-    Point2D<Real>
-    normal_normalized() const
+    Point2D<Real> normal_normalized() const
     {
       Point2D<Real> n   = compute_normal();
       Real          len = n.norm();
@@ -679,8 +536,7 @@ namespace Utils
     //! \return `true` if the projection lies within [0,1] (on the segment),
     //! `false` otherwise.
     //!
-    bool
-    projection( Point2D<Real> const & P, Real & s ) const noexcept
+    bool projection( Point2D<Real> const & P, Real & s ) const noexcept
     {
       Point2D<Real> const BA        = m_Pb - m_Pa;
       Real const          length_sq = BA.squaredNorm();
@@ -708,8 +564,7 @@ namespace Utils
     //!
     //! \return The projected point on the segment (clamped to [0,1]).
     //!
-    Point2D<Real>
-    projection( Point2D<Real> const & P, Real & s, Real & t ) const
+    Point2D<Real> projection( Point2D<Real> const & P, Real & s, Real & t ) const
     {
       Point2D<Real> const BA        = m_Pb - m_Pa;
       Real const          length_sq = BA.squaredNorm();
@@ -752,11 +607,7 @@ namespace Utils
     //!
     //! \return The point on the segment at parameter s.
     //!
-    Point2D<Real>
-    eval( Real s ) const noexcept
-    {
-      return m_Pa + s * ( m_Pb - m_Pa );
-    }
+    Point2D<Real> eval( Real s ) const noexcept { return m_Pa + s * ( m_Pb - m_Pa ); }
 
     //!
     //! \brief Evaluates a point offset from the segment.
@@ -766,8 +617,7 @@ namespace Utils
     //!
     //! \return The point at position s along the segment, offset by distance t.
     //!
-    Point2D<Real>
-    eval( Real s, Real t ) const
+    Point2D<Real> eval( Real s, Real t ) const
     {
       Point2D<Real> N   = compute_normal();
       Real          len = N.norm();
@@ -776,51 +626,29 @@ namespace Utils
     }
 
     //! Get first endpoint
-    Point2D<Real> const &
-    Pa() const noexcept
-    {
-      return m_Pa;
-    }
+    Point2D<Real> const & Pa() const noexcept { return m_Pa; }
 
     //! Get second endpoint
-    Point2D<Real> const &
-    Pb() const noexcept
-    {
-      return m_Pb;
-    }
+    Point2D<Real> const & Pb() const noexcept { return m_Pb; }
 
     //! Set first endpoint
-    void
-    Pa( Point2D<Real> const & p ) noexcept
-    {
-      m_Pa = p;
-    }
+    void Pa( Point2D<Real> const & p ) noexcept { m_Pa = p; }
 
     //! Set second endpoint
-    void
-    Pb( Point2D<Real> const & p ) noexcept
-    {
-      m_Pb = p;
-    }
+    void Pb( Point2D<Real> const & p ) noexcept { m_Pb = p; }
 
     //! Get midpoint of segment
-    Point2D<Real>
-    midpoint() const noexcept
-    {
-      return ( m_Pa + m_Pb ) * Real( 0.5 );
-    }
+    Point2D<Real> midpoint() const noexcept { return ( m_Pa + m_Pb ) * Real( 0.5 ); }
 
     //! Compute bounding box
-    void
-    bbox( Point2D<Real> & pmin, Point2D<Real> & pmax ) const noexcept
+    void bbox( Point2D<Real> & pmin, Point2D<Real> & pmax ) const noexcept
     {
       pmin.to_eigen() = m_Pa.cwiseMin( m_Pb );
       pmax.to_eigen() = m_Pa.cwiseMax( m_Pb );
     }
 
     //! Get bounding box as Box2D
-    Box2D<Real>
-    bounding_box() const noexcept
+    Box2D<Real> bounding_box() const noexcept
     {
       Point2D<Real> pmin, pmax;
       bbox( pmin, pmax );
@@ -828,8 +656,7 @@ namespace Utils
     }
 
     //! Distance from point to segment
-    Real
-    distance( Point2D<Real> const & P ) const
+    Real distance( Point2D<Real> const & P ) const
     {
       Real s, t;
       projection( P, s, t );
@@ -837,8 +664,7 @@ namespace Utils
     }
 
     //! Squared distance from point to segment
-    Real
-    distance_squared( Point2D<Real> const & P ) const
+    Real distance_squared( Point2D<Real> const & P ) const
     {
       Real          s, t;
       Point2D<Real> proj = projection( P, s, t );
@@ -846,16 +672,14 @@ namespace Utils
     }
 
     //! Closest point on segment to given point
-    Point2D<Real>
-    closest_point( Point2D<Real> const & P ) const
+    Point2D<Real> closest_point( Point2D<Real> const & P ) const
     {
       Real s, t;
       return projection( P, s, t );
     }
 
     //! Check if point lies on segment (within tolerance)
-    bool
-    contains( Point2D<Real> const & P, Real tol = DEFAULT_TOLERANCE ) const
+    bool contains( Point2D<Real> const & P, Real tol = DEFAULT_TOLERANCE ) const
     {
       Real s, t;
       projection( P, s, t );
@@ -872,8 +696,7 @@ namespace Utils
     //!
     //! \return `true` if segments intersect, `false` otherwise.
     //!
-    bool
-    intersect( Segment2D<Real> const & S, Real & s, Real & t, Real tol = DEFAULT_TOLERANCE ) const
+    bool intersect( Segment2D<Real> const & S, Real & s, Real & t, Real tol = DEFAULT_TOLERANCE ) const
     {
       s = t = 0;
 
@@ -926,8 +749,7 @@ namespace Utils
     }
 
     //! Get intersection point with another segment
-    bool
-    intersection_point( Segment2D<Real> const & S, Point2D<Real> & point, Real tol = DEFAULT_TOLERANCE ) const
+    bool intersection_point( Segment2D<Real> const & S, Point2D<Real> & point, Real tol = DEFAULT_TOLERANCE ) const
     {
       Real s, t;
       if ( intersect( S, s, t, tol ) )
@@ -939,16 +761,14 @@ namespace Utils
     }
 
     //! Check if segments intersect (simpler interface)
-    bool
-    intersects( Segment2D<Real> const & S, Real tol = DEFAULT_TOLERANCE ) const
+    bool intersects( Segment2D<Real> const & S, Real tol = DEFAULT_TOLERANCE ) const
     {
       Real s, t;
       return intersect( S, s, t, tol );
     }
 
     //! Check if segments are parallel
-    bool
-    is_parallel( Segment2D<Real> const & S, Real tol = DEFAULT_TOLERANCE ) const
+    bool is_parallel( Segment2D<Real> const & S, Real tol = DEFAULT_TOLERANCE ) const
     {
       Point2D<Real> D1    = direction();
       Point2D<Real> D2    = S.direction();
@@ -963,8 +783,7 @@ namespace Utils
     }
 
     //! Check if segments are perpendicular
-    bool
-    is_perpendicular( Segment2D<Real> const & S, Real tol = DEFAULT_TOLERANCE ) const
+    bool is_perpendicular( Segment2D<Real> const & S, Real tol = DEFAULT_TOLERANCE ) const
     {
       Point2D<Real> D1   = direction();
       Point2D<Real> D2   = S.direction();
@@ -979,30 +798,20 @@ namespace Utils
     }
 
     //! Reverse the segment (swap endpoints)
-    void
-    reverse() noexcept
-    {
-      std::swap( m_Pa, m_Pb );
-    }
+    void reverse() noexcept { std::swap( m_Pa, m_Pb ); }
 
     //! Get reversed segment
-    Segment2D<Real>
-    reversed() const noexcept
-    {
-      return Segment2D<Real>( m_Pb, m_Pa );
-    }
+    Segment2D<Real> reversed() const noexcept { return Segment2D<Real>( m_Pb, m_Pa ); }
 
     //! Split segment at parameter s, returning two segments
-    std::pair<Segment2D<Real>, Segment2D<Real>>
-    split( Real s ) const
+    std::pair<Segment2D<Real>, Segment2D<Real>> split( Real s ) const
     {
       Point2D<Real> P = eval( s );
       return std::make_pair( Segment2D<Real>( m_Pa, P ), Segment2D<Real>( P, m_Pb ) );
     }
 
     //! Stream output operator
-    friend std::ostream &
-    operator<<( std::ostream & os, Segment2D<Real> const & seg )
+    friend std::ostream & operator<<( std::ostream & os, Segment2D<Real> const & seg )
     {
       os << "Segment[" << seg.Pa() << " -> " << seg.Pb() << "]";
       return os;
@@ -1028,8 +837,7 @@ namespace Utils
   //! \tparam Real The data type used for the coordinates of the triangle's
   //! vertices.
   //!
-  template <typename Real>
-  class Triangle2D
+  template <typename Real> class Triangle2D
   {
     Point2D<Real> m_Pa;  //!< First vertex
     Point2D<Real> m_Pb;  //!< Second vertex
@@ -1052,8 +860,7 @@ namespace Utils
     }
 
     //! Setup triangle from three points
-    void
-    setup( Point2D<Real> const & A, Point2D<Real> const & B, Point2D<Real> const & C ) noexcept
+    void setup( Point2D<Real> const & A, Point2D<Real> const & B, Point2D<Real> const & C ) noexcept
     {
       m_Pa = A;
       m_Pb = B;
@@ -1061,8 +868,7 @@ namespace Utils
     }
 
     //! Setup triangle from coordinates
-    void
-    setup( Real ax, Real ay, Real bx, Real by, Real cx, Real cy ) noexcept
+    void setup( Real ax, Real ay, Real bx, Real by, Real cx, Real cy ) noexcept
     {
       m_Pa.x( ax );
       m_Pa.y( ay );
@@ -1073,65 +879,35 @@ namespace Utils
     }
 
     //! Get first vertex
-    Point2D<Real> const &
-    Pa() const noexcept
-    {
-      return m_Pa;
-    }
+    Point2D<Real> const & Pa() const noexcept { return m_Pa; }
 
     //! Get second vertex
-    Point2D<Real> const &
-    Pb() const noexcept
-    {
-      return m_Pb;
-    }
+    Point2D<Real> const & Pb() const noexcept { return m_Pb; }
 
     //! Get third vertex
-    Point2D<Real> const &
-    Pc() const noexcept
-    {
-      return m_Pc;
-    }
+    Point2D<Real> const & Pc() const noexcept { return m_Pc; }
 
     //! Set first vertex
-    void
-    Pa( Point2D<Real> const & p ) noexcept
-    {
-      m_Pa = p;
-    }
+    void Pa( Point2D<Real> const & p ) noexcept { m_Pa = p; }
 
     //! Set second vertex
-    void
-    Pb( Point2D<Real> const & p ) noexcept
-    {
-      m_Pb = p;
-    }
+    void Pb( Point2D<Real> const & p ) noexcept { m_Pb = p; }
 
     //! Set third vertex
-    void
-    Pc( Point2D<Real> const & p ) noexcept
-    {
-      m_Pc = p;
-    }
+    void Pc( Point2D<Real> const & p ) noexcept { m_Pc = p; }
 
     //! Compute signed area (positive if CCW, negative if CW)
-    Real
-    signed_area() const noexcept
+    Real signed_area() const noexcept
     {
       return ( ( m_Pb.x() - m_Pa.x() ) * ( m_Pc.y() - m_Pa.y() ) - ( m_Pc.x() - m_Pa.x() ) * ( m_Pb.y() - m_Pa.y() ) ) *
              Real( 0.5 );
     }
 
     //! Compute area (always positive)
-    Real
-    area() const noexcept
-    {
-      return std::abs( signed_area() );
-    }
+    Real area() const noexcept { return std::abs( signed_area() ); }
 
     //! Check orientation (1 for CCW, -1 for CW, 0 for degenerate)
-    int
-    orientation( Real tol = Real( 1e-10 ) ) const noexcept
+    int orientation( Real tol = Real( 1e-10 ) ) const noexcept
     {
       Real area = signed_area();
       if ( area > tol ) return 1;
@@ -1140,76 +916,57 @@ namespace Utils
     }
 
     //! Make triangle CCW oriented
-    void
-    make_ccw() noexcept
+    void make_ccw() noexcept
     {
       if ( orientation() < 0 ) { std::swap( m_Pb, m_Pc ); }
     }
 
     //! Check if triangle is valid (non-degenerate)
-    bool
-    is_valid( Real tol = Real( 1e-10 ) ) const noexcept
-    {
-      return area() > tol;
-    }
+    bool is_valid( Real tol = Real( 1e-10 ) ) const noexcept { return area() > tol; }
 
     //! Compute centroid (center of mass)
-    Point2D<Real>
-    centroid() const noexcept
+    Point2D<Real> centroid() const noexcept
     {
-      return Point2D<Real>( ( m_Pa.x() + m_Pb.x() + m_Pc.x() ) / Real( 3 ),
-                            ( m_Pa.y() + m_Pb.y() + m_Pc.y() ) / Real( 3 ) );
+      return Point2D<Real>(
+        ( m_Pa.x() + m_Pb.x() + m_Pc.x() ) / Real( 3 ),
+        ( m_Pa.y() + m_Pb.y() + m_Pc.y() ) / Real( 3 ) );
     }
 
     //! Compute perimeter
-    Real
-    perimeter() const noexcept
-    {
-      return m_Pa.distance( m_Pb ) + m_Pb.distance( m_Pc ) + m_Pc.distance( m_Pa );
-    }
+    Real perimeter() const noexcept { return m_Pa.distance( m_Pb ) + m_Pb.distance( m_Pc ) + m_Pc.distance( m_Pa ); }
 
     //! Get edge as segment
-    Segment2D<Real>
-    edge( int i ) const
+    Segment2D<Real> edge( int i ) const
     {
       i = ( ( i % 3 ) + 3 ) % 3;  // Handle negative indices
       switch ( i )
       {
-        case 0:
-          return Segment2D<Real>( m_Pa, m_Pb );
-        case 1:
-          return Segment2D<Real>( m_Pb, m_Pc );
-        default:
-          return Segment2D<Real>( m_Pc, m_Pa );
+        case 0: return Segment2D<Real>( m_Pa, m_Pb );
+        case 1: return Segment2D<Real>( m_Pb, m_Pc );
+        default: return Segment2D<Real>( m_Pc, m_Pa );
       }
     }
 
     //! Get all edges
-    std::array<Segment2D<Real>, 3>
-    edges() const noexcept
+    std::array<Segment2D<Real>, 3> edges() const noexcept
     {
       return { { Segment2D<Real>( m_Pa, m_Pb ), Segment2D<Real>( m_Pb, m_Pc ), Segment2D<Real>( m_Pc, m_Pa ) } };
     }
 
     //! Get vertex by index
-    Point2D<Real>
-    vertex( int i ) const
+    Point2D<Real> vertex( int i ) const
     {
       i = ( ( i % 3 ) + 3 ) % 3;  // Handle negative indices
       switch ( i )
       {
-        case 0:
-          return m_Pa;
-        case 1:
-          return m_Pb;
-        default:
-          return m_Pc;
+        case 0: return m_Pa;
+        case 1: return m_Pb;
+        default: return m_Pc;
       }
     }
 
     //! Check if point is inside triangle using barycentric coordinates
-    bool
-    contains( Point2D<Real> const & P, Real tol = Real( 1e-10 ) ) const
+    bool contains( Point2D<Real> const & P, Real tol = Real( 1e-10 ) ) const
     {
       Real const total_area = signed_area();
       if ( std::abs( total_area ) < tol ) return false;
@@ -1235,8 +992,7 @@ namespace Utils
     }
 
     //! Check if point is strictly inside triangle (excluding edges)
-    bool
-    contains_strict( Point2D<Real> const & P, Real tol = Real( 1e-10 ) ) const
+    bool contains_strict( Point2D<Real> const & P, Real tol = Real( 1e-10 ) ) const
     {
       Real const total_area = signed_area();
       if ( std::abs( total_area ) < tol ) return false;
@@ -1259,8 +1015,7 @@ namespace Utils
     }
 
     //! Get barycentric coordinates of point
-    bool
-    barycentric_coords( Point2D<Real> const & P, Real & u, Real & v, Real & w, Real tol = Real( 1e-10 ) ) const
+    bool barycentric_coords( Point2D<Real> const & P, Real & u, Real & v, Real & w, Real tol = Real( 1e-10 ) ) const
     {
       Real const total_area = signed_area();
       if ( std::abs( total_area ) < tol ) return false;
@@ -1283,15 +1038,10 @@ namespace Utils
     }
 
     //! Compute point from barycentric coordinates
-    Point2D<Real>
-    from_barycentric( Real u, Real v, Real w ) const noexcept
-    {
-      return m_Pa * u + m_Pb * v + m_Pc * w;
-    }
+    Point2D<Real> from_barycentric( Real u, Real v, Real w ) const noexcept { return m_Pa * u + m_Pb * v + m_Pc * w; }
 
     //! Compute bounding box
-    void
-    bbox( Point2D<Real> & pmin, Point2D<Real> & pmax ) const noexcept
+    void bbox( Point2D<Real> & pmin, Point2D<Real> & pmax ) const noexcept
     {
       pmin.x( std::min( { m_Pa.x(), m_Pb.x(), m_Pc.x() } ) );
       pmin.y( std::min( { m_Pa.y(), m_Pb.y(), m_Pc.y() } ) );
@@ -1300,8 +1050,7 @@ namespace Utils
     }
 
     //! Get bounding box as Box2D
-    Box2D<Real>
-    bounding_box() const noexcept
+    Box2D<Real> bounding_box() const noexcept
     {
       Point2D<Real> pmin, pmax;
       bbox( pmin, pmax );
@@ -1309,8 +1058,7 @@ namespace Utils
     }
 
     //! Check if triangle is acute (all angles < 90°)
-    bool
-    is_acute() const
+    bool is_acute() const
     {
       // Compute squared side lengths
       Real a2 = m_Pb.distance_squared( m_Pc );
@@ -1322,8 +1070,7 @@ namespace Utils
     }
 
     //! Check if triangle is obtuse (one angle > 90°)
-    bool
-    is_obtuse() const
+    bool is_obtuse() const
     {
       // Compute squared side lengths
       Real a2 = m_Pb.distance_squared( m_Pc );
@@ -1335,8 +1082,7 @@ namespace Utils
     }
 
     //! Check if triangle is right-angled (one angle = 90°)
-    bool
-    is_right_angled( Real tol = Real( 1e-6 ) ) const
+    bool is_right_angled( Real tol = Real( 1e-6 ) ) const
     {
       // Compute squared side lengths
       Real a2 = m_Pb.distance_squared( m_Pc );
@@ -1348,8 +1094,7 @@ namespace Utils
     }
 
     //! Check if triangle is equilateral (all sides equal)
-    bool
-    is_equilateral( Real tol = Real( 1e-6 ) ) const
+    bool is_equilateral( Real tol = Real( 1e-6 ) ) const
     {
       Real a = m_Pb.distance( m_Pc );
       Real b = m_Pc.distance( m_Pa );
@@ -1359,8 +1104,7 @@ namespace Utils
     }
 
     //! Check if triangle is isosceles (at least two sides equal)
-    bool
-    is_isosceles( Real tol = Real( 1e-6 ) ) const
+    bool is_isosceles( Real tol = Real( 1e-6 ) ) const
     {
       Real a = m_Pb.distance( m_Pc );
       Real b = m_Pc.distance( m_Pa );
@@ -1370,8 +1114,7 @@ namespace Utils
     }
 
     //! Compute circumcircle center and radius
-    bool
-    circumcircle( Point2D<Real> & center, Real & radius ) const
+    bool circumcircle( Point2D<Real> & center, Real & radius ) const
     {
       Real const D = 2 * ( m_Pa.x() * ( m_Pb.y() - m_Pc.y() ) + m_Pb.x() * ( m_Pc.y() - m_Pa.y() ) +
                            m_Pc.x() * ( m_Pa.y() - m_Pb.y() ) );
@@ -1393,8 +1136,7 @@ namespace Utils
     }
 
     //! Compute incircle center and radius
-    bool
-    incircle( Point2D<Real> & center, Real & radius ) const
+    bool incircle( Point2D<Real> & center, Real & radius ) const
     {
       Real const a         = m_Pb.distance( m_Pc );
       Real const b         = m_Pc.distance( m_Pa );
@@ -1415,8 +1157,7 @@ namespace Utils
     }
 
     //! Translate triangle by a vector
-    void
-    translate( Point2D<Real> const & delta ) noexcept
+    void translate( Point2D<Real> const & delta ) noexcept
     {
       m_Pa = m_Pa + delta;
       m_Pb = m_Pb + delta;
@@ -1424,8 +1165,7 @@ namespace Utils
     }
 
     //! Translate triangle by coordinates
-    void
-    translate( Real dx, Real dy ) noexcept
+    void translate( Real dx, Real dy ) noexcept
     {
       m_Pa.x( m_Pa.x() + dx );
       m_Pa.y( m_Pa.y() + dy );
@@ -1436,8 +1176,7 @@ namespace Utils
     }
 
     //! Rotate triangle by angle (radians) around origin
-    void
-    rotate( Real angle ) noexcept
+    void rotate( Real angle ) noexcept
     {
       m_Pa = m_Pa.rotate( angle );
       m_Pb = m_Pb.rotate( angle );
@@ -1445,8 +1184,7 @@ namespace Utils
     }
 
     //! Rotate triangle by angle around a center point
-    void
-    rotate( Real angle, Point2D<Real> const & center ) noexcept
+    void rotate( Real angle, Point2D<Real> const & center ) noexcept
     {
       m_Pa = m_Pa.rotate( angle, center );
       m_Pb = m_Pb.rotate( angle, center );
@@ -1454,8 +1192,7 @@ namespace Utils
     }
 
     //! Scale triangle relative to origin
-    void
-    scale( Real sx, Real sy ) noexcept
+    void scale( Real sx, Real sy ) noexcept
     {
       m_Pa = m_Pa.scale( sx, sy );
       m_Pb = m_Pb.scale( sx, sy );
@@ -1463,8 +1200,7 @@ namespace Utils
     }
 
     //! Scale triangle relative to a center point
-    void
-    scale( Real sx, Real sy, Point2D<Real> const & center ) noexcept
+    void scale( Real sx, Real sy, Point2D<Real> const & center ) noexcept
     {
       m_Pa = m_Pa.scale( sx, sy, center );
       m_Pb = m_Pb.scale( sx, sy, center );
@@ -1472,8 +1208,7 @@ namespace Utils
     }
 
     //! Stream output operator
-    friend std::ostream &
-    operator<<( std::ostream & os, Triangle2D<Real> const & tri )
+    friend std::ostream & operator<<( std::ostream & os, Triangle2D<Real> const & tri )
     {
       os << "Triangle[" << tri.Pa() << ", " << tri.Pb() << ", " << tri.Pc() << "]";
       return os;
@@ -1500,8 +1235,7 @@ namespace Utils
   //! \tparam Real The data type used for the coordinates of the polygon's
   //! vertices.
   //!
-  template <typename Real>
-  class Polygon2D : public Eigen::Matrix<Real, 2, Eigen::Dynamic>
+  template <typename Real> class Polygon2D : public Eigen::Matrix<Real, 2, Eigen::Dynamic>
   {
     using BaseMatrix = Eigen::Matrix<Real, 2, Eigen::Dynamic>;
 
@@ -1530,44 +1264,26 @@ namespace Utils
     }
 
     //! Get number of vertices
-    int
-    num_vertices() const noexcept
-    {
-      return static_cast<int>( this->cols() );
-    }
+    int num_vertices() const noexcept { return static_cast<int>( this->cols() ); }
 
     //! Check if polygon is empty
-    bool
-    empty() const noexcept
-    {
-      return num_vertices() == 0;
-    }
+    bool empty() const noexcept { return num_vertices() == 0; }
 
     //! Resize polygon to have n vertices
-    void
-    resize( int n )
-    {
-      BaseMatrix::resize( 2, n );
-    }
+    void resize( int n ) { BaseMatrix::resize( 2, n ); }
 
     //! Clear polygon (remove all vertices)
-    void
-    clear()
-    {
-      BaseMatrix::resize( 2, 0 );
-    }
+    void clear() { BaseMatrix::resize( 2, 0 ); }
 
     //! Get vertex at index i (with bounds checking)
-    Point2D<Real>
-    vertex( int i ) const
+    Point2D<Real> vertex( int i ) const
     {
       i = ( ( i % num_vertices() ) + num_vertices() ) % num_vertices();  // Wrap index
       return Point2D<Real>( this->coeff( 0, i ), this->coeff( 1, i ) );
     }
 
     //! Set vertex at index i
-    void
-    set_vertex( int i, Point2D<Real> const & p )
+    void set_vertex( int i, Point2D<Real> const & p )
     {
       if ( i >= 0 && i < num_vertices() )
       {
@@ -1577,8 +1293,7 @@ namespace Utils
     }
 
     //! Add vertex to the end of polygon
-    void
-    add_vertex( Point2D<Real> const & p )
+    void add_vertex( Point2D<Real> const & p )
     {
       int n = num_vertices();
       this->conservativeResize( 2, n + 1 );
@@ -1586,15 +1301,10 @@ namespace Utils
     }
 
     //! Add vertex by coordinates
-    void
-    add_vertex( Real x, Real y )
-    {
-      add_vertex( Point2D<Real>( x, y ) );
-    }
+    void add_vertex( Real x, Real y ) { add_vertex( Point2D<Real>( x, y ) ); }
 
     //! Insert vertex at position i
-    void
-    insert_vertex( int i, Point2D<Real> const & p )
+    void insert_vertex( int i, Point2D<Real> const & p )
     {
       if ( i < 0 || i > num_vertices() ) return;
 
@@ -1608,8 +1318,7 @@ namespace Utils
     }
 
     //! Remove vertex at position i
-    void
-    remove_vertex( int i )
+    void remove_vertex( int i )
     {
       if ( i < 0 || i >= num_vertices() || num_vertices() <= 0 ) return;
 
@@ -1620,15 +1329,10 @@ namespace Utils
     }
 
     //! Get edge as segment
-    Segment2D<Real>
-    edge( int i ) const
-    {
-      return Segment2D<Real>( vertex( i ), vertex( i + 1 ) );
-    }
+    Segment2D<Real> edge( int i ) const { return Segment2D<Real>( vertex( i ), vertex( i + 1 ) ); }
 
     //! Get all edges
-    std::vector<Segment2D<Real>>
-    edges() const
+    std::vector<Segment2D<Real>> edges() const
     {
       std::vector<Segment2D<Real>> result;
       int                          n = num_vertices();
@@ -1640,8 +1344,7 @@ namespace Utils
     }
 
     //! Compute centroid
-    Point2D<Real>
-    centroid() const
+    Point2D<Real> centroid() const
     {
       int n = num_vertices();
       if ( n == 0 ) return Point2D<Real>( 0, 0 );
@@ -1657,8 +1360,7 @@ namespace Utils
     }
 
     //! Compute signed area (positive if CCW, negative if CW)
-    Real
-    signed_area() const noexcept
+    Real signed_area() const noexcept
     {
       int n = num_vertices();
       if ( n < 3 ) return 0;
@@ -1674,15 +1376,10 @@ namespace Utils
     }
 
     //! Compute area (always positive)
-    Real
-    area() const noexcept
-    {
-      return std::abs( signed_area() );
-    }
+    Real area() const noexcept { return std::abs( signed_area() ); }
 
     //! Check orientation (1 for CCW, -1 for CW, 0 for degenerate)
-    int
-    orientation( Real tol = Real( 1e-10 ) ) const noexcept
+    int orientation( Real tol = Real( 1e-10 ) ) const noexcept
     {
       Real area = signed_area();
       if ( area > tol ) return 1;
@@ -1691,22 +1388,19 @@ namespace Utils
     }
 
     //! Make polygon CCW oriented
-    void
-    make_ccw() noexcept
+    void make_ccw() noexcept
     {
       if ( orientation() < 0 ) { reverse(); }
     }
 
     //! Make polygon CW oriented
-    void
-    make_cw() noexcept
+    void make_cw() noexcept
     {
       if ( orientation() > 0 ) { reverse(); }
     }
 
     //! Reverse vertex order
-    void
-    reverse() noexcept
+    void reverse() noexcept
     {
       int n = num_vertices();
       for ( int i = 0; i < n / 2; ++i )
@@ -1718,8 +1412,7 @@ namespace Utils
     }
 
     //! Compute perimeter
-    Real
-    perimeter() const noexcept
+    Real perimeter() const noexcept
     {
       int n = num_vertices();
       if ( n < 2 ) return 0;
@@ -1730,8 +1423,7 @@ namespace Utils
     }
 
     //! Check if polygon is convex
-    bool
-    is_convex( Real tol = Real( 1e-10 ) ) const
+    bool is_convex( Real tol = Real( 1e-10 ) ) const
     {
       int n = num_vertices();
       if ( n < 3 ) return false;
@@ -1757,8 +1449,7 @@ namespace Utils
     }
 
     //! Check if polygon is simple (non-self-intersecting)
-    bool
-    is_simple() const
+    bool is_simple() const
     {
       int n = num_vertices();
       if ( n < 3 ) return true;
@@ -1779,8 +1470,7 @@ namespace Utils
     }
 
     //! Check if point is inside polygon using winding number
-    bool
-    contains( Point2D<Real> const & P ) const
+    bool contains( Point2D<Real> const & P ) const
     {
       int n = num_vertices();
       if ( n < 3 ) return false;
@@ -1814,8 +1504,7 @@ namespace Utils
     }
 
     //! Check if point is on polygon boundary
-    bool
-    on_boundary( Point2D<Real> const & P, Real tol = Real( 1e-6 ) ) const
+    bool on_boundary( Point2D<Real> const & P, Real tol = Real( 1e-6 ) ) const
     {
       int n = num_vertices();
       for ( int i = 0; i < n; ++i )
@@ -1827,8 +1516,7 @@ namespace Utils
     }
 
     //! Compute bounding box
-    void
-    bbox( Point2D<Real> & pmin, Point2D<Real> & pmax ) const
+    void bbox( Point2D<Real> & pmin, Point2D<Real> & pmax ) const
     {
       int n = num_vertices();
       if ( n == 0 )
@@ -1851,8 +1539,7 @@ namespace Utils
     }
 
     //! Get bounding box as Box2D
-    Box2D<Real>
-    bounding_box() const
+    Box2D<Real> bounding_box() const
     {
       Point2D<Real> pmin, pmax;
       bbox( pmin, pmax );
@@ -1860,8 +1547,7 @@ namespace Utils
     }
 
     //! Translate polygon by a vector
-    void
-    translate( Point2D<Real> const & delta ) noexcept
+    void translate( Point2D<Real> const & delta ) noexcept
     {
       for ( int i = 0; i < num_vertices(); ++i )
       {
@@ -1872,15 +1558,10 @@ namespace Utils
     }
 
     //! Translate polygon by coordinates
-    void
-    translate( Real dx, Real dy ) noexcept
-    {
-      translate( Point2D<Real>( dx, dy ) );
-    }
+    void translate( Real dx, Real dy ) noexcept { translate( Point2D<Real>( dx, dy ) ); }
 
     //! Rotate polygon by angle (radians) around origin
-    void
-    rotate( Real angle ) noexcept
+    void rotate( Real angle ) noexcept
     {
       for ( int i = 0; i < num_vertices(); ++i )
       {
@@ -1891,8 +1572,7 @@ namespace Utils
     }
 
     //! Rotate polygon by angle around a center point
-    void
-    rotate( Real angle, Point2D<Real> const & center ) noexcept
+    void rotate( Real angle, Point2D<Real> const & center ) noexcept
     {
       for ( int i = 0; i < num_vertices(); ++i )
       {
@@ -1903,8 +1583,7 @@ namespace Utils
     }
 
     //! Scale polygon relative to origin
-    void
-    scale( Real sx, Real sy ) noexcept
+    void scale( Real sx, Real sy ) noexcept
     {
       for ( int i = 0; i < num_vertices(); ++i )
       {
@@ -1915,8 +1594,7 @@ namespace Utils
     }
 
     //! Scale polygon relative to a center point
-    void
-    scale( Real sx, Real sy, Point2D<Real> const & center ) noexcept
+    void scale( Real sx, Real sy, Point2D<Real> const & center ) noexcept
     {
       for ( int i = 0; i < num_vertices(); ++i )
       {
@@ -1927,8 +1605,7 @@ namespace Utils
     }
 
     //! Get polygon as vector of points
-    std::vector<Point2D<Real>>
-    to_vector() const
+    std::vector<Point2D<Real>> to_vector() const
     {
       std::vector<Point2D<Real>> result;
       int                        n = num_vertices();
@@ -1938,8 +1615,7 @@ namespace Utils
     }
 
     //! Simplify polygon (remove collinear points)
-    void
-    simplify( Real tol = Real( 1e-6 ) )
+    void simplify( Real tol = Real( 1e-6 ) )
     {
       int n = num_vertices();
       if ( n < 3 ) return;
@@ -1973,8 +1649,7 @@ namespace Utils
     }
 
     //! Stream output operator
-    friend std::ostream &
-    operator<<( std::ostream & os, Polygon2D<Real> const & poly )
+    friend std::ostream & operator<<( std::ostream & os, Polygon2D<Real> const & poly )
     {
       os << "Polygon[";
       int n = poly.num_vertices();

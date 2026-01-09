@@ -110,75 +110,55 @@ namespace Utils
     // SETTERS CON VALIDAZIONE
     // ========================================================================
 
-    void
-    set_tolerance( real_type tol )
+    void set_tolerance( real_type tol )
     {
       UTILS_ASSERT( tol > 0, "Tolerance must be positive" );
       m_tolerance = tol;
     }
 
-    void
-    set_relative_tolerance( real_type tol )
+    void set_relative_tolerance( real_type tol )
     {
       UTILS_ASSERT( tol > 0, "Relative tolerance must be positive" );
       m_relative_tolerance = tol;
     }
 
-    void
-    set_max_iterations( integer max_iter )
+    void set_max_iterations( integer max_iter )
     {
       UTILS_ASSERT( max_iter > 0, "Max iterations must be positive" );
       m_max_iterations = max_iter;
     }
 
-    void
-    set_max_function_evals( integer max_feval )
+    void set_max_function_evals( integer max_feval )
     {
       UTILS_ASSERT( max_feval > 0, "Max function evaluations must be positive" );
       m_max_function_evals = max_feval;
     }
 
-    void
-    set_relaxation( real_type lambda )
+    void set_relaxation( real_type lambda )
     {
       UTILS_ASSERT( lambda > 0 && lambda <= MAX_RELAXATION, "Relaxation parameter must be in (0, 2]" );
       m_relaxation = lambda;
     }
 
-    void
-    set_strategy( SelectionStrategy s )
-    {
-      m_strategy = s;
-    }
+    void set_strategy( SelectionStrategy s ) { m_strategy = s; }
 
-    void
-    set_use_line_search( bool use )
-    {
-      m_use_line_search = use;
-    }
+    void set_use_line_search( bool use ) { m_use_line_search = use; }
 
-    void
-    set_line_search_beta( real_type beta )
+    void set_line_search_beta( real_type beta )
     {
       UTILS_ASSERT( beta > 0 && beta < 1, "Beta must be in (0, 1)" );
       m_line_search_beta = beta;
     }
 
-    void
-    set_line_search_c1( real_type c1 )
+    void set_line_search_c1( real_type c1 )
     {
       UTILS_ASSERT( c1 > 0 && c1 < 0.5, "c1 must be in (0, 0.5)" );
       m_line_search_c1 = c1;
     }
 
-    void
-    set_random_seed( unsigned seed )
-    {
-      m_random_engine.seed( seed );
-    }
+    void set_random_seed( unsigned seed ) { m_random_engine.seed( seed ); }
 
-    void
-    set_verbose_level( integer level )
+    void set_verbose_level( integer level )
     {
       UTILS_ASSERT( level >= 0 && level <= 2, "Verbose level must be 0, 1, or 2" );
       m_verbose_level = level;
@@ -188,46 +168,14 @@ namespace Utils
     // GETTERS
     // ========================================================================
 
-    integer
-    get_num_iterations() const
-    {
-      return m_num_iterations;
-    }
-    integer
-    get_num_function_evals() const
-    {
-      return m_num_function_evals;
-    }
-    integer
-    get_num_jacobian_evals() const
-    {
-      return m_num_jacobian_evals;
-    }
-    integer
-    get_num_line_searches() const
-    {
-      return m_num_line_searches;
-    }
-    bool
-    has_converged() const
-    {
-      return m_converged;
-    }
-    real_type
-    get_final_residual() const
-    {
-      return m_final_residual;
-    }
-    real_type
-    get_tolerance() const
-    {
-      return m_tolerance;
-    }
-    real_type
-    get_relaxation() const
-    {
-      return m_relaxation;
-    }
+    integer   get_num_iterations() const { return m_num_iterations; }
+    integer   get_num_function_evals() const { return m_num_function_evals; }
+    integer   get_num_jacobian_evals() const { return m_num_jacobian_evals; }
+    integer   get_num_line_searches() const { return m_num_line_searches; }
+    bool      has_converged() const { return m_converged; }
+    real_type get_final_residual() const { return m_final_residual; }
+    real_type get_tolerance() const { return m_tolerance; }
+    real_type get_relaxation() const { return m_relaxation; }
 
     // ========================================================================
     // METODI PRIVATI
@@ -235,15 +183,13 @@ namespace Utils
 
   private:
     //! Seleziona l'equazione in base alla strategia scelta
-    integer
-    select_equation( const Vector & f ) const
+    integer select_equation( const Vector & f ) const
     {
       integer m = f.size();
 
       switch ( m_strategy )
       {
-        case CYCLIC:
-          return m_num_iterations % m;
+        case CYCLIC: return m_num_iterations % m;
 
         case RANDOM_UNIFORM:
         {
@@ -295,14 +241,12 @@ namespace Utils
           return max_idx;
         }
 
-        default:
-          return m_num_iterations % m;
+        default: return m_num_iterations % m;
       }
     }
 
     //! Calcola il gradiente della i-esima equazione (efficiente)
-    void
-    compute_gradient( NonlinearSystem & system, const Vector & x, integer eq_idx, Vector & grad )
+    void compute_gradient( NonlinearSystem & system, const Vector & x, integer eq_idx, Vector & grad )
     {
       integer n = system.num_equations();
 
@@ -318,14 +262,14 @@ namespace Utils
     }
 
     //! Line search di Armijo per Kaczmarz
-    real_type
-    armijo_line_search( NonlinearSystem & system,
-                        const Vector &    x,
-                        const Vector &    f,
-                        real_type         norm_f,
-                        integer           eq_idx,
-                        const Vector &    grad,
-                        real_type         lambda_init )
+    real_type armijo_line_search(
+      NonlinearSystem & system,
+      const Vector &    x,
+      const Vector &    f,
+      real_type         norm_f,
+      integer           eq_idx,
+      const Vector &    grad,
+      real_type         lambda_init )
     {
       integer n = x.size();
 
@@ -384,8 +328,7 @@ namespace Utils
     }
 
     //! Verifica convergenza
-    bool
-    check_convergence( real_type norm_f, real_type initial_norm ) const
+    bool check_convergence( real_type norm_f, real_type initial_norm ) const
     {
       // Convergenza assoluta
       if ( norm_f < m_tolerance ) return true;
@@ -397,21 +340,15 @@ namespace Utils
     }
 
     //! Nome della strategia (per output)
-    const char *
-    strategy_name( SelectionStrategy s ) const
+    const char * strategy_name( SelectionStrategy s ) const
     {
       switch ( s )
       {
-        case CYCLIC:
-          return "Cyclic";
-        case RANDOM_UNIFORM:
-          return "Random Uniform";
-        case RANDOM_WEIGHTED:
-          return "Random Weighted";
-        case GREEDY:
-          return "Greedy";
-        default:
-          return "Unknown";
+        case CYCLIC: return "Cyclic";
+        case RANDOM_UNIFORM: return "Random Uniform";
+        case RANDOM_WEIGHTED: return "Random Weighted";
+        case GREEDY: return "Greedy";
+        default: return "Unknown";
       }
     }
 
@@ -420,8 +357,7 @@ namespace Utils
     // METODO PRINCIPALE DI RISOLUZIONE
     // ========================================================================
 
-    bool
-    solve( NonlinearSystem & system, Vector & x )
+    bool solve( NonlinearSystem & system, Vector & x )
     {
       integer n = system.num_equations();
 
@@ -459,16 +395,16 @@ namespace Utils
 
       if ( m_verbose_level > 0 )
       {
-        fmt::print( fmt::fg( fmt::color::light_blue ),
-                    "══════════════════════════════════════════════════════════"
-                    "═════════\n" );
+        fmt::print(
+          fmt::fg( fmt::color::light_blue ),
+          "═══════════════════════════════════════════════════════════════════\n" );
         fmt::print( fmt::fg( fmt::color::light_blue ), "Starting Nonlinear Kaczmarz\n" );
         fmt::print( "Initial residual: {:.6e}\n", initial_norm );
         fmt::print( "Strategy: {}\n", strategy_name( m_strategy ) );
         if ( m_use_line_search ) fmt::print( "Line search: Enabled\n" );
-        fmt::print( fmt::fg( fmt::color::light_blue ),
-                    "══════════════════════════════════════════════════════════"
-                    "═════════\n" );
+        fmt::print(
+          fmt::fg( fmt::color::light_blue ),
+          "═══════════════════════════════════════════════════════════════════\n" );
       }
 
       // Iterazioni principali
@@ -493,8 +429,11 @@ namespace Utils
         if ( m_verbose_level == 2 )
         {
           real_type reduction = initial_norm > EPSILON ? initial_norm / norm_f : 1.0;
-          fmt::print( fmt::fg( fmt::color::light_blue ), "[{:5}] ‖f‖ = {:.2e}",
-                      fmt::format( "{}", m_num_iterations + 1 ), norm_f );
+          fmt::print(
+            fmt::fg( fmt::color::light_blue ),
+            "[{:5}] ‖f‖ = {:.2e}",
+            fmt::format( "{}", m_num_iterations + 1 ),
+            norm_f );
           fmt::print( ", reduction = {:.3e}\n", reduction );
         }
 
@@ -511,8 +450,10 @@ namespace Utils
         {
           if ( m_verbose_level > 1 )
           {
-            fmt::print( fmt::fg( fmt::color::yellow ), "  ⚠ Near-zero gradient at iteration {}, skipping\n",
-                        m_num_iterations );
+            fmt::print(
+              fmt::fg( fmt::color::yellow ),
+              "  ⚠ Near-zero gradient at iteration {}, skipping\n",
+              m_num_iterations );
           }
           continue;
         }
@@ -569,8 +510,10 @@ namespace Utils
           {
             if ( m_verbose_level > 0 )
             {
-              fmt::print( fmt::fg( fmt::color::yellow ), "⚠ Stopping: insufficient progress (avg reduction: {:.4f})\n",
-                          avg_reduction );
+              fmt::print(
+                fmt::fg( fmt::color::yellow ),
+                "⚠ Stopping: insufficient progress (avg reduction: {:.4f})\n",
+                avg_reduction );
             }
             break;
           }
@@ -587,8 +530,10 @@ namespace Utils
         }
         else if ( m_num_function_evals >= m_max_function_evals )
         {
-          fmt::print( fmt::fg( fmt::color::yellow ), "⚠ Max function evaluations ({}) reached\n",
-                      m_max_function_evals );
+          fmt::print(
+            fmt::fg( fmt::color::yellow ),
+            "⚠ Max function evaluations ({}) reached\n",
+            m_max_function_evals );
         }
         print_summary( initial_norm, norm_f );
       }
@@ -600,8 +545,7 @@ namespace Utils
     // VARIANTE BLOCK KACZMARZ
     // ========================================================================
 
-    bool
-    solve_block( NonlinearSystem & system, Vector & x, integer block_size = 5 )
+    bool solve_block( NonlinearSystem & system, Vector & x, integer block_size = 5 )
     {
       integer n = system.num_equations();
 
@@ -639,15 +583,17 @@ namespace Utils
 
       if ( m_verbose_level > 0 )
       {
-        fmt::print( fmt::fg( fmt::color::light_blue ),
-                    "══════════════════════════════════════════════════════════"
-                    "═════════\n" );
+        fmt::print(
+          fmt::fg( fmt::color::light_blue ),
+          "══════════════════════════════════════════════════════════"
+          "═════════\n" );
         fmt::print( fmt::fg( fmt::color::light_blue ), "Starting Block Kaczmarz (block_size={})\n", block_size );
         fmt::print( "Initial residual: {:.6e}\n", initial_norm );
         fmt::print( "Strategy: {}\n", strategy_name( m_strategy ) );
-        fmt::print( fmt::fg( fmt::color::light_blue ),
-                    "══════════════════════════════════════════════════════════"
-                    "═════════\n" );
+        fmt::print(
+          fmt::fg( fmt::color::light_blue ),
+          "══════════════════════════════════════════════════════════"
+          "═════════\n" );
       }
 
       for ( m_num_iterations = 0; m_num_iterations < m_max_iterations; ++m_num_iterations )
@@ -669,8 +615,11 @@ namespace Utils
         if ( m_verbose_level == 2 )
         {
           real_type reduction = initial_norm > EPSILON ? initial_norm / norm_f : 1.0;
-          fmt::print( fmt::fg( fmt::color::light_blue ), "[{:5}] ‖f‖ = {:.2e}",
-                      fmt::format( "{}", m_num_iterations + 1 ), norm_f );
+          fmt::print(
+            fmt::fg( fmt::color::light_blue ),
+            "[{:5}] ‖f‖ = {:.2e}",
+            fmt::format( "{}", m_num_iterations + 1 ),
+            norm_f );
           fmt::print( ", reduction = {:.3e}\n", reduction );
         }
 
@@ -726,8 +675,7 @@ namespace Utils
 
   private:
     //! Seleziona un blocco di equazioni
-    std::vector<integer>
-    select_block( const Vector & f, integer n, integer block_size ) const
+    std::vector<integer> select_block( const Vector & f, integer n, integer block_size ) const
     {
       std::vector<integer> block_indices;
       block_indices.reserve( block_size );
@@ -762,8 +710,11 @@ namespace Utils
           }
 
           // Ordina parzialmente per trovare i primi block_size elementi
-          std::partial_sort( sorted_indices.begin(), sorted_indices.begin() + block_size, sorted_indices.end(),
-                             [this]( integer i, integer j ) { return m_residuals[i] > m_residuals[j]; } );
+          std::partial_sort(
+            sorted_indices.begin(),
+            sorted_indices.begin() + block_size,
+            sorted_indices.end(),
+            [this]( integer i, integer j ) { return m_residuals[i] > m_residuals[j]; } );
 
           for ( integer i = 0; i < block_size; ++i ) { block_indices.push_back( sorted_indices[i] ); }
           break;
@@ -774,18 +725,19 @@ namespace Utils
     }
 
     //! Stampa riepilogo per il metodo standard
-    void
-    print_summary( real_type initial_norm, real_type final_norm ) const
+    void print_summary( real_type initial_norm, real_type final_norm ) const
     {
       if ( m_verbose_level == 0 ) return;
 
-      fmt::print( fmt::fg( fmt::color::light_blue ),
-                  "════════════════════════════════════════════════════════════"
-                  "═══════\n" );
+      fmt::print(
+        fmt::fg( fmt::color::light_blue ),
+        "════════════════════════════════════════════════════════════"
+        "═══════\n" );
       fmt::print( "Nonlinear Kaczmarz - Summary\n" );
-      fmt::print( fmt::fg( fmt::color::light_blue ),
-                  "════════════════════════════════════════════════════════════"
-                  "═══════\n" );
+      fmt::print(
+        fmt::fg( fmt::color::light_blue ),
+        "════════════════════════════════════════════════════════════"
+        "═══════\n" );
 
       if ( m_converged ) { fmt::print( fmt::fg( fmt::color::green ), "Status:             ✓ CONVERGED\n" ); }
       else
@@ -808,24 +760,26 @@ namespace Utils
         fmt::print( "Residual reduction: {:.3e} ({:.1f}%)\n", reduction, ( 1.0 - final_norm / initial_norm ) * 100.0 );
       }
 
-      fmt::print( fmt::fg( fmt::color::light_blue ),
-                  "════════════════════════════════════════════════════════════"
-                  "═══════\n\n" );
+      fmt::print(
+        fmt::fg( fmt::color::light_blue ),
+        "════════════════════════════════════════════════════════════"
+        "═══════\n\n" );
     }
 
     //! Stampa riepilogo per il metodo block
-    void
-    print_summary_block( real_type initial_norm, real_type final_norm ) const
+    void print_summary_block( real_type initial_norm, real_type final_norm ) const
     {
       if ( m_verbose_level == 0 ) return;
 
-      fmt::print( fmt::fg( fmt::color::light_blue ),
-                  "════════════════════════════════════════════════════════════"
-                  "═══════\n" );
+      fmt::print(
+        fmt::fg( fmt::color::light_blue ),
+        "════════════════════════════════════════════════════════════"
+        "═══════\n" );
       fmt::print( "Block Kaczmarz - Summary\n" );
-      fmt::print( fmt::fg( fmt::color::light_blue ),
-                  "════════════════════════════════════════════════════════════"
-                  "═══════\n" );
+      fmt::print(
+        fmt::fg( fmt::color::light_blue ),
+        "════════════════════════════════════════════════════════════"
+        "═══════\n" );
 
       if ( m_converged ) { fmt::print( fmt::fg( fmt::color::green ), "Status:             ✓ CONVERGED\n" ); }
       else
@@ -847,9 +801,10 @@ namespace Utils
         fmt::print( "Residual reduction: {:.3e} ({:.1f}%)\n", reduction, ( 1.0 - final_norm / initial_norm ) * 100.0 );
       }
 
-      fmt::print( fmt::fg( fmt::color::light_blue ),
-                  "════════════════════════════════════════════════════════════"
-                  "═══════\n\n" );
+      fmt::print(
+        fmt::fg( fmt::color::light_blue ),
+        "════════════════════════════════════════════════════════════"
+        "═══════\n\n" );
     }
   };
 

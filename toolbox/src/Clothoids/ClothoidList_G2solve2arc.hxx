@@ -21,7 +21,8 @@
 /// file: ClothoidList_G2solve2arc.hxx
 ///
 
-namespace G2lib {
+namespace G2lib
+{
 
   /*\
    |    ____ ____            _           ____
@@ -69,85 +70,58 @@ namespace G2lib {
   //! The solution do not exist for all the combination of points/angle/curvature
   //!
   //!
-  class G2solve2arc {
+  class G2solve2arc
+  {
+    real_type m_tolerance{ real_type( 1e-10 ) };
+    integer   m_max_iter{ 20 };
 
-    real_type m_tolerance{real_type(1e-10)};
-    integer   m_max_iter{20};
+    real_type m_x0{ real_type( 0 ) };
+    real_type m_y0{ real_type( 0 ) };
+    real_type m_theta0{ real_type( 0 ) };
+    real_type m_kappa0{ real_type( 0 ) };
 
-    real_type m_x0{real_type(0)};
-    real_type m_y0{real_type(0)};
-    real_type m_theta0{real_type(0)};
-    real_type m_kappa0{real_type(0)};
-
-    real_type m_x1{real_type(0)};
-    real_type m_y1{real_type(0)};
-    real_type m_theta1{real_type(0)};
-    real_type m_kappa1{real_type(0)};
+    real_type m_x1{ real_type( 0 ) };
+    real_type m_y1{ real_type( 0 ) };
+    real_type m_theta1{ real_type( 0 ) };
+    real_type m_kappa1{ real_type( 0 ) };
 
     // standard problem
-    real_type m_lambda{real_type(0)};
-    real_type m_phi{real_type(0)};
-    real_type m_xbar{real_type(0)};
-    real_type m_ybar{real_type(0)};
-    real_type m_th0{real_type(0)};
-    real_type m_th1{real_type(0)};
-    real_type m_k0{real_type(0)};
-    real_type m_k1{real_type(0)};
-    real_type m_DeltaK{real_type(0)};
-    real_type m_DeltaTheta{real_type(0)};
+    real_type m_lambda{ real_type( 0 ) };
+    real_type m_phi{ real_type( 0 ) };
+    real_type m_xbar{ real_type( 0 ) };
+    real_type m_ybar{ real_type( 0 ) };
+    real_type m_th0{ real_type( 0 ) };
+    real_type m_th1{ real_type( 0 ) };
+    real_type m_k0{ real_type( 0 ) };
+    real_type m_k1{ real_type( 0 ) };
+    real_type m_DeltaK{ real_type( 0 ) };
+    real_type m_DeltaTheta{ real_type( 0 ) };
 
-    ClothoidCurve m_S0{"G2solve2arc_S0"};
-    ClothoidCurve m_S1{"G2solve2arc_S1"};
+    ClothoidCurve m_S0{ "G2solve2arc_S0" };
+    ClothoidCurve m_S1{ "G2solve2arc_S1" };
 
-    void
-    evalA(
-      real_type const alpha,
-      real_type const L,
-      real_type     & A
-    ) const;
+    void evalA( real_type const alpha, real_type const L, real_type & A ) const;
 
-    void
-    evalA(
-      real_type const alpha,
-      real_type const L,
-      real_type     & A,
-      real_type     & A_1,
-      real_type     & A_2
-    ) const;
+    void evalA( real_type const alpha, real_type const L, real_type & A, real_type & A_1, real_type & A_2 ) const;
 
-    void
-    evalG(
+    void evalG( real_type const alpha, real_type const L, real_type const th, real_type const k, real_type G[2] ) const;
+
+    void evalG(
       real_type const alpha,
       real_type const L,
       real_type const th,
       real_type const k,
-      real_type       G[2]
-    ) const;
-
-    void
-    evalG(
-      real_type const alpha,
-      real_type const L,
-      real_type const th,
-      real_type const k,
-      real_type G[2],
-      real_type G_1[2],
-      real_type G_2[2]
-    ) const;
+      real_type       G[2],
+      real_type       G_1[2],
+      real_type       G_2[2] ) const;
 
     void evalF( real_type const vars[2], real_type F[2] ) const;
 
-    void
-    evalFJ(
-      real_type const vars[2],
-      real_type       F[2],
-      real_type       J[2][2]
-    ) const;
+    void evalFJ( real_type const vars[2], real_type F[2], real_type J[2][2] ) const;
 
     void build_solution( real_type alpha, real_type L );
 
   public:
-
     //!
     //! Build an empty clothoid list
     //!
@@ -176,11 +150,15 @@ namespace G2lib {
     //! \param[in] kappa1 \f$ \kappa_1 \f$
     //! \return number of iterations of -1 if failed
     //!
-    int
-    build(
-      real_type const x0, real_type const y0, real_type const theta0, real_type const kappa0,
-      real_type const x1, real_type const y1, real_type const theta1, real_type const kappa1
-    );
+    int build(
+      real_type const x0,
+      real_type const y0,
+      real_type const theta0,
+      real_type const kappa0,
+      real_type const x1,
+      real_type const y1,
+      real_type const theta1,
+      real_type const kappa1 );
 
     //!
     //! Fix tolerance for the \f$ G^2 \f$ problem
@@ -209,14 +187,13 @@ namespace G2lib {
     //!
     ClothoidCurve const & S1() const { return m_S1; }
 
-    #ifdef CLOTHOIDS_BACK_COMPATIBILITY
+#ifdef CLOTHOIDS_BACK_COMPATIBILITY
     void setTolerance( real_type const tol ) { set_tolerance( tol ); }
     void setMaxIter( integer const miter ) { set_max_iter( miter ); }
-    #endif
-
+#endif
   };
 
-}
+}  // namespace G2lib
 
 ///
 /// eof: ClothoidList_G2solve2arc.hxx

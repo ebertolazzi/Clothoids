@@ -16,30 +16,29 @@ class XiaoYin1 : public NonlinearSystem
 {
 public:
   XiaoYin1()
-    : NonlinearSystem( "XiaoYin example 3",
-                       "@article{XiaoYin:2015,\n"
-                       "  author    = {Xiaoyong Xiao and Hongwei Yin},\n"
-                       "  title     = {A new class of methods with higher order of "
-                       "convergence for solving systems of nonlinear equations},\n"
-                       "  Journal   = {Applied Mathematics and Computation},\n"
-                       "  Number    = {264},\n"
-                       "  Pages     = {300–-309},\n"
-                       "  Publisher = {Elsevier},\n"
-                       "  Year      = {2015},\n"
-                       "  Doi       = {10.1016/j.amc.2015.04.094},\n"
-                       "}\n",
-                       8 )
+    : NonlinearSystem(
+        "XiaoYin example 3",
+        "@article{XiaoYin:2015,\n"
+        "  author    = {Xiaoyong Xiao and Hongwei Yin},\n"
+        "  title     = {A new class of methods with higher order of "
+        "convergence for solving systems of nonlinear equations},\n"
+        "  Journal   = {Applied Mathematics and Computation},\n"
+        "  Number    = {264},\n"
+        "  Pages     = {300–-309},\n"
+        "  Publisher = {Elsevier},\n"
+        "  Year      = {2015},\n"
+        "  Doi       = {10.1016/j.amc.2015.04.094},\n"
+        "}\n",
+        8 )
   {
   }
 
-  virtual void
-  evaluate( Vector const & x, Vector & f ) const override
+  virtual void evaluate( Vector const & x, Vector & f ) const override
   {
     for ( integer i = 0; i < n; ++i ) f( i ) = x( i ) * log( 1 + x( ( i + 1 ) % n ) ) - 1;
   }
 
-  virtual void
-  jacobian( Vector const & x, SparseMatrix & J ) const override
+  virtual void jacobian( Vector const & x, SparseMatrix & J ) const override
   {
     J.resize( n, n );
     J.setZero();
@@ -51,8 +50,7 @@ public:
     J.makeCompressed();
   }
 
-  virtual void
-  initial_points( vector<Vector> & x_vec ) const override
+  virtual void initial_points( vector<Vector> & x_vec ) const override
   {
     x_vec.resize( 1 );
     auto & x0{ x_vec[0] };
@@ -69,30 +67,29 @@ class XiaoYin2 : public NonlinearSystem
 {
 public:
   XiaoYin2()
-    : NonlinearSystem( "XiaoYin example 4",
-                       "@article{XiaoYin:2015,\n"
-                       "  author    = {Xiaoyong Xiao and Hongwei Yin},\n"
-                       "  title     = {A new class of methods with higher order of "
-                       "convergence for solving systems of nonlinear equations},\n"
-                       "  Journal   = {Applied Mathematics and Computation},\n"
-                       "  Number    = {264},\n"
-                       "  Pages     = {300–-309},\n"
-                       "  Publisher = {Elsevier},\n"
-                       "  Year      = {2015},\n"
-                       "  Doi       = {10.1016/j.amc.2015.04.094},\n"
-                       "}\n",
-                       16 )
+    : NonlinearSystem(
+        "XiaoYin example 4",
+        "@article{XiaoYin:2015,\n"
+        "  author    = {Xiaoyong Xiao and Hongwei Yin},\n"
+        "  title     = {A new class of methods with higher order of "
+        "convergence for solving systems of nonlinear equations},\n"
+        "  Journal   = {Applied Mathematics and Computation},\n"
+        "  Number    = {264},\n"
+        "  Pages     = {300–-309},\n"
+        "  Publisher = {Elsevier},\n"
+        "  Year      = {2015},\n"
+        "  Doi       = {10.1016/j.amc.2015.04.094},\n"
+        "}\n",
+        16 )
   {
   }
 
-  virtual void
-  evaluate( Vector const & x, Vector & f ) const override
+  virtual void evaluate( Vector const & x, Vector & f ) const override
   {
     for ( integer i = 0; i < n; ++i ) f( i ) = x( i ) * sin( x( ( i + 1 ) % n ) ) - 1;
   }
 
-  virtual void
-  jacobian( Vector const & x, SparseMatrix & J ) const override
+  virtual void jacobian( Vector const & x, SparseMatrix & J ) const override
   {
     J.resize( n, n );
     J.setZero();
@@ -104,8 +101,7 @@ public:
     J.makeCompressed();
   }
 
-  virtual void
-  initial_points( vector<Vector> & x_vec ) const override
+  virtual void initial_points( vector<Vector> & x_vec ) const override
   {
     x_vec.resize( 1 );
     auto & x0{ x_vec[0] };
@@ -122,24 +118,24 @@ class XiaoYin3 : public NonlinearSystem
 {
 public:
   XiaoYin3()
-    : NonlinearSystem( "XiaoYin example 5",
-                       "@article{XiaoYin:2015,\n"
-                       "  author    = {Xiaoyong Xiao and Hongwei Yin},\n"
-                       "  title     = {A new class of methods with higher order of "
-                       "convergence for solving systems of nonlinear equations},\n"
-                       "  Journal   = {Applied Mathematics and Computation},\n"
-                       "  Number    = {264},\n"
-                       "  Pages     = {300–-309},\n"
-                       "  Publisher = {Elsevier},\n"
-                       "  Year      = {2015},\n"
-                       "  Doi       = {10.1016/j.amc.2015.04.094},\n"
-                       "}\n",
-                       35 )
+    : NonlinearSystem(
+        "XiaoYin example 5",
+        "@article{XiaoYin:2015,\n"
+        "  author    = {Xiaoyong Xiao and Hongwei Yin},\n"
+        "  title     = {A new class of methods with higher order of "
+        "convergence for solving systems of nonlinear equations},\n"
+        "  Journal   = {Applied Mathematics and Computation},\n"
+        "  Number    = {264},\n"
+        "  Pages     = {300–-309},\n"
+        "  Publisher = {Elsevier},\n"
+        "  Year      = {2015},\n"
+        "  Doi       = {10.1016/j.amc.2015.04.094},\n"
+        "}\n",
+        35 )
   {
   }
 
-  virtual void
-  evaluate( Vector const & x, Vector & f ) const override
+  virtual void evaluate( Vector const & x, Vector & f ) const override
   {
     for ( integer i = 0; i < n; ++i )
     {
@@ -149,8 +145,7 @@ public:
     }
   }
 
-  virtual void
-  jacobian( Vector const & x, SparseMatrix & J ) const override
+  virtual void jacobian( Vector const & x, SparseMatrix & J ) const override
   {
     J.resize( n, n );
     J.setZero();
@@ -164,8 +159,7 @@ public:
     J.makeCompressed();
   }
 
-  virtual void
-  initial_points( vector<Vector> & x_vec ) const override
+  virtual void initial_points( vector<Vector> & x_vec ) const override
   {
     x_vec.resize( 1 );
     auto & x0{ x_vec[0] };

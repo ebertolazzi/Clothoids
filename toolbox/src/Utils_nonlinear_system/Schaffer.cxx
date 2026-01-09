@@ -12,14 +12,14 @@
  | - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 \*/
 
-#define SHAFFER_BIBTEX                                                                                                 \
-  "@book{brent2013,\n"                                                                                                 \
-  "  author    = {Brent, R.P.},\n"                                                                                     \
-  "  title     = {Algorithms for Minimization Without Derivatives},\n"                                                 \
-  "  isbn      = {9780486143682},\n"                                                                                   \
-  "  series    = {Dover Books on Mathematics},\n"                                                                      \
-  "  year      = {2013},\n"                                                                                            \
-  "  publisher = {Dover Publications}\n"                                                                               \
+#define SHAFFER_BIBTEX                                                 \
+  "@book{brent2013,\n"                                                 \
+  "  author    = {Brent, R.P.},\n"                                     \
+  "  title     = {Algorithms for Minimization Without Derivatives},\n" \
+  "  isbn      = {9780486143682},\n"                                   \
+  "  series    = {Dover Books on Mathematics},\n"                      \
+  "  year      = {2013},\n"                                            \
+  "  publisher = {Dover Publications}\n"                               \
   "}\n"
 
 class SchafferF6 : public NonlinearSystem
@@ -27,8 +27,7 @@ class SchafferF6 : public NonlinearSystem
 public:
   SchafferF6() : NonlinearSystem( "Schaffer Function F6", SHAFFER_BIBTEX, 2 ) {}
 
-  virtual void
-  evaluate( Vector const & x, Vector & f ) const override
+  virtual void evaluate( Vector const & x, Vector & f ) const override
   {
     real_type x1 = x( 0 );
     real_type x2 = x( 1 );
@@ -63,8 +62,7 @@ public:
     f( 1 ) = S * rx2;
   }
 
-  virtual void
-  jacobian( Vector const & x, SparseMatrix & J ) const override
+  virtual void jacobian( Vector const & x, SparseMatrix & J ) const override
   {
     real_type x1 = x( 0 );
     real_type x2 = x( 1 );
@@ -126,8 +124,7 @@ public:
     J.makeCompressed();
   }
 
-  virtual void
-  exact_solution( vector<Vector> & x_vec ) const override
+  virtual void exact_solution( vector<Vector> & x_vec ) const override
   {
     x_vec.resize( 1 );
     auto & x0{ x_vec[0] };
@@ -135,8 +132,7 @@ public:
     x0.setZero();
   }
 
-  virtual void
-  initial_points( vector<Vector> & x_vec ) const override
+  virtual void initial_points( vector<Vector> & x_vec ) const override
   {
     x_vec.resize( 1 );
     auto & x0{ x_vec[0] };
@@ -154,8 +150,7 @@ class SchafferF7 : public NonlinearSystem
 public:
   SchafferF7() : NonlinearSystem( "Schaffer Function F7", SHAFFER_BIBTEX, 2 ) {}
 
-  virtual void
-  evaluate( Vector const & x, Vector & f ) const override
+  virtual void evaluate( Vector const & x, Vector & f ) const override
   {
     real_type x1 = x( 0 );
     real_type x2 = x( 1 );
@@ -181,8 +176,7 @@ public:
     f( 1 ) = ( ar * b + a * br ) * rx2;
   }
 
-  virtual void
-  jacobian( Vector const & x, SparseMatrix & J ) const override
+  virtual void jacobian( Vector const & x, SparseMatrix & J ) const override
   {
     real_type x1 = x( 0 );
     real_type x2 = x( 1 );
@@ -229,8 +223,7 @@ public:
     J.makeCompressed();
   }
 
-  virtual void
-  exact_solution( vector<Vector> & x_vec ) const override
+  virtual void exact_solution( vector<Vector> & x_vec ) const override
   {
     x_vec.resize( 1 );
     auto & x0{ x_vec[0] };
@@ -238,8 +231,7 @@ public:
     x0.setZero();
   }
 
-  virtual void
-  initial_points( vector<Vector> & x_vec ) const override
+  virtual void initial_points( vector<Vector> & x_vec ) const override
   {
     x_vec.resize( 1 );
     auto & x0{ x_vec[0] };

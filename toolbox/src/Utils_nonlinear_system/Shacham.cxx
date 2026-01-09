@@ -8,38 +8,38 @@
  |    email: enrico.bertolazzi@unitn.it
 \*/
 
-#define SHACHAM_BIBTEX                                                                                                 \
-  "@inbook{eden2014proceedings,\n"                                                                                     \
-  "  author    = {M. Shacham},\n"                                                                                      \
-  "  title     = {Recent developments in solution techniques for\n"                                                    \
-  "               systems of nonlinear equations},\n"                                                                  \
-  "  booktitle = {Proceedings of the 2nd International Conference\n"                                                   \
-  "               on Foundations of Computer-Aided Process Design},\n"                                                 \
-  "  editor    = {A.W. Westerberg, H.H. Chien},\n"                                                                     \
-  "  series    = {Computer Aided Chemical Engineering},\n"                                                             \
-  "  year      = {1983},\n"                                                                                            \
-  "}\n\n"                                                                                                              \
-  "@article{Meintjes:1990,\n"                                                                                          \
-  "  author  = {Meintjes, Keith and Morgan, Alexander P.},\n"                                                          \
-  "  title   = {Chemical Equilibrium Systems As Numerical Test Problems},\n"                                           \
-  "  journal = {ACM Trans. Math. Softw.},\n"                                                                           \
-  "  year    = {1990},\n"                                                                                              \
-  "  volume  = {16},\n"                                                                                                \
-  "  number  = {2},\n"                                                                                                 \
-  "  pages   = {143--151},\n"                                                                                          \
-  "  doi     = {10.1145/78928.78930},\n"                                                                               \
-  "}\n\n"                                                                                                              \
-  "@article{Shacham:1985,\n"                                                                                           \
-  "  author  = {Mordechai Shacham},\n"                                                                                 \
-  "  title   = {Comparing software for the solution of systems\n"                                                      \
-  "              of nonlinear algebraic equations arising in\n"                                                        \
-  "              chemical engineering},\n"                                                                             \
-  "  journal = {Computers \\& Chemical Engineering},\n"                                                                \
-  "  year    = {1985},\n"                                                                                              \
-  "  volume  = {9},\n"                                                                                                 \
-  "  number  = {2},\n"                                                                                                 \
-  "  pages   = {103--112},\n"                                                                                          \
-  "  doi     = {10.1016/0098-1354(85)85001-8}\n"                                                                       \
+#define SHACHAM_BIBTEX                                                       \
+  "@inbook{eden2014proceedings,\n"                                           \
+  "  author    = {M. Shacham},\n"                                            \
+  "  title     = {Recent developments in solution techniques for\n"          \
+  "               systems of nonlinear equations},\n"                        \
+  "  booktitle = {Proceedings of the 2nd International Conference\n"         \
+  "               on Foundations of Computer-Aided Process Design},\n"       \
+  "  editor    = {A.W. Westerberg, H.H. Chien},\n"                           \
+  "  series    = {Computer Aided Chemical Engineering},\n"                   \
+  "  year      = {1983},\n"                                                  \
+  "}\n\n"                                                                    \
+  "@article{Meintjes:1990,\n"                                                \
+  "  author  = {Meintjes, Keith and Morgan, Alexander P.},\n"                \
+  "  title   = {Chemical Equilibrium Systems As Numerical Test Problems},\n" \
+  "  journal = {ACM Trans. Math. Softw.},\n"                                 \
+  "  year    = {1990},\n"                                                    \
+  "  volume  = {16},\n"                                                      \
+  "  number  = {2},\n"                                                       \
+  "  pages   = {143--151},\n"                                                \
+  "  doi     = {10.1145/78928.78930},\n"                                     \
+  "}\n\n"                                                                    \
+  "@article{Shacham:1985,\n"                                                 \
+  "  author  = {Mordechai Shacham},\n"                                       \
+  "  title   = {Comparing software for the solution of systems\n"            \
+  "              of nonlinear algebraic equations arising in\n"              \
+  "              chemical engineering},\n"                                   \
+  "  journal = {Computers \\& Chemical Engineering},\n"                      \
+  "  year    = {1985},\n"                                                    \
+  "  volume  = {9},\n"                                                       \
+  "  number  = {2},\n"                                                       \
+  "  pages   = {103--112},\n"                                                \
+  "  doi     = {10.1016/0098-1354(85)85001-8}\n"                             \
   "}\n"
 
 /*\
@@ -50,8 +50,7 @@ class ChemicalReactorEquilibriumConversion : public NonlinearSystem
 {
   mutable real_type y, T, k, kkp, k_1, kkp_1;
 
-  void
-  eval( Vector const & x ) const
+  void eval( Vector const & x ) const
   {
     T = x( 0 );
     y = x( 1 );
@@ -76,40 +75,25 @@ public:
   {
   }
 
-  real_type
-  f1( real_type _y ) const
-  {
-    return sqrt( 1 - _y ) * ( 1.82 - _y ) / ( 18.2 - _y );
-  }
+  real_type f1( real_type _y ) const { return sqrt( 1 - _y ) * ( 1.82 - _y ) / ( 18.2 - _y ); }
 
-  real_type
-  f1_1( real_type _y ) const
+  real_type f1_1( real_type _y ) const
   {
     return ( _y * ( 26.39 - 0.5 * _y ) - 32.942 ) / ( sqrt( 1 - _y ) * power2( _y - 18.2 ) );
   }
 
-  real_type
-  f2( real_type _y ) const
-  {
-    return _y * _y * pow( 1 - _y, -1.5 );
-  }
+  real_type f2( real_type _y ) const { return _y * _y * pow( 1 - _y, -1.5 ); }
 
-  real_type
-  f2_1( real_type _y ) const
-  {
-    return 0.5 * _y * ( 4 - _y ) * pow( 1 - _y, -2.5 );
-  }
+  real_type f2_1( real_type _y ) const { return 0.5 * _y * ( 4 - _y ) * pow( 1 - _y, -2.5 ); }
 
-  virtual void
-  evaluate( Vector const & x, Vector & f ) const override
+  virtual void evaluate( Vector const & x, Vector & f ) const override
   {
     eval( x );
     f( 0 ) = k * f1( y ) - kkp * f2( y );
     f( 1 ) = T * ( 1.84 * y + 77.3 ) - 43260 * y - 105128;  // nell'articolo originale trovo 150128!
   }
 
-  virtual void
-  jacobian( Vector const & x, SparseMatrix & J ) const override
+  virtual void jacobian( Vector const & x, SparseMatrix & J ) const override
   {
     J.resize( n, n );
     J.setZero();
@@ -121,8 +105,7 @@ public:
     J.makeCompressed();
   }
 
-  virtual void
-  exact_solution( vector<Vector> & x_vec ) const override
+  virtual void exact_solution( vector<Vector> & x_vec ) const override
   {
     x_vec.resize( 1 );
     auto & x0{ x_vec[0] };
@@ -130,8 +113,7 @@ public:
     x0 << 1637.7032294649301990, 0.53337289955233521695;
   }
 
-  virtual void
-  initial_points( vector<Vector> & x_vec ) const override
+  virtual void initial_points( vector<Vector> & x_vec ) const override
   {
     x_vec.resize( 8 );
     auto & x0{ x_vec[0] };
@@ -163,36 +145,38 @@ public:
     x7 << 1650.0, 0.0;
   }
 
-  virtual void
-  check_if_admissible( Vector const & x ) const override
+  virtual void check_if_admissible( Vector const & x ) const override
   {
     real_type _T = x( 0 );
     real_type _y = x( 1 );
-    UTILS_ASSERT( _y <= 1,
-                  "ChemicalReactorEquilibriumConversion::check_if_admissible "
-                  "found y > 1, y = {}",
-                  y );
-    UTILS_ASSERT( _T > 0,
-                  "ChemicalReactorEquilibriumConversion::check_if_admissible "
-                  "found T <= 0, T = {}",
-                  T );
+    UTILS_ASSERT(
+      _y <= 1,
+      "ChemicalReactorEquilibriumConversion::check_if_admissible "
+      "found y > 1, y = {}",
+      y );
+    UTILS_ASSERT(
+      _T > 0,
+      "ChemicalReactorEquilibriumConversion::check_if_admissible "
+      "found T <= 0, T = {}",
+      T );
     real_type bf1 = 149750.0 / _T;
     real_type bf2 = 192050.0 / _T;
 
     real_type k1 = 92.5 - bf1;
     real_type k2 = 116.7 - bf2 - 0.17 * log( _T );
-    UTILS_ASSERT( k1 <= 350,
-                  "ChemicalReactorEquilibriumConversion::check_if_admissible "
-                  "found k1 > 350, k1 = {}",
-                  k1 );
-    UTILS_ASSERT( k2 <= 350,
-                  "ChemicalReactorEquilibriumConversion::check_if_admissible "
-                  "found k2 > 350, k2 = {}",
-                  k2 );
+    UTILS_ASSERT(
+      k1 <= 350,
+      "ChemicalReactorEquilibriumConversion::check_if_admissible "
+      "found k1 > 350, k1 = {}",
+      k1 );
+    UTILS_ASSERT(
+      k2 <= 350,
+      "ChemicalReactorEquilibriumConversion::check_if_admissible "
+      "found k2 > 350, k2 = {}",
+      k2 );
   }
 
-  virtual void
-  bounding_box( Vector & L, Vector & U ) const override
+  virtual void bounding_box( Vector & L, Vector & U ) const override
   {
     L[0] = 0;
     U[0] = 20000;
@@ -215,8 +199,7 @@ class ChemicalReactorSteadyState : public NonlinearSystem
 {
   mutable real_type y, T, arg, k;
 
-  bool
-  eval( Vector const & x ) const
+  bool eval( Vector const & x ) const
   {
     y   = x( 0 );
     T   = x( 1 );
@@ -230,8 +213,7 @@ class ChemicalReactorSteadyState : public NonlinearSystem
 public:
   ChemicalReactorSteadyState() : NonlinearSystem( "Chemical Reactor Steady State", SHACHAM_BIBTEX, 2 ) {}
 
-  virtual void
-  evaluate( Vector const & x, Vector & f ) const override
+  virtual void evaluate( Vector const & x, Vector & f ) const override
   {
     if ( eval( x ) )
     {
@@ -244,8 +226,7 @@ public:
     }
   }
 
-  virtual void
-  jacobian( Vector const & x, SparseMatrix & J ) const override
+  virtual void jacobian( Vector const & x, SparseMatrix & J ) const override
   {
     J.resize( n, n );
     J.setZero();
@@ -258,8 +239,7 @@ public:
     J.makeCompressed();
   }
 
-  virtual void
-  exact_solution( vector<Vector> & x_vec ) const override
+  virtual void exact_solution( vector<Vector> & x_vec ) const override
   {
     x_vec.resize( 1 );
     auto & x0{ x_vec[0] };
@@ -267,8 +247,7 @@ public:
     x0 << 0.96386805127953300008, 346.16369814644557483739;
   }
 
-  virtual void
-  initial_points( vector<Vector> & x_vec ) const override
+  virtual void initial_points( vector<Vector> & x_vec ) const override
   {
     x_vec.resize( 9 );
     auto & x0{ x_vec[0] };
@@ -302,8 +281,7 @@ public:
     x8 << 0.906948356846E+00, 0.308103350833E+03;
   }
 
-  virtual void
-  check_if_admissible( Vector const & x ) const override
+  virtual void check_if_admissible( Vector const & x ) const override
   {
     real_type _y = x( 0 );
     real_type _T = x( 1 );
@@ -312,8 +290,7 @@ public:
     UTILS_ASSERT( _T >= 298.0, "bad point2" );
   }
 
-  virtual void
-  bounding_box( Vector & L, Vector & U ) const override
+  virtual void bounding_box( Vector & L, Vector & U ) const override
   {
     U[0] = real_max;
     L[0] = 0;
@@ -340,8 +317,7 @@ public:
   {
   }
 
-  virtual void
-  evaluate( Vector const & x, Vector & f ) const override
+  virtual void evaluate( Vector const & x, Vector & f ) const override
   {
     f( 0 ) = 0.5 * x( 0 ) + x( 1 ) + 0.5 * x( 2 ) - x( 5 ) / x( 6 );
     f( 1 ) = x( 2 ) + x( 3 ) + 2 * x( 4 ) - 2 / x( 6 );
@@ -353,8 +329,7 @@ public:
     f( 6 ) = x( 0 ) * x( 2 ) - 2.6058 * x( 1 ) * x( 3 );
   }
 
-  virtual void
-  jacobian( Vector const & x, SparseMatrix & J ) const override
+  virtual void jacobian( Vector const & x, SparseMatrix & J ) const override
   {
     J.resize( n, n );
     J.setZero();
@@ -402,8 +377,7 @@ public:
     J.makeCompressed();
   }
 
-  virtual void
-  initial_points( vector<Vector> & x_vec ) const override
+  virtual void initial_points( vector<Vector> & x_vec ) const override
   {
     x_vec.resize( 5 );
     auto & x0{ x_vec[0] };
@@ -429,16 +403,14 @@ public:
     x4 << 1.5, 0.001, 1.33, 1.e-3, 1.e-4, 0.8, 3.0;
   }
 
-  virtual void
-  check_if_admissible( Vector const & x ) const override
+  virtual void check_if_admissible( Vector const & x ) const override
   {
     UTILS_ASSERT( x( 0 ) > 0, "check_if_admissible: x(0) = {}", x( 0 ) );
     for ( integer i = 0; i < n; ++i )
       UTILS_ASSERT( std::abs( x( i ) ) < 20, "check_if_admissible: x[{}] = {} out of [-20,20]", i, x( i ) );
   }
 
-  virtual void
-  bounding_box( Vector & L, Vector & U ) const override
+  virtual void bounding_box( Vector & L, Vector & U ) const override
   {
     U.fill( 20 );
     L.fill( -20 );
@@ -446,8 +418,7 @@ public:
   }
 };
 
-static inline string
-ini_msg_CutlipsSteadyStateForReactionRateEquations( int k_set )
+static inline string ini_msg_CutlipsSteadyStateForReactionRateEquations( int k_set )
 {
   return fmt::format( "Cutlips steady state for reaction rate equations, k set N.{}", k_set );
 }
@@ -463,30 +434,31 @@ class CutlipsSteadyStateForReactionRateEquations : public NonlinearSystem
 
 public:
   CutlipsSteadyStateForReactionRateEquations( integer k_set_in )
-    : NonlinearSystem( ini_msg_CutlipsSteadyStateForReactionRateEquations( k_set_in ),
-                       "@inbook{eden2014proceedings,\n"
-                       "  author    = {M. Shacham},\n"
-                       "  title     = {Recent developments in solution techniques for\n"
-                       "               systems of nonlinear equations},\n"
-                       "  booktitle = {Proceedings of the 2nd International Conference\n"
-                       "               on Foundations of Computer-Aided Process Design},\n"
-                       "  editor    = {A.W. Westerberg, H.H. Chien},\n"
-                       "  series    = {Computer Aided Chemical Engineering},\n"
-                       "  year      = {1983},\n"
-                       "}\n\n"
-                       "@article{Mordechai:10.1002/nme.1620230805,\n"
-                       "  author  = {Shacham Mordechai},\n"
-                       "  title   = {Numerical solution of constrained non-linear "
-                       "algebraic equations},\n"
-                       "  journal = {International Journal for Numerical Methods in "
-                       "Engineering},\n"
-                       "  year    = {1986},\n"
-                       "  volume  = {23},\n"
-                       "  number  = {8},\n"
-                       "  pages   = {1455-1481},\n"
-                       "  doi     = {10.1002/nme.1620230805},\n"
-                       "}\n",
-                       6 )
+    : NonlinearSystem(
+        ini_msg_CutlipsSteadyStateForReactionRateEquations( k_set_in ),
+        "@inbook{eden2014proceedings,\n"
+        "  author    = {M. Shacham},\n"
+        "  title     = {Recent developments in solution techniques for\n"
+        "               systems of nonlinear equations},\n"
+        "  booktitle = {Proceedings of the 2nd International Conference\n"
+        "               on Foundations of Computer-Aided Process Design},\n"
+        "  editor    = {A.W. Westerberg, H.H. Chien},\n"
+        "  series    = {Computer Aided Chemical Engineering},\n"
+        "  year      = {1983},\n"
+        "}\n\n"
+        "@article{Mordechai:10.1002/nme.1620230805,\n"
+        "  author  = {Shacham Mordechai},\n"
+        "  title   = {Numerical solution of constrained non-linear "
+        "algebraic equations},\n"
+        "  journal = {International Journal for Numerical Methods in "
+        "Engineering},\n"
+        "  year    = {1986},\n"
+        "  volume  = {23},\n"
+        "  number  = {8},\n"
+        "  pages   = {1455-1481},\n"
+        "  doi     = {10.1002/nme.1620230805},\n"
+        "}\n",
+        6 )
     , k_set( k_set_in )
   {
     switch ( k_set )
@@ -515,8 +487,7 @@ public:
     }
   }
 
-  virtual void
-  evaluate( Vector const & x, Vector & f ) const override
+  virtual void evaluate( Vector const & x, Vector & f ) const override
   {
     f( 0 ) = 1 - x( 0 ) - p_k1 * x( 0 ) * x( 5 ) + p_kr1 * x( 3 );
     f( 1 ) = 1 - x( 1 ) - p_k2 * x( 1 ) * x( 5 ) + p_kr2 * x( 4 );
@@ -526,8 +497,7 @@ public:
     f( 5 ) = 1 - x( 3 ) - x( 4 ) - x( 5 );
   }
 
-  virtual void
-  jacobian( Vector const & x, SparseMatrix & J ) const override
+  virtual void jacobian( Vector const & x, SparseMatrix & J ) const override
   {
     J.resize( n, n );
     J.setZero();
@@ -561,8 +531,7 @@ public:
     J.makeCompressed();
   }
 
-  virtual void
-  initial_points( vector<Vector> & x_vec ) const override
+  virtual void initial_points( vector<Vector> & x_vec ) const override
   {
     x_vec.resize( 7 );
     auto & x0{ x_vec[0] };
@@ -589,8 +558,7 @@ public:
   }
 };
 
-static inline string
-ini_msg_Hiebert3ChemicalEquilibriumProblem( real_type R )
+static inline string ini_msg_Hiebert3ChemicalEquilibriumProblem( real_type R )
 {
   return fmt::format( "Hiebert's 3rd Chemical Equilibrium Problem, R={}", R );
 }
@@ -605,33 +573,32 @@ class Hiebert3ChemicalEquilibriumProblem : public NonlinearSystem
 
 public:
   Hiebert3ChemicalEquilibriumProblem( real_type r_in )
-    : NonlinearSystem( ini_msg_Hiebert3ChemicalEquilibriumProblem( r_in ),
-                       "@article{Mordechai:10.1002/nme.1620230805,\n"
-                       "  author  = {Shacham Mordechai},\n"
-                       "  title   = {Numerical solution of constrained "
-                       "non-linear algebraic equations},\n"
-                       "  journal = {International Journal for Numerical "
-                       "Methods in Engineering},\n"
-                       "  year    = {1986},\n"
-                       "  volume  = {23},\n"
-                       "  number  = {8},\n"
-                       "  pages   = {1455-1481},\n"
-                       "  doi     = {10.1002/nme.1620230805},\n"
-                       "}\n",
-                       10 )
+    : NonlinearSystem(
+        ini_msg_Hiebert3ChemicalEquilibriumProblem( r_in ),
+        "@article{Mordechai:10.1002/nme.1620230805,\n"
+        "  author  = {Shacham Mordechai},\n"
+        "  title   = {Numerical solution of constrained "
+        "non-linear algebraic equations},\n"
+        "  journal = {International Journal for Numerical "
+        "Methods in Engineering},\n"
+        "  year    = {1986},\n"
+        "  volume  = {23},\n"
+        "  number  = {8},\n"
+        "  pages   = {1455-1481},\n"
+        "  doi     = {10.1002/nme.1620230805},\n"
+        "}\n",
+        10 )
     , R( r_in )
   {
   }
 
-  bool
-  check_x( Vector const & x ) const
+  bool check_x( Vector const & x ) const
   {
     if ( x( 0 ) > 0 && x( 1 ) > 0 && x( 2 ) > 0 && x( 3 ) >= 0 ) return true;
     return false;
   }
 
-  virtual void
-  evaluate( Vector const & x, Vector & f ) const override
+  virtual void evaluate( Vector const & x, Vector & f ) const override
   {
     if ( check_x( x ) )
     {
@@ -650,12 +617,11 @@ public:
     else
     {
       f( 0 ) = f( 1 ) = f( 2 ) = f( 3 ) = f( 4 ) = f( 5 ) = f( 6 ) = f( 7 ) = f( 8 ) = f( 9 ) = nan(
-          "Hiebert3ChemicalEquilibriumProblem" );
+        "Hiebert3ChemicalEquilibriumProblem" );
     }
   }
 
-  virtual void
-  jacobian( Vector const & x, SparseMatrix & J ) const override
+  virtual void jacobian( Vector const & x, SparseMatrix & J ) const override
   {
     J.resize( n, n );
     J.setZero();
@@ -781,8 +747,7 @@ public:
     J.makeCompressed();
   }
 
-  virtual void
-  initial_points( vector<Vector> & x_vec ) const override
+  virtual void initial_points( vector<Vector> & x_vec ) const override
   {
     x_vec.resize( 4 );
     auto & x0{ x_vec[0] };
@@ -799,8 +764,7 @@ public:
     x3 << 2, 1, 20, 1, 0, 0, 0, 0, 0, 0;
   }
 
-  virtual void
-  check_if_admissible( Vector const & x ) const override
+  virtual void check_if_admissible( Vector const & x ) const override
   {
     // for (  i = 0; i < n; ++i )
     //   UTILS_ASSERT( std::abs(x(i)) < 1000, "Bad range" );
@@ -812,8 +776,7 @@ public:
     UTILS_ASSERT( s >= 0, "Bad range" );
   }
 
-  virtual void
-  bounding_box( Vector & L, Vector & U ) const override
+  virtual void bounding_box( Vector & L, Vector & U ) const override
   {
     for ( integer i = 0; i < n; ++i )
     {
@@ -828,18 +791,18 @@ public:
  | - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 \*/
 
-#define SHACHAM1_BIBTEX                                                                                                \
-  "@article{Mordechai:10.1002/nme.1620230805,\n"                                                                       \
-  "  author  = {Shacham Mordechai},\n"                                                                                 \
-  "  title   = {Numerical solution of constrained non-linear algebraic "                                               \
-  "equations},\n"                                                                                                      \
-  "  journal = {International Journal for Numerical Methods in "                                                       \
-  "Engineering},\n"                                                                                                    \
-  "  year    = {1986},\n"                                                                                              \
-  "  volume  = {23},\n"                                                                                                \
-  "  number  = {8},\n"                                                                                                 \
-  "  pages   = {1455-1481},\n"                                                                                         \
-  "  doi     = {10.1002/nme.1620230805},\n"                                                                            \
+#define SHACHAM1_BIBTEX                                                  \
+  "@article{Mordechai:10.1002/nme.1620230805,\n"                         \
+  "  author  = {Shacham Mordechai},\n"                                   \
+  "  title   = {Numerical solution of constrained non-linear algebraic " \
+  "equations},\n"                                                        \
+  "  journal = {International Journal for Numerical Methods in "         \
+  "Engineering},\n"                                                      \
+  "  year    = {1986},\n"                                                \
+  "  volume  = {23},\n"                                                  \
+  "  number  = {8},\n"                                                   \
+  "  pages   = {1455-1481},\n"                                           \
+  "  doi     = {10.1002/nme.1620230805},\n"                              \
   "}\n"
 
 class FractionalConversionInAchemicalReactor : public NonlinearSystem
@@ -850,14 +813,9 @@ public:
   {
   }
 
-  bool
-  check_x( real_type x ) const
-  {
-    return x >= 0 && x < 0.8;
-  }
+  bool check_x( real_type x ) const { return x >= 0 && x < 0.8; }
 
-  virtual void
-  evaluate( Vector const & x_in, Vector & f ) const override
+  virtual void evaluate( Vector const & x_in, Vector & f ) const override
   {
     real_type x = x_in[0];
     if ( check_x( x ) )
@@ -866,8 +824,7 @@ public:
       f( 0 ) = nan( "FractionalConversionInAchemicalReactor" );
   }
 
-  virtual void
-  jacobian( Vector const & x_in, SparseMatrix & J ) const override
+  virtual void jacobian( Vector const & x_in, SparseMatrix & J ) const override
   {
     J.resize( n, n );
     J.setZero();
@@ -879,8 +836,7 @@ public:
     J.makeCompressed();
   }
 
-  virtual void
-  exact_solution( vector<Vector> & x_vec ) const override
+  virtual void exact_solution( vector<Vector> & x_vec ) const override
   {
     x_vec.resize( 1 );
     auto & x0{ x_vec[0] };
@@ -888,8 +844,7 @@ public:
     x0 << 0.7573962462537538794596412979291452934280;
   }
 
-  virtual void
-  initial_points( vector<Vector> & x_vec ) const override
+  virtual void initial_points( vector<Vector> & x_vec ) const override
   {
     x_vec.resize( 8 );
     for ( integer i{ 0 }; i < 8; ++i )
@@ -899,14 +854,12 @@ public:
     }
   }
 
-  virtual void
-  check_if_admissible( Vector const & x ) const override
+  virtual void check_if_admissible( Vector const & x ) const override
   {
     UTILS_ASSERT( x( 0 ) >= 0 && x( 0 ) < 0.8, "x(0) = {} must be in [0,0.8)", x( 0 ) );
   }
 
-  virtual void
-  bounding_box( Vector & L, Vector & U ) const override
+  virtual void bounding_box( Vector & L, Vector & U ) const override
   {
     U[0] = 0.8;
     L[0] = 0;
@@ -921,8 +874,7 @@ public:
   {
   }
 
-  virtual void
-  evaluate( Vector const & x, Vector & f ) const override
+  virtual void evaluate( Vector const & x, Vector & f ) const override
   {
     real_type x1 = x( 0 );
     real_type x2 = x( 1 );
@@ -936,8 +888,7 @@ public:
     }
   }
 
-  virtual void
-  jacobian( Vector const & x, SparseMatrix & J ) const override
+  virtual void jacobian( Vector const & x, SparseMatrix & J ) const override
   {
     J.resize( n, n );
     J.setZero();
@@ -961,18 +912,16 @@ public:
     J.makeCompressed();
   }
 
-  virtual void
-  exact_solution( vector<Vector> & x_vec ) const override
+  virtual void exact_solution( vector<Vector> & x_vec ) const override
   {
     x_vec.resize( 1 );
     auto & x0{ x_vec[0] };
     x0.resize( n );
     x0 << 0.7573962462537538794596412979291452934280, 0.2426037537462461205403587020708547065720,
-        0.02130187687312306027017935103542735328602;
+      0.02130187687312306027017935103542735328602;
   }
 
-  virtual void
-  initial_points( vector<Vector> & x_vec ) const override
+  virtual void initial_points( vector<Vector> & x_vec ) const override
   {
     x_vec.resize( 8 );
     for ( integer ini{ 0 }; ini < 8; ++ini )
@@ -986,8 +935,7 @@ public:
     }
   }
 
-  virtual void
-  check_if_admissible( Vector const & x ) const override
+  virtual void check_if_admissible( Vector const & x ) const override
   {
     real_type x2 = x( 1 );
     real_type x3 = x( 2 );
@@ -995,8 +943,7 @@ public:
     UTILS_ASSERT( x3 > 0, "FractionalConversionInAchemicalReactor2, x3 = {} must be > 0", x3 );
   }
 
-  virtual void
-  bounding_box( Vector & L, Vector & U ) const override
+  virtual void bounding_box( Vector & L, Vector & U ) const override
   {
     U.fill( real_max );
     L.fill( -real_max );
@@ -1008,16 +955,16 @@ public:
  | - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 \*/
 
-#define SHACHAM2_BIBTEX                                                                                                \
-  "@article{Mordechai,\n"                                                                                              \
-  "  author  = {Shacham Mordechai},\n"                                                                                 \
-  "  title   = {Decomposition of systems of nonlinear algebraic equations},\n"                                         \
-  "  journal = {AIChE Journal},\n"                                                                                     \
-  "  year    = {1984},\n"                                                                                              \
-  "  volume  = {30},\n"                                                                                                \
-  "  number  = {1},\n"                                                                                                 \
-  "  pages   = {92--99},\n"                                                                                            \
-  "  doi     = {10.1002/aic.690300114},\n"                                                                             \
+#define SHACHAM2_BIBTEX                                                        \
+  "@article{Mordechai,\n"                                                      \
+  "  author  = {Shacham Mordechai},\n"                                         \
+  "  title   = {Decomposition of systems of nonlinear algebraic equations},\n" \
+  "  journal = {AIChE Journal},\n"                                             \
+  "  year    = {1984},\n"                                                      \
+  "  volume  = {30},\n"                                                        \
+  "  number  = {1},\n"                                                         \
+  "  pages   = {92--99},\n"                                                    \
+  "  doi     = {10.1002/aic.690300114},\n"                                     \
   "}\n"
 
 class PipelineNetworkProblem : public NonlinearSystem
@@ -1028,8 +975,7 @@ public:
   {
   }
 
-  virtual void
-  evaluate( Vector const & x, Vector & f ) const override
+  virtual void evaluate( Vector const & x, Vector & f ) const override
   {
     real_type x1 = x( 0 );
     real_type x2 = x( 1 );
@@ -1047,8 +993,7 @@ public:
     f( 6 )       = x1 * x3 - 2.6058 * x2 * x4;
   }
 
-  virtual void
-  jacobian( const Vector & x, SparseMatrix & J ) const override
+  virtual void jacobian( const Vector & x, SparseMatrix & J ) const override
   {
     // Estrazione variabili
     const real_type x1 = x( 0 );
@@ -1115,18 +1060,16 @@ public:
     J.makeCompressed();
   }
 
-  virtual void
-  exact_solution( vector<Vector> & x_vec ) const override
+  virtual void exact_solution( vector<Vector> & x_vec ) const override
   {
     x_vec.resize( 1 );
     auto & x0{ x_vec[0] };
     x0.resize( n );
     x0 << 0.32287083947654068257, 0.92235435391875035348e-2, 0.46017090960632262350e-1, 0.61817167507082410985,
-        0.37168509528154416956e-2, 0.57671539593554916672, 2.9778634507911453048;
+      0.37168509528154416956e-2, 0.57671539593554916672, 2.9778634507911453048;
   }
 
-  virtual void
-  initial_points( vector<Vector> & x_vec ) const override
+  virtual void initial_points( vector<Vector> & x_vec ) const override
   {
     x_vec.resize( 1 );
     auto & x0{ x_vec[0] };
@@ -1134,14 +1077,9 @@ public:
     x0 << 0.208, 0.042, 0.048, 0.452, 0.250, 0.340, 2;
   }
 
-  virtual void
-  check_if_admissible( Vector const & x ) const override
-  {
-    UTILS_ASSERT( x( 6 ) > 0, "Bad range" );
-  }
+  virtual void check_if_admissible( Vector const & x ) const override { UTILS_ASSERT( x( 6 ) > 0, "Bad range" ); }
 
-  virtual void
-  bounding_box( Vector & L, Vector & U ) const override
+  virtual void bounding_box( Vector & L, Vector & U ) const override
   {
     U.fill( real_max );
     L.fill( -real_max );
@@ -1161,8 +1099,7 @@ public:
   {
   }
 
-  virtual void
-  evaluate( Vector const & x, Vector & f ) const override
+  virtual void evaluate( Vector const & x, Vector & f ) const override
   {
     real_type x1 = x( 0 );
     real_type x2 = x( 1 );
@@ -1184,8 +1121,7 @@ public:
     f( 8 )       = x9 - x6 / x7;
   }
 
-  virtual void
-  jacobian( Vector const & x, SparseMatrix & J ) const override
+  virtual void jacobian( Vector const & x, SparseMatrix & J ) const override
   {
     J.resize( n, n );
     J.setZero();
@@ -1247,8 +1183,7 @@ public:
     J.makeCompressed();
   }
 
-  virtual void
-  exact_solution( vector<Vector> & x_vec ) const override
+  virtual void exact_solution( vector<Vector> & x_vec ) const override
   {
     x_vec.resize( 1 );
     auto & x0{ x_vec[0] };
@@ -1264,8 +1199,7 @@ public:
     x0( 8 ) = x0( 5 ) / x0( 6 );
   }
 
-  virtual void
-  initial_points( vector<Vector> & x_vec ) const override
+  virtual void initial_points( vector<Vector> & x_vec ) const override
   {
     x_vec.resize( 1 );
     auto & x0{ x_vec[0] };
@@ -1275,14 +1209,9 @@ public:
     x0( 8 ) = x0( 5 ) / x0( 6 );
   }
 
-  virtual void
-  check_if_admissible( Vector const & x ) const override
-  {
-    UTILS_ASSERT( x( 6 ) > 0, "Bad range" );
-  }
+  virtual void check_if_admissible( Vector const & x ) const override { UTILS_ASSERT( x( 6 ) > 0, "Bad range" ); }
 
-  virtual void
-  bounding_box( Vector & L, Vector & U ) const override
+  virtual void bounding_box( Vector & L, Vector & U ) const override
   {
     U.fill( real_max );
     L.fill( -real_max );
@@ -1300,19 +1229,20 @@ class ModelEquationsForTheCSTR : public NonlinearSystem
 
 public:
   ModelEquationsForTheCSTR()
-    : NonlinearSystem( "Model equations for the CSTR",
-                       "@article{Shacham:2002,\n"
-                       "  author  = {Mordechai Shacham and Neima Brauner},\n"
-                       "  title   = {Numerical solution of non-linear algebraic\n"
-                       "             equations with discontinuities},\n"
-                       "  journal = {Computers \\& Chemical Engineering},\n"
-                       "  volume  = {26},\n"
-                       "  number  = {10},\n"
-                       "  pages   = {1449--1457},\n"
-                       "  year    = {2002},\n"
-                       "  doi     = {10.1016/S0098-1354(02)00122-9}\n"
-                       "}\n",
-                       15 )
+    : NonlinearSystem(
+        "Model equations for the CSTR",
+        "@article{Shacham:2002,\n"
+        "  author  = {Mordechai Shacham and Neima Brauner},\n"
+        "  title   = {Numerical solution of non-linear algebraic\n"
+        "             equations with discontinuities},\n"
+        "  journal = {Computers \\& Chemical Engineering},\n"
+        "  volume  = {26},\n"
+        "  number  = {10},\n"
+        "  pages   = {1449--1457},\n"
+        "  year    = {2002},\n"
+        "  doi     = {10.1016/S0098-1354(02)00122-9}\n"
+        "}\n",
+        15 )
   {
     R   = 1.987;
     V   = 500;
@@ -1321,8 +1251,7 @@ public:
     CBO = 50 / vo;
   }
 
-  virtual void
-  evaluate( Vector const & x, Vector & f ) const override
+  virtual void evaluate( Vector const & x, Vector & f ) const override
   {
     real_type T   = x( 0 );
     real_type SRH = x( 1 );
@@ -1362,8 +1291,7 @@ public:
     f( 14 ) = SRH - 40000 * k1B * CA * CB - 20000 * k2C * CC * CB * CB + 5000 * k3E * CD;
   }
 
-  virtual void
-  jacobian( Vector const & x, SparseMatrix & J ) const override
+  virtual void jacobian( Vector const & x, SparseMatrix & J ) const override
   {
     real_type T = x( 0 );
     // real_type SRH = x(1);
@@ -1449,8 +1377,7 @@ public:
     J.makeCompressed();
   }
 
-  virtual void
-  exact_solution( vector<Vector> & x_vec ) const override
+  virtual void exact_solution( vector<Vector> & x_vec ) const override
   {
     x_vec.resize( 1 );
     auto & x0{ x_vec[0] };
@@ -1488,8 +1415,7 @@ public:
     k3E = 1098.3958631006667095;
   }
 
-  virtual void
-  initial_points( vector<Vector> & x_vec ) const override
+  virtual void initial_points( vector<Vector> & x_vec ) const override
   {
     x_vec.resize( 1 );
     auto & x0{ x_vec[0] };
@@ -1528,8 +1454,7 @@ public:
     k3E = 422.9115;
   }
 
-  virtual void
-  check_if_admissible( Vector const & x ) const override
+  virtual void check_if_admissible( Vector const & x ) const override
   {
     real_type T = x( 0 );
     // real_type SRH = x(1);
@@ -1546,14 +1471,14 @@ public:
     real_type k1B = x( 12 );
     real_type k2C = x( 13 );
     real_type k3E = x( 14 );
-    UTILS_ASSERT( T > 0 && CA > 0 && CB > 0 && CC > 0 && CD > 0 && CE > 0 && k1B > 0 && k2C > 0 && k3E > 0,
-                  "non positive" );
+    UTILS_ASSERT(
+      T > 0 && CA > 0 && CB > 0 && CC > 0 && CD > 0 && CE > 0 && k1B > 0 && k2C > 0 && k3E > 0,
+      "non positive" );
     // ASSERT( rA < 0, "T non positive" );
     // ASSERT( rB < 0, "T non positive" );
   }
 
-  virtual void
-  bounding_box( Vector & L, Vector & U ) const override
+  virtual void bounding_box( Vector & L, Vector & U ) const override
   {
     U.fill( real_max );
     L.fill( -real_max );
@@ -1572,8 +1497,7 @@ public:
  | - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 \*/
 
-static inline string
-ini_msg_ModelEquationsForCombustionOfPropane( real_type R_set )
+static inline string ini_msg_ModelEquationsForCombustionOfPropane( real_type R_set )
 {
   return fmt::format( "Model equations for combustion of propane, R={}", R_set );
 }
@@ -1593,40 +1517,40 @@ class ModelEquationsForCombustionOfPropane : public NonlinearSystem
 
 public:
   ModelEquationsForCombustionOfPropane( real_type R_in )
-    : NonlinearSystem( "ModelEquationsForCombustionOfPropane",
-                       "Combustion of propane system from Shacham & Brauner (2002)\n\n"
-                       "This system models the combustion of propane (C3H8) with oxygen.\n"
-                       "The variables n1...n10 represent mole numbers of different "
-                       "species.\n\n"
-                       "@article{Shacham:2002,\n"
-                       "  author  = {Mordechai Shacham and Neima Brauner},\n"
-                       "  title   = {Numerical solution of non-linear algebraic\n"
-                       "             equations with discontinuities},\n"
-                       "  journal = {Computers \\& Chemical Engineering},\n"
-                       "  volume  = {26},\n"
-                       "  number  = {10},\n"
-                       "  pages   = {1449--1457},\n"
-                       "  year    = {2002},\n"
-                       "  doi     = {10.1016/S0098-1354(02)00122-9}\n"
-                       "}\n\n"
-                       "@article{Hiebert:1982,\n"
-                       "  author  = {Hiebert, K. L.},\n"
-                       "  title   = {An Evaluation of Mathematical Software That\n"
-                       "             Solves Systems of Nonlinear Equations},\n"
-                       "  journal = {ACM Trans. Math. Softw.},\n"
-                       "  year    = {1982},\n"
-                       "  volume  = {8},\n"
-                       "  number  = {1},\n"
-                       "  pages   = {5--20},\n"
-                       "  doi     = {10.1145/355984.355986},\n"
-                       "}",
-                       10 )
+    : NonlinearSystem(
+        "ModelEquationsForCombustionOfPropane",
+        "Combustion of propane system from Shacham & Brauner (2002)\n\n"
+        "This system models the combustion of propane (C3H8) with oxygen.\n"
+        "The variables n1...n10 represent mole numbers of different "
+        "species.\n\n"
+        "@article{Shacham:2002,\n"
+        "  author  = {Mordechai Shacham and Neima Brauner},\n"
+        "  title   = {Numerical solution of non-linear algebraic\n"
+        "             equations with discontinuities},\n"
+        "  journal = {Computers \\& Chemical Engineering},\n"
+        "  volume  = {26},\n"
+        "  number  = {10},\n"
+        "  pages   = {1449--1457},\n"
+        "  year    = {2002},\n"
+        "  doi     = {10.1016/S0098-1354(02)00122-9}\n"
+        "}\n\n"
+        "@article{Hiebert:1982,\n"
+        "  author  = {Hiebert, K. L.},\n"
+        "  title   = {An Evaluation of Mathematical Software That\n"
+        "             Solves Systems of Nonlinear Equations},\n"
+        "  journal = {ACM Trans. Math. Softw.},\n"
+        "  year    = {1982},\n"
+        "  volume  = {8},\n"
+        "  number  = {1},\n"
+        "  pages   = {5--20},\n"
+        "  doi     = {10.1145/355984.355986},\n"
+        "}",
+        10 )
     , R( R_in )
   {
   }
 
-  virtual void
-  evaluate( Vector const & x, Vector & f ) const override
+  virtual void evaluate( Vector const & x, Vector & f ) const override
   {
     // Check for non-negative concentrations
     if ( x.minCoeff() < 0 )
@@ -1665,8 +1589,7 @@ public:
     f( 9 ) = K10 * n1 * n1 - n4 * n4 * n10 * ( p / nT );
   }
 
-  virtual void
-  jacobian( const Vector & x, SparseMatrix & J ) const override
+  virtual void jacobian( const Vector & x, SparseMatrix & J ) const override
   {
     J.resize( n, n );
     J.setZero();
@@ -1878,8 +1801,7 @@ public:
     J.makeCompressed();
   }
 
-  virtual void
-  initial_points( vector<Vector> & x_vec ) const override
+  virtual void initial_points( vector<Vector> & x_vec ) const override
   {
     x_vec.resize( 4 );
 
@@ -1887,15 +1809,15 @@ public:
     // For propane combustion with oxygen
     x_vec[0].resize( n );
     x_vec[0] << 0.1,  // n1: small amount of unreacted fuel
-        1.0,          // n2: oxygen
-        2.0,          // n3: nitrogen (if air is used)
-        2.0,          // n4: water
-        1.0,          // n5: CO2
-        0.1,          // n6: CO
-        0.1,          // n7: H2
-        0.01,         // n8: CH4
-        0.01,         // n9: C2H4
-        0.01;         // n10: C2H2
+      1.0,            // n2: oxygen
+      2.0,            // n3: nitrogen (if air is used)
+      2.0,            // n4: water
+      1.0,            // n5: CO2
+      0.1,            // n6: CO
+      0.1,            // n7: H2
+      0.01,           // n8: CH4
+      0.01,           // n9: C2H4
+      0.01;           // n10: C2H2
     x_vec[1].resize( n );
     x_vec[1] << 1.5, 2, 35, 0.5, 0.05, 0.005, 0.04, 0.003, 0.02, 5;
 
@@ -1907,8 +1829,7 @@ public:
     x_vec[3].setConstant( 0.1 );  // All small values
   }
 
-  virtual void
-  exact_solution( vector<Vector> & x_vec ) const override
+  virtual void exact_solution( vector<Vector> & x_vec ) const override
   {
     x_vec.resize( 1 );
     auto & x0{ x_vec[0] };
@@ -1916,18 +1837,18 @@ public:
     if ( R == 5 )
     {
       x0 << 0.3559599245750028940279730558909830996301, 1.642881004256062705758024434229955541198,
-          9.999899747218013590855403541750759597903, 2.644040075424997105972026944109016900370,
-          2.355213838697166839205357709126128172422, 0.002753117723184878305195786386034944005309,
-          0.001057196370356031768039926901797628753538, 1.029441963879188481974370137023981334505e-6,
-          0.0001002527819864091445964582492404020974267, 2.962873140400564420751789431521697439618e-7;
+        9.999899747218013590855403541750759597903, 2.644040075424997105972026944109016900370,
+        2.355213838697166839205357709126128172422, 0.002753117723184878305195786386034944005309,
+        0.001057196370356031768039926901797628753538, 1.029441963879188481974370137023981334505e-6,
+        0.0001002527819864091445964582492404020974267, 2.962873140400564420751789431521697439618e-7;
     }
     else if ( R == 10 )
     {
       x0 << 2.919263696189521723108379722252553967701, 3.961582490687720316870121495020578447644,
-          19.98323454308129571358397763858877461630, 0.08073630381047827689162027774744603229942,
-          0.02114567481365013128155333837125051257291, 0.0006068394522716562366021600034848250442609,
-          0.03393682954498744746004817321285725452169, 0.0004399167312730170718469569851013066514717,
-          0.01676545691870428641602236141122538370263, 0.03400580496389660453679064555884181988976;
+        19.98323454308129571358397763858877461630, 0.08073630381047827689162027774744603229942,
+        0.02114567481365013128155333837125051257291, 0.0006068394522716562366021600034848250442609,
+        0.03393682954498744746004817321285725452169, 0.0004399167312730170718469569851013066514717,
+        0.01676545691870428641602236141122538370263, 0.03400580496389660453679064555884181988976;
     }
     else
     {
@@ -1935,8 +1856,7 @@ public:
     }
   }
 
-  virtual void
-  check_if_admissible( Vector const & x ) const override
+  virtual void check_if_admissible( Vector const & x ) const override
   {
     // All concentrations must be non-negative
     for ( int i = 0; i < n; ++i )
@@ -1948,8 +1868,7 @@ public:
     UTILS_ASSERT( x.sum() > 0, "Total moles must be positive" );
   }
 
-  virtual void
-  bounding_box( Vector & L, Vector & U ) const override
+  virtual void bounding_box( Vector & L, Vector & U ) const override
   {
     L.resize( n );
     U.resize( n );

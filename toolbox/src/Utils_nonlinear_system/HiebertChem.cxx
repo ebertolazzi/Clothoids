@@ -8,17 +8,17 @@
  |    email: enrico.bertolazzi@unitn.it
 \*/
 
-#define HIEBERT_BIBTEX                                                                                                 \
-  "@article{Hiebert:1982,\n"                                                                                           \
-  "  author  = {Hiebert, K. L.},\n"                                                                                    \
-  "  title   = {An Evaluation of Mathematical Software That\n"                                                         \
-  "             Solves Systems of Nonlinear Equations},\n"                                                             \
-  "  journal = {ACM Trans. Math. Softw.},\n"                                                                           \
-  "  year    = {1982},\n"                                                                                              \
-  "  volume  = {8},\n"                                                                                                 \
-  "  number  = {1},\n"                                                                                                 \
-  "  pages   = {5--20},\n"                                                                                             \
-  "  doi     = {10.1145/355984.355986},\n"                                                                             \
+#define HIEBERT_BIBTEX                                         \
+  "@article{Hiebert:1982,\n"                                   \
+  "  author  = {Hiebert, K. L.},\n"                            \
+  "  title   = {An Evaluation of Mathematical Software That\n" \
+  "             Solves Systems of Nonlinear Equations},\n"     \
+  "  journal = {ACM Trans. Math. Softw.},\n"                   \
+  "  year    = {1982},\n"                                      \
+  "  volume  = {8},\n"                                         \
+  "  number  = {1},\n"                                         \
+  "  pages   = {5--20},\n"                                     \
+  "  doi     = {10.1145/355984.355986},\n"                     \
   "}\n"
 
 /*\
@@ -30,15 +30,13 @@ class HiebertChem2x2 : public NonlinearSystem
 public:
   HiebertChem2x2() : NonlinearSystem( "Hiebert Chem 2x2", HIEBERT_BIBTEX, 2 ) {}
 
-  virtual void
-  evaluate( Vector const & x, Vector & f ) const override
+  virtual void evaluate( Vector const & x, Vector & f ) const override
   {
     f( 0 ) = x( 1 ) - 10;
     f( 1 ) = x( 0 ) * x( 1 ) - 5E4;
   }
 
-  virtual void
-  jacobian( Vector const & x, SparseMatrix & J ) const override
+  virtual void jacobian( Vector const & x, SparseMatrix & J ) const override
   {
     J.resize( n, n );
     J.setZero();
@@ -49,8 +47,7 @@ public:
     J.makeCompressed();
   }
 
-  virtual void
-  exact_solution( vector<Vector> & x_vec ) const override
+  virtual void exact_solution( vector<Vector> & x_vec ) const override
   {
     x_vec.resize( 1 );
     auto & x0{ x_vec[0] };
@@ -58,8 +55,7 @@ public:
     x0 << 5000, 10;
   }
 
-  virtual void
-  initial_points( vector<Vector> & x_vec ) const override
+  virtual void initial_points( vector<Vector> & x_vec ) const override
   {
     x_vec.resize( 1 );
     auto & x0{ x_vec[0] };
@@ -77,8 +73,7 @@ class HiebertChem6x6 : public NonlinearSystem
 public:
   HiebertChem6x6() : NonlinearSystem( "Hiebert Chem 6x6", HIEBERT_BIBTEX, 6 ) {}
 
-  virtual void
-  evaluate( Vector const & x, Vector & f ) const override
+  virtual void evaluate( Vector const & x, Vector & f ) const override
   {
     f( 0 ) = x( 0 ) + x( 1 ) + x( 3 ) - 0.001;
     f( 1 ) = x( 4 ) + x( 5 ) - 55;
@@ -88,9 +83,7 @@ public:
     f( 5 ) = x( 3 ) - 55E14 * x( 2 ) * x( 5 );
   }
 
-
-  virtual void
-  jacobian( Vector const & x, SparseMatrix & J ) const override
+  virtual void jacobian( Vector const & x, SparseMatrix & J ) const override
   {
     J.resize( n, n );
     J.setZero();
@@ -148,8 +141,7 @@ public:
     J.makeCompressed();
   }
 
-  virtual void
-  exact_solution( vector<Vector> & x_vec ) const override
+  virtual void exact_solution( vector<Vector> & x_vec ) const override
   {
     x_vec.resize( 3 );
     auto & x0{ x_vec[0] };
@@ -160,26 +152,23 @@ public:
     x2.resize( n );
 
     x0 << 0.10000000000000865800865802832637712049655126051610e-3,
-        0.10000000000000865800865802832637712049655126051610e-2,
-        -0.99999999999913419913419799193454109698763804853664e-4,
-        -0.10000000000009523809523831159014832546206386567714e-3, 54.999999999999999818181818181487603305784236699939,
-        0.18181818181851239669421576330006082348099514876998e-15;
+      0.10000000000000865800865802832637712049655126051610e-2, -0.99999999999913419913419799193454109698763804853664e-4,
+      -0.10000000000009523809523831159014832546206386567714e-3, 54.999999999999999818181818181487603305784236699939,
+      0.18181818181851239669421576330006082348099514876998e-15;
 
     x1 << -0.18181818182178512396701422689707131359333381750224e-14,
-        -0.18181818182178512396701422689707131359333381750224e-13,
-        -0.18181818181814876033057918557475582208319103887114e-15,
-        0.10000000000200000000003963636363715649586778444953e-2, 55.001000000000020181818182214512396702144144252600,
-        -0.10000000000201818181822145123967021441442526003173e-2;
+      -0.18181818182178512396701422689707131359333381750224e-13,
+      -0.18181818181814876033057918557475582208319103887114e-15,
+      0.10000000000200000000003963636363715649586778444953e-2, 55.001000000000020181818182214512396702144144252600,
+      -0.10000000000201818181822145123967021441442526003173e-2;
 
     x2 << 0.82644628099181424635970070847176598631923570438011e-4,
-        0.82644628099181424635970070847176598631923570438011e-3,
-        0.90909090909186147186147038862875597975247651584838e-4,
-        0.90909090909004329004329220681057415048840725181878e-4, 54.999999999999999818181818182181818181817073593074,
-        0.18181818181781818181818292640692640295982173534745e-15;
+      0.82644628099181424635970070847176598631923570438011e-3, 0.90909090909186147186147038862875597975247651584838e-4,
+      0.90909090909004329004329220681057415048840725181878e-4, 54.999999999999999818181818182181818181817073593074,
+      0.18181818181781818181818292640692640295982173534745e-15;
   }
 
-  virtual void
-  initial_points( vector<Vector> & x_vec ) const override
+  virtual void initial_points( vector<Vector> & x_vec ) const override
   {
     x_vec.resize( 1 );
     auto & x0{ x_vec[0] };
@@ -199,8 +188,7 @@ class HiebertChem10x10 : public NonlinearSystem
 public:
   HiebertChem10x10() : NonlinearSystem( "Hiebert Chem 10x10", HIEBERT_BIBTEX, 10 ), R( 3 ) {}
 
-  virtual void
-  evaluate( Vector const & x, Vector & f ) const override
+  virtual void evaluate( Vector const & x, Vector & f ) const override
   {
     real_type TOT = x( 0 ) + x( 1 ) + x( 2 ) + x( 3 ) + x( 4 ) + x( 5 ) + x( 6 ) + x( 7 ) + x( 8 ) + x( 9 );
     f( 0 )        = x( 0 ) + x( 3 ) - 3.0;
@@ -215,8 +203,7 @@ public:
     f( 9 )        = ( x( 9 ) - ( 1923.0 / 50000000.0 ) * TOT ) * x( 3 ) * x( 3 );
   }
 
-  virtual void
-  jacobian( Vector const & x, SparseMatrix & J ) const override
+  virtual void jacobian( Vector const & x, SparseMatrix & J ) const override
   {
     J.resize( n, n );
     J.setZero();
@@ -239,7 +226,6 @@ public:
     real_type t65 = 431.0 / 4000000.0 * t63 * x( 2 );
     real_type t73 = x( 3 ) * x( 3 );
     real_type t74 = 1923.0 / 50000000.0 * t73;
-
 
     J.insert( 0, 0 ) = 1.0;
     J.insert( 0, 3 ) = 1.0;
@@ -295,9 +281,9 @@ public:
     J.insert( 7, 9 ) = -t45;
     J.insert( 8, 0 ) = -431.0 / 2000000.0 * t60 - t65;
     J.insert( 8, 1 ) = -t65;
-    J.insert( 8,
-              2 )    = -431.0 / 4000000.0 * t63 *
-                    ( x( 0 ) + x( 1 ) + 2.0 * x( 2 ) + x( 3 ) + x( 4 ) + x( 5 ) + x( 6 ) + x( 7 ) + x( 8 ) + x( 9 ) );
+    J.insert( 8, 2 ) = -431.0 / 4000000.0 * t63 *
+                       ( x( 0 ) + x( 1 ) + 2.0 * x( 2 ) + x( 3 ) + x( 4 ) + x( 5 ) + x( 6 ) + x( 7 ) + x( 8 ) +
+                         x( 9 ) );
     J.insert( 8, 3 ) = x( 8 ) - t65;
     J.insert( 8, 4 ) = -t65;
     J.insert( 8, 5 ) = -t65;
@@ -319,20 +305,17 @@ public:
     J.makeCompressed();
   }
 
-  virtual void
-  exact_solution( vector<Vector> & x_vec ) const override
+  virtual void exact_solution( vector<Vector> & x_vec ) const override
   {
     x_vec.resize( 1 );
     auto & x0{ x_vec[0] };
     x0.resize( n );
     x0 << 2.998999999984848914379136, 3.988799803896425004703170, 5.999871650821869274792302,
-        0.001000000000000000000000000, 0.0002566983540637031238314806, 0.0002969410500484113283243128,
-        0.02159005444686014319849639, 1.411134475268817487496289, 5.723908589993461301590475,
-        -7.072216461786208715286129;
+      0.001000000000000000000000000, 0.0002566983540637031238314806, 0.0002969410500484113283243128,
+      0.02159005444686014319849639, 1.411134475268817487496289, 5.723908589993461301590475, -7.072216461786208715286129;
   }
 
-  virtual void
-  initial_points( vector<Vector> & x_vec ) const override
+  virtual void initial_points( vector<Vector> & x_vec ) const override
   {
     x_vec.resize( 1 );
     auto & x0{ x_vec[0] };

@@ -21,15 +21,16 @@ class Semiconductor2D : public NonlinearSystem
 
 public:
   Semiconductor2D()
-    : NonlinearSystem( "2D semiconductor",
-                       "@techreport{Nowak:1991,\n"
-                       "  author = {U. Nowak and L. Weimann},\n"
-                       "  title  = {A Family of Newton Co des for Systems of Highly "
-                       "Nonlinear Equations},\n"
-                       "  number = {Technical Report TR-91-10 (December 1991)},\n"
-                       "  year   = {1991}\n"
-                       "}\n",
-                       6 )
+    : NonlinearSystem(
+        "2D semiconductor",
+        "@techreport{Nowak:1991,\n"
+        "  author = {U. Nowak and L. Weimann},\n"
+        "  title  = {A Family of Newton Co des for Systems of Highly "
+        "Nonlinear Equations},\n"
+        "  number = {Technical Report TR-91-10 (December 1991)},\n"
+        "  year   = {1991}\n"
+        "}\n",
+        6 )
     , alpha( 38.683 )
     , ni( 1.22E10 )
     , V( 100 )
@@ -37,8 +38,7 @@ public:
   {
   }
 
-  virtual void
-  evaluate( Vector const & x, Vector & f ) const override
+  virtual void evaluate( Vector const & x, Vector & f ) const override
   {
     f( 0 ) = exp( alpha * ( x( 2 ) - x( 0 ) ) ) - exp( alpha * ( x( 0 ) - x( 1 ) ) ) - D / ni;
     f( 1 ) = x( 1 );
@@ -48,8 +48,7 @@ public:
     f( 5 ) = x( 5 ) - V;
   }
 
-  virtual void
-  jacobian( Vector const & x, SparseMatrix & J ) const override
+  virtual void jacobian( Vector const & x, SparseMatrix & J ) const override
   {
     J.resize( n, n );
     J.setZero();
@@ -71,8 +70,7 @@ public:
     J.makeCompressed();
   }
 
-  virtual void
-  initial_points( vector<Vector> & x_vec ) const override
+  virtual void initial_points( vector<Vector> & x_vec ) const override
   {
     x_vec.resize( 1 );
     auto & x0{ x_vec[0] };

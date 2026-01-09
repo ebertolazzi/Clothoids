@@ -41,7 +41,7 @@
 #include "Utils_eigen.hh"
 #include "Utils_fmt.hh"
 #include "Utils_nonlinear_system.hh"
-#include "Utils_pseudoinverse.hh"
+#include "Utils_Tikhonov.hh"
 
 namespace Utils
 {
@@ -148,130 +148,99 @@ namespace Utils
     // SETTERS CON VALIDAZIONE
     // ========================================================================
 
-    void
-    set_tolerance( real_type tol )
+    void set_tolerance( real_type tol )
     {
       UTILS_ASSERT( tol > 0, "Tolerance must be positive" );
       m_tolerance = tol;
     }
 
-    void
-    set_relative_tolerance( real_type tol )
+    void set_relative_tolerance( real_type tol )
     {
       UTILS_ASSERT( tol > 0, "Relative tolerance must be positive" );
       m_relative_tolerance = tol;
     }
 
-    void
-    set_max_iterations( integer max_iter )
+    void set_max_iterations( integer max_iter )
     {
       UTILS_ASSERT( max_iter > 0, "Max iterations must be positive" );
       m_max_iterations = max_iter;
     }
 
-    void
-    set_max_function_evals( integer max_feval )
+    void set_max_function_evals( integer max_feval )
     {
       UTILS_ASSERT( max_feval > 0, "Max function evaluations must be positive" );
       m_max_function_evals = max_feval;
     }
 
-    void
-    set_lambda( real_type lambda )
+    void set_lambda( real_type lambda )
     {
       UTILS_ASSERT( lambda >= 0, "Lambda must be non-negative" );
       m_lambda = lambda;
     }
 
-    void
-    set_lambda_factor( real_type factor )
+    void set_lambda_factor( real_type factor )
     {
       UTILS_ASSERT( factor > 1, "Lambda factor must be > 1" );
       m_lambda_factor = factor;
     }
 
-    void
-    set_lambda_min( real_type min_val )
+    void set_lambda_min( real_type min_val )
     {
       UTILS_ASSERT( min_val >= 0, "Lambda min must be non-negative" );
       m_lambda_min = min_val;
     }
 
-    void
-    set_lambda_max( real_type max_val )
+    void set_lambda_max( real_type max_val )
     {
       UTILS_ASSERT( max_val > 0, "Lambda max must be positive" );
       m_lambda_max = max_val;
     }
 
-    void
-    set_good_reduction( real_type good )
+    void set_good_reduction( real_type good )
     {
       UTILS_ASSERT( good > 0 && good < 1, "Good reduction must be in (0,1)" );
       m_good_reduction = good;
     }
 
-    void
-    set_bad_reduction( real_type bad )
+    void set_bad_reduction( real_type bad )
     {
       UTILS_ASSERT( bad > 0 && bad < 1, "Bad reduction must be in (0,1)" );
       m_bad_reduction = bad;
     }
 
-    void
-    set_strategy( SelectionStrategy s )
-    {
-      m_strategy = s;
-    }
+    void set_strategy( SelectionStrategy s ) { m_strategy = s; }
 
-    void
-    set_block_size( integer size )
+    void set_block_size( integer size )
     {
       UTILS_ASSERT( size > 0, "Block size must be positive" );
       m_block_size = size;
     }
 
-    void
-    set_adaptive_lambda( bool adaptive )
-    {
-      m_adaptive_lambda = adaptive;
-    }
+    void set_adaptive_lambda( bool adaptive ) { m_adaptive_lambda = adaptive; }
 
-    void
-    set_use_line_search( bool use )
-    {
-      m_use_line_search = use;
-    }
+    void set_use_line_search( bool use ) { m_use_line_search = use; }
 
-    void
-    set_line_search_beta( real_type beta )
+    void set_line_search_beta( real_type beta )
     {
       UTILS_ASSERT( beta > 0 && beta < 1, "Beta must be in (0,1)" );
       m_line_search_beta = beta;
     }
 
-    void
-    set_line_search_c1( real_type c1 )
+    void set_line_search_c1( real_type c1 )
     {
       UTILS_ASSERT( c1 > 0 && c1 < 0.5, "c1 must be in (0,0.5)" );
       m_line_search_c1 = c1;
     }
 
-    void
-    set_random_seed( unsigned seed )
-    {
-      m_random_engine.seed( seed );
-    }
+    void set_random_seed( unsigned seed ) { m_random_engine.seed( seed ); }
 
-    void
-    set_verbose_level( integer level )
+    void set_verbose_level( integer level )
     {
       UTILS_ASSERT( level >= 0 && level <= 3, "Verbose level must be 0, 1, 2, or 3" );
       m_verbose_level = level;
     }
 
-    void
-    set_print_frequency( integer freq )
+    void set_print_frequency( integer freq )
     {
       UTILS_ASSERT( freq > 0, "Print frequency must be positive" );
       m_print_frequency = freq;
@@ -281,66 +250,18 @@ namespace Utils
     // GETTERS
     // ========================================================================
 
-    integer
-    get_num_iterations() const
-    {
-      return m_num_iterations;
-    }
-    integer
-    get_num_function_evals() const
-    {
-      return m_num_function_evals;
-    }
-    integer
-    get_num_jacobian_evals() const
-    {
-      return m_num_jacobian_evals;
-    }
-    integer
-    get_num_line_searches() const
-    {
-      return m_num_line_searches;
-    }
-    integer
-    get_num_lambda_updates() const
-    {
-      return m_num_lambda_updates;
-    }
-    bool
-    has_converged() const
-    {
-      return m_converged;
-    }
-    real_type
-    get_final_residual() const
-    {
-      return m_final_residual;
-    }
-    real_type
-    get_initial_residual() const
-    {
-      return m_initial_residual;
-    }
-    real_type
-    get_lambda() const
-    {
-      return m_lambda;
-    }
-    real_type
-    get_tolerance() const
-    {
-      return m_tolerance;
-    }
-    integer
-    get_block_size() const
-    {
-      return m_block_size;
-    }
-    SelectionStrategy
-    get_strategy() const
-    {
-      return m_strategy;
-    }
+    integer           get_num_iterations() const { return m_num_iterations; }
+    integer           get_num_function_evals() const { return m_num_function_evals; }
+    integer           get_num_jacobian_evals() const { return m_num_jacobian_evals; }
+    integer           get_num_line_searches() const { return m_num_line_searches; }
+    integer           get_num_lambda_updates() const { return m_num_lambda_updates; }
+    bool              has_converged() const { return m_converged; }
+    real_type         get_final_residual() const { return m_final_residual; }
+    real_type         get_initial_residual() const { return m_initial_residual; }
+    real_type         get_lambda() const { return m_lambda; }
+    real_type         get_tolerance() const { return m_tolerance; }
+    integer           get_block_size() const { return m_block_size; }
+    SelectionStrategy get_strategy() const { return m_strategy; }
 
     // ========================================================================
     // METODI PRIVATI
@@ -348,29 +269,21 @@ namespace Utils
 
   private:
     //! Nome della strategia (per output)
-    const char *
-    strategy_name( SelectionStrategy s ) const
+    const char * strategy_name( SelectionStrategy s ) const
     {
       switch ( s )
       {
-        case CYCLIC:
-          return "Cyclic";
-        case RANDOM_UNIFORM:
-          return "Random Uniform";
-        case RANDOM_WEIGHTED:
-          return "Random Weighted";
-        case GREEDY:
-          return "Greedy";
-        case RANDOM_PARTITION:
-          return "Random Partition";
-        default:
-          return "Unknown";
+        case CYCLIC: return "Cyclic";
+        case RANDOM_UNIFORM: return "Random Uniform";
+        case RANDOM_WEIGHTED: return "Random Weighted";
+        case GREEDY: return "Greedy";
+        case RANDOM_PARTITION: return "Random Partition";
+        default: return "Unknown";
       }
     }
 
     //! Seleziona un blocco di equazioni in base alla strategia scelta
-    std::vector<integer>
-    select_block( const Vector & f, integer epoch = -1 )
+    std::vector<integer> select_block( const Vector & f, integer epoch = -1 )
     {
       integer              m = f.size();
       std::vector<integer> block_indices;
@@ -435,9 +348,11 @@ namespace Utils
           for ( integer i = 0; i < m; ++i ) { residuals_with_idx.emplace_back( std::abs( f( i ) ), i ); }
 
           // Ordina per residuo decrescente
-          std::partial_sort( residuals_with_idx.begin(), residuals_with_idx.begin() + actual_block_size,
-                             residuals_with_idx.end(),
-                             []( const auto & a, const auto & b ) { return a.first > b.first; } );
+          std::partial_sort(
+            residuals_with_idx.begin(),
+            residuals_with_idx.begin() + actual_block_size,
+            residuals_with_idx.end(),
+            []( const auto & a, const auto & b ) { return a.first > b.first; } );
 
           for ( integer i = 0; i < actual_block_size; ++i )
           {
@@ -473,13 +388,13 @@ namespace Utils
     }
 
     //! Estrae il blocco di Jacobiano e residui
-    void
-    extract_block( NonlinearSystem &            system,
-                   const Vector &               x,
-                   const Vector &               f_full,
-                   const std::vector<integer> & block_indices,
-                   Matrix &                     J_block,
-                   Vector &                     f_block )
+    void extract_block(
+      NonlinearSystem &            system,
+      const Vector &               x,
+      const Vector &               f_full,
+      const std::vector<integer> & block_indices,
+      Matrix &                     J_block,
+      Vector &                     f_block )
     {
       integer m          = system.num_equations();
       integer block_size = block_indices.size();
@@ -502,8 +417,7 @@ namespace Utils
     }
 
     //! Calcola il passo LM incrementale usando pseudo-inversa regolarizzata
-    Vector
-    compute_step( const Matrix & J_block, const Vector & f_block, real_type lambda )
+    Vector compute_step( const Matrix & J_block, const Vector & f_block, real_type lambda )
     {
       // Aggiungi regolarizzazione diagonale piccola per stabilità
       Matrix A = J_block.transpose() * J_block;
@@ -527,14 +441,14 @@ namespace Utils
     }
 
     //! Calcola il rapporto di riduzione (rho) per LM - VERSIONE CORRETTA
-    real_type
-    compute_reduction_ratio( NonlinearSystem & system,
-                             const Vector &    x,
-                             real_type         norm_f_old,
-                             const Vector &    dx,
-                             const Matrix &    J_block,
-                             const Vector &    f_block,
-                             real_type         lambda )
+    real_type compute_reduction_ratio(
+      NonlinearSystem & system,
+      const Vector &    x,
+      real_type         norm_f_old,
+      const Vector &    dx,
+      const Matrix &    J_block,
+      const Vector &    f_block,
+      real_type         lambda )
     {
       // Predicted reduction: phi(0) - phi(dx)
       // phi(dx) = ||f_block + J_block*dx||^2 + lambda*||dx||^2
@@ -566,13 +480,13 @@ namespace Utils
     }
 
     //! Line search di Armijo per LM
-    real_type
-    armijo_line_search( NonlinearSystem & system,
-                        const Vector &    x,
-                        real_type         norm_f_old,
-                        const Vector &    dx,
-                        const Matrix &    J_block,
-                        const Vector &    f_block )
+    real_type armijo_line_search(
+      NonlinearSystem & system,
+      const Vector &    x,
+      real_type         norm_f_old,
+      const Vector &    dx,
+      const Matrix &    J_block,
+      const Vector &    f_block )
     {
       integer   n     = x.size();
       real_type alpha = 1.0;
@@ -619,8 +533,7 @@ namespace Utils
     }
 
     //! Verifica convergenza
-    bool
-    check_convergence( real_type norm_f, real_type initial_norm ) const
+    bool check_convergence( real_type norm_f, real_type initial_norm ) const
     {
       // Convergenza assoluta
       if ( norm_f < m_tolerance ) return true;
@@ -632,13 +545,13 @@ namespace Utils
     }
 
     //! Stampa informazioni sull'iterazione
-    void
-    print_iteration_info( integer   iter,
-                          real_type norm_f,
-                          real_type initial_norm,
-                          real_type lambda,
-                          real_type rho,
-                          real_type dx_norm ) const
+    void print_iteration_info(
+      integer   iter,
+      real_type norm_f,
+      real_type initial_norm,
+      real_type lambda,
+      real_type rho,
+      real_type dx_norm ) const
     {
       if ( m_verbose_level < 2 ) return;
       if ( iter % m_print_frequency != 0 ) return;
@@ -652,19 +565,20 @@ namespace Utils
     }
 
     //! Stampa riepilogo finale
-    void
-    print_summary( real_type initial_norm, real_type final_norm ) const
+    void print_summary( real_type initial_norm, real_type final_norm ) const
     {
       if ( m_verbose_level == 0 ) return;
 
       fmt::print( "\n" );
-      fmt::print( fmt::fg( fmt::color::light_blue ),
-                  "════════════════════════════════════════════════════════════"
-                  "═══════\n" );
+      fmt::print(
+        fmt::fg( fmt::color::light_blue ),
+        "════════════════════════════════════════════════════════════"
+        "═══════\n" );
       fmt::print( "Incremental Levenberg-Marquardt - Summary\n" );
-      fmt::print( fmt::fg( fmt::color::light_blue ),
-                  "════════════════════════════════════════════════════════════"
-                  "═══════\n" );
+      fmt::print(
+        fmt::fg( fmt::color::light_blue ),
+        "════════════════════════════════════════════════════════════"
+        "═══════\n" );
 
       if ( m_converged ) { fmt::print( fmt::fg( fmt::color::green ), "Status:             ✓ CONVERGED\n" ); }
       else
@@ -689,9 +603,10 @@ namespace Utils
         fmt::print( "Residual reduction: {:.3e} ({:.1f}%)\n", reduction, ( 1.0 - final_norm / initial_norm ) * 100.0 );
       }
 
-      fmt::print( fmt::fg( fmt::color::light_blue ),
-                  "════════════════════════════════════════════════════════════"
-                  "═══════\n\n" );
+      fmt::print(
+        fmt::fg( fmt::color::light_blue ),
+        "════════════════════════════════════════════════════════════"
+        "═══════\n\n" );
     }
 
   public:
@@ -699,8 +614,7 @@ namespace Utils
     // METODO PRINCIPALE DI RISOLUZIONE - VERSIONE MIGLIORATA
     // ========================================================================
 
-    bool
-    solve( NonlinearSystem & system, Vector & x )
+    bool solve( NonlinearSystem & system, Vector & x )
     {
       integer m = system.num_equations();
       Vector  f( m );
@@ -723,17 +637,20 @@ namespace Utils
 
       if ( m_verbose_level > 0 )
       {
-        fmt::print( fmt::fg( fmt::color::light_blue ),
-                    "══════════════════════════════════════════════════════════"
-                    "═════════\n" );
+        fmt::print(
+          fmt::fg( fmt::color::light_blue ),
+          "══════════════════════════════════════════════════════════"
+          "═════════\n" );
         fmt::print( fmt::fg( fmt::color::light_blue ), "Starting Incremental Levenberg-Marquardt\n" );
         fmt::print( "Initial residual:   {:.2e}\n", norm_f );
+        fmt::print( "Num Equation:       {}\n", m );
         fmt::print( "Block size:         {}\n", m_block_size );
         fmt::print( "Strategy:           {}\n", strategy_name( m_strategy ) );
         fmt::print( "Initial lambda:     {:.2e}\n", m_lambda );
-        fmt::print( fmt::fg( fmt::color::light_blue ),
-                    "══════════════════════════════════════════════════════════"
-                    "═════════\n" );
+        fmt::print(
+          fmt::fg( fmt::color::light_blue ),
+          "══════════════════════════════════════════════════════════"
+          "═════════\n" );
       }
 
       // Buffer per permutazione se necessario
@@ -794,8 +711,11 @@ namespace Utils
 
           if ( m_verbose_level >= 3 )
           {
-            fmt::print( fmt::fg( fmt::color::yellow ), "  ⚠ Small step (‖dx‖={:.2e}), increasing λ to {:.2e}\n",
-                        dx_norm, m_lambda );
+            fmt::print(
+              fmt::fg( fmt::color::yellow ),
+              "  ⚠ Small step (‖dx‖={:.2e}), increasing λ to {:.2e}\n",
+              dx_norm,
+              m_lambda );
           }
           continue;
         }
@@ -849,10 +769,13 @@ namespace Utils
 
             if ( m_verbose_level >= 3 )
             {
-              fmt::print( fmt::fg( fmt::color::green ),
-                          "  ✓ Good reduction (ρ={:.3f}), decreasing λ: {:.2e} "
-                          "→ {:.2e}\n",
-                          rho, old_lambda, m_lambda );
+              fmt::print(
+                fmt::fg( fmt::color::green ),
+                "  ✓ Good reduction (ρ={:.3f}), decreasing λ: {:.2e} "
+                "→ {:.2e}\n",
+                rho,
+                old_lambda,
+                m_lambda );
             }
           }
           else if ( rho > m_bad_reduction )
@@ -864,8 +787,11 @@ namespace Utils
 
             if ( m_verbose_level >= 3 )
             {
-              fmt::print( fmt::fg( fmt::color::yellow ), "  ~ Moderate reduction (ρ={:.3f}), keeping λ={:.2e}\n", rho,
-                          m_lambda );
+              fmt::print(
+                fmt::fg( fmt::color::yellow ),
+                "  ~ Moderate reduction (ρ={:.3f}), keeping λ={:.2e}\n",
+                rho,
+                m_lambda );
             }
           }
           else
@@ -879,10 +805,13 @@ namespace Utils
 
             if ( m_verbose_level >= 2 )
             {
-              fmt::print( fmt::fg( fmt::color::red ),
-                          "  ✗ Bad reduction (ρ={:.3f}), increasing λ: {:.2e} "
-                          "→ {:.2e}\n",
-                          rho, old_lambda, m_lambda );
+              fmt::print(
+                fmt::fg( fmt::color::red ),
+                "  ✗ Bad reduction (ρ={:.3f}), increasing λ: {:.2e} "
+                "→ {:.2e}\n",
+                rho,
+                old_lambda,
+                m_lambda );
             }
           }
         }
@@ -933,8 +862,10 @@ namespace Utils
         {
           if ( m_verbose_level > 0 )
           {
-            fmt::print( fmt::fg( fmt::color::yellow ), "⚠ Lambda too large ({:.2e}), resetting to initial\n",
-                        m_lambda );
+            fmt::print(
+              fmt::fg( fmt::color::yellow ),
+              "⚠ Lambda too large ({:.2e}), resetting to initial\n",
+              m_lambda );
           }
           m_lambda          = 0.1;
           no_progress_count = 0;
@@ -959,17 +890,23 @@ namespace Utils
       {
         if ( m_converged )
         {
-          fmt::print( fmt::fg( fmt::color::green ),
-                      "✓ Finished: {} iterations, {} function evals, final "
-                      "residual: {:.2e}\n",
-                      m_num_iterations, m_num_function_evals, norm_f );
+          fmt::print(
+            fmt::fg( fmt::color::green ),
+            "✓ Finished: {} iterations, {} function evals, final "
+            "residual: {:.2e}\n",
+            m_num_iterations,
+            m_num_function_evals,
+            norm_f );
         }
         else
         {
-          fmt::print( fmt::fg( fmt::color::yellow ),
-                      "⚠ Finished: {} iterations, {} function evals, final "
-                      "residual: {:.2e}\n",
-                      m_num_iterations, m_num_function_evals, norm_f );
+          fmt::print(
+            fmt::fg( fmt::color::yellow ),
+            "⚠ Finished: {} iterations, {} function evals, final "
+            "residual: {:.2e}\n",
+            m_num_iterations,
+            m_num_function_evals,
+            norm_f );
         }
         print_summary( m_initial_residual, norm_f );
       }

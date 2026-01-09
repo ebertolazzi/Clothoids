@@ -102,8 +102,7 @@ namespace Utils
    * front (expensive). b. If not dominated, remove any point in the partial
    * front that is strictly dominated by $C$. c. Add $C$ to the partial front.
    */
-  template <typename T, size_t N, typename Payload = void, size_t RebuildThreshold = 128>
-  class ParetoFront
+  template <typename T, size_t N, typename Payload = void, size_t RebuildThreshold = 128> class ParetoFront
   {
   public:
     /// @brief Type alias for an N-dimensional point. $\mathbf{p} \in
@@ -146,8 +145,7 @@ namespace Utils
      * @param b The second point.
      * @return true if $a_i = b_i$ for all $i \in [0, N-1]$.
      */
-    static bool
-    equals( Point_type const & a, Point_type const & b )
+    static bool equals( Point_type const & a, Point_type const & b )
     {
       for ( size_t i{ 0 }; i < N; ++i )
         if ( a[i] != b[i] ) return false;
@@ -166,8 +164,7 @@ namespace Utils
      * @param b The potentially dominated point.
      * @return true if $A \succ B$, false otherwise.
      */
-    bool
-    dominates( Point_type const & a, Point_type const & b ) const
+    bool dominates( Point_type const & a, Point_type const & b ) const
     {
       bool any_strict{ false };
       for ( size_t i{ 0 }; i < N; ++i )
@@ -188,8 +185,7 @@ namespace Utils
      * @param b The potentially weakly dominated point.
      * @return true if $A \succeq B$, false otherwise.
      */
-    bool
-    dominates_weakly( Point_type const & a, Point_type const & b ) const
+    bool dominates_weakly( Point_type const & a, Point_type const & b ) const
     {
       for ( size_t i{ 0 }; i < N; ++i )
         if ( a[i] > b[i] ) return false;
@@ -226,8 +222,7 @@ namespace Utils
      * }
      * \enddot
      */
-    void
-    maybe_rebuild()
+    void maybe_rebuild()
     {
       if ( m_tombstones >= RebuildThreshold )
       {
@@ -255,8 +250,7 @@ namespace Utils
      * @param b The second point.
      * @return true if a comes before b in the sorted order.
      */
-    static bool
-    compare_points( Point_type const & a, Point_type const & b )
+    static bool compare_points( Point_type const & a, Point_type const & b )
     {
       // Calculate L1 norm
       T norm_a = T( 0 );
@@ -289,25 +283,13 @@ namespace Utils
     explicit ParetoFront() {}
 
     /// @brief Returns the number of **active** entries in the front.
-    size_t
-    size() const
-    {
-      return m_entries.size() - m_tombstones;
-    }
+    size_t size() const { return m_entries.size() - m_tombstones; }
 
     /// @brief Returns the total number of entries (active + tombstones).
-    size_t
-    raw_size() const
-    {
-      return m_entries.size();
-    }
+    size_t raw_size() const { return m_entries.size(); }
 
     /// @brief Checks if the front is empty (size() == 0).
-    bool
-    empty() const
-    {
-      return size() == 0;
-    }
+    bool empty() const { return size() == 0; }
 
     /**
      * @brief Iterates over all active entries and applies a function object.
@@ -315,9 +297,7 @@ namespace Utils
      * @param f The function to apply to each alive Entry. Signature must accept
      * a const Entry&.
      */
-    template <typename F>
-    void
-    for_each_alive( F && f ) const
+    template <typename F> void for_each_alive( F && f ) const
     {
       for ( auto const & e : m_entries )
         if ( e.alive ) f( e );
@@ -328,8 +308,7 @@ namespace Utils
      * current Pareto Front.
      * @return A vector of Front type.
      */
-    Front
-    front() const
+    Front front() const
     {
       Front out;
       out.reserve( size() );
@@ -350,8 +329,7 @@ namespace Utils
      * @return true if $p$ is weakly dominated by an existing point, false
      * otherwise.
      */
-    bool
-    is_dominated_by_front( Point_type const & p ) const
+    bool is_dominated_by_front( Point_type const & p ) const
     {
       for ( auto const & e : m_entries )
         if ( e.alive && dominates_weakly( e.p, p ) ) return true;
@@ -388,8 +366,7 @@ namespace Utils
      * }
      * \enddot
      */
-    std::pair<bool, size_t>
-    insert( Point_type const & p, Payload_type const & payload = Payload_type{} )
+    std::pair<bool, size_t> insert( Point_type const & p, Payload_type const & payload = Payload_type{} )
     {
       // 1. Controlla duplicati esatti
       for ( auto const & e : m_entries )
@@ -429,8 +406,7 @@ namespace Utils
      * @param id The unique identifier of the entry to erase. Must be > 0.
      * @return true if the entry was found and erased, false otherwise.
      */
-    bool
-    erase_by_id( size_t id )
+    bool erase_by_id( size_t id )
     {
       if ( id == 0 ) return false;
       for ( auto & e : m_entries )
@@ -458,8 +434,7 @@ namespace Utils
      * @return A pair: {found\_status, unique\_id\_of\_nearest\_point}.
      * unique\_id is 0 if no alive entry is found.
      */
-    std::pair<bool, size_t>
-    find_nearest( Point_type const & p ) const
+    std::pair<bool, size_t> find_nearest( Point_type const & p ) const
     {
       double bestd  = std::numeric_limits<double>::infinity();
       size_t bestid = 0;
@@ -520,16 +495,17 @@ namespace Utils
      * }
      * \enddot
      */
-    void
-    batch_build( Front pts )
+    void batch_build( Front pts )
     {
       m_entries.clear();
       m_tombstones = 0;
       m_next_id    = 1;
 
       // 1. Sort points using L1-norm based strict-weak ordering
-      std::sort( pts.begin(), pts.end(),
-                 []( auto const & a, auto const & b ) { return compare_points( a.first, b.first ); } );
+      std::sort(
+        pts.begin(),
+        pts.end(),
+        []( auto const & a, auto const & b ) { return compare_points( a.first, b.first ); } );
 
       std::vector<Entry> front;
       for ( auto const & pr : pts )
@@ -575,8 +551,7 @@ namespace Utils
 
     /// @brief Clears the entire Pareto Front, resetting internal state,
     /// entries, and counters.
-    void
-    clear()
+    void clear()
     {
       m_entries.clear();
       m_tombstones = 0;
@@ -589,8 +564,7 @@ namespace Utils
      * @return A pair: {found\_status, payload}. Payload is default-constructed
      * if not found.
      */
-    std::pair<bool, Payload_type>
-    get_payload_by_id( size_t id ) const
+    std::pair<bool, Payload_type> get_payload_by_id( size_t id ) const
     {
       for ( auto const & e : m_entries )
         if ( e.alive && e.id == id ) return { true, e.payload };

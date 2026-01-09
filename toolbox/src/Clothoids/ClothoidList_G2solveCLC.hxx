@@ -21,7 +21,8 @@
 /// file: ClothoidList_G2solveCLC.hxx
 ///
 
-namespace G2lib {
+namespace G2lib
+{
 
   /*\
    |    ____ ____            _            ____ _     ____
@@ -67,38 +68,37 @@ namespace G2lib {
   //!
   //! The solution do not exist for all the combination of points/angle/curvature
   //!
-  class G2solveCLC {
+  class G2solveCLC
+  {
+    real_type m_tolerance{ real_type( 1e-10 ) };
+    int       m_max_iter{ 20 };
 
-    real_type m_tolerance{real_type(1e-10)};
-    int       m_max_iter{20};
-
-    real_type m_x0{real_type(0)};
-    real_type m_y0{real_type(0)};
-    real_type m_theta0{real_type(0)};
-    real_type m_kappa0{real_type(0)};
-    real_type m_x1{real_type(0)};
-    real_type m_y1{real_type(0)};
-    real_type m_theta1{real_type(0)};
-    real_type m_kappa1{real_type(0)};
+    real_type m_x0{ real_type( 0 ) };
+    real_type m_y0{ real_type( 0 ) };
+    real_type m_theta0{ real_type( 0 ) };
+    real_type m_kappa0{ real_type( 0 ) };
+    real_type m_x1{ real_type( 0 ) };
+    real_type m_y1{ real_type( 0 ) };
+    real_type m_theta1{ real_type( 0 ) };
+    real_type m_kappa1{ real_type( 0 ) };
 
     // standard problem
-    real_type m_lambda{real_type(0)};
-    real_type m_phi{real_type(0)};
-    real_type m_xbar{real_type(0)};
-    real_type m_ybar{real_type(0)};
-    real_type m_th0{real_type(0)};
-    real_type m_th1{real_type(0)};
-    real_type m_k0{real_type(0)};
-    real_type m_k1{real_type(0)};
+    real_type m_lambda{ real_type( 0 ) };
+    real_type m_phi{ real_type( 0 ) };
+    real_type m_xbar{ real_type( 0 ) };
+    real_type m_ybar{ real_type( 0 ) };
+    real_type m_th0{ real_type( 0 ) };
+    real_type m_th1{ real_type( 0 ) };
+    real_type m_k0{ real_type( 0 ) };
+    real_type m_k1{ real_type( 0 ) };
 
-    ClothoidCurve m_S0{"G2solveCLC_S0"};
-    ClothoidCurve m_SM{"G2solveCLC_SM"};
-    ClothoidCurve m_S1{"G2solveCLC_S1"};
+    ClothoidCurve m_S0{ "G2solveCLC_S0" };
+    ClothoidCurve m_SM{ "G2solveCLC_SM" };
+    ClothoidCurve m_S1{ "G2solveCLC_S1" };
 
     bool build_solution( real_type sM, real_type thM );
 
   public:
-
     //!
     //! Build an empty clothoid list
     //!
@@ -127,11 +127,15 @@ namespace G2lib {
     //! \param[in] kappa1 \f$ \kappa_1 \f$
     //! \return number of iterations of -1 if failed
     //!
-    int
-    build(
-      real_type const x0, real_type const y0, real_type const theta0, real_type const kappa0,
-      real_type const x1, real_type const y1, real_type const theta1, real_type const kappa1
-    );
+    int build(
+      real_type const x0,
+      real_type const y0,
+      real_type const theta0,
+      real_type const kappa0,
+      real_type const x1,
+      real_type const y1,
+      real_type const theta1,
+      real_type const kappa1 );
 
     //!
     //! Fix tolerance for the \f$ G^2 \f$ problem
@@ -167,13 +171,12 @@ namespace G2lib {
 
     void save( ostream_type & stream ) const;
 
-    #ifdef CLOTHOIDS_BACK_COMPATIBILITY
+#ifdef CLOTHOIDS_BACK_COMPATIBILITY
     void setTolerance( real_type const tol ) { set_tolerance( tol ); }
     void setMaxIter( integer const miter ) { set_max_iter( miter ); }
-    #endif
-
+#endif
   };
-}
+}  // namespace G2lib
 
 ///
 /// eof: ClothoidList_G2solveCLC.hxx

@@ -24,31 +24,32 @@ class ChemicalEquilibriumApplication : public NonlinearSystem
 
 public:
   ChemicalEquilibriumApplication()
-    : NonlinearSystem( "Chemical Equilibrium Application",
-                       "@article{Meintjes:1990,\n"
-                       "  author  = {Meintjes, Keith and Morgan, Alexander P.},\n"
-                       "  title   = {Chemical Equilibrium Systems As Numerical Test "
-                       "Problems},\n"
-                       "  journal = {ACM Trans. Math. Softw.},\n"
-                       "  year    = {1990},\n"
-                       "  volume  = {16},\n"
-                       "  number  = {2},\n"
-                       "  pages   = {143--151},\n"
-                       "  doi     = {10.1145/78928.78930},\n"
-                       "}\n\n"
-                       "@article{Hentenryck:1997,\n"
-                       "  author  = {Van Hentenryck, P. and McAllester, D. and Kapur, "
-                       "D.},\n"
-                       "  title   = {Solving Polynomial Systems Using a Branch and Prune "
-                       "Approach},\n"
-                       "  journal = {SIAM Journal on Numerical Analysis},\n"
-                       "  year    = {1997},\n"
-                       "  volume  = {34},\n"
-                       "  number  = {2},\n"
-                       "  pages   = {797-827},\n"
-                       "  doi = {10.1137/S0036142995281504}\n"
-                       "}\n",
-                       5 )
+    : NonlinearSystem(
+        "Chemical Equilibrium Application",
+        "@article{Meintjes:1990,\n"
+        "  author  = {Meintjes, Keith and Morgan, Alexander P.},\n"
+        "  title   = {Chemical Equilibrium Systems As Numerical Test "
+        "Problems},\n"
+        "  journal = {ACM Trans. Math. Softw.},\n"
+        "  year    = {1990},\n"
+        "  volume  = {16},\n"
+        "  number  = {2},\n"
+        "  pages   = {143--151},\n"
+        "  doi     = {10.1145/78928.78930},\n"
+        "}\n\n"
+        "@article{Hentenryck:1997,\n"
+        "  author  = {Van Hentenryck, P. and McAllester, D. and Kapur, "
+        "D.},\n"
+        "  title   = {Solving Polynomial Systems Using a Branch and Prune "
+        "Approach},\n"
+        "  journal = {SIAM Journal on Numerical Analysis},\n"
+        "  year    = {1997},\n"
+        "  volume  = {34},\n"
+        "  number  = {2},\n"
+        "  pages   = {797-827},\n"
+        "  doi = {10.1137/S0036142995281504}\n"
+        "}\n",
+        5 )
     , R( 10 )
     , R5( 0.193 )
     , R6( 0.002597 / sqrt( 40.0 ) )
@@ -59,8 +60,7 @@ public:
   {
   }
 
-  virtual void
-  evaluate( Vector const & x, Vector & f ) const override
+  virtual void evaluate( Vector const & x, Vector & f ) const override
   {
     f( 0 ) = x( 0 ) * x( 1 ) + x( 0 ) - 3 * x( 4 );
     f( 1 ) = 2 * x( 0 ) * x( 1 ) + x( 0 ) + x( 1 ) * x( 2 ) * x( 2 ) + R8 * x( 1 ) - R * x( 4 ) +
@@ -71,8 +71,7 @@ public:
              ( R5 + x( 1 ) ) * x( 2 ) * x( 2 ) + x( 3 ) * x( 3 ) - 1 + R6 * x( 2 );
   }
 
-  virtual void
-  jacobian( Vector const & x, SparseMatrix & J ) const override
+  virtual void jacobian( Vector const & x, SparseMatrix & J ) const override
   {
     J.resize( n, n );
     J.setZero();
@@ -103,8 +102,7 @@ public:
     J.makeCompressed();
   }
 
-  virtual void
-  initial_points( vector<Vector> & x_vec ) const override
+  virtual void initial_points( vector<Vector> & x_vec ) const override
   {
     x_vec.resize( 1 );
     auto & x0{ x_vec[0] };

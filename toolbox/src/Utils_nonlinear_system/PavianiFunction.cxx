@@ -17,49 +17,42 @@ class PavianiFunction : public NonlinearSystem
 public:
   // sum log(xi-2)^2+log(xi-10)^2 - prod( xi) ^(1/5)
   PavianiFunction()
-    : NonlinearSystem( "Paviani function",
-                       "@book{himmelblau:1972,\n"
-                       "  author    = {Himmelblau, D.M.},\n"
-                       "  title     = {Applied nonlinear programming},\n"
-                       "  year      = {1972},\n"
-                       "  publisher = {McGraw-Hill}\n"
-                       "}\n",
-                       10 )
+    : NonlinearSystem(
+        "Paviani function",
+        "@book{himmelblau:1972,\n"
+        "  author    = {Himmelblau, D.M.},\n"
+        "  title     = {Applied nonlinear programming},\n"
+        "  year      = {1972},\n"
+        "  publisher = {McGraw-Hill}\n"
+        "}\n",
+        10 )
   {
   }
 
-  real_type
-  loglog( real_type x ) const
-  {
-    return power2( log( 10 - x ) ) + power2( log( x - 2 ) );
-  }
+  real_type loglog( real_type x ) const { return power2( log( 10 - x ) ) + power2( log( x - 2 ) ); }
 
-  real_type
-  loglog_D( real_type x ) const
+  real_type loglog_D( real_type x ) const
   {
     real_type t1 = 10 - x;
     real_type t2 = x - 2;
     return 2 * ( log( t2 ) / t2 - log( t1 ) / t1 );
   }
 
-  real_type
-  loglog_DD( real_type x ) const
+  real_type loglog_DD( real_type x ) const
   {
     real_type t1 = 10 - x;
     real_type t2 = x - 2;
     return 2 * ( ( 1 - log( t1 ) ) / ( t1 * t1 ) + ( 1 - log( t2 ) ) / ( t2 * t2 ) );
   }
 
-  real_type
-  mul( Vector const & x ) const
+  real_type mul( Vector const & x ) const
   {
     real_type res = 1;
     for ( integer i = 0; i < 10; ++i ) res *= power2( std::abs( x( i ) ) );
     return res;
   }
 
-  real_type
-  mul_D( Vector const & x, integer k ) const
+  real_type mul_D( Vector const & x, integer k ) const
   {
     real_type res = 1;
     for ( integer i = 0; i < 10; ++i )
@@ -73,8 +66,7 @@ public:
     return res;
   }
 
-  real_type
-  mul_DD( Vector const & x, integer i, integer j ) const
+  real_type mul_DD( Vector const & x, integer i, integer j ) const
   {
     real_type res = 1;
     if ( i == j )
@@ -101,8 +93,7 @@ public:
     return res;
   }
 
-  virtual void
-  evaluate( Vector const & x, Vector & f ) const override
+  virtual void evaluate( Vector const & x, Vector & f ) const override
   {
     for ( integer i = 0; i < 10; ++i )
     {
@@ -113,8 +104,7 @@ public:
     }
   }
 
-  virtual void
-  jacobian( Vector const & x, SparseMatrix & J ) const override
+  virtual void jacobian( Vector const & x, SparseMatrix & J ) const override
   {
     J.resize( n, n );
     J.setZero();
@@ -130,8 +120,7 @@ public:
     J.makeCompressed();
   }
 
-  virtual void
-  initial_points( vector<Vector> & x_vec ) const override
+  virtual void initial_points( vector<Vector> & x_vec ) const override
   {
     /*x(0) = 2.001;
     x(1) = 9.999;
@@ -150,8 +139,7 @@ public:
     x0 << 2.1, 9.9, 2.1, 9.9, 2.1, 9.9, 2.1, 9.9, 2.1, 9.9;
   }
 
-  virtual void
-  check_if_admissible( Vector const & x ) const override
+  virtual void check_if_admissible( Vector const & x ) const override
   {
     for ( integer i = 0; i < 10; ++i )
     {
@@ -159,8 +147,7 @@ public:
     }
   }
 
-  virtual void
-  bounding_box( Vector & L, Vector & U ) const override
+  virtual void bounding_box( Vector & L, Vector & U ) const override
   {
     U.fill( 10 );
     L.fill( 2 );

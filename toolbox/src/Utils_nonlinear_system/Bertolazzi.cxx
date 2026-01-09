@@ -25,8 +25,7 @@ public:
     xmin = epsilon * ( 1.0 / exp( 1.0 ) - 1.0 );
   }
 
-  virtual void
-  evaluate( Vector const & x_in, Vector & f ) const override
+  virtual void evaluate( Vector const & x_in, Vector & f ) const override
   {
     real_type x = x_in( 0 );
     real_type y = x_in( 1 );
@@ -34,8 +33,7 @@ public:
     f( 1 )      = delta * y + power2( y );
   }
 
-  virtual void
-  jacobian( Vector const & x_in, SparseMatrix & J ) const override
+  virtual void jacobian( Vector const & x_in, SparseMatrix & J ) const override
   {
     J.resize( n, n );
     J.setZero();
@@ -46,8 +44,7 @@ public:
     J.makeCompressed();
   }
 
-  virtual void
-  exact_solution( vector<Vector> & x_vec ) const override
+  virtual void exact_solution( vector<Vector> & x_vec ) const override
   {
     x_vec.resize( 1 );
     auto & x0{ x_vec[0] };
@@ -55,8 +52,7 @@ public:
     x0.setZero();
   }
 
-  virtual void
-  initial_points( vector<Vector> & x_vec ) const override
+  virtual void initial_points( vector<Vector> & x_vec ) const override
   {
     x_vec.resize( 1 );
     auto & x0{ x_vec[0] };
@@ -64,14 +60,12 @@ public:
     x0 << 1000, 1000;
   }
 
-  virtual void
-  check_if_admissible( Vector const & x ) const override
+  virtual void check_if_admissible( Vector const & x ) const override
   {
     UTILS_ASSERT( x( 0 ) >= xmin, "BertolazziRootPlusSquare: x = {} must be >= {}", x( 0 ), xmin );
   }
 
-  virtual void
-  bounding_box( Vector & L, Vector & U ) const override
+  virtual void bounding_box( Vector & L, Vector & U ) const override
   {
     L( 0 ) = xmin;
     L( 1 ) = -real_max;
@@ -95,8 +89,7 @@ class BertolazziAtanPlusQuadratic : public NonlinearSystem
 public:
   BertolazziAtanPlusQuadratic() : NonlinearSystem( "Bertolazzi: atan+quadratic", "no doc", 2 ), epsilon( 1E-9 ) {}
 
-  virtual void
-  evaluate( Vector const & x_in, Vector & f ) const override
+  virtual void evaluate( Vector const & x_in, Vector & f ) const override
   {
     real_type x = x_in( 0 );
     real_type y = x_in( 1 );
@@ -104,8 +97,7 @@ public:
     f( 1 )      = epsilon * y + x * y;
   }
 
-  virtual void
-  jacobian( Vector const & x_in, SparseMatrix & J ) const override
+  virtual void jacobian( Vector const & x_in, SparseMatrix & J ) const override
   {
     J.resize( n, n );
     J.setZero();
@@ -118,8 +110,7 @@ public:
     J.makeCompressed();
   }
 
-  virtual void
-  exact_solution( vector<Vector> & x_vec ) const override
+  virtual void exact_solution( vector<Vector> & x_vec ) const override
   {
     x_vec.resize( 1 );
     auto & x0{ x_vec[0] };
@@ -127,8 +118,7 @@ public:
     x0.setZero();
   }
 
-  virtual void
-  initial_points( vector<Vector> & x_vec ) const override
+  virtual void initial_points( vector<Vector> & x_vec ) const override
   {
     x_vec.resize( 1 );
     auto & x0{ x_vec[0] };
@@ -136,15 +126,13 @@ public:
     x0 << 1, 1;
   }
 
-  virtual void
-  check_if_admissible( Vector const & x ) const override
+  virtual void check_if_admissible( Vector const & x ) const override
   {
     for ( integer i = 0; i < n; ++i )
       UTILS_ASSERT( std::abs( x( i ) ) < 10, "x[{}] = {} out of range [-10,10]", i, x( i ) );
   }
 
-  virtual void
-  bounding_box( Vector & L, Vector & U ) const override
+  virtual void bounding_box( Vector & L, Vector & U ) const override
   {
     L.fill( -10 );
     U.fill( 10 );
@@ -171,8 +159,7 @@ class BertolazziHard : public NonlinearSystem
 public:
   BertolazziHard() : NonlinearSystem( "Bertolazzi Hard.", "no doc", 2 ) {}
 
-  virtual void
-  evaluate( Vector const & x_in, Vector & f ) const override
+  virtual void evaluate( Vector const & x_in, Vector & f ) const override
   {
     real_type x  = x_in( 0 );
     real_type y  = x_in( 1 );
@@ -186,8 +173,7 @@ public:
     f( 1 )       = -t6 - 1 + t4 + t5 + t1 + t2 - t3;
   }
 
-  virtual void
-  jacobian( Vector const & x_in, SparseMatrix & J ) const override
+  virtual void jacobian( Vector const & x_in, SparseMatrix & J ) const override
   {
     J.resize( n, n );
     J.setZero();
@@ -203,8 +189,7 @@ public:
     J.makeCompressed();
   }
 
-  virtual void
-  exact_solution( vector<Vector> & x_vec ) const override
+  virtual void exact_solution( vector<Vector> & x_vec ) const override
   {
     x_vec.resize( 1 );
     auto & x0{ x_vec[0] };
@@ -212,8 +197,7 @@ public:
     x0 << 0, 3;
   }
 
-  virtual void
-  initial_points( vector<Vector> & x_vec ) const override
+  virtual void initial_points( vector<Vector> & x_vec ) const override
   {
     x_vec.resize( 1 );
     auto & x0{ x_vec[0] };
@@ -234,15 +218,13 @@ class BertolazziSingleEQ : public NonlinearSystem
 public:
   BertolazziSingleEQ() : NonlinearSystem( "Bertolazzi Single EQ.", "no doc", 1 ) {}
 
-  virtual void
-  evaluate( Vector const & x_in, Vector & f ) const override
+  virtual void evaluate( Vector const & x_in, Vector & f ) const override
   {
     real_type x = x_in( 0 );
     f( 0 )      = exp( -x ) * ( x * x + 1 ) * x + exp( x / 10 ) - 1;
   }
 
-  virtual void
-  jacobian( Vector const & x_in, SparseMatrix & J ) const override
+  virtual void jacobian( Vector const & x_in, SparseMatrix & J ) const override
   {
     J.resize( n, n );
     J.setZero();
@@ -254,8 +236,7 @@ public:
     J.makeCompressed();
   }
 
-  virtual void
-  exact_solution( vector<Vector> & x_vec ) const override
+  virtual void exact_solution( vector<Vector> & x_vec ) const override
   {
     x_vec.resize( 1 );
     auto & x0{ x_vec[0] };
@@ -263,8 +244,7 @@ public:
     x0 << 0;
   }
 
-  virtual void
-  initial_points( vector<Vector> & x_vec ) const override
+  virtual void initial_points( vector<Vector> & x_vec ) const override
   {
     x_vec.resize( 1 );
     auto & x0{ x_vec[0] };

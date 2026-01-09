@@ -81,13 +81,11 @@ namespace Utils
   /**
    * @brief Comparator for Eigen vectors to use in std::set
    */
-  template <typename Scalar>
-  struct VectorComparator
+  template <typename Scalar> struct VectorComparator
   {
     using Vector = Eigen::Matrix<Scalar, Eigen::Dynamic, 1>;
 
-    bool
-    operator()( Vector const & a, Vector const & b ) const
+    bool operator()( Vector const & a, Vector const & b ) const
     {
       if ( a.size() != b.size() ) return a.size() < b.size();
       for ( int i = 0; i < a.size(); ++i )
@@ -102,10 +100,10 @@ namespace Utils
    * @class MADS_minimizer
    * @brief Minimizer using Mesh Adaptive Direct Search (MADS)
    */
-  template <typename Scalar = double>
-  class MADS_minimizer
+  template <typename Scalar = double> class MADS_minimizer
   {
   public:
+    using integer  = Eigen::Index;
     using Vector   = Eigen::Matrix<Scalar, Eigen::Dynamic, 1>;               ///< Vector type
     using Matrix   = Eigen::Matrix<Scalar, Eigen::Dynamic, Eigen::Dynamic>;  ///< Matrix type
     using Callback = std::function<Scalar( Vector const & )>;                ///< Function callback type
@@ -116,45 +114,30 @@ namespace Utils
      */
     struct Options
     {
-      size_t max_iter{ 1000 };          ///< Maximum iterations
-      size_t max_evaluations{ 10000 };  ///< Maximum function evaluations
-      Scalar initial_mesh_size{ 1.0 };  ///< Initial mesh size
-      Scalar min_mesh_size{ 1e-6 };     ///< Minimum mesh size
-      Scalar mesh_contraction{ 0.5 };   ///< Mesh contraction factor
-      Scalar mesh_expansion{ 2.0 };     ///< Mesh expansion factor
-      bool   verbose{ false };          ///< Verbose output
-      size_t print_every{ 10 };         ///< Print every n iterations
+      integer max_iter          = 1000;   ///< Maximum iterations
+      integer max_evaluations   = 10000;  ///< Maximum function evaluations
+      Scalar  initial_mesh_size = 1.0;    ///< Initial mesh size
+      Scalar  min_mesh_size     = 1e-6;   ///< Minimum mesh size
+      Scalar  mesh_contraction  = 0.5;    ///< Mesh contraction factor
+      Scalar  mesh_expansion    = 2.0;    ///< Mesh expansion factor
+      bool    verbose           = false;  ///< Verbose output
+      integer print_every       = 10;     ///< Print every n iterations
 
       // Search and poll parameters
-      bool        enable_search{ true };  ///< Enable search step
-      size_t      search_points{ 100 };   ///< Number of search points
-      size_t      poll_directions{ 2 };   ///< Number of poll directions per dimension
-      std::string poll_method{ "ltm" };   ///< Poll method: "ltm" (LTMADS) or "ortho" (OrthoMADS)
+      bool        enable_search   = true;   ///< Enable search step
+      integer     search_points   = 100;    ///< Number of search points
+      integer     poll_directions = 2;      ///< Number of poll directions per dimension
+      std::string poll_method     = "ltm";  ///< Poll method: "ltm" (LTMADS) or "ortho" (OrthoMADS)
 
       // Convergence criteria
-      Scalar tol_mesh{ 1e-8 };  ///< Mesh size tolerance
-      Scalar tol_f{ 1e-8 };     ///< Function value tolerance
-      Scalar tol_x{ 1e-6 };     ///< Step size tolerance
-      size_t patience{ 50 };    ///< Iterations without improvement before stop
+      Scalar  tol_mesh = 1e-8;  ///< Mesh size tolerance
+      Scalar  tol_f    = 1e-8;  ///< Function value tolerance
+      Scalar  tol_x    = 1e-6;  ///< Step size tolerance
+      integer patience = 50;    ///< Iterations without improvement before stop
 
       // Adaptive parameters
-      bool   adaptive_poll{ true };     ///< Adaptive poll directions
-      Scalar success_threshold{ 0.1 };  ///< Threshold for successful iteration
-    };
-
-    /**
-     * @struct Result
-     * @brief Minimization result
-     */
-    struct Result
-    {
-      Scalar final_f;       ///< Final function value
-      Vector final_x;       ///< Final point
-      size_t iterations;    ///< Number of iterations performed
-      size_t f_eval_count;  ///< Number of function evaluations
-      bool   converged;     ///< True if convergence reached
-      Scalar mesh_size;     ///< Final mesh size
-      string message;       ///< Termination message
+      bool   adaptive_poll     = true;  ///< Adaptive poll directions
+      Scalar success_threshold = 0.1;   ///< Threshold for successful iteration
     };
 
     /**
@@ -163,11 +146,11 @@ namespace Utils
      */
     struct IterationData
     {
-      size_t iteration;
-      Scalar f_value;
-      Scalar mesh_size;
-      bool   success;
-      size_t eval_count;
+      integer iteration;
+      Scalar  f_value;
+      Scalar  mesh_size;
+      bool    success;
+      integer eval_count;
     };
 
   private:
@@ -179,7 +162,7 @@ namespace Utils
     Vector                     m_current_x;   ///< Current best point
     Scalar                     m_current_f;   ///< Current best function value
     Scalar                     m_mesh_size;   ///< Current mesh size
-    size_t                     m_eval_count;  ///< Function evaluation counter
+    integer                    m_eval_count;  ///< Function evaluation counter
     std::vector<IterationData> m_history;     ///< Optimization history
 
     // Cache for visited points (to avoid re-evaluation)
@@ -187,6 +170,10 @@ namespace Utils
 
     // Random number generator
     std::mt19937 m_rng{ std::random_device{}() };
+
+    // Optimization results
+    bool   m_converged{ false };     ///< Whether optimization converged
+    string m_termination_message{};  ///< Termination message
 
   public:
     /**
@@ -200,16 +187,14 @@ namespace Utils
      * @param lo Lower bounds
      * @param up Upper bounds
      */
-    void
-    set_bounds( Vector const & lo, Vector const & up )
+    void set_bounds( Vector const & lo, Vector const & up )
     {
       assert( lo.size() == up.size() );
       m_lower = lo;
       m_upper = up;
     }
 
-    void
-    set_bounds( size_t n, Scalar const lower[], Scalar const upper[] )
+    void set_bounds( integer n, Scalar const lower[], Scalar const upper[] )
     {
       m_lower.resize( n );
       m_upper.resize( n );
@@ -221,25 +206,29 @@ namespace Utils
      * @brief Project point onto bounds
      * @param x Point to project (modified in-place)
      */
-    void
-    project( Vector & x ) const
-    {
-      x = x.cwiseMax( m_lower ).cwiseMin( m_upper );
-    }
+    void project( Vector & x ) const { x = x.cwiseMax( m_lower ).cwiseMin( m_upper ); }
+
+    // Accessor methods for optimization results
+    Vector  get_final_x() const { return m_current_x; }
+    Scalar  get_final_f() const { return m_current_f; }
+    integer get_iterations() const { return m_history.empty() ? 0 : m_history.back().iteration + 1; }
+    integer get_f_eval_count() const { return m_eval_count; }
+    bool    get_converged() const { return m_converged; }
+    string  get_message() const { return m_termination_message; }
+    Scalar  get_mesh_size() const { return m_mesh_size; }
 
   private:
     /**
      * @brief Generate poll directions using LTMADS method
      * @param directions Output vector of directions
      */
-    void
-    generate_ltmads_directions( std::vector<Vector> & directions )
+    void generate_ltmads_directions( std::vector<Vector> & directions )
     {
-      size_t n = m_current_x.size();
+      integer n = m_current_x.size();
       directions.clear();
 
       // Generate positive and negative coordinate directions
-      for ( size_t i = 0; i < n; ++i )
+      for ( integer i = 0; i < n; ++i )
       {
         for ( int sign = -1; sign <= 1; sign += 2 )
         {
@@ -252,10 +241,10 @@ namespace Utils
       // Add some random orthogonal directions for diversity
       std::normal_distribution<Scalar> dist( 0.0, 1.0 );
 
-      for ( size_t i = 0; i < m_opts.poll_directions; ++i )
+      for ( integer i = 0; i < m_opts.poll_directions; ++i )
       {
         Vector dir( n );
-        for ( size_t j = 0; j < n; ++j ) { dir( j ) = dist( m_rng ); }
+        for ( integer j = 0; j < n; ++j ) { dir( j ) = dist( m_rng ); }
         dir.normalize();
         directions.push_back( dir );
 
@@ -268,10 +257,9 @@ namespace Utils
      * @brief Generate orthogonal poll directions
      * @param directions Output vector of directions
      */
-    void
-    generate_orthomads_directions( std::vector<Vector> & directions ) const
+    void generate_orthomads_directions( std::vector<Vector> & directions ) const
     {
-      size_t n = m_current_x.size();
+      integer n = m_current_x.size();
       directions.clear();
 
       // Generate orthogonal basis directions
@@ -280,7 +268,7 @@ namespace Utils
       Q = qr.householderQ();
 
       // Use columns of Q as directions (both positive and negative)
-      for ( size_t i = 0; i < n; ++i )
+      for ( integer i = 0; i < n; ++i )
       {
         directions.push_back( Q.col( i ) );
         directions.push_back( -Q.col( i ) );
@@ -291,19 +279,18 @@ namespace Utils
      * @brief Generate search points around current point
      * @param search_points Output vector of search points
      */
-    void
-    generate_search_points( std::vector<Vector> & search_points )
+    void generate_search_points( std::vector<Vector> & search_points )
     {
-      size_t n = m_current_x.size();
+      integer n = m_current_x.size();
       search_points.clear();
 
       std::uniform_real_distribution<Scalar> dist( -1.0, 1.0 );
 
       // Generate random points in the mesh neighborhood
-      for ( size_t i = 0; i < m_opts.search_points; ++i )
+      for ( integer i = 0; i < m_opts.search_points; ++i )
       {
         Vector point = m_current_x;
-        for ( size_t j = 0; j < n; ++j )
+        for ( integer j = 0; j < n; ++j )
         {
           Scalar step = m_mesh_size * dist( m_rng );
           point( j ) += step;
@@ -321,8 +308,7 @@ namespace Utils
      * @param fun Objective function
      * @return Function value
      */
-    Scalar
-    evaluate_point( Vector const & point, Callback const & fun )
+    Scalar evaluate_point( Vector const & point, Callback const & fun )
     {
       // Check if point was already evaluated
       auto it = m_visited_points.find( point );
@@ -345,8 +331,7 @@ namespace Utils
      * @param fun Objective function
      * @return True if improvement found
      */
-    bool
-    search_step( Callback const & fun )
+    bool search_step( Callback const & fun )
     {
       if ( !m_opts.enable_search ) return false;
 
@@ -385,8 +370,7 @@ namespace Utils
      * @param fun Objective function
      * @return True if improvement found
      */
-    bool
-    poll_step( Callback const & fun )
+    bool poll_step( Callback const & fun )
     {
       std::vector<Vector> directions;
 
@@ -436,8 +420,7 @@ namespace Utils
      * @brief Update mesh size based on iteration success
      * @param success Whether iteration was successful
      */
-    void
-    update_mesh_size( bool success )
+    void update_mesh_size( bool success )
     {
       if ( success )
       {
@@ -455,43 +438,41 @@ namespace Utils
      * @brief Check convergence criteria
      * @param iteration Current iteration
      * @param no_improvement_count Count of iterations without improvement
-     * @return Convergence result
+     * @return True if converged
      */
-    Result
-    check_convergence( size_t iteration, size_t no_improvement_count ) const
+    bool check_convergence( integer no_improvement_count )
     {
       // Mesh size convergence
       if ( m_mesh_size <= m_opts.tol_mesh )
       {
-        return { m_current_f, m_current_x, iteration, m_eval_count, true, m_mesh_size, "Mesh size below tolerance" };
+        m_termination_message = "Mesh size below tolerance";
+        return ( m_converged = true );
       }
 
       // No improvement convergence
       if ( no_improvement_count >= m_opts.patience )
       {
-        return {
-          m_current_f, m_current_x, iteration, m_eval_count, true, m_mesh_size, "No improvement for patience iterations"
-        };
+        m_termination_message = "No improvement for patience iterations";
+        return ( m_converged = true );
       }
 
       // Maximum evaluations reached
       if ( m_eval_count >= m_opts.max_evaluations )
       {
-        return {
-          m_current_f, m_current_x, iteration, m_eval_count, true, m_mesh_size, "Maximum function evaluations reached"
-        };
+        m_termination_message = "Maximum function evaluations reached";
+        return ( m_converged = true );
       }
 
-      // Not converged
-      return { m_current_f, m_current_x, iteration, m_eval_count, false, m_mesh_size, "" };
+      return false;
     }
 
   public:
     /**
      * @brief Perform minimization using MADS
+     * @param x0 Initial point
+     * @param fun Objective function
      */
-    Result
-    minimize( Vector const & x0, Callback const & fun )
+    void minimize( Vector const & x0, Callback const & fun )
     {
       // Initialize
       m_current_x = x0;
@@ -499,22 +480,26 @@ namespace Utils
       m_current_f  = fun( x0 );
       m_mesh_size  = m_opts.initial_mesh_size;
       m_eval_count = 1;
+      m_converged  = false;
+      m_termination_message.clear();
       m_history.clear();
       m_visited_points.clear();
       m_visited_points.insert( m_current_x );
 
-      size_t n                    = x0.size();
-      size_t no_improvement_count = 0;
+      integer n                    = x0.size();
+      integer no_improvement_count = 0;
 
       if ( m_opts.verbose )
       {
         fmt::print(
-            "[MADS] Starting optimization, dimension: {}, initial f: {}, "
-            "initial mesh: {}\n",
-            n, m_current_f, m_mesh_size );
+          "[MADS] Starting optimization, dimension: {}, initial f: {}, "
+          "initial mesh: {}\n",
+          n,
+          m_current_f,
+          m_mesh_size );
       }
 
-      for ( size_t k{ 0 }; k < m_opts.max_iter; ++k )
+      for ( integer k{ 0 }; k < m_opts.max_iter; ++k )
       {
         bool improvement = false;
 
@@ -540,103 +525,80 @@ namespace Utils
         // Verbose output
         if ( m_opts.verbose && ( k % m_opts.print_every ) == 0 )
         {
-          fmt::print( "[MADS] iter={:<4} f={:<10.4} mesh={:<10.4} improv={} evals={}\n", k, m_current_f, m_mesh_size,
-                      improvement, m_eval_count );
+          fmt::print(
+            "[MADS] iter={:<4} f={:<10.4} mesh={:<10.4} improv={} evals={}\n",
+            k,
+            m_current_f,
+            m_mesh_size,
+            improvement,
+            m_eval_count );
         }
 
         // Check convergence
-        Result conv_result = check_convergence( k, no_improvement_count );
-        if ( conv_result.converged )
+        if ( check_convergence( no_improvement_count ) )
         {
-          if ( m_opts.verbose ) { fmt::print( "[MADS] Converged at iteration {}: {}\n", k, conv_result.message ); }
-          return conv_result;
+          if ( m_opts.verbose ) { fmt::print( "[MADS] Converged at iteration {}: {}\n", k, m_termination_message ); }
+          return;
         }
 
         // Check maximum evaluations
         if ( m_eval_count >= m_opts.max_evaluations )
         {
-          return {
-            m_current_f, m_current_x, k, m_eval_count, true, m_mesh_size, "Maximum function evaluations reached"
-          };
+          m_converged           = true;
+          m_termination_message = "Maximum function evaluations reached";
+          if ( m_opts.verbose ) { fmt::print( "[MADS] Stopped: {}\n", m_termination_message ); }
+          return;
         }
       }
 
-      return {
-        m_current_f, m_current_x, m_opts.max_iter, m_eval_count, false, m_mesh_size, "Maximum iterations reached"
-      };
+      m_converged           = false;
+      m_termination_message = "Maximum iterations reached";
+      if ( m_opts.verbose ) { fmt::print( "[MADS] Stopped: {}\n", m_termination_message ); }
     }
 
     /**
      * @brief Get optimization history
      * @return Vector of iteration data
      */
-    std::vector<IterationData> const &
-    get_history() const
-    {
-      return m_history;
-    }
-
-    /**
-     * @brief Get current mesh size
-     * @return Current mesh size
-     */
-    Scalar
-    get_mesh_size() const
-    {
-      return m_mesh_size;
-    }
-
-    /**
-     * @brief Get number of function evaluations
-     * @return Evaluation count
-     */
-    size_t
-    get_eval_count() const
-    {
-      return m_eval_count;
-    }
+    std::vector<IterationData> const & get_history() const { return m_history; }
 
     /**
      * @brief Get current options
      * @return Current options
      */
-    Options const &
-    get_options() const
-    {
-      return m_opts;
-    }
+    Options const & get_options() const { return m_opts; }
 
     /**
      * @brief Set new options
      * @param opts New options
      */
-    void
-    set_options( Options const & opts )
-    {
-      m_opts = opts;
-    }
+    void set_options( Options const & opts ) { m_opts = opts; }
 
     /**
      * @brief Get current state information
      * @return String with current state info
      */
-    string
-    get_state_info() const
+    string get_state_info() const
     {
-      return fmt::format( "MADS State: f={}, mesh_size={}, evaluations={}, visited_points={}", m_current_f, m_mesh_size,
-                          m_eval_count, m_visited_points.size() );
+      return fmt::format(
+        "MADS State: f={}, mesh_size={}, evaluations={}, visited_points={}",
+        m_current_f,
+        m_mesh_size,
+        m_eval_count,
+        m_visited_points.size() );
     }
 
     /**
      * @brief Reset the optimizer state
      */
-    void
-    reset()
+    void reset()
     {
       m_current_x  = Vector();
       m_current_f  = std::numeric_limits<Scalar>::max();
       m_mesh_size  = m_opts.initial_mesh_size;
       m_eval_count = 0;
+      m_converged  = false;
+      m_termination_message.clear();
       m_history.clear();
       m_visited_points.clear();
     }

@@ -20,16 +20,17 @@ class Gulf : public NonlinearSystem
 
 public:
   Gulf()
-    : NonlinearSystem( "Gulf R&D Function",
-                       "@book{brent2013,\n"
-                       "  author    = {Brent, R.P.},\n"
-                       "  title     = {Algorithms for Minimization Without Derivatives},\n"
-                       "  isbn      = {9780486143682},\n"
-                       "  series    = {Dover Books on Mathematics},\n"
-                       "  year      = {2013},\n"
-                       "  publisher = {Dover Publications}\n"
-                       "}\n",
-                       3 )
+    : NonlinearSystem(
+        "Gulf R&D Function",
+        "@book{brent2013,\n"
+        "  author    = {Brent, R.P.},\n"
+        "  title     = {Algorithms for Minimization Without Derivatives},\n"
+        "  isbn      = {9780486143682},\n"
+        "  series    = {Dover Books on Mathematics},\n"
+        "  year      = {2013},\n"
+        "  publisher = {Dover Publications}\n"
+        "}\n",
+        3 )
   {
     for ( integer i = 0; i < 99; ++i )
     {
@@ -38,8 +39,7 @@ public:
     }
   }
 
-  real_type
-  t_fun( Vector const & x, integer i ) const
+  real_type t_fun( Vector const & x, integer i ) const
   {
     real_type arg = ( i + 1 ) / 100.0;
     real_type r   = rr[i] - x( 1 );
@@ -47,8 +47,7 @@ public:
     return exp( -pow( r, x( 2 ) ) / x( 0 ) ) - arg;
   }
 
-  void
-  t_grad( Vector const & x, integer i, Vector & g ) const
+  void t_grad( Vector const & x, integer i, Vector & g ) const
   {
     real_type t1 = rr[i] - x( 1 );
     if ( t1 <= 0 )
@@ -66,8 +65,7 @@ public:
     g( 2 )        = -t8 * t6 * t15 * t2;
   }
 
-  void
-  t_hess( Vector const & x, integer i, Matrix & h ) const
+  void t_hess( Vector const & x, integer i, Matrix & h ) const
   {
     real_type t1 = rr[i] - x( 1 );
     if ( t1 <= 0 )
@@ -99,8 +97,7 @@ public:
     h( 2, 1 )     = h( 1, 2 );
   }
 
-  virtual void
-  evaluate( Vector const & x, Vector & f ) const override
+  virtual void evaluate( Vector const & x, Vector & f ) const override
   {
     Vector g( 3 );
     f( 0 ) = f( 1 ) = f( 2 ) = 0;
@@ -114,8 +111,7 @@ public:
     }
   }
 
-  virtual void
-  jacobian( Vector const & x, SparseMatrix & J ) const override
+  virtual void jacobian( Vector const & x, SparseMatrix & J ) const override
   {
     Matrix J_full( n, n );
     J_full.setZero();
@@ -141,8 +137,7 @@ public:
     J = J_full.sparseView();
   }
 
-  virtual void
-  exact_solution( vector<Vector> & x_vec ) const override
+  virtual void exact_solution( vector<Vector> & x_vec ) const override
   {
     x_vec.resize( 1 );
     auto & x0{ x_vec[0] };
@@ -150,8 +145,7 @@ public:
     x0 << 50.0, 25.0, 1.5;
   }
 
-  virtual void
-  initial_points( vector<Vector> & x_vec ) const override
+  virtual void initial_points( vector<Vector> & x_vec ) const override
   {
     x_vec.resize( 1 );
     auto & x0{ x_vec[0] };
@@ -159,8 +153,7 @@ public:
     x0 << 40.0, 20.0, 1.20;
   }
 
-  virtual void
-  check_if_admissible( Vector const & x ) const override
+  virtual void check_if_admissible( Vector const & x ) const override
   {
     UTILS_ASSERT( x( 0 ) > 0, "x0!!!!" );
     UTILS_ASSERT( x( 1 ) > 0, "x0!!!!" );
@@ -171,8 +164,7 @@ public:
     }
   }
 
-  virtual void
-  bounding_box( Vector & L, Vector & U ) const override
+  virtual void bounding_box( Vector & L, Vector & U ) const override
   {
     U.fill( real_max );
     L.fill( -real_max );

@@ -8,17 +8,17 @@
  |    email: enrico.bertolazzi@unitn.it
 \*/
 
-#define DEVILLIERS_BIBTEX                                                                                              \
-  "@article{More:1981,\n"                                                                                              \
-  "  author  = {Mor{\'e}, Jorge J. and Garbow, Burton S. and Hillstrom, "                                              \
-  "Kenneth E.},\n"                                                                                                     \
-  "  title   = {Testing Unconstrained Optimization Software},\n"                                                       \
-  "  journal = {ACM Trans. Math. Softw.},\n"                                                                           \
-  "  year    = {1981},\n"                                                                                              \
-  "  volume  = {7},\n"                                                                                                 \
-  "  number  = {1},\n"                                                                                                 \
-  "  pages   = {17--41},\n"                                                                                            \
-  "  doi     = {10.1145/355934.355936},\n"                                                                             \
+#define DEVILLIERS_BIBTEX                                                 \
+  "@article{More:1981,\n"                                                 \
+  "  author  = {Mor{\'e}, Jorge J. and Garbow, Burton S. and Hillstrom, " \
+  "Kenneth E.},\n"                                                        \
+  "  title   = {Testing Unconstrained Optimization Software},\n"          \
+  "  journal = {ACM Trans. Math. Softw.},\n"                              \
+  "  year    = {1981},\n"                                                 \
+  "  volume  = {7},\n"                                                    \
+  "  number  = {1},\n"                                                    \
+  "  pages   = {17--41},\n"                                               \
+  "  doi     = {10.1145/355934.355936},\n"                                \
   "}\n"
 
 /*\
@@ -41,16 +41,14 @@ public:
     }
   }
 
-  real_type
-  f_val( Vector const & x, integer k ) const
+  real_type f_val( Vector const & x, integer k ) const
   {
     real_type t  = t_vec[k];
     real_type bf = x( 0 ) * pow( x( 1 ), t );
     return sin( x( 2 ) * t + x( 3 ) ) * bf - y_vec[k];
   }
 
-  void
-  f_grad( Vector const & x, integer k, Vector & g ) const
+  void f_grad( Vector const & x, integer k, Vector & g ) const
   {
     real_type t   = t_vec[k];
     real_type SIN = sin( x( 2 ) * t + x( 3 ) );
@@ -63,8 +61,7 @@ public:
     g( 3 )        = COS * x( 0 ) * PW;
   }
 
-  void
-  f_hess( Vector const & x, integer k, Matrix & h ) const
+  void f_hess( Vector const & x, integer k, Matrix & h ) const
   {
     real_type t   = t_vec[k];
     real_type SIN = sin( x( 2 ) * t + x( 3 ) );
@@ -93,14 +90,9 @@ public:
     h( 3, 3 ) = -SIN * x( 0 ) * PW;
   }
 
-  bool
-  check_x( Vector const & x ) const
-  {
-    return x( 1 ) > 0;
-  }
+  bool check_x( Vector const & x ) const { return x( 1 ) > 0; }
 
-  virtual void
-  evaluate( Vector const & x, Vector & f ) const override
+  virtual void evaluate( Vector const & x, Vector & f ) const override
   {
     if ( check_x( x ) )
     {
@@ -119,8 +111,7 @@ public:
     }
   }
 
-  virtual void
-  jacobian( Vector const & x, SparseMatrix & J ) const override
+  virtual void jacobian( Vector const & x, SparseMatrix & J ) const override
   {
     Vector g( 4 );
     Matrix h( 4, 4 ), J_full( 4, 4 );
@@ -137,8 +128,7 @@ public:
     J = J_full.sparseView();
   }
 
-  virtual void
-  initial_points( vector<Vector> & x_vec ) const override
+  virtual void initial_points( vector<Vector> & x_vec ) const override
   {
     x_vec.resize( 1 );
     auto & x0{ x_vec[0] };
@@ -146,8 +136,7 @@ public:
     x0 << 1, 8, 4, 4.412;
   }
 
-  virtual void
-  check_if_admissible( Vector const & x ) const override
+  virtual void check_if_admissible( Vector const & x ) const override
   {
     UTILS_ASSERT( x( 1 ) > 0, "DeVilliersGlasser01, x(1) = {} <= 0", x( 1 ) );
     UTILS_ASSERT( -500 <= x( 0 ) && x( 0 ) <= 500, "DeVilliersGlasser#1, x(0) = {} must be in [-500,500]", x( 0 ) );
@@ -156,8 +145,7 @@ public:
     UTILS_ASSERT( -500 <= x( 3 ) && x( 3 ) <= 500, "DeVilliersGlasser#1, x(3) = {} must be in [-500,500]", x( 3 ) );
   }
 
-  virtual void
-  bounding_box( Vector & L, Vector & U ) const override
+  virtual void bounding_box( Vector & L, Vector & U ) const override
   {
     L[0] = -500;
     U[0] = 500;
@@ -191,8 +179,7 @@ public:
     }
   }
 
-  real_type
-  f_val( Vector const & x, integer k ) const
+  real_type f_val( Vector const & x, integer k ) const
   {
     real_type t = t_vec[k];
     real_type bf;
@@ -203,8 +190,7 @@ public:
     return cos( exp( x( 4 ) ) * t ) * tanh( x( 2 ) * t + sin( x( 3 ) * t ) ) * bf * x( 0 ) - y_vec[k];
   }
 
-  void
-  f_grad( Vector const & x, integer k, Vector & g ) const
+  void f_grad( Vector const & x, integer k, Vector & g ) const
   {
     real_type PW   = pow( std::abs( x( 1 ) ), t_vec[k] );
     real_type PW1  = pow( std::abs( x( 1 ) ), t_vec[k] - 1 );
@@ -221,8 +207,7 @@ public:
     g[4]   = -bf * PW * TANH * exp( x( 4 ) ) * SIN;
   }
 
-  void
-  f_hess( Vector const & x, integer k, Matrix & h ) const
+  void f_hess( Vector const & x, integer k, Matrix & h ) const
   {
     real_type PW   = pow( std::abs( x( 1 ) ), t_vec[k] );
     real_type PW1  = pow( std::abs( x( 1 ) ), t_vec[k] - 1 );
@@ -288,14 +273,9 @@ public:
     h( 4, 4 )     = -( COS * t17 + SIN ) * x( 0 ) * t23 * PW * t17;
   }
 
-  bool
-  check_x( Vector const & x ) const
-  {
-    return x( 1 ) > 0;
-  }
+  bool check_x( Vector const & x ) const { return x( 1 ) > 0; }
 
-  virtual void
-  evaluate( Vector const & x, Vector & f ) const override
+  virtual void evaluate( Vector const & x, Vector & f ) const override
   {
     if ( check_x( x ) )
     {
@@ -314,8 +294,7 @@ public:
     }
   }
 
-  virtual void
-  jacobian( Vector const & x, SparseMatrix & J ) const override
+  virtual void jacobian( Vector const & x, SparseMatrix & J ) const override
   {
     Vector g( 5 );
     Matrix h( 5, 5 ), J_full( 5, 5 );
@@ -331,8 +310,7 @@ public:
     J = J_full.sparseView();
   }
 
-  virtual void
-  initial_points( vector<Vector> & x_vec ) const override
+  virtual void initial_points( vector<Vector> & x_vec ) const override
   {
     x_vec.resize( 1 );
     auto & x0{ x_vec[0] };
@@ -340,8 +318,7 @@ public:
     x0 << 45, 2, 2.5, 1.5, 0.9;
   }
 
-  virtual void
-  check_if_admissible( Vector const & x ) const override
+  virtual void check_if_admissible( Vector const & x ) const override
   {
     UTILS_ASSERT( x( 1 ) > 0, "DeVilliersGlasser02, x(1) = {} <= 0", x( 1 ) );
     UTILS_ASSERT( -500 <= x( 0 ) && x( 0 ) <= 500, "DeVilliersGlasser#2, x(0) = {} must be in [-500,500]", x( 0 ) );
@@ -351,8 +328,7 @@ public:
     UTILS_ASSERT( -500 <= x( 4 ) && x( 4 ) <= 500, "DeVilliersGlasser#2, x(4) = {} must be in [-500,500]", x( 4 ) );
   }
 
-  virtual void
-  bounding_box( Vector & L, Vector & U ) const override
+  virtual void bounding_box( Vector & L, Vector & U ) const override
   {
     L[0] = -500;
     U[0] = 500;

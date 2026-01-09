@@ -16,37 +16,37 @@ class BoxAndBettsExponentialQuadraticSum : public NonlinearSystem
 {
 public:
   BoxAndBettsExponentialQuadraticSum()
-    : NonlinearSystem( "Box and Betts exponential quadratic sum",
-                       "@article{Box:1966,\n"
-                       "  author  = {Box, M. J.},\n"
-                       "  title   = {A Comparison of Several Current Optimization "
-                       "Methods,\n"
-                       "             and the use of Transformations in Constrained "
-                       "Problems},\n"
-                       "  journal = {The Computer Journal},\n"
-                       "  volume  = {9},\n"
-                       "  number  = {1},\n"
-                       "  pages   = {67--77},\n"
-                       "  year    = {1966},\n"
-                       "  doi     = {10.1093/comjnl/9.1.67},\n"
-                       "}\n\n"
-                       "@article{More:1981,\n"
-                       "  author  = {Mor{\'e}, Jorge J. and Garbow, Burton S. and "
-                       "Hillstrom, Kenneth E.},\n"
-                       "  title   = {Testing Unconstrained Optimization Software},\n"
-                       "  journal = {ACM Trans. Math. Softw.},\n"
-                       "  year    = {1981},\n"
-                       "  volume  = {7},\n"
-                       "  number  = {1},\n"
-                       "  pages   = {17--41},\n"
-                       "  doi     = {10.1145/355934.355936},\n"
-                       "}\n",
-                       3 )
+    : NonlinearSystem(
+        "Box and Betts exponential quadratic sum",
+        "@article{Box:1966,\n"
+        "  author  = {Box, M. J.},\n"
+        "  title   = {A Comparison of Several Current Optimization "
+        "Methods,\n"
+        "             and the use of Transformations in Constrained "
+        "Problems},\n"
+        "  journal = {The Computer Journal},\n"
+        "  volume  = {9},\n"
+        "  number  = {1},\n"
+        "  pages   = {67--77},\n"
+        "  year    = {1966},\n"
+        "  doi     = {10.1093/comjnl/9.1.67},\n"
+        "}\n\n"
+        "@article{More:1981,\n"
+        "  author  = {Mor{\'e}, Jorge J. and Garbow, Burton S. and "
+        "Hillstrom, Kenneth E.},\n"
+        "  title   = {Testing Unconstrained Optimization Software},\n"
+        "  journal = {ACM Trans. Math. Softw.},\n"
+        "  year    = {1981},\n"
+        "  volume  = {7},\n"
+        "  number  = {1},\n"
+        "  pages   = {17--41},\n"
+        "  doi     = {10.1145/355934.355936},\n"
+        "}\n",
+        3 )
   {
   }
 
-  virtual void
-  evaluate( Vector const & x_in, Vector & f ) const override
+  virtual void evaluate( Vector const & x_in, Vector & f ) const override
   {
     real_type const & x    = x_in( 0 );
     real_type const & y    = x_in( 1 );
@@ -120,8 +120,7 @@ public:
              2.0 * t74 * t72 - 2.0 * t85 * t83 - 2.0 * t96 * t94 - 2.0 * t104 * t102;
   }
 
-  virtual void
-  jacobian( Vector const & x_in, SparseMatrix & J ) const override
+  virtual void jacobian( Vector const & x_in, SparseMatrix & J ) const override
   {
     J.resize( n, n );
     J.setZero();
@@ -250,8 +249,7 @@ public:
     J.makeCompressed();
   }
 
-  virtual void
-  exact_solution( vector<Vector> & x_vec ) const override
+  virtual void exact_solution( vector<Vector> & x_vec ) const override
   {
     x_vec.resize( 2 );
     auto & x0{ x_vec[0] };
@@ -262,8 +260,7 @@ public:
     x1 << 10, 1, -1;
   }
 
-  virtual void
-  initial_points( vector<Vector> & x_vec ) const override
+  virtual void initial_points( vector<Vector> & x_vec ) const override
   {
     x_vec.resize( 1 );
     auto & x0{ x_vec[0] };

@@ -21,7 +21,8 @@
 /// file: ClothoidList_ClothoidSplineG2.hxx
 ///
 
-namespace G2lib {
+namespace G2lib
+{
 
   /*\
    |
@@ -35,21 +36,20 @@ namespace G2lib {
   //!
   //! Class for the computation of \f$ G^2 \f$ spljne of clothoids
   //!
-  class ClothoidSplineG2 {
+  class ClothoidSplineG2
+  {
   public:
-    
-    integer   m_max_iter{50};
-    real_type m_tolerance{1e-10};
-    real_type m_dump_min{0.1};
+    integer   m_max_iter{ 50 };
+    real_type m_tolerance{ 1e-10 };
+    real_type m_dump_min{ 0.1 };
 
   private:
-
-    TargetType m_tt{TargetType::P1};
-    integer    m_npts{0};
+    TargetType m_tt{ TargetType::P1 };
+    integer    m_npts{ 0 };
 
     // work vector
-    Eigen::Vector<real_type,Eigen::Dynamic> m_x;
-    Eigen::Vector<real_type,Eigen::Dynamic> m_y;
+    Eigen::Vector<real_type, Eigen::Dynamic> m_x;
+    Eigen::Vector<real_type, Eigen::Dynamic> m_y;
 
     mutable vector<G2derivative> m_G2_vec;
 
@@ -61,16 +61,13 @@ namespace G2lib {
     void evaluate_for_NLP_D_BC( real_type const theta[] ) const;
     void evaluate_for_NLP_DD_BC( real_type const theta[] ) const;
 
-    real_type
-    diff2pi( real_type in ) const
-    { return in-Utils::m_2pi*round(in/Utils::m_2pi); }
+    real_type diff2pi( real_type in ) const { return in - Utils::m_2pi * round( in / Utils::m_2pi ); }
 
     // vecchio da rimuovere
     void allocate( integer const npts );
 
   public:
-
-    ClothoidSplineG2() = default;
+    ClothoidSplineG2()  = default;
     ~ClothoidSplineG2() = default;
 
     void setP4() { m_tt = TargetType::P4; }
@@ -83,80 +80,53 @@ namespace G2lib {
     TargetType get_target() const { return m_tt; }
 
     // vecchio da rimuovere
-    void
-    build(
-      real_type const xvec[],
-      real_type const yvec[],
-      integer   const npts
-    );
+    void build( real_type const xvec[], real_type const yvec[], integer const npts );
 
-    void
-    build(
-      integer   const npts,
-      real_type const xvec[],
-      real_type const yvec[],
-      real_type       theta[]
-    ) {
+    void build( integer const npts, real_type const xvec[], real_type const yvec[], real_type theta[] )
+    {
       build_PN( npts, xvec, yvec, theta, TargetType::P4 );
     }
 
-    bool
-    build_P1(
-      integer   const npts,
+    bool build_P1(
+      integer const   npts,
       real_type const xvec[],
       real_type const yvec[],
       real_type       theta[],
       real_type       theta_init,
-      real_type       theta_end
-    );
+      real_type       theta_end );
 
-    bool
-    build_P2(
-      integer   const npts,
-      real_type const xvec[],
-      real_type const yvec[],
-      real_type       theta[]
-    );
+    bool build_P2( integer const npts, real_type const xvec[], real_type const yvec[], real_type theta[] );
 
-    bool
-    build_PN(
-      integer   const npts,
+    bool build_PN(
+      integer const   npts,
       real_type const xvec[],
       real_type const yvec[],
       real_type       theta[],
-      TargetType      tt
-    );
+      TargetType      tt );
 
     integer numPnts() const { return m_npts; }
     integer numTheta() const;
     integer numConstraints() const;
 
-    void
-    guess(
-      real_type theta_guess[],
-      real_type theta_min[],
-      real_type theta_max[]
-    ) const;
+    void guess( real_type theta_guess[], real_type theta_min[], real_type theta_max[] ) const;
 
-    bool objective   ( real_type const theta[], real_type & f ) const;
-    bool gradient    ( real_type const theta[], Pipal::Vector<real_type> & g ) const;
-    bool constraints ( real_type const theta[], Pipal::Vector<real_type> & c ) const;
+    bool objective( real_type const theta[], real_type & f ) const;
+    bool gradient( real_type const theta[], Pipal::Vector<real_type> & g ) const;
+    bool constraints( real_type const theta[], Pipal::Vector<real_type> & c ) const;
 
-    bool jacobian ( real_type const theta[], Pipal::SparseMatrix<real_type> & J ) const;
+    bool jacobian( real_type const theta[], Pipal::SparseMatrix<real_type> & J ) const;
 
-    bool lagrangian_hessian ( real_type const theta[], real_type const lambda[], Pipal::SparseMatrix<real_type> & H ) const;
+    bool lagrangian_hessian( real_type const theta[], real_type const lambda[], Pipal::SparseMatrix<real_type> & H )
+      const;
 
     string info() const;
 
     void info( ostream_type & stream ) const { stream << this->info(); }
 
-    friend
-    ostream_type &
-    operator << ( ostream_type & stream, ClothoidSplineG2 const & c );
-
+    friend ostream_type & operator<<( ostream_type & stream, ClothoidSplineG2 const & c );
   };
 
-}
+}  // namespace G2lib
 
 ///
 /// eof: ClothoidList_ClothoidSplineG2.hxx

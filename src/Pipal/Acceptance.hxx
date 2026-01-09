@@ -13,7 +13,8 @@
 #ifndef INCLUDE_PIPAL_ACCEPTANCE_HXX
 #define INCLUDE_PIPAL_ACCEPTANCE_HXX
 
-namespace Pipal {
+namespace Pipal
+{
 
   /**
    * \brief Backtracking line search.
@@ -23,64 +24,59 @@ namespace Pipal {
    * the iterate is restored to the accepted trial point; otherwise the steplength is reduced until
    * the Armijo condition or the fraction-to-boundary constraint prevents further reductions.
    */
-  template <typename Real>
-  void Solver<Real>::backtracking()
+  template <typename Real> void Solver<Real>::backtracking()
   {
-    static constexpr Real EPS{std::numeric_limits<Real>::epsilon()};
+    static constexpr Real EPS{ std::numeric_limits<Real>::epsilon() };
 
     // Create alias for easier access
-    Parameter<Real>  & p{this->m_parameter};
-    Input<Real>      & i{this->m_input};
-    Iterate<Real>    & z{this->m_iterate};
-    Direction<Real>  & d{this->m_direction};
-    Acceptance<Real> & a{this->m_acceptance};
+    Parameter<Real> &  p{ this->m_parameter };
+    Input<Real> &      i{ this->m_input };
+    Iterate<Real> &    z{ this->m_iterate };
+    Direction<Real> &  d{ this->m_direction };
+    Acceptance<Real> & a{ this->m_acceptance };
 
     // Store current values
-    Real f{z.f}, phi{z.phi};
-    Array<Real> cE(z.cE), r1(z.r1), r2(z.r2), lE(z.lE), cI(z.cI), s1(z.s1), s2(z.s2), lI(z.lI);
-    Vector<Real> x(z.x);
+    Real         f{ z.f }, phi{ z.phi };
+    Array<Real>  cE( z.cE ), r1( z.r1 ), r2( z.r2 ), lE( z.lE ), cI( z.cI ), s1( z.s1 ), s2( z.s2 ), lI( z.lI );
+    Vector<Real> x( z.x );
 
     // Backtracking loop
-    while (a.p >= EPS)
+    while ( a.p >= EPS )
     {
       // Set trial point
       this->updatePoint();
       this->evalFunctions();
 
       // Check for function evaluation error
-      if (z.err == 0)
+      if ( z.err == 0 )
       {
         // Set remaining trial values
         this->evalSlacks();
         this->evalMerit();
 
         // Check for nonlinear fraction-to-boundary violation
-        Integer ftb{0};
-        Real const tmp_min{std::min(p.ls_frac, z.mu)};
-        if (i.nE > 0) {
-          ftb += (z.r1 < tmp_min*r1).count() + (z.r2 < tmp_min*r2).count();
-        }
-        if (i.nI > 0) {
-          ftb += (z.s1 < tmp_min*s1).count() + (z.s2 < tmp_min*s2).count();
-        }
+        Integer    ftb{ 0 };
+        Real const tmp_min{ std::min( p.ls_frac, z.mu ) };
+        if ( i.nE > 0 ) { ftb += ( z.r1 < tmp_min * r1 ).count() + ( z.r2 < tmp_min * r2 ).count(); }
+        if ( i.nI > 0 ) { ftb += ( z.s1 < tmp_min * s1 ).count() + ( z.s2 < tmp_min * s2 ).count(); }
 
         // Check Armijo condition
-        if (ftb == 0 && z.phi - phi <= -p.ls_thresh*a.p*std::max(d.qtred, 0.0))
+        if ( ftb == 0 && z.phi - phi <= -p.ls_thresh * a.p * std::max( d.qtred, 0.0 ) )
         {
           // Reset variables and return
-          this->setPrimals(x, r1, r2, s1, s2, lE, lI, z.f, z.cE, z.cI, z.phi);
+          this->setPrimals( x, r1, r2, s1, s2, lE, lI, z.f, z.cE, z.cI, z.phi );
           return;
         }
         else
         {
           // Reset variables
-          this->setPrimals(x, r1, r2, s1, s2, lE, lI, f, cE, cI, phi);
+          this->setPrimals( x, r1, r2, s1, s2, lE, lI, f, cE, cI, phi );
         }
       }
       else
       {
         // Reset variables
-        this->setPrimals(x, r1, r2, s1, s2, lE, lI, f, cE, cI, phi);
+        this->setPrimals( x, r1, r2, s1, s2, lE, lI, f, cE, cI, phi );
       }
 
       // Reduce step length
@@ -96,36 +92,37 @@ namespace Pipal {
    * (initial primal fraction), \p a.p (primal steplength) and \p a.d (dual steplength).
    * \tparam Real Floating-point type used by the algorithm.
    */
-  template <typename Real>
-  void Solver<Real>::fractionToBoundary()
+  template <typename Real> void Solver<Real>::fractionToBoundary()
   {
-    static constexpr Real INF{std::numeric_limits<Real>::infinity()};
+    static constexpr Real INF{ std::numeric_limits<Real>::infinity() };
 
     // Create alias for easier access
-    Parameter<Real>  & p{this->m_parameter};
-    Input<Real>      & i{this->m_input};
-    Iterate<Real>    & z{this->m_iterate};
-    Direction<Real>  & d{this->m_direction};
-    Acceptance<Real> & a{this->m_acceptance};
+    Parameter<Real> &  p{ this->m_parameter };
+    Input<Real> &      i{ this->m_input };
+    Iterate<Real> &    z{ this->m_iterate };
+    Direction<Real> &  d{ this->m_direction };
+    Acceptance<Real> & a{ this->m_acceptance };
 
     // Initialize primal fraction-to-boundary
     a.p0 = 1.0;
 
     // Update primal fraction-to-boundary for constraint slacks
-    Real frac{std::min(p.ls_frac, z.mu)};
-    if (i.nE > 0) {
-      const Indices idx_r1(find(d.r1 < 0.0)), idx_r2(find(d.r2 < 0.0));
-      Real min_1{INF}, min_2{INF};
-      if (idx_r1.size() > 0) {min_1 = (((frac - 1.0)*z.r1(idx_r1))/d.r1(idx_r1)).minCoeff();}
-      if (idx_r2.size() > 0) {min_2 = (((frac - 1.0)*z.r2(idx_r2))/d.r2(idx_r2)).minCoeff();}
-      a.p0 = std::min(a.p0, std::min(min_1, min_2));
+    Real frac{ std::min( p.ls_frac, z.mu ) };
+    if ( i.nE > 0 )
+    {
+      const Indices idx_r1( find( d.r1 < 0.0 ) ), idx_r2( find( d.r2 < 0.0 ) );
+      Real          min_1{ INF }, min_2{ INF };
+      if ( idx_r1.size() > 0 ) { min_1 = ( ( ( frac - 1.0 ) * z.r1( idx_r1 ) ) / d.r1( idx_r1 ) ).minCoeff(); }
+      if ( idx_r2.size() > 0 ) { min_2 = ( ( ( frac - 1.0 ) * z.r2( idx_r2 ) ) / d.r2( idx_r2 ) ).minCoeff(); }
+      a.p0 = std::min( a.p0, std::min( min_1, min_2 ) );
     }
-    if (i.nI > 0) {
-      const Indices idx_s1(find(d.s1 < 0.0)), idx_s2(find(d.s2 < 0.0));
-      Real min_1{INF}, min_2{INF};
-      if (idx_s1.size() > 0) {min_1 = (((frac - 1.0)*z.s1(idx_s1))/d.s1(idx_s1)).minCoeff();}
-      if (idx_s2.size() > 0) {min_2 = (((frac - 1.0)*z.s2(idx_s2))/d.s2(idx_s2)).minCoeff();}
-      a.p0 = std::min(a.p0, std::min(min_1, min_2));
+    if ( i.nI > 0 )
+    {
+      const Indices idx_s1( find( d.s1 < 0.0 ) ), idx_s2( find( d.s2 < 0.0 ) );
+      Real          min_1{ INF }, min_2{ INF };
+      if ( idx_s1.size() > 0 ) { min_1 = ( ( ( frac - 1.0 ) * z.s1( idx_s1 ) ) / d.s1( idx_s1 ) ).minCoeff(); }
+      if ( idx_s2.size() > 0 ) { min_2 = ( ( ( frac - 1.0 ) * z.s2( idx_s2 ) ) / d.s2( idx_s2 ) ).minCoeff(); }
+      a.p0 = std::min( a.p0, std::min( min_1, min_2 ) );
     }
 
     // Initialize primal step length
@@ -135,19 +132,21 @@ namespace Pipal {
     a.d = 1.0;
 
     // Update dual fraction-to-boundary for constraint multipliers
-    if (i.nE > 0) {
-      const Indices idx_l(find(d.lE < 0.0)), idx_g(find(d.lE > 0));
-      Real min_1{INF}, min_2{INF};
-      if (idx_l.size() > 0) {min_1 = (((frac - 1.0)*(1.0 + z.lE(idx_l)))/d.lE(idx_l)).minCoeff();}
-      if (idx_g.size() > 0) {min_2 = (((1.0 - frac)*(1.0 - z.lE(idx_g)))/d.lE(idx_g)).minCoeff();}
-      a.d = std::min(a.d, std::min(min_1, min_2));
+    if ( i.nE > 0 )
+    {
+      const Indices idx_l( find( d.lE < 0.0 ) ), idx_g( find( d.lE > 0 ) );
+      Real          min_1{ INF }, min_2{ INF };
+      if ( idx_l.size() > 0 ) { min_1 = ( ( ( frac - 1.0 ) * ( 1.0 + z.lE( idx_l ) ) ) / d.lE( idx_l ) ).minCoeff(); }
+      if ( idx_g.size() > 0 ) { min_2 = ( ( ( 1.0 - frac ) * ( 1.0 - z.lE( idx_g ) ) ) / d.lE( idx_g ) ).minCoeff(); }
+      a.d = std::min( a.d, std::min( min_1, min_2 ) );
     }
-    if (i.nI > 0) {
-      const Indices idx_l(find(d.lI < 0.0)), idx_g(find(d.lI > 0));
-      Real min_1{INF}, min_2{INF};
-      if (idx_l.size() > 0) {min_1 = (((frac - 1.0)*       z.lI(idx_l)) /d.lI(idx_l)).minCoeff();}
-      if (idx_g.size() > 0) {min_2 = (((1.0 - frac)*(1.0 - z.lI(idx_g)))/d.lI(idx_g)).minCoeff();}
-      a.d = std::min(a.d, std::min(min_1, min_2));
+    if ( i.nI > 0 )
+    {
+      const Indices idx_l( find( d.lI < 0.0 ) ), idx_g( find( d.lI > 0 ) );
+      Real          min_1{ INF }, min_2{ INF };
+      if ( idx_l.size() > 0 ) { min_1 = ( ( ( frac - 1.0 ) * z.lI( idx_l ) ) / d.lI( idx_l ) ).minCoeff(); }
+      if ( idx_g.size() > 0 ) { min_2 = ( ( ( 1.0 - frac ) * ( 1.0 - z.lI( idx_g ) ) ) / d.lI( idx_g ) ).minCoeff(); }
+      a.d = std::min( a.d, std::min( min_1, min_2 ) );
     }
   }
 
@@ -161,71 +160,66 @@ namespace Pipal {
    * \tparam Real Floating-point type used by the algorithm.
    * \return 1 if a full step was accepted, 0 otherwise.
    */
-  template <typename Real>
-  Integer Solver<Real>::fullStepCheck()
+  template <typename Real> Integer Solver<Real>::fullStepCheck()
   {
     // Create alias for easier access
-    Parameter<Real>  & p{this->m_parameter};
-    Input<Real>      & i{this->m_input};
-    Iterate<Real>    & z{this->m_iterate};
-    Direction<Real>  & d{this->m_direction};
-    Acceptance<Real> & a{this->m_acceptance};
+    Parameter<Real> &  p{ this->m_parameter };
+    Input<Real> &      i{ this->m_input };
+    Iterate<Real> &    z{ this->m_iterate };
+    Direction<Real> &  d{ this->m_direction };
+    Acceptance<Real> & a{ this->m_acceptance };
 
     // Set current and last penalty parameters
-    Real rho{z.rho}, rho_temp{z.rho_};
+    Real rho{ z.rho }, rho_temp{ z.rho_ };
 
     // Loop through last penalty parameters
-    while (rho < rho_temp)
+    while ( rho < rho_temp )
     {
       // Set penalty parameter
-      this->setRho(rho_temp);
+      this->setRho( rho_temp );
 
       // Evaluate merit
       this->evalMerit();
 
       // Store current values
-      Real phi{z.phi}, f{z.f};
-      Array<Real> cE(z.cE), r1(z.r1), r2(z.r2), lE(z.lE), cI(z.cI), s1(z.s1), s2(z.s2), lI(z.lI);
-      Vector<Real> x(z.x);
+      Real         phi{ z.phi }, f{ z.f };
+      Array<Real>  cE( z.cE ), r1( z.r1 ), r2( z.r2 ), lE( z.lE ), cI( z.cI ), s1( z.s1 ), s2( z.s2 ), lI( z.lI );
+      Vector<Real> x( z.x );
 
       // Set trial point
       this->updatePoint();
       this->evalFunctions();
 
       // Check for function evaluation error
-      if (z.err == 0)
+      if ( z.err == 0 )
       {
         // Set remaining trial values
         this->evalSlacks();
         this->evalMerit();
 
         // Check for nonlinear fraction-to-boundary violation
-        Integer ftb{0};
-        Real const tmp_min{std::min(p.ls_frac, z.mu)};
-        if (i.nE > 0) {
-          ftb += (z.r1 < tmp_min*r1).count() + (z.r2 < tmp_min*r2).count();
-        }
-        if (i.nI > 0) {
-          ftb += (z.s1 < tmp_min*s1).count() + (z.s2 < tmp_min*s2).count();
-        }
+        Integer    ftb{ 0 };
+        Real const tmp_min{ std::min( p.ls_frac, z.mu ) };
+        if ( i.nE > 0 ) { ftb += ( z.r1 < tmp_min * r1 ).count() + ( z.r2 < tmp_min * r2 ).count(); }
+        if ( i.nI > 0 ) { ftb += ( z.s1 < tmp_min * s1 ).count() + ( z.s2 < tmp_min * s2 ).count(); }
 
         // Check Armijo condition
-        if (ftb == 0 && z.phi - phi <= -p.ls_thresh*a.p*std::max(d.qtred, 0.0))
+        if ( ftb == 0 && z.phi - phi <= -p.ls_thresh * a.p * std::max( d.qtred, 0.0 ) )
         {
           // Reset variables, set boolean, and return
-          this->setPrimals(x, r1, r2, s1, s2, lE, lI, z.f, z.cE, z.cI, z.phi);
+          this->setPrimals( x, r1, r2, s1, s2, lE, lI, z.f, z.cE, z.cI, z.phi );
           return 1;
         }
         else
         {
           // Reset variables
-          this->setPrimals(x, r1, r2, s1, s2, lE, lI, f, cE, cI, phi);
+          this->setPrimals( x, r1, r2, s1, s2, lE, lI, f, cE, cI, phi );
         }
       }
       else
       {
         // Reset variables
-        this->setPrimals(x, r1, r2, s1, s2, lE, lI, f, cE, cI, phi);
+        this->setPrimals( x, r1, r2, s1, s2, lE, lI, f, cE, cI, phi );
       }
 
       // Decrease rho
@@ -233,7 +227,7 @@ namespace Pipal {
     }
 
     // Set rho
-    this->setRho(rho);
+    this->setRho( rho );
 
     // Evaluate merit
     this->evalMerit();
@@ -249,26 +243,26 @@ namespace Pipal {
    * chosen step.
    * \tparam Real Floating-point type used by the algorithm.
    */
-  template <typename Real>
-  void Solver<Real>::lineSearch()
+  template <typename Real> void Solver<Real>::lineSearch()
   {
     // Create alias for easier access
-    Acceptance<Real> & a{this->m_acceptance};
+    Acceptance<Real> & a{ this->m_acceptance };
 
     // Check fraction-to-boundary rule
     this->fractionToBoundary();
 
     // Check for full step for trial penalty parameters
-    Integer b{this->fullStepCheck()};
+    Integer b{ this->fullStepCheck() };
     // Run second-order correction
     a.s = false;
-    if (b == 0) {
+    if ( b == 0 )
+    {
       b = this->secondOrderCorrection();
-      if (b == 2) {a.s = true;}
+      if ( b == 2 ) { a.s = true; }
     }
 
     // Run backtracking line search
-    if (b == 0) {this->backtracking();}
+    if ( b == 0 ) { this->backtracking(); }
   }
 
   /**
@@ -280,65 +274,60 @@ namespace Pipal {
    * \tparam Real Floating-point type used by the algorithm.
    * \return 0 if SOC not accepted, 1 if first acceptance criterion met, 2 if SOC accepted.
    */
-  template <typename Real>
-  Integer Solver<Real>::secondOrderCorrection()
+  template <typename Real> Integer Solver<Real>::secondOrderCorrection()
   {
     // Create alias for easier access
-    Parameter<Real>  & p{this->m_parameter};
-    Input<Real>      & i{this->m_input};
-    Iterate<Real>    & z{this->m_iterate};
-    Direction<Real>  & d{this->m_direction};
-    Acceptance<Real> & a{this->m_acceptance};
+    Parameter<Real> &  p{ this->m_parameter };
+    Input<Real> &      i{ this->m_input };
+    Iterate<Real> &    z{ this->m_iterate };
+    Direction<Real> &  d{ this->m_direction };
+    Acceptance<Real> & a{ this->m_acceptance };
 
     // Store current iterate values
-    Real f{z.f}, phi{z.phi}, v{z.v};
-    Array<Real> cE(z.cE), r1(z.r1), r2(z.r2), lE(z.lE), cI(z.cI), s1(z.s1), s2(z.s2), lI(z.lI);
-    Vector<Real> x(z.x);
+    Real         f{ z.f }, phi{ z.phi }, v{ z.v };
+    Array<Real>  cE( z.cE ), r1( z.r1 ), r2( z.r2 ), lE( z.lE ), cI( z.cI ), s1( z.s1 ), s2( z.s2 ), lI( z.lI );
+    Vector<Real> x( z.x );
 
     // Set trial point
     this->updatePoint();
     this->evalFunctions();
 
     // Check for function evaluation error
-    if (z.err == 0)
+    if ( z.err == 0 )
     {
       // Set remaining trial values
       this->evalSlacks();
       this->evalMerit();
 
       // Check for nonlinear fraction-to-boundary violation
-      Integer ftb{0};
-      Real const tmp_min{std::min(p.ls_frac, z.mu)};
-      if (i.nE > 0) {
-        ftb += (z.r1 < tmp_min*r1).count() + (z.r2 < tmp_min*r2).count();
-      }
-      if (i.nI > 0) {
-        ftb += (z.s1 < tmp_min*s1).count() + (z.s2 < tmp_min*s2).count();
-      }
+      Integer    ftb{ 0 };
+      Real const tmp_min{ std::min( p.ls_frac, z.mu ) };
+      if ( i.nE > 0 ) { ftb += ( z.r1 < tmp_min * r1 ).count() + ( z.r2 < tmp_min * r2 ).count(); }
+      if ( i.nI > 0 ) { ftb += ( z.s1 < tmp_min * s1 ).count() + ( z.s2 < tmp_min * s2 ).count(); }
 
       // Check Armijo condition
-      if (ftb == 0 && z.phi - phi <= -p.ls_thresh*a.p*std::max(d.qtred, 0.0))
+      if ( ftb == 0 && z.phi - phi <= -p.ls_thresh * a.p * std::max( d.qtred, 0.0 ) )
       {
         // Reset variables, set flag, and return
-        this->setPrimals(x, r1, r2, s1, s2, lE, lI, z.f, z.cE, z.cI, z.phi);
+        this->setPrimals( x, r1, r2, s1, s2, lE, lI, z.f, z.cE, z.cI, z.phi );
         return 1;
       }
-      else if (this->evalViolation(z.cE, z.cI) < v)
+      else if ( this->evalViolation( z.cE, z.cI ) < v )
       {
         // Reset variables and return
-        this->setPrimals(x, r1, r2, s1, s2, lE, lI, f, cE, cI, phi);
+        this->setPrimals( x, r1, r2, s1, s2, lE, lI, f, cE, cI, phi );
         return 0;
       }
       else
       {
         // Reset variables (but leave constraint values for second-order correction)
-        this->setPrimals(x, r1, r2, s1, s2, lE, lI, f, z.cE, z.cI, phi);
+        this->setPrimals( x, r1, r2, s1, s2, lE, lI, f, z.cE, z.cI, phi );
       }
     }
     else
     {
       // Reset variables and return
-      this->setPrimals(x, r1, r2, s1, s2, lE, lI, f, cE, cI, phi);
+      this->setPrimals( x, r1, r2, s1, s2, lE, lI, f, cE, cI, phi );
       return 0;
     }
 
@@ -349,59 +338,62 @@ namespace Pipal {
     this->evalNewtonRhs();
 
     // Store current direction values
-    Vector<Real> dx(d.x), dr1(d.r1), dr2(d.r2), dlE(d.lE), ds1(d.s1), ds2(d.s2), dlI(d.lI);
-    Real dx_norm{d.x_norm}, dl_norm{d.l_norm};
+    Vector<Real> dx( d.x ), dr1( d.r1 ), dr2( d.r2 ), dlE( d.lE ), ds1( d.s1 ), ds2( d.s2 ), dlI( d.lI );
+    Real         dx_norm{ d.x_norm }, dl_norm{ d.l_norm };
 
     // Evaluate search direction
     this->evalNewtonStep();
 
     // Set trial direction
-    this->setDirection(a.p*dx+d.x, a.p*dr1+d.r1.matrix(), a.p*dr2+d.r2.matrix(), a.p*ds1+d.s1.matrix(),
-      a.p*ds2+d.s2.matrix(), a.d*dlE+d.lE.matrix(), a.d*dlI+d.lI.matrix(), (a.p*dx+d.x).norm(),
-      std::sqrt((a.d*dlE+d.lE.matrix()).matrix().squaredNorm() + (a.d*dlI+d.lI.matrix()).squaredNorm()));
+    this->setDirection(
+      a.p * dx + d.x,
+      a.p * dr1 + d.r1.matrix(),
+      a.p * dr2 + d.r2.matrix(),
+      a.p * ds1 + d.s1.matrix(),
+      a.p * ds2 + d.s2.matrix(),
+      a.d * dlE + d.lE.matrix(),
+      a.d * dlI + d.lI.matrix(),
+      ( a.p * dx + d.x ).norm(),
+      std::sqrt( ( a.d * dlE + d.lE.matrix() ).matrix().squaredNorm() + ( a.d * dlI + d.lI.matrix() ).squaredNorm() ) );
 
     // Set trial point
     this->updatePoint();
     this->evalFunctions();
 
     // Check for function evaluation error
-    if (z.err == 0)
+    if ( z.err == 0 )
     {
       // Set remaining trial values
       this->evalSlacks();
       this->evalMerit();
 
       // Check for nonlinear fraction-to-boundary violation
-      Integer ftb{0};
-      Real const tmp_min{std::min(p.ls_frac, z.mu)};
-      if (i.nE > 0) {
-        ftb += (z.r1 < tmp_min*r1).count() + (z.r2 < tmp_min*r2).count();
-      }
-      if (i.nI > 0) {
-        ftb += (z.s1 < tmp_min*s1).count() + (z.s2 < tmp_min*s2).count();
-      }
+      Integer    ftb{ 0 };
+      Real const tmp_min{ std::min( p.ls_frac, z.mu ) };
+      if ( i.nE > 0 ) { ftb += ( z.r1 < tmp_min * r1 ).count() + ( z.r2 < tmp_min * r2 ).count(); }
+      if ( i.nI > 0 ) { ftb += ( z.s1 < tmp_min * s1 ).count() + ( z.s2 < tmp_min * s2 ).count(); }
 
       // Check Armijo condition
-      if (ftb == 0 && z.phi - phi <= -p.ls_thresh*a.p*std::max(d.qtred, 0.0))
+      if ( ftb == 0 && z.phi - phi <= -p.ls_thresh * a.p * std::max( d.qtred, 0.0 ) )
       {
         // Reset variables, set flag, and return
-        this->setPrimals(x, r1, r2, s1, s2, lE, lI, z.f, z.cE, z.cI, z.phi);
+        this->setPrimals( x, r1, r2, s1, s2, lE, lI, z.f, z.cE, z.cI, z.phi );
         return 2;
       }
       else
       {
         // Reset variables
-        this->setPrimals(x, r1, r2, s1, s2, lE, lI, f, cE, cI, phi);
+        this->setPrimals( x, r1, r2, s1, s2, lE, lI, f, cE, cI, phi );
       }
     }
     else
     {
       // Reset variables
-      this->setPrimals(x, r1, r2, s1, s2, lE, lI, f, cE, cI, phi);
+      this->setPrimals( x, r1, r2, s1, s2, lE, lI, f, cE, cI, phi );
     }
 
     // Reset direction
-    this->setDirection(dx, dr1, dr2, ds1, ds2, dlE, dlI, dx_norm, dl_norm);
+    this->setDirection( dx, dr1, dr2, ds1, ds2, dlE, dlI, dx_norm, dl_norm );
 
     // Reduce step length
     a.p *= p.ls_factor;
@@ -409,6 +401,6 @@ namespace Pipal {
     return 0;
   }
 
-} // namespace Pipal
+}  // namespace Pipal
 
-#endif // INCLUDE_PIPAL_ACCEPTANCE_HXX
+#endif  // INCLUDE_PIPAL_ACCEPTANCE_HXX

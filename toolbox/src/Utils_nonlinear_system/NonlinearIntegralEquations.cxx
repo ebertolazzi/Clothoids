@@ -18,23 +18,23 @@ class NonlinearIntegralEquations : public NonlinearSystem
 
 public:
   NonlinearIntegralEquations()
-    : NonlinearSystem( "Nonlinear Integral Equations",
-                       "@article{More:1979,\n"
-                       "  author  = {Mor{\'e}, Jorge J. and Cosnard, Michel Y.},\n"
-                       "  title   = {Numerical Solution of Nonlinear Equations},\n"
-                       "  journal = {ACM Trans. Math. Softw.},\n"
-                       "  year    = {1979},\n"
-                       "  volume  = {5},\n"
-                       "  number  = {1},\n"
-                       "  pages   = {64--85},\n"
-                       "  doi     = {10.1145/355815.355820},\n"
-                       "}\n",
-                       100 )
+    : NonlinearSystem(
+        "Nonlinear Integral Equations",
+        "@article{More:1979,\n"
+        "  author  = {Mor{\'e}, Jorge J. and Cosnard, Michel Y.},\n"
+        "  title   = {Numerical Solution of Nonlinear Equations},\n"
+        "  journal = {ACM Trans. Math. Softw.},\n"
+        "  year    = {1979},\n"
+        "  volume  = {5},\n"
+        "  number  = {1},\n"
+        "  pages   = {64--85},\n"
+        "  doi     = {10.1145/355815.355820},\n"
+        "}\n",
+        100 )
   {
   }
 
-  virtual void
-  evaluate( Vector const & x, Vector & f ) const override
+  virtual void evaluate( Vector const & x, Vector & f ) const override
   {
     real_type h = 1.0 / ( n - 1.0 );
 
@@ -57,8 +57,7 @@ public:
     }
   }
 
-  virtual void
-  jacobian( Vector const & x, SparseMatrix & J ) const override
+  virtual void jacobian( Vector const & x, SparseMatrix & J ) const override
   {
     Matrix J_full( n, n );
     J_full.setZero();
@@ -77,8 +76,7 @@ public:
     J = J_full.sparseView();
   }
 
-  virtual void
-  initial_points( vector<Vector> & x_vec ) const override
+  virtual void initial_points( vector<Vector> & x_vec ) const override
   {
     x_vec.resize( 1 );
     auto & x0{ x_vec[0] };

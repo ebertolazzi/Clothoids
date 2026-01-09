@@ -34,27 +34,27 @@
  | - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 \*/
 
-#define BIGGS_BIBTEX                                                                                                   \
-  "@Article{Biggs:1971,\n"                                                                                             \
-  "  author = {M. C. Biggs},\n"                                                                                        \
-  "  title  = { Minimization algorithms making use of non-quadratic\n"                                                 \
-  "             properties of the objective function},\n"                                                              \
-  "  volume = {8},\n"                                                                                                  \
-  "  pages  = {315--327},\n"                                                                                           \
-  "  year   = {1971},\n"                                                                                               \
-  "  journal = {Journal of the Institute of Mathematics and its "                                                      \
-  "Applications}\n"                                                                                                    \
-  "}\n\n"                                                                                                              \
-  "@article{More:1981,\n"                                                                                              \
-  "  author  = {Mor{\'e}, Jorge J. and Garbow, Burton S. and Hillstrom, "                                              \
-  "Kenneth E.},\n"                                                                                                     \
-  "  title   = {Testing Unconstrained Optimization Software},\n"                                                       \
-  "  journal = {ACM Trans. Math. Softw.},\n"                                                                           \
-  "  year    = {1981},\n"                                                                                              \
-  "  volume  = {7},\n"                                                                                                 \
-  "  number  = {1},\n"                                                                                                 \
-  "  pages   = {17--41},\n"                                                                                            \
-  "  doi     = {10.1145/355934.355936},\n"                                                                             \
+#define BIGGS_BIBTEX                                                      \
+  "@Article{Biggs:1971,\n"                                                \
+  "  author = {M. C. Biggs},\n"                                           \
+  "  title  = { Minimization algorithms making use of non-quadratic\n"    \
+  "             properties of the objective function},\n"                 \
+  "  volume = {8},\n"                                                     \
+  "  pages  = {315--327},\n"                                              \
+  "  year   = {1971},\n"                                                  \
+  "  journal = {Journal of the Institute of Mathematics and its "         \
+  "Applications}\n"                                                       \
+  "}\n\n"                                                                 \
+  "@article{More:1981,\n"                                                 \
+  "  author  = {Mor{\'e}, Jorge J. and Garbow, Burton S. and Hillstrom, " \
+  "Kenneth E.},\n"                                                        \
+  "  title   = {Testing Unconstrained Optimization Software},\n"          \
+  "  journal = {ACM Trans. Math. Softw.},\n"                              \
+  "  year    = {1981},\n"                                                 \
+  "  volume  = {7},\n"                                                    \
+  "  number  = {1},\n"                                                    \
+  "  pages   = {17--41},\n"                                               \
+  "  doi     = {10.1145/355934.355936},\n"                                \
   "}\n"
 
 class BiggsEXP2function : public NonlinearSystem
@@ -73,21 +73,18 @@ public:
     y = exp( -z.array() ) - 5 * exp( -10 * z.array() );
   }
 
-  void
-  map( Vector const & x, Vector & eq ) const
+  void map( Vector const & x, Vector & eq ) const
   {
     eq = exp( -x( 0 ) * z.array() ) - 5 * exp( -x( 1 ) * z.array() ) - y.array();
   }
 
-  void
-  Grad_map( Vector const & x, integer k, Vector & G ) const
+  void Grad_map( Vector const & x, integer k, Vector & G ) const
   {
     G( 0 ) = -z( k ) * exp( -x( 0 ) * z( k ) );
     G( 1 ) = 5 * z( k ) * exp( -x( 1 ) * z( k ) );
   }
 
-  void
-  Hess_map( Vector const & x, integer k, Matrix & H ) const
+  void Hess_map( Vector const & x, integer k, Matrix & H ) const
   {
     real_type zk  = z( k );
     real_type zk2 = zk * zk;
@@ -99,8 +96,7 @@ public:
     H( 1, 0 )     = 0;
   }
 
-  virtual void
-  evaluate( Vector const & x, Vector & f ) const override
+  virtual void evaluate( Vector const & x, Vector & f ) const override
   {
     Vector eq( NPT ), G( n );
     map( x, eq );
@@ -112,8 +108,7 @@ public:
     }
   }
 
-  virtual void
-  jacobian( Vector const & x, SparseMatrix & J ) const override
+  virtual void jacobian( Vector const & x, SparseMatrix & J ) const override
   {
     Vector eq( NPT ), G( n );
     Matrix H( n, n ), J_full( n, n );
@@ -132,8 +127,7 @@ public:
     J = J_full.sparseView();
   }
 
-  virtual void
-  exact_solution( vector<Vector> & x_vec ) const override
+  virtual void exact_solution( vector<Vector> & x_vec ) const override
   {
     x_vec.resize( 1 );
     auto & x0{ x_vec[0] };
@@ -141,8 +135,7 @@ public:
     x0 << 16.7046761257, 16.7046761257;
   }
 
-  virtual void
-  initial_points( vector<Vector> & x_vec ) const override
+  virtual void initial_points( vector<Vector> & x_vec ) const override
   {
     x_vec.resize( 1 );
     auto & x0{ x_vec[0] };
@@ -171,14 +164,12 @@ public:
     y = exp( -z.array() ) - 5 * exp( -10 * z.array() );
   }
 
-  void
-  map( Vector const & x, Vector & eq ) const
+  void map( Vector const & x, Vector & eq ) const
   {
     eq = exp( -x( 0 ) * z.array() ) - x( 2 ) * exp( -x( 1 ) * z.array() ) - y.array();
   }
 
-  void
-  Grad_map( Vector const & x, integer k, Vector & G ) const
+  void Grad_map( Vector const & x, integer k, Vector & G ) const
   {
     real_type zk  = z( k );
     real_type ex0 = exp( -x( 0 ) * zk );
@@ -188,8 +179,7 @@ public:
     G( 2 )        = -ex1;
   }
 
-  void
-  Hess_map( Vector const & x, integer k, Matrix & H ) const
+  void Hess_map( Vector const & x, integer k, Matrix & H ) const
   {
     real_type zk  = z( k );
     real_type zk2 = zk * zk;
@@ -206,8 +196,7 @@ public:
     H( 2, 2 )     = 0;
   }
 
-  virtual void
-  evaluate( Vector const & x, Vector & f ) const override
+  virtual void evaluate( Vector const & x, Vector & f ) const override
   {
     Vector eq( NPT ), G( n );
     map( x, eq );
@@ -219,8 +208,7 @@ public:
     }
   }
 
-  virtual void
-  jacobian( Vector const & x, SparseMatrix & J ) const override
+  virtual void jacobian( Vector const & x, SparseMatrix & J ) const override
   {
     Vector eq( NPT ), G( n );
     Matrix H( n, n ), J_full( n, n );
@@ -239,8 +227,7 @@ public:
     J = J_full.sparseView();
   }
 
-  virtual void
-  exact_solution( vector<Vector> & x_vec ) const override
+  virtual void exact_solution( vector<Vector> & x_vec ) const override
   {
     x_vec.resize( 1 );
     auto & x0{ x_vec[0] };
@@ -248,8 +235,7 @@ public:
     x0 << 1, 1, 5;
   }
 
-  virtual void
-  initial_points( vector<Vector> & x_vec ) const override
+  virtual void initial_points( vector<Vector> & x_vec ) const override
   {
     x_vec.resize( 1 );
     auto & x0{ x_vec[0] };
@@ -278,14 +264,12 @@ public:
     y = exp( -z.array() ) - 5 * exp( -10 * z.array() );
   }
 
-  void
-  map( Vector const & x, Vector & eq ) const
+  void map( Vector const & x, Vector & eq ) const
   {
     eq = x( 2 ) * exp( -x( 0 ) * z.array() ) - x( 3 ) * exp( -x( 1 ) * z.array() ) - y.array();
   }
 
-  void
-  Grad_map( Vector const & x, integer k, Vector & G ) const
+  void Grad_map( Vector const & x, integer k, Vector & G ) const
   {
     real_type zk  = z( k );
     real_type ex0 = exp( -x( 0 ) * zk );
@@ -296,8 +280,7 @@ public:
     G( 3 )        = -ex1;
   }
 
-  void
-  Hess_map( Vector const & x, integer k, Matrix & H ) const
+  void Hess_map( Vector const & x, integer k, Matrix & H ) const
   {
     real_type zk  = z( k );
     real_type zk2 = zk * zk;
@@ -325,8 +308,7 @@ public:
     H( 3, 3 ) = 0;
   }
 
-  virtual void
-  evaluate( Vector const & x, Vector & f ) const override
+  virtual void evaluate( Vector const & x, Vector & f ) const override
   {
     Vector eq( NPT ), G( n );
     map( x, eq );
@@ -338,8 +320,7 @@ public:
     }
   }
 
-  virtual void
-  jacobian( Vector const & x, SparseMatrix & J ) const override
+  virtual void jacobian( Vector const & x, SparseMatrix & J ) const override
   {
     Vector eq( NPT ), G( n );
     Matrix H( n, n ), J_full( n, n );
@@ -358,8 +339,7 @@ public:
     J = J_full.sparseView();
   }
 
-  virtual void
-  exact_solution( vector<Vector> & x_vec ) const override
+  virtual void exact_solution( vector<Vector> & x_vec ) const override
   {
     x_vec.resize( 1 );
     auto & x0{ x_vec[0] };
@@ -367,8 +347,7 @@ public:
     x0 << -1.370515321, -1.370515321, 0.146554089168054, 0.003045452799256;
   }
 
-  virtual void
-  initial_points( vector<Vector> & x_vec ) const override
+  virtual void initial_points( vector<Vector> & x_vec ) const override
   {
     x_vec.resize( 1 );
     auto & x0{ x_vec[0] };
@@ -397,15 +376,13 @@ public:
     y = exp( -z.array() ) - 5 * exp( -10 * z.array() ) + 3 * exp( -4 * z.array() );
   }
 
-  void
-  map( Vector const & x, Vector & eq ) const
+  void map( Vector const & x, Vector & eq ) const
   {
     eq = x( 2 ) * exp( -x( 0 ) * z.array() ) - x( 3 ) * exp( -x( 1 ) * z.array() ) + 3 * exp( -x( 4 ) * z.array() ) -
          y.array();
   }
 
-  void
-  Grad_map( Vector const & x, integer k, Vector & G ) const
+  void Grad_map( Vector const & x, integer k, Vector & G ) const
   {
     real_type zk  = z( k );
     real_type ex0 = exp( -x( 0 ) * zk );
@@ -418,8 +395,7 @@ public:
     G( 4 )        = -3 * zk * ex4;
   }
 
-  void
-  Hess_map( Vector const & x, integer k, Matrix & H ) const
+  void Hess_map( Vector const & x, integer k, Matrix & H ) const
   {
     real_type zk  = z( k );
     real_type zk2 = zk * zk;
@@ -458,8 +434,7 @@ public:
     H( 4, 4 ) = 3 * zk2 * ex4;
   }
 
-  virtual void
-  evaluate( Vector const & x, Vector & f ) const override
+  virtual void evaluate( Vector const & x, Vector & f ) const override
   {
     Vector eq( NPT ), G( n );
     map( x, eq );
@@ -474,8 +449,7 @@ public:
   // sum (eq(k,x)-yk) * D_x(j) eq(k,x)
   // sum (eq(k,x)-yk)^2 - z
 
-  virtual void
-  jacobian( Vector const & x, SparseMatrix & J ) const override
+  virtual void jacobian( Vector const & x, SparseMatrix & J ) const override
   {
     Vector eq( NPT ), G( n );
     Matrix H( n, n ), J_full( n, n );
@@ -494,8 +468,7 @@ public:
     J = J_full.sparseView();
   }
 
-  virtual void
-  exact_solution( vector<Vector> & x_vec ) const override
+  virtual void exact_solution( vector<Vector> & x_vec ) const override
   {
     x_vec.resize( 1 );
     auto & x0{ x_vec[0] };
@@ -503,8 +476,7 @@ public:
     x0 << 2.645310671110160, 2.693935021162610, 0.048826924681352, 0.049142366883430, 0.025390267672614;
   }
 
-  virtual void
-  initial_points( vector<Vector> & x_vec ) const override
+  virtual void initial_points( vector<Vector> & x_vec ) const override
   {
     x_vec.resize( 1 );
     auto & x0{ x_vec[0] };
@@ -532,8 +504,7 @@ public:
     y = exp( -t.array() ) - 5 * exp( -10 * t.array() ) + 3 * exp( -4 * t.array() );
   }
 
-  virtual void
-  evaluate( Vector const & x, Vector & f ) const override
+  virtual void evaluate( Vector const & x, Vector & f ) const override
   {
     for ( integer k = 0; k < 6; ++k )
     {
@@ -544,8 +515,7 @@ public:
     }
   }
 
-  virtual void
-  jacobian( Vector const & x, SparseMatrix & J ) const override
+  virtual void jacobian( Vector const & x, SparseMatrix & J ) const override
   {
     J.resize( n, n );
     J.setZero();
@@ -564,8 +534,7 @@ public:
     J.makeCompressed();
   }
 
-  virtual void
-  exact_solution( vector<Vector> & x_vec ) const override
+  virtual void exact_solution( vector<Vector> & x_vec ) const override
   {
     x_vec.resize( 2 );
     auto & x0{ x_vec[0] };
@@ -577,8 +546,7 @@ public:
     x1 << 1, 10, 1, 5, 4, 3;
   }
 
-  virtual void
-  initial_points( vector<Vector> & x_vec ) const override
+  virtual void initial_points( vector<Vector> & x_vec ) const override
   {
     x_vec.resize( 1 );
     auto & x0{ x_vec[0] };
@@ -586,17 +554,15 @@ public:
     x0 << 1, 2, 1, 1, 1, 1;
   }
 
-  virtual void
-  check_if_admissible( Vector const & x ) const override
+  virtual void check_if_admissible( Vector const & x ) const override
   {
-    UTILS_ASSERT( x( 0 ) > xmin && x( 0 ) < xmax && x( 1 ) > xmin && x( 1 ) < xmax && x( 2 ) > xmin && x( 2 ) < xmax &&
-                      x( 3 ) > xmin && x( 3 ) < xmax && x( 4 ) > xmin && x( 4 ) < xmax && x( 5 ) > xmin &&
-                      x( 5 ) < xmax,
-                  "Bad Range" );
+    UTILS_ASSERT(
+      x( 0 ) > xmin && x( 0 ) < xmax && x( 1 ) > xmin && x( 1 ) < xmax && x( 2 ) > xmin && x( 2 ) < xmax &&
+        x( 3 ) > xmin && x( 3 ) < xmax && x( 4 ) > xmin && x( 4 ) < xmax && x( 5 ) > xmin && x( 5 ) < xmax,
+      "Bad Range" );
   }
 
-  virtual void
-  bounding_box( Vector & L, Vector & U ) const override
+  virtual void bounding_box( Vector & L, Vector & U ) const override
   {
     L.fill( xmin );
     U.fill( xmax );

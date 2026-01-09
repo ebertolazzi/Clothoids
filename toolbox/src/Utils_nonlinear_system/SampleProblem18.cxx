@@ -19,8 +19,7 @@ class SampleProblem18 : public NonlinearSystem
 public:
   SampleProblem18() : NonlinearSystem( "Sample problem 18", "no doc", 2 ), epsi( 1e-8 ) {}
 
-  real_type
-  fun( real_type x ) const
+  real_type fun( real_type x ) const
   {
     real_type x2 = x * x;
     if ( std::abs( x2 ) > epsi )
@@ -29,8 +28,7 @@ public:
       return x * ( 1 + x2 * ( x2 / 6.0 - 0.5 ) );
   }
 
-  real_type
-  fun_1( real_type x ) const
+  real_type fun_1( real_type x ) const
   {
     real_type x2    = x * x;
     real_type expx2 = exp( -x2 );
@@ -40,15 +38,13 @@ public:
       return 1 + x2 * ( ( 5.0 / 6.0 ) * x2 - 1.5 );
   }
 
-  virtual void
-  evaluate( Vector const & x, Vector & f ) const override
+  virtual void evaluate( Vector const & x, Vector & f ) const override
   {
     f( 0 ) = power2( x( 1 ) ) * fun( x( 0 ) );
     f( 1 ) = x( 0 ) * fun( x( 1 ) );
   }
 
-  virtual void
-  jacobian( Vector const & x, SparseMatrix & J ) const override
+  virtual void jacobian( Vector const & x, SparseMatrix & J ) const override
   {
     J.resize( n, n );
     J.setZero();
@@ -59,8 +55,7 @@ public:
     J.makeCompressed();
   }
 
-  virtual void
-  exact_solution( vector<Vector> & x_vec ) const override
+  virtual void exact_solution( vector<Vector> & x_vec ) const override
   {
     x_vec.resize( 1 );
     auto & x0{ x_vec[0] };
@@ -68,8 +63,7 @@ public:
     x0.setZero();
   }
 
-  virtual void
-  initial_points( vector<Vector> & x_vec ) const override
+  virtual void initial_points( vector<Vector> & x_vec ) const override
   {
     x_vec.resize( 1 );
     auto & x0{ x_vec[0] };
@@ -77,14 +71,12 @@ public:
     x0 << 2, 2;
   }
 
-  virtual void
-  check_if_admissible( Vector const & x ) const override
+  virtual void check_if_admissible( Vector const & x ) const override
   {
     for ( integer i{ 0 }; i < n; ++i ) UTILS_ASSERT( std::abs( x( i ) ) < 4, "Bad range" );
   }
 
-  virtual void
-  bounding_box( Vector & L, Vector & U ) const override
+  virtual void bounding_box( Vector & L, Vector & U ) const override
   {
     U.fill( 4 );
     L.fill( -4 );

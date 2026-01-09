@@ -19,35 +19,36 @@ class WatsonFunction : public NonlinearSystem
 
 public:
   WatsonFunction()
-    : NonlinearSystem( "Watson function",
-                       "@book{brent2013,\n"
-                       "  author    = {Brent, R.P.},\n"
-                       "  title     = {Algorithms for Minimization Without Derivatives},\n"
-                       "  isbn      = {9780486143682},\n"
-                       "  series    = {Dover Books on Mathematics},\n"
-                       "  year      = {2013},\n"
-                       "  publisher = {Dover Publications}\n"
-                       "}\n\n"
-                       "@book{kowalik1968methods,\n"
-                       "  author = {Kowalik, J.S. and Osborne, M.R.},\n"
-                       "  title  = {Methods for unconstrained optimization problems},\n"
-                       "  series = {Mathematical Linguistics and Automatic Language "
-                       "Processing},\n"
-                       "  year   = {1968},\n"
-                       "  publisher={American Elsevier Pub. Co.}\n"
-                       "}\n\n"
-                       "@article{More:1981,\n"
-                       "  author  = {Mor{\'e}, Jorge J. and Garbow, Burton S. and "
-                       "Hillstrom, Kenneth E.},\n"
-                       "  title   = {Testing Unconstrained Optimization Software},\n"
-                       "  journal = {ACM Trans. Math. Softw.},\n"
-                       "  year    = {1981},\n"
-                       "  volume  = {7},\n"
-                       "  number  = {1},\n"
-                       "  pages   = {17--41},\n"
-                       "  doi     = {10.1145/355934.355936},\n"
-                       "}\n",
-                       31 )
+    : NonlinearSystem(
+        "Watson function",
+        "@book{brent2013,\n"
+        "  author    = {Brent, R.P.},\n"
+        "  title     = {Algorithms for Minimization Without Derivatives},\n"
+        "  isbn      = {9780486143682},\n"
+        "  series    = {Dover Books on Mathematics},\n"
+        "  year      = {2013},\n"
+        "  publisher = {Dover Publications}\n"
+        "}\n\n"
+        "@book{kowalik1968methods,\n"
+        "  author = {Kowalik, J.S. and Osborne, M.R.},\n"
+        "  title  = {Methods for unconstrained optimization problems},\n"
+        "  series = {Mathematical Linguistics and Automatic Language "
+        "Processing},\n"
+        "  year   = {1968},\n"
+        "  publisher={American Elsevier Pub. Co.}\n"
+        "}\n\n"
+        "@article{More:1981,\n"
+        "  author  = {Mor{\'e}, Jorge J. and Garbow, Burton S. and "
+        "Hillstrom, Kenneth E.},\n"
+        "  title   = {Testing Unconstrained Optimization Software},\n"
+        "  journal = {ACM Trans. Math. Softw.},\n"
+        "  year    = {1981},\n"
+        "  volume  = {7},\n"
+        "  number  = {1},\n"
+        "  pages   = {17--41},\n"
+        "  doi     = {10.1145/355934.355936},\n"
+        "}\n",
+        31 )
   {
     for ( integer i = 0; i < 29; ++i )
     {
@@ -57,8 +58,7 @@ public:
     }
   }
 
-  virtual void
-  evaluate( Vector const & x, Vector & f ) const override
+  virtual void evaluate( Vector const & x, Vector & f ) const override
   {
     f.setZero();
     for ( integer i = 0; i < 29; ++i )
@@ -74,8 +74,7 @@ public:
     f( 30 ) = x( 1 ) - x( 0 ) * x( 0 ) - 1;
   }
 
-  virtual void
-  jacobian( Vector const & x, SparseMatrix & J ) const override
+  virtual void jacobian( Vector const & x, SparseMatrix & J ) const override
   {
     Matrix J_full( n, n );
     J_full.setZero();
@@ -94,8 +93,7 @@ public:
     J = J_full.sparseView();
   }
 
-  virtual void
-  initial_points( vector<Vector> & x_vec ) const override
+  virtual void initial_points( vector<Vector> & x_vec ) const override
   {
     x_vec.resize( 1 );
     auto & x0{ x_vec[0] };

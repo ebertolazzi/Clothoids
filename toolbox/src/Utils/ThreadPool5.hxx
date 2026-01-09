@@ -78,17 +78,20 @@ namespace Utils
       //! \brief The main loop for the worker thread, continuously fetching and
       //! executing tasks.
       //!
-      void
-      worker_loop()
+      void worker_loop()
       {
-        m_is_running.red();  // block computation
+        // FIXED: Signal that worker is ready (blocked/red) before entering loop
+        m_is_running.red();
+        m_push_worker();  // Notify pool that this worker is ready
+
         while ( m_active )
         {
-          m_is_running.wait();  // wait signal to start computation
+          m_is_running.wait();     // wait signal to start computation (wait for green)
+          if ( !m_active ) break;  // Check if we're shutting down
           // ----------------------------------------
           m_job();
           // ----------------------------------------
-          m_is_running.red();  // block computation
+          m_is_running.red();  // block computation (back to red/ready state)
           m_push_worker();     // worker ready for a new computation
         }
       }
@@ -126,23 +129,18 @@ namespace Utils
       //!
       //! \brief Waits for the currently running task to complete.
       //!
-      void
-      wait()
-      {
-        m_is_running.wait_red();
-      }
+      void wait() { m_is_running.wait_red(); }
 
       //!
       //! \brief Executes a task.
       //!
       //! \param fun The function to be executed as a task.
       //!
-      void
-      exec( FUN && fun )
+      void exec( FUN && fun )
       {
-        m_is_running.wait_red();
-        m_job = std::move( fun );  // cambia funzione da eseguire
-        m_is_running.green();      // activate computation
+        m_is_running.wait_red();   // wait until worker is ready (semaphore is red)
+        m_job = std::move( fun );  // assign new job
+        m_is_running.green();      // signal worker to start execution
       }
     };
 
@@ -153,16 +151,15 @@ namespace Utils
     // Vector of workers managed by the thread pool.
     std::vector<Worker>     m_workers;
     std::list<unsigned>     m_queue;
-    std::mutex              m_queue_mutex;  //!< Mutex for accessing the worker stack.
+    std::mutex              m_queue_mutex;  //!< Mutex for accessing the worker queue.
     std::condition_variable m_queue_cond;   //!< Condition variable for worker availability.
 
     //!
-    //! \brief Pushes a worker ID back onto the stack of available workers.
+    //! \brief Pushes a worker ID back onto the queue of available workers.
     //!
     //! \param id The ID of the worker to be pushed.
     //!
-    void
-    push_worker( unsigned id )
+    void push_worker( unsigned id )
     {
       std::unique_lock<std::mutex> lock( m_queue_mutex );
       m_queue.emplace_back( id );
@@ -170,12 +167,11 @@ namespace Utils
     }
 
     //!
-    //! \brief Pops a worker ID from the stack of available workers.
+    //! \brief Pops a worker ID from the queue of available workers.
     //!
     //! \return The ID of the popped worker.
     //!
-    unsigned
-    pop_worker()
+    unsigned pop_worker()
     {
       std::unique_lock<std::mutex> lock( m_queue_mutex );
       while ( m_queue.empty() ) m_queue_cond.wait( lock );
@@ -202,7 +198,8 @@ namespace Utils
         new ( &w ) Worker( this, id );
         ++id;
       }
-      while ( id-- > 0 ) push_worker( id );
+      // FIXED: Workers will add themselves to the queue once they're ready
+      // No need to push them here, they'll call push_worker() from worker_loop()
     }
 
     //!
@@ -221,8 +218,7 @@ namespace Utils
     //!
     //! \param fun The function to be executed as a task.
     //!
-    void
-    exec( FUN && fun ) override
+    void exec( FUN && fun ) override
     {
       // cerca prima thread libera
       m_workers[pop_worker()].exec( std::move( fun ) );
@@ -231,8 +227,7 @@ namespace Utils
     //!
     //! \brief Waits for all tasks to be completed.
     //!
-    void
-    wait() override
+    void wait() override
     {
       for ( auto & w : m_workers ) w.wait();
     }
@@ -242,28 +237,16 @@ namespace Utils
     //!
     //! \return The number of threads in the pool.
     //!
-    unsigned
-    thread_count() const override
-    {
-      return unsigned( m_workers.size() );
-    }
+    unsigned thread_count() const override { return unsigned( m_workers.size() ); }
 
     //!
     //! \brief Gets the name of the thread pool implementation.
     //!
     //! \return A constant character pointer to the name of the thread pool.
     //!
-    static char const *
-    Name()
-    {
-      return "ThreadPool5";
-    }
+    static char const * Name() { return "ThreadPool5"; }
 
-    char const *
-    name() const override
-    {
-      return Name();
-    }
+    char const * name() const override { return Name(); }
   };
 
   /*! @} */

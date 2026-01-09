@@ -8,18 +8,18 @@
  |    email: enrico.bertolazzi@unitn.it
 \*/
 
-#define SINGULAR_SYSTEM_BIBTEX                                                                                         \
-  "@article{Waziri:2011,\n"                                                                                            \
-  "  author  = {Waziri Yusuf, Mohammed and June, Leong Wah and Hassan, Malik "                                         \
-  "Abu},\n"                                                                                                            \
-  "  title   = {Jacobian-free diagonal {N}ewton's method for solving "                                                 \
-  "nonlinear\n"                                                                                                        \
-  "             systems with singular {J}acobian},\n"                                                                  \
-  "  joirnal = {Malaysian Journal of Mathematical Sciences},\n"                                                        \
-  "  volume  = {5},\n"                                                                                                 \
-  "  year    = {2011},\n"                                                                                              \
-  "  number  = {2},\n"                                                                                                 \
-  "  pages   = {241--255}\n"                                                                                           \
+#define SINGULAR_SYSTEM_BIBTEX                                                 \
+  "@article{Waziri:2011,\n"                                                    \
+  "  author  = {Waziri Yusuf, Mohammed and June, Leong Wah and Hassan, Malik " \
+  "Abu},\n"                                                                    \
+  "  title   = {Jacobian-free diagonal {N}ewton's method for solving "         \
+  "nonlinear\n"                                                                \
+  "             systems with singular {J}acobian},\n"                          \
+  "  joirnal = {Malaysian Journal of Mathematical Sciences},\n"                \
+  "  volume  = {5},\n"                                                         \
+  "  year    = {2011},\n"                                                      \
+  "  number  = {2},\n"                                                         \
+  "  pages   = {241--255}\n"                                                   \
   "}\n"
 
 /*
@@ -38,15 +38,13 @@ class SingularSystemA : public NonlinearSystem
 public:
   SingularSystemA() : NonlinearSystem( "Singular System A", SINGULAR_SYSTEM_BIBTEX, 2 ) {}
 
-  virtual void
-  evaluate( Vector const & x, Vector & f ) const override
+  virtual void evaluate( Vector const & x, Vector & f ) const override
   {
     f( 0 ) = power2( x( 0 ) - 1 ) * ( x( 0 ) - x( 1 ) );
     f( 1 ) = power5( x( 1 ) - 2 ) * cos( 2 * x( 0 ) / x( 1 ) );
   }
 
-  virtual void
-  jacobian( Vector const & x, SparseMatrix & J ) const override
+  virtual void jacobian( Vector const & x, SparseMatrix & J ) const override
   {
     J.resize( n, n );
     J.setZero();
@@ -60,8 +58,7 @@ public:
     J.makeCompressed();
   }
 
-  virtual void
-  exact_solution( vector<Vector> & x_vec ) const override
+  virtual void exact_solution( vector<Vector> & x_vec ) const override
   {
     x_vec.resize( 1 );
     auto & x0{ x_vec[0] };
@@ -69,8 +66,7 @@ public:
     x0 << 1, 2;
   }
 
-  virtual void
-  initial_points( vector<Vector> & x_vec ) const override
+  virtual void initial_points( vector<Vector> & x_vec ) const override
   {
     x_vec.resize( 4 );
     auto & x0{ x_vec[0] };
@@ -98,8 +94,7 @@ class SingularSystemB : public NonlinearSystem
 public:
   SingularSystemB() : NonlinearSystem( "Singular System B", SINGULAR_SYSTEM_BIBTEX, 3 ) {}
 
-  virtual void
-  evaluate( Vector const & X, Vector & f ) const override
+  virtual void evaluate( Vector const & X, Vector & f ) const override
   {
     real_type x = X( 0 );
     real_type y = X( 1 );
@@ -109,8 +104,7 @@ public:
     f( 2 )      = power6( z + 4 );
   }
 
-  virtual void
-  jacobian( Vector const & X, SparseMatrix & J ) const override
+  virtual void jacobian( Vector const & X, SparseMatrix & J ) const override
   {
     J.resize( n, n );
     J.setZero();
@@ -125,8 +119,7 @@ public:
     J.makeCompressed();
   }
 
-  virtual void
-  exact_solution( vector<Vector> & x_vec ) const override
+  virtual void exact_solution( vector<Vector> & x_vec ) const override
   {
     x_vec.resize( 1 );
     auto & x0{ x_vec[0] };
@@ -134,8 +127,7 @@ public:
     x0 << 1, 2, -4;
   }
 
-  virtual void
-  initial_points( vector<Vector> & x_vec ) const override
+  virtual void initial_points( vector<Vector> & x_vec ) const override
   {
     x_vec.resize( 2 );
     auto & x0{ x_vec[0] };
@@ -157,8 +149,7 @@ class SingularSystemC : public NonlinearSystem
 public:
   SingularSystemC() : NonlinearSystem( "Singular System C", SINGULAR_SYSTEM_BIBTEX, 2 ) {}
 
-  virtual void
-  evaluate( Vector const & X, Vector & f ) const override
+  virtual void evaluate( Vector const & X, Vector & f ) const override
   {
     real_type x = X( 0 );
     real_type y = X( 1 );
@@ -166,8 +157,7 @@ public:
     f( 1 )      = x - y;
   }
 
-  virtual void
-  jacobian( Vector const & X, SparseMatrix & J ) const override
+  virtual void jacobian( Vector const & X, SparseMatrix & J ) const override
   {
     J.resize( n, n );
     J.setZero();
@@ -179,8 +169,7 @@ public:
     J.makeCompressed();
   }
 
-  virtual void
-  exact_solution( vector<Vector> & x_vec ) const override
+  virtual void exact_solution( vector<Vector> & x_vec ) const override
   {
     x_vec.resize( 1 );
     auto & x0{ x_vec[0] };
@@ -188,8 +177,7 @@ public:
     x0.setZero();
   }
 
-  virtual void
-  initial_points( vector<Vector> & x_vec ) const override
+  virtual void initial_points( vector<Vector> & x_vec ) const override
   {
     x_vec.resize( 2 );
     auto & x0{ x_vec[0] };
@@ -210,8 +198,7 @@ class SingularSystemD : public NonlinearSystem
 public:
   SingularSystemD() : NonlinearSystem( "Singular System D", SINGULAR_SYSTEM_BIBTEX, 2 ) {}
 
-  virtual void
-  evaluate( Vector const & X, Vector & f ) const override
+  virtual void evaluate( Vector const & X, Vector & f ) const override
   {
     real_type x = X( 0 );
     real_type y = X( 1 );
@@ -219,8 +206,7 @@ public:
     f( 1 )      = cos( x ) - 1 + y;
   }
 
-  virtual void
-  jacobian( Vector const & X, SparseMatrix & J ) const override
+  virtual void jacobian( Vector const & X, SparseMatrix & J ) const override
   {
     J.resize( n, n );
     J.setZero();
@@ -233,8 +219,7 @@ public:
     J.makeCompressed();
   }
 
-  virtual void
-  exact_solution( vector<Vector> & x_vec ) const override
+  virtual void exact_solution( vector<Vector> & x_vec ) const override
   {
     x_vec.resize( 1 );
     auto & x0{ x_vec[0] };
@@ -242,8 +227,7 @@ public:
     x0.setZero();
   }
 
-  virtual void
-  initial_points( vector<Vector> & x_vec ) const override
+  virtual void initial_points( vector<Vector> & x_vec ) const override
   {
     x_vec.resize( 2 );
     auto & x0{ x_vec[0] };
@@ -264,8 +248,7 @@ class SingularSystemE : public NonlinearSystem
 public:
   SingularSystemE() : NonlinearSystem( "Singular System E", SINGULAR_SYSTEM_BIBTEX, 3 ) {}
 
-  virtual void
-  evaluate( Vector const & X, Vector & f ) const override
+  virtual void evaluate( Vector const & X, Vector & f ) const override
   {
     real_type x = X( 0 );
     real_type y = X( 1 );
@@ -275,8 +258,7 @@ public:
     f( 2 )      = exp( -x * y ) + 20 * z + ( 10 * m_pi - 3 ) / 3;
   }
 
-  virtual void
-  jacobian( Vector const & X, SparseMatrix & J ) const override
+  virtual void jacobian( Vector const & X, SparseMatrix & J ) const override
   {
     J.resize( n, n );
     J.setZero();
@@ -294,8 +276,7 @@ public:
     J.makeCompressed();
   }
 
-  virtual void
-  exact_solution( vector<Vector> & x_vec ) const override
+  virtual void exact_solution( vector<Vector> & x_vec ) const override
   {
     x_vec.resize( 1 );
     auto & x0{ x_vec[0] };
@@ -303,8 +284,7 @@ public:
     x0 << 0.5, 0, -m_pi / 6;
   }
 
-  virtual void
-  initial_points( vector<Vector> & x_vec ) const override
+  virtual void initial_points( vector<Vector> & x_vec ) const override
   {
     x_vec.resize( 2 );
     auto & x0{ x_vec[0] };
@@ -326,8 +306,7 @@ class SingularSystemF : public NonlinearSystem
 public:
   SingularSystemF() : NonlinearSystem( "Singular System F", SINGULAR_SYSTEM_BIBTEX, 3 ) {}
 
-  virtual void
-  evaluate( Vector const & X, Vector & f ) const override
+  virtual void evaluate( Vector const & X, Vector & f ) const override
   {
     real_type x = X( 0 );
     real_type y = X( 1 );
@@ -337,8 +316,7 @@ public:
     f( 2 )      = power3( z - 1 );
   }
 
-  virtual void
-  jacobian( Vector const & X, SparseMatrix & J ) const override
+  virtual void jacobian( Vector const & X, SparseMatrix & J ) const override
   {
     J.resize( n, n );
     J.setZero();
@@ -357,8 +335,7 @@ public:
     J.makeCompressed();
   }
 
-  virtual void
-  exact_solution( vector<Vector> & x_vec ) const override
+  virtual void exact_solution( vector<Vector> & x_vec ) const override
   {
     x_vec.resize( 1 );
     auto & x0{ x_vec[0] };
@@ -366,8 +343,7 @@ public:
     x0 << 0.175599, 0.824401, 1;
   }
 
-  virtual void
-  initial_points( vector<Vector> & x_vec ) const override
+  virtual void initial_points( vector<Vector> & x_vec ) const override
   {
     x_vec.resize( 2 );
     auto & x0{ x_vec[0] };
@@ -389,16 +365,14 @@ class SingularSystemP2 : public NonlinearSystem
 public:
   SingularSystemP2() : NonlinearSystem( "Singular System Problem 2 (Ishihara, K. 2001)", SINGULAR_SYSTEM_BIBTEX, 3 ) {}
 
-  virtual void
-  evaluate( Vector const & x, Vector & f ) const override
+  virtual void evaluate( Vector const & x, Vector & f ) const override
   {
     f( 0 ) = 4 * x( 0 ) - 2 * x( 1 ) + power2( x( 0 ) ) - 3;
     f( 1 ) = -x( 0 ) + 4 * x( 1 ) - x( 2 ) + power2( x( 1 ) ) - 3;
     f( 2 ) = -2 * x( 1 ) + 4 * x( 2 ) + power2( x( 2 ) ) - 3;
   }
 
-  virtual void
-  jacobian( Vector const & x, SparseMatrix & J ) const override
+  virtual void jacobian( Vector const & x, SparseMatrix & J ) const override
   {
     J.resize( n, n );
     J.setZero();
@@ -418,8 +392,7 @@ public:
     J.makeCompressed();
   }
 
-  virtual void
-  exact_solution( vector<Vector> & x_vec ) const override
+  virtual void exact_solution( vector<Vector> & x_vec ) const override
   {
     x_vec.resize( 1 );
     auto & x0{ x_vec[0] };
@@ -427,8 +400,7 @@ public:
     x0.fill( 1 );
   }
 
-  virtual void
-  initial_points( vector<Vector> & x_vec ) const override
+  virtual void initial_points( vector<Vector> & x_vec ) const override
   {
     x_vec.resize( 5 );
     auto & x0{ x_vec[0] };
@@ -459,15 +431,13 @@ class SingularSystemP3 : public NonlinearSystem
 public:
   SingularSystemP3() : NonlinearSystem( "Singular System Problem 3", SINGULAR_SYSTEM_BIBTEX, 2 ) {}
 
-  virtual void
-  evaluate( Vector const & x, Vector & f ) const override
+  virtual void evaluate( Vector const & x, Vector & f ) const override
   {
     f( 0 ) = 2 / ( 1 + power2( x( 0 ) ) ) + sin( x( 1 ) - 1 ) - 1;
     f( 1 ) = 2 / ( 1 + power2( x( 1 ) ) ) + sin( x( 1 ) - 1 ) - 1;
   }
 
-  virtual void
-  jacobian( Vector const & x, SparseMatrix & J ) const override
+  virtual void jacobian( Vector const & x, SparseMatrix & J ) const override
   {
     J.resize( n, n );
     J.setZero();
@@ -478,8 +448,7 @@ public:
     J.makeCompressed();
   }
 
-  virtual void
-  exact_solution( vector<Vector> & x_vec ) const override
+  virtual void exact_solution( vector<Vector> & x_vec ) const override
   {
     x_vec.resize( 1 );
     auto & x0{ x_vec[0] };
@@ -487,8 +456,7 @@ public:
     x0.fill( 1 );
   }
 
-  virtual void
-  initial_points( vector<Vector> & x_vec ) const override
+  virtual void initial_points( vector<Vector> & x_vec ) const override
   {
     x_vec.resize( 3 );
     auto & x0{ x_vec[0] };
@@ -513,15 +481,13 @@ class SingularSystemP4 : public NonlinearSystem
 public:
   SingularSystemP4() : NonlinearSystem( "Singular System Problem 4", SINGULAR_SYSTEM_BIBTEX, 2 ) {}
 
-  virtual void
-  evaluate( Vector const & x, Vector & f ) const override
+  virtual void evaluate( Vector const & x, Vector & f ) const override
   {
     f( 0 ) = 1 + tan( 2 - 2 * cos( x( 0 ) ) ) - exp( sin( x( 0 ) ) );
     f( 1 ) = 1 + tan( 2 - 2 * cos( x( 1 ) ) ) - exp( sin( x( 1 ) ) );
   }
 
-  virtual void
-  jacobian( Vector const & x, SparseMatrix & J ) const override
+  virtual void jacobian( Vector const & x, SparseMatrix & J ) const override
   {
     J.resize( n, n );
     J.setZero();
@@ -532,8 +498,7 @@ public:
     J.makeCompressed();
   }
 
-  virtual void
-  exact_solution( vector<Vector> & x_vec ) const override
+  virtual void exact_solution( vector<Vector> & x_vec ) const override
   {
     x_vec.resize( 1 );
     auto & x0{ x_vec[0] };
@@ -541,8 +506,7 @@ public:
     x0.setZero();
   }
 
-  virtual void
-  initial_points( vector<Vector> & x_vec ) const override
+  virtual void initial_points( vector<Vector> & x_vec ) const override
   {
     x_vec.resize( 3 );
     auto & x0{ x_vec[0] };
@@ -566,15 +530,13 @@ class SingularSystemP5 : public NonlinearSystem
 public:
   SingularSystemP5() : NonlinearSystem( "Singular System Problem 5", SINGULAR_SYSTEM_BIBTEX, 2 ) {}
 
-  virtual void
-  evaluate( Vector const & x, Vector & f ) const override
+  virtual void evaluate( Vector const & x, Vector & f ) const override
   {
     f( 0 ) = exp( x( 0 ) ) + x( 1 ) - 1;
     f( 1 ) = exp( x( 1 ) ) + x( 0 ) - 1;
   }
 
-  virtual void
-  jacobian( Vector const & x, SparseMatrix & J ) const override
+  virtual void jacobian( Vector const & x, SparseMatrix & J ) const override
   {
     J.resize( n, n );
     J.setZero();
@@ -587,8 +549,7 @@ public:
     J.makeCompressed();
   }
 
-  virtual void
-  exact_solution( vector<Vector> & x_vec ) const override
+  virtual void exact_solution( vector<Vector> & x_vec ) const override
   {
     x_vec.resize( 1 );
     auto & x0{ x_vec[0] };
@@ -596,8 +557,7 @@ public:
     x0.setZero();
   }
 
-  virtual void
-  initial_points( vector<Vector> & x_vec ) const override
+  virtual void initial_points( vector<Vector> & x_vec ) const override
   {
     x_vec.resize( 1 );
     auto & x0{ x_vec[0] };
@@ -615,16 +575,14 @@ class SingularSystemP6 : public NonlinearSystem
 public:
   SingularSystemP6() : NonlinearSystem( "Singular System Problem 6", SINGULAR_SYSTEM_BIBTEX, 3 ) {}
 
-  virtual void
-  evaluate( Vector const & x, Vector & f ) const override
+  virtual void evaluate( Vector const & x, Vector & f ) const override
   {
     f( 0 ) = cos( x( 0 ) ) - 9 + 3 * x( 0 ) + 8 * exp( x( 1 ) );
     f( 1 ) = cos( x( 1 ) ) - 9 + 3 * x( 1 ) + 8 * exp( x( 0 ) );
     f( 2 ) = cos( x( 2 ) ) - x( 2 ) - 1;
   }
 
-  virtual void
-  jacobian( Vector const & x, SparseMatrix & J ) const override
+  virtual void jacobian( Vector const & x, SparseMatrix & J ) const override
   {
     J.resize( n, n );
     J.setZero();
@@ -636,8 +594,7 @@ public:
     J.makeCompressed();
   }
 
-  virtual void
-  exact_solution( vector<Vector> & x_vec ) const override
+  virtual void exact_solution( vector<Vector> & x_vec ) const override
   {
     x_vec.resize( 1 );
     auto & x0{ x_vec[0] };
@@ -645,8 +602,7 @@ public:
     x0.setZero();
   }
 
-  virtual void
-  initial_points( vector<Vector> & x_vec ) const override
+  virtual void initial_points( vector<Vector> & x_vec ) const override
   {
     x_vec.resize( 4 );
     auto & x0{ x_vec[0] };
@@ -674,15 +630,13 @@ class SingularSystemP7 : public NonlinearSystem
 public:
   SingularSystemP7() : NonlinearSystem( "Singular System Problem 7 (Ishihara, K. 2001)", SINGULAR_SYSTEM_BIBTEX, 2 ) {}
 
-  virtual void
-  evaluate( Vector const & x, Vector & f ) const override
+  virtual void evaluate( Vector const & x, Vector & f ) const override
   {
     f( 0 ) = 4 * x( 0 ) - 2 * x( 1 ) + power2( x( 0 ) ) - 3;
     f( 1 ) = -2 * x( 0 ) + 4 * x( 1 ) + power2( x( 0 ) ) - 3;
   }
 
-  virtual void
-  jacobian( Vector const & x, SparseMatrix & J ) const override
+  virtual void jacobian( Vector const & x, SparseMatrix & J ) const override
   {
     J.resize( n, n );
     J.setZero();
@@ -693,8 +647,7 @@ public:
     J.makeCompressed();
   }
 
-  virtual void
-  exact_solution( vector<Vector> & x_vec ) const override
+  virtual void exact_solution( vector<Vector> & x_vec ) const override
   {
     x_vec.resize( 1 );
     auto & x0{ x_vec[0] };
@@ -702,8 +655,7 @@ public:
     x0.fill( 1 );
   }
 
-  virtual void
-  initial_points( vector<Vector> & x_vec ) const override
+  virtual void initial_points( vector<Vector> & x_vec ) const override
   {
     x_vec.resize( 4 );
     auto & x0{ x_vec[0] };
@@ -731,15 +683,13 @@ class SingularSystemP8 : public NonlinearSystem
 public:
   SingularSystemP8() : NonlinearSystem( "Singular System Problem 8", SINGULAR_SYSTEM_BIBTEX, 2 ) {}
 
-  virtual void
-  evaluate( Vector const & x, Vector & f ) const override
+  virtual void evaluate( Vector const & x, Vector & f ) const override
   {
     f( 0 ) = sqrt( 3.0 ) * power2( x( 0 ) ) - power2( x( 1 ) );
     f( 1 ) = cos( x( 0 ) ) - 1 / ( 1 + power2( x( 1 ) ) );
   }
 
-  virtual void
-  jacobian( Vector const & x, SparseMatrix & J ) const override
+  virtual void jacobian( Vector const & x, SparseMatrix & J ) const override
   {
     J.resize( n, n );
     J.setZero();
@@ -750,8 +700,7 @@ public:
     J.makeCompressed();
   }
 
-  virtual void
-  exact_solution( vector<Vector> & x_vec ) const override
+  virtual void exact_solution( vector<Vector> & x_vec ) const override
   {
     x_vec.resize( 1 );
     auto & x0{ x_vec[0] };
@@ -759,8 +708,7 @@ public:
     x0.setZero();
   }
 
-  virtual void
-  initial_points( vector<Vector> & x_vec ) const override
+  virtual void initial_points( vector<Vector> & x_vec ) const override
   {
     x_vec.resize( 1 );
     auto & x0{ x_vec[0] };
@@ -778,15 +726,13 @@ class SingularSystemP9 : public NonlinearSystem
 public:
   SingularSystemP9() : NonlinearSystem( "Singular System Problem 9", SINGULAR_SYSTEM_BIBTEX, 2 ) {}
 
-  virtual void
-  evaluate( Vector const & x, Vector & f ) const override
+  virtual void evaluate( Vector const & x, Vector & f ) const override
   {
     f( 0 ) = power2( x( 0 ) ) - power2( x( 1 ) );
     f( 1 ) = 3 * power2( x( 0 ) ) - 3 * power2( x( 1 ) );
   }
 
-  virtual void
-  jacobian( Vector const & x, SparseMatrix & J ) const override
+  virtual void jacobian( Vector const & x, SparseMatrix & J ) const override
   {
     J.resize( n, n );
     J.setZero();
@@ -797,8 +743,7 @@ public:
     J.makeCompressed();
   }
 
-  virtual void
-  exact_solution( vector<Vector> & x_vec ) const override
+  virtual void exact_solution( vector<Vector> & x_vec ) const override
   {
     x_vec.resize( 1 );
     auto & x0{ x_vec[0] };
@@ -806,8 +751,7 @@ public:
     x0.setZero();
   }
 
-  virtual void
-  initial_points( vector<Vector> & x_vec ) const override
+  virtual void initial_points( vector<Vector> & x_vec ) const override
   {
     x_vec.resize( 4 );
     auto & x0{ x_vec[0] };

@@ -16,24 +16,24 @@ class CraggAndLevyProblem : public NonlinearSystem
 {
 public:
   CraggAndLevyProblem()
-    : NonlinearSystem( "Cragg and Levy Problem",
-                       "@article{More:1981,\n"
-                       "  author  = {Mor{\'e}, Jorge J. and Garbow, Burton S. and "
-                       "Hillstrom, Kenneth E.},\n"
-                       "  title   = {Testing Unconstrained Optimization Software},\n"
-                       "  journal = {ACM Trans. Math. Softw.},\n"
-                       "  year    = {1981},\n"
-                       "  volume  = {7},\n"
-                       "  number  = {1},\n"
-                       "  pages   = {17--41},\n"
-                       "  doi     = {10.1145/355934.355936},\n"
-                       "}\n",
-                       4 )
+    : NonlinearSystem(
+        "Cragg and Levy Problem",
+        "@article{More:1981,\n"
+        "  author  = {Mor{\'e}, Jorge J. and Garbow, Burton S. and "
+        "Hillstrom, Kenneth E.},\n"
+        "  title   = {Testing Unconstrained Optimization Software},\n"
+        "  journal = {ACM Trans. Math. Softw.},\n"
+        "  year    = {1981},\n"
+        "  volume  = {7},\n"
+        "  number  = {1},\n"
+        "  pages   = {17--41},\n"
+        "  doi     = {10.1145/355934.355936},\n"
+        "}\n",
+        4 )
   {
   }
 
-  virtual void
-  evaluate( Vector const & x, Vector & f ) const override
+  virtual void evaluate( Vector const & x, Vector & f ) const override
   {
     f( 0 ) = power2( exp( x( 0 ) ) - x( 1 ) );
     f( 1 ) = 10 * power3( x( 1 ) - x( 2 ) );
@@ -41,8 +41,7 @@ public:
     f( 3 ) = x( 3 ) - 1;
   }
 
-  virtual void
-  jacobian( Vector const & x, SparseMatrix & J ) const override
+  virtual void jacobian( Vector const & x, SparseMatrix & J ) const override
   {
     J.resize( n, n );
     J.setZero();
@@ -73,8 +72,7 @@ public:
     J.makeCompressed();
   }
 
-  virtual void
-  initial_points( vector<Vector> & x_vec ) const override
+  virtual void initial_points( vector<Vector> & x_vec ) const override
   {
     x_vec.resize( 1 );
     auto & x0{ x_vec[0] };

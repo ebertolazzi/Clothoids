@@ -19,39 +19,37 @@ class GheriMancino : public NonlinearSystem
 public:
   // sum log(xi-2)^2+log(xi-10)^2 - prod( xi) ^(1/5)
   GheriMancino( integer neq )
-    : NonlinearSystem( "Gheri-Mancino function",
-                       "@Article{Gheri1971,\n"
-                       "  author  = {Gheri, G. and Mancino, O. G.},\n"
-                       "  title   = {A significant example to test methods for\n"
-                       "             solving systems of nonlinear equations},\n"
-                       "  journal = {CALCOLO},\n"
-                       "  year    = {1971},\n"
-                       "  volume  = {8},\n"
-                       "  number  = {1},\n"
-                       "  pages   = {107--113},\n"
-                       "  doi     = {10.1007/BF02575578}\n"
-                       "}\n",
-                       neq )
+    : NonlinearSystem(
+        "Gheri-Mancino function",
+        "@Article{Gheri1971,\n"
+        "  author  = {Gheri, G. and Mancino, O. G.},\n"
+        "  title   = {A significant example to test methods for\n"
+        "             solving systems of nonlinear equations},\n"
+        "  journal = {CALCOLO},\n"
+        "  year    = {1971},\n"
+        "  volume  = {8},\n"
+        "  number  = {1},\n"
+        "  pages   = {107--113},\n"
+        "  doi     = {10.1007/BF02575578}\n"
+        "}\n",
+        neq )
     , alpha( 7 )
     , beta( 17 )
     , gamma( 4 )
   {
   }
 
-  real_type
-  zfun( integer i, integer j, Vector const & x ) const
+  real_type zfun( integer i, integer j, Vector const & x ) const
   {
     return sqrt( x( j ) * x( j ) + ( i + 1.0 ) / ( j + 1.0 ) );
   }
 
-  real_type
-  zfun_1( integer i, integer j, Vector const & x ) const
+  real_type zfun_1( integer i, integer j, Vector const & x ) const
   {
     return x( j ) / sqrt( x( j ) * x( j ) + ( i + 1.0 ) / ( j + 1.0 ) );
   }
 
-  virtual void
-  evaluate( Vector const & x, Vector & f ) const override
+  virtual void evaluate( Vector const & x, Vector & f ) const override
   {
     for ( integer i = 0; i < n; ++i )
     {
@@ -70,8 +68,7 @@ public:
     }
   }
 
-  virtual void
-  jacobian( Vector const & x, SparseMatrix & J ) const override
+  virtual void jacobian( Vector const & x, SparseMatrix & J ) const override
   {
     J.resize( n, n );
     J.setZero();
@@ -98,8 +95,7 @@ public:
     J.makeCompressed();
   }
 
-  virtual void
-  initial_points( vector<Vector> & x_vec ) const override
+  virtual void initial_points( vector<Vector> & x_vec ) const override
   {
     x_vec.resize( 1 );
     auto & x0{ x_vec[0] };

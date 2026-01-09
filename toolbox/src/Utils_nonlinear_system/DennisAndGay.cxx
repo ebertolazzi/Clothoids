@@ -8,13 +8,13 @@
  |    email: enrico.bertolazzi@unitn.it
 \*/
 
-#define DENNIS_AND_GAY_BIBTEX                                                                                          \
-  "@techreport{Dennis:1983,\n"                                                                                         \
-  "  author = {J. E. Dennis, D. M. Gay, and P. A. Vu},\n"                                                              \
-  "  title  = {A new nonlinear equations test problem},\n"                                                             \
-  "  number = {Technical Report 83-16, Mathematical Sciences Department},\n"                                           \
-  "  year   = {1983}\n"                                                                                                \
-  "  note   = {Rice University (1983 - revised 1985)}\n"                                                               \
+#define DENNIS_AND_GAY_BIBTEX                                                \
+  "@techreport{Dennis:1983,\n"                                               \
+  "  author = {J. E. Dennis, D. M. Gay, and P. A. Vu},\n"                    \
+  "  title  = {A new nonlinear equations test problem},\n"                   \
+  "  number = {Technical Report 83-16, Mathematical Sciences Department},\n" \
+  "  year   = {1983}\n"                                                      \
+  "  note   = {Rice University (1983 - revised 1985)}\n"                     \
   "}\n"
 
 /*\
@@ -39,21 +39,22 @@ class test_dennis_gay_6 : public NonlinearSystem
   real_type const x5;
 
 public:
-  test_dennis_gay_6( string const & n,
-                     real_type      _summx,
-                     real_type      _summy,
-                     real_type      _suma,
-                     real_type      _sumb,
-                     real_type      _sumc,
-                     real_type      _sumd,
-                     real_type      _sume,
-                     real_type      _sumf,
-                     real_type      _x0,
-                     real_type      _x1,
-                     real_type      _x2,
-                     real_type      _x3,
-                     real_type      _x4,
-                     real_type      _x5 )
+  test_dennis_gay_6(
+    string const & n,
+    real_type      _summx,
+    real_type      _summy,
+    real_type      _suma,
+    real_type      _sumb,
+    real_type      _sumc,
+    real_type      _sumd,
+    real_type      _sume,
+    real_type      _sumf,
+    real_type      _x0,
+    real_type      _x1,
+    real_type      _x2,
+    real_type      _x3,
+    real_type      _x4,
+    real_type      _x5 )
     : NonlinearSystem( n, DENNIS_AND_GAY_BIBTEX, 6 )
     , summx( _summx )
     , summy( _summy )
@@ -72,8 +73,7 @@ public:
   {
   }
 
-  virtual void
-  evaluate( Vector const & x, Vector & f ) const override
+  virtual void evaluate( Vector const & x, Vector & f ) const override
   {
     real_type a = x( 0 );
     real_type b = summx - a;
@@ -105,8 +105,7 @@ public:
     f( 5 ) = c * t * ts3vs - a * v * vs3ts + d * u * us3ws - b * w * ws3us - sumf;
   }
 
-  virtual void
-  jacobian( Vector const & x, SparseMatrix & J ) const override
+  virtual void jacobian( Vector const & x, SparseMatrix & J ) const override
   {
     J.resize( n, n );
     J.setZero();
@@ -178,22 +177,19 @@ public:
     J.makeCompressed();
   }
 
-  virtual void
-  initial_points( vector<Vector> & x_vec ) const override
+  virtual void initial_points( vector<Vector> & x_vec ) const override
   {
     x_vec.resize( 1 );
     x_vec[0].resize( n );
     x_vec[0] << x0, x1, x2, x3, x4, x5;
   }
 
-  virtual void
-  check_if_admissible( Vector const & x ) const override
+  virtual void check_if_admissible( Vector const & x ) const override
   {
     for ( integer i = 0; i < n; ++i ) UTILS_ASSERT( std::abs( x( i ) ) < 100, "Bad range" );
   }
 
-  virtual void
-  bounding_box( Vector & L, Vector & U ) const override
+  virtual void bounding_box( Vector & L, Vector & U ) const override
   {
     U.fill( 100 );
     L.fill( -100 );
@@ -208,21 +204,22 @@ class DennisAndGay6eqN1 : public test_dennis_gay_6
 {
 public:
   DennisAndGay6eqN1()
-    : test_dennis_gay_6( "Dennis and Gay 6 eq N 1",
-                         0.485,
-                         -0.0019,
-                         -0.0581,
-                         0.015,
-                         0.105,
-                         0.0406,
-                         0.167,
-                         -0.399,
-                         0.299,
-                         -0.0273,
-                         -0.474,
-                         0.474,
-                         -0.0892,
-                         0.0892 )
+    : test_dennis_gay_6(
+        "Dennis and Gay 6 eq N 1",
+        0.485,
+        -0.0019,
+        -0.0581,
+        0.015,
+        0.105,
+        0.0406,
+        0.167,
+        -0.399,
+        0.299,
+        -0.0273,
+        -0.474,
+        0.474,
+        -0.0892,
+        0.0892 )
   {
   }
 };
@@ -235,21 +232,22 @@ class DennisAndGay6eqN2 : public test_dennis_gay_6
 {
 public:
   DennisAndGay6eqN2()
-    : test_dennis_gay_6( "Dennis and Gay 6 eq N 2",
-                         -0.69,
-                         -0.044,
-                         -1.57,
-                         -1.31,
-                         -2.65,
-                         2.0,
-                         -12.6,
-                         9.48,
-                         -0.3,
-                         0.3,
-                         -1.2,
-                         2.69,
-                         1.59,
-                         -1.5 )
+    : test_dennis_gay_6(
+        "Dennis and Gay 6 eq N 2",
+        -0.69,
+        -0.044,
+        -1.57,
+        -1.31,
+        -2.65,
+        2.0,
+        -12.6,
+        9.48,
+        -0.3,
+        0.3,
+        -1.2,
+        2.69,
+        1.59,
+        -1.5 )
   {
   }
 };
@@ -262,21 +260,22 @@ class DennisAndGay6eqN3 : public test_dennis_gay_6
 {
 public:
   DennisAndGay6eqN3()
-    : test_dennis_gay_6( "Dennis and Gay 6 eq N 3",
-                         -0.816,
-                         -0.017,
-                         -1.826,
-                         -0.754,
-                         -4.839,
-                         -3.259,
-                         -14.023,
-                         15.467,
-                         -0.041,
-                         0.03,
-                         -2.565,
-                         2.565,
-                         -0.754,
-                         0.754 )
+    : test_dennis_gay_6(
+        "Dennis and Gay 6 eq N 3",
+        -0.816,
+        -0.017,
+        -1.826,
+        -0.754,
+        -4.839,
+        -3.259,
+        -14.023,
+        15.467,
+        -0.041,
+        0.03,
+        -2.565,
+        2.565,
+        -0.754,
+        0.754 )
   {
   }
 };
@@ -289,21 +288,22 @@ class DennisAndGay6eqN4 : public test_dennis_gay_6
 {
 public:
   DennisAndGay6eqN4()
-    : test_dennis_gay_6( "Dennis and Gay 6 eq N 4",
-                         -0.809,
-                         -0.021,
-                         -2.04,
-                         -0.614,
-                         -6.903,
-                         -2.934,
-                         -26.328,
-                         18.639,
-                         -0.056,
-                         0.026,
-                         -2.991,
-                         2.991,
-                         -0.568,
-                         0.568 )
+    : test_dennis_gay_6(
+        "Dennis and Gay 6 eq N 4",
+        -0.809,
+        -0.021,
+        -2.04,
+        -0.614,
+        -6.903,
+        -2.934,
+        -26.328,
+        18.639,
+        -0.056,
+        0.026,
+        -2.991,
+        2.991,
+        -0.568,
+        0.568 )
   {
   }
 };
@@ -316,21 +316,22 @@ class DennisAndGay6eqN5 : public test_dennis_gay_6
 {
 public:
   DennisAndGay6eqN5()
-    : test_dennis_gay_6( "Dennis and Gay 6 eq N 5",
-                         -0.807,
-                         -0.021,
-                         -2.379,
-                         -0.364,
-                         -10.541,
-                         -1.961,
-                         -51.551,
-                         21.053,
-                         -0.074,
-                         0.013,
-                         -3.632,
-                         3.632,
-                         -0.289,
-                         0.289 )
+    : test_dennis_gay_6(
+        "Dennis and Gay 6 eq N 5",
+        -0.807,
+        -0.021,
+        -2.379,
+        -0.364,
+        -10.541,
+        -1.961,
+        -51.551,
+        21.053,
+        -0.074,
+        0.013,
+        -3.632,
+        3.632,
+        -0.289,
+        0.289 )
   {
   }
 };
@@ -359,23 +360,24 @@ class test_dennis_gay_8 : public NonlinearSystem
   real_type const x7;
 
 public:
-  test_dennis_gay_8( string const & n,
-                     real_type      _summx,
-                     real_type      _summy,
-                     real_type      _suma,
-                     real_type      _sumb,
-                     real_type      _sumc,
-                     real_type      _sumd,
-                     real_type      _sume,
-                     real_type      _sumf,
-                     real_type      _x0,
-                     real_type      _x1,
-                     real_type      _x2,
-                     real_type      _x3,
-                     real_type      _x4,
-                     real_type      _x5,
-                     real_type      _x6,
-                     real_type      _x7 )
+  test_dennis_gay_8(
+    string const & n,
+    real_type      _summx,
+    real_type      _summy,
+    real_type      _suma,
+    real_type      _sumb,
+    real_type      _sumc,
+    real_type      _sumd,
+    real_type      _sume,
+    real_type      _sumf,
+    real_type      _x0,
+    real_type      _x1,
+    real_type      _x2,
+    real_type      _x3,
+    real_type      _x4,
+    real_type      _x5,
+    real_type      _x6,
+    real_type      _x7 )
     : NonlinearSystem( n, DENNIS_AND_GAY_BIBTEX, 8 )
     , summx( _summx )
     , summy( _summy )
@@ -396,8 +398,7 @@ public:
   {
   }
 
-  virtual void
-  evaluate( Vector const & x, Vector & f ) const override
+  virtual void evaluate( Vector const & x, Vector & f ) const override
   {
     real_type a = x( 0 );
     real_type b = x( 1 );
@@ -431,8 +432,7 @@ public:
     f( 7 ) = c * t * ts3vs - a * v * vs3ts + d * u * us3ws - b * w * ws3us - sumf;
   }
 
-  virtual void
-  jacobian( Vector const & x, SparseMatrix & J ) const override
+  virtual void jacobian( Vector const & x, SparseMatrix & J ) const override
   {
     J.resize( n, n );
     J.setZero();
@@ -534,8 +534,7 @@ public:
     J.makeCompressed();
   }
 
-  virtual void
-  initial_points( vector<Vector> & x_vec ) const override
+  virtual void initial_points( vector<Vector> & x_vec ) const override
   {
     x_vec.resize( 1 );
     x_vec[0].resize( n );
@@ -551,23 +550,24 @@ class DennisAndGay8eqN1 : public test_dennis_gay_8
 {
 public:
   DennisAndGay8eqN1()
-    : test_dennis_gay_8( "Dennis and Gay 8 eq N 1",
-                         0.485,
-                         -0.0019,
-                         -0.0581,
-                         0.015,
-                         0.105,
-                         0.0406,
-                         0.167,
-                         -0.399,
-                         0.299,
-                         0.186,
-                         -0.0273,
-                         0.0254,
-                         -0.474,
-                         0.474,
-                         -0.0892,
-                         0.0892 )
+    : test_dennis_gay_8(
+        "Dennis and Gay 8 eq N 1",
+        0.485,
+        -0.0019,
+        -0.0581,
+        0.015,
+        0.105,
+        0.0406,
+        0.167,
+        -0.399,
+        0.299,
+        0.186,
+        -0.0273,
+        0.0254,
+        -0.474,
+        0.474,
+        -0.0892,
+        0.0892 )
   {
   }
 };
@@ -580,23 +580,24 @@ class DennisAndGay8eqN2 : public test_dennis_gay_8
 {
 public:
   DennisAndGay8eqN2()
-    : test_dennis_gay_8( "Dennis and Gay 8 eq N 2",
-                         -0.69,
-                         -0.044,
-                         -1.57,
-                         -1.31,
-                         -2.65,
-                         2.0,
-                         -12.6,
-                         9.48,
-                         -0.3,
-                         -0.39,
-                         0.3,
-                         -0.344,
-                         -1.2,
-                         2.69,
-                         1.59,
-                         -1.5 )
+    : test_dennis_gay_8(
+        "Dennis and Gay 8 eq N 2",
+        -0.69,
+        -0.044,
+        -1.57,
+        -1.31,
+        -2.65,
+        2.0,
+        -12.6,
+        9.48,
+        -0.3,
+        -0.39,
+        0.3,
+        -0.344,
+        -1.2,
+        2.69,
+        1.59,
+        -1.5 )
   {
   }
 };
@@ -609,23 +610,24 @@ class DennisAndGay8eqN3 : public test_dennis_gay_8
 {
 public:
   DennisAndGay8eqN3()
-    : test_dennis_gay_8( "Dennis and Gay 8 eq N 3",
-                         -0.816,
-                         -0.017,
-                         -1.826,
-                         -0.754,
-                         -4.839,
-                         -3.259,
-                         -14.023,
-                         15.467,
-                         -0.041,
-                         -0.775,
-                         0.03,
-                         -0.047,
-                         -2.565,
-                         2.565,
-                         -0.754,
-                         0.754 )
+    : test_dennis_gay_8(
+        "Dennis and Gay 8 eq N 3",
+        -0.816,
+        -0.017,
+        -1.826,
+        -0.754,
+        -4.839,
+        -3.259,
+        -14.023,
+        15.467,
+        -0.041,
+        -0.775,
+        0.03,
+        -0.047,
+        -2.565,
+        2.565,
+        -0.754,
+        0.754 )
   {
   }
 };
@@ -638,23 +640,24 @@ class DennisAndGay8eqN4 : public test_dennis_gay_8
 {
 public:
   DennisAndGay8eqN4()
-    : test_dennis_gay_8( "Dennis and Gay 8 eq N 4",
-                         -0.809,
-                         -0.021,
-                         -2.04,
-                         -0.614,
-                         -6.903,
-                         -2.934,
-                         -26.328,
-                         18.639,
-                         -0.056,
-                         -0.753,
-                         0.026,
-                         -0.047,
-                         -2.991,
-                         2.991,
-                         -0.568,
-                         0.568 )
+    : test_dennis_gay_8(
+        "Dennis and Gay 8 eq N 4",
+        -0.809,
+        -0.021,
+        -2.04,
+        -0.614,
+        -6.903,
+        -2.934,
+        -26.328,
+        18.639,
+        -0.056,
+        -0.753,
+        0.026,
+        -0.047,
+        -2.991,
+        2.991,
+        -0.568,
+        0.568 )
   {
   }
 };
@@ -667,23 +670,24 @@ class DennisAndGay8eqN5 : public test_dennis_gay_8
 {
 public:
   DennisAndGay8eqN5()
-    : test_dennis_gay_8( "Dennis and Gay 8 eq N 5",
-                         -0.807,
-                         -0.021,
-                         -2.379,
-                         -0.364,
-                         -10.541,
-                         -1.961,
-                         -51.551,
-                         21.053,
-                         -0.074,
-                         -0.733,
-                         0.013,
-                         -0.034,
-                         -3.632,
-                         3.632,
-                         -0.289,
-                         0.289 )
+    : test_dennis_gay_8(
+        "Dennis and Gay 8 eq N 5",
+        -0.807,
+        -0.021,
+        -2.379,
+        -0.364,
+        -10.541,
+        -1.961,
+        -51.551,
+        21.053,
+        -0.074,
+        -0.733,
+        0.013,
+        -0.034,
+        -3.632,
+        3.632,
+        -0.289,
+        0.289 )
   {
   }
 };

@@ -19,38 +19,38 @@ class ExtendedPowellSingularFunction : public NonlinearSystem
 
 public:
   ExtendedPowellSingularFunction()
-    : NonlinearSystem( "Extended Powell singular function",
-                       "@article{Powell:1962,\n"
-                       "  author  = {Powell, M. J. D.},\n"
-                       "  title   = {An Iterative Method for Finding Stationary\n"
-                       "             Values of a Function of Several Variables},\n"
-                       "  journal = {The Computer Journal},\n"
-                       "  year    = {1962},\n"
-                       "  volume  = {5},\n"
-                       "  number  = {2},\n"
-                       "  pages   = {147--151},\n"
-                       "  doi     = {10.1093/comjnl/5.2.147}\n"
-                       "}\n\n"
-                       "@article{More:1981,\n"
-                       "  author  = {Mor{\'e}, Jorge J. and Garbow, Burton S. and "
-                       "Hillstrom, Kenneth E.},\n"
-                       "  title   = {Testing Unconstrained Optimization Software},\n"
-                       "  journal = {ACM Trans. Math. Softw.},\n"
-                       "  year    = {1981},\n"
-                       "  volume  = {7},\n"
-                       "  number  = {1},\n"
-                       "  pages   = {17--41},\n"
-                       "  doi     = {10.1145/355934.355936},\n"
-                       "}\n",
-                       4 )
+    : NonlinearSystem(
+        "Extended Powell singular function",
+        "@article{Powell:1962,\n"
+        "  author  = {Powell, M. J. D.},\n"
+        "  title   = {An Iterative Method for Finding Stationary\n"
+        "             Values of a Function of Several Variables},\n"
+        "  journal = {The Computer Journal},\n"
+        "  year    = {1962},\n"
+        "  volume  = {5},\n"
+        "  number  = {2},\n"
+        "  pages   = {147--151},\n"
+        "  doi     = {10.1093/comjnl/5.2.147}\n"
+        "}\n\n"
+        "@article{More:1981,\n"
+        "  author  = {Mor{\'e}, Jorge J. and Garbow, Burton S. and "
+        "Hillstrom, Kenneth E.},\n"
+        "  title   = {Testing Unconstrained Optimization Software},\n"
+        "  journal = {ACM Trans. Math. Softw.},\n"
+        "  year    = {1981},\n"
+        "  volume  = {7},\n"
+        "  number  = {1},\n"
+        "  pages   = {17--41},\n"
+        "  doi     = {10.1145/355934.355936},\n"
+        "}\n",
+        4 )
     , sqrt5( sqrt( 5.0 ) )
     , sqrt10( sqrt( 10.0 ) )
   {
     check_four( n, 4 );
   }
 
-  virtual void
-  evaluate( Vector const & x, Vector & f ) const override
+  virtual void evaluate( Vector const & x, Vector & f ) const override
   {
     for ( integer i = 0; i < n; i += 4 )
     {
@@ -61,8 +61,7 @@ public:
     }
   }
 
-  virtual void
-  jacobian( Vector const & x, SparseMatrix & J ) const override
+  virtual void jacobian( Vector const & x, SparseMatrix & J ) const override
   {
     J.resize( n, n );
     J.setZero();
@@ -91,8 +90,7 @@ public:
     J.makeCompressed();
   }
 
-  virtual void
-  exact_solution( vector<Vector> & x_vec ) const override
+  virtual void exact_solution( vector<Vector> & x_vec ) const override
   {
     x_vec.resize( 1 );
     auto & x0{ x_vec[0] };
@@ -100,8 +98,7 @@ public:
     x0.setZero();
   }
 
-  virtual void
-  initial_points( vector<Vector> & x_vec ) const override
+  virtual void initial_points( vector<Vector> & x_vec ) const override
   {
     x_vec.resize( 1 );
     auto & x0{ x_vec[0] };

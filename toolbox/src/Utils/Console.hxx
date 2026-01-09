@@ -22,19 +22,27 @@
  * \brief Console utility for formatted output with different message levels.
  */
 
+#ifndef UTILS_CONSOLE_HXX
+#define UTILS_CONSOLE_HXX
+
 namespace Utils
 {
 
   using istream_type = std::basic_istream<char>;  //!< Type for input stream
   using ostream_type = std::basic_ostream<char>;  //!< Type for output stream
   using string       = std::string;               //!< Type for string
+  using string_view  = std::string_view;          //!< Type for string view
 
   //! Get the base name of a file.
   /*!
    * \param filename C-style string representing the file name.
    * \return Base name of the file.
    */
-  string basename( string_view filename );
+  inline string basename( string_view filename )
+  {
+    size_t pos = filename.find_last_of( "/\\" );
+    return ( pos == string::npos ) ? string( filename ) : string( filename.substr( pos + 1 ) );
+  }
 
   //!
   //! \brief Class to handle console output with different styles and levels.
@@ -54,26 +62,22 @@ namespace Utils
   {
     mutable std::mutex m_message_mutex;  //!< Mutex for critical section
 
-#ifndef DOXYGEN_SHOULD_SKIP_THIS
   public:
     //! Structure representing console style.
     class Console_style
     {
     public:
-      rang::style s;  //!< Text style
-      rang::fg    f;  //!< Foreground color
-      rang::bg    b;  //!< Background color
+      fmt::text_style ts;  //!< Text style using fmt::text_style
     };
-#endif
 
   private:
     ostream_type * m_stream{ nullptr };  //!< Output stream pointer
     int            m_level{ 4 };         //!< Message level threshold
 
-    Console_style m_message_style = { rang::style::reset, rang::fg::reset, rang::bg::reset };    //!< Message style
-    Console_style m_warning_style = { rang::style::reset, rang::fg::yellow, rang::bg::reset };   //!< Warning style
-    Console_style m_error_style   = { rang::style::italic, rang::fg::red, rang::bg::reset };     //!< Error style
-    Console_style m_fatal_style   = { rang::style::underline, rang::fg::red, rang::bg::reset };  //!< Fatal style
+    Console_style m_message_style;  //!< Message style
+    Console_style m_warning_style;  //!< Warning style
+    Console_style m_error_style;    //!< Error style
+    Console_style m_fatal_style;    //!< Fatal style
 
   public:
     //! Deleted default constructor.
@@ -88,10 +92,20 @@ namespace Utils
      * \param level Minimum message \ref console_level "level" to output
      * (default is 4).
      */
-    explicit Console( ostream_type * stream = &std::cout, int level = 4 );
+    explicit Console( ostream_type * stream = &std::cout, int level = 4 ) : m_stream( stream ), m_level( level )
+    {
+      // Initialize default styles using fmt
+      m_message_style.ts = fmt::text_style();
+
+      m_warning_style.ts = fmt::fg( fmt::color::yellow );
+
+      m_error_style.ts = fmt::emphasis::italic | fmt::fg( fmt::color::red );
+
+      m_fatal_style.ts = fmt::emphasis::underline | fmt::fg( fmt::color::red );
+    }
 
     //! Destructor.
-    ~Console() {}
+    ~Console() = default;
 
     //! Change the message level.
     /*!
@@ -101,84 +115,61 @@ namespace Utils
      * - Level -1 means that all messages are suppressed.
      * - Level 4 means that all messages are printed
      */
-    void change_level( int new_level );
+    void change_level( int new_level )
+    {
+      if ( new_level < -1 || new_level > 4 )
+      {
+        fmt::print( "Console::change_level( new_level = {})\nnew_level must be in the range [-1,4]\n", new_level );
+        return;
+      }
+      m_level = new_level;
+    }
+
     //! Change the message \ref console_level "level".
     /*!
      * \param new_level New level for message output.
      * \deprecated
      */
-    void
-    changeLevel( int new_level )
-    {
-      this->change_level( new_level );
-    }
+    void changeLevel( int new_level ) { this->change_level( new_level ); }
 
     //! Change the output stream.
     /*!
      * \param new_stream Pointer to the new output stream.
      */
-    void
-    change_stream( ostream_type * new_stream )
-    {
-      m_stream = new_stream;
-    }
+    void change_stream( ostream_type * new_stream ) { m_stream = new_stream; }
     //! Change the output stream.
     /*!
      * \param new_stream Pointer to the new output stream.
      * \deprecated
      */
-    void
-    changeStream( ostream_type * new_stream )
-    {
-      m_stream = new_stream;
-    }
+    void changeStream( ostream_type * new_stream ) { m_stream = new_stream; }
 
     //! Get the current message \ref console_level "level".
     /*!
      * \return Current message level.
      */
-    int
-    get_level() const
-    {
-      return m_level;
-    }
+    int get_level() const { return m_level; }
     //! Get the current message level.
     /*!
      * \return Current message level.
      * \deprecated
      */
-    int
-    getLevel() const
-    {
-      return m_level;
-    }
+    int getLevel() const { return m_level; }
 
     //! Get the current output stream.
     /*!
      * \return Pointer to the current output stream.
      */
-    ostream_type *
-    get_stream() const
-    {
-      return m_stream;
-    }
+    ostream_type * get_stream() const { return m_stream; }
     //! Get the current output stream.
     /*!
      * \return Pointer to the current output stream.
      * \deprecated
      */
-    ostream_type *
-    getStream() const
-    {
-      return m_stream;
-    }
+    ostream_type * getStream() const { return m_stream; }
 
     //! Flush the output stream.
-    void
-    flush() const
-    {
-      m_stream->flush();
-    }
+    void flush() const { m_stream->flush(); }
 
     //! Output a message at a specified \ref console_level "level".
     /*!
@@ -186,7 +177,11 @@ namespace Utils
      * \param msg_level The \ref console_level "level of the message" (default
      * is 4).
      */
-    void message( string_view msg, int msg_level = 4 ) const;
+    void message( string_view const msg, int const msg_level = 4 ) const
+    {
+      std::lock_guard lock_access( m_message_mutex );
+      if ( msg_level <= m_level ) { *m_stream << fmt::format( m_message_style.ts, "{}", msg ); }
+    }
 
     //! Output a semaphore message.
     /*!
@@ -195,7 +190,12 @@ namespace Utils
      * \param msg_level The \ref console_level "level of the message" (default
      * is 0).
      */
-    void semaphore( unsigned ryg, string_view msg, int msg_level = 0 ) const;
+    void semaphore( unsigned const ryg, string_view const msg, int const msg_level = 0 ) const
+    {
+      std::lock_guard             lock_access( m_message_mutex );
+      static constexpr fmt::color ryg_color[3]{ fmt::color::red, fmt::color::yellow, fmt::color::green };
+      if ( msg_level <= m_level ) { *m_stream << fmt::format( fmt::fg( ryg_color[ryg % 3] ), "{}", msg ); }
+    }
 
     //! Output a message with specified colors.
     /*!
@@ -204,25 +204,46 @@ namespace Utils
      * \param msg_level The \ref console_level "level of the message" (default
      * is 0).
      */
-    void colors( unsigned c, string_view msg, int msg_level = 0 ) const;
+    void colors( unsigned const c, string_view const msg, int const msg_level = 0 ) const
+    {
+      std::lock_guard             lock_access( m_message_mutex );
+      static constexpr fmt::color rvg_color[5]{ fmt::color::red,
+                                                fmt::color::magenta,
+                                                fmt::color::yellow,
+                                                fmt::color::cyan,
+                                                fmt::color::green };
+      if ( msg_level <= m_level ) { *m_stream << fmt::format( fmt::fg( rvg_color[c % 5] ), "{}", msg ); }
+    }
 
     //! Output a warning message.
     /*!
      * \param msg The warning message to output.
      */
-    void warning( string_view msg ) const;  // level >= 2
+    void warning( string_view const msg ) const
+    {
+      std::lock_guard lock_access( m_message_mutex );
+      if ( m_level >= 2 ) { *m_stream << fmt::format( m_warning_style.ts, "{}", msg ); }
+    }
 
     //! Output an error message.
     /*!
      * \param msg The error message to output.
      */
-    void error( string_view msg ) const;  // level >= 1
+    void error( string_view const msg ) const
+    {
+      std::lock_guard lock_access( m_message_mutex );
+      if ( m_level >= 1 ) { *m_stream << fmt::format( m_error_style.ts, "{}", msg ); }
+    }
 
     //! Output a fatal message.
     /*!
      * \param msg The fatal message to output.
      */
-    void fatal( string_view msg ) const;  // level >= 0
+    void fatal( string_view const msg ) const
+    {
+      std::lock_guard lock_access( m_message_mutex );
+      *m_stream << fmt::format( m_fatal_style.ts, "{}", msg );
+    }
 
     //! Output a message in black color.
     /*!
@@ -230,7 +251,11 @@ namespace Utils
      * \param msg_level The \ref console_level "level of the message" (default
      * is 0).
      */
-    void black( string_view msg, int msg_level = 0 ) const;
+    void black( string_view const msg, int const msg_level = 0 ) const
+    {
+      std::lock_guard lock_access( m_message_mutex );
+      if ( msg_level <= m_level ) { *m_stream << fmt::format( fmt::fg( fmt::color::black ), "{}", msg ); }
+    }
 
     //! Output a message in red color.
     /*!
@@ -238,7 +263,11 @@ namespace Utils
      * \param msg_level The \ref console_level "level of the message" (default
      * is 0).
      */
-    void red( string_view msg, int msg_level = 0 ) const;
+    void red( string_view const msg, int const msg_level = 0 ) const
+    {
+      std::lock_guard lock_access( m_message_mutex );
+      if ( msg_level <= m_level ) { *m_stream << fmt::format( fmt::fg( fmt::color::red ), "{}", msg ); }
+    }
 
     //! Output a message in green color.
     /*!
@@ -246,7 +275,11 @@ namespace Utils
      * \param msg_level The \ref console_level "level of the message" (default
      * is 0).
      */
-    void green( string_view msg, int msg_level = 0 ) const;
+    void green( string_view const msg, int const msg_level = 0 ) const
+    {
+      std::lock_guard lock_access( m_message_mutex );
+      if ( msg_level <= m_level ) { *m_stream << fmt::format( fmt::fg( fmt::color::green ), "{}", msg ); }
+    }
 
     //! Output a message in yellow color.
     /*!
@@ -254,7 +287,11 @@ namespace Utils
      * \param msg_level The \ref console_level "level of the message" (default
      * is 0).
      */
-    void yellow( string_view msg, int msg_level = 0 ) const;
+    void yellow( string_view const msg, int const msg_level = 0 ) const
+    {
+      std::lock_guard lock_access( m_message_mutex );
+      if ( msg_level <= m_level ) { *m_stream << fmt::format( fmt::fg( fmt::color::yellow ), "{}", msg ); }
+    }
 
     //! Output a message in blue color.
     /*!
@@ -262,7 +299,11 @@ namespace Utils
      * \param msg_level The \ref console_level "level of the message" (default
      * is 0).
      */
-    void blue( string_view msg, int msg_level = 0 ) const;
+    void blue( string_view const msg, int const msg_level = 0 ) const
+    {
+      std::lock_guard lock_access( m_message_mutex );
+      if ( msg_level <= m_level ) { *m_stream << fmt::format( fmt::fg( fmt::color::blue ), "{}", msg ); }
+    }
 
     //! Output a message in magenta color.
     /*!
@@ -270,7 +311,11 @@ namespace Utils
      * \param msg_level The \ref console_level "level of the message" (default
      * is 0).
      */
-    void magenta( string_view msg, int msg_level = 0 ) const;
+    void magenta( string_view const msg, int const msg_level = 0 ) const
+    {
+      std::lock_guard lock_access( m_message_mutex );
+      if ( msg_level <= m_level ) { *m_stream << fmt::format( fmt::fg( fmt::color::magenta ), "{}", msg ); }
+    }
 
     //! Output a message in cyan color.
     /*!
@@ -278,7 +323,11 @@ namespace Utils
      * \param msg_level The \ref console_level "level of the message" (default
      * is 0).
      */
-    void cyan( string_view msg, int msg_level = 0 ) const;
+    void cyan( string_view const msg, int const msg_level = 0 ) const
+    {
+      std::lock_guard lock_access( m_message_mutex );
+      if ( msg_level <= m_level ) { *m_stream << fmt::format( fmt::fg( fmt::color::cyan ), "{}", msg ); }
+    }
 
     //! Output a message in gray color.
     /*!
@@ -286,7 +335,11 @@ namespace Utils
      * \param msg_level The \ref console_level "level of the message" (default
      * is 0).
      */
-    void gray( string_view msg, int msg_level = 0 ) const;
+    void gray( string_view const msg, int const msg_level = 0 ) const
+    {
+      std::lock_guard lock_access( m_message_mutex );
+      if ( msg_level <= m_level ) { *m_stream << fmt::format( fmt::fg( fmt::color::gray ), "{}", msg ); }
+    }
 
     //! Output a message in black reversed color.
     /*!
@@ -294,7 +347,14 @@ namespace Utils
      * \param msg_level The \ref console_level "level of the message" (default
      * is 0).
      */
-    void black_reversed( string_view msg, int msg_level = 0 ) const;
+    void black_reversed( string_view const msg, int const msg_level = 0 ) const
+    {
+      std::lock_guard lock_access( m_message_mutex );
+      if ( msg_level <= m_level )
+      {
+        *m_stream << fmt::format( fmt::fg( fmt::color::black ) | fmt::emphasis::reverse, "{}", msg );
+      }
+    }
 
     //! Output a message in red reversed color.
     /*!
@@ -302,7 +362,14 @@ namespace Utils
      * \param msg_level The \ref console_level "level of the message" (default
      * is 0).
      */
-    void red_reversed( string_view msg, int msg_level = 0 ) const;
+    void red_reversed( string_view const msg, int const msg_level = 0 ) const
+    {
+      std::lock_guard lock_access( m_message_mutex );
+      if ( msg_level <= m_level )
+      {
+        *m_stream << fmt::format( fmt::fg( fmt::color::red ) | fmt::emphasis::reverse, "{}", msg );
+      }
+    }
 
     //! Output a message in green reversed color.
     /*!
@@ -310,7 +377,14 @@ namespace Utils
      * \param msg_level The \ref console_level "level of the message" (default
      * is 0).
      */
-    void green_reversed( string_view msg, int msg_level = 0 ) const;
+    void green_reversed( string_view const msg, int const msg_level = 0 ) const
+    {
+      std::lock_guard lock_access( m_message_mutex );
+      if ( msg_level <= m_level )
+      {
+        *m_stream << fmt::format( fmt::fg( fmt::color::green ) | fmt::emphasis::reverse, "{}", msg );
+      }
+    }
 
     //! Output a message in yellow reversed color.
     /*!
@@ -318,7 +392,14 @@ namespace Utils
      * \param msg_level The \ref console_level "level of the message" (default
      * is 0).
      */
-    void yellow_reversed( string_view msg, int msg_level = 0 ) const;
+    void yellow_reversed( string_view const msg, int const msg_level = 0 ) const
+    {
+      std::lock_guard lock_access( m_message_mutex );
+      if ( msg_level <= m_level )
+      {
+        *m_stream << fmt::format( fmt::fg( fmt::color::yellow ) | fmt::emphasis::reverse, "{}", msg );
+      }
+    }
 
     //! Output a message in blue reversed color.
     /*!
@@ -326,7 +407,14 @@ namespace Utils
      * \param msg_level The \ref console_level "level of the message" (default
      * is 0).
      */
-    void blue_reversed( string_view msg, int msg_level = 0 ) const;
+    void blue_reversed( string_view const msg, int const msg_level = 0 ) const
+    {
+      std::lock_guard lock_access( m_message_mutex );
+      if ( msg_level <= m_level )
+      {
+        *m_stream << fmt::format( fmt::fg( fmt::color::blue ) | fmt::emphasis::reverse, "{}", msg );
+      }
+    }
 
     //! Output a message in magenta reversed color.
     /*!
@@ -334,7 +422,14 @@ namespace Utils
      * \param msg_level The \ref console_level "level of the message" (default
      * is 0).
      */
-    void magenta_reversed( string_view msg, int msg_level = 0 ) const;
+    void magenta_reversed( string_view const msg, int const msg_level = 0 ) const
+    {
+      std::lock_guard lock_access( m_message_mutex );
+      if ( msg_level <= m_level )
+      {
+        *m_stream << fmt::format( fmt::fg( fmt::color::magenta ) | fmt::emphasis::reverse, "{}", msg );
+      }
+    }
 
     //! Output a message in cyan reversed color.
     /*!
@@ -342,7 +437,14 @@ namespace Utils
      * \param msg_level The \ref console_level "level of the message" (default
      * is 0).
      */
-    void cyan_reversed( string_view msg, int msg_level = 0 ) const;
+    void cyan_reversed( string_view const msg, int const msg_level = 0 ) const
+    {
+      std::lock_guard lock_access( m_message_mutex );
+      if ( msg_level <= m_level )
+      {
+        *m_stream << fmt::format( fmt::fg( fmt::color::cyan ) | fmt::emphasis::reverse, "{}", msg );
+      }
+    }
 
     //! Output a message in gray reversed color.
     /*!
@@ -350,18 +452,22 @@ namespace Utils
      * \param msg_level The \ref console_level "level of the message" (default
      * is 0).
      */
-    void gray_reversed( string_view msg, int msg_level = 0 ) const;
+    void gray_reversed( string_view const msg, int const msg_level = 0 ) const
+    {
+      std::lock_guard lock_access( m_message_mutex );
+      if ( msg_level <= m_level )
+      {
+        *m_stream << fmt::format( fmt::fg( fmt::color::gray ) | fmt::emphasis::reverse, "{}", msg );
+      }
+    }
 
     //! Sets the message style.
     //! \param s The text style (e.g., bold, underline).
     //! \param f The foreground color of the text.
     //! \param b The background color of the text.
-    void
-    set_message_style( rang::style const & s, rang::fg const & f, rang::bg const & b )
+    void set_message_style( fmt::emphasis s, fmt::color f, fmt::color b )
     {
-      m_message_style.s = s;
-      m_message_style.f = f;
-      m_message_style.b = b;
+      m_message_style.ts = s | fmt::fg( f ) | fmt::bg( b );
     }
 
     //! Sets the message style using a higher-level function.
@@ -369,22 +475,15 @@ namespace Utils
     //! \param f The foreground color.
     //! \param b The background color.
     //! \deprecated use `set_message_style`
-    void
-    setMessageStyle( rang::style const & s, rang::fg const & f, rang::bg const & b )
-    {
-      this->set_message_style( s, f, b );
-    }
+    void setMessageStyle( fmt::emphasis s, fmt::color f, fmt::color b ) { this->set_message_style( s, f, b ); }
 
     //! Sets the warning style.
     //! \param s The text style.
     //! \param f The foreground color.
     //! \param b The background color.
-    void
-    set_warning_style( rang::style const & s, rang::fg const & f, rang::bg const & b )
+    void set_warning_style( fmt::emphasis s, fmt::color f, fmt::color b )
     {
-      m_warning_style.s = s;
-      m_warning_style.f = f;
-      m_warning_style.b = b;
+      m_warning_style.ts = s | fmt::fg( f ) | fmt::bg( b );
     }
 
     //! Sets the warning style.
@@ -392,22 +491,15 @@ namespace Utils
     //! \param f The foreground color.
     //! \param b The background color.
     //! \deprecated use `set_warning_style`
-    void
-    setWarningStyle( rang::style const & s, rang::fg const & f, rang::bg const & b )
-    {
-      this->set_warning_style( s, f, b );
-    }
+    void setWarningStyle( fmt::emphasis s, fmt::color f, fmt::color b ) { this->set_warning_style( s, f, b ); }
 
     //! Sets the error style.
     //! \param s The text style.
     //! \param f The foreground color.
     //! \param b The background color.
-    void
-    set_error_style( rang::style const & s, rang::fg const & f, rang::bg const & b )
+    void set_error_style( fmt::emphasis s, fmt::color f, fmt::color b )
     {
-      m_error_style.s = s;
-      m_error_style.f = f;
-      m_error_style.b = b;
+      m_error_style.ts = s | fmt::fg( f ) | fmt::bg( b );
     }
 
     //! Sets the error style.
@@ -415,22 +507,15 @@ namespace Utils
     //! \param f The foreground color.
     //! \param b The background color.
     //! \deprecated use `set_error_style`
-    void
-    setErrorStyle( rang::style const & s, rang::fg const & f, rang::bg const & b )
-    {
-      this->set_error_style( s, f, b );
-    }
+    void setErrorStyle( fmt::emphasis s, fmt::color f, fmt::color b ) { this->set_error_style( s, f, b ); }
 
     //! Sets the fatal error style.
     //! \param s The text style.
     //! \param f The foreground color.
     //! \param b The background color.
-    void
-    set_fatal_style( rang::style const & s, rang::fg const & f, rang::bg const & b )
+    void set_fatal_style( fmt::emphasis s, fmt::color f, fmt::color b )
     {
-      m_fatal_style.s = s;
-      m_fatal_style.f = f;
-      m_fatal_style.b = b;
+      m_fatal_style.ts = s | fmt::fg( f ) | fmt::bg( b );
     }
 
     //! Sets the fatal error style.
@@ -438,53 +523,37 @@ namespace Utils
     //! \param f The foreground color.
     //! \param b The background color.
     //! \deprecated use `set_fatal_style`
-    void
-    setFatalStyle( rang::style const & s, rang::fg const & f, rang::bg const & b )
-    {
-      this->set_fatal_style( s, f, b );
-    }
+    void setFatalStyle( fmt::emphasis s, fmt::color f, fmt::color b ) { this->set_fatal_style( s, f, b ); }
 
     //! Disables coloring.
     //! Turns off color control in non-Windows terminals.
-    void
-    set_off() const
+    void set_off() const
     {
-#ifndef UTILS_OS_WINDOWS
-      rang::setControlMode( rang::control::Off );
-#endif
+      // fmt automatically handles color support detection
+      // No equivalent to rang::setControlMode needed
     }
 
     //! Disables coloring.
     //! Turns off color control in non-Windows terminals.
     //! \deprecated use `set_off`
-    void
-    setOff() const
-    {
-      this->set_off();
-    }
+    void setOff() const { this->set_off(); }
 
     //! Sets coloring to automatic mode.
     //! Enables automatic color control in terminals depending on the operating
     //! system.
-    void
-    set_auto() const
+    void set_auto() const
     {
-#ifdef UTILS_OS_WINDOWS
-      rang::setWinTermMode( rang::winTerm::Auto );
-#else
-      rang::setControlMode( rang::control::Auto );
-#endif
+      // fmt automatically handles color support detection
+      // No equivalent to rang::setControlMode or rang::setWinTermMode needed
     }
 
     //! Sets coloring to automatic mode.
     //! Enables automatic color control in terminals depending on the operating
     //! system.
     //! \deprecated use `set_auto`
-    void
-    setAuto() const
-    {
-      this->set_auto();
-    }
+    void setAuto() const { this->set_auto(); }
   };
 
 }  // namespace Utils
+
+#endif  // UTILS_CONSOLE_HXX

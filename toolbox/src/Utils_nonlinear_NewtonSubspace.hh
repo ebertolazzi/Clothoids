@@ -35,7 +35,7 @@
 #include "Utils_eigen.hh"
 #include "Utils_fmt.hh"
 #include "Utils_nonlinear_system.hh"
-#include "Utils_pseudoinverse.hh"
+#include "Utils_Tikhonov.hh"
 
 namespace Utils
 {
@@ -57,6 +57,7 @@ namespace Utils
     using Scalar       = double;
     using Vector       = Eigen::VectorXd;
     using SparseMatrix = Eigen::SparseMatrix<Scalar>;
+    using integer      = Eigen::Index;
 
   private:
     int    m_max_inner_iter{ 10 };
@@ -86,61 +87,20 @@ namespace Utils
   public:
     SubspaceInnerSolver() = default;
 
-    void
-    set_max_iterations( int it )
-    {
-      m_max_inner_iter = it;
-    }
-    void
-    set_tolerance( Scalar t )
-    {
-      m_inner_tol = t;
-    }
-    void
-    set_damping( Scalar l )
-    {
-      m_inner_lambda = l;
-    }
-    void
-    enable_line_search( bool v )
-    {
-      m_use_linesearch = v;
-    }
-    void
-    set_verbose_level( int v )
-    {
-      m_verbose = v;
-    }
-    void
-    enable_lazy_jacobian( bool v )
-    {
-      m_lazy_jacobian = v;
-    }
-    void
-    enable_adaptive_damping( bool v )
-    {
-      m_adaptive_damping = v;
-    }
+    void set_max_iterations( int it ) { m_max_inner_iter = it; }
+    void set_tolerance( Scalar t ) { m_inner_tol = t; }
+    void set_damping( Scalar l ) { m_inner_lambda = l; }
+    void enable_line_search( bool v ) { m_use_linesearch = v; }
+    void set_verbose_level( int v ) { m_verbose = v; }
+    void enable_lazy_jacobian( bool v ) { m_lazy_jacobian = v; }
+    void enable_adaptive_damping( bool v ) { m_adaptive_damping = v; }
 
     // Getters for stats
-    int
-    get_total_inner_iterations() const
-    {
-      return m_total_inner_iter;
-    }
-    int
-    get_inner_function_evals() const
-    {
-      return m_inner_feval;
-    }
-    int
-    get_inner_jacobian_evals() const
-    {
-      return m_inner_jeval;
-    }
+    int get_total_inner_iterations() const { return m_total_inner_iter; }
+    int get_inner_function_evals() const { return m_inner_feval; }
+    int get_inner_jacobian_evals() const { return m_inner_jeval; }
 
-    void
-    reset_counters()
+    void reset_counters()
     {
       m_total_inner_iter    = 0;
       m_inner_feval         = 0;
@@ -148,13 +108,14 @@ namespace Utils
       m_consecutive_rejects = 0;
     }
 
-    // Risolve il problema ridotto mantenendo fisse le variabili non in active_indices
-    bool
-    solve_in_subspace( NonlinearSystem const &  sys,
-                       Vector &                 x_full,
-                       std::vector<int> const & active_indices,
-                       Vector &                 f,
-                       int                      outer_iter_idx )
+    // Risolve il problema ridotto mantenendo fisse le variabili non in
+    // active_indices
+    bool solve_in_subspace(
+      NonlinearSystem const &  sys,
+      Vector &                 x_full,
+      std::vector<int> const & active_indices,
+      Vector &                 f,
+      int                      outer_iter_idx )
     {
       int n_full   = x_full.size();
       int n_active = static_cast<int>( active_indices.size() );
@@ -162,11 +123,11 @@ namespace Utils
 
       // Mapping: active_subset -> full_vector
       Vector x_active( n_active );
-      for ( int i = 0; i < n_active; ++i ) { x_active[i] = x_full[active_indices[i]]; }
+      for ( integer i = 0; i < n_active; ++i ) { x_active[i] = x_full[active_indices[i]]; }
 
       // Mappa colonne sparse per estrazione rapida
       std::vector<int> col_map( n_full, -1 );
-      for ( int i = 0; i < n_active; ++i ) { col_map[active_indices[i]] = i; }
+      for ( integer i = 0; i < n_active; ++i ) { col_map[active_indices[i]] = i; }
 
       Scalar current_norm = f.norm();
       Scalar initial_norm = current_norm;
@@ -180,7 +141,8 @@ namespace Utils
 
       for ( ; inner_iter < m_max_inner_iter; ++inner_iter )
       {
-        // Modified Newton: Aggiorna J solo alla prima iter o ogni m_lazy_update_freq
+        // Modified Newton: Aggiorna J solo alla prima iter o ogni
+        // m_lazy_update_freq
         bool force_update = ( inner_iter == 0 ) || ( !m_lazy_jacobian ) || ( inner_iter % m_lazy_update_freq == 0 );
 
         if ( force_update )
@@ -268,8 +230,12 @@ namespace Utils
           auto        color_code = is_good ? fg( fmt::color::green ) : fg( fmt::color::red );
           std::string status_msg = is_good ? "converging" : "diverging/rejected";
 
-          fmt::print( "  [outer:{:3d} | inner:{:3d}] |f|={:12.3e} red={:6.2f}% ", outer_iter_idx, inner_iter, new_norm,
-                      reduction );
+          fmt::print(
+            "  [outer:{:3d} | inner:{:3d}] |f|={:12.3e} red={:6.2f}% ",
+            outer_iter_idx,
+            inner_iter,
+            new_norm,
+            reduction );
 
           fmt::print( color_code, "--> {} (α={:.1e}, λ={:.1e})\n", status_msg, alpha, lambda );
         }
@@ -306,7 +272,7 @@ namespace Utils
       m_total_inner_iter += ( inner_iter + 1 );
 
       // Assicuriamoci che x_full sia sincronizzato
-      for ( int i = 0; i < n_active; ++i ) { x_full[active_indices[i]] = x_active[i]; }
+      for ( integer i = 0; i < n_active; ++i ) { x_full[active_indices[i]] = x_active[i]; }
 
       // Valutazione finale per sicurezza
       try
@@ -323,15 +289,19 @@ namespace Utils
     }
 
   private:
-    // Usa SP_TikhonovSolver2 per calcolare la direzione di Newton con regolarizzazione diagonale
-    bool
-    compute_newton_direction_with_tikhonov( SparseMatrix const & J_sub, Vector const & f, Scalar lambda, Vector & dx )
+    // Usa SP_TikhonovSolver2 per calcolare la direzione di Newton con
+    // regolarizzazione diagonale
+    bool compute_newton_direction_with_tikhonov(
+      SparseMatrix const & J_sub,
+      Vector const &       f,
+      Scalar               lambda,
+      Vector &             dx )
     {
       int n = J_sub.cols();
 
       // Calcola regolarizzazione diagonale basata sulle norme delle colonne
       Vector D = Vector::Ones( n );
-      for ( int i = 0; i < n; ++i )
+      for ( integer i = 0; i < n; ++i )
       {
         // Norma al quadrato della colonna i-esima
         Scalar col_norm_sq = 0.0;
@@ -364,7 +334,7 @@ namespace Utils
         Vector       rhs = -J_sub.transpose() * f;
         SparseMatrix JtJ = J_sub.transpose() * J_sub;
 
-        for ( int i = 0; i < n; ++i ) { JtJ.coeffRef( i, i ) += D[i]; }
+        for ( integer i = 0; i < n; ++i ) { JtJ.coeffRef( i, i ) += D[i]; }
 
         Eigen::SimplicialLDLT<SparseMatrix> solver;
         solver.compute( JtJ );
@@ -380,14 +350,14 @@ namespace Utils
       }
     }
 
-    bool
-    subspace_line_search( NonlinearSystem const &  sys,
-                          Vector const &           x_full,
-                          Vector &                 x_active,
-                          std::vector<int> const & active_indices,
-                          Vector &                 f,
-                          Vector const &           dx_active,
-                          Scalar &                 alpha_out )
+    bool subspace_line_search(
+      NonlinearSystem const &  sys,
+      Vector const &           x_full,
+      Vector &                 x_active,
+      std::vector<int> const & active_indices,
+      Vector &                 f,
+      Vector const &           dx_active,
+      Scalar &                 alpha_out )
     {
       Scalar alpha    = 1.0;
       Scalar c        = 1e-4;
@@ -431,12 +401,12 @@ namespace Utils
       return false;
     }
 
-    bool
-    update_and_evaluate( NonlinearSystem const &  sys,
-                         Vector &                 x_full,
-                         Vector const &           x_active_new,
-                         std::vector<int> const & active_indices,
-                         Vector &                 f )
+    bool update_and_evaluate(
+      NonlinearSystem const &  sys,
+      Vector &                 x_full,
+      Vector const &           x_active_new,
+      std::vector<int> const & active_indices,
+      Vector &                 f )
     {
       for ( size_t i = 0; i < active_indices.size(); ++i ) { x_full[active_indices[i]] = x_active_new[i]; }
       try
@@ -468,6 +438,7 @@ namespace Utils
     using Scalar       = double;
     using Vector       = Eigen::VectorXd;
     using SparseMatrix = Eigen::SparseMatrix<Scalar>;
+    using integer      = Eigen::Index;
 
     enum SelectionStrategy
     {
@@ -532,149 +503,51 @@ namespace Utils
     }
 
     // --- Configuration API (API compatibile con i Test) ---
-    void
-    set_max_iterations( int it )
-    {
-      m_max_outer_iter = it;
-    }
-    void
-    set_tolerance( Scalar t )
-    {
-      m_outer_tol = t;
-    }
-    void
-    set_block_size( int b )
-    {
-      m_block_size = std::max( 1, b );
-    }
-    void
-    set_verbose_level( int v )
+    void set_max_iterations( int it ) { m_max_outer_iter = it; }
+    void set_tolerance( Scalar t ) { m_outer_tol = t; }
+    void set_block_size( int b ) { m_block_size = std::max( 1, b ); }
+    void set_verbose_level( int v )
     {
       m_verbose = v;
       m_inner_solver.set_verbose_level( v );
     }
-    void
-    set_strategy( SelectionStrategy s )
-    {
-      m_strategy = s;
-    }
+    void set_strategy( SelectionStrategy s ) { m_strategy = s; }
 
     // Stagnation and adaptive configuration
-    void
-    enable_adaptive_block_size( bool enable )
-    {
-      m_adaptive_block_size = enable;
-    }
-    void
-    set_min_block_size( int s )
-    {
-      m_min_block_size = std::max( 1, s );
-    }
-    void
-    set_max_block_size( int s )
-    {
-      m_max_block_size = std::min( s, 1000 );
-    }
-    void
-    set_fallback_strategy( FallbackStrategy s )
-    {
-      m_fallback_strategy = s;
-    }
-    void
-    set_stagnation_tolerance( Scalar tol )
-    {
-      m_stagnation_tolerance = tol;
-    }
-    void
-    set_max_stagnation_before_reset( int n )
-    {
-      m_max_stagnation_before_reset = n;
-    }
-    void
-    enable_adaptive_strategy( bool enable )
-    {
-      m_adaptive_strategy = enable;
-    }
+    void enable_adaptive_block_size( bool enable ) { m_adaptive_block_size = enable; }
+    void set_min_block_size( int s ) { m_min_block_size = std::max( 1, s ); }
+    void set_max_block_size( int s ) { m_max_block_size = std::min( s, 1000 ); }
+    void set_fallback_strategy( FallbackStrategy s ) { m_fallback_strategy = s; }
+    void set_stagnation_tolerance( Scalar tol ) { m_stagnation_tolerance = tol; }
+    void set_max_stagnation_before_reset( int n ) { m_max_stagnation_before_reset = n; }
+    void enable_adaptive_strategy( bool enable ) { m_adaptive_strategy = enable; }
 
     // Proxy methods for Inner Solver configuration
-    void
-    set_inner_max_iterations( int i )
-    {
-      m_inner_solver.set_max_iterations( i );
-    }
-    void
-    set_inner_tolerance( Scalar t )
-    {
-      m_inner_solver.set_tolerance( t );
-    }
-    void
-    set_inner_damping( Scalar d )
-    {
-      m_inner_solver.set_damping( d );
-    }
-    void
-    enable_inner_line_search( bool b )
-    {
-      m_inner_solver.enable_line_search( b );
-    }
-    void
-    enable_inner_adaptive_damping( bool b )
-    {
-      m_inner_solver.enable_adaptive_damping( b );
-    }
+    void set_inner_max_iterations( int i ) { m_inner_solver.set_max_iterations( i ); }
+    void set_inner_tolerance( Scalar t ) { m_inner_solver.set_tolerance( t ); }
+    void set_inner_damping( Scalar d ) { m_inner_solver.set_damping( d ); }
+    void enable_inner_line_search( bool b ) { m_inner_solver.enable_line_search( b ); }
+    void enable_inner_adaptive_damping( bool b ) { m_inner_solver.enable_adaptive_damping( b ); }
 
     // Direct Access if needed
-    SubspaceInnerSolver &
-    inner_solver()
-    {
-      return m_inner_solver;
-    }
+    SubspaceInnerSolver & inner_solver() { return m_inner_solver; }
 
     // --- Getters for Statistics (API compatibile con i Test) ---
-    int
-    get_outer_iterations() const
-    {
-      return m_outer_iter;
-    }
-    int
-    get_total_iterations() const
-    {
-      return m_inner_solver.get_total_inner_iterations();
-    }
+    int get_outer_iterations() const { return m_outer_iter; }
+    int get_total_iterations() const { return m_inner_solver.get_total_inner_iterations(); }
 
-    int
-    get_function_evals() const
-    {
-      return 1 + m_inner_solver.get_inner_function_evals();
-    }
+    int get_function_evals() const { return 1 + m_inner_solver.get_inner_function_evals(); }
 
-    int
-    get_jacobian_evals() const
-    {
-      return m_outer_jeval + m_inner_solver.get_inner_jacobian_evals();
-    }
+    int get_jacobian_evals() const { return m_outer_jeval + m_inner_solver.get_inner_jacobian_evals(); }
 
-    Scalar
-    final_residual() const
-    {
-      return m_final_residual;
-    }
+    Scalar final_residual() const { return m_final_residual; }
 
     // Get current progress information
-    Scalar
-    get_current_progress() const
-    {
-      return m_current_progress;
-    }
-    int
-    get_stagnation_counter() const
-    {
-      return m_stagnation_counter;
-    }
+    Scalar get_current_progress() const { return m_current_progress; }
+    int    get_stagnation_counter() const { return m_stagnation_counter; }
 
     // --- Main Solver ---
-    bool
-    solve( NonlinearSystem const & sys, Vector & x )
+    bool solve( NonlinearSystem const & sys, Vector & x )
     {
       int n = x.size();
       m_inner_solver.reset_counters();
@@ -700,16 +573,26 @@ namespace Utils
 
       if ( m_verbose > 0 )
       {
-        fmt::print( fg( fmt::color::cyan ) | fmt::emphasis::bold,
-                    "==========================================================\n" );
-        fmt::print( fg( fmt::color::cyan ) | fmt::emphasis::bold,
-                    "=== Two-Level Subspace Newton Solver                    ===\n" );
-        fmt::print( fg( fmt::color::cyan ) | fmt::emphasis::bold, "=== Strategy: {:15} Block size: {:3d} {:>17}===\n",
-                    strategy_name( m_strategy ), m_block_size, m_adaptive_block_size ? "(adaptive)" : "(fixed)" );
-        fmt::print( fg( fmt::color::cyan ) | fmt::emphasis::bold,
-                    "==========================================================\n" );
-        fmt::print( "Initial residual: {:12.3e} | Variables: {:4d} | Equations: {:4d}\n", m_final_residual, n,
-                    sys.num_equations() );
+        fmt::print(
+          fg( fmt::color::cyan ) | fmt::emphasis::bold,
+          "==========================================================\n" );
+        fmt::print(
+          fg( fmt::color::cyan ) | fmt::emphasis::bold,
+          "=== Two-Level Subspace Newton Solver                    ===\n" );
+        fmt::print(
+          fg( fmt::color::cyan ) | fmt::emphasis::bold,
+          "=== Strategy: {:15} Block size: {:3d} {:>17}===\n",
+          strategy_name( m_strategy ),
+          m_block_size,
+          m_adaptive_block_size ? "(adaptive)" : "(fixed)" );
+        fmt::print(
+          fg( fmt::color::cyan ) | fmt::emphasis::bold,
+          "==========================================================\n" );
+        fmt::print(
+          "Initial residual: {:12.3e} | Variables: {:4d} | Equations: {:4d}\n",
+          m_final_residual,
+          n,
+          sys.num_equations() );
         fmt::print( "----------------------------------------------------------\n" );
       }
 
@@ -741,12 +624,17 @@ namespace Utils
         {
           if ( m_verbose > 0 )
           {
-            fmt::print( fg( fmt::color::lime_green ) | fmt::emphasis::bold,
-                        "==========================================================\n" );
-            fmt::print( fg( fmt::color::lime_green ) | fmt::emphasis::bold,
-                        " CONVERGED at iteration {:3d} with residual {:12.3e}\n", m_outer_iter, m_final_residual );
-            fmt::print( fg( fmt::color::lime_green ) | fmt::emphasis::bold,
-                        "==========================================================\n" );
+            fmt::print(
+              fg( fmt::color::lime_green ) | fmt::emphasis::bold,
+              "==========================================================\n" );
+            fmt::print(
+              fg( fmt::color::lime_green ) | fmt::emphasis::bold,
+              " CONVERGED at iteration {:3d} with residual {:12.3e}\n",
+              m_outer_iter,
+              m_final_residual );
+            fmt::print(
+              fg( fmt::color::lime_green ) | fmt::emphasis::bold,
+              "==========================================================\n" );
           }
           return true;
         }
@@ -758,8 +646,12 @@ namespace Utils
           current_strategy               = select_adaptive_strategy();
           if ( m_verbose > 0 && old_strategy != current_strategy )
           {
-            fmt::print( fg( fmt::color::yellow ), "Switching strategy from {} to {} at iteration {:3d}\n",
-                        strategy_name( old_strategy ), strategy_name( current_strategy ), m_outer_iter );
+            fmt::print(
+              fg( fmt::color::yellow ),
+              "Switching strategy from {} to {} at iteration {:3d}\n",
+              strategy_name( old_strategy ),
+              strategy_name( current_strategy ),
+              m_outer_iter );
           }
         }
 
@@ -769,8 +661,11 @@ namespace Utils
         if ( m_verbose > 0 )
         {
           fmt::print( fg( fmt::color::cyan ) | fmt::emphasis::bold, "┌─ Outer iteration {:3d} ", m_outer_iter );
-          fmt::print( "|f|={:12.3e} | Block size: {:3d} | Strategy: {:12} \n", f.norm(), dynamic_block_size,
-                      strategy_name( current_strategy ) );
+          fmt::print(
+            "|f|={:12.3e} | Block size: {:3d} | Strategy: {:12} \n",
+            f.norm(),
+            dynamic_block_size,
+            strategy_name( current_strategy ) );
 
           if ( m_verbose > 1 && !active_indices.empty() )
           {
@@ -789,7 +684,7 @@ namespace Utils
             else
             {
               // Mostra i primi 5 e gli ultimi 5
-              for ( int i = 0; i < 5; ++i )
+              for ( integer i = 0; i < 5; ++i )
               {
                 if ( i > 0 ) fmt::print( ", " );
                 fmt::print( "{:3d}", active_indices[i] );
@@ -809,8 +704,11 @@ namespace Utils
             // Per verbose=1, stampa solo un riepilogo ogni 5 iterazioni
             if ( m_outer_iter % 5 == 0 )
             {
-              fmt::print( "├─ Progress: {:6.2f}% | Stagnation: {:2d}/{:2d}\n", m_current_progress * 100,
-                          m_stagnation_counter, m_max_stagnation_before_reset );
+              fmt::print(
+                "├─ Progress: {:6.2f}% | Stagnation: {:2d}/{:2d}\n",
+                m_current_progress * 100,
+                m_stagnation_counter,
+                m_max_stagnation_before_reset );
             }
           }
 
@@ -819,10 +717,11 @@ namespace Utils
         // --------------------------------------------
 
         // Update selection history
-        for ( int idx : active_indices )
+        for ( integer idx : active_indices )
         {
           m_selection_history.push_back( idx );
-          if ( m_selection_history.size() > 5 * n ) { m_selection_history.pop_front(); }
+          integer sz = m_selection_history.size();
+          if ( sz > 5 * n ) m_selection_history.pop_front();
         }
 
         bool inner_ok = m_inner_solver.solve_in_subspace( sys, x, active_indices, f, m_outer_iter );
@@ -833,8 +732,11 @@ namespace Utils
         {
           if ( m_verbose > 0 )
           {
-            fmt::print( fg( fmt::color::orange ),
-                        "  Inner solver failed at outer iteration {:3d}. Activating fallback.\n", m_outer_iter );
+            fmt::print(
+              fg( fmt::color::orange ),
+              "  Inner solver failed at outer iteration {:3d}. "
+              "Activating fallback.\n",
+              m_outer_iter );
           }
           m_stagnation_counter++;
         }
@@ -847,8 +749,14 @@ namespace Utils
         // Progress report per verbose=1 (ogni 5 iterazioni)
         if ( m_verbose == 1 && m_outer_iter % 5 == 0 && m_outer_iter > 0 )
         {
-          fmt::print( "[{:3d}] |f|={:12.3e} | Block={:3d} | Progress={:6.2f}% | Stagn={:2d}\n", m_outer_iter, f.norm(),
-                      dynamic_block_size, m_current_progress * 100, m_stagnation_counter );
+          fmt::print(
+            "[{:3d}] |f|={:12.3e} | Block={:3d} | Progress={:6.2f}% | "
+            "Stagn={:2d}\n",
+            m_outer_iter,
+            f.norm(),
+            dynamic_block_size,
+            m_current_progress * 100,
+            m_stagnation_counter );
         }
 
         // Progress report per verbose>1 (ogni iterazione, dopo il solver interno)
@@ -865,22 +773,31 @@ namespace Utils
       {
         if ( converged )
         {
-          fmt::print( fg( fmt::color::lime_green ) | fmt::emphasis::bold,
-                      "==========================================================\n" );
-          fmt::print( fg( fmt::color::lime_green ) | fmt::emphasis::bold,
-                      " CONVERGED after {:3d} iterations | Final residual: {:12.3e}\n", m_outer_iter,
-                      m_final_residual );
-          fmt::print( fg( fmt::color::lime_green ) | fmt::emphasis::bold,
-                      "==========================================================\n" );
+          fmt::print(
+            fg( fmt::color::lime_green ) | fmt::emphasis::bold,
+            "==========================================================\n" );
+          fmt::print(
+            fg( fmt::color::lime_green ) | fmt::emphasis::bold,
+            " CONVERGED after {:3d} iterations | Final residual: {:12.3e}\n",
+            m_outer_iter,
+            m_final_residual );
+          fmt::print(
+            fg( fmt::color::lime_green ) | fmt::emphasis::bold,
+            "==========================================================\n" );
         }
         else
         {
-          fmt::print( fg( fmt::color::orange ) | fmt::emphasis::bold,
-                      "==========================================================\n" );
-          fmt::print( fg( fmt::color::orange ) | fmt::emphasis::bold,
-                      " STOPPED after {:3d} iterations | Final residual: {:12.3e}\n", m_outer_iter, m_final_residual );
-          fmt::print( fg( fmt::color::orange ) | fmt::emphasis::bold,
-                      "==========================================================\n" );
+          fmt::print(
+            fg( fmt::color::orange ) | fmt::emphasis::bold,
+            "==========================================================\n" );
+          fmt::print(
+            fg( fmt::color::orange ) | fmt::emphasis::bold,
+            " STOPPED after {:3d} iterations | Final residual: {:12.3e}\n",
+            m_outer_iter,
+            m_final_residual );
+          fmt::print(
+            fg( fmt::color::orange ) | fmt::emphasis::bold,
+            "==========================================================\n" );
         }
 
         // Stampa statistiche finali
@@ -898,12 +815,12 @@ namespace Utils
     }
 
   private:
-    std::vector<int>
-    select_variables_enhanced( NonlinearSystem const & sys,
-                               Vector const &          x,
-                               Vector const &          f,
-                               int &                   dynamic_block_size,
-                               SelectionStrategy       current_strategy )
+    std::vector<int> select_variables_enhanced(
+      NonlinearSystem const & sys,
+      Vector const &          x,
+      Vector const &          f,
+      int &                   dynamic_block_size,
+      SelectionStrategy       current_strategy )
     {
       int n = x.size();
 
@@ -931,7 +848,7 @@ namespace Utils
       }
       else if ( current_strategy == CYCLIC )
       {
-        for ( int i = 0; i < dynamic_block_size; ++i ) indices.push_back( ( m_cyclic_index + i ) % n );
+        for ( integer i = 0; i < dynamic_block_size; ++i ) indices.push_back( ( m_cyclic_index + i ) % n );
         m_cyclic_index = ( m_cyclic_index + dynamic_block_size ) % n;
       }
       else
@@ -972,33 +889,35 @@ namespace Utils
           }
           col_norms = col_norms.cwiseSqrt();
 
-          for ( int i = 0; i < n; ++i ) { criteria[i] = std::abs( grad[i] ) / ( col_norms[i] + 1e-8 ); }
+          for ( integer i = 0; i < n; ++i ) { criteria[i] = std::abs( grad[i] ) / ( col_norms[i] + 1e-8 ); }
         }
 
         // Penalizza variabili selezionate recentemente
         std::unordered_map<int, int> recent_count;
-        for ( int idx : m_selection_history ) { recent_count[idx]++; }
+        for ( integer idx : m_selection_history ) { recent_count[idx]++; }
 
         // Aggiungi penalizzazione basata su selezione recente
-        if ( m_selection_history.size() > n )
+        if ( integer sz = m_selection_history.size(); sz > n )
         {
-          for ( int i = 0; i < n; ++i ) { criteria[i] /= ( 1.0 + 0.1 * recent_count[i] ); }
+          for ( integer i = 0; i < n; ++i ) { criteria[i] /= ( 1.0 + 0.1 * recent_count[i] ); }
         }
 
         std::vector<std::pair<Scalar, int>> importance( n );
-        for ( int i = 0; i < n; ++i ) importance[i] = { criteria[i], i };
+        for ( integer i = 0; i < n; ++i ) importance[i] = { criteria[i], i };
 
-        std::partial_sort( importance.begin(), importance.begin() + dynamic_block_size, importance.end(),
-                           std::greater<std::pair<Scalar, int>>() );
+        std::partial_sort(
+          importance.begin(),
+          importance.begin() + dynamic_block_size,
+          importance.end(),
+          std::greater<std::pair<Scalar, int>>() );
 
-        for ( int i = 0; i < dynamic_block_size; ++i ) indices.push_back( importance[i].second );
+        for ( integer i = 0; i < dynamic_block_size; ++i ) indices.push_back( importance[i].second );
       }
 
       return indices;
     }
 
-    int
-    adjust_block_size_based_on_progress( int current_size, int n )
+    int adjust_block_size_based_on_progress( int current_size, int n )
     {
       if ( m_residual_history.size() < 3 ) return current_size;
 
@@ -1012,9 +931,13 @@ namespace Utils
 
         if ( m_verbose > 1 )
         {
-          fmt::print( fg( fmt::color::yellow ),
-                      "  Slow progress ({:6.2f}%), increasing block size from {:3d} to {:3d}\n",
-                      m_current_progress * 100, current_size, new_size );
+          fmt::print(
+            fg( fmt::color::yellow ),
+            "  Slow progress ({:6.2f}%), increasing block size from "
+            "{:3d} to {:3d}\n",
+            m_current_progress * 100,
+            current_size,
+            new_size );
         }
         return new_size;
       }
@@ -1024,9 +947,13 @@ namespace Utils
         int new_size = std::max( current_size / 2, m_min_block_size );
         if ( m_verbose > 1 )
         {
-          fmt::print( fg( fmt::color::green ),
-                      "  Good progress ({:6.2f}%), decreasing block size from {:3d} to {:3d}\n",
-                      m_current_progress * 100, current_size, new_size );
+          fmt::print(
+            fg( fmt::color::green ),
+            "  Good progress ({:6.2f}%), decreasing block size from "
+            "{:3d} to {:3d}\n",
+            m_current_progress * 100,
+            current_size,
+            new_size );
         }
         return new_size;
       }
@@ -1034,8 +961,7 @@ namespace Utils
       return current_size;
     }
 
-    Scalar
-    compute_recent_progress() const
+    Scalar compute_recent_progress() const
     {
       if ( m_residual_history.size() < 3 ) return 0.0;
 
@@ -1056,8 +982,7 @@ namespace Utils
       return count > 0 ? progress / count : 0.0;
     }
 
-    bool
-    detect_stagnation()
+    bool detect_stagnation()
     {
       if ( m_residual_history.size() < 5 ) return false;
 
@@ -1087,9 +1012,13 @@ namespace Utils
           m_stagnation_counter++;
           if ( m_verbose > 1 )
           {
-            fmt::print( fg( fmt::color::yellow ),
-                        "  Stagnation detected: avg reduction = {:8.3e}, counter = {:2d}/{:2d}\n", avg_reduction,
-                        m_stagnation_counter, m_max_stagnation_before_reset );
+            fmt::print(
+              fg( fmt::color::yellow ),
+              "  Stagnation detected: avg reduction = {:8.3e}, counter "
+              "= {:2d}/{:2d}\n",
+              avg_reduction,
+              m_stagnation_counter,
+              m_max_stagnation_before_reset );
           }
           return true;
         }
@@ -1098,22 +1027,25 @@ namespace Utils
       return false;
     }
 
-    bool
-    apply_fallback_strategy( NonlinearSystem const & sys,
-                             Vector &                x,
-                             Vector &                f,
-                             int &                   block_size,
-                             int                     n,
-                             SelectionStrategy &     current_strategy )
+    bool apply_fallback_strategy(
+      NonlinearSystem const & sys,
+      Vector &                x,
+      Vector &                f,
+      int &                   block_size,
+      int                     n,
+      SelectionStrategy &     current_strategy )
     {
       if ( m_stagnation_counter > m_max_stagnation_before_reset )
       {
         if ( m_verbose > 0 )
         {
-          fmt::print( fg( fmt::color::orange ) | fmt::emphasis::bold,
-                      "  Maximum stagnation reached ({:2d}/{:2d}). Applying fallback strategy: {}.\n",
-                      m_stagnation_counter, m_max_stagnation_before_reset,
-                      fallback_strategy_name( m_fallback_strategy ) );
+          fmt::print(
+            fg( fmt::color::orange ) | fmt::emphasis::bold,
+            "  Maximum stagnation reached ({:2d}/{:2d}). Applying "
+            "fallback strategy: {}.\n",
+            m_stagnation_counter,
+            m_max_stagnation_before_reset,
+            fallback_strategy_name( m_fallback_strategy ) );
         }
 
         switch ( m_fallback_strategy )
@@ -1133,7 +1065,7 @@ namespace Utils
 
               // Usa regolarizzazione diagonale basata sulle norme delle colonne
               Vector D = Vector::Ones( J.cols() );
-              for ( int i = 0; i < J.cols(); ++i )
+              for ( integer i = 0; i < J.cols(); ++i )
               {
                 Scalar col_norm_sq = J.col( i ).squaredNorm();
                 D[i]               = 1e-6 * ( col_norm_sq + 1e-8 );
@@ -1152,8 +1084,10 @@ namespace Utils
                 m_stagnation_counter = 0;
                 if ( m_verbose > 0 )
                 {
-                  fmt::print( fg( fmt::color::green ), "  Full Newton step successful, new residual: {:12.3e}\n",
-                              f.norm() );
+                  fmt::print(
+                    fg( fmt::color::green ),
+                    "  Full Newton step successful, new residual: {:12.3e}\n",
+                    f.norm() );
                 }
                 return true;
               }
@@ -1202,8 +1136,11 @@ namespace Utils
                     m_stagnation_counter = 0;
                     if ( m_verbose > 0 )
                     {
-                      fmt::print( fg( fmt::color::green ), "  Gradient fallback successful, new residual: {:12.3e}\n",
-                                  f.norm() );
+                      fmt::print(
+                        fg( fmt::color::green ),
+                        "  Gradient fallback successful, new residual: "
+                        "{:12.3e}\n",
+                        f.norm() );
                     }
                     return true;
                   }
@@ -1220,7 +1157,7 @@ namespace Utils
           case RANDOM_RESTART:
             // Piccola perturbazione random
             std::normal_distribution<Scalar> dist( 0.0, 0.01 );
-            for ( int i = 0; i < x.size(); ++i ) { x[i] += dist( m_rng ); }
+            for ( integer i = 0; i < x.size(); ++i ) { x[i] += dist( m_rng ); }
             sys.evaluate( x, f );
             m_residual_history.push_back( f.norm() );
             m_stagnation_counter = 0;
@@ -1229,8 +1166,10 @@ namespace Utils
             current_strategy = static_cast<SelectionStrategy>( ( current_strategy + 1 ) % 5 );
             if ( m_verbose > 0 )
             {
-              fmt::print( fg( fmt::color::yellow ), "  Random restart applied, new strategy: {}\n",
-                          strategy_name( current_strategy ) );
+              fmt::print(
+                fg( fmt::color::yellow ),
+                "  Random restart applied, new strategy: {}\n",
+                strategy_name( current_strategy ) );
             }
             return true;
         }
@@ -1242,19 +1181,19 @@ namespace Utils
       return false;
     }
 
-    bool
-    line_search_full( NonlinearSystem const & sys,
-                      Vector const &          x,
-                      Vector const &          f,
-                      Vector const &          dx,
-                      Scalar &                alpha )
+    bool line_search_full(
+      NonlinearSystem const & sys,
+      Vector const &          x,
+      Vector const &          f,
+      Vector const &          dx,
+      Scalar &                alpha )
     {
       Scalar f0      = f.squaredNorm();
       Scalar c       = 1e-4;
       Vector x_trial = x;
       Vector f_trial;
 
-      for ( int i = 0; i < 10; ++i )
+      for ( integer i = 0; i < 10; ++i )
       {
         x_trial = x + alpha * dx;
         sys.evaluate( x_trial, f_trial );
@@ -1266,8 +1205,7 @@ namespace Utils
       return false;
     }
 
-    SelectionStrategy
-    select_adaptive_strategy() const
+    SelectionStrategy select_adaptive_strategy() const
     {
       if ( m_current_progress < 0.01 )
       {
@@ -1286,43 +1224,29 @@ namespace Utils
       }
     }
 
-    const char *
-    strategy_name( SelectionStrategy s ) const
+    const char * strategy_name( SelectionStrategy s ) const
     {
       switch ( s )
       {
-        case RANDOM_UNIFORM:
-          return "Random";
-        case CYCLIC:
-          return "Cyclic";
-        case GREEDY:
-          return "Greedy";
-        case SCALED_GRADIENT:
-          return "ScaledGrad";
-        case ADAPTIVE:
-          return "Adaptive";
-        default:
-          return "?";
+        case RANDOM_UNIFORM: return "Random";
+        case CYCLIC: return "Cyclic";
+        case GREEDY: return "Greedy";
+        case SCALED_GRADIENT: return "ScaledGrad";
+        case ADAPTIVE: return "Adaptive";
+        default: return "?";
       }
     }
 
-    const char *
-    fallback_strategy_name( FallbackStrategy s ) const
+    const char * fallback_strategy_name( FallbackStrategy s ) const
     {
       switch ( s )
       {
-        case NO_FALLBACK:
-          return "NoFallback";
-        case INCREASE_BLOCK:
-          return "IncreaseBlock";
-        case FULL_NEWTON_STEP:
-          return "FullNewtonStep";
-        case GRADIENT_FALLBACK:
-          return "GradientFallback";
-        case RANDOM_RESTART:
-          return "RandomRestart";
-        default:
-          return "?";
+        case NO_FALLBACK: return "NoFallback";
+        case INCREASE_BLOCK: return "IncreaseBlock";
+        case FULL_NEWTON_STEP: return "FullNewtonStep";
+        case GRADIENT_FALLBACK: return "GradientFallback";
+        case RANDOM_RESTART: return "RandomRestart";
+        default: return "?";
       }
     }
   };

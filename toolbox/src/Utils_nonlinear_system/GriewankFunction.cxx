@@ -16,24 +16,24 @@ class GriewankFunction : public NonlinearSystem
 {
 public:
   GriewankFunction( integer n )
-    : NonlinearSystem( "Griewank function",
-                       "@Article{Griewan:k1981,\n"
-                       "  author  = {Griewank, A. O.},\n"
-                       "  title   = {Generalized descent for global optimization},\n"
-                       "  journal = {Journal of Optimization Theory and Applications},\n"
-                       "  year    = {1981},\n"
-                       "  volume  = {34},\n"
-                       "  number  = {1},\n"
-                       "  pages   = {11--39},\n"
-                       "  doi     = {10.1007/BF00933356}\n"
-                       "}\n",
-                       n )
+    : NonlinearSystem(
+        "Griewank function",
+        "@Article{Griewan:k1981,\n"
+        "  author  = {Griewank, A. O.},\n"
+        "  title   = {Generalized descent for global optimization},\n"
+        "  journal = {Journal of Optimization Theory and Applications},\n"
+        "  year    = {1981},\n"
+        "  volume  = {34},\n"
+        "  number  = {1},\n"
+        "  pages   = {11--39},\n"
+        "  doi     = {10.1007/BF00933356}\n"
+        "}\n",
+        n )
   {
     UTILS_ASSERT( n >= 2 && n <= 20, "GriewankFunction(n={}) must be in range [2..20]", n );
   }
 
-  real_type
-  grad( Vector const & x, integer k ) const
+  real_type grad( Vector const & x, integer k ) const
   {
     real_type f = 1 / sqrt( k + 1.0 );
     for ( integer i = 0; i < n; ++i )
@@ -47,8 +47,7 @@ public:
     return f;
   }
 
-  real_type
-  hess( Vector const & x, integer i, integer j ) const
+  real_type hess( Vector const & x, integer i, integer j ) const
   {
     if ( i == j )
     {
@@ -75,14 +74,12 @@ public:
     }
   }
 
-  virtual void
-  evaluate( Vector const & x, Vector & f ) const override
+  virtual void evaluate( Vector const & x, Vector & f ) const override
   {
     for ( integer k = 0; k < n; ++k ) f( k ) = grad( x, k ) + x( k ) / 2000.0;
   }
 
-  virtual void
-  jacobian( Vector const & x, SparseMatrix & J ) const override
+  virtual void jacobian( Vector const & x, SparseMatrix & J ) const override
   {
     J.resize( n, n );
     J.setZero();
@@ -98,8 +95,7 @@ public:
     J.makeCompressed();
   }
 
-  virtual void
-  initial_points( vector<Vector> & x_vec ) const override
+  virtual void initial_points( vector<Vector> & x_vec ) const override
   {
     x_vec.resize( 2 );
     auto & x0{ x_vec[0] };
@@ -114,14 +110,12 @@ public:
     x1 = 10 * x0;
   }
 
-  virtual void
-  check_if_admissible( Vector const & x ) const override
+  virtual void check_if_admissible( Vector const & x ) const override
   {
     for ( integer i = 0; i < n; ++i ) UTILS_ASSERT( std::abs( x( i ) ) < 1000, "Bad range" );
   }
 
-  virtual void
-  bounding_box( Vector & L, Vector & U ) const override
+  virtual void bounding_box( Vector & L, Vector & U ) const override
   {
     L.fill( -1000 );
     U.fill( 1000 );

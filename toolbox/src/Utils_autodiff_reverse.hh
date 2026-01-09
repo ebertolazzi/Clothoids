@@ -32,8 +32,7 @@
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
 namespace fmt
 {
-  template <>
-  struct formatter<autodiff::var> : ostream_formatter
+  template <> struct formatter<autodiff::var> : ostream_formatter
   {
   };
 }  // namespace fmt

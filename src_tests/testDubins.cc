@@ -1,14 +1,13 @@
-//#define _USE_MATH_DEFINES
+// #define _USE_MATH_DEFINES
 #include "Clothoids.hh"
 #include "Clothoids_fmt.hh"
 
-using G2lib::real_type;
 using G2lib::integer;
+using G2lib::real_type;
 using namespace std;
 
-int
-main() {
-
+int main()
+{
   // check constructors
   constexpr real_type x0     = 484.405986676;
   constexpr real_type y0     = 556.309795113;
@@ -18,8 +17,8 @@ main() {
   constexpr real_type theta3 = 0.593139910671;
   constexpr real_type k_max  = 1;
 
-  G2lib::Dubins DB{"DB"};
-  bool ok { DB.build( x0, y0, theta0, x3, y3, theta3, k_max ) };
+  G2lib::Dubins DB{ "DB" };
+  bool          ok{ DB.build( x0, y0, theta0, x3, y3, theta3, k_max ) };
   fmt::print( "DB.build = {}\n", ok );
   fmt::print( "C0\n{}\n", DB.C0() );
   fmt::print( "C1\n{}\n", DB.C1() );

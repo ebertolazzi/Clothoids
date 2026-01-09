@@ -19,36 +19,36 @@ class BroydenBandedFunction : public NonlinearSystem
 
 public:
   BroydenBandedFunction()
-    : NonlinearSystem( "Broyden Banded Function",
-                       "@article{Broyden:1971,\n"
-                       "  author  = {Broyden, C. G.},\n"
-                       "  title   = {The convergence of an algorithm for solving sparse "
-                       "nonlinear systems},\n"
-                       "  journal = {Mathematics of Computation},\n"
-                       "  volume  = {25},\n"
-                       "  year    = {1971},\n"
-                       "  pages   = {285--294},\n"
-                       "  doi     = {10.2307/2004922},\n"
-                       "}\n\n"
-                       "@article{More:1981,\n"
-                       "  author  = {Mor{\'e}, Jorge J. and Garbow, Burton S. and "
-                       "Hillstrom, Kenneth E.},\n"
-                       "  title   = {Testing Unconstrained Optimization Software},\n"
-                       "  journal = {ACM Trans. Math. Softw.},\n"
-                       "  volume  = {7},\n"
-                       "  number  = {1},\n"
-                       "  year    = {1981},\n"
-                       "  pages   = {17--41},\n"
-                       "  doi     = {10.1145/355934.355936},\n"
-                       "}\n",
-                       10 )
+    : NonlinearSystem(
+        "Broyden Banded Function",
+        "@article{Broyden:1971,\n"
+        "  author  = {Broyden, C. G.},\n"
+        "  title   = {The convergence of an algorithm for solving sparse "
+        "nonlinear systems},\n"
+        "  journal = {Mathematics of Computation},\n"
+        "  volume  = {25},\n"
+        "  year    = {1971},\n"
+        "  pages   = {285--294},\n"
+        "  doi     = {10.2307/2004922},\n"
+        "}\n\n"
+        "@article{More:1981,\n"
+        "  author  = {Mor{\'e}, Jorge J. and Garbow, Burton S. and "
+        "Hillstrom, Kenneth E.},\n"
+        "  title   = {Testing Unconstrained Optimization Software},\n"
+        "  journal = {ACM Trans. Math. Softw.},\n"
+        "  volume  = {7},\n"
+        "  number  = {1},\n"
+        "  year    = {1981},\n"
+        "  pages   = {17--41},\n"
+        "  doi     = {10.1145/355934.355936},\n"
+        "}\n",
+        10 )
     , ml( 5 )
     , mu( 1 )
   {
   }
 
-  virtual void
-  evaluate( Vector const & x, Vector & f ) const override
+  virtual void evaluate( Vector const & x, Vector & f ) const override
   {
     for ( integer k = 0; k < n; ++k )
     {
@@ -63,8 +63,7 @@ public:
     }
   }
 
-  virtual void
-  jacobian( Vector const & x, SparseMatrix & J ) const override
+  virtual void jacobian( Vector const & x, SparseMatrix & J ) const override
   {
     J.resize( n, n );
     J.setZero();
@@ -81,8 +80,7 @@ public:
     J.makeCompressed();
   }
 
-  virtual void
-  initial_points( vector<Vector> & x_vec ) const override
+  virtual void initial_points( vector<Vector> & x_vec ) const override
   {
     x_vec.resize( 1 );
     auto & x0{ x_vec[0] };

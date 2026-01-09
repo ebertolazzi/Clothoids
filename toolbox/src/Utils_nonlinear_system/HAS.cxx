@@ -12,21 +12,20 @@
  | - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 \*/
 
-#define HAS_BIBTEX                                                                                                     \
-  "@article{Grippo:1991,\n"                                                                                            \
-  "  author  = {Grippo, L. and Lampariello, F. and Lucidi, S.},\n"                                                     \
-  "  title   = {A Class of Nonmonotone Stabilization Methods\n"                                                        \
-  "             in Unconstrained Optimization},\n"                                                                     \
-  "  journal = {Numer. Math.},\n"                                                                                      \
-  "  year    = {1991},\n"                                                                                              \
-  "  volume  = {59},\n"                                                                                                \
-  "  number  = {1},\n"                                                                                                 \
-  "  pages   = {779--805},\n"                                                                                          \
-  "  doi     = {10.1007/BF01385810},\n"                                                                                \
+#define HAS_BIBTEX                                                 \
+  "@article{Grippo:1991,\n"                                        \
+  "  author  = {Grippo, L. and Lampariello, F. and Lucidi, S.},\n" \
+  "  title   = {A Class of Nonmonotone Stabilization Methods\n"    \
+  "             in Unconstrained Optimization},\n"                 \
+  "  journal = {Numer. Math.},\n"                                  \
+  "  year    = {1991},\n"                                          \
+  "  volume  = {59},\n"                                            \
+  "  number  = {1},\n"                                             \
+  "  pages   = {779--805},\n"                                      \
+  "  doi     = {10.1007/BF01385810},\n"                            \
   "}\n"
 
-static inline string
-ini_msg_HAS64( real_type tau )
+static inline string ini_msg_HAS64( real_type tau )
 {
   return fmt::format( "HAS 64, tau = {}", tau );
 }
@@ -39,8 +38,7 @@ class HAS64 : public NonlinearSystem
 public:
   HAS64( real_type tau_in ) : NonlinearSystem( ini_msg_HAS64( tau_in ), HAS_BIBTEX, 7 ), tau( tau_in ) {}
 
-  virtual void
-  evaluate( Vector const & x, Vector & f ) const override
+  virtual void evaluate( Vector const & x, Vector & f ) const override
   {
     real_type x0 = x( 0 );
     real_type x1 = x( 1 );
@@ -86,8 +84,7 @@ public:
     f( 6 ) = -( 4 * tau ) * ( penalty_term4 * x6 );
   }
 
-  virtual void
-  jacobian( Vector const & x, SparseMatrix & J ) const override
+  virtual void jacobian( Vector const & x, SparseMatrix & J ) const override
   {
     Matrix J_full( n, n );
     J_full.setZero();
@@ -206,8 +203,7 @@ public:
     J = J_full.sparseView();
   }
 
-  virtual void
-  exact_solution( vector<Vector> & x_vec ) const override
+  virtual void exact_solution( vector<Vector> & x_vec ) const override
   {
     x_vec.resize( 1 );
     auto & x0{ x_vec[0] };
@@ -215,22 +211,22 @@ public:
     if ( tau == 1e2 )
     {
       x0 << 6.681814179997021692636660004601691302401, 9.074510495626874674434074592710482202822,
-          12.99535539607610906540018013075666371709, 0, 0, 0, 0;
+        12.99535539607610906540018013075666371709, 0, 0, 0, 0;
     }
     else if ( tau == 1e4 )
     {
       x0 << 3.900157915419476405557407980428199299310, 7.709248543842730875537744129799143332094,
-          11.96290763014932833437155935276448655442, 0, 0, 0, 0;
+        11.96290763014932833437155935276448655442, 0, 0, 0, 0;
     }
     else if ( tau == 1e6 )
     {
       x0 << 3.847831075410325147818365927952842675327, 7.694733977443614783484512361392494920171,
-          11.95451849301910537037961219270342443906, 0, 0, 0, 0;
+        11.95451849301910537037961219270342443906, 0, 0, 0, 0;
     }
     else if ( tau == 1e8 )
     {
       x0 << 3.847300847063338217370019344657353290973, 7.694589110936489763239095186897873067137,
-          11.95443542298989582053077640148919021918, 0, 0, 0, 0;
+        11.95443542298989582053077640148919021918, 0, 0, 0, 0;
     }
     else if ( tau == 1e10 )
     {
@@ -242,8 +238,7 @@ public:
     }
   }
 
-  virtual void
-  initial_points( vector<Vector> & x_vec ) const override
+  virtual void initial_points( vector<Vector> & x_vec ) const override
   {
     x_vec.resize( 1 );
     auto & x0{ x_vec[0] };
@@ -251,16 +246,14 @@ public:
     x0 << 1, 1, 1, -10, -10, -10, -10;
   }
 
-  virtual void
-  check_if_admissible( Vector const & x ) const override
+  virtual void check_if_admissible( Vector const & x ) const override
   {
     UTILS_ASSERT( x( 0 ) > 0, "check_if_admissible x(0) = {} must be > 0", x( 0 ) );
     UTILS_ASSERT( x( 1 ) > 0, "check_if_admissible x(1) = {} must be > 0", x( 1 ) );
     UTILS_ASSERT( x( 2 ) > 0, "check_if_admissible x(2) = {} must be > 0", x( 2 ) );
   }
 
-  virtual void
-  bounding_box( Vector & L, Vector & U ) const override
+  virtual void bounding_box( Vector & L, Vector & U ) const override
   {
     U.fill( real_max );
     L.fill( -real_max );
@@ -272,8 +265,7 @@ public:
  | - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 \*/
 
-static inline string
-ini_msg_HAS93( real_type tau )
+static inline string ini_msg_HAS93( real_type tau )
 {
   return fmt::format( "HAS 93, tau = {}", tau );
 }
@@ -287,8 +279,7 @@ class HAS93 : public NonlinearSystem
 public:
   HAS93( real_type tau_in ) : NonlinearSystem( ini_msg_HAS93( tau_in ), HAS_BIBTEX, 14 ), tau( tau_in ) {}
 
-  virtual void
-  evaluate( Vector const & x, Vector & f ) const override
+  virtual void evaluate( Vector const & x, Vector & f ) const override
   {
     {
       real_type t4  = x( 3 ) * x( 4 ) * x( 5 );
@@ -343,11 +334,11 @@ public:
     real_type t40 = x( 0 ) + x( 1 ) + x( 2 );
     f( 0 ) += ( 0.408E-1 * x( 0 ) + 0.1214 * x( 0 ) * t2 + 0.204E-1 * x( 1 ) + 0.607E-1 * x( 1 ) * t2 +
                 0.204E-1 * x( 2 ) + 0.607E-1 * x( 2 ) * t2 ) *
-                  x( 3 ) +
+                x( 3 ) +
               t17;
     f( 1 ) += ( 0.187E-1 * x( 0 ) + 0.437E-1 * x( 0 ) * t14 + 0.58718E-1 * x( 1 ) + 0.137218 * x( 1 ) * t14 +
                 0.187E-1 * x( 3 ) + 0.437E-1 * x( 3 ) * t14 ) *
-                  x( 2 ) +
+                x( 2 ) +
               t33;
     f( 2 ) += x( 1 ) * t36 * t16 + t33;
     f( 3 ) += x( 0 ) * t40 * t32 + t17;
@@ -355,8 +346,7 @@ public:
     f( 5 ) += 0.874E-1 * t13 * t36 * x( 5 );
   }
 
-  virtual void
-  jacobian( Vector const & x, SparseMatrix & J ) const override
+  virtual void jacobian( Vector const & x, SparseMatrix & J ) const override
   {
     Matrix J_full( n, n );
     J_full.setZero();
@@ -488,7 +478,7 @@ public:
       J_full( 0, 0 ) = 0.2E-5 * t3 * t8 + 2.0 * t22 +
                        ( ( 0.15376E-5 * t24 * x( 0 ) + 0.14384E-5 * t28 ) * x( 1 ) + 0.15376E-5 * t24 * t32 +
                          0.15376E-5 * t24 * x( 2 ) * x( 0 ) ) *
-                           t4 +
+                         t4 +
                        0.248E-2 * ( -1.0 + 0.58E-3 * t18 * t40 + 0.9106E-3 * t1 * x( 2 ) * t7 + t46 ) * t5 * x( 3 ) +
                        2.0;
       J_full( 0, 1 ) = t89;
@@ -505,9 +495,9 @@ public:
                        ( 0.331676944E-5 * t1 * t182 +
                          ( 0.2112592E-5 * t182 * x( 0 ) + 0.2112592E-5 * t182 * x( 3 ) ) * x( 1 ) +
                          0.2258288E-5 * t40 * t11 ) *
-                           t2 +
+                         t2 +
                        0.36424E-2 * ( -1.0 + 0.62E-3 * x( 3 ) * t32 * t5 + 0.62E-3 * t15 * t5 * x( 1 ) + t46 ) * t7 *
-                           x( 2 ) +
+                         x( 2 ) +
                        2.0;
       J_full( 1, 2 ) = t220;
       J_full( 1, 3 ) = t231;
@@ -662,8 +652,7 @@ public:
     J = J_full.sparseView();
   }
 
-  virtual void
-  initial_points( vector<Vector> & x_vec ) const override
+  virtual void initial_points( vector<Vector> & x_vec ) const override
   {
     x_vec.resize( 1 );
     auto & x0{ x_vec[0] };
@@ -678,28 +667,27 @@ public:
   }
 };
 
-
 /*\
  | - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 \*/
 
-#define HAS111_BIBTEX                                                                                                  \
-  "@article{Shacham:1990,\n"                                                                                           \
-  "  author  = {Shacham, Orit and Schacham, Mordechai},\n"                                                             \
-  "  title   = {Finding Boundaries of the Domain of Definition\n"                                                      \
-  "             for Functions Along a One-dimensional Ray},\n"                                                         \
-  "  journal = {ACM Trans. Math. Softw.},\n"                                                                           \
-  "  year    = {1990},\n"                                                                                              \
-  "  volume  = {16},\n"                                                                                                \
-  "  number  = {3},\n"                                                                                                 \
-  "  pages   = {258--268},\n"                                                                                          \
-  "  doi     = {10.1145/79505.79511},\n"                                                                               \
-  "}\n\n"                                                                                                              \
-  "@book{himmelblau:1972,\n"                                                                                           \
-  "  author    = {Himmelblau, D.M.},\n"                                                                                \
-  "  title     = {Applied nonlinear programming},\n"                                                                   \
-  "  year      = {1972},\n"                                                                                            \
-  "  publisher = {McGraw-Hill}\n"                                                                                      \
+#define HAS111_BIBTEX                                             \
+  "@article{Shacham:1990,\n"                                      \
+  "  author  = {Shacham, Orit and Schacham, Mordechai},\n"        \
+  "  title   = {Finding Boundaries of the Domain of Definition\n" \
+  "             for Functions Along a One-dimensional Ray},\n"    \
+  "  journal = {ACM Trans. Math. Softw.},\n"                      \
+  "  year    = {1990},\n"                                         \
+  "  volume  = {16},\n"                                           \
+  "  number  = {3},\n"                                            \
+  "  pages   = {258--268},\n"                                     \
+  "  doi     = {10.1145/79505.79511},\n"                          \
+  "}\n\n"                                                         \
+  "@book{himmelblau:1972,\n"                                      \
+  "  author    = {Himmelblau, D.M.},\n"                           \
+  "  title     = {Applied nonlinear programming},\n"              \
+  "  year      = {1972},\n"                                       \
+  "  publisher = {McGraw-Hill}\n"                                 \
   "}\n"
 
 class HAS111 : public NonlinearSystem
@@ -724,8 +712,7 @@ public:
     c[9] = -22.179;
   }
 
-  virtual void
-  evaluate( Vector const & x, Vector & f ) const override
+  virtual void evaluate( Vector const & x, Vector & f ) const override
   {
     real_type ex0 = exp( x( 0 ) );
     real_type ex1 = exp( x( 1 ) );
@@ -764,8 +751,7 @@ public:
     f( 9 ) = ex9 * ( c[9] + x( 9 ) - logss ) + fact * f( 9 );
   }
 
-  virtual void
-  jacobian( Vector const & x, SparseMatrix & J ) const override
+  virtual void jacobian( Vector const & x, SparseMatrix & J ) const override
   {
     real_type ex0 = exp( x( 0 ) );
     real_type ex1 = exp( x( 1 ) );
@@ -972,8 +958,7 @@ public:
     J = J_full.sparseView();
   }
 
-  virtual void
-  initial_points( vector<Vector> & x_vec ) const override
+  virtual void initial_points( vector<Vector> & x_vec ) const override
   {
     x_vec.resize( 2 );
     auto & x0{ x_vec[0] };

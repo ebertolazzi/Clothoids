@@ -16,26 +16,26 @@ class DiagonalFunctionMulQO : public NonlinearSystem
 {
 public:
   DiagonalFunctionMulQO( integer neq )
-    : NonlinearSystem( "Diagonal Functions Multiplied by quasi-orthogonal matrix",
-                       "@article{Gasparo:2000,\n"
-                       "  Author    = {Maria Grazia Gasparo},\n"
-                       "  Title     = {A nonmonotone hybrid method for nonlinear "
-                       "systems},\n"
-                       "  Journal   = {Optimization Methods and Software},\n"
-                       "  Number    = {2},\n"
-                       "  Pages     = {79--94},\n"
-                       "  Publisher = {Taylor & Francis},\n"
-                       "  Volume    = {13},\n"
-                       "  Year      = {2000},\n"
-                       "  Doi       = {10.1080/10556780008805776},\n"
-                       "}\n",
-                       neq )
+    : NonlinearSystem(
+        "Diagonal Functions Multiplied by quasi-orthogonal matrix",
+        "@article{Gasparo:2000,\n"
+        "  Author    = {Maria Grazia Gasparo},\n"
+        "  Title     = {A nonmonotone hybrid method for nonlinear "
+        "systems},\n"
+        "  Journal   = {Optimization Methods and Software},\n"
+        "  Number    = {2},\n"
+        "  Pages     = {79--94},\n"
+        "  Publisher = {Taylor & Francis},\n"
+        "  Volume    = {13},\n"
+        "  Year      = {2000},\n"
+        "  Doi       = {10.1080/10556780008805776},\n"
+        "}\n",
+        neq )
   {
     check_three( n, 3 );
   }
 
-  virtual void
-  evaluate( Vector const & X, Vector & F ) const override
+  virtual void evaluate( Vector const & X, Vector & F ) const override
   {
     for ( integer i = 0; i < n; i += 3 )
     {
@@ -48,8 +48,7 @@ public:
     }
   }
 
-  virtual void
-  jacobian( Vector const & X, SparseMatrix & J ) const override
+  virtual void jacobian( Vector const & X, SparseMatrix & J ) const override
   {
     J.resize( n, n );
     J.setZero();
@@ -71,8 +70,7 @@ public:
     J.makeCompressed();
   }
 
-  virtual void
-  initial_points( vector<Vector> & x_vec ) const override
+  virtual void initial_points( vector<Vector> & x_vec ) const override
   {
     x_vec.resize( 1 );
     auto & x0{ x_vec[0] };
