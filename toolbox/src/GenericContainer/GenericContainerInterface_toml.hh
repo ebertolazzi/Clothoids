@@ -30,7 +30,8 @@
 
 #include <fstream>
 
-namespace GC_namespace {
+namespace GC_namespace
+{
 
   using std::ifstream;
 
@@ -49,13 +50,9 @@ namespace GC_namespace {
   //! \param[out] gc        The `GenericContainer` to be populated.
   //! \return     true      if the conversion was successful, false otherwise.
   //!
-  inline
-  bool
-  file_TOML_to_GC(
-    string_view        file_name,
-    GenericContainer & gc
-  ) {
-    ifstream stream(file_name.data());
+  inline bool file_TOML_to_GC( string_view file_name, GenericContainer & gc )
+  {
+    ifstream stream( file_name.data() );
     gc.clear();
     return gc.from_toml( stream );
   }
@@ -70,12 +67,8 @@ namespace GC_namespace {
   //! \param[out] gc     The `GenericContainer` to be populated.
   //! \return     true   if the conversion was successful, false otherwise.
   //!
-  inline
-  bool
-  TOML_to_GC(
-    istream_type     & stream,
-    GenericContainer & gc
-  ) {
+  inline bool TOML_to_GC( istream_type & stream, GenericContainer & gc )
+  {
     gc.clear();
     return gc.from_toml( stream );
   }
@@ -90,15 +83,11 @@ namespace GC_namespace {
   //! \param[out] gc   The `GenericContainer` to be populated.
   //! \return     true if the conversion was successful, false otherwise.
   //!
-  inline
-  bool
-  TOML_to_GC(
-    string const     & DATA,
-    GenericContainer & gc
-  ) {
-    istringstream stream(DATA);
+  inline bool TOML_to_GC( string const & DATA, GenericContainer & gc )
+  {
+    istringstream stream( DATA );
     gc.clear();
-    return gc.from_toml(stream);
+    return gc.from_toml( stream );
   }
 
   //!
@@ -111,9 +100,8 @@ namespace GC_namespace {
   //! \param[in]  gc   The `GenericContainer` to convert.
   //! \param[out] DATA String to store the TOML encoded GenericContainer.
   //!
-  inline
-  void
-  GC_to_TOML( GenericContainer const & gc, std::string & res ) {
+  inline void GC_to_TOML( GenericContainer const & gc, std::string & res )
+  {
     ostringstream stream;
     gc.to_toml( stream );
     res = stream.str();
@@ -128,18 +116,14 @@ namespace GC_namespace {
   //! \param[in]  gc     The `GenericContainer` to convert.
   //! \param[out] stream Output stream to write the TOML data.
   //!
-  inline
-  void
-  GC_to_TOML(
-    GenericContainer const & gc,
-    ostream_type           & stream
-  ) {
+  inline void GC_to_TOML( GenericContainer const & gc, ostream_type & stream )
+  {
     gc.to_toml( stream );
   }
 
   //!
   //! @}
   //!
-}
+}  // namespace GC_namespace
 
 #endif

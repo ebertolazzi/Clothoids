@@ -1,4 +1,4 @@
-//#define _USE_MATH_DEFINES
+// #define _USE_MATH_DEFINES
 #include "Clothoids.hh"
 #include "Clothoids_fmt.hh"
 
@@ -12,22 +12,21 @@ using namespace std;
 #define M_PI 3.14159265358979323846264338328
 #endif
 
-int
-main() {
-
+int main()
+{
   G2lib::G2solve2arc g2sol;
 
-  #if 1
+#if 1
   real_type x0  = -2;
   real_type y0  = 3;
-  real_type th0 = M_PI/3;
+  real_type th0 = M_PI / 3;
   real_type k0  = 10.2;
   real_type x1  = 3;
   real_type y1  = 2;
-  real_type th1 = M_PI/10;
+  real_type th1 = M_PI / 10;
   real_type k1  = -0.5;
-  //real_type s1 = 1;
-  #else
+// real_type s1 = 1;
+#else
   real_type x0  = -1;
   real_type y0  = 0;
   real_type th0 = M_PI / 2;
@@ -38,11 +37,11 @@ main() {
   real_type th1 = -M_PI / 2;
   real_type k1  = -1;
   real_type s1  = 2;
-  #endif
+#endif
 
-  //int iter = g2sol.build(x0, y0, th0, k0, s0, x1, y1, th1, k1, s1);
-  int iter = g2sol.build(x0, y0, th0, k0, x1, y1, th1, k1 );
-  //int iter = g2solve3arc.build( x0, y0, th0, k0, x1, y1, th1, k1 );
+  // int iter = g2sol.build(x0, y0, th0, k0, s0, x1, y1, th1, k1, s1);
+  int iter = g2sol.build( x0, y0, th0, k0, x1, y1, th1, k1 );
+  // int iter = g2solve3arc.build( x0, y0, th0, k0, x1, y1, th1, k1 );
   fmt::print( "iter = {}\n", iter );
 
   G2lib::ClothoidCurve const & S0 = g2sol.S0();
@@ -64,7 +63,6 @@ main() {
     S0.y_end(),
     S1.y_begin(),
     S0.theta_end(),
-    S1.theta_begin()
-	);
-	return 0;
+    S1.theta_begin() );
+  return 0;
 }

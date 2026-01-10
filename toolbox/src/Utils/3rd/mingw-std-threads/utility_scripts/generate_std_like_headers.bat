@@ -1,1 +1,0 @@
-powershell -NonInteractive -ExecutionPolicy ByPass -File %~dp0Generate-StdLikeHeaders.ps1 %*

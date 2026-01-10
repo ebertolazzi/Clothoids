@@ -300,6 +300,78 @@ classdef ClothoidList < CurveBase
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     %>
+    %> Given a list of xy-coordinates at node points build a clothoid list.
+    %> If third argument (`angle`) is not present angles are estimated internally.
+    %>
+    %>
+    %> ```{matlab}
+    %>
+    %>  ref.build_G2( x, y, theta0, kappa0, theta1, kappa1 );
+    %>
+    %> ```
+    %>
+    %> - `x` x-coordinates at nodes
+    %> - `y` y-coordinates at nodes
+    %>
+    function ok = build_G2( self, x, y, theta0, kappa0, theta1, kappa1 )
+      ok = ClothoidListMexWrapper( 'build_G2', self.objectHandle, x, y, theta0, kappa0, theta1, kappa1 );
+    end
+    % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    %>
+    %> Given a list of xy-coordinates at node points build a clothoid list.
+    %> If third argument (`angle`) is not present angles are estimated internally.
+    %>
+    %>
+    %> ```{matlab}
+    %>
+    %>  ref.build_G2_cyclic( x, y );
+    %>
+    %> ```
+    %>
+    %> - `x` x-coordinates at nodes
+    %> - `y` y-coordinates at nodes
+    %>
+    function ok = build_G2_cyclic( self, x, y )
+      ok = ClothoidListMexWrapper( 'build_G2_cyclic', self.objectHandle, x, y );
+    end
+    % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    %>
+    %> Given a list of xy-coordinates at node points build a clothoid list.
+    %> If third argument (`angle`) is not present angles are estimated internally.
+    %>
+    %>
+    %> ```{matlab}
+    %>
+    %>  ref.build_G2_with_target( x, y, w_min, w_max, theta0, theta1, target );
+    %>
+    %> ```
+    %>
+    %> - `x` x-coordinates at nodes
+    %> - `y` y-coordinates at nodes
+    %>
+    function ok = build_G2_with_target( self, x, y, w_min, w_max, theta0, theta1, target )
+      ok = ClothoidListMexWrapper( 'build_G2_with_target', self.objectHandle, x, y, w_min, w_max, theta0, theta1, target );
+    end
+    % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    %>
+    %> Given a list of xy-coordinates at node points build a clothoid list.
+    %> If third argument (`angle`) is not present angles are estimated internally.
+    %>
+    %>
+    %> ```{matlab}
+    %>
+    %>  ref.build_G2_cyclic_with_target( x, y, w_min, w_max, target );
+    %>
+    %> ```
+    %>
+    %> - `x` x-coordinates at nodes
+    %> - `y` y-coordinates at nodes
+    %>
+    function ok = build_G2_cyclic_with_target( self, x, y, w_min, w_max, target )
+      ok = ClothoidListMexWrapper( 'build_G2_cyclic_with_target', self.objectHandle, x, y, w_min, w_max, target );
+    end
+    % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    %>
     %> Given a list of curvilinear coordinated and curvatures
     %> at nodes build a G2 clothoid list.
     %> Initial position and angle must be set to determine a unique clothoid list.

@@ -1,0 +1,666 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Worksheet>
+<Version major="2024" minor="2"/>
+<Label-Scheme value="2" prefix=""/>
+<View-Properties presentation="true" autoexpanding_sections="true" UserProfileName="Maple Default Profile" NumericFormat-ApplyInteger="true" NumericFormat-ApplyRational="true" NumericFormat-ApplyExponent="false" editable="true">
+</View-Properties>
+<MapleNet-Properties prettyprint="3" warnlevel="3" compactdisplay="false" preplot="" helpbrowser="standard" displayprecision="-1" echo="1" scientificx="true" unitattributes="&quot;fontweight&quot; = &quot;bold&quot;" imaginaryunit="I" longdelim="true" elisiontermsthreshold="10000" elisiondigitsafter="100" elisiondigitsbefore="100" plotdevice="inline" errorbreak="1" plotoptions="" plotdriver="opengl" quiet="false" elisiontermsbefore="100" elisiontermsafter="100" historytimestamp="false" screenwidth="79" indentamount="4" plotoutput="terminal" screenpixelheight="1117" rtablesize="[10, 10]" useclientjvm="true" format="document" labelwidth="20" postplot="" typesetting="extended" ansi="false" ansicolor="[]" elisiondigitsthreshold="10000" showassumed="1" ansilprint="false" trailingsemicolon="true" errorcursor="false" labelling="true" screenheight="25" prompt="&gt; " verboseproc="1" latexwidth="8.0" ShowLabels="true"/>
+<Styles>
+<Font name="Heading 1" background="[255,255,255]" bold="true" executable="false" family="Times New Roman" foreground="[0,0,0]" italic="false" opaque="false" readonly="false" size="18" subscript="false" superscript="false" underline="false" strikethrough="false" placeholder="false"/>
+<Font name="Warning" background="[255,255,255]" bold="false" executable="false" family="Courier New" foreground="[0,0,255]" italic="false" opaque="false" readonly="true" size="12" subscript="false" superscript="false" underline="false" strikethrough="false" placeholder="false"/>
+<Font name="2D Output" background="[255,255,255]" bold="false" executable="false" family="Times New Roman" foreground="[0,0,255]" italic="false" opaque="false" readonly="true" size="12" subscript="false" superscript="false" underline="false" strikethrough="false" placeholder="false"/>
+<Font name="Heading 4" background="[255,255,255]" bold="false" executable="false" family="Times New Roman" foreground="[0,0,0]" italic="true" opaque="false" readonly="false" size="12" subscript="false" superscript="false" underline="false" strikethrough="false" placeholder="false"/>
+<Font name="Line Printed Output" background="[255,255,255]" bold="false" executable="false" family="Courier New" foreground="[0,0,255]" italic="false" opaque="false" readonly="true" size="12" subscript="false" superscript="false" underline="false" strikethrough="false" placeholder="false"/>
+<Font name="Heading 2" background="[255,255,255]" bold="true" executable="false" family="Times New Roman" foreground="[0,0,0]" italic="false" opaque="false" readonly="false" size="16" subscript="false" superscript="false" underline="false" strikethrough="false" placeholder="false"/>
+<Font name="Maple Output" background="[255,255,255]" bold="false" executable="false" family="Times New Roman" foreground="[0,0,0]" italic="false" opaque="false" readonly="false" size="12" subscript="false" superscript="false" underline="false" strikethrough="false" placeholder="false"/>
+<Font name="2D Inert Output" background="[255,255,255]" bold="false" executable="true" family="Times New Roman" foreground="[144,144,144]" italic="false" opaque="false" readonly="false" size="12" subscript="false" superscript="false" underline="false" strikethrough="false" placeholder="false"/>
+<Font name="Heading 3" background="[255,255,255]" bold="true" executable="false" family="Times New Roman" foreground="[0,0,0]" italic="true" opaque="false" readonly="false" size="14" subscript="false" superscript="false" underline="false" strikethrough="false" placeholder="false"/>
+<Font name="Diagnostic" background="[255,255,255]" bold="false" executable="false" family="Courier New" foreground="[40,120,40]" italic="false" opaque="false" readonly="true" size="12" subscript="false" superscript="false" underline="false" strikethrough="false" placeholder="false"/>
+<Font name="Ordered List 1" background="[255,255,255]" bold="false" executable="false" family="Times New Roman" foreground="[0,0,0]" italic="false" opaque="false" readonly="false" size="12" subscript="false" superscript="false" underline="false" strikethrough="false" placeholder="false"/>
+<Font name="Maple Input" background="[255,255,255]" bold="true" executable="true" family="Courier New" foreground="[120,0,14]" italic="false" opaque="false" readonly="false" size="12" subscript="false" superscript="false" underline="false" strikethrough="false" placeholder="false"/>
+<Font name="Text Output" background="[255,255,255]" bold="false" executable="false" family="Courier New" foreground="[0,0,255]" italic="false" opaque="false" readonly="true" size="12" subscript="false" superscript="false" underline="false" strikethrough="false" placeholder="false"/>
+<Font name="Ordered List 2" background="[255,255,255]" bold="false" executable="false" family="Times New Roman" foreground="[0,0,0]" italic="false" opaque="false" readonly="false" size="12" subscript="false" superscript="false" underline="false" strikethrough="false" placeholder="false"/>
+<Font name="Ordered List 3" background="[255,255,255]" bold="false" executable="false" family="Times New Roman" foreground="[0,0,0]" italic="false" opaque="false" readonly="false" size="12" subscript="false" superscript="false" underline="false" strikethrough="false" placeholder="false"/>
+<Font name="Ordered List 4" background="[255,255,255]" bold="false" executable="false" family="Times New Roman" foreground="[0,0,0]" italic="false" opaque="false" readonly="false" size="12" subscript="false" superscript="false" underline="false" strikethrough="false" placeholder="false"/>
+<Font name="Ordered List 5" background="[255,255,255]" bold="false" executable="false" family="Times New Roman" foreground="[0,0,0]" italic="false" opaque="false" readonly="false" size="12" subscript="false" superscript="false" underline="false" strikethrough="false" placeholder="false"/>
+<Font name="Annotation Title" background="[255,255,255]" bold="true" executable="false" family="Times New Roman" foreground="[0,0,0]" italic="false" opaque="false" readonly="false" size="18" subscript="false" superscript="false" underline="false" strikethrough="false" placeholder="false"/>
+<Font name="Header and Footer" background="[255,255,255]" bold="false" executable="false" family="Times New Roman" foreground="[0,0,0]" italic="false" opaque="false" readonly="false" size="10" subscript="false" superscript="false" underline="false" strikethrough="false" placeholder="false"/>
+<Font name="HyperlinkError" background="[255,255,255]" bold="false" executable="false" family="Courier New" foreground="[255,0,255]" italic="false" opaque="false" readonly="true" size="12" subscript="false" superscript="false" underline="true" strikethrough="false" placeholder="false"/>
+<Font name="Atomic Variable" background="[255,255,255]" bold="false" executable="false" family="Times New Roman" foreground="[175,0,175]" italic="true" opaque="false" readonly="false" size="12" subscript="false" superscript="false" underline="false" strikethrough="false" placeholder="false"/>
+<Font name="HyperlinkWarning" background="[255,255,255]" bold="false" executable="false" family="Courier New" foreground="[0,0,255]" italic="false" opaque="false" readonly="true" size="12" subscript="false" superscript="false" underline="true" strikethrough="false" placeholder="false"/>
+<Font name="Dictionary Hyperlink" background="[255,255,255]" bold="false" executable="false" family="Times New Roman" foreground="[147,0,15]" italic="false" opaque="false" readonly="false" size="12" subscript="false" superscript="false" underline="true" strikethrough="false" placeholder="false"/>
+<Font name="2D Math" background="[255,255,255]" bold="false" executable="true" family="Times New Roman" foreground="[0,0,0]" italic="false" opaque="false" readonly="false" size="12" subscript="false" superscript="false" underline="false" strikethrough="false" placeholder="false"/>
+<Font name="Bullet Item" background="[255,255,255]" bold="false" executable="false" family="Times New Roman" foreground="[0,0,0]" italic="false" opaque="false" readonly="false" size="12" subscript="false" superscript="false" underline="false" strikethrough="false" placeholder="false"/>
+<Font name="Maple Plot" background="[255,255,255]" bold="false" executable="false" family="Times New Roman" foreground="[0,0,0]" italic="false" opaque="false" readonly="false" size="12" subscript="false" superscript="false" underline="false" strikethrough="false" placeholder="false"/>
+<Font name="Annotation Text" background="[255,255,255]" bold="false" executable="false" family="Times New Roman" foreground="[0,0,0]" italic="false" opaque="false" readonly="false" size="12" subscript="false" superscript="false" underline="false" strikethrough="false" placeholder="false"/>
+<Font name="List Item" background="[255,255,255]" bold="false" executable="false" family="Times New Roman" foreground="[0,0,0]" italic="false" opaque="false" readonly="false" size="12" subscript="false" superscript="false" underline="false" strikethrough="false" placeholder="false"/>
+<Font name="Dash Item" background="[255,255,255]" bold="false" executable="false" family="Times New Roman" foreground="[0,0,0]" italic="false" opaque="false" readonly="false" size="12" subscript="false" superscript="false" underline="false" strikethrough="false" placeholder="false"/>
+<Font name="2D Input" background="[255,255,255]" bold="false" executable="true" family="Times New Roman" foreground="[0,0,0]" italic="false" opaque="false" readonly="false" size="12" subscript="false" superscript="false" underline="false" strikethrough="false" placeholder="false"/>
+<Font name="Error" background="[255,255,255]" bold="false" executable="false" family="Courier New" foreground="[255,0,255]" italic="false" opaque="false" readonly="true" size="12" subscript="false" superscript="false" underline="false" strikethrough="false" placeholder="false"/>
+<Font name="Title" background="[255,255,255]" bold="true" executable="false" family="Times New Roman" foreground="[0,0,0]" italic="false" opaque="false" readonly="false" size="18" subscript="false" superscript="false" underline="false" strikethrough="false" placeholder="false"/>
+<Font name="Text" background="[255,255,255]" bold="false" executable="false" family="Times New Roman" foreground="[0,0,0]" italic="false" opaque="false" readonly="false" size="12" subscript="false" superscript="false" underline="false" strikethrough="false" placeholder="false"/>
+<Font name="Normal" background="[255,255,255]" bold="false" executable="false" family="Times New Roman" foreground="[0,0,0]" italic="false" opaque="false" readonly="false" size="12" subscript="false" superscript="false" underline="false" strikethrough="false" placeholder="false"/>
+<Font name="Caption Reference" background="[255,255,255]" bold="true" executable="false" family="Times New Roman" foreground="[0,0,0]" italic="false" opaque="false" readonly="false" size="12" subscript="false" superscript="false" underline="false" strikethrough="false" placeholder="false"/>
+<Font name="Code" background="[255,255,255]" bold="false" executable="false" family="Courier New" foreground="[255,0,0]" italic="false" opaque="false" readonly="false" size="12" subscript="false" superscript="false" underline="false" strikethrough="false" placeholder="false"/>
+<Font name="Maple Input Placeholder" background="[255,255,255]" bold="true" executable="true" family="Courier New" foreground="[200,0,200]" italic="false" opaque="false" readonly="false" size="12" subscript="false" superscript="false" underline="false" strikethrough="false" placeholder="true"/>
+<Font name="Equation Label" background="[255,255,255]" bold="true" executable="false" family="Times New Roman" foreground="[0,0,0]" italic="false" opaque="false" readonly="false" size="12" subscript="false" superscript="false" underline="false" strikethrough="false" placeholder="false"/>
+<Font name="Author" background="[255,255,255]" bold="false" executable="false" family="Times New Roman" foreground="[0,0,0]" italic="false" opaque="false" readonly="false" size="12" subscript="false" superscript="false" underline="false" strikethrough="false" placeholder="false"/>
+<Font name="Hyperlink" background="[255,255,255]" bold="false" executable="false" family="Times New Roman" foreground="[0,128,128]" italic="false" opaque="false" readonly="false" size="12" subscript="false" superscript="false" underline="true" strikethrough="false" placeholder="false"/>
+<Font name="Caption Text" background="[255,255,255]" bold="true" executable="false" family="Times New Roman" foreground="[0,0,0]" italic="false" opaque="false" readonly="false" size="12" subscript="false" superscript="false" underline="false" strikethrough="false" placeholder="false"/>
+<Layout name="Heading 1" alignment="left" bullet="none" firstindent="0" leftmargin="0" rightmargin="0" linespacing="0.0" spaceabove="8" spacebelow="4" linebreak="space" pagebreak-before="false" initial="0" bulletsuffix=""/>
+<Layout name="Warning" alignment="left" bullet="none" firstindent="0" leftmargin="0" rightmargin="0" linespacing="0.0" spaceabove="0" spacebelow="0" linebreak="space" pagebreak-before="false" initial="0" bulletsuffix=""/>
+<Layout name="Heading 4" alignment="left" bullet="none" firstindent="0" leftmargin="0" rightmargin="0" linespacing="0.0" spaceabove="0" spacebelow="0" linebreak="space" pagebreak-before="false" initial="0" bulletsuffix=""/>
+<Layout name="Line Printed Output" alignment="left" bullet="none" firstindent="0" leftmargin="0" rightmargin="0" linespacing="0.0" spaceabove="0" spacebelow="0" linebreak="any" pagebreak-before="false" initial="0" bulletsuffix=""/>
+<Layout name="Heading 2" alignment="left" bullet="none" firstindent="0" leftmargin="0" rightmargin="0" linespacing="0.0" spaceabove="8" spacebelow="2" linebreak="space" pagebreak-before="false" initial="0" bulletsuffix=""/>
+<Layout name="Maple Output" alignment="centred" bullet="none" firstindent="0" leftmargin="0" rightmargin="0" linespacing="0.3" spaceabove="0" spacebelow="0" linebreak="space" pagebreak-before="false" initial="0" bulletsuffix=""/>
+<Layout name="Heading 3" alignment="left" bullet="none" firstindent="0" leftmargin="0" rightmargin="0" linespacing="0.0" spaceabove="0" spacebelow="0" linebreak="space" pagebreak-before="false" initial="0" bulletsuffix=""/>
+<Layout name="Diagnostic" alignment="left" bullet="none" firstindent="0" leftmargin="0" rightmargin="0" linespacing="0.0" spaceabove="0" spacebelow="0" linebreak="any" pagebreak-before="false" initial="0" bulletsuffix=""/>
+<Layout name="Ordered List 1" alignment="left" bullet="numeric" firstindent="0" leftmargin="0" rightmargin="0" linespacing="0.0" spaceabove="3" spacebelow="3" linebreak="space" pagebreak-before="false" initial="-1" bulletsuffix="."/>
+<Layout name="Text Output" alignment="left" bullet="none" firstindent="0" leftmargin="0" rightmargin="0" linespacing="0.0" spaceabove="0" spacebelow="0" linebreak="newline" pagebreak-before="false" initial="0" bulletsuffix=""/>
+<Layout name="Ordered List 2" alignment="left" bullet="alphabetic" firstindent="0" leftmargin="36" rightmargin="0" linespacing="0.0" spaceabove="3" spacebelow="3" linebreak="space" pagebreak-before="false" initial="-1" bulletsuffix="."/>
+<Layout name="Ordered List 3" alignment="left" bullet="roman" firstindent="0" leftmargin="72" rightmargin="0" linespacing="0.0" spaceabove="3" spacebelow="3" linebreak="space" pagebreak-before="false" initial="-1" bulletsuffix="."/>
+<Layout name="Ordered List 4" alignment="left" bullet="ALPHABETIC" firstindent="0" leftmargin="108" rightmargin="0" linespacing="0.0" spaceabove="3" spacebelow="3" linebreak="space" pagebreak-before="false" initial="-1" bulletsuffix="."/>
+<Layout name="Ordered List 5" alignment="left" bullet="ROMAN" firstindent="0" leftmargin="144" rightmargin="0" linespacing="0.0" spaceabove="3" spacebelow="3" linebreak="space" pagebreak-before="false" initial="-1" bulletsuffix="."/>
+<Layout name="Annotation Title" alignment="centred" bullet="none" firstindent="0" leftmargin="0" rightmargin="0" linespacing="0.0" spaceabove="12" spacebelow="12" linebreak="space" pagebreak-before="false" initial="0" bulletsuffix=""/>
+<Layout name="HyperlinkError" alignment="left" bullet="none" firstindent="0" leftmargin="0" rightmargin="0" linespacing="0.0" spaceabove="0" spacebelow="0" linebreak="space" pagebreak-before="false" initial="0" bulletsuffix=""/>
+<Layout name="HyperlinkWarning" alignment="left" bullet="none" firstindent="0" leftmargin="0" rightmargin="0" linespacing="0.0" spaceabove="0" spacebelow="0" linebreak="space" pagebreak-before="false" initial="0" bulletsuffix=""/>
+<Layout name="Bullet Item" alignment="left" bullet="dot" firstindent="0" leftmargin="0" rightmargin="0" linespacing="0.0" spaceabove="3" spacebelow="3" linebreak="space" pagebreak-before="false" initial="0" bulletsuffix=""/>
+<Layout name="Maple Plot" alignment="centred" bullet="none" firstindent="0" leftmargin="0" rightmargin="0" linespacing="0.0" spaceabove="0" spacebelow="0" linebreak="space" pagebreak-before="false" initial="0" bulletsuffix=""/>
+<Layout name="List Item" alignment="left" bullet="indent" firstindent="0" leftmargin="0" rightmargin="0" linespacing="0.0" spaceabove="3" spacebelow="3" linebreak="space" pagebreak-before="false" initial="0" bulletsuffix=""/>
+<Layout name="Dash Item" alignment="left" bullet="dash" firstindent="0" leftmargin="0" rightmargin="0" linespacing="0.0" spaceabove="3" spacebelow="3" linebreak="space" pagebreak-before="false" initial="0" bulletsuffix=""/>
+<Layout name="Error" alignment="left" bullet="none" firstindent="0" leftmargin="0" rightmargin="0" linespacing="0.0" spaceabove="0" spacebelow="0" linebreak="space" pagebreak-before="false" initial="0" bulletsuffix=""/>
+<Layout name="Title" alignment="centred" bullet="none" firstindent="0" leftmargin="0" rightmargin="0" linespacing="0.0" spaceabove="12" spacebelow="12" linebreak="space" pagebreak-before="false" initial="0" bulletsuffix=""/>
+<Layout name="Normal" alignment="left" bullet="none" firstindent="0" leftmargin="0" rightmargin="0" linespacing="0.0" spaceabove="0" spacebelow="0" linebreak="space" pagebreak-before="false" initial="0" bulletsuffix=""/>
+<Layout name="Author" alignment="centred" bullet="none" firstindent="0" leftmargin="0" rightmargin="0" linespacing="0.0" spaceabove="8" spacebelow="8" linebreak="space" pagebreak-before="false" initial="0" bulletsuffix=""/>
+<Pencil-style name="Pencil 1" pen-color="[0,0,0]" pen-height="1.0" pen-width="1.0" pen-opacity="1.0"/>
+<Pencil-style name="Pencil 2" pen-color="[0,0,255]" pen-height="1.0" pen-width="1.0" pen-opacity="1.0"/>
+<Pencil-style name="Pencil 3" pen-color="[0,0,0]" pen-height="3.0" pen-width="3.0" pen-opacity="1.0"/>
+<Pencil-style name="Pencil 4" pen-color="[0,0,255]" pen-height="3.0" pen-width="3.0" pen-opacity="1.0"/>
+<Pencil-style name="Pencil 5" pen-color="[255,0,0]" pen-height="5.0" pen-width="5.0" pen-opacity="1.0"/>
+<Highlighter-style name="Highlighter 5" pen-color="[255,255,0]" pen-height="48.0" pen-width="48.0" pen-opacity="0.8"/>
+<Highlighter-style name="Highlighter 3" pen-color="[51,255,0]" pen-height="24.0" pen-width="24.0" pen-opacity="0.8"/>
+<Highlighter-style name="Highlighter 4" pen-color="[0,255,255]" pen-height="32.0" pen-width="32.0" pen-opacity="0.8"/>
+<Highlighter-style name="Highlighter 1" pen-color="[255,153,255]" pen-height="12.0" pen-width="8.0" pen-opacity="0.8"/>
+<Highlighter-style name="Highlighter 2" pen-color="[255,204,0]" pen-height="14.0" pen-width="14.0" pen-opacity="0.8"/>
+</Styles>
+<Startup-Code startupcode=""/>
+<Task-table>
+	<Task-category name="&lt;default&gt;"/>
+</Task-table>
+<Task/><Presentation-Block>
+<Group view="presentation" inline-output="false" labelreference="L8" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field style="Text" layout="Normal"><Equation executable="true" style="2D Math" input-equation="" display="LUklbXJvd0c2Iy9JK21vZHVsZW5hbWVHNiJJLFR5cGVzZXR0aW5nR0koX3N5c2xpYkdGJzYlLUkjbW9HRiQ2LlEifkYnLyUsbWF0aHZhcmlhbnRHUSdub3JtYWxGJy8lJmZlbmNlR1EmZmFsc2VGJy8lKnNlcGFyYXRvckdGNC8lKXN0cmV0Y2h5R0Y0LyUqc3ltbWV0cmljR0Y0LyUobGFyZ2VvcEdGNC8lLm1vdmFibGVsaW1pdHNHRjQvJSdhY2NlbnRHRjQvJSdsc3BhY2VHUSYwLjBlbUYnLyUncnNwYWNlR0ZDLyUpZXF1YWxpdHlHRjQvJStleGVjdXRhYmxlR0Y0Ri8=">LUklbXJvd0c2Iy9JK21vZHVsZW5hbWVHNiJJLFR5cGVzZXR0aW5nR0koX3N5c2xpYkdGJzYlLUkjbW9HRiQ2LlEifkYnLyUsbWF0aHZhcmlhbnRHUSdub3JtYWxGJy8lJmZlbmNlR1EmZmFsc2VGJy8lKnNlcGFyYXRvckdGNC8lKXN0cmV0Y2h5R0Y0LyUqc3ltbWV0cmljR0Y0LyUobGFyZ2VvcEdGNC8lLm1vdmFibGVsaW1pdHNHRjQvJSdhY2NlbnRHRjQvJSdsc3BhY2VHUSYwLjBlbUYnLyUncnNwYWNlR0ZDLyUpZXF1YWxpdHlHRjQvJStleGVjdXRhYmxlR0Y0Ri8=</Equation></Text-field>
+</Input>
+</Group>
+<Group view="code" hide-input="false" labelreference="L20" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal">restart;
+with(LinearAlgebra):
+with(Optimization):
+Digits := 100;</Text-field>
+</Input>
+<Output><Text-field style="2D Output" layout="Maple Output"><Equation executable="false" style="2D Output" display="LUklbXJvd0c2Iy9JK21vZHVsZW5hbWVHNiJJLFR5cGVzZXR0aW5nR0koX3N5c2xpYkdGJzYmLUkjbWlHRiQ2JVEnRGlnaXRzRicvJSdpdGFsaWNHUSV0cnVlRicvJSxtYXRodmFyaWFudEdRJ2l0YWxpY0YnLUkjbW9HRiQ2LlEpJkFzc2lnbjtGJy9GM1Enbm9ybWFsRicvJSZmZW5jZUdRJmZhbHNlRicvJSpzZXBhcmF0b3JHRj0vJSlzdHJldGNoeUdGPS8lKnN5bW1ldHJpY0dGPS8lKGxhcmdlb3BHRj0vJS5tb3ZhYmxlbGltaXRzR0Y9LyUnYWNjZW50R0Y9LyUnbHNwYWNlR1EsMC4yNzc3Nzc4ZW1GJy8lJ3JzcGFjZUdGTC8lKWVxdWFsaXR5R0Y9LUkjbW5HRiQ2JFEkMTAwRidGOUY5">LV9JLFR5cGVzZXR0aW5nRzYkJSpwcm90ZWN0ZWRHSShfc3lzbGliRzYiSSxtcHJpbnRzbGFzaEdGKDYkNyM+SSdEaWdpdHNHRigiJCsiNyNGLg==</Equation></Text-field>
+</Output>
+</Group>
+<Group view="code" labelreference="L19" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal"># =============================================
+# DEFINIZIONE DELLA CHEBYQUAD FUNCTION
+# =============================================
+
+# Polinomi di Chebyshev shiftati T_i^*(x) = T_i(2x-1)
+ChebyshevShifted := proc(i, x)
+    return orthopoly[T](i, 2*x-1);
+end proc:
+
+# Integrale di T_i^*(t) da 0 a 1
+ChebyshevIntegral := proc(i)
+    local t;
+    if i = 0 then
+        return 1;
+    elif i mod 2 = 1 then
+        return 0;
+    else
+        return 1/(1 - i^2);
+    end if;
+end proc:
+
+# Sistema Chebyquad per dimensione n
+ChebyquadSystem := proc(n)
+    local system_proc;
+    
+    system_proc := proc(x)
+    local f, i, j, sum_val;
+        f := Vector(n);
+        for i from 1 to n do
+            sum_val := 0;
+            for j from 1 to n do
+                sum_val := sum_val + ChebyshevShifted(i, x[j]);
+            end do;
+            f[i] := (1/n) * sum_val - ChebyshevIntegral(i);
+        end do;
+        return f;
+    end proc;
+    
+    return system_proc;
+end proc:</Text-field>
+</Input>
+</Group>
+<Group view="code" labelreference="L18" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal"># =============================================
+# FUNZIONE PER TROVARE SOLUZIONI
+# =============================================
+
+FindChebyquadSolutions := proc(n, max_trials := 10, tol := 1e-14)
+local F, solutions_found, trial, x0, solution, x_sol, f_sol, residuo, i, j;
+    
+    F := ChebyquadSystem(n);
+    solutions_found := [];
+    
+<Font encoding="UTF-8">    printf(&quot;\342\225\224\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\227\134n&quot;);
+    printf(&quot;\342\225\221        CHEBYQUAD n = %-2d              \342\225\221\134n&quot;, n);
+    printf(&quot;\342\225\232\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\235\134n&quot;);
+</Font>    
+    for trial from 1 to max_trials do
+        # Genera punti iniziali casuali ma simmetrici
+        x0 := Vector(n);
+        if trial = 1 then
+            # Trial 1: punti equispaziati (strategia standard)
+            for i from 1 to n do
+                x0[i] := i/(n+1.0);
+            end do;
+        else
+            # Trial successivi: punti casuali simmetrici
+            for i from 1 to ceil(n/2) do
+                x0[i] := rand()/10^12;
+                if 2*i &lt;= n then
+                    x0[n-i+1] := 1.0 - x0[i];
+                end if;
+            end do;
+            if n mod 2 = 1 then
+                x0[ceil(n/2)] := 0.5;
+            end if;
+        end if;
+        
+        try
+            solution := fsolve({seq(F(x)[i] = 0, i=1..n)}, 
+                              {seq(x[i] = x0[i], i=1..n)});
+            
+            if solution &lt;&gt; NULL then
+                # Estrai la soluzione
+                x_sol := Vector(n);
+                for i from 1 to n do
+                    x_sol[i] := rhs(solution[i]);
+                end do;
+                
+                # Calcola il residuo
+                f_sol := F(x_sol);
+                residuo := Norm(f_sol, 2);
+                
+<Font encoding="UTF-8">                # Verifica se \303\250 una nuova soluzione
+</Font>                is_new := true;
+                for existing_sol in solutions_found do
+                    if Norm(existing_sol[1] - x_sol, 2) &lt; 1e-6 then
+                        is_new := false;
+                        break;
+                    end if;
+                end do;
+                
+                if is_new and residuo &lt; 1e-8 then
+                    solutions_found := [op(solutions_found), [x_sol, residuo]];
+<Font encoding="UTF-8">                    printf(&quot;Trial %d: Trovata soluzione con residuo = %.3e\134n&quot;, 
+</Font>                           trial, residuo);
+                    
+                    # Stampa la soluzione
+                    printf(&quot;Soluzione: [&quot;);
+                    for i from 1 to n do
+                        printf(&quot;%.20f&quot;, x_sol[i]);
+                        if i &lt; n then printf(&quot;, &quot;); end if;
+                    end do;
+<Font encoding="UTF-8">                    printf(&quot;]\134n\134n&quot;);
+</Font>                end if;
+            end if;
+        catch:
+            # Ignora errori e continua
+        end try;
+    end do;
+    
+    if nops(solutions_found) = 0 then
+<Font encoding="UTF-8">        printf(&quot;Nessuna soluzione trovata con residuo &lt; 1e-8\134n&quot;);
+</Font>    else
+        # Trova la soluzione con il residuo minimo
+        best_sol := solutions_found[1];
+        for i from 2 to nops(solutions_found) do
+            if solutions_found[i][2] &lt; best_sol[2] then
+                best_sol := solutions_found[i];
+            end if;
+        end do;
+        
+<Font encoding="UTF-8">        printf(&quot;MIGLIORE SOLUZIONE TROVATA (residuo = %.3e):\134n&quot;, best_sol[2]);
+</Font>        for i from 1 to n do
+<Font encoding="UTF-8">            printf(&quot;x[%d] = %.30f\134n&quot;, i, best_sol[1][i]);
+</Font>        end do;
+    end if;
+    
+<Font encoding="UTF-8">    printf(&quot;\134n&quot;);
+</Font>    return best_sol[1];
+end proc:</Text-field>
+</Input>
+<Output><Text-field style="HyperlinkWarning" layout="HyperlinkWarning"><Hyperlink linktarget="http://www.maplesoft.com/support/help/errors/view.aspx?path=Warning,%20(in%20FindChebyquadSolutions)%20%60is_new%60%20is%20implicitly%20declared%20local" hyperlink="true"><Font style="HyperlinkWarning">Warning, (in FindChebyquadSolutions) `is_new` is implicitly declared local</Font></Hyperlink></Text-field>
+</Output>
+<Output><Text-field style="HyperlinkWarning" layout="HyperlinkWarning"><Hyperlink linktarget="http://www.maplesoft.com/support/help/errors/view.aspx?path=Warning,%20(in%20FindChebyquadSolutions)%20%60existing_sol%60%20is%20implicitly%20declared%20local" hyperlink="true"><Font style="HyperlinkWarning">Warning, (in FindChebyquadSolutions) `existing_sol` is implicitly declared local</Font></Hyperlink></Text-field>
+</Output>
+<Output><Text-field style="HyperlinkWarning" layout="HyperlinkWarning"><Hyperlink linktarget="http://www.maplesoft.com/support/help/errors/view.aspx?path=Warning,%20(in%20FindChebyquadSolutions)%20%60best_sol%60%20is%20implicitly%20declared%20local" hyperlink="true"><Font style="HyperlinkWarning">Warning, (in FindChebyquadSolutions) `best_sol` is implicitly declared local</Font></Hyperlink></Text-field>
+</Output>
+</Group>
+<Group view="code" labelreference="L17" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal"># =============================================
+# CALCOLO SOLUZIONI PER n = 1 A 9
+# =============================================
+
+<Font encoding="UTF-8">printf(&quot;=================================================\134n&quot;);
+printf(&quot;    SOLUZIONI CHEBYQUAD FUNCTION n = 1 - 10\134n&quot;);
+printf(&quot;=================================================\134n\134n&quot;);
+</Font>
+solutions := table():
+for n from 1 to 9 do
+    solutions[n] := FindChebyquadSolutions(n);
+end do:</Text-field>
+</Input>
+<Output><Text-field style="Line Printed Output" layout="Line Printed Output">=================================================
+    SOLUZIONI CHEBYQUAD FUNCTION n = 1 - 10
+=================================================
+
+<Font encoding="UTF-8">\342\225\224\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\227
+\342\225\221        CHEBYQUAD n = 1               \342\225\221
+\342\225\232\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\235
+</Font>Trial 1: Trovata soluzione con residuo = 0.000e+00
+Soluzione: [0.50000000000000000000]
+
+MIGLIORE SOLUZIONE TROVATA (residuo = 0.000e+00):
+x[1] = 0.500000000000000000000000000000
+
+<Font encoding="UTF-8">\342\225\224\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\227
+\342\225\221        CHEBYQUAD n = 2               \342\225\221
+\342\225\232\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\235
+</Font>Trial 1: Trovata soluzione con residuo = 3.162e-100
+Soluzione: [0.21132486540518711775, 0.78867513459481288225]
+
+Trial 2: Trovata soluzione con residuo = 3.162e-100
+Soluzione: [0.78867513459481288225, 0.21132486540518711775]
+
+MIGLIORE SOLUZIONE TROVATA (residuo = 3.162e-100):
+x[1] = 0.211324865405187117745425609749
+x[2] = 0.788675134594812882254574390251
+
+<Font encoding="UTF-8">\342\225\224\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\227
+\342\225\221        CHEBYQUAD n = 3               \342\225\221
+\342\225\232\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\235
+</Font>Trial 1: Trovata soluzione con residuo = 5.812e-100
+Soluzione: [0.14644660940672623780, 0.50000000000000000000, 0.85355339059327376220]
+
+Trial 2: Trovata soluzione con residuo = 5.812e-100
+Soluzione: [0.85355339059327376220, 0.50000000000000000000, 0.14644660940672623780]
+
+MIGLIORE SOLUZIONE TROVATA (residuo = 5.812e-100):
+x[1] = 0.146446609406726237799577818948
+x[2] = 0.500000000000000000000000000000
+x[3] = 0.853553390593273762200422181052
+
+<Font encoding="UTF-8">\342\225\224\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\227
+\342\225\221        CHEBYQUAD n = 4               \342\225\221
+\342\225\232\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\235
+</Font>Trial 1: Trovata soluzione con residuo = 1.045e-99
+Soluzione: [0.10267276385411693852, 0.40620376295746005007, 0.59379623704253994993, 0.89732723614588306148]
+
+Trial 2: Trovata soluzione con residuo = 1.045e-99
+Soluzione: [0.40620376295746005007, 0.89732723614588306148, 0.10267276385411693852, 0.59379623704253994993]
+
+Trial 3: Trovata soluzione con residuo = 1.045e-99
+Soluzione: [0.10267276385411693852, 0.59379623704253994993, 0.40620376295746005007, 0.89732723614588306148]
+
+Trial 4: Trovata soluzione con residuo = 1.045e-99
+Soluzione: [0.59379623704253994993, 0.10267276385411693852, 0.89732723614588306148, 0.40620376295746005007]
+
+Trial 5: Trovata soluzione con residuo = 1.045e-99
+Soluzione: [0.40620376295746005007, 0.10267276385411693852, 0.89732723614588306148, 0.59379623704253994993]
+
+Trial 8: Trovata soluzione con residuo = 1.045e-99
+Soluzione: [0.59379623704253994993, 0.89732723614588306148, 0.10267276385411693852, 0.40620376295746005007]
+
+MIGLIORE SOLUZIONE TROVATA (residuo = 1.045e-99):
+x[1] = 0.102672763854116938522234535836
+x[2] = 0.406203762957460050069930326546
+x[3] = 0.593796237042539949930069673454
+x[4] = 0.897327236145883061477765464164
+
+<Font encoding="UTF-8">\342\225\224\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\227
+\342\225\221        CHEBYQUAD n = 5               \342\225\221
+\342\225\232\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\235
+</Font>Trial 1: Trovata soluzione con residuo = 3.900e-100
+Soluzione: [0.08375125649950906205, 0.31272929522320946721, 0.50000000000000000000, 0.68727070477679053279, 0.91624874350049093795]
+
+Trial 2: Trovata soluzione con residuo = 3.895e-100
+Soluzione: [0.31272929522320946721, 0.91624874350049093795, 0.50000000000000000000, 0.08375125649950906205, 0.68727070477679053279]
+
+Trial 5: Trovata soluzione con residuo = 3.879e-100
+Soluzione: [0.08375125649950906205, 0.68727070477679053279, 0.50000000000000000000, 0.31272929522320946721, 0.91624874350049093795]
+
+Trial 6: Trovata soluzione con residuo = 3.900e-100
+Soluzione: [0.31272929522320946721, 0.08375125649950906205, 0.50000000000000000000, 0.91624874350049093795, 0.68727070477679053279]
+
+Trial 7: Trovata soluzione con residuo = 3.879e-100
+Soluzione: [0.68727070477679053279, 0.08375125649950906205, 0.50000000000000000000, 0.91624874350049093795, 0.31272929522320946721]
+
+MIGLIORE SOLUZIONE TROVATA (residuo = 3.879e-100):
+x[1] = 0.083751256499509062053708208178
+x[2] = 0.687270704776790532793022187859
+x[3] = 0.500000000000000000000000000000
+x[4] = 0.312729295223209467206977812141
+x[5] = 0.916248743500490937946291791822
+
+<Font encoding="UTF-8">\342\225\224\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\227
+\342\225\221        CHEBYQUAD n = 6               \342\225\221
+\342\225\232\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\235
+</Font>Trial 1: Trovata soluzione con residuo = 1.735e-99
+Soluzione: [0.06687659094608970431, 0.36668229924164763983, 0.28874067311944423544, 0.71125932688055576456, 0.63331770075835236017, 0.93312340905391029569]
+
+Trial 2: Trovata soluzione con residuo = 1.748e-99
+Soluzione: [0.36668229924164763983, 0.71125932688055576456, 0.93312340905391029569, 0.06687659094608970431, 0.28874067311944423544, 0.63331770075835236017]
+
+Trial 3: Trovata soluzione con residuo = 1.750e-99
+Soluzione: [0.36668229924164763983, 0.93312340905391029569, 0.28874067311944423544, 0.71125932688055576456, 0.06687659094608970431, 0.63331770075835236017]
+
+Trial 4: Trovata soluzione con residuo = 1.740e-99
+Soluzione: [0.63331770075835236017, 0.06687659094608970431, 0.28874067311944423544, 0.71125932688055576456, 0.93312340905391029569, 0.36668229924164763983]
+
+Trial 5: Trovata soluzione con residuo = 1.750e-99
+Soluzione: [0.63331770075835236017, 0.93312340905391029569, 0.28874067311944423544, 0.71125932688055576456, 0.06687659094608970431, 0.36668229924164763983]
+
+Trial 6: Trovata soluzione con residuo = 1.677e-99
+Soluzione: [0.06687659094608970431, 0.71125932688055576456, 0.36668229924164763983, 0.63331770075835236017, 0.28874067311944423544, 0.93312340905391029569]
+
+Trial 7: Trovata soluzione con residuo = 1.762e-99
+Soluzione: [0.71125932688055576456, 0.93312340905391029569, 0.36668229924164763983, 0.63331770075835236017, 0.06687659094608970431, 0.28874067311944423544]
+
+Trial 8: Trovata soluzione con residuo = 1.851e-99
+Soluzione: [0.36668229924164763983, 0.28874067311944423544, 0.06687659094608970431, 0.93312340905391029569, 0.71125932688055576456, 0.63331770075835236017]
+
+Trial 10: Trovata soluzione con residuo = 1.739e-99
+Soluzione: [0.06687659094608970431, 0.63331770075835236017, 0.28874067311944423544, 0.71125932688055576456, 0.36668229924164763983, 0.93312340905391029569]
+
+MIGLIORE SOLUZIONE TROVATA (residuo = 1.677e-99):
+x[1] = 0.066876590946089704308200972975
+x[2] = 0.711259326880555764559273198606
+x[3] = 0.366682299241647639834232733086
+x[4] = 0.633317700758352360165767266914
+x[5] = 0.288740673119444235440726801394
+x[6] = 0.933123409053910295691799027025
+
+<Font encoding="UTF-8">\342\225\224\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\227
+\342\225\221        CHEBYQUAD n = 7               \342\225\221
+\342\225\232\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\235
+</Font>Trial 1: Trovata soluzione con residuo = 2.264e-99
+Soluzione: [0.05806914962097548215, 0.33804409474004618124, 0.23517161235742159431, 0.50000000000000000000, 0.76482838764257840569, 0.66195590525995381876, 0.94193085037902451785]
+
+Trial 2: Trovata soluzione con residuo = 2.237e-99
+Soluzione: [0.76482838764257840569, 0.05806914962097548215, 0.66195590525995381876, 0.50000000000000000000, 0.33804409474004618124, 0.94193085037902451785, 0.23517161235742159431]
+
+Trial 3: Trovata soluzione con residuo = 2.331e-99
+Soluzione: [0.33804409474004618124, 0.76482838764257840569, 0.05806914962097548215, 0.50000000000000000000, 0.94193085037902451785, 0.23517161235742159431, 0.66195590525995381876]
+
+Trial 4: Trovata soluzione con residuo = 2.293e-99
+Soluzione: [0.66195590525995381876, 0.05806914962097548215, 0.23517161235742159431, 0.50000000000000000000, 0.76482838764257840569, 0.94193085037902451785, 0.33804409474004618124]
+
+Trial 5: Trovata soluzione con residuo = 2.245e-99
+Soluzione: [0.94193085037902451785, 0.23517161235742159431, 0.66195590525995381876, 0.50000000000000000000, 0.33804409474004618124, 0.76482838764257840569, 0.05806914962097548215]
+
+Trial 6: Trovata soluzione con residuo = 2.314e-99
+Soluzione: [0.23517161235742159431, 0.66195590525995381876, 0.94193085037902451785, 0.50000000000000000000, 0.05806914962097548215, 0.33804409474004618124, 0.76482838764257840569]
+
+Trial 8: Trovata soluzione con residuo = 2.296e-99
+Soluzione: [0.94193085037902451785, 0.66195590525995381876, 0.76482838764257840569, 0.50000000000000000000, 0.23517161235742159431, 0.33804409474004618124, 0.05806914962097548215]
+
+Trial 9: Trovata soluzione con residuo = 2.285e-99
+Soluzione: [0.66195590525995381876, 0.94193085037902451785, 0.76482838764257840569, 0.50000000000000000000, 0.23517161235742159431, 0.05806914962097548215, 0.33804409474004618124]
+
+Trial 10: Trovata soluzione con residuo = 2.307e-99
+Soluzione: [0.66195590525995381876, 0.76482838764257840569, 0.94193085037902451785, 0.50000000000000000000, 0.05806914962097548215, 0.23517161235742159431, 0.33804409474004618124]
+
+MIGLIORE SOLUZIONE TROVATA (residuo = 2.237e-99):
+x[1] = 0.764828387642578405692523766680
+x[2] = 0.058069149620975482147887954609
+x[3] = 0.661955905259953818759836546176
+x[4] = 0.500000000000000000000000000000
+x[5] = 0.338044094740046181240163453824
+x[6] = 0.941930850379024517852112045391
+x[7] = 0.235171612357421594307476233320
+
+<Font encoding="UTF-8">\342\225\224\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\227
+\342\225\221        CHEBYQUAD n = 8               \342\225\221
+\342\225\232\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\235
+</Font>Nessuna soluzione trovata con residuo &lt; 1e-8
+
+<Font encoding="UTF-8">\342\225\224\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\227
+\342\225\221        CHEBYQUAD n = 9               \342\225\221
+\342\225\232\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\220\342\225\235
+</Font>Trial 2: Trovata soluzione con residuo = 6.792e-99
+Soluzione: [0.19949067230988096429, 0.41604690789259802847, 0.23561910847106000337, 0.95579465386421723683, 0.50000000000000000000, 0.04420534613578276317, 0.76438089152893999663, 0.58395309210740197153, 0.80050932769011903571]
+
+Trial 3: Trovata soluzione con residuo = 6.777e-99
+Soluzione: [0.76438089152893999663, 0.19949067230988096429, 0.04420534613578276317, 0.58395309210740197153, 0.50000000000000000000, 0.41604690789259802847, 0.95579465386421723683, 0.80050932769011903571, 0.23561910847106000337]
+
+Trial 4: Trovata soluzione con residuo = 6.795e-99
+Soluzione: [0.58395309210740197153, 0.76438089152893999663, 0.19949067230988096429, 0.04420534613578276317, 0.50000000000000000000, 0.95579465386421723683, 0.80050932769011903571, 0.23561910847106000337, 0.41604690789259802847]
+
+Trial 5: Trovata soluzione con residuo = 6.765e-99
+Soluzione: [0.95579465386421723683, 0.41604690789259802847, 0.19949067230988096429, 0.76438089152893999663, 0.50000000000000000000, 0.23561910847106000337, 0.80050932769011903571, 0.58395309210740197153, 0.04420534613578276317]
+
+Trial 6: Trovata soluzione con residuo = 6.821e-99
+Soluzione: [0.76438089152893999663, 0.41604690789259802847, 0.95579465386421723683, 0.80050932769011903571, 0.50000000000000000000, 0.19949067230988096429, 0.04420534613578276317, 0.58395309210740197153, 0.23561910847106000337]
+
+Trial 7: Trovata soluzione con residuo = 6.838e-99
+Soluzione: [0.76438089152893999663, 0.41604690789259802847, 0.80050932769011903571, 0.95579465386421723683, 0.50000000000000000000, 0.04420534613578276317, 0.19949067230988096429, 0.58395309210740197153, 0.23561910847106000337]
+
+Trial 8: Trovata soluzione con residuo = 6.844e-99
+Soluzione: [0.80050932769011903571, 0.41604690789259802847, 0.04420534613578276317, 0.23561910847106000337, 0.50000000000000000000, 0.76438089152893999663, 0.95579465386421723683, 0.58395309210740197153, 0.19949067230988096429]
+
+Trial 9: Trovata soluzione con residuo = 6.808e-99
+Soluzione: [0.95579465386421723683, 0.58395309210740197153, 0.19949067230988096429, 0.76438089152893999663, 0.50000000000000000000, 0.23561910847106000337, 0.80050932769011903571, 0.41604690789259802847, 0.04420534613578276317]
+
+Trial 10: Trovata soluzione con residuo = 6.857e-99
+Soluzione: [0.95579465386421723683, 0.76438089152893999663, 0.80050932769011903571, 0.58395309210740197153, 0.50000000000000000000, 0.41604690789259802847, 0.19949067230988096429, 0.23561910847106000337, 0.04420534613578276317]
+
+MIGLIORE SOLUZIONE TROVATA (residuo = 6.765e-99):
+x[1] = 0.955794653864217236832474283916
+x[2] = 0.416046907892598028465984050873
+x[3] = 0.199490672309880964285936033933
+x[4] = 0.764380891528939996630090810677
+x[5] = 0.500000000000000000000000000000
+x[6] = 0.235619108471060003369909189323
+x[7] = 0.800509327690119035714063966067
+x[8] = 0.583953092107401971534015949127
+x[9] = 0.044205346135782763167525716084
+
+</Text-field>
+</Output>
+</Group>
+<Group view="code" hide-input="false" labelreference="L9" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal"><Font encoding="UTF-8"># =============================================
+# VERIFICA DELLE SOLUZIONI TROVATE
+# =============================================
+
+printf(&quot;\134n\134n=================================================\134n&quot;);
+printf(&quot;           VERIFICA DELLE SOLUZIONI\134n&quot;);
+printf(&quot;=================================================\134n&quot;);
+
+for n from 1 to 9 do
+    if solutions[n] &lt;&gt; NULL then
+        F := ChebyquadSystem(n);
+        residuo := Norm(F(solutions[n]), 2);
+        printf(&quot;n = %d: residuo = %.3e&quot;, n, residuo);
+        if residuo &lt; 1e-8 then
+            printf(&quot;  \342\234\223 OK\134n&quot;);
+        else
+            printf(&quot;  \342\234\227 NO\134n&quot;);
+        end if;
+    else
+        printf(&quot;n = %d: Nessuna soluzione trovata\134n&quot;, n);
+    end if;
+end do:
+
+# =============================================
+# CONFRONTO CON I VALORI NOTI
+# =============================================
+
+printf(&quot;\134n\134n=================================================\134n&quot;);
+printf(&quot;        CONFRONTO CON SOLUZIONI NOTE\134n&quot;);
+printf(&quot;=================================================\134n&quot;);
+
+# Soluzioni note dalla letteratura
+known_solutions := table():
+known_solutions[1] := Vector([0.5]);
+known_solutions[2] := Vector([0.2113248654051871, 0.7886751345948129]);
+known_solutions[3] := Vector([0.1464466094067262, 0.5, 0.8535533905932737]);
+known_solutions[4] := Vector([0.1026727638541169, 0.40620376295746, 
+                             0.5937962370425399, 0.8973272361458831]);
+known_solutions[5] := Vector([0.08375125649950906, 0.3127292952232095, 0.5,
+                             0.6872707047767905, 0.9162487435004909]);
+known_solutions[6] := Vector([0.06687659094608972, 0.3666822992416476, 0.2887406731194442,
+                             0.7112593268805557, 0.6333177007583524, 0.9331234090539103]);
+known_solutions[7] := Vector([0.0580691496209755, 0.2351716123574216, 0.3380440947400462, 0.5,
+                             0.6619559052599538, 0.7648283876425784, 0.9419308503790246]);
+known_solutions[9] := Vector([0.04420534613578277, 0.199490672309881, 0.23561910847106,
+                             0.4160469078925981, 0.5, 0.5839530921074021,
+                             0.76438089152894, 0.8005093276901191, 0.9557946538642172]);
+
+for n in [indices(known_solutions, nolist)] do
+    if solutions[n] &lt;&gt; NULL then
+        diff_norm := Norm(solutions[n] - known_solutions[n], 2);
+        printf(&quot;n = %d: differenza dalle soluzioni note = %.3e&quot;, n, diff_norm);
+        if diff_norm &lt; 1e-8 then
+            printf(&quot;  \342\234\223 Coerente\134n&quot;);
+        else
+            printf(&quot;  \342\234\227 Diversa\134n&quot;);
+        end if;
+    end if;
+end do:
+
+# =============================================
+# ESPORTAZIONE DEI RISULTATI IN FORMATO C++
+# =============================================
+
+printf(&quot;\134n\134n=================================================\134n&quot;);
+printf(&quot;       FORMATO C++ PER L'IMPLEMENTAZIONE\134n&quot;);
+printf(&quot;=================================================\134n&quot;);
+
+for n from 1 to 9 do
+    if solutions[n] &lt;&gt; NULL then
+        printf(&quot;case %d:\134n&quot;, n);
+        printf(&quot;  x &lt;&lt; &quot;);
+        for i from 1 to n do
+            printf(&quot;%.20f&quot;, solutions[n][i]);
+            if i &lt; n then
+                printf(&quot;, &quot;);
+                if i mod 3 = 0 then
+                    printf(&quot;\134n         &quot;);
+                end if;
+            end if;
+        end do;
+        printf(&quot;;\134n&quot;);
+        printf(&quot;  break;\134n&quot;);
+    end if;
+end do:</Font></Text-field>
+</Input>
+<Output><Text-field style="Line Printed Output" layout="Line Printed Output">
+
+=================================================
+           VERIFICA DELLE SOLUZIONI
+=================================================
+n = 1: residuo = 0.000e+00<Font encoding="UTF-8">  \342\234\223 OK
+</Font>n = 2: residuo = 5.385e-40<Font encoding="UTF-8">  \342\234\223 OK
+</Font>n = 3: residuo = 2.333e-40<Font encoding="UTF-8">  \342\234\223 OK
+</Font>n = 4: residuo = 6.391e-40<Font encoding="UTF-8">  \342\234\223 OK
+</Font>n = 5: residuo = 1.194e-39<Font encoding="UTF-8">  \342\234\223 OK
+</Font>n = 6: residuo = 1.172e-39<Font encoding="UTF-8">  \342\234\223 OK
+</Font>n = 7: residuo = 2.129e-39<Font encoding="UTF-8">  \342\234\223 OK
+</Font>n = 8: residuo = 
+</Text-field>
+</Output>
+<Output><Text-field style="HyperlinkError" layout="HyperlinkError"><Hyperlink linktarget="http://www.maplesoft.com/support/help/errors/view.aspx?path=Error,%20(in%20fprintf)%20number%20expected%20for%20floating%20point%20format" hyperlink="true"><Font style="HyperlinkError">Error, (in fprintf) number expected for floating point format</Font></Hyperlink></Text-field>
+</Output>
+<Output><Text-field style="Line Printed Output" layout="Line Printed Output">
+
+=================================================
+        CONFRONTO CON SOLUZIONI NOTE
+=================================================
+</Text-field>
+</Output>
+<Output><Text-field style="2D Output" layout="Maple Output"><Equation executable="false" style="2D Output" display="LUkqbWNvbXBsZXRlRzYjL0krbW9kdWxlbmFtZUc2IkksVHlwZXNldHRpbmdHSShfc3lzbGliR0YnNiQtSSVtcm93R0YkNiYtSSVtc3ViR0YkNiUtSSNtaUdGJDYlUTBrbm93bl9zb2x1dGlvbnNGJy8lJ2l0YWxpY0dRJXRydWVGJy8lLG1hdGh2YXJpYW50R1EnaXRhbGljRictSSNtbkdGJDYkUSIxRicvRjlRJ25vcm1hbEYnLyUvc3Vic2NyaXB0c2hpZnRHUSIwRictSSNtb0dGJDYuUSkmQXNzaWduO0YnRj8vJSZmZW5jZUdRJmZhbHNlRicvJSpzZXBhcmF0b3JHRkovJSlzdHJldGNoeUdGSi8lKnN5bW1ldHJpY0dGSi8lKGxhcmdlb3BHRkovJS5tb3ZhYmxlbGltaXRzR0ZKLyUnYWNjZW50R0ZKLyUnbHNwYWNlR1EsMC4yNzc3Nzc4ZW1GJy8lJ3JzcGFjZUdGWS8lKWVxdWFsaXR5R0ZKLUYsNiYtSShtZmVuY2VkR0YkNigtRiw2Ji1JLW1zY3JvbGx0YWJsZUdGJDZPLUkqbXNjcm9sbHRyR0YkNigtSSptc2Nyb2xsdGRHRiQ2Ki1GPDYkUSQwLjVGJ0Y/LyUrZm9yZWdyb3VuZEdRKFswLDAsMF1GJy8lKXJlYWRvbmx5R0ZKLyUpcm93YWxpZ25HUSFGJy8lLGNvbHVtbmFsaWduR0ZicC8lK2dyb3VwYWxpZ25HRmJwLyUocm93c3BhbkdGPi8lK2NvbHVtbnNwYW5HRj5GW3BGXnBGYHBGY3BGZXAvJSZhbGlnbkdRJWF4aXNGJy9GYXBRJ2NlbnRlckYnL0ZkcEZfcS9GZnBRJ3xmcmxlZnR8aHJGJy8lL2FsaWdubWVudHNjb3BlR0Y3LyUsY29sdW1ud2lkdGhHUSVhdXRvRicvJSZ3aWR0aEdGZ3EvJStyb3dzcGFjaW5nR1EmMS4wZXhGJy8lLmNvbHVtbnNwYWNpbmdHUSYwLjhlbUYnLyUpcm93bGluZXNHUSVub25lRicvJSxjb2x1bW5saW5lc0dGYnIvJSZmcmFtZUdGYnIvJS1mcmFtZXNwYWNpbmdHUSwwLjRlbX4wLjVleEYnLyUqZXF1YWxyb3dzR0ZKLyUtZXF1YWxjb2x1bW5zR0ZKLyUtZGlzcGxheXN0eWxlR0ZKLyUlc2lkZUdRJnJpZ2h0RicvJTBtaW5sYWJlbHNwYWNpbmdHRl9yLyUxc2hvd2NvbHVtbmhlYWRlckdGSi8lLnNob3dyb3doZWFkZXJHRkovJS5mcm96ZW5kaXNwbGF5R0ZKLyUubnVtYmVyY29sdW1uc0dGPi8lK251bWJlcnJvd3NHRj4vJTZkZWZhdWx0dmlzaWJsZWNvbHVtbnNHRj4vJTNkZWZhdWx0dmlzaWJsZXJvd3NHRj4vJTFjb2x1bW5sb3dlcmJvdW5kR0Y+LyUxY29sdW1udXBwZXJib3VuZEdGPi8lLnJvd2xvd2VyYm91bmRHRj4vJS5yb3d1cHBlcmJvdW5kR0Y+LyUtZGlzcGxheXdpZHRoR1EjMjVGJy8lLmRpc3BsYXloZWlnaHRHUSMyMEYnLyUwdXNlcmRlZmluZWRzaXplR0ZKLyU6ZGlzcGxheWhvcml6b250YWxwb3NpdGlvbkdGQy8lOGRpc3BsYXl2ZXJ0aWNhbHBvc2l0aW9uR0ZDLyU0ZGlzcGxheWNvbHVtbndpZHRoc0dRJVsxN11GJy8lNWRpc3BsYXljb2x1bW5zcGFjaW5nR1EjW11GJy8lOHVzZXJkZWZpbmVkY29sdW1ud2lkdGhzR1EoW2ZhbHNlXUYnLyUyZGlzcGxheXJvd2hlaWdodHNHUSVbMTRdRicvJTJkaXNwbGF5cm93c3BhY2luZ0dGXHYvJTZ1c2VyZGVmaW5lZHJvd2hlaWdodHNHRl92LyUqdGFibGV0eXBlR0ZDLyUycm93aW5kZXhpbmdvZmZzZXRHRkMvJTVjb2x1bW5pbmRleGluZ29mZnNldEdGQy8lMmFycmF5c2xpY2VpbmRpY2VzR0ZcdkZbcEZecEY/Rj8vSSttc2VtYW50aWNzR0YkUSpDb2xWZWN0b3JGJy8lJW9wZW5HUScmbHNxYjtGJy8lJmNsb3NlR1EnJnJzcWI7RidGX3dGW3BGXnBGP0Y/LUZbbzYoLUYsNiYtSSdtdGFibGVHRiQ2Ny1JJG10ckdGJDYoLUkkbXRkR0YkNiotRjw2JkZqb0ZbcEZecEY/RltwRl5wRmBwRmNwRmVwRmdwRmlwRltwRl5wRmBwRmNwRmVwRltwRl5wRltxL0ZhcFEpYmFzZWxpbmVGJ0ZgcUZhcUZjcUZlcUZocUZqcUZdckZgckZjckZlckZnckZqckZcc0Zec0Zgc0Zjc0ZbcEZecEY/RltwRl5wRj8vRmN3USJbRicvRmZ3USJdRic=">LV9JLFR5cGVzZXR0aW5nRzYkJSpwcm90ZWN0ZWRHSShfc3lzbGliRzYiSSxtcHJpbnRzbGFzaEdGKDYkNyM+Jkkwa25vd25fc29sdXRpb25zR0YoNiMiIiItSSdSVEFCTEVHRig2JSI1Iyo9dndBOilbJCpvJC1JJ01BVFJJWEdGKDYjNyM3Iy1JI21uRzYkRiYvSSttb2R1bGVuYW1lR0YoRiQ2I1EkMC41RigmSSdWZWN0b3JHRiU2I0knY29sdW1uR0YoNyMtRkE2Iy9JJCVpZEdGKEY0</Equation></Text-field>
+</Output>
+<Output><Text-field style="2D Output" layout="Maple Output"><Equation executable="false" style="2D Output" display="LUkqbWNvbXBsZXRlRzYjL0krbW9kdWxlbmFtZUc2IkksVHlwZXNldHRpbmdHSShfc3lzbGliR0YnNiQtSSVtcm93R0YkNiYtSSVtc3ViR0YkNiUtSSNtaUdGJDYlUTBrbm93bl9zb2x1dGlvbnNGJy8lJ2l0YWxpY0dRJXRydWVGJy8lLG1hdGh2YXJpYW50R1EnaXRhbGljRictSSNtbkdGJDYkUSIyRicvRjlRJ25vcm1hbEYnLyUvc3Vic2NyaXB0c2hpZnRHUSIwRictSSNtb0dGJDYuUSkmQXNzaWduO0YnRj8vJSZmZW5jZUdRJmZhbHNlRicvJSpzZXBhcmF0b3JHRkovJSlzdHJldGNoeUdGSi8lKnN5bW1ldHJpY0dGSi8lKGxhcmdlb3BHRkovJS5tb3ZhYmxlbGltaXRzR0ZKLyUnYWNjZW50R0ZKLyUnbHNwYWNlR1EsMC4yNzc3Nzc4ZW1GJy8lJ3JzcGFjZUdGWS8lKWVxdWFsaXR5R0ZKLUYsNiYtSShtZmVuY2VkR0YkNigtRiw2Ji1JLW1zY3JvbGx0YWJsZUdGJDZQLUkqbXNjcm9sbHRyR0YkNigtSSptc2Nyb2xsdGRHRiQ2Ki1GPDYkUTMwLjIxMTMyNDg2NTQwNTE4NzFGJ0Y/LyUrZm9yZWdyb3VuZEdRKFswLDAsMF1GJy8lKXJlYWRvbmx5R0ZKLyUpcm93YWxpZ25HUSFGJy8lLGNvbHVtbmFsaWduR0ZicC8lK2dyb3VwYWxpZ25HRmJwLyUocm93c3BhbkdRIjFGJy8lK2NvbHVtbnNwYW5HRmlwRltwRl5wRmBwRmNwRmVwLUZjbzYoLUZmbzYqLUY8NiRRMzAuNzg4Njc1MTM0NTk0ODEyOUYnRj9GW3BGXnBGYHBGY3BGZXBGZ3BGanBGW3BGXnBGYHBGY3BGZXAvJSZhbGlnbkdRJWF4aXNGJy9GYXBRJ2NlbnRlckYnL0ZkcEZncS9GZnBRJ3xmcmxlZnR8aHJGJy8lL2FsaWdubWVudHNjb3BlR0Y3LyUsY29sdW1ud2lkdGhHUSVhdXRvRicvJSZ3aWR0aEdGX3IvJStyb3dzcGFjaW5nR1EmMS4wZXhGJy8lLmNvbHVtbnNwYWNpbmdHUSYwLjhlbUYnLyUpcm93bGluZXNHUSVub25lRicvJSxjb2x1bW5saW5lc0dGanIvJSZmcmFtZUdGanIvJS1mcmFtZXNwYWNpbmdHUSwwLjRlbX4wLjVleEYnLyUqZXF1YWxyb3dzR0ZKLyUtZXF1YWxjb2x1bW5zR0ZKLyUtZGlzcGxheXN0eWxlR0ZKLyUlc2lkZUdRJnJpZ2h0RicvJTBtaW5sYWJlbHNwYWNpbmdHRmdyLyUxc2hvd2NvbHVtbmhlYWRlckdGSi8lLnNob3dyb3doZWFkZXJHRkovJS5mcm96ZW5kaXNwbGF5R0ZKLyUubnVtYmVyY29sdW1uc0dGaXAvJStudW1iZXJyb3dzR0Y+LyU2ZGVmYXVsdHZpc2libGVjb2x1bW5zR0ZpcC8lM2RlZmF1bHR2aXNpYmxlcm93c0dGPi8lMWNvbHVtbmxvd2VyYm91bmRHRmlwLyUxY29sdW1udXBwZXJib3VuZEdGaXAvJS5yb3dsb3dlcmJvdW5kR0ZpcC8lLnJvd3VwcGVyYm91bmRHRj4vJS1kaXNwbGF5d2lkdGhHUSQxMTVGJy8lLmRpc3BsYXloZWlnaHRHUSM0MEYnLyUwdXNlcmRlZmluZWRzaXplR0ZKLyU6ZGlzcGxheWhvcml6b250YWxwb3NpdGlvbkdGQy8lOGRpc3BsYXl2ZXJ0aWNhbHBvc2l0aW9uR0ZDLyU0ZGlzcGxheWNvbHVtbndpZHRoc0dRJlsxMDddRicvJTVkaXNwbGF5Y29sdW1uc3BhY2luZ0dRI1tdRicvJTh1c2VyZGVmaW5lZGNvbHVtbndpZHRoc0dRKFtmYWxzZV1GJy8lMmRpc3BsYXlyb3doZWlnaHRzR1EpWzE0LH4xNF1GJy8lMmRpc3BsYXlyb3dzcGFjaW5nR1EkWzZdRicvJTZ1c2VyZGVmaW5lZHJvd2hlaWdodHNHUS9bZmFsc2UsfmZhbHNlXUYnLyUqdGFibGV0eXBlR0ZDLyUycm93aW5kZXhpbmdvZmZzZXRHRkMvJTVjb2x1bW5pbmRleGluZ29mZnNldEdGQy8lMmFycmF5c2xpY2VpbmRpY2VzR0ZkdkZbcEZecEY/Rj8vSSttc2VtYW50aWNzR0YkUSpDb2xWZWN0b3JGJy8lJW9wZW5HUScmbHNxYjtGJy8lJmNsb3NlR1EnJnJzcWI7RidGaXdGW3BGXnBGP0Y/LUZbbzYoLUYsNiYtSSdtdGFibGVHRiQ2OC1JJG10ckdGJDYoLUkkbXRkR0YkNiotRjw2JkZqb0ZbcEZecEY/RltwRl5wRmBwRmNwRmVwRmdwRmpwRltwRl5wRmBwRmNwRmVwLUZqeDYoLUZdeTYqLUY8NiZGYnFGW3BGXnBGP0ZbcEZecEZgcEZjcEZlcEZncEZqcEZbcEZecEZgcEZjcEZlcEZbcEZecEZjcS9GYXBRKWJhc2VsaW5lRidGaHFGaXFGW3JGXXJGYHJGYnJGZXJGaHJGW3NGXXNGX3NGYnNGZHNGZnNGaHNGW3RGW3BGXnBGP0ZbcEZecEY/L0ZdeFEiW0YnL0ZgeFEiXUYn">LV9JLFR5cGVzZXR0aW5nRzYkJSpwcm90ZWN0ZWRHSShfc3lzbGliRzYiSSxtcHJpbnRzbGFzaEdGKDYkNyM+Jkkwa25vd25fc29sdXRpb25zR0YoNiMiIiMtSSdSVEFCTEVHRig2JSI1X012d0E6KVskKm8kLUknTUFUUklYR0YoNiM3JDcjLUkjbW5HNiRGJi9JK21vZHVsZW5hbWVHRihGJDYjUTMwLjIxMTMyNDg2NTQwNTE4NzFGKDcjLUY7NiNRMzAuNzg4Njc1MTM0NTk0ODEyOUYoJkknVmVjdG9yR0YlNiNJJ2NvbHVtbkdGKDcjLUZFNiMvSSQlaWRHRihGNA==</Equation></Text-field>
+</Output>
+<Output><Text-field style="2D Output" layout="Maple Output"><Equation executable="false" style="2D Output" display="LUkqbWNvbXBsZXRlRzYjL0krbW9kdWxlbmFtZUc2IkksVHlwZXNldHRpbmdHSShfc3lzbGliR0YnNiQtSSVtcm93R0YkNiYtSSVtc3ViR0YkNiUtSSNtaUdGJDYlUTBrbm93bl9zb2x1dGlvbnNGJy8lJ2l0YWxpY0dRJXRydWVGJy8lLG1hdGh2YXJpYW50R1EnaXRhbGljRictSSNtbkdGJDYkUSIzRicvRjlRJ25vcm1hbEYnLyUvc3Vic2NyaXB0c2hpZnRHUSIwRictSSNtb0dGJDYuUSkmQXNzaWduO0YnRj8vJSZmZW5jZUdRJmZhbHNlRicvJSpzZXBhcmF0b3JHRkovJSlzdHJldGNoeUdGSi8lKnN5bW1ldHJpY0dGSi8lKGxhcmdlb3BHRkovJS5tb3ZhYmxlbGltaXRzR0ZKLyUnYWNjZW50R0ZKLyUnbHNwYWNlR1EsMC4yNzc3Nzc4ZW1GJy8lJ3JzcGFjZUdGWS8lKWVxdWFsaXR5R0ZKLUYsNiYtSShtZmVuY2VkR0YkNigtRiw2Ji1JLW1zY3JvbGx0YWJsZUdGJDZRLUkqbXNjcm9sbHRyR0YkNigtSSptc2Nyb2xsdGRHRiQ2Ki1GPDYkUTMwLjE0NjQ0NjYwOTQwNjcyNjJGJ0Y/LyUrZm9yZWdyb3VuZEdRKFswLDAsMF1GJy8lKXJlYWRvbmx5R0ZKLyUpcm93YWxpZ25HUSFGJy8lLGNvbHVtbmFsaWduR0ZicC8lK2dyb3VwYWxpZ25HRmJwLyUocm93c3BhbkdRIjFGJy8lK2NvbHVtbnNwYW5HRmlwRltwRl5wRmBwRmNwRmVwLUZjbzYoLUZmbzYqLUY8NiRRJDAuNUYnRj9GW3BGXnBGYHBGY3BGZXBGZ3BGanBGW3BGXnBGYHBGY3BGZXAtRmNvNigtRmZvNiotRjw2JFEzMC44NTM1NTMzOTA1OTMyNzM3RidGP0ZbcEZecEZgcEZjcEZlcEZncEZqcEZbcEZecEZgcEZjcEZlcC8lJmFsaWduR1ElYXhpc0YnL0ZhcFEnY2VudGVyRicvRmRwRl5yL0ZmcFEnfGZybGVmdHxockYnLyUvYWxpZ25tZW50c2NvcGVHRjcvJSxjb2x1bW53aWR0aEdRJWF1dG9GJy8lJndpZHRoR0Zmci8lK3Jvd3NwYWNpbmdHUSYxLjBleEYnLyUuY29sdW1uc3BhY2luZ0dRJjAuOGVtRicvJSlyb3dsaW5lc0dRJW5vbmVGJy8lLGNvbHVtbmxpbmVzR0Zhcy8lJmZyYW1lR0Zhcy8lLWZyYW1lc3BhY2luZ0dRLDAuNGVtfjAuNWV4RicvJSplcXVhbHJvd3NHRkovJS1lcXVhbGNvbHVtbnNHRkovJS1kaXNwbGF5c3R5bGVHRkovJSVzaWRlR1EmcmlnaHRGJy8lMG1pbmxhYmVsc3BhY2luZ0dGXnMvJTFzaG93Y29sdW1uaGVhZGVyR0ZKLyUuc2hvd3Jvd2hlYWRlckdGSi8lLmZyb3plbmRpc3BsYXlHRkovJS5udW1iZXJjb2x1bW5zR0ZpcC8lK251bWJlcnJvd3NHRj4vJTZkZWZhdWx0dmlzaWJsZWNvbHVtbnNHRmlwLyUzZGVmYXVsdHZpc2libGVyb3dzR0Y+LyUxY29sdW1ubG93ZXJib3VuZEdGaXAvJTFjb2x1bW51cHBlcmJvdW5kR0ZpcC8lLnJvd2xvd2VyYm91bmRHRmlwLyUucm93dXBwZXJib3VuZEdGPi8lLWRpc3BsYXl3aWR0aEdRJDExNUYnLyUuZGlzcGxheWhlaWdodEdRIzYwRicvJTB1c2VyZGVmaW5lZHNpemVHRkovJTpkaXNwbGF5aG9yaXpvbnRhbHBvc2l0aW9uR0ZDLyU4ZGlzcGxheXZlcnRpY2FscG9zaXRpb25HRkMvJTRkaXNwbGF5Y29sdW1ud2lkdGhzR1EmWzEwN11GJy8lNWRpc3BsYXljb2x1bW5zcGFjaW5nR1EjW11GJy8lOHVzZXJkZWZpbmVkY29sdW1ud2lkdGhzR1EoW2ZhbHNlXUYnLyUyZGlzcGxheXJvd2hlaWdodHNHUS1bMTQsfjE0LH4xNF1GJy8lMmRpc3BsYXlyb3dzcGFjaW5nR1EnWzYsfjZdRicvJTZ1c2VyZGVmaW5lZHJvd2hlaWdodHNHUTZbZmFsc2UsfmZhbHNlLH5mYWxzZV1GJy8lKnRhYmxldHlwZUdGQy8lMnJvd2luZGV4aW5nb2Zmc2V0R0ZDLyU1Y29sdW1uaW5kZXhpbmdvZmZzZXRHRkMvJTJhcnJheXNsaWNlaW5kaWNlc0dGW3dGW3BGXnBGP0Y/L0krbXNlbWFudGljc0dGJFEqQ29sVmVjdG9yRicvJSVvcGVuR1EnJmxzcWI7RicvJSZjbG9zZUdRJyZyc3FiO0YnRmB4RltwRl5wRj9GPy1GW282KC1GLDYmLUknbXRhYmxlR0YkNjktSSRtdHJHRiQ2KC1JJG10ZEdGJDYqLUY8NiZGam9GW3BGXnBGP0ZbcEZecEZgcEZjcEZlcEZncEZqcEZbcEZecEZgcEZjcEZlcC1GYXk2KC1GZHk2Ki1GPDYmRmJxRltwRl5wRj9GW3BGXnBGYHBGY3BGZXBGZ3BGanBGW3BGXnBGYHBGY3BGZXAtRmF5NigtRmR5NiotRjw2JkZpcUZbcEZecEY/RltwRl5wRmBwRmNwRmVwRmdwRmpwRltwRl5wRmBwRmNwRmVwRltwRl5wRmpxL0ZhcFEpYmFzZWxpbmVGJ0ZfckZgckZickZkckZnckZpckZcc0Zfc0Zic0Zkc0Zmc0Zpc0ZbdEZddEZfdEZidEZbcEZecEY/RltwRl5wRj8vRmR4USJbRicvRmd4USJdRic=">LV9JLFR5cGVzZXR0aW5nRzYkJSpwcm90ZWN0ZWRHSShfc3lzbGliRzYiSSxtcHJpbnRzbGFzaEdGKDYkNyM+Jkkwa25vd25fc29sdXRpb25zR0YoNiMiIiQtSSdSVEFCTEVHRig2JSI1Y3B1d0E6KVskKm8kLUknTUFUUklYR0YoNiM3JTcjLUkjbW5HNiRGJi9JK21vZHVsZW5hbWVHRihGJDYjUTMwLjE0NjQ0NjYwOTQwNjcyNjJGKDcjLUY7NiNRJDAuNUYoNyMtRjs2I1EzMC44NTM1NTMzOTA1OTMyNzM3RigmSSdWZWN0b3JHRiU2I0knY29sdW1uR0YoNyMtRkk2Iy9JJCVpZEdGKEY0</Equation></Text-field>
+</Output>
+<Output><Text-field style="2D Output" layout="Maple Output"><Equation executable="false" style="2D Output" display="LUkqbWNvbXBsZXRlRzYjL0krbW9kdWxlbmFtZUc2IkksVHlwZXNldHRpbmdHSShfc3lzbGliR0YnNiQtSSVtcm93R0YkNiYtSSVtc3ViR0YkNiUtSSNtaUdGJDYlUTBrbm93bl9zb2x1dGlvbnNGJy8lJ2l0YWxpY0dRJXRydWVGJy8lLG1hdGh2YXJpYW50R1EnaXRhbGljRictSSNtbkdGJDYkUSI0RicvRjlRJ25vcm1hbEYnLyUvc3Vic2NyaXB0c2hpZnRHUSIwRictSSNtb0dGJDYuUSkmQXNzaWduO0YnRj8vJSZmZW5jZUdRJmZhbHNlRicvJSpzZXBhcmF0b3JHRkovJSlzdHJldGNoeUdGSi8lKnN5bW1ldHJpY0dGSi8lKGxhcmdlb3BHRkovJS5tb3ZhYmxlbGltaXRzR0ZKLyUnYWNjZW50R0ZKLyUnbHNwYWNlR1EsMC4yNzc3Nzc4ZW1GJy8lJ3JzcGFjZUdGWS8lKWVxdWFsaXR5R0ZKLUYsNiYtSShtZmVuY2VkR0YkNigtRiw2Ji1JLW1zY3JvbGx0YWJsZUdGJDZSLUkqbXNjcm9sbHRyR0YkNigtSSptc2Nyb2xsdGRHRiQ2Ki1GPDYkUTMwLjEwMjY3Mjc2Mzg1NDExNjlGJ0Y/LyUrZm9yZWdyb3VuZEdRKFswLDAsMF1GJy8lKXJlYWRvbmx5R0ZKLyUpcm93YWxpZ25HUSFGJy8lLGNvbHVtbmFsaWduR0ZicC8lK2dyb3VwYWxpZ25HRmJwLyUocm93c3BhbkdRIjFGJy8lK2NvbHVtbnNwYW5HRmlwRltwRl5wRmBwRmNwRmVwLUZjbzYoLUZmbzYqLUY8NiRRMTAuNDA2MjAzNzYyOTU3NDZGJ0Y/RltwRl5wRmBwRmNwRmVwRmdwRmpwRltwRl5wRmBwRmNwRmVwLUZjbzYoLUZmbzYqLUY8NiRRMzAuNTkzNzk2MjM3MDQyNTM5OUYnRj9GW3BGXnBGYHBGY3BGZXBGZ3BGanBGW3BGXnBGYHBGY3BGZXAtRmNvNigtRmZvNiotRjw2JFEzMC44OTczMjcyMzYxNDU4ODMxRidGP0ZbcEZecEZgcEZjcEZlcEZncEZqcEZbcEZecEZgcEZjcEZlcC8lJmFsaWduR1ElYXhpc0YnL0ZhcFEnY2VudGVyRicvRmRwRmVyL0ZmcFEnfGZybGVmdHxockYnLyUvYWxpZ25tZW50c2NvcGVHRjcvJSxjb2x1bW53aWR0aEdRJWF1dG9GJy8lJndpZHRoR0Zdcy8lK3Jvd3NwYWNpbmdHUSYxLjBleEYnLyUuY29sdW1uc3BhY2luZ0dRJjAuOGVtRicvJSlyb3dsaW5lc0dRJW5vbmVGJy8lLGNvbHVtbmxpbmVzR0Zocy8lJmZyYW1lR0Zocy8lLWZyYW1lc3BhY2luZ0dRLDAuNGVtfjAuNWV4RicvJSplcXVhbHJvd3NHRkovJS1lcXVhbGNvbHVtbnNHRkovJS1kaXNwbGF5c3R5bGVHRkovJSVzaWRlR1EmcmlnaHRGJy8lMG1pbmxhYmVsc3BhY2luZ0dGZXMvJTFzaG93Y29sdW1uaGVhZGVyR0ZKLyUuc2hvd3Jvd2hlYWRlckdGSi8lLmZyb3plbmRpc3BsYXlHRkovJS5udW1iZXJjb2x1bW5zR0ZpcC8lK251bWJlcnJvd3NHRj4vJTZkZWZhdWx0dmlzaWJsZWNvbHVtbnNHRmlwLyUzZGVmYXVsdHZpc2libGVyb3dzR0Y+LyUxY29sdW1ubG93ZXJib3VuZEdGaXAvJTFjb2x1bW51cHBlcmJvdW5kR0ZpcC8lLnJvd2xvd2VyYm91bmRHRmlwLyUucm93dXBwZXJib3VuZEdGPi8lLWRpc3BsYXl3aWR0aEdRJDExNUYnLyUuZGlzcGxheWhlaWdodEdRIzgwRicvJTB1c2VyZGVmaW5lZHNpemVHRkovJTpkaXNwbGF5aG9yaXpvbnRhbHBvc2l0aW9uR0ZDLyU4ZGlzcGxheXZlcnRpY2FscG9zaXRpb25HRkMvJTRkaXNwbGF5Y29sdW1ud2lkdGhzR1EmWzEwN11GJy8lNWRpc3BsYXljb2x1bW5zcGFjaW5nR1EjW11GJy8lOHVzZXJkZWZpbmVkY29sdW1ud2lkdGhzR1EoW2ZhbHNlXUYnLyUyZGlzcGxheXJvd2hlaWdodHNHUTFbMTQsfjE0LH4xNCx+MTRdRicvJTJkaXNwbGF5cm93c3BhY2luZ0dRKls2LH42LH42XUYnLyU2dXNlcmRlZmluZWRyb3doZWlnaHRzR1E9W2ZhbHNlLH5mYWxzZSx+ZmFsc2UsfmZhbHNlXUYnLyUqdGFibGV0eXBlR0ZDLyUycm93aW5kZXhpbmdvZmZzZXRHRkMvJTVjb2x1bW5pbmRleGluZ29mZnNldEdGQy8lMmFycmF5c2xpY2VpbmRpY2VzR0Zid0ZbcEZecEY/Rj8vSSttc2VtYW50aWNzR0YkUSpDb2xWZWN0b3JGJy8lJW9wZW5HUScmbHNxYjtGJy8lJmNsb3NlR1EnJnJzcWI7RidGZ3hGW3BGXnBGP0Y/LUZbbzYoLUYsNiYtSSdtdGFibGVHRiQ2Oi1JJG10ckdGJDYoLUkkbXRkR0YkNiotRjw2JkZqb0ZbcEZecEY/RltwRl5wRmBwRmNwRmVwRmdwRmpwRltwRl5wRmBwRmNwRmVwLUZoeTYoLUZbejYqLUY8NiZGYnFGW3BGXnBGP0ZbcEZecEZgcEZjcEZlcEZncEZqcEZbcEZecEZgcEZjcEZlcC1GaHk2KC1GW3o2Ki1GPDYmRmlxRltwRl5wRj9GW3BGXnBGYHBGY3BGZXBGZ3BGanBGW3BGXnBGYHBGY3BGZXAtRmh5NigtRlt6NiotRjw2JkZgckZbcEZecEY/RltwRl5wRmBwRmNwRmVwRmdwRmpwRltwRl5wRmBwRmNwRmVwRltwRl5wRmFyL0ZhcFEpYmFzZWxpbmVGJ0ZmckZnckZpckZbc0Zec0Zgc0Zjc0Zmc0Zpc0ZbdEZddEZgdEZidEZkdEZmdEZpdEZbcEZecEY/RltwRl5wRj8vRlt5USJbRicvRl55USJdRic=">LV9JLFR5cGVzZXR0aW5nRzYkJSpwcm90ZWN0ZWRHSShfc3lzbGliRzYiSSxtcHJpbnRzbGFzaEdGKDYkNyM+Jkkwa25vd25fc29sdXRpb25zR0YoNiMiIiUtSSdSVEFCTEVHRig2JSI1YyhbbkZfIilbJCpvJC1JJ01BVFJJWEdGKDYjNyY3Iy1JI21uRzYkRiYvSSttb2R1bGVuYW1lR0YoRiQ2I1EzMC4xMDI2NzI3NjM4NTQxMTY5Rig3Iy1GOzYjUTEwLjQwNjIwMzc2Mjk1NzQ2Rig3Iy1GOzYjUTMwLjU5Mzc5NjIzNzA0MjUzOTlGKDcjLUY7NiNRMzAuODk3MzI3MjM2MTQ1ODgzMUYoJkknVmVjdG9yR0YlNiNJJ2NvbHVtbkdGKDcjLUZNNiMvSSQlaWRHRihGNA==</Equation></Text-field>
+</Output>
+<Output><Text-field style="2D Output" layout="Maple Output"><Equation executable="false" style="2D Output" display="LUkqbWNvbXBsZXRlRzYjL0krbW9kdWxlbmFtZUc2IkksVHlwZXNldHRpbmdHSShfc3lzbGliR0YnNiQtSSVtcm93R0YkNiYtSSVtc3ViR0YkNiUtSSNtaUdGJDYlUTBrbm93bl9zb2x1dGlvbnNGJy8lJ2l0YWxpY0dRJXRydWVGJy8lLG1hdGh2YXJpYW50R1EnaXRhbGljRictSSNtbkdGJDYkUSI1RicvRjlRJ25vcm1hbEYnLyUvc3Vic2NyaXB0c2hpZnRHUSIwRictSSNtb0dGJDYuUSkmQXNzaWduO0YnRj8vJSZmZW5jZUdRJmZhbHNlRicvJSpzZXBhcmF0b3JHRkovJSlzdHJldGNoeUdGSi8lKnN5bW1ldHJpY0dGSi8lKGxhcmdlb3BHRkovJS5tb3ZhYmxlbGltaXRzR0ZKLyUnYWNjZW50R0ZKLyUnbHNwYWNlR1EsMC4yNzc3Nzc4ZW1GJy8lJ3JzcGFjZUdGWS8lKWVxdWFsaXR5R0ZKLUYsNiYtSShtZmVuY2VkR0YkNigtRiw2Ji1JLW1zY3JvbGx0YWJsZUdGJDZTLUkqbXNjcm9sbHRyR0YkNigtSSptc2Nyb2xsdGRHRiQ2Ki1GPDYkUTQwLjA4Mzc1MTI1NjQ5OTUwOTA2RidGPy8lK2ZvcmVncm91bmRHUShbMCwwLDBdRicvJSlyZWFkb25seUdGSi8lKXJvd2FsaWduR1EhRicvJSxjb2x1bW5hbGlnbkdGYnAvJStncm91cGFsaWduR0ZicC8lKHJvd3NwYW5HUSIxRicvJStjb2x1bW5zcGFuR0ZpcEZbcEZecEZgcEZjcEZlcC1GY282KC1GZm82Ki1GPDYkUTMwLjMxMjcyOTI5NTIyMzIwOTVGJ0Y/RltwRl5wRmBwRmNwRmVwRmdwRmpwRltwRl5wRmBwRmNwRmVwLUZjbzYoLUZmbzYqLUY8NiRRJDAuNUYnRj9GW3BGXnBGYHBGY3BGZXBGZ3BGanBGW3BGXnBGYHBGY3BGZXAtRmNvNigtRmZvNiotRjw2JFEzMC42ODcyNzA3MDQ3NzY3OTA1RidGP0ZbcEZecEZgcEZjcEZlcEZncEZqcEZbcEZecEZgcEZjcEZlcC1GY282KC1GZm82Ki1GPDYkUTMwLjkxNjI0ODc0MzUwMDQ5MDlGJ0Y/RltwRl5wRmBwRmNwRmVwRmdwRmpwRltwRl5wRmBwRmNwRmVwLyUmYWxpZ25HUSVheGlzRicvRmFwUSdjZW50ZXJGJy9GZHBGXHMvRmZwUSd8ZnJsZWZ0fGhyRicvJS9hbGlnbm1lbnRzY29wZUdGNy8lLGNvbHVtbndpZHRoR1ElYXV0b0YnLyUmd2lkdGhHRmRzLyUrcm93c3BhY2luZ0dRJjEuMGV4RicvJS5jb2x1bW5zcGFjaW5nR1EmMC44ZW1GJy8lKXJvd2xpbmVzR1Elbm9uZUYnLyUsY29sdW1ubGluZXNHRl90LyUmZnJhbWVHRl90LyUtZnJhbWVzcGFjaW5nR1EsMC40ZW1+MC41ZXhGJy8lKmVxdWFscm93c0dGSi8lLWVxdWFsY29sdW1uc0dGSi8lLWRpc3BsYXlzdHlsZUdGSi8lJXNpZGVHUSZyaWdodEYnLyUwbWlubGFiZWxzcGFjaW5nR0ZcdC8lMXNob3djb2x1bW5oZWFkZXJHRkovJS5zaG93cm93aGVhZGVyR0ZKLyUuZnJvemVuZGlzcGxheUdGSi8lLm51bWJlcmNvbHVtbnNHRmlwLyUrbnVtYmVycm93c0dGPi8lNmRlZmF1bHR2aXNpYmxlY29sdW1uc0dGaXAvJTNkZWZhdWx0dmlzaWJsZXJvd3NHRj4vJTFjb2x1bW5sb3dlcmJvdW5kR0ZpcC8lMWNvbHVtbnVwcGVyYm91bmRHRmlwLyUucm93bG93ZXJib3VuZEdGaXAvJS5yb3d1cHBlcmJvdW5kR0Y+LyUtZGlzcGxheXdpZHRoR1EkMTIxRicvJS5kaXNwbGF5aGVpZ2h0R1EkMTAwRicvJTB1c2VyZGVmaW5lZHNpemVHRkovJTpkaXNwbGF5aG9yaXpvbnRhbHBvc2l0aW9uR0ZDLyU4ZGlzcGxheXZlcnRpY2FscG9zaXRpb25HRkMvJTRkaXNwbGF5Y29sdW1ud2lkdGhzR1EmWzExM11GJy8lNWRpc3BsYXljb2x1bW5zcGFjaW5nR1EjW11GJy8lOHVzZXJkZWZpbmVkY29sdW1ud2lkdGhzR1EoW2ZhbHNlXUYnLyUyZGlzcGxheXJvd2hlaWdodHNHUTVbMTQsfjE0LH4xNCx+MTQsfjE0XUYnLyUyZGlzcGxheXJvd3NwYWNpbmdHUS1bNix+Nix+Nix+Nl1GJy8lNnVzZXJkZWZpbmVkcm93aGVpZ2h0c0dRRFtmYWxzZSx+ZmFsc2UsfmZhbHNlLH5mYWxzZSx+ZmFsc2VdRicvJSp0YWJsZXR5cGVHRkMvJTJyb3dpbmRleGluZ29mZnNldEdGQy8lNWNvbHVtbmluZGV4aW5nb2Zmc2V0R0ZDLyUyYXJyYXlzbGljZWluZGljZXNHRml3RltwRl5wRj9GPy9JK21zZW1hbnRpY3NHRiRRKkNvbFZlY3RvckYnLyUlb3BlbkdRJyZsc3FiO0YnLyUmY2xvc2VHUScmcnNxYjtGJ0ZeeUZbcEZecEY/Rj8tRltvNigtRiw2Ji1JJ210YWJsZUdGJDY7LUkkbXRyR0YkNigtSSRtdGRHRiQ2Ki1GPDYmRmpvRltwRl5wRj9GW3BGXnBGYHBGY3BGZXBGZ3BGanBGW3BGXnBGYHBGY3BGZXAtRl96NigtRmJ6NiotRjw2JkZicUZbcEZecEY/RltwRl5wRmBwRmNwRmVwRmdwRmpwRltwRl5wRmBwRmNwRmVwLUZfejYoLUZiejYqLUY8NiZGaXFGW3BGXnBGP0ZbcEZecEZgcEZjcEZlcEZncEZqcEZbcEZecEZgcEZjcEZlcC1GX3o2KC1GYno2Ki1GPDYmRmByRltwRl5wRj9GW3BGXnBGYHBGY3BGZXBGZ3BGanBGW3BGXnBGYHBGY3BGZXAtRl96NigtRmJ6NiotRjw2JkZnckZbcEZecEY/RltwRl5wRmBwRmNwRmVwRmdwRmpwRltwRl5wRmBwRmNwRmVwRltwRl5wRmhyL0ZhcFEpYmFzZWxpbmVGJ0Zdc0Zec0Zgc0Zic0Zlc0Znc0Zqc0ZddEZgdEZidEZkdEZndEZpdEZbdUZddUZgdUZbcEZecEY/RltwRl5wRj8vRmJ5USJbRicvRmV5USJdRic=">LV9JLFR5cGVzZXR0aW5nRzYkJSpwcm90ZWN0ZWRHSShfc3lzbGliRzYiSSxtcHJpbnRzbGFzaEdGKDYkNyM+Jkkwa25vd25fc29sdXRpb25zR0YoNiMiIiYtSSdSVEFCTEVHRig2JSI1K0R1d0E6KVskKm8kLUknTUFUUklYR0YoNiM3JzcjLUkjbW5HNiRGJi9JK21vZHVsZW5hbWVHRihGJDYjUTQwLjA4Mzc1MTI1NjQ5OTUwOTA2Rig3Iy1GOzYjUTMwLjMxMjcyOTI5NTIyMzIwOTVGKDcjLUY7NiNRJDAuNUYoNyMtRjs2I1EzMC42ODcyNzA3MDQ3NzY3OTA1Rig3Iy1GOzYjUTMwLjkxNjI0ODc0MzUwMDQ5MDlGKCZJJ1ZlY3RvckdGJTYjSSdjb2x1bW5HRig3Iy1GUTYjL0kkJWlkR0YoRjQ=</Equation></Text-field>
+</Output>
+<Output><Text-field style="2D Output" layout="Maple Output"><Equation executable="false" style="2D Output" display="LUkqbWNvbXBsZXRlRzYjL0krbW9kdWxlbmFtZUc2IkksVHlwZXNldHRpbmdHSShfc3lzbGliR0YnNiQtSSVtcm93R0YkNiYtSSVtc3ViR0YkNiUtSSNtaUdGJDYlUTBrbm93bl9zb2x1dGlvbnNGJy8lJ2l0YWxpY0dRJXRydWVGJy8lLG1hdGh2YXJpYW50R1EnaXRhbGljRictSSNtbkdGJDYkUSI2RicvRjlRJ25vcm1hbEYnLyUvc3Vic2NyaXB0c2hpZnRHUSIwRictSSNtb0dGJDYuUSkmQXNzaWduO0YnRj8vJSZmZW5jZUdRJmZhbHNlRicvJSpzZXBhcmF0b3JHRkovJSlzdHJldGNoeUdGSi8lKnN5bW1ldHJpY0dGSi8lKGxhcmdlb3BHRkovJS5tb3ZhYmxlbGltaXRzR0ZKLyUnYWNjZW50R0ZKLyUnbHNwYWNlR1EsMC4yNzc3Nzc4ZW1GJy8lJ3JzcGFjZUdGWS8lKWVxdWFsaXR5R0ZKLUYsNiYtSShtZmVuY2VkR0YkNigtRiw2Ji1JLW1zY3JvbGx0YWJsZUdGJDZULUkqbXNjcm9sbHRyR0YkNigtSSptc2Nyb2xsdGRHRiQ2Ki1GPDYkUTQwLjA2Njg3NjU5MDk0NjA4OTcyRidGPy8lK2ZvcmVncm91bmRHUShbMCwwLDBdRicvJSlyZWFkb25seUdGSi8lKXJvd2FsaWduR1EhRicvJSxjb2x1bW5hbGlnbkdGYnAvJStncm91cGFsaWduR0ZicC8lKHJvd3NwYW5HUSIxRicvJStjb2x1bW5zcGFuR0ZpcEZbcEZecEZgcEZjcEZlcC1GY282KC1GZm82Ki1GPDYkUTMwLjM2NjY4MjI5OTI0MTY0NzZGJ0Y/RltwRl5wRmBwRmNwRmVwRmdwRmpwRltwRl5wRmBwRmNwRmVwLUZjbzYoLUZmbzYqLUY8NiRRMzAuMjg4NzQwNjczMTE5NDQ0MkYnRj9GW3BGXnBGYHBGY3BGZXBGZ3BGanBGW3BGXnBGYHBGY3BGZXAtRmNvNigtRmZvNiotRjw2JFEzMC43MTEyNTkzMjY4ODA1NTU3RidGP0ZbcEZecEZgcEZjcEZlcEZncEZqcEZbcEZecEZgcEZjcEZlcC1GY282KC1GZm82Ki1GPDYkUTMwLjYzMzMxNzcwMDc1ODM1MjRGJ0Y/RltwRl5wRmBwRmNwRmVwRmdwRmpwRltwRl5wRmBwRmNwRmVwLUZjbzYoLUZmbzYqLUY8NiRRMzAuOTMzMTIzNDA5MDUzOTEwM0YnRj9GW3BGXnBGYHBGY3BGZXBGZ3BGanBGW3BGXnBGYHBGY3BGZXAvJSZhbGlnbkdRJWF4aXNGJy9GYXBRJ2NlbnRlckYnL0ZkcEZjcy9GZnBRJ3xmcmxlZnR8aHJGJy8lL2FsaWdubWVudHNjb3BlR0Y3LyUsY29sdW1ud2lkdGhHUSVhdXRvRicvJSZ3aWR0aEdGW3QvJStyb3dzcGFjaW5nR1EmMS4wZXhGJy8lLmNvbHVtbnNwYWNpbmdHUSYwLjhlbUYnLyUpcm93bGluZXNHUSVub25lRicvJSxjb2x1bW5saW5lc0dGZnQvJSZmcmFtZUdGZnQvJS1mcmFtZXNwYWNpbmdHUSwwLjRlbX4wLjVleEYnLyUqZXF1YWxyb3dzR0ZKLyUtZXF1YWxjb2x1bW5zR0ZKLyUtZGlzcGxheXN0eWxlR0ZKLyUlc2lkZUdRJnJpZ2h0RicvJTBtaW5sYWJlbHNwYWNpbmdHRmN0LyUxc2hvd2NvbHVtbmhlYWRlckdGSi8lLnNob3dyb3doZWFkZXJHRkovJS5mcm96ZW5kaXNwbGF5R0ZKLyUubnVtYmVyY29sdW1uc0dGaXAvJStudW1iZXJyb3dzR0Y+LyU2ZGVmYXVsdHZpc2libGVjb2x1bW5zR0ZpcC8lM2RlZmF1bHR2aXNpYmxlcm93c0dGPi8lMWNvbHVtbmxvd2VyYm91bmRHRmlwLyUxY29sdW1udXBwZXJib3VuZEdGaXAvJS5yb3dsb3dlcmJvdW5kR0ZpcC8lLnJvd3VwcGVyYm91bmRHRj4vJS1kaXNwbGF5d2lkdGhHUSQxMjFGJy8lLmRpc3BsYXloZWlnaHRHUSQxMjBGJy8lMHVzZXJkZWZpbmVkc2l6ZUdGSi8lOmRpc3BsYXlob3Jpem9udGFscG9zaXRpb25HRkMvJThkaXNwbGF5dmVydGljYWxwb3NpdGlvbkdGQy8lNGRpc3BsYXljb2x1bW53aWR0aHNHUSZbMTEzXUYnLyU1ZGlzcGxheWNvbHVtbnNwYWNpbmdHUSNbXUYnLyU4dXNlcmRlZmluZWRjb2x1bW53aWR0aHNHUShbZmFsc2VdRicvJTJkaXNwbGF5cm93aGVpZ2h0c0dROVsxNCx+MTQsfjE0LH4xNCx+MTQsfjE0XUYnLyUyZGlzcGxheXJvd3NwYWNpbmdHUTBbNix+Nix+Nix+Nix+Nl1GJy8lNnVzZXJkZWZpbmVkcm93aGVpZ2h0c0dRS1tmYWxzZSx+ZmFsc2UsfmZhbHNlLH5mYWxzZSx+ZmFsc2UsfmZhbHNlXUYnLyUqdGFibGV0eXBlR0ZDLyUycm93aW5kZXhpbmdvZmZzZXRHRkMvJTVjb2x1bW5pbmRleGluZ29mZnNldEdGQy8lMmFycmF5c2xpY2VpbmRpY2VzR0ZgeEZbcEZecEY/Rj8vSSttc2VtYW50aWNzR0YkUSpDb2xWZWN0b3JGJy8lJW9wZW5HUScmbHNxYjtGJy8lJmNsb3NlR1EnJnJzcWI7RidGZXlGW3BGXnBGP0Y/LUZbbzYoLUYsNiYtSSdtdGFibGVHRiQ2PC1JJG10ckdGJDYoLUkkbXRkR0YkNiotRjw2JkZqb0ZbcEZecEY/RltwRl5wRmBwRmNwRmVwRmdwRmpwRltwRl5wRmBwRmNwRmVwLUZmejYoLUZpejYqLUY8NiZGYnFGW3BGXnBGP0ZbcEZecEZgcEZjcEZlcEZncEZqcEZbcEZecEZgcEZjcEZlcC1GZno2KC1GaXo2Ki1GPDYmRmlxRltwRl5wRj9GW3BGXnBGYHBGY3BGZXBGZ3BGanBGW3BGXnBGYHBGY3BGZXAtRmZ6NigtRml6NiotRjw2JkZgckZbcEZecEY/RltwRl5wRmBwRmNwRmVwRmdwRmpwRltwRl5wRmBwRmNwRmVwLUZmejYoLUZpejYqLUY8NiZGZ3JGW3BGXnBGP0ZbcEZecEZgcEZjcEZlcEZncEZqcEZbcEZecEZgcEZjcEZlcC1GZno2KC1GaXo2Ki1GPDYmRl5zRltwRl5wRj9GW3BGXnBGYHBGY3BGZXBGZ3BGanBGW3BGXnBGYHBGY3BGZXBGW3BGXnBGX3MvRmFwUSliYXNlbGluZUYnRmRzRmVzRmdzRmlzRlx0Rl50RmF0RmR0Rmd0Rml0Rlt1Rl51RmB1RmJ1RmR1Rmd1RltwRl5wRj9GW3BGXnBGPy9GaXlRIltGJy9GXHpRIl1GJw==">LV9JLFR5cGVzZXR0aW5nRzYkJSpwcm90ZWN0ZWRHSShfc3lzbGliRzYiSSxtcHJpbnRzbGFzaEdGKDYkNyM+Jkkwa25vd25fc29sdXRpb25zR0YoNiMiIictSSdSVEFCTEVHRig2JSI1U1h1d0E6KVskKm8kLUknTUFUUklYR0YoNiM3KDcjLUkjbW5HNiRGJi9JK21vZHVsZW5hbWVHRihGJDYjUTQwLjA2Njg3NjU5MDk0NjA4OTcyRig3Iy1GOzYjUTMwLjM2NjY4MjI5OTI0MTY0NzZGKDcjLUY7NiNRMzAuMjg4NzQwNjczMTE5NDQ0MkYoNyMtRjs2I1EzMC43MTEyNTkzMjY4ODA1NTU3Rig3Iy1GOzYjUTMwLjYzMzMxNzcwMDc1ODM1MjRGKDcjLUY7NiNRMzAuOTMzMTIzNDA5MDUzOTEwM0YoJkknVmVjdG9yR0YlNiNJJ2NvbHVtbkdGKDcjLUZVNiMvSSQlaWRHRihGNA==</Equation></Text-field>
+</Output>
+<Output><Text-field style="2D Output" layout="Maple Output"><Equation executable="false" style="2D Output" display="LUkqbWNvbXBsZXRlRzYjL0krbW9kdWxlbmFtZUc2IkksVHlwZXNldHRpbmdHSShfc3lzbGliR0YnNiQtSSVtcm93R0YkNiYtSSVtc3ViR0YkNiUtSSNtaUdGJDYlUTBrbm93bl9zb2x1dGlvbnNGJy8lJ2l0YWxpY0dRJXRydWVGJy8lLG1hdGh2YXJpYW50R1EnaXRhbGljRictSSNtbkdGJDYkUSI3RicvRjlRJ25vcm1hbEYnLyUvc3Vic2NyaXB0c2hpZnRHUSIwRictSSNtb0dGJDYuUSkmQXNzaWduO0YnRj8vJSZmZW5jZUdRJmZhbHNlRicvJSpzZXBhcmF0b3JHRkovJSlzdHJldGNoeUdGSi8lKnN5bW1ldHJpY0dGSi8lKGxhcmdlb3BHRkovJS5tb3ZhYmxlbGltaXRzR0ZKLyUnYWNjZW50R0ZKLyUnbHNwYWNlR1EsMC4yNzc3Nzc4ZW1GJy8lJ3JzcGFjZUdGWS8lKWVxdWFsaXR5R0ZKLUYsNiYtSShtZmVuY2VkR0YkNigtRiw2Ji1JLW1zY3JvbGx0YWJsZUdGJDZVLUkqbXNjcm9sbHRyR0YkNigtSSptc2Nyb2xsdGRHRiQ2Ki1GPDYkUTMwLjA1ODA2OTE0OTYyMDk3NTVGJ0Y/LyUrZm9yZWdyb3VuZEdRKFswLDAsMF1GJy8lKXJlYWRvbmx5R0ZKLyUpcm93YWxpZ25HUSFGJy8lLGNvbHVtbmFsaWduR0ZicC8lK2dyb3VwYWxpZ25HRmJwLyUocm93c3BhbkdRIjFGJy8lK2NvbHVtbnNwYW5HRmlwRltwRl5wRmBwRmNwRmVwLUZjbzYoLUZmbzYqLUY8NiRRMzAuMjM1MTcxNjEyMzU3NDIxNkYnRj9GW3BGXnBGYHBGY3BGZXBGZ3BGanBGW3BGXnBGYHBGY3BGZXAtRmNvNigtRmZvNiotRjw2JFEzMC4zMzgwNDQwOTQ3NDAwNDYyRidGP0ZbcEZecEZgcEZjcEZlcEZncEZqcEZbcEZecEZgcEZjcEZlcC1GY282KC1GZm82Ki1GPDYkUSQwLjVGJ0Y/RltwRl5wRmBwRmNwRmVwRmdwRmpwRltwRl5wRmBwRmNwRmVwLUZjbzYoLUZmbzYqLUY8NiRRMzAuNjYxOTU1OTA1MjU5OTUzOEYnRj9GW3BGXnBGYHBGY3BGZXBGZ3BGanBGW3BGXnBGYHBGY3BGZXAtRmNvNigtRmZvNiotRjw2JFEzMC43NjQ4MjgzODc2NDI1Nzg0RidGP0ZbcEZecEZgcEZjcEZlcEZncEZqcEZbcEZecEZgcEZjcEZlcC1GY282KC1GZm82Ki1GPDYkUTMwLjk0MTkzMDg1MDM3OTAyNDZGJ0Y/RltwRl5wRmBwRmNwRmVwRmdwRmpwRltwRl5wRmBwRmNwRmVwLyUmYWxpZ25HUSVheGlzRicvRmFwUSdjZW50ZXJGJy9GZHBGanMvRmZwUSd8ZnJsZWZ0fGhyRicvJS9hbGlnbm1lbnRzY29wZUdGNy8lLGNvbHVtbndpZHRoR1ElYXV0b0YnLyUmd2lkdGhHRmJ0LyUrcm93c3BhY2luZ0dRJjEuMGV4RicvJS5jb2x1bW5zcGFjaW5nR1EmMC44ZW1GJy8lKXJvd2xpbmVzR1Elbm9uZUYnLyUsY29sdW1ubGluZXNHRl11LyUmZnJhbWVHRl11LyUtZnJhbWVzcGFjaW5nR1EsMC40ZW1+MC41ZXhGJy8lKmVxdWFscm93c0dGSi8lLWVxdWFsY29sdW1uc0dGSi8lLWRpc3BsYXlzdHlsZUdGSi8lJXNpZGVHUSZyaWdodEYnLyUwbWlubGFiZWxzcGFjaW5nR0ZqdC8lMXNob3djb2x1bW5oZWFkZXJHRkovJS5zaG93cm93aGVhZGVyR0ZKLyUuZnJvemVuZGlzcGxheUdGSi8lLm51bWJlcmNvbHVtbnNHRmlwLyUrbnVtYmVycm93c0dGPi8lNmRlZmF1bHR2aXNpYmxlY29sdW1uc0dGaXAvJTNkZWZhdWx0dmlzaWJsZXJvd3NHRj4vJTFjb2x1bW5sb3dlcmJvdW5kR0ZpcC8lMWNvbHVtbnVwcGVyYm91bmRHRmlwLyUucm93bG93ZXJib3VuZEdGaXAvJS5yb3d1cHBlcmJvdW5kR0Y+LyUtZGlzcGxheXdpZHRoR1EkMTE1RicvJS5kaXNwbGF5aGVpZ2h0R1EkMTQwRicvJTB1c2VyZGVmaW5lZHNpemVHRkovJTpkaXNwbGF5aG9yaXpvbnRhbHBvc2l0aW9uR0ZDLyU4ZGlzcGxheXZlcnRpY2FscG9zaXRpb25HRkMvJTRkaXNwbGF5Y29sdW1ud2lkdGhzR1EmWzEwN11GJy8lNWRpc3BsYXljb2x1bW5zcGFjaW5nR1EjW11GJy8lOHVzZXJkZWZpbmVkY29sdW1ud2lkdGhzR1EoW2ZhbHNlXUYnLyUyZGlzcGxheXJvd2hlaWdodHNHUT1bMTQsfjE0LH4xNCx+MTQsfjE0LH4xNCx+MTRdRicvJTJkaXNwbGF5cm93c3BhY2luZ0dRM1s2LH42LH42LH42LH42LH42XUYnLyU2dXNlcmRlZmluZWRyb3doZWlnaHRzR1FSW2ZhbHNlLH5mYWxzZSx+ZmFsc2UsfmZhbHNlLH5mYWxzZSx+ZmFsc2UsfmZhbHNlXUYnLyUqdGFibGV0eXBlR0ZDLyUycm93aW5kZXhpbmdvZmZzZXRHRkMvJTVjb2x1bW5pbmRleGluZ29mZnNldEdGQy8lMmFycmF5c2xpY2VpbmRpY2VzR0ZneEZbcEZecEY/Rj8vSSttc2VtYW50aWNzR0YkUSpDb2xWZWN0b3JGJy8lJW9wZW5HUScmbHNxYjtGJy8lJmNsb3NlR1EnJnJzcWI7RidGXHpGW3BGXnBGP0Y/LUZbbzYoLUYsNiYtSSdtdGFibGVHRiQ2PS1JJG10ckdGJDYoLUkkbXRkR0YkNiotRjw2JkZqb0ZbcEZecEY/RltwRl5wRmBwRmNwRmVwRmdwRmpwRltwRl5wRmBwRmNwRmVwLUZdW2w2KC1GYFtsNiotRjw2JkZicUZbcEZecEY/RltwRl5wRmBwRmNwRmVwRmdwRmpwRltwRl5wRmBwRmNwRmVwLUZdW2w2KC1GYFtsNiotRjw2JkZpcUZbcEZecEY/RltwRl5wRmBwRmNwRmVwRmdwRmpwRltwRl5wRmBwRmNwRmVwLUZdW2w2KC1GYFtsNiotRjw2JkZgckZbcEZecEY/RltwRl5wRmBwRmNwRmVwRmdwRmpwRltwRl5wRmBwRmNwRmVwLUZdW2w2KC1GYFtsNiotRjw2JkZnckZbcEZecEY/RltwRl5wRmBwRmNwRmVwRmdwRmpwRltwRl5wRmBwRmNwRmVwLUZdW2w2KC1GYFtsNiotRjw2JkZec0ZbcEZecEY/RltwRl5wRmBwRmNwRmVwRmdwRmpwRltwRl5wRmBwRmNwRmVwLUZdW2w2KC1GYFtsNiotRjw2JkZlc0ZbcEZecEY/RltwRl5wRmBwRmNwRmVwRmdwRmpwRltwRl5wRmBwRmNwRmVwRltwRl5wRmZzL0ZhcFEpYmFzZWxpbmVGJ0ZbdEZcdEZedEZgdEZjdEZldEZodEZbdUZedUZgdUZidUZldUZndUZpdUZbdkZedkZbcEZecEY/RltwRl5wRj8vRmB6USJbRicvRmN6USJdRic=">LV9JLFR5cGVzZXR0aW5nRzYkJSpwcm90ZWN0ZWRHSShfc3lzbGliRzYiSSxtcHJpbnRzbGFzaEdGKDYkNyM+Jkkwa25vd25fc29sdXRpb25zR0YoNiMiIigtSSdSVEFCTEVHRig2JSI1QyZRbkZfIilbJCpvJC1JJ01BVFJJWEdGKDYjNyk3Iy1JI21uRzYkRiYvSSttb2R1bGVuYW1lR0YoRiQ2I1EzMC4wNTgwNjkxNDk2MjA5NzU1Rig3Iy1GOzYjUTMwLjIzNTE3MTYxMjM1NzQyMTZGKDcjLUY7NiNRMzAuMzM4MDQ0MDk0NzQwMDQ2MkYoNyMtRjs2I1EkMC41Rig3Iy1GOzYjUTMwLjY2MTk1NTkwNTI1OTk1MzhGKDcjLUY7NiNRMzAuNzY0ODI4Mzg3NjQyNTc4NEYoNyMtRjs2I1EzMC45NDE5MzA4NTAzNzkwMjQ2RigmSSdWZWN0b3JHRiU2I0knY29sdW1uR0YoNyMtRlk2Iy9JJCVpZEdGKEY0</Equation></Text-field>
+</Output>
+<Output><Text-field style="2D Output" layout="Maple Output"><Equation executable="false" style="2D Output" display="LUkqbWNvbXBsZXRlRzYjL0krbW9kdWxlbmFtZUc2IkksVHlwZXNldHRpbmdHSShfc3lzbGliR0YnNiQtSSVtcm93R0YkNiYtSSVtc3ViR0YkNiUtSSNtaUdGJDYlUTBrbm93bl9zb2x1dGlvbnNGJy8lJ2l0YWxpY0dRJXRydWVGJy8lLG1hdGh2YXJpYW50R1EnaXRhbGljRictSSNtbkdGJDYkUSI5RicvRjlRJ25vcm1hbEYnLyUvc3Vic2NyaXB0c2hpZnRHUSIwRictSSNtb0dGJDYuUSkmQXNzaWduO0YnRj8vJSZmZW5jZUdRJmZhbHNlRicvJSpzZXBhcmF0b3JHRkovJSlzdHJldGNoeUdGSi8lKnN5bW1ldHJpY0dGSi8lKGxhcmdlb3BHRkovJS5tb3ZhYmxlbGltaXRzR0ZKLyUnYWNjZW50R0ZKLyUnbHNwYWNlR1EsMC4yNzc3Nzc4ZW1GJy8lJ3JzcGFjZUdGWS8lKWVxdWFsaXR5R0ZKLUYsNiYtSShtZmVuY2VkR0YkNigtRiw2Ji1JLW1zY3JvbGx0YWJsZUdGJDZXLUkqbXNjcm9sbHRyR0YkNigtSSptc2Nyb2xsdGRHRiQ2Ki1GPDYkUTQwLjA0NDIwNTM0NjEzNTc4Mjc3RidGPy8lK2ZvcmVncm91bmRHUShbMCwwLDBdRicvJSlyZWFkb25seUdGSi8lKXJvd2FsaWduR1EhRicvJSxjb2x1bW5hbGlnbkdGYnAvJStncm91cGFsaWduR0ZicC8lKHJvd3NwYW5HUSIxRicvJStjb2x1bW5zcGFuR0ZpcEZbcEZecEZgcEZjcEZlcC1GY282KC1GZm82Ki1GPDYkUTIwLjE5OTQ5MDY3MjMwOTg4MUYnRj9GW3BGXnBGYHBGY3BGZXBGZ3BGanBGW3BGXnBGYHBGY3BGZXAtRmNvNigtRmZvNiotRjw2JFExMC4yMzU2MTkxMDg0NzEwNkYnRj9GW3BGXnBGYHBGY3BGZXBGZ3BGanBGW3BGXnBGYHBGY3BGZXAtRmNvNigtRmZvNiotRjw2JFEzMC40MTYwNDY5MDc4OTI1OTgxRidGP0ZbcEZecEZgcEZjcEZlcEZncEZqcEZbcEZecEZgcEZjcEZlcC1GY282KC1GZm82Ki1GPDYkUSQwLjVGJ0Y/RltwRl5wRmBwRmNwRmVwRmdwRmpwRltwRl5wRmBwRmNwRmVwLUZjbzYoLUZmbzYqLUY8NiRRMzAuNTgzOTUzMDkyMTA3NDAyMUYnRj9GW3BGXnBGYHBGY3BGZXBGZ3BGanBGW3BGXnBGYHBGY3BGZXAtRmNvNigtRmZvNiotRjw2JFExMC43NjQzODA4OTE1Mjg5NEYnRj9GW3BGXnBGYHBGY3BGZXBGZ3BGanBGW3BGXnBGYHBGY3BGZXAtRmNvNigtRmZvNiotRjw2JFEzMC44MDA1MDkzMjc2OTAxMTkxRidGP0ZbcEZecEZgcEZjcEZlcEZncEZqcEZbcEZecEZgcEZjcEZlcC1GY282KC1GZm82Ki1GPDYkUTMwLjk1NTc5NDY1Mzg2NDIxNzJGJ0Y/RltwRl5wRmBwRmNwRmVwRmdwRmpwRltwRl5wRmBwRmNwRmVwLyUmYWxpZ25HUSVheGlzRicvRmFwUSdjZW50ZXJGJy9GZHBGaHQvRmZwUSd8ZnJsZWZ0fGhyRicvJS9hbGlnbm1lbnRzY29wZUdGNy8lLGNvbHVtbndpZHRoR1ElYXV0b0YnLyUmd2lkdGhHRmB1LyUrcm93c3BhY2luZ0dRJjEuMGV4RicvJS5jb2x1bW5zcGFjaW5nR1EmMC44ZW1GJy8lKXJvd2xpbmVzR1Elbm9uZUYnLyUsY29sdW1ubGluZXNHRlt2LyUmZnJhbWVHRlt2LyUtZnJhbWVzcGFjaW5nR1EsMC40ZW1+MC41ZXhGJy8lKmVxdWFscm93c0dGSi8lLWVxdWFsY29sdW1uc0dGSi8lLWRpc3BsYXlzdHlsZUdGSi8lJXNpZGVHUSZyaWdodEYnLyUwbWlubGFiZWxzcGFjaW5nR0ZodS8lMXNob3djb2x1bW5oZWFkZXJHRkovJS5zaG93cm93aGVhZGVyR0ZKLyUuZnJvemVuZGlzcGxheUdGSi8lLm51bWJlcmNvbHVtbnNHRmlwLyUrbnVtYmVycm93c0dGPi8lNmRlZmF1bHR2aXNpYmxlY29sdW1uc0dGaXAvJTNkZWZhdWx0dmlzaWJsZXJvd3NHRj4vJTFjb2x1bW5sb3dlcmJvdW5kR0ZpcC8lMWNvbHVtbnVwcGVyYm91bmRHRmlwLyUucm93bG93ZXJib3VuZEdGaXAvJS5yb3d1cHBlcmJvdW5kR0Y+LyUtZGlzcGxheXdpZHRoR1EkMTIxRicvJS5kaXNwbGF5aGVpZ2h0R1EkMTgwRicvJTB1c2VyZGVmaW5lZHNpemVHRkovJTpkaXNwbGF5aG9yaXpvbnRhbHBvc2l0aW9uR0ZDLyU4ZGlzcGxheXZlcnRpY2FscG9zaXRpb25HRkMvJTRkaXNwbGF5Y29sdW1ud2lkdGhzR1EmWzExM11GJy8lNWRpc3BsYXljb2x1bW5zcGFjaW5nR1EjW11GJy8lOHVzZXJkZWZpbmVkY29sdW1ud2lkdGhzR1EoW2ZhbHNlXUYnLyUyZGlzcGxheXJvd2hlaWdodHNHUUVbMTQsfjE0LH4xNCx+MTQsfjE0LH4xNCx+MTQsfjE0LH4xNF1GJy8lMmRpc3BsYXlyb3dzcGFjaW5nR1E5WzYsfjYsfjYsfjYsfjYsfjYsfjYsfjZdRicvJTZ1c2VyZGVmaW5lZHJvd2hlaWdodHNHUWpuW2ZhbHNlLH5mYWxzZSx+ZmFsc2UsfmZhbHNlLH5mYWxzZSx+ZmFsc2UsfmZhbHNlLH5mYWxzZSx+ZmFsc2VdRicvJSp0YWJsZXR5cGVHRkMvJTJyb3dpbmRleGluZ29mZnNldEdGQy8lNWNvbHVtbmluZGV4aW5nb2Zmc2V0R0ZDLyUyYXJyYXlzbGljZWluZGljZXNHRmV5RltwRl5wRj9GPy9JK21zZW1hbnRpY3NHRiRRKkNvbFZlY3RvckYnLyUlb3BlbkdRJyZsc3FiO0YnLyUmY2xvc2VHUScmcnNxYjtGJ0ZqekZbcEZecEY/Rj8tRltvNigtRiw2Ji1JJ210YWJsZUdGJDY/LUkkbXRyR0YkNigtSSRtdGRHRiQ2Ki1GPDYmRmpvRltwRl5wRj9GW3BGXnBGYHBGY3BGZXBGZ3BGanBGW3BGXnBGYHBGY3BGZXAtRltcbDYoLUZeXGw2Ki1GPDYmRmJxRltwRl5wRj9GW3BGXnBGYHBGY3BGZXBGZ3BGanBGW3BGXnBGYHBGY3BGZXAtRltcbDYoLUZeXGw2Ki1GPDYmRmlxRltwRl5wRj9GW3BGXnBGYHBGY3BGZXBGZ3BGanBGW3BGXnBGYHBGY3BGZXAtRltcbDYoLUZeXGw2Ki1GPDYmRmByRltwRl5wRj9GW3BGXnBGYHBGY3BGZXBGZ3BGanBGW3BGXnBGYHBGY3BGZXAtRltcbDYoLUZeXGw2Ki1GPDYmRmdyRltwRl5wRj9GW3BGXnBGYHBGY3BGZXBGZ3BGanBGW3BGXnBGYHBGY3BGZXAtRltcbDYoLUZeXGw2Ki1GPDYmRl5zRltwRl5wRj9GW3BGXnBGYHBGY3BGZXBGZ3BGanBGW3BGXnBGYHBGY3BGZXAtRltcbDYoLUZeXGw2Ki1GPDYmRmVzRltwRl5wRj9GW3BGXnBGYHBGY3BGZXBGZ3BGanBGW3BGXnBGYHBGY3BGZXAtRltcbDYoLUZeXGw2Ki1GPDYmRlx0RltwRl5wRj9GW3BGXnBGYHBGY3BGZXBGZ3BGanBGW3BGXnBGYHBGY3BGZXAtRltcbDYoLUZeXGw2Ki1GPDYmRmN0RltwRl5wRj9GW3BGXnBGYHBGY3BGZXBGZ3BGanBGW3BGXnBGYHBGY3BGZXBGW3BGXnBGZHQvRmFwUSliYXNlbGluZUYnRml0Rmp0Rlx1Rl51RmF1RmN1RmZ1Rml1Rlx2Rl52RmB2RmN2RmV2Rmd2Rml2Rlx3RltwRl5wRj9GW3BGXnBGPy9GXltsUSJbRicvRmFbbFEiXUYn">LV9JLFR5cGVzZXR0aW5nRzYkJSpwcm90ZWN0ZWRHSShfc3lzbGliRzYiSSxtcHJpbnRzbGFzaEdGKDYkNyM+Jkkwa25vd25fc29sdXRpb25zR0YoNiMiIiotSSdSVEFCTEVHRig2JSI1LzN1d0E6KVskKm8kLUknTUFUUklYR0YoNiM3KzcjLUkjbW5HNiRGJi9JK21vZHVsZW5hbWVHRihGJDYjUTQwLjA0NDIwNTM0NjEzNTc4Mjc3Rig3Iy1GOzYjUTIwLjE5OTQ5MDY3MjMwOTg4MUYoNyMtRjs2I1ExMC4yMzU2MTkxMDg0NzEwNkYoNyMtRjs2I1EzMC40MTYwNDY5MDc4OTI1OTgxRig3Iy1GOzYjUSQwLjVGKDcjLUY7NiNRMzAuNTgzOTUzMDkyMTA3NDAyMUYoNyMtRjs2I1ExMC43NjQzODA4OTE1Mjg5NEYoNyMtRjs2I1EzMC44MDA1MDkzMjc2OTAxMTkxRig3Iy1GOzYjUTMwLjk1NTc5NDY1Mzg2NDIxNzJGKCZJJ1ZlY3RvckdGJTYjSSdjb2x1bW5HRig3Iy1GW282Iy9JJCVpZEdGKEY0</Equation></Text-field>
+</Output>
+<Output><Text-field style="Line Printed Output" layout="Line Printed Output">n = 1: differenza dalle soluzioni note = 0.000e+00<Font encoding="UTF-8">  \342\234\223 Coerente
+</Font>n = 2: differenza dalle soluzioni note = 2.510e-17<Font encoding="UTF-8">  \342\234\223 Coerente
+</Font>n = 3: differenza dalle soluzioni note = 7.279e-17<Font encoding="UTF-8">  \342\234\223 Coerente
+</Font>n = 4: differenza dalle soluzioni note = 8.926e-17<Font encoding="UTF-8">  \342\234\223 Coerente
+</Font>n = 5: differenza dalle soluzioni note = 9.129e-01<Font encoding="UTF-8">  \342\234\227 Diversa
+</Font>n = 6: differenza dalle soluzioni note = 1.035e+00<Font encoding="UTF-8">  \342\234\227 Diversa
+</Font>n = 7: differenza dalle soluzioni note = 9.018e-01<Font encoding="UTF-8">  \342\234\227 Diversa
+</Font>n = 9: differenza dalle soluzioni note = 1.085e+00<Font encoding="UTF-8">  \342\234\227 Diversa
+</Font>
+
+=================================================
+       FORMATO C++ PER L'IMPLEMENTAZIONE
+=================================================
+case 1:
+  x &lt;&lt; 0.50000000000000000000;
+  break;
+case 2:
+  x &lt;&lt; 0.21132486540518711775, 0.78867513459481288225;
+  break;
+case 3:
+  x &lt;&lt; 0.14644660940672623780, 0.50000000000000000000, 0.85355339059327376220;
+  break;
+case 4:
+  x &lt;&lt; 0.10267276385411693852, 0.40620376295746005007, 0.59379623704253994993, 
+         0.89732723614588306148;
+  break;
+case 5:
+  x &lt;&lt; 0.68727070477679053279, 0.08375125649950906205, 0.50000000000000000000, 
+         0.91624874350049093795, 0.31272929522320946721;
+  break;
+case 6:
+  x &lt;&lt; 0.28874067311944423544, 0.63331770075835236017, 0.93312340905391029569, 
+         0.06687659094608970431, 0.36668229924164763983, 0.71125932688055576456;
+  break;
+case 7:
+  x &lt;&lt; 0.23517161235742159431, 0.33804409474004618124, 0.94193085037902451785, 
+         0.50000000000000000000, 0.05806914962097548215, 0.66195590525995381876, 
+         0.76482838764257840569;
+  break;
+case 8:
+  x &lt;&lt; </Text-field>
+</Output>
+<Output><Text-field style="HyperlinkError" layout="HyperlinkError"><Hyperlink linktarget="http://www.maplesoft.com/support/help/errors/view.aspx?path=Error,%20(in%20fprintf)%20number%20expected%20for%20floating%20point%20format" hyperlink="true"><Font style="HyperlinkError">Error, (in fprintf) number expected for floating point format</Font></Hyperlink></Text-field>
+</Output>
+</Group>
+<Group view="code" labelreference="L15" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field prompt="&gt; " style="Maple Input" layout="Normal"></Text-field>
+</Input>
+</Group></Presentation-Block><Presentation-Block>
+<Group view="presentation" inline-output="false" labelreference="L13" drawlabel="true" applyint="true" applyrational="true" applyexponent="false">
+<Input><Text-field style="Text" layout="Normal"><Equation executable="true" style="2D Math" input-equation="" display="LUklbXJvd0c2Iy9JK21vZHVsZW5hbWVHNiJJLFR5cGVzZXR0aW5nR0koX3N5c2xpYkdGJzYlLUkjbW9HRiQ2LlEifkYnLyUsbWF0aHZhcmlhbnRHUSdub3JtYWxGJy8lJmZlbmNlR1EmZmFsc2VGJy8lKnNlcGFyYXRvckdGNC8lKXN0cmV0Y2h5R0Y0LyUqc3ltbWV0cmljR0Y0LyUobGFyZ2VvcEdGNC8lLm1vdmFibGVsaW1pdHNHRjQvJSdhY2NlbnRHRjQvJSdsc3BhY2VHUSYwLjBlbUYnLyUncnNwYWNlR0ZDLyUpZXF1YWxpdHlHRjQvJStleGVjdXRhYmxlR0Y0Ri8=">LUklbXJvd0c2Iy9JK21vZHVsZW5hbWVHNiJJLFR5cGVzZXR0aW5nR0koX3N5c2xpYkdGJzYlLUkjbW9HRiQ2LlEifkYnLyUsbWF0aHZhcmlhbnRHUSdub3JtYWxGJy8lJmZlbmNlR1EmZmFsc2VGJy8lKnNlcGFyYXRvckdGNC8lKXN0cmV0Y2h5R0Y0LyUqc3ltbWV0cmljR0Y0LyUobGFyZ2VvcEdGNC8lLm1vdmFibGVsaW1pdHNHRjQvJSdhY2NlbnRHRjQvJSdsc3BhY2VHUSYwLjBlbUYnLyUncnNwYWNlR0ZDLyUpZXF1YWxpdHlHRjQvJStleGVjdXRhYmxlR0Y0Ri8=</Equation></Text-field>
+</Input>
+</Group></Presentation-Block>
+</Worksheet>

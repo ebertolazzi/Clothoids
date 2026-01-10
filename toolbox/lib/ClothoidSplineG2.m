@@ -26,42 +26,76 @@
 classdef ClothoidSplineG2 < matlab.mixin.Copyable
   %% MATLAB class wrapper for the underlying C++ class
   properties (SetAccess = private, Hidden = true)
-    objectHandle; % Handle to the underlying C++ class instance
-    call_delete;
-    use_Ipopt;
-    iter_opt;
-    ipopt_check_gradient;
-    isOctave;
+    m_objectHandle; % Handle to the underlying C++ class instance
+    m_call_delete;
+    m_use_PIPAL;
+    m_iter_opt;
+    m_is_octave;
   end
 
   methods(Access = protected)
     % make deep copy for copy command
     function obj = copyElement( self )
-      obj              = copyElement@matlab.mixin.Copyable(self);
-      obj.objectHandle = ClothoidSplineG2MexWrapper( 'copy', self.objectHandle );
-      obj.call_delete  = true;
+      obj                = copyElement@matlab.mixin.Copyable(self);
+      obj.m_objectHandle = ClothoidSplineG2MexWrapper( 'copy', self.objectHandle );
+      obj.m_call_delete  = true;
     end
   end
 
   methods (Hidden = true)
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    function o = objective( self, theta )
+      o = ClothoidSplineG2MexWrapper( 'objective', self.m_objectHandle, theta );
+    end
+    % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    function g = gradient( self, theta )
+      g = ClothoidSplineG2MexWrapper( 'gradient',  self.m_objectHandle, theta );
+    end
+    % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    function ceq = constraints( self, theta )
+      ceq = ClothoidSplineG2MexWrapper( 'constraints', self.m_objectHandle, theta );
+    end
+    % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    function jaceq = jacobian( self, theta )
+      jaceq = ClothoidSplineG2MexWrapper( 'jacobian', self.m_objectHandle, theta );
+    end
+    % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    function H = lagrangian_hessian( self, theta, lambda )
+      H = ClothoidSplineG2MexWrapper( 'lagrangian_hessian', self.m_objectHandle, theta, lambda );
+    end
+    % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     function [ceq,jaceq] = nlsys( self, theta )
-      ceq   = ClothoidSplineG2MexWrapper( 'constraints', self.objectHandle, theta );
-      jaceq = ClothoidSplineG2MexWrapper( 'jacobian', self.objectHandle, theta  );
+      ceq   = self.constraints( theta );
+      jaceq = self.jacobian( theta );
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     function [c,ceq,jac,jaceq] = con( self, theta )
       c     = zeros(0,0);
-      ceq   = ClothoidSplineG2MexWrapper( 'constraints', self.objectHandle, theta );
+      ceq   = self.constraints( theta );
       jac   = sparse(0,0);
-      jaceq = ClothoidSplineG2MexWrapper( 'jacobian', self.objectHandle, theta  ).';
+      jaceq = self.jacobian( theta ).'; %'
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     function [o,g] = obj( self, theta )
-      o = ClothoidSplineG2MexWrapper( 'objective', self.objectHandle, theta );
-      g = ClothoidSplineG2MexWrapper( 'gradient', self.objectHandle, theta );
+      o = self.objective( theta );
+      g = self.gradient( theta );
     end
-    % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    function [f,g] = checkcheck( self, x )
+      f = self.objective( x );
+      if nargout > 1
+        g = self.gradient( x );
+      end
+    end
+    % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    function [f,g] = checkcheck2( self, x )
+      f = self.gradient( x );
+      if nargout > 1
+        lambda = zeros( length(x)-2, 1 );
+        g = full(self.lagrangian_hessian( x, lambda ));
+      end
+    end
+    % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     %>
     %> Call C++ setup for the problem solver.
     %> Check that consecutive points are distinct
@@ -77,72 +111,81 @@ classdef ClothoidSplineG2 < matlab.mixin.Copyable
             'index of points at minimum distance is %d\n'], mi, ma, idx1 ...
         );
       end
-      ClothoidSplineG2MexWrapper( 'build', self.objectHandle, x, y );
+      ClothoidSplineG2MexWrapper( 'build', self.m_objectHandle, x, y );
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     function clots = build_internal( self, x, y, varargin )
-      %
-      % Compute guess angles
-      %
-      self.build( x, y );
-      [ theta_guess, theta_min, theta_max ] = self.guess();
-      [~,nc] = self.dims();
-
-      if self.use_Ipopt
-
-        options = {};
-
-        options.ub = theta_max;
-        options.lb = theta_min;
-
-        % The constraint functions are bounded to zero
-        options.cl = zeros(nc,1); %  constraints
-        options.cu = zeros(nc,1);
-
-        % Set the IPOPT options.
-        options.ipopt.jac_d_constant      = 'no';
-        options.ipopt.hessian_constant    = 'no';
-        options.ipopt.mu_strategy         = 'adaptive';
-        options.ipopt.max_iter            = 400;
-        options.ipopt.tol                 = 1e-10;
-        options.ipopt.derivative_test_tol = 1e-5;
-        if self.ipopt_check_gradient
-          options.ipopt.derivative_test = 'first-order';
+      if self.m_use_PIPAL
+        if false
+          theta = ClothoidSplineG2MexWrapper( 'pipal', self.m_objectHandle, x, y, varargin{:} );
         else
-          options.ipopt.derivative_test = 'none';
+          % --- obiettivo
+          f_orig = @(x) self.objective( x );
+
+          % gradiente obiettivo
+          g_orig = @(x) self.gradient( x );
+
+          % --- vincoli in forma c(x) <= 0
+          c_orig = @(x) self.constraints( x );
+
+          % Jacobiano dei vincoli (righe = grad c_i^T)
+          J_orig = @(x) self.jacobian( x );
+
+          % Hessiano del lagrangiano: H = Hf + sum_i lambda_i * H(ci)
+          H_orig = @(x,lambda) self.lagrangian_hessian( x, -lambda );
+
+          % --- bounds, iniziale, e limiti dei vincoli (cl, cu)
+          self.build( x, y );
+          [ theta_guess, theta_min, theta_max ] = self.guess();
+
+          l     = [];
+          czero = zeros( length(theta_guess) - 2, 1 );
+
+          outfile   = 'PIPAL-iter.txt';
+          algorithm = 'PIPAL_Default';
+
+          % --- istanzia e lancia
+          P = Pipal( 'PIPAL.txt', f_orig, c_orig, g_orig, J_orig, H_orig, ...
+                     theta_guess, theta_min, theta_max, l, czero, czero, outfile, algorithm );
+
+          P.optimize();
+
+          % --- risultati e diagnostica finale (senza accedere a proprietà private)
+          x_opt = P.getSolution();
+          theta = x_opt.x;
         end
-        %options.ipopt.derivative_test_perturbation = 1e-8;
 
-        % The callback functions.
-        funcs.objective         = @(theta) ClothoidSplineG2MexWrapper( 'objective', self.objectHandle, theta );
-        funcs.constraints       = @(theta) ClothoidSplineG2MexWrapper( 'constraints', self.objectHandle, theta );
-        funcs.gradient          = @(theta) ClothoidSplineG2MexWrapper( 'gradient', self.objectHandle, theta );
-        funcs.jacobian          = @(theta) ClothoidSplineG2MexWrapper( 'jacobian', self.objectHandle, theta );
-        funcs.jacobianstructure = @()      ClothoidSplineG2MexWrapper( 'jacobian_pattern', self.objectHandle );
-
-        %options.ipopt.jacobian_approximation = 'finite-difference-values';
-        options.ipopt.hessian_approximation  = 'limited-memory';
-        %options.ipopt.limited_memory_update_type = 'bfgs'; % {bfgs}, sr1 = 6; % {6}
-        %options.ipopt.limited_memory_update_type = 'sr1';
-        options.ipopt.limited_memory_update_type = 'bfgs'; % {bfgs}, sr1 = 6; % {6}
-
-        tic
-        [theta, info] = ipopt(theta_guess,funcs,options);
-        stats.elapsed = toc;
-        info;
       else
+        %
+        % Compute guess angles
+        %
+        self.build( x, y );
+        [ theta_guess, theta_min, theta_max ] = self.guess();
+        [~,nc] = self.dims();
+        
+        fun = @(x) self.checkcheck( x );
+        valid = checkGradients(fun,theta_guess,Display="on");
+
+        fun2 = @(x) self.checkcheck2( x );
+        valid = checkGradients(fun2,theta_guess,Display="on");
+        
+        % Hessiano del lagrangiano: H = Hf + sum_i lambda_i * H(ci)
+        H_orig = @(x,lambda) self.lagrangian_hessian( x, lambda.eqnonlin );
+
         % 'interior-point'
-        if self.isOctave
+        if self.m_is_octave
           options.TolX   = 1e-10;
           options.TolFun = 1e-20;
         else
           options = optimoptions(...
-            'fmincon','Display',self.iter_opt, ...
+            'fmincon',...
+            'Display',self.m_iter_opt, ...
+            'Algorithm','interior-point',...
             'CheckGradients',false, ...
             'FiniteDifferenceType','central', ...
-            'Algorithm','sqp',...
             'SpecifyConstraintGradient',true,...
             'SpecifyObjectiveGradient',true,...
+            'HessianFcn', H_orig, ...
             'OptimalityTolerance',1e-20,...
             'ConstraintTolerance',1e-10 ...
           );
@@ -162,6 +205,7 @@ classdef ClothoidSplineG2 < matlab.mixin.Copyable
       for j=1:N-1
         clots.push_back_G1( x(j), y(j), theta(j), x(j+1), y(j+1), theta(j+1) );
       end
+      theta.'
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     function clots = build_internal2( self, x, y, varargin )
@@ -171,11 +215,11 @@ classdef ClothoidSplineG2 < matlab.mixin.Copyable
       self.build( x, y );
       [ theta_guess, ~, ~ ] = self.guess();
       % 'interior-point'
-      if self.isOctave
+      if self.m_is_octave
         options.TolX = 1e-20;
       else
         options = optimoptions( ...
-          'fsolve', 'Display', self.iter_opt, ...
+          'fsolve', 'Display', self.m_iter_opt, ...
           'CheckGradients', false, ...
           'FiniteDifferenceType', 'central', ...
           'Algorithm', 'levenberg-marquardt',...
@@ -203,45 +247,40 @@ classdef ClothoidSplineG2 < matlab.mixin.Copyable
   methods
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     function self = ClothoidSplineG2()
-      self.objectHandle          = ClothoidSplineG2MexWrapper( 'new' );
-      self.use_Ipopt             = false;
-      self.iter_opt              = 'iter';
-      self.ipopt_check_gradient  = false;
-      self.isOctave              = exist('OCTAVE_VERSION', 'builtin') ~= 0;
+      self.m_objectHandle = ClothoidSplineG2MexWrapper( 'new' );
+      self.m_use_PIPAL    = false;
+      self.m_iter_opt     = 'iter';
+      self.m_is_octave    = exist('OCTAVE_VERSION', 'builtin') ~= 0;
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     function delete( self )
-      if self.objectHandle ~= 0
-        if self.call_delete
-          ClothoidSplineG2MexWrapper( 'delete', self.objectHandle );
-          self.objectHandle = 0; % avoid double destruction of object
+      if self.m_objectHandle ~= 0
+        if self.m_call_delete
+          ClothoidSplineG2MexWrapper( 'delete', self.m_objectHandle );
+          self.m_objectHandle = 0; % avoid double destruction of object
         end
       end
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     function verbose( self, yes )
       if yes
-        self.iter_opt = 'iter';
+        self.m_iter_opt = 'iter';
       else
-        self.iter_opt = 'none';
+        self.m_iter_opt = 'none';
       end
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-    function ipopt( self, yesno )
-      self.use_Ipopt = yesno;
-    end
-    % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-    function ipopt_check( self, yesno )
-      self.ipopt_check_gradient = yesno;
+    function use_pipal( self, yesno )
+      self.m_use_PIPAL = yesno;
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     function [n,nc] = dims( self )
-      [n,nc] = ClothoidSplineG2MexWrapper( 'dims', self.objectHandle );
+      [n,nc] = ClothoidSplineG2MexWrapper( 'dims', self.m_objectHandle );
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     function [ theta, theta_min, theta_max ] = guess( self )
       [ theta, theta_min, theta_max ] = ...
-        ClothoidSplineG2MexWrapper( 'guess', self.objectHandle );
+        ClothoidSplineG2MexWrapper( 'guess', self.m_objectHandle );
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     %>
@@ -249,9 +288,7 @@ classdef ClothoidSplineG2 < matlab.mixin.Copyable
     %> with initial angle theta0 (radiants) and final angle theta1 (radiants)
     %>
     function clots = buildP1( self, x, y, theta0, theta1 )
-      ClothoidSplineG2MexWrapper( ...
-        'target', self.objectHandle, 'P1', theta0, theta1 ...
-      );
+      ClothoidSplineG2MexWrapper( 'target', self.m_objectHandle, 'P1', theta0, theta1 );
       %clots = self.build_internal2( x, y );
       clots = self.build_internal( x, y );
     end
@@ -264,9 +301,9 @@ classdef ClothoidSplineG2 < matlab.mixin.Copyable
     %> - kappa(1) = kappa(end)
     %>
     function clots = buildP2( self, x, y )
-      ClothoidSplineG2MexWrapper( 'target', self.objectHandle, 'P2' );
-      %clots = self.build_internal2( x, y );
-      clots = self.build_internal( x, y );
+      S = ClothoidList();
+      S.build_G2_cyclic( x, y );
+      clots = S;
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     %>
@@ -275,7 +312,7 @@ classdef ClothoidSplineG2 < matlab.mixin.Copyable
     %> NB: this target is not reccomended (its unstable), used only for debugging
     %>
     function clots = buildP3( self, x, y, theta0, kappa0 )
-      ClothoidSplineG2MexWrapper( 'target', self.objectHandle, 'P3' );
+      ClothoidSplineG2MexWrapper( 'target', self.m_objectHandle, 'P3' );
       %
       % Compute spline parameters
       %
@@ -310,7 +347,7 @@ classdef ClothoidSplineG2 < matlab.mixin.Copyable
     %> minimize \f$ k'(0)^2 + k'(L)^2 \f$
     %>
     function clots = buildP4( self, x, y )
-      ClothoidSplineG2MexWrapper( 'target', self.objectHandle, 'P4' );
+      ClothoidSplineG2MexWrapper( 'target', self.m_objectHandle, 'P4' );
       clots = self.build_internal( x, y );
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -321,7 +358,7 @@ classdef ClothoidSplineG2 < matlab.mixin.Copyable
     %> minimize \f$ (s_1-s_0)+(s_n - s_{n-1}) \f$
     %>
     function clots = buildP5( self, x, y )
-      ClothoidSplineG2MexWrapper( 'target', self.objectHandle, 'P5' );
+      ClothoidSplineG2MexWrapper( 'target', self.m_objectHandle, 'P5' );
       clots = self.build_internal( x, y );
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -332,7 +369,7 @@ classdef ClothoidSplineG2 < matlab.mixin.Copyable
     %> \f$ L = s_n-s_0 \f$
     %>
     function clots = buildP6( self, x, y )
-      ClothoidSplineG2MexWrapper( 'target', self.objectHandle, 'P6' );
+      ClothoidSplineG2MexWrapper( 'target', self.m_objectHandle, 'P6' );
       clots = self.build_internal( x, y );
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -343,7 +380,7 @@ classdef ClothoidSplineG2 < matlab.mixin.Copyable
     %> minimize: \f$ \displaystyle \int_0^L k(s)^2 \mathrm{d}s \f$
     %>
     function clots = buildP7( self, x, y )
-      ClothoidSplineG2MexWrapper( 'target', self.objectHandle, 'P7' );
+      ClothoidSplineG2MexWrapper( 'target', self.m_objectHandle, 'P7' );
       clots = self.build_internal( x, y );
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -354,7 +391,7 @@ classdef ClothoidSplineG2 < matlab.mixin.Copyable
     %> minimize:  \f$ \displaystyle \int_0^L k'(s)^2 \mathrm{d}s \f$
     %>
     function clots = buildP8( self, x, y )
-      ClothoidSplineG2MexWrapper( 'target', self.objectHandle, 'P8' );
+      ClothoidSplineG2MexWrapper( 'target', self.m_objectHandle, 'P8' );
       clots = self.build_internal( x, y );
     end
     % - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -363,7 +400,7 @@ classdef ClothoidSplineG2 < matlab.mixin.Copyable
     %> and minimizing the integral of the jerk squared
     %>
     function clots = buildP9( self, x, y )
-      ClothoidSplineG2MexWrapper( 'target', self.objectHandle, 'P9' );
+      ClothoidSplineG2MexWrapper( 'target', self.m_objectHandle, 'P9' );
       clots = self.build_internal( x, y );
     end
     %

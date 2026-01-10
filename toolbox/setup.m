@@ -4,5 +4,6 @@ addpath('lib');
 addpath('bin');
 addpath('tests');
 addpath('.');
+%addpath('PIPAL-main/PIPAL/src');
 
 cd(old_dir);

@@ -21,7 +21,8 @@
 // file: ThreadPool5.hxx
 //
 
-namespace Utils {
+namespace Utils
+{
 
   /*!
    * \addtogroup THREAD
@@ -46,10 +47,10 @@ namespace Utils {
   //! This class extends `ThreadPoolBase` and supports task execution, joining,
   //! and resizing of worker threads.
   //!
-  class ThreadPool5 : public ThreadPoolBase {
-
+  class ThreadPool5 : public ThreadPoolBase
+  {
     using FUN = ThreadPoolBase::FUN;
-    //using PFUN = ThreadPoolBase::PFUN;
+    // using PFUN = ThreadPoolBase::PFUN;
 
     /*\
      |  __        __         _
@@ -65,33 +66,37 @@ namespace Utils {
     //! completion status. Workers are managed by the `ThreadPool5` class and
     //! can wait for tasks to be assigned to them.
     //!
-    class Worker {
-    
-    
+    class Worker
+    {
       FUN             m_push_worker;
-      bool            m_active{true};    //!< Indicates if the worker is active.
+      bool            m_active{ true };  //!< Indicates if the worker is active.
       UTILS_SEMAPHORE m_is_running;      //!< Semaphore to manage task execution.
       std::thread     m_running_thread;  //!< The thread that runs the worker loop.
       FUN             m_job;             //!< Function to be executed by the worker.
 
       //!
-      //! \brief The main loop for the worker thread, continuously fetching and executing tasks.
+      //! \brief The main loop for the worker thread, continuously fetching and
+      //! executing tasks.
       //!
-      void
-      worker_loop() {
-        m_is_running.red(); // block computation
-        while ( m_active ) {
-          m_is_running.wait(); // wait signal to start computation
+      void worker_loop()
+      {
+        // FIXED: Signal that worker is ready (blocked/red) before entering loop
+        m_is_running.red();
+        m_push_worker();  // Notify pool that this worker is ready
+
+        while ( m_active )
+        {
+          m_is_running.wait();     // wait signal to start computation (wait for green)
+          if ( !m_active ) break;  // Check if we're shutting down
           // ----------------------------------------
           m_job();
           // ----------------------------------------
-          m_is_running.red(); // block computation
-          m_push_worker();    // worker ready for a new computation
+          m_is_running.red();  // block computation (back to red/ready state)
+          m_push_worker();     // worker ready for a new computation
         }
       }
 
     public:
-
       Worker() { m_is_running.red(); }
 
       //!
@@ -100,10 +105,10 @@ namespace Utils {
       //! \param tp Pointer to the parent ThreadPool5.
       //! \param id The unique ID of the worker.
       //!
-      explicit
-      Worker( ThreadPool5 * tp, unsigned id ) {
+      explicit Worker( ThreadPool5 * tp, unsigned id )
+      {
         m_is_running.red();
-        m_push_worker    = [tp,id]()->void { tp->push_worker( id ); };
+        m_push_worker    = [tp, id]() -> void { tp->push_worker( id ); };
         m_running_thread = std::thread( &Worker::worker_loop, this );
       }
 
@@ -112,12 +117,13 @@ namespace Utils {
       //!
       //! Ensures the worker stops execution before destruction.
       //!
-      ~Worker() {
-        wait();               // if running task wait it terminate
-        m_active = false;     // deactivate computation
-        m_job    = [](){};    // dummy task
-        m_is_running.green(); // start computation (exiting loop)
-        if ( m_running_thread.joinable() ) m_running_thread.join(); // wait thread for exiting
+      ~Worker()
+      {
+        wait();                                                      // if running task wait it terminate
+        m_active = false;                                            // deactivate computation
+        m_job    = []() {};                                          // dummy task
+        m_is_running.green();                                        // start computation (exiting loop)
+        if ( m_running_thread.joinable() ) m_running_thread.join();  // wait thread for exiting
       }
 
       //!
@@ -130,13 +136,12 @@ namespace Utils {
       //!
       //! \param fun The function to be executed as a task.
       //!
-      void
-      exec( FUN && fun ) {
-        m_is_running.wait_red();
-        m_job = std::move(fun); // cambia funzione da eseguire
-        m_is_running.green();   // activate computation
+      void exec( FUN && fun )
+      {
+        m_is_running.wait_red();   // wait until worker is ready (semaphore is red)
+        m_job = std::move( fun );  // assign new job
+        m_is_running.green();      // signal worker to start execution
       }
-
     };
 
     // =========================================================================
@@ -146,54 +151,55 @@ namespace Utils {
     // Vector of workers managed by the thread pool.
     std::vector<Worker>     m_workers;
     std::list<unsigned>     m_queue;
-    std::mutex              m_queue_mutex; //!< Mutex for accessing the worker stack.
-    std::condition_variable m_queue_cond;  //!< Condition variable for worker availability.
+    std::mutex              m_queue_mutex;  //!< Mutex for accessing the worker queue.
+    std::condition_variable m_queue_cond;   //!< Condition variable for worker availability.
 
     //!
-    //! \brief Pushes a worker ID back onto the stack of available workers.
+    //! \brief Pushes a worker ID back onto the queue of available workers.
     //!
     //! \param id The ID of the worker to be pushed.
     //!
-    void
-    push_worker( unsigned id ) {
-      std::unique_lock<std::mutex> lock(m_queue_mutex);
-      m_queue.emplace_back(id);
+    void push_worker( unsigned id )
+    {
+      std::unique_lock<std::mutex> lock( m_queue_mutex );
+      m_queue.emplace_back( id );
       m_queue_cond.notify_one();
     }
 
     //!
-    //! \brief Pops a worker ID from the stack of available workers.
+    //! \brief Pops a worker ID from the queue of available workers.
     //!
     //! \return The ID of the popped worker.
     //!
-    unsigned
-    pop_worker() {
-      std::unique_lock<std::mutex> lock(m_queue_mutex);
+    unsigned pop_worker()
+    {
+      std::unique_lock<std::mutex> lock( m_queue_mutex );
       while ( m_queue.empty() ) m_queue_cond.wait( lock );
-      unsigned id{ m_queue.back() }; m_queue.pop_back();
+      unsigned id{ m_queue.back() };
+      m_queue.pop_back();
       return id;
     }
 
   public:
-
     //!
-    //! \brief Constructs a new ThreadPool5 instance with a specified number of threads.
+    //! \brief Constructs a new ThreadPool5 instance with a specified number of
+    //! threads.
     //!
-    //! \param nthread The number of threads to create in the pool. Defaults to the maximum hardware threads available.
+    //! \param nthread The number of threads to create in the pool. Defaults to
+    //! the maximum hardware threads available.
     //!
-    ThreadPool5(
-      unsigned nthread = std::max(
-        unsigned(1),
-        unsigned(std::thread::hardware_concurrency()-1)
-      )
-    )
-    : ThreadPoolBase()
-    , m_workers( size_t(nthread) )
+    ThreadPool5( unsigned nthread = std::max( unsigned( 1 ), unsigned( std::thread::hardware_concurrency() - 1 ) ) )
+      : ThreadPoolBase(), m_workers( size_t( nthread ) )
     {
       m_queue.clear();
-      unsigned id{0};
-      for ( Worker & w : m_workers ) { new (&w) Worker( this, id ); ++id; }
-      while ( id-- > 0 ) push_worker( id );
+      unsigned id{ 0 };
+      for ( Worker & w : m_workers )
+      {
+        new ( &w ) Worker( this, id );
+        ++id;
+      }
+      // FIXED: Workers will add themselves to the queue once they're ready
+      // No need to push them here, they'll call push_worker() from worker_loop()
     }
 
     //!
@@ -201,8 +207,8 @@ namespace Utils {
     //!
     //! Ensures all workers are stopped and joined before destruction.
     //!
-    virtual
-    ~ThreadPool5() {
+    virtual ~ThreadPool5()
+    {
       wait();
       m_workers.clear();
     }
@@ -212,27 +218,26 @@ namespace Utils {
     //!
     //! \param fun The function to be executed as a task.
     //!
-    void
-    exec( FUN && fun ) override {
+    void exec( FUN && fun ) override
+    {
       // cerca prima thread libera
-      m_workers[pop_worker()].exec( std::move(fun) );
+      m_workers[pop_worker()].exec( std::move( fun ) );
     }
 
     //!
     //! \brief Waits for all tasks to be completed.
     //!
-    void
-    wait() override
-    { for ( auto & w : m_workers ) w.wait(); }
+    void wait() override
+    {
+      for ( auto & w : m_workers ) w.wait();
+    }
 
     //!
     //! \brief Gets the current number of threads in the pool.
     //!
     //! \return The number of threads in the pool.
     //!
-    unsigned
-    thread_count() const override
-    { return unsigned(m_workers.size()); }
+    unsigned thread_count() const override { return unsigned( m_workers.size() ); }
 
     //!
     //! \brief Gets the name of the thread pool implementation.
@@ -242,12 +247,11 @@ namespace Utils {
     static char const * Name() { return "ThreadPool5"; }
 
     char const * name() const override { return Name(); }
-
   };
 
   /*! @} */
 
-}
+}  // namespace Utils
 
 //
 // eof: ThreadPool5.hxx

@@ -33,15 +33,30 @@
 // comment to disable threads support
 #define CLOTHOIDS_USE_THREADS 1
 
+#ifdef __clang__
+#pragma clang diagnostic ignored "-Wsign-compare"
+#endif
+
 #ifdef NO_SYSTEM_UTILS
-  #include "Utils.hh"
-  #include "Utils_AABB_tree.hh"
+#include "Utils.hh"
+#include "Utils_TicToc.hh"
+#include "Utils_autodiff.hh"
+#include "Utils_AABB_tree.hh"
+#include "Utils_eigen.hh"
+#include "Utils_search_intervals.hh"
 #else
-  #include <Utils.hh>
-  #include <Utils_AABB_tree.hh>
+#include <Utils.hh>
+#include <Utils_TicToc.hh>
+#include <Utils_autodiff.hh>
+#include <Utils_AABB_tree.hh>
+#include <Utils_eigen.hh>
+#include <Utils_search_intervals.hh>
 #endif
 
 #include "GenericContainer/GenericContainer.hh"
+
+#define PIPAL_EIGEN_EXTERNAL
+#include "Pipal.hh"
 
 #include <string>
 #include <string_view>
@@ -59,31 +74,53 @@
 #include <memory>  // shared_ptr
 
 #ifdef G2LIB_DEBUG
-  #define G2LIB_DEBUG_MESSAGE(...) std::cout << fmt::format(__VA_ARGS__) << std::flush
+#define G2LIB_DEBUG_MESSAGE( ... ) std::cout << fmt::format( __VA_ARGS__ ) << std::flush
 #else
-  #define G2LIB_DEBUG_MESSAGE(...)
+#define G2LIB_DEBUG_MESSAGE( ... )
 #endif
 
 #ifndef GLIB2_TOL_ANGLE
-  #define GLIB2_TOL_ANGLE 1e-8
+#define GLIB2_TOL_ANGLE 1e-8
 #endif
 
-namespace G2lib {
+namespace G2lib
+{
 
+  using std::map;
+  using std::set;
   using std::string;
   using std::string_view;
   using std::vector;
-  using std::map;
-  using std::set;
 
-  using istream_type     = std::basic_istream<char>;             //!< input streaming
-  using ostream_type     = std::basic_ostream<char>;             //!< output streaming
-  using real_type        = double;                               //!< real type number
-  using integer          = int;                                  //!< integer type number
-  using AABB_TREE        = Utils::AABBtree<real_type>;           //!< `AABB` tree type
-  using AABB_SET         = Utils::AABBtree<real_type>::AABB_SET; //!< Set type used in `AABB` tree object
-  using AABB_MAP         = Utils::AABBtree<real_type>::AABB_MAP; //!< Map type used in `AABB` tree object
-  using GenericContainer = GC_namespace::GenericContainer;       //!< Generic container object
+  using istream_type     = std::basic_istream<char>;              //!< input streaming
+  using ostream_type     = std::basic_ostream<char>;              //!< output streaming
+  using real_type        = double;                                //!< real type number
+  using integer          = int;                                   //!< integer type number
+  using AABB_TREE        = Utils::AABBtree<real_type>;            //!< `AABB` tree type
+  using AABB_SET         = Utils::AABBtree<real_type>::AABB_SET;  //!< Set type used in `AABB` tree object
+  using AABB_MAP         = Utils::AABBtree<real_type>::AABB_MAP;  //!< Map type used in `AABB` tree object
+  using GenericContainer = GC_namespace::GenericContainer;        //!< Generic container object
+
+  /*
+  //               _            _ _  __  __
+  //    __ _ _   _| |_ ___   __| (_)/ _|/ _|
+  //   / _` | | | | __/ _ \ / _` | | |_| |_
+  //  | (_| | |_| | || (_) | (_| | |  _|  _|
+  //   \__,_|\__,_|\__\___/ \__,_|_|_| |_|
+  */
+
+  using autodiff::dual0th;
+  using autodiff::dual1st;
+  using autodiff::dual2nd;
+  using autodiff::detail::DualOrder;
+
+  template <size_t N> using DualN      = autodiff::detail::HigherOrderDual<N, real_type>;
+  template <typename... T> using DualT = DualN<DualOrder<T...>::value>;
+
+  template <size_t N> constexpr void static_check_N()
+  {
+    static_assert( N <= 2, "DualOrder exceeded allowed limit" );
+  }
 
   //!
   //! Enumeration type for curve type
@@ -103,19 +140,19 @@ namespace G2lib {
   //!
   //! Convert curve type to a string
   //!
-  inline
-  string_view
-  to_string( CurveType n ) {
-    switch ( n ) {
-    case CurveType::LINE:          return "LINE";
-    case CurveType::POLYLINE:      return "POLYLINE";
-    case CurveType::CIRCLE:        return "CIRCLE";
-    case CurveType::BIARC:         return "BIARC";
-    case CurveType::BIARC_LIST:    return "BIARC_LIST";
-    case CurveType::CLOTHOID:      return "CLOTHOID";
-    case CurveType::CLOTHOID_LIST: return "CLOTHOID_LIST";
-    case CurveType::DUBINS:        return "DUBINS";
-    case CurveType::DUBINS3P:      return "DUBINS3P";
+  inline string_view to_string( CurveType n )
+  {
+    switch ( n )
+    {
+      case CurveType::LINE: return "LINE";
+      case CurveType::POLYLINE: return "POLYLINE";
+      case CurveType::CIRCLE: return "CIRCLE";
+      case CurveType::BIARC: return "BIARC";
+      case CurveType::BIARC_LIST: return "BIARC_LIST";
+      case CurveType::CLOTHOID: return "CLOTHOID";
+      case CurveType::CLOTHOID_LIST: return "CLOTHOID_LIST";
+      case CurveType::DUBINS: return "DUBINS";
+      case CurveType::DUBINS3P: return "DUBINS3P";
     }
     return "";
   };
@@ -138,7 +175,7 @@ namespace G2lib {
   class ClothoidList;
   class Dubins;
   class Dubins3p;
-}
+}  // namespace G2lib
 
 #include "Clothoids/G2lib.hxx"
 #include "Clothoids/Triangle2D.hxx"

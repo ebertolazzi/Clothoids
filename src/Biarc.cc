@@ -24,81 +24,90 @@
 #include "Clothoids.hh"
 #include "Clothoids_fmt.hh"
 
-namespace G2lib {
+namespace G2lib
+{
 
   using std::abs;
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   Biarc::Biarc(
-    real_type   const x0,
-    real_type   const y0,
-    real_type   const theta0,
-    real_type   const x1,
-    real_type   const y1,
-    real_type   const theta1,
-    string_view const name
-  ) : BaseCurve( name )
+    real_type const   x0,
+    real_type const   y0,
+    real_type const   theta0,
+    real_type const   x1,
+    real_type const   y1,
+    real_type const   theta1,
+    string_view const name )
+    : BaseCurve( name )
   {
     bool const ok = build( x0, y0, theta0, x1, y1, theta1 );
     UTILS_ASSERT(
       ok,
       "Biarc( x₀={}, y₀={}, θ₀={}, x₁={}, y₁={}, θ₁={}) cannot be computed\n",
-      x0, y0, theta0, x1, y1, theta1
-    );
+      x0,
+      y0,
+      theta0,
+      x1,
+      y1,
+      theta1 );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  void
-  Biarc::setup( GenericContainer const & gc ) {
-    string const where{ fmt::format("Biarc[{}]::setup( gc ):", this->name() ) };
-    real_type const x0     = gc.get_map_number("x0",     where );
-    real_type const y0     = gc.get_map_number("y0",     where );
-    real_type const theta0 = gc.get_map_number("theta0", where );
-    real_type const x1     = gc.get_map_number("x1",     where );
-    real_type const y1     = gc.get_map_number("y1",     where );
-    real_type const theta1 = gc.get_map_number("theta1", where );
-    bool const ok = this->build( x0, y0, theta0, x1, y1, theta1 );
+  void Biarc::setup( GenericContainer const & gc )
+  {
+    string const    where{ fmt::format( "Biarc[{}]::setup( gc ):", this->name() ) };
+    real_type const x0     = gc.get_map_number( "x0", where );
+    real_type const y0     = gc.get_map_number( "y0", where );
+    real_type const theta0 = gc.get_map_number( "theta0", where );
+    real_type const x1     = gc.get_map_number( "x1", where );
+    real_type const y1     = gc.get_map_number( "y1", where );
+    real_type const theta1 = gc.get_map_number( "theta1", where );
+    bool const      ok     = this->build( x0, y0, theta0, x1, y1, theta1 );
     UTILS_ASSERT( ok, "Biarc[{}]::setup( gc ) failed\n", this->name() );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  void
-  Biarc::build( LineSegment const & LS ) {
+  void Biarc::build( LineSegment const & LS )
+  {
     // @@@@ DA RIVEDERE
-    this->build(
-      LS.x_begin(),
-      LS.y_begin(),
-      LS.theta_begin(),
-      LS.x_end(),
-      LS.y_end(),
-      LS.theta_end()
-    );
+    this->build( LS.x_begin(), LS.y_begin(), LS.theta_begin(), LS.x_end(), LS.y_end(), LS.theta_end() );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  void
-  Biarc::build( CircleArc const & C ) {
+  void Biarc::build( CircleArc const & C )
+  {
     // @@@@ DA RIVEDERE
-    this->build(
-      C.x_begin(),
-      C.y_begin(),
-      C.theta_begin(),
-      C.x_end(),
-      C.y_end(),
-      C.theta_end()
-    );
+    this->build( C.x_begin(), C.y_begin(), C.theta_begin(), C.x_end(), C.y_end(), C.theta_end() );
   }
 
-  void Biarc::build( ClothoidCurve const & ) { UTILS_ERROR("cannot convert from ClothoidCurve to Biarc\n"); }
-  void Biarc::build( PolyLine      const & ) { UTILS_ERROR("cannot convert from PolyLine to Biarc\n"); }
-  void Biarc::build( BiarcList     const & ) { UTILS_ERROR("cannot convert from BiarcList to Biarc\n"); }
-  void Biarc::build( ClothoidList  const & ) { UTILS_ERROR("cannot convert from ClothoidList to Biarc\n"); }
-  void Biarc::build( Dubins        const & ) { UTILS_ERROR("cannot convert from Dubins to CircleArc\n"); }
-  void Biarc::build( Dubins3p      const & ) { UTILS_ERROR("cannot convert from Dubins3p to CircleArc\n"); }
+  void Biarc::build( ClothoidCurve const & )
+  {
+    UTILS_ERROR( "cannot convert from ClothoidCurve to Biarc\n" );
+  }
+  void Biarc::build( PolyLine const & )
+  {
+    UTILS_ERROR( "cannot convert from PolyLine to Biarc\n" );
+  }
+  void Biarc::build( BiarcList const & )
+  {
+    UTILS_ERROR( "cannot convert from BiarcList to Biarc\n" );
+  }
+  void Biarc::build( ClothoidList const & )
+  {
+    UTILS_ERROR( "cannot convert from ClothoidList to Biarc\n" );
+  }
+  void Biarc::build( Dubins const & )
+  {
+    UTILS_ERROR( "cannot convert from Dubins to CircleArc\n" );
+  }
+  void Biarc::build( Dubins3p const & )
+  {
+    UTILS_ERROR( "cannot convert from Dubins3p to CircleArc\n" );
+  }
 
   /*\
    |   ____  _
@@ -108,73 +117,71 @@ namespace G2lib {
    |  |____/|_|\__,_|_|  \___|
   \*/
 
-  Biarc::Biarc( BaseCurve const * pC ) : Biarc( pC->name() ) {
-
+  Biarc::Biarc( BaseCurve const * pC ) : Biarc( pC->name() )
+  {
     G2LIB_DEBUG_MESSAGE( "Biarc convert: {}\n", pC->type_name() );
 
-    switch ( pC->type() ) {
-    case CurveType::LINE:
-      G2LIB_DEBUG_MESSAGE( "to -> Biarc\n" );
-      this->build( *dynamic_cast<LineSegment const *>(pC) );
-      break;
-    case CurveType::CIRCLE:
-      G2LIB_DEBUG_MESSAGE( "to -> CircleArc\n" );
-      this->build( *dynamic_cast<CircleArc const *>(pC) );
-      break;
-    case CurveType::BIARC:
-      G2LIB_DEBUG_MESSAGE( "to -> Biarc\n" );
-      *this = *dynamic_cast<Biarc const *>(pC);
-      break;
-    default:
-      UTILS_ERROR( "Biarc constructor cannot convert from: {}\n", pC->type_name() );
+    switch ( pC->type() )
+    {
+      case CurveType::LINE:
+        G2LIB_DEBUG_MESSAGE( "to -> Biarc\n" );
+        this->build( *dynamic_cast<LineSegment const *>( pC ) );
+        break;
+      case CurveType::CIRCLE:
+        G2LIB_DEBUG_MESSAGE( "to -> CircleArc\n" );
+        this->build( *dynamic_cast<CircleArc const *>( pC ) );
+        break;
+      case CurveType::BIARC:
+        G2LIB_DEBUG_MESSAGE( "to -> Biarc\n" );
+        *this = *dynamic_cast<Biarc const *>( pC );
+        break;
+      default: UTILS_ERROR( "Biarc constructor cannot convert from: {}\n", pC->type_name() );
     }
   }
 
-  bool
-  Biarc::build(
+  bool Biarc::build(
     real_type const x0,
     real_type const y0,
     real_type const theta0,
     real_type const x1,
     real_type const y1,
-    real_type const theta1
-  ) {
+    real_type const theta1 )
+  {
+    real_type const dx{ x1 - x0 };
+    real_type const dy{ y1 - y0 };
+    real_type const d{ hypot( dy, dx ) };
 
-    real_type const dx { x1-x0 };
-    real_type const dy { y1-y0 };
-    real_type const d  { hypot(dy,dx) };
-
-    real_type const omega{ atan2(dy,dx) };
+    real_type const omega{ atan2( dy, dx ) };
 
     // put in range
-    real_type th0 { theta0 - omega };
-    real_type th1 { theta1 - omega };
+    real_type th0{ theta0 - omega };
+    real_type th1{ theta1 - omega };
 
-    rangeSymm(th0);
-    rangeSymm(th1);
+    rangeSymm( th0 );
+    rangeSymm( th1 );
 
-    real_type const thstar{ - (th0+th1)/2 };
+    real_type const thstar{ -( th0 + th1 ) / 2 };
 
-    real_type const dth  { (th1 - th0)/4    };
-    real_type const dth0 { (thstar - th0)/2 };
-    real_type const dth1 { (thstar - th1)/2 };
+    real_type const dth{ ( th1 - th0 ) / 4 };
+    real_type const dth0{ ( thstar - th0 ) / 2 };
+    real_type const dth1{ ( thstar - th1 ) / 2 };
 
-    real_type const t  { 2 * cos( dth ) / d };
-    real_type const l0 { 1/(t*Sinc( dth0 )) };
-    real_type const l1 { 1/(t*Sinc( dth1 )) };
-    real_type const k0 { 2*t*sin( dth0 )    };
-    real_type const k1 { -2*t*sin( dth1 )   };
+    real_type const t{ 2 * cos( dth ) / d };
+    real_type const l0{ 1 / ( t * Sinc( dth0 ) ) };
+    real_type const l1{ 1 / ( t * Sinc( dth1 ) ) };
+    real_type const k0{ 2 * t * sin( dth0 ) };
+    real_type const k1{ -2 * t * sin( dth1 ) };
 
-    real_type const epsi{ 100*d*Utils::machine_eps<real_type>() };
-    if ( l0 > epsi && l1 > epsi ) {
-
+    real_type const epsi{ 100 * d * Utils::machine_eps<real_type>() };
+    if ( l0 > epsi && l1 > epsi )
+    {
       m_C0.build( x0, y0, theta0, k0, l0 );
 
-      real_type const an { omega+(thstar+th0)/2 };
-      real_type const xs { x0 + cos(an)/t };
-      real_type const ys { y0 + sin(an)/t };
+      real_type const an{ omega + ( thstar + th0 ) / 2 };
+      real_type const xs{ x0 + cos( an ) / t };
+      real_type const ys{ y0 + sin( an ) / t };
 
-      m_C1.build( xs, ys, omega+thstar, k1, l1 );
+      m_C1.build( xs, ys, omega + thstar, k1, l1 );
       return true;
     }
     return false;
@@ -182,52 +189,58 @@ namespace G2lib {
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  bool
-  Biarc::build_3P(
+  bool Biarc::build_3P(
     real_type const x0,
     real_type const y0,
     real_type const x1,
     real_type const y1,
     real_type const x2,
-    real_type const y2
-  ) {
+    real_type const y2 )
+  {
+    real_type const dxa{ x1 - x0 };
+    real_type const dya{ y1 - y0 };
+    real_type const dxb{ x2 - x1 };
+    real_type const dyb{ y2 - y1 };
+    real_type const La{ hypot( dya, dxa ) };
+    real_type const Lb{ hypot( dyb, dxb ) };
+    real_type       arg{ ( dxa * dxb + dya * dyb ) / ( La * Lb ) };
+    if ( arg > 1 )
+      arg = 1;
+    else if ( arg < -1 )
+      arg = -1;
+    real_type const om{ acos( arg ) };
 
-    real_type const dxa {  x1-x0 };
-    real_type const dya {  y1-y0 };
-    real_type const dxb {  x2-x1 };
-    real_type const dyb {  y2-y1 };
-    real_type const La  {  hypot(dya,dxa) };
-    real_type const Lb  {  hypot(dyb,dxb) };
-    real_type       arg {  (dxa*dxb + dya * dyb)/(La*Lb) };
-    if      ( arg >  1 ) arg = 1;
-    else if ( arg < -1 ) arg = -1;
-    real_type const om{ acos(arg) };
-
-    real_type at { (La/(La+Lb))*om };
-    real_type bt { (Lb/(La+Lb))*om };
+    real_type at{ ( La / ( La + Lb ) ) * om };
+    real_type bt{ ( Lb / ( La + Lb ) ) * om };
     // find solution using Halley
-    real_type Delta{0};
-    bool found{false};
-    for ( integer iter{0}; iter < 10 && !found; ++iter ) {
+    real_type Delta{ 0 };
+    bool      found{ false };
+    for ( integer iter{ 0 }; iter < 10 && !found; ++iter )
+    {
       real_type ga[3], gb[3];
-      gfun( at+Delta, ga );
-      gfun( bt-Delta, gb );
-      real_type const f   { ga[0]/La - gb[0]/Lb };
-      real_type const df  { ga[1]/La + gb[1]/Lb };
-      real_type const ddf { ga[2]/La - gb[2]/Lb };
-      real_type const h   { (df*f)/(df*df-0.5*f*ddf) };
+      gfun( at + Delta, ga );
+      gfun( bt - Delta, gb );
+      real_type const f{ ga[0] / La - gb[0] / Lb };
+      real_type const df{ ga[1] / La + gb[1] / Lb };
+      real_type const ddf{ ga[2] / La - gb[2] / Lb };
+      real_type const h{ ( df * f ) / ( df * df - 0.5 * f * ddf ) };
       Delta -= h;
-      found = abs(h) < 1e-10 && abs(f) < 1e-10;
+      found = abs( h ) < 1e-10 && abs( f ) < 1e-10;
     }
 
-    if ( found ) {
-      at += Delta; bt -= Delta;
-      real_type tha { atan2(dya,dxa) };
-      real_type thb { atan2(dyb,dxb) };
-      if ( dxa*dyb < dya*dxb ) {
+    if ( found )
+    {
+      at += Delta;
+      bt -= Delta;
+      real_type tha{ atan2( dya, dxa ) };
+      real_type thb{ atan2( dyb, dxb ) };
+      if ( dxa * dyb < dya * dxb )
+      {
         tha += at;
         thb += bt;
-      } else {
+      }
+      else
+      {
         tha -= at;
         thb -= bt;
       }
@@ -240,13 +253,8 @@ namespace G2lib {
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  void
-  Biarc::bbox(
-    real_type & xmin,
-    real_type & ymin,
-    real_type & xmax,
-    real_type & ymax
-  ) const {
+  void Biarc::bbox( real_type & xmin, real_type & ymin, real_type & xmax, real_type & ymax ) const
+  {
     m_C0.bbox( xmin, ymin, xmax, ymax );
     real_type xmi1, ymi1, xma1, yma1;
     m_C1.bbox( xmi1, ymi1, xma1, yma1 );
@@ -258,14 +266,9 @@ namespace G2lib {
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  void
-  Biarc::bbox_ISO(
-    real_type const offs,
-    real_type &     xmin,
-    real_type &     ymin,
-    real_type &     xmax,
-    real_type &     ymax
-  ) const {
+  void Biarc::bbox_ISO( real_type const offs, real_type & xmin, real_type & ymin, real_type & xmax, real_type & ymax )
+    const
+  {
     m_C0.bbox_ISO( offs, xmin, ymin, xmax, ymax );
     real_type xmi1, ymi1, xma1, yma1;
     m_C1.bbox_ISO( offs, xmi1, ymi1, xma1, yma1 );
@@ -283,67 +286,70 @@ namespace G2lib {
    |  \__|_|  \__,_|_| |_|___/_|  \___/|_|  |_| |_| |_|
   \*/
 
-  void
-  Biarc::reverse() {
-    CircleArc const TMP(m_C0);
-    m_C0 = m_C1; m_C0.reverse();
-    m_C1 = TMP;  m_C1.reverse();
+  void Biarc::reverse()
+  {
+    CircleArc const TMP( m_C0 );
+    m_C0 = m_C1;
+    m_C0.reverse();
+    m_C1 = TMP;
+    m_C1.reverse();
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  void
-  Biarc::scale( real_type const s ) {
+  void Biarc::scale( real_type const s )
+  {
     m_C0.scale( s );
     m_C1.scale( s );
     m_C1.change_origin( m_C0.x_end(), m_C0.y_end() );
   }
 
-  void
-  Biarc::change_origin( real_type const newx0, real_type const newy0 ) {
-    m_C0.change_origin(newx0,newy0);
-    m_C1.change_origin(m_C0.x_end(),m_C0.y_end());
+  void Biarc::change_origin( real_type const newx0, real_type const newy0 )
+  {
+    m_C0.change_origin( newx0, newy0 );
+    m_C1.change_origin( m_C0.x_end(), m_C0.y_end() );
   }
 
-  void
-  Biarc::trim( real_type const s_begin, real_type const s_end ) {
-    UTILS_ASSERT(
-      s_end > s_begin,
-      "Biarc::trim( begin={}, s_end={} ) s_end must be > s_begin\n",
-      s_begin, s_end
-    );
+  void Biarc::trim( real_type const s_begin, real_type const s_end )
+  {
+    UTILS_ASSERT( s_end > s_begin, "Biarc::trim( begin={}, s_end={} ) s_end must be > s_begin\n", s_begin, s_end );
     real_type const L0{ m_C0.length() };
-    if ( s_end <= L0 ) {
+    if ( s_end <= L0 )
+    {
       m_C0.trim( s_begin, s_end );
       m_C1 = m_C0;
       real_type const ss{ m_C0.length() };
-      m_C0.trim( 0, ss/2 );
-      m_C1.trim( ss/2, ss );
-    } else if ( s_begin >= L0 ) {
-      m_C1.trim( s_begin-L0, s_end-L0 );
+      m_C0.trim( 0, ss / 2 );
+      m_C1.trim( ss / 2, ss );
+    }
+    else if ( s_begin >= L0 )
+    {
+      m_C1.trim( s_begin - L0, s_end - L0 );
       m_C0 = m_C1;
       real_type const ss{ m_C0.length() };
-      m_C0.trim( 0, ss/2 );
-      m_C1.trim( ss/2, ss );
-    } else {
+      m_C0.trim( 0, ss / 2 );
+      m_C1.trim( ss / 2, ss );
+    }
+    else
+    {
       m_C0.trim( s_begin, L0 );
-      m_C1.trim( 0, s_end-L0 );
+      m_C1.trim( 0, s_end - L0 );
     }
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  real_type
-  Biarc::theta( real_type const s ) const {
+  real_type Biarc::theta( real_type const s ) const
+  {
     real_type const L0{ m_C0.length() };
-    if ( s < L0 ) return m_C0.theta(s);
-    return m_C1.theta(s-L0);
+    if ( s < L0 ) return m_C0.theta( s );
+    return m_C1.theta( s - L0 );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  real_type
-  Biarc::theta_D( real_type const s ) const {
+  real_type Biarc::theta_D( real_type const s ) const
+  {
     real_type const L0{ m_C0.length() };
     if ( s < L0 ) return m_C0.m_k;
     return m_C1.m_k;
@@ -351,407 +357,368 @@ namespace G2lib {
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  real_type
-  Biarc::tx( real_type const s ) const {
+  real_type Biarc::tx( real_type const s ) const
+  {
     real_type const L0 = m_C0.length();
-    if ( s < L0 ) return m_C0.tx(s);
-    return m_C1.tx(s-L0);
+    if ( s < L0 ) return m_C0.tx( s );
+    return m_C1.tx( s - L0 );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  real_type
-  Biarc::tx_D( real_type const s ) const {
+  real_type Biarc::tx_D( real_type const s ) const
+  {
     real_type const L0{ m_C0.length() };
-    if ( s < L0 ) return m_C0.tx_D(s);
-    return m_C1.tx_D(s-L0);
+    if ( s < L0 ) return m_C0.tx_D( s );
+    return m_C1.tx_D( s - L0 );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  real_type
-  Biarc::tx_DD( real_type const s ) const {
+  real_type Biarc::tx_DD( real_type const s ) const
+  {
     real_type const L0{ m_C0.length() };
-    if ( s < L0 ) return m_C0.tx_DD(s);
-    return m_C1.tx_DD(s-L0);
+    if ( s < L0 ) return m_C0.tx_DD( s );
+    return m_C1.tx_DD( s - L0 );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  real_type
-  Biarc::tx_DDD( real_type const s ) const {
+  real_type Biarc::tx_DDD( real_type const s ) const
+  {
     real_type const L0{ m_C0.length() };
-    if ( s < L0 ) return m_C0.tx_DDD(s);
-    return m_C1.tx_DDD(s-L0);
+    if ( s < L0 ) return m_C0.tx_DDD( s );
+    return m_C1.tx_DDD( s - L0 );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  real_type
-  Biarc::ty( real_type const s ) const {
+  real_type Biarc::ty( real_type const s ) const
+  {
     real_type const L0{ m_C0.length() };
-    if ( s < L0 ) return m_C0.ty(s);
-    return m_C1.ty(s-L0);
+    if ( s < L0 ) return m_C0.ty( s );
+    return m_C1.ty( s - L0 );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  real_type
-  Biarc::ty_D( real_type const s ) const {
+  real_type Biarc::ty_D( real_type const s ) const
+  {
     real_type const L0{ m_C0.length() };
-    if ( s < L0 ) return m_C0.ty_D(s);
-    return m_C1.ty_D(s-L0);
+    if ( s < L0 ) return m_C0.ty_D( s );
+    return m_C1.ty_D( s - L0 );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  real_type
-  Biarc::ty_DD( real_type const s ) const {
+  real_type Biarc::ty_DD( real_type const s ) const
+  {
     real_type const L0{ m_C0.length() };
-    if ( s < L0 ) return m_C0.ty_DD(s);
-    return m_C1.ty_DD(s-L0);
+    if ( s < L0 ) return m_C0.ty_DD( s );
+    return m_C1.ty_DD( s - L0 );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  real_type
-  Biarc::ty_DDD( real_type const s ) const {
+  real_type Biarc::ty_DDD( real_type const s ) const
+  {
     real_type const L0{ m_C0.length() };
-    if ( s < L0 ) return m_C0.ty_DDD(s);
-    return m_C1.ty_DDD(s-L0);
+    if ( s < L0 ) return m_C0.ty_DDD( s );
+    return m_C1.ty_DDD( s - L0 );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  real_type
-  Biarc::X( real_type const s ) const {
+  real_type Biarc::X( real_type const s ) const
+  {
     real_type const L0{ m_C0.length() };
-    if ( s < L0 ) return m_C0.X(s);
-    return m_C1.X(s-L0);
+    if ( s < L0 ) return m_C0.X( s );
+    return m_C1.X( s - L0 );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  real_type
-  Biarc::X_D( real_type const s ) const {
+  real_type Biarc::X_D( real_type const s ) const
+  {
     real_type const L0{ m_C0.length() };
-    if ( s < L0 ) return m_C0.X_D(s);
-    return m_C1.X_D(s-L0);
+    if ( s < L0 ) return m_C0.X_D( s );
+    return m_C1.X_D( s - L0 );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  real_type
-  Biarc::X_DD( real_type const s ) const {
+  real_type Biarc::X_DD( real_type const s ) const
+  {
     real_type const L0{ m_C0.length() };
-    if ( s < L0 ) return m_C0.X_DD(s);
-    return m_C1.X_DD(s-L0);
+    if ( s < L0 ) return m_C0.X_DD( s );
+    return m_C1.X_DD( s - L0 );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  real_type
-  Biarc::X_DDD( real_type const s ) const {
+  real_type Biarc::X_DDD( real_type const s ) const
+  {
     real_type const L0{ m_C0.length() };
-    if ( s < L0 ) return m_C0.X_DDD(s);
-    return m_C1.X_DDD(s-L0);
+    if ( s < L0 ) return m_C0.X_DDD( s );
+    return m_C1.X_DDD( s - L0 );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  real_type
-  Biarc::Y( real_type const s ) const {
+  real_type Biarc::Y( real_type const s ) const
+  {
     real_type const L0{ m_C0.length() };
-    if ( s < L0 ) return m_C0.Y(s);
-    return m_C1.Y(s-L0);
+    if ( s < L0 ) return m_C0.Y( s );
+    return m_C1.Y( s - L0 );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  real_type
-  Biarc::Y_D( real_type const s ) const {
+  real_type Biarc::Y_D( real_type const s ) const
+  {
     real_type const L0{ m_C0.length() };
-    if ( s < L0 ) return m_C0.Y_D(s);
-    return m_C1.Y_D(s-L0);
+    if ( s < L0 ) return m_C0.Y_D( s );
+    return m_C1.Y_D( s - L0 );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  real_type
-  Biarc::Y_DD( real_type const s ) const {
+  real_type Biarc::Y_DD( real_type const s ) const
+  {
     real_type const L0{ m_C0.length() };
-    if ( s < L0 ) return m_C0.Y_DD(s);
-    return m_C1.Y_DD(s-L0);
+    if ( s < L0 ) return m_C0.Y_DD( s );
+    return m_C1.Y_DD( s - L0 );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  real_type
-  Biarc::Y_DDD( real_type const s ) const {
+  real_type Biarc::Y_DDD( real_type const s ) const
+  {
     real_type const L0{ m_C0.length() };
-    if ( s < L0 ) return m_C0.Y_DDD(s);
-    return m_C1.Y_DDD(s-L0);
+    if ( s < L0 ) return m_C0.Y_DDD( s );
+    return m_C1.Y_DDD( s - L0 );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  real_type
-  Biarc::X_ISO( real_type const s, real_type const offs ) const {
+  real_type Biarc::X_ISO( real_type const s, real_type const offs ) const
+  {
     real_type const L0{ m_C0.length() };
-    if ( s < L0 ) return m_C0.X_ISO(s,offs);
-    return m_C1.X_ISO(s-L0,offs);
+    if ( s < L0 ) return m_C0.X_ISO( s, offs );
+    return m_C1.X_ISO( s - L0, offs );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  real_type
-  Biarc::X_ISO_D( real_type const s, real_type const offs ) const {
+  real_type Biarc::X_ISO_D( real_type const s, real_type const offs ) const
+  {
     real_type const L0{ m_C0.length() };
-    if ( s < L0 ) return m_C0.X_ISO_D(s,offs);
-    return m_C1.X_ISO_D(s-L0,offs);
+    if ( s < L0 ) return m_C0.X_ISO_D( s, offs );
+    return m_C1.X_ISO_D( s - L0, offs );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  real_type
-  Biarc::X_ISO_DD( real_type const s, real_type const offs ) const {
+  real_type Biarc::X_ISO_DD( real_type const s, real_type const offs ) const
+  {
     real_type const L0{ m_C0.length() };
-    if ( s < L0 ) return m_C0.X_ISO_DD(s,offs);
-    return m_C1.X_ISO_DD(s-L0,offs);
+    if ( s < L0 ) return m_C0.X_ISO_DD( s, offs );
+    return m_C1.X_ISO_DD( s - L0, offs );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  real_type
-  Biarc::X_ISO_DDD( real_type const s, real_type const offs ) const {
+  real_type Biarc::X_ISO_DDD( real_type const s, real_type const offs ) const
+  {
     real_type const L0{ m_C0.length() };
-    if ( s < L0 ) return m_C0.X_ISO_DDD(s,offs);
-    return m_C1.X_ISO_DDD(s-L0,offs);
+    if ( s < L0 ) return m_C0.X_ISO_DDD( s, offs );
+    return m_C1.X_ISO_DDD( s - L0, offs );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  real_type
-  Biarc::Y_ISO( real_type const s, real_type const offs ) const {
+  real_type Biarc::Y_ISO( real_type const s, real_type const offs ) const
+  {
     real_type const L0{ m_C0.length() };
-    if ( s < L0 ) return m_C0.Y_ISO(s,offs);
-    return m_C1.Y_ISO(s-L0,offs);
+    if ( s < L0 ) return m_C0.Y_ISO( s, offs );
+    return m_C1.Y_ISO( s - L0, offs );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  real_type
-  Biarc::Y_ISO_D( real_type const s, real_type const offs ) const {
+  real_type Biarc::Y_ISO_D( real_type const s, real_type const offs ) const
+  {
     real_type const L0{ m_C0.length() };
-    if ( s < L0 ) return m_C0.Y_ISO_D(s,offs);
-    return m_C1.Y_ISO_D(s-L0,offs);
+    if ( s < L0 ) return m_C0.Y_ISO_D( s, offs );
+    return m_C1.Y_ISO_D( s - L0, offs );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  real_type
-  Biarc::Y_ISO_DD( real_type const s, real_type const offs ) const {
+  real_type Biarc::Y_ISO_DD( real_type const s, real_type const offs ) const
+  {
     real_type const L0{ m_C0.length() };
-    if ( s < L0 ) return m_C0.Y_ISO_DD(s,offs);
-    return m_C1.Y_ISO_DD(s-L0,offs);
+    if ( s < L0 ) return m_C0.Y_ISO_DD( s, offs );
+    return m_C1.Y_ISO_DD( s - L0, offs );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  real_type
-  Biarc::Y_ISO_DDD( real_type const s, real_type const offs ) const {
+  real_type Biarc::Y_ISO_DDD( real_type const s, real_type const offs ) const
+  {
     real_type const L0{ m_C0.length() };
-    if ( s < L0 ) return m_C0.Y_ISO_DDD(s,offs);
-    return m_C1.Y_ISO_DDD(s-L0,offs);
+    if ( s < L0 ) return m_C0.Y_ISO_DDD( s, offs );
+    return m_C1.Y_ISO_DDD( s - L0, offs );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  void
-  Biarc::tg( real_type const s, real_type & tx, real_type & ty ) const {
+  void Biarc::tg( real_type const s, real_type & tx, real_type & ty ) const
+  {
     real_type const L0{ m_C0.length() };
-    if ( s < L0 ) return m_C0.tg(s,tx,ty);
-    return m_C1.tg(s-L0,tx,ty);
+    if ( s < L0 ) return m_C0.tg( s, tx, ty );
+    return m_C1.tg( s - L0, tx, ty );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  void
-  Biarc::tg_D( real_type const s, real_type & tx_D, real_type & ty_D ) const {
+  void Biarc::tg_D( real_type const s, real_type & tx_D, real_type & ty_D ) const
+  {
     real_type const L0{ m_C0.length() };
-    if ( s < L0 ) return m_C0.tg_D(s,tx_D,ty_D);
-    return m_C1.tg_D(s-L0,tx_D,ty_D);
+    if ( s < L0 ) return m_C0.tg_D( s, tx_D, ty_D );
+    return m_C1.tg_D( s - L0, tx_D, ty_D );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  void
-  Biarc::tg_DD( real_type const s, real_type & tx_DD, real_type & ty_DD ) const {
+  void Biarc::tg_DD( real_type const s, real_type & tx_DD, real_type & ty_DD ) const
+  {
     real_type const L0{ m_C0.length() };
-    if ( s < L0 ) return m_C0.tg_DD(s,tx_DD,ty_DD);
-    return m_C1.tg_DD(s-L0,tx_DD,ty_DD);
+    if ( s < L0 ) return m_C0.tg_DD( s, tx_DD, ty_DD );
+    return m_C1.tg_DD( s - L0, tx_DD, ty_DD );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  void
-  Biarc::tg_DDD( real_type const s, real_type & tx_DDD, real_type & ty_DDD ) const {
+  void Biarc::tg_DDD( real_type const s, real_type & tx_DDD, real_type & ty_DDD ) const
+  {
     real_type const L0{ m_C0.length() };
-    if ( s < L0 ) return m_C0.tg_DDD(s,tx_DDD,ty_DDD);
-    return m_C1.tg_DDD(s-L0,tx_DDD,ty_DDD);
+    if ( s < L0 ) return m_C0.tg_DDD( s, tx_DDD, ty_DDD );
+    return m_C1.tg_DDD( s - L0, tx_DDD, ty_DDD );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  void
-  Biarc::evaluate(
-    real_type   s,
-    real_type & th,
-    real_type & k,
-    real_type & x,
-    real_type & y
-  ) const {
-    if ( s < m_C0.length() ) {
-      th = m_C0.theta(s);
+  void Biarc::evaluate( real_type s, real_type & th, real_type & k, real_type & x, real_type & y ) const
+  {
+    if ( s < m_C0.length() )
+    {
+      th = m_C0.theta( s );
       k  = m_C0.curvature();
-      m_C0.eval(s,x,y);
-    } else {
+      m_C0.eval( s, x, y );
+    }
+    else
+    {
       s -= m_C0.length();
-      th = m_C1.theta(s);
+      th = m_C1.theta( s );
       k  = m_C1.curvature();
-      m_C1.eval(s,x,y);
+      m_C1.eval( s, x, y );
     }
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  void
-  Biarc::eval(
-    real_type   s,
-    real_type & x,
-    real_type & y
-  ) const {
-    if ( s < m_C0.length() ) {
-      m_C0.eval(s,x,y);
-    } else {
+  void Biarc::eval( real_type s, real_type & x, real_type & y ) const
+  {
+    if ( s < m_C0.length() ) { m_C0.eval( s, x, y ); }
+    else
+    {
       s -= m_C0.length();
-      m_C1.eval(s,x,y);
+      m_C1.eval( s, x, y );
     }
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  void
-  Biarc::eval_D(
-    real_type   s,
-    real_type & x_D,
-    real_type & y_D
-  ) const {
-    if ( s < m_C0.length() ) {
-      m_C0.eval_D(s,x_D,y_D);
-    } else {
+  void Biarc::eval_D( real_type s, real_type & x_D, real_type & y_D ) const
+  {
+    if ( s < m_C0.length() ) { m_C0.eval_D( s, x_D, y_D ); }
+    else
+    {
       s -= m_C0.length();
-      m_C1.eval_D(s,x_D,y_D);
+      m_C1.eval_D( s, x_D, y_D );
     }
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  void
-  Biarc::eval_DD(
-    real_type   s,
-    real_type & x_DD,
-    real_type & y_DD
-  ) const {
-    if ( s < m_C0.length() ) {
-      m_C0.eval_DD(s,x_DD,y_DD);
-    } else {
+  void Biarc::eval_DD( real_type s, real_type & x_DD, real_type & y_DD ) const
+  {
+    if ( s < m_C0.length() ) { m_C0.eval_DD( s, x_DD, y_DD ); }
+    else
+    {
       s -= m_C0.length();
-      m_C1.eval_DD(s,x_DD,y_DD);
+      m_C1.eval_DD( s, x_DD, y_DD );
     }
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  void
-  Biarc::eval_DDD(
-    real_type   s,
-    real_type & x_DDD,
-    real_type & y_DDD
-  ) const {
-    if ( s < m_C0.length() ) {
-      m_C0.eval_DDD(s,x_DDD,y_DDD);
-    } else {
+  void Biarc::eval_DDD( real_type s, real_type & x_DDD, real_type & y_DDD ) const
+  {
+    if ( s < m_C0.length() ) { m_C0.eval_DDD( s, x_DDD, y_DDD ); }
+    else
+    {
       s -= m_C0.length();
-      m_C1.eval_DDD(s,x_DDD,y_DDD);
+      m_C1.eval_DDD( s, x_DDD, y_DDD );
     }
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  void
-  Biarc::eval_ISO(
-    real_type       s,
-    real_type const offs,
-    real_type &     x,
-    real_type &     y
-  ) const {
-    if ( s < m_C0.length() ) {
-      m_C0.eval_ISO(s,offs,x,y);
-    } else {
+  void Biarc::eval_ISO( real_type s, real_type const offs, real_type & x, real_type & y ) const
+  {
+    if ( s < m_C0.length() ) { m_C0.eval_ISO( s, offs, x, y ); }
+    else
+    {
       s -= m_C0.length();
-      m_C1.eval_ISO(s,offs,x,y);
+      m_C1.eval_ISO( s, offs, x, y );
     }
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  void
-  Biarc::eval_ISO_D(
-    real_type       s,
-    real_type const offs,
-    real_type &     x_D,
-    real_type &     y_D
-  ) const {
-    if ( s < m_C0.length() ) {
-      m_C0.eval_ISO_D(s,offs,x_D,y_D);
-    } else {
+  void Biarc::eval_ISO_D( real_type s, real_type const offs, real_type & x_D, real_type & y_D ) const
+  {
+    if ( s < m_C0.length() ) { m_C0.eval_ISO_D( s, offs, x_D, y_D ); }
+    else
+    {
       s -= m_C0.length();
-      m_C1.eval_ISO_D(s,offs,x_D,y_D);
+      m_C1.eval_ISO_D( s, offs, x_D, y_D );
     }
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  void
-  Biarc::eval_ISO_DD(
-    real_type       s,
-    real_type const offs,
-    real_type &     x_DD,
-    real_type &     y_DD
-  ) const {
-    if ( s < m_C0.length() ) {
-      m_C0.eval_ISO_DD(s,offs,x_DD,y_DD);
-    } else {
+  void Biarc::eval_ISO_DD( real_type s, real_type const offs, real_type & x_DD, real_type & y_DD ) const
+  {
+    if ( s < m_C0.length() ) { m_C0.eval_ISO_DD( s, offs, x_DD, y_DD ); }
+    else
+    {
       s -= m_C0.length();
-      m_C1.eval_ISO_DD(s,offs,x_DD,y_DD);
+      m_C1.eval_ISO_DD( s, offs, x_DD, y_DD );
     }
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  void
-  Biarc::eval_ISO_DDD(
-    real_type       s,
-    real_type const offs,
-    real_type &     x_DDD,
-    real_type &     y_DDD
-  ) const {
-    if ( s < m_C0.length() ) {
-      m_C0.eval_ISO_DDD(s,offs,x_DDD,y_DDD);
-    } else {
+  void Biarc::eval_ISO_DDD( real_type s, real_type const offs, real_type & x_DDD, real_type & y_DDD ) const
+  {
+    if ( s < m_C0.length() ) { m_C0.eval_ISO_DDD( s, offs, x_DDD, y_DDD ); }
+    else
+    {
       s -= m_C0.length();
-      m_C1.eval_ISO_DDD(s,offs,x_DDD,y_DDD);
+      m_C1.eval_ISO_DDD( s, offs, x_DDD, y_DDD );
     }
   }
 
@@ -765,15 +732,17 @@ namespace G2lib {
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  bool
-  Biarc::collision( BaseCurve const * pC ) const {
-    if ( pC->type() == CurveType::BIARC ) {
-      Biarc const & C{ *dynamic_cast<Biarc const *>(pC) };
+  bool Biarc::collision( BaseCurve const * pC ) const
+  {
+    if ( pC->type() == CurveType::BIARC )
+    {
+      Biarc const & C{ *dynamic_cast<Biarc const *>( pC ) };
       return this->collision( C );
     }
     CurveType const CT{ curve_promote( this->type(), pC->type() ) };
-    if ( CT == CurveType::BIARC ) {
-      Biarc const C(pC);
+    if ( CT == CurveType::BIARC )
+    {
+      Biarc const C( pC );
       return this->collision( C );
     }
     return G2lib::collision( this, pC );
@@ -781,19 +750,17 @@ namespace G2lib {
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  bool
-  Biarc::collision_ISO(
-    real_type const   offs,
-    BaseCurve const * pC,
-    real_type const   offs_C
-  ) const {
-    if ( pC->type() == CurveType::BIARC ) {
-      Biarc const & C{ *dynamic_cast<Biarc const *>(pC) };
+  bool Biarc::collision_ISO( real_type const offs, BaseCurve const * pC, real_type const offs_C ) const
+  {
+    if ( pC->type() == CurveType::BIARC )
+    {
+      Biarc const & C{ *dynamic_cast<Biarc const *>( pC ) };
       return this->collision_ISO( offs, C, offs_C );
     }
     CurveType const CT{ curve_promote( this->type(), pC->type() ) };
-    if ( CT == CurveType::BIARC ) {
-      Biarc const C(pC);
+    if ( CT == CurveType::BIARC )
+    {
+      Biarc const C( pC );
       return this->collision_ISO( offs, C, offs_C );
     }
     return G2lib::collision_ISO( this, offs, pC, offs_C );
@@ -801,27 +768,24 @@ namespace G2lib {
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  void
-  Biarc::intersect(
-    Biarc const   & B,
-    IntersectList & ilist
-  ) const {
+  void Biarc::intersect( Biarc const & B, IntersectList & ilist ) const
+  {
     IntersectList ilist00, ilist01, ilist10, ilist11;
     m_C0.intersect( B.m_C0, ilist00 );
     m_C0.intersect( B.m_C1, ilist01 );
     m_C1.intersect( B.m_C0, ilist10 );
     m_C1.intersect( B.m_C1, ilist11 );
-    real_type const L  { m_C0.length()   };
-    real_type const LB { B.m_C0.length() };
-    ilist.reserve( ilist.size() +
-                   ilist00.size() +
-                   ilist01.size() +
-                   ilist10.size() +
-                   ilist11.size() );
+    real_type const L{ m_C0.length() };
+    real_type const LB{ B.m_C0.length() };
+    ilist.reserve( ilist.size() + ilist00.size() + ilist01.size() + ilist10.size() + ilist11.size() );
 
-    for ( auto &[fst, snd] : ilist01 ) snd += LB;
-    for ( auto &[fst, snd] : ilist10 ) fst  += L;
-    for ( auto &[fst, snd] : ilist11 ) { fst += L; snd += LB; }
+    for ( auto & [fst, snd] : ilist01 ) snd += LB;
+    for ( auto & [fst, snd] : ilist10 ) fst += L;
+    for ( auto & [fst, snd] : ilist11 )
+    {
+      fst += L;
+      snd += LB;
+    }
 
     for ( auto const & it : ilist00 ) ilist.push_back( it );
     for ( auto const & it : ilist01 ) ilist.push_back( it );
@@ -831,29 +795,25 @@ namespace G2lib {
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  void
-  Biarc::intersect_ISO(
-    real_type const   offs,
-    Biarc     const & B,
-    real_type const   offs_B,
-    IntersectList   & ilist
-  ) const {
+  void Biarc::intersect_ISO( real_type const offs, Biarc const & B, real_type const offs_B, IntersectList & ilist )
+    const
+  {
     IntersectList ilist00, ilist01, ilist10, ilist11;
     m_C0.intersect_ISO( offs, B.m_C0, offs_B, ilist00 );
     m_C0.intersect_ISO( offs, B.m_C1, offs_B, ilist01 );
     m_C1.intersect_ISO( offs, B.m_C0, offs_B, ilist10 );
     m_C1.intersect_ISO( offs, B.m_C1, offs_B, ilist11 );
-    real_type const L  { m_C0.length()   };
-    real_type const LB { B.m_C0.length() };
-    ilist.reserve( ilist.size() +
-                   ilist00.size() +
-                   ilist01.size() +
-                   ilist10.size() +
-                   ilist11.size() );
+    real_type const L{ m_C0.length() };
+    real_type const LB{ B.m_C0.length() };
+    ilist.reserve( ilist.size() + ilist00.size() + ilist01.size() + ilist10.size() + ilist11.size() );
 
-    for ( auto &[fst, snd] : ilist01 ) snd += LB;
-    for ( auto &[fst, snd] : ilist10 ) fst  += L;
-    for ( auto &[fst, snd] : ilist11 ) { fst += L; snd += LB; }
+    for ( auto & [fst, snd] : ilist01 ) snd += LB;
+    for ( auto & [fst, snd] : ilist10 ) fst += L;
+    for ( auto & [fst, snd] : ilist11 )
+    {
+      fst += L;
+      snd += LB;
+    }
 
     for ( auto const & it : ilist00 ) ilist.push_back( it );
     for ( auto const & it : ilist01 ) ilist.push_back( it );
@@ -863,23 +823,23 @@ namespace G2lib {
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  integer
-  Biarc::closest_point_ISO(
+  integer Biarc::closest_point_ISO(
     real_type const qx,
     real_type const qy,
     real_type &     x,
     real_type &     y,
     real_type &     s,
     real_type &     t,
-    real_type &     dst
-  ) const {
-    real_type x1, y1, s1, t1, dst1;
-    integer       res  { m_C0.closest_point_ISO( qx, qy, x,  y,  s,  t,  dst  ) };
-    integer const res1 { m_C1.closest_point_ISO( qx, qy, x1, y1, s1, t1, dst1 ) };
-    if ( dst1 < dst ) {
+    real_type &     dst ) const
+  {
+    real_type     x1, y1, s1, t1, dst1;
+    integer       res{ m_C0.closest_point_ISO( qx, qy, x, y, s, t, dst ) };
+    integer const res1{ m_C1.closest_point_ISO( qx, qy, x1, y1, s1, t1, dst1 ) };
+    if ( dst1 < dst )
+    {
       x   = x1;
       y   = y1;
-      s   = s1+m_C0.length();
+      s   = s1 + m_C0.length();
       t   = t1;
       dst = dst1;
       res = res1;
@@ -887,41 +847,49 @@ namespace G2lib {
     return res;
   }
 
-  void
-  Biarc::intersect(
-    BaseCurve const * pC,
-    IntersectList   & ilist
-  ) const {
-    if ( pC->type() == CurveType::BIARC ) {
-      Biarc const & C{ *dynamic_cast<Biarc const *>(pC) };
+  void Biarc::intersect( BaseCurve const * pC, IntersectList & ilist ) const
+  {
+    if ( pC->type() == CurveType::BIARC )
+    {
+      Biarc const & C{ *dynamic_cast<Biarc const *>( pC ) };
       this->intersect( C, ilist );
-    } else {
+    }
+    else
+    {
       CurveType const CT{ curve_promote( this->type(), pC->type() ) };
-      if ( CT == CurveType::BIARC ) {
-        Biarc const C(pC);
+      if ( CT == CurveType::BIARC )
+      {
+        Biarc const C( pC );
         this->intersect( C, ilist );
-      } else {
+      }
+      else
+      {
         G2lib::intersect( this, pC, ilist );
       }
     }
   }
 
-  void
-  Biarc::intersect_ISO(
+  void Biarc::intersect_ISO(
     real_type const   offs,
     BaseCurve const * pC,
     real_type const   offs_LS,
-    IntersectList   & ilist
-  ) const {
-    if ( pC->type() == CurveType::BIARC ) {
-      Biarc const & C{ *dynamic_cast<Biarc const *>(pC) };
+    IntersectList &   ilist ) const
+  {
+    if ( pC->type() == CurveType::BIARC )
+    {
+      Biarc const & C{ *dynamic_cast<Biarc const *>( pC ) };
       this->intersect_ISO( offs, C, offs_LS, ilist );
-    } else {
+    }
+    else
+    {
       CurveType const CT{ curve_promote( this->type(), pC->type() ) };
-      if ( CT == CurveType::BIARC ) {
-        Biarc const C(pC);
+      if ( CT == CurveType::BIARC )
+      {
+        Biarc const C( pC );
         this->intersect_ISO( offs, C, offs_LS, ilist );
-      } else {
+      }
+      else
+      {
         G2lib::intersect_ISO( this, offs, pC, offs_LS, ilist );
       }
     }
@@ -929,8 +897,7 @@ namespace G2lib {
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  integer
-  Biarc::closest_point_ISO(
+  integer Biarc::closest_point_ISO(
     real_type const qx,
     real_type const qy,
     real_type const offs,
@@ -938,15 +905,16 @@ namespace G2lib {
     real_type &     y,
     real_type &     s,
     real_type &     t,
-    real_type &     dst
-  ) const {
-    real_type x1, y1, s1, t1, dst1;
-    integer       res  { m_C0.closest_point_ISO( qx, qy, offs, x,  y,  s,  t,  dst  ) };
-    integer const res1 { m_C1.closest_point_ISO( qx, qy, offs, x1, y1, s1, t1, dst1 ) };
-    if ( dst1 < dst ) {
+    real_type &     dst ) const
+  {
+    real_type     x1, y1, s1, t1, dst1;
+    integer       res{ m_C0.closest_point_ISO( qx, qy, offs, x, y, s, t, dst ) };
+    integer const res1{ m_C1.closest_point_ISO( qx, qy, offs, x1, y1, s1, t1, dst1 ) };
+    if ( dst1 < dst )
+    {
       x   = x1;
       y   = y1;
-      s   = s1+m_C0.length();
+      s   = s1 + m_C0.length();
       t   = t1;
       dst = dst1;
       res = res1;
@@ -956,30 +924,27 @@ namespace G2lib {
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  bool
-  build_guess_theta(
-    integer   const n,
-    real_type const x[],
-    real_type const y[],
-    real_type       theta[]
-  ) {
+  bool build_guess_theta( integer const n, real_type const x[], real_type const y[], real_type theta[] )
+  {
     UTILS_ASSERT0( n > 1, "build_guess_theta, at least 2 points are necessary\n" );
-    Biarc b("build_guess_theta temporary b");
-    if ( n == 2 ) {
-      theta[0] = theta[1] = atan2( y[1] - y[0], x[1] - x[0] );
-    } else {
-      bool const ciclic{ hypot( x[0]-x[n-1], y[0]-y[n-1] ) < 1e-10 };
-      if ( ciclic ) {
-        bool const ok{ b.build_3P( x[n-2], y[n-2], x[0], y[0], x[1], y[1] ) };
+    Biarc b( "build_guess_theta temporary b" );
+    if ( n == 2 ) { theta[0] = theta[1] = atan2( y[1] - y[0], x[1] - x[0] ); }
+    else
+    {
+      bool const ciclic{ hypot( x[0] - x[n - 1], y[0] - y[n - 1] ) < 1e-10 };
+      if ( ciclic )
+      {
+        bool const ok{ b.build_3P( x[n - 2], y[n - 2], x[0], y[0], x[1], y[1] ) };
         UTILS_ASSERT0( ok, "build_guess_theta, failed\n" );
-        theta[0] = theta[n-1] = b.theta_middle();
+        theta[0] = theta[n - 1] = b.theta_middle();
       }
-      for ( integer k{1}; k < n-1; ++k ) {
-        bool const ok{ b.build_3P( x[k-1], y[k-1], x[k], y[k], x[k+1], y[k+1] ) };
+      for ( integer k{ 1 }; k < n - 1; ++k )
+      {
+        bool const ok{ b.build_3P( x[k - 1], y[k - 1], x[k], y[k], x[k + 1], y[k + 1] ) };
         UTILS_ASSERT0( ok, "build_guess_theta, failed\n" );
         theta[k] = b.theta_middle();
-        if ( k == 1   && !ciclic ) theta[0]   = b.theta_begin();
-        if ( k == n-2 && !ciclic ) theta[n-1] = b.theta_end();
+        if ( k == 1 && !ciclic ) theta[0] = b.theta_begin();
+        if ( k == n - 2 && !ciclic ) theta[n - 1] = b.theta_end();
       }
     }
     return true;
@@ -987,9 +952,10 @@ namespace G2lib {
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  string
-  Biarc::info() const
-  { return fmt::format( "BiArc\n{}\n", *this ); }
+  string Biarc::info() const
+  {
+    return fmt::format( "BiArc\n{}\n", *this );
+  }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   //!
@@ -999,16 +965,13 @@ namespace G2lib {
   //!  \param bi     an instance of `Biarc` object
   //!  \return the output stream
   //!
-  ostream_type &
-  operator << ( ostream_type & stream, Biarc const & bi ) {
-    stream
-      << "C0\n" << bi.m_C0
-      << "C1\n" << bi.m_C1
-      << "\n";
+  ostream_type & operator<<( ostream_type & stream, Biarc const & bi )
+  {
+    stream << "C0\n" << bi.m_C0 << "C1\n" << bi.m_C1 << "\n";
     return stream;
   }
 
-}
+}  // namespace G2lib
 
 ///
 /// eof: Biarc.cc

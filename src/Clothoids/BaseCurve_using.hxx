@@ -29,33 +29,33 @@ using BaseCurve::theta_begin;
 using BaseCurve::theta_end;
 
 using BaseCurve::x_begin;
-using BaseCurve::y_begin;
 using BaseCurve::x_end;
+using BaseCurve::y_begin;
 using BaseCurve::y_end;
 
 using BaseCurve::x_begin_ISO;
-using BaseCurve::y_begin_ISO;
 using BaseCurve::x_end_ISO;
+using BaseCurve::y_begin_ISO;
 using BaseCurve::y_end_ISO;
 
 using BaseCurve::x_begin_SAE;
-using BaseCurve::y_begin_SAE;
 using BaseCurve::x_end_SAE;
+using BaseCurve::y_begin_SAE;
 using BaseCurve::y_end_SAE;
 
 using BaseCurve::tx_begin;
-using BaseCurve::ty_begin;
 using BaseCurve::tx_end;
+using BaseCurve::ty_begin;
 using BaseCurve::ty_end;
 
 using BaseCurve::nx_begin_ISO;
-using BaseCurve::ny_begin_ISO;
 using BaseCurve::nx_end_ISO;
+using BaseCurve::ny_begin_ISO;
 using BaseCurve::ny_end_ISO;
 
 using BaseCurve::nx_begin_SAE;
-using BaseCurve::ny_begin_SAE;
 using BaseCurve::nx_end_SAE;
+using BaseCurve::ny_begin_SAE;
 using BaseCurve::ny_end_SAE;
 
 using BaseCurve::X;
@@ -113,12 +113,12 @@ using BaseCurve::distance_SAE;
 
 #ifdef CLOTHOIDS_BACK_COMPATIBILITY
 using BaseCurve::nx_Begin;
-using BaseCurve::ny_Begin;
 using BaseCurve::nx_End;
+using BaseCurve::ny_Begin;
 using BaseCurve::ny_End;
-//using BaseCurve::evaluate;
-//using BaseCurve::closestPoint;
-//using BaseCurve::distance;
+// using BaseCurve::evaluate;
+// using BaseCurve::closestPoint;
+// using BaseCurve::distance;
 #endif
 
 ///

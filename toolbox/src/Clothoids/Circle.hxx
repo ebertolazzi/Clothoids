@@ -21,7 +21,8 @@
 /// file: Circle.hxx
 ///
 
-namespace G2lib {
+namespace G2lib
+{
 
   /*\
    |    ____ _          _         _
@@ -34,38 +35,35 @@ namespace G2lib {
   //!
   //! Class to manage a circle arc
   //!
-  class CircleArc : public BaseCurve {
-
+  class CircleArc : public BaseCurve
+  {
     friend class Biarc;
 
-    real_type m_x0{0};     //!< initial \f$x\f$-coordinate of the clothoid
-    real_type m_y0{0};     //!< initial \f$y\f$-coordinate of the clothoid
-    real_type m_theta0{0}; //!< initial angle of the clothoid
-    real_type m_c0{1};     //!< initial \f$\cos(\f$ angle \f$)\f$ of the clothoid
-    real_type m_s0{0};     //!< initial \f$\sin(\f$ angle \f$)\f$ of the clothoid
-    real_type m_k{0};      //!< curvature
+    real_type m_x0{ 0 };      //!< initial \f$x\f$-coordinate of the clothoid
+    real_type m_y0{ 0 };      //!< initial \f$y\f$-coordinate of the clothoid
+    real_type m_theta0{ 0 };  //!< initial angle of the clothoid
+    real_type m_c0{ 1 };      //!< initial \f$\cos(\f$ angle \f$)\f$ of the clothoid
+    real_type m_s0{ 0 };      //!< initial \f$\sin(\f$ angle \f$)\f$ of the clothoid
+    real_type m_k{ 0 };       //!< curvature
 
-    real_type m_L{0};      //!< length of the circle segment
+    real_type m_L{ 0 };  //!< length of the circle segment
 
   public:
-
-    #include "BaseCurve_using.hxx"
+#include "BaseCurve_using.hxx"
 
     //!
     //! Build an empty circle
     //!
     CircleArc() = delete;
 
-    explicit
-    CircleArc( string_view const name ) : BaseCurve( name ) {};
+    explicit CircleArc( string_view const name ) : BaseCurve( name ) {};
 
     void setup( GenericContainer const & gc ) override;
 
     //!
     //! Build a copy of an existing circle arc.
     //!
-    CircleArc( CircleArc const & s ) : BaseCurve( s.name() )
-    { this->copy(s); }
+    CircleArc( CircleArc const & s ) : BaseCurve( s.name() ) { this->copy( s ); }
 
     //!
     //! Construct a circle arc with the standard parameters.
@@ -77,46 +75,45 @@ namespace G2lib {
     //! \param[in] L      length
     //! \param[in] name   name of the circle arc
     //!
-    explicit
-    CircleArc(
-      real_type   x0,
-      real_type   y0,
-      real_type   theta0,
-      real_type   k,
-      real_type   L,
-      string_view name
-    )
-    : BaseCurve( name )
-    , m_x0(x0)
-    , m_y0(y0)
-    , m_theta0(theta0)
-    , m_c0(cos(theta0))
-    , m_s0(sin(theta0))
-    , m_k(k)
-    , m_L(L)
-    {}
+    explicit CircleArc(
+      real_type const x0,
+      real_type const y0,
+      real_type const theta0,
+      real_type const k,
+      real_type const L,
+      string_view     name )
+      : BaseCurve( name )
+      , m_x0( x0 )
+      , m_y0( y0 )
+      , m_theta0( theta0 )
+      , m_c0( cos( theta0 ) )
+      , m_s0( sin( theta0 ) )
+      , m_k( k )
+      , m_L( L )
+    {
+    }
 
     //!
     //! Construct a circle arc from a line
     //! segment (degenerate circle).
     //!
-    explicit
-    CircleArc( LineSegment const & LS )
-    : BaseCurve( LS.name() )
-    , m_x0(LS.x_begin())
-    , m_y0(LS.y_begin())
-    , m_theta0(LS.m_theta0)
-    , m_c0(LS.m_c0)
-    , m_s0(LS.m_s0)
-    , m_k(0)
-    , m_L(LS.length())
-    {}
+    explicit CircleArc( LineSegment const & LS )
+      : BaseCurve( LS.name() )
+      , m_x0( LS.x_begin() )
+      , m_y0( LS.y_begin() )
+      , m_theta0( LS.m_theta0 )
+      , m_c0( LS.m_c0 )
+      , m_s0( LS.m_s0 )
+      , m_k( 0 )
+      , m_L( LS.length() )
+    {
+    }
 
     //!
     //! Make a copy of an existing circle arc.
     //!
-    void
-    copy( CircleArc const & c ) {
+    void copy( CircleArc const & c )
+    {
       m_x0     = c.m_x0;
       m_y0     = c.m_y0;
       m_theta0 = c.m_theta0;
@@ -129,17 +126,18 @@ namespace G2lib {
     //!
     //! Build a circle arc from a generic curve (if possibile).
     //!
-    explicit
-    CircleArc( BaseCurve const * pC );
+    explicit CircleArc( BaseCurve const * pC );
 
     [[nodiscard]] CurveType type() const override { return CurveType::CIRCLE; }
 
     //!
     //! Make a copy of an existing circle arc.
     //!
-    CircleArc &
-    operator = ( CircleArc const & s )
-    { this->copy(s); return *this; }
+    CircleArc & operator=( CircleArc const & s )
+    {
+      this->copy( s );
+      return *this;
+    }
 
     //!
     //! Construct a circle arc with the standard parameters.
@@ -150,14 +148,8 @@ namespace G2lib {
     //! \param[in] k      curvature
     //! \param[in] L      length
     //!
-    void
-    build(
-      real_type x0,
-      real_type y0,
-      real_type theta0,
-      real_type k,
-      real_type L
-    ) {
+    void build( real_type const x0, real_type const y0, real_type const theta0, real_type const k, real_type const L )
+    {
       m_x0     = x0;
       m_y0     = y0;
       m_theta0 = theta0;
@@ -175,14 +167,12 @@ namespace G2lib {
     //! \param[in] y1     final position \f$y\f$-coordinate
     //! \return true if success
     //!
-    bool
-    build_G1(
-      real_type x0,
-      real_type y0,
-      real_type theta0,
-      real_type x1,
-      real_type y1
-    );
+    bool build_G1(
+      real_type const x0,
+      real_type const y0,
+      real_type const theta0,
+      real_type const x1,
+      real_type const y1 );
 
     //!
     //! Build a circle passing by 3 points.
@@ -195,31 +185,29 @@ namespace G2lib {
     //! \param[in] y2 final point \f$y\f$-coordinate
     //! \return true if success
     //!
-    bool
-    build_3P(
-      real_type x0,
-      real_type y0,
-      real_type x1,
-      real_type y1,
-      real_type x2,
-      real_type y2
-    );
+    bool build_3P(
+      real_type const x0,
+      real_type const y0,
+      real_type const x1,
+      real_type const y1,
+      real_type const x2,
+      real_type const y2 );
 
     //!
     //! Construct a circle arc from a line
     //! segment (degenerate circle).
     //!
 
-    void build( CircleArc   const & C ) { *this = C; }
+    void build( CircleArc const & C ) { *this = C; }
     void build( LineSegment const & );
 
-    static void build( Biarc         const & );
+    static void build( Biarc const & );
     static void build( ClothoidCurve const & );
-    static void build( PolyLine      const & );
-    static void build( BiarcList     const & );
-    static void build( ClothoidList  const & );
-    static void build( Dubins        const & );
-    static void build( Dubins3p      const & );
+    static void build( PolyLine const & );
+    static void build( BiarcList const & );
+    static void build( ClothoidList const & );
+    static void build( Dubins const & );
+    static void build( Dubins3p const & );
 
     // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 
@@ -234,12 +222,8 @@ namespace G2lib {
     //! \param[out] y2 third triangle point \f$y\f$-coordinate
     //! \return true if success
     //!
-    bool
-    bbTriangle(
-      real_type & x0, real_type & y0,
-      real_type & x1, real_type & y1,
-      real_type & x2, real_type & y2
-    ) const;
+    bool bbTriangle( real_type & x0, real_type & y0, real_type & x1, real_type & y1, real_type & x2, real_type & y2 )
+      const override;
 
     //!
     //! Get the bounding box triangle of the circle arc with offset
@@ -254,13 +238,14 @@ namespace G2lib {
     //! \param[out] y2   third triangle point \f$y\f$-coordinate
     //! \return true if success
     //!
-    bool
-    bbTriangle_ISO(
-      real_type   offs,
-      real_type & x0, real_type & y0,
-      real_type & x1, real_type & y1,
-      real_type & x2, real_type & y2
-    ) const;
+    bool bbTriangle_ISO(
+      real_type const offs,
+      real_type &     x0,
+      real_type &     y0,
+      real_type &     x1,
+      real_type &     y1,
+      real_type &     x2,
+      real_type &     y2 ) const override;
 
     //!
     //! Get the bounding box triangle of the circle arc with offset
@@ -275,13 +260,15 @@ namespace G2lib {
     //! \param[out] y2   third triangle point \f$y\f$-coordinate
     //! \return true if success
     //!
-    bool
-    bbTriangle_SAE(
-      real_type   offs,
-      real_type & x0, real_type & y0,
-      real_type & x1, real_type & y1,
-      real_type & x2, real_type & y2
-    ) const {
+    bool bbTriangle_SAE(
+      real_type const offs,
+      real_type &     x0,
+      real_type &     y0,
+      real_type &     x1,
+      real_type &     y1,
+      real_type &     x2,
+      real_type &     y2 ) const
+    {
       return this->bbTriangle_ISO( -offs, x0, y0, x1, y1, x2, y2 );
     }
 
@@ -294,12 +281,8 @@ namespace G2lib {
     //! \param[out] p2 third triangle point
     //! \return true if success
     //!
-    bool
-    bbTriangle(
-      real_type p0[],
-      real_type p1[],
-      real_type p2[]
-    ) const {
+    bool bbTriangle( real_type p0[], real_type p1[], real_type p2[] ) const
+    {
       return bbTriangle( p0[0], p0[1], p1[0], p1[1], p2[0], p2[1] );
     }
 
@@ -313,13 +296,8 @@ namespace G2lib {
     //! \param[out] p2   third triangle point
     //! \return true if success
     //!
-    bool
-    bbTriangle_ISO(
-      real_type   offs,
-      real_type p0[],
-      real_type p1[],
-      real_type p2[]
-    ) const {
+    bool bbTriangle_ISO( real_type const offs, real_type p0[], real_type p1[], real_type p2[] ) const
+    {
       return bbTriangle_ISO( offs, p0[0], p0[1], p1[0], p1[1], p2[0], p2[1] );
     }
 
@@ -333,13 +311,8 @@ namespace G2lib {
     //! \param[out] p2   third triangle point
     //! \return true if success
     //!
-    bool
-    bbTriangle_SAE(
-      real_type offs,
-      real_type p0[],
-      real_type p1[],
-      real_type p2[]
-    ) const {
+    bool bbTriangle_SAE( real_type const offs, real_type p0[], real_type p1[], real_type p2[] ) const
+    {
       return bbTriangle_SAE( offs, p0[0], p0[1], p1[0], p1[1], p2[0], p2[1] );
     }
 
@@ -352,15 +325,10 @@ namespace G2lib {
     //! \param[in]  icurve `id` stored in the triangle class
     //! \return true if success
     //!
-    bool
-    bbTriangle(
-      Triangle2D & t,
-      real_type    ss0    = 0,
-      real_type    ss1    = 0,
-      integer      icurve = 0
-    ) const {
+    bool bbTriangle( Triangle2D & t, real_type const ss0 = 0, real_type const ss1 = 0, integer const icurve = 0 ) const
+    {
       real_type p0[2], p1[2], p2[2];
-      bool ok = bbTriangle( p0, p1, p2 );
+      bool      ok = bbTriangle( p0, p1, p2 );
       if ( ok ) t.build( p0, p1, p2, ss0, ss1, icurve );
       return ok;
     }
@@ -376,16 +344,15 @@ namespace G2lib {
     //! \param[in]  icurve `id` stored in the triangle class
     //! \return true if success
     //!
-    bool
-    bbTriangle_ISO(
-      real_type    offs,
-      Triangle2D & t,
-      real_type    ss0    = 0,
-      real_type    ss1    = 0,
-      integer      icurve = 0
-    ) const {
+    bool bbTriangle_ISO(
+      real_type const offs,
+      Triangle2D &    t,
+      real_type const ss0    = 0,
+      real_type const ss1    = 0,
+      integer const   icurve = 0 ) const
+    {
       real_type p0[2], p1[2], p2[2];
-      bool ok = bbTriangle_ISO( offs, p0, p1, p2 );
+      bool      ok = bbTriangle_ISO( offs, p0, p1, p2 );
       if ( ok ) t.build( p0, p1, p2, ss0, ss1, icurve );
       return ok;
     }
@@ -401,14 +368,13 @@ namespace G2lib {
     //! \param[in]  icurve `id` stored in the triangle class
     //! \return true if success
     //!
-    bool
-    bbTriangle_SAE(
-      real_type    offs,
-      Triangle2D & t,
-      real_type    ss0    = 0,
-      real_type    ss1    = 0,
-      integer      icurve = 0
-    ) const {
+    bool bbTriangle_SAE(
+      real_type const offs,
+      Triangle2D &    t,
+      real_type const ss0    = 0,
+      real_type const ss1    = 0,
+      integer const   icurve = 0 ) const
+    {
       return this->bbTriangle_ISO( -offs, t, ss0, ss1, icurve );
     }
 
@@ -420,13 +386,12 @@ namespace G2lib {
     //! \param[in]  max_size  maximum size admitted for all splitted segment
     //! \param[in]  icurve    `id` stored in the triangles
     //!
-    void
-    bb_triangles(
+    void bb_triangles(
       vector<Triangle2D> & tvec,
-      real_type max_angle, // = Utils::m_pi/18,
-      real_type max_size,  // = 1e100,
-      integer   icurve     // = 0
-    ) const override; // 10 degree
+      real_type const      max_angle,  // = Utils::m_pi/18,
+      real_type const      max_size,   // = 1e100,
+      integer const        icurve      // = 0
+    ) const override;                  // 10 degree
 
     //!
     //! Get the bounding box triangle list of the circle arc with offset.
@@ -437,14 +402,13 @@ namespace G2lib {
     //! \param[in]  max_size  maximum size admitted for all splitted segment
     //! \param[in]  icurve    `id` stored in the triangles
     //!
-    void
-    bb_triangles_ISO(
-      real_type offs,
+    void bb_triangles_ISO(
+      real_type const      offs,
       vector<Triangle2D> & tvec,
-      real_type max_angle, // = Utils::m_pi/18,
-      real_type max_size,  // = 1e100,
-      integer   icurve     // = 0
-    ) const override; // 10 degree
+      real_type const      max_angle,  // = Utils::m_pi/18,
+      real_type const      max_size,   // = 1e100,
+      integer const        icurve      // = 0
+    ) const override;                  // 10 degree
 
     //!
     //! Get the bounding box triangle list of the circle arc with offset.
@@ -455,71 +419,53 @@ namespace G2lib {
     //! \param[in]  max_size  maximum size admitted for all splitted segment
     //! \param[in]  icurve    `id` stored in the triangles
     //!
-    void
-    bb_triangles_SAE(
-      real_type offs,
+    void bb_triangles_SAE(
+      real_type const      offs,
       vector<Triangle2D> & tvec,
-      real_type max_angle, // = Utils::m_pi/18,
-      real_type max_size,  // = 1e100,
-      integer   icurve     // = 0
-    ) const override {
+      real_type const      max_angle,  // = Utils::m_pi/18,
+      real_type const      max_size,   // = 1e100,
+      integer const        icurve      // = 0
+    ) const override
+    {
       this->bb_triangles_ISO( -offs, tvec, max_angle, max_size, icurve );
     }
 
     // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 
-    void
-    bbox(
-      real_type & xmin,
-      real_type & ymin,
-      real_type & xmax,
-      real_type & ymax
-    ) const override;
+    void bbox( real_type & xmin, real_type & ymin, real_type & xmax, real_type & ymax ) const override;
 
-    void
-    bbox_ISO(
-      real_type   offs,
-      real_type & xmin,
-      real_type & ymin,
-      real_type & xmax,
-      real_type & ymax
-    ) const override;
+    void bbox_ISO( real_type offs, real_type & xmin, real_type & ymin, real_type & xmax, real_type & ymax )
+      const override;
 
     // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 
     [[nodiscard]] real_type length() const override { return m_L; }
-    [[nodiscard]] real_type length_ISO( real_type const offs ) const override { return m_L*(1+m_k*offs); }
+    [[nodiscard]] real_type length_ISO( real_type const offs ) const override { return m_L * ( 1 + m_k * offs ); }
 
-    [[nodiscard]] real_type theta_begin()  const override { return m_theta0; }
-    [[nodiscard]] real_type kappa_begin()  const override { return m_k; }
-    [[nodiscard]] real_type kappa_end()    const override { return m_k; }
-    [[nodiscard]] real_type x_begin()      const override { return m_x0; }
-    [[nodiscard]] real_type y_begin()      const override { return m_y0; }
-    [[nodiscard]] real_type tx_begin()     const override { return m_c0; }
-    [[nodiscard]] real_type ty_begin()     const override { return m_s0; }
+    [[nodiscard]] real_type theta_begin() const override { return m_theta0; }
+    [[nodiscard]] real_type kappa_begin() const override { return m_k; }
+    [[nodiscard]] real_type kappa_end() const override { return m_k; }
+    [[nodiscard]] real_type x_begin() const override { return m_x0; }
+    [[nodiscard]] real_type y_begin() const override { return m_y0; }
+    [[nodiscard]] real_type tx_begin() const override { return m_c0; }
+    [[nodiscard]] real_type ty_begin() const override { return m_s0; }
     [[nodiscard]] real_type nx_begin_ISO() const override { return m_s0; }
     [[nodiscard]] real_type ny_begin_ISO() const override { return -m_c0; }
 
     // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 
-    [[nodiscard]] real_type theta    ( real_type s ) const override { return m_theta0 + s*m_k; }
-    [[nodiscard]] real_type theta_D  ( real_type   ) const override { return m_k; }
-    [[nodiscard]] real_type theta_DD ( real_type   ) const override { return 0; }
-    [[nodiscard]] real_type theta_DDD( real_type   ) const override { return 0; }
+    [[nodiscard]] real_type theta( real_type s ) const override { return m_theta0 + s * m_k; }
+    [[nodiscard]] real_type theta_D( real_type ) const override { return m_k; }
+    [[nodiscard]] real_type theta_DD( real_type ) const override { return 0; }
+    [[nodiscard]] real_type theta_DDD( real_type ) const override { return 0; }
 
     // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 
-    void
-    evaluate(
-      real_type const s,
-      real_type     & th,
-      real_type     & kappa,
-      real_type     & x,
-      real_type     & y
-    ) const override {
+    void evaluate( real_type const s, real_type & th, real_type & kappa, real_type & x, real_type & y ) const override
+    {
       eval( s, x, y );
-      th     = m_theta0 + s*m_k;
-      kappa  = m_k;
+      th    = m_theta0 + s * m_k;
+      kappa = m_k;
     }
 
     // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
@@ -538,33 +484,13 @@ namespace G2lib {
 
     // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 
-    void
-    eval(
-      real_type   s,
-      real_type & x,
-      real_type & y
-    ) const override;
+    void eval( real_type const s, real_type & x, real_type & y ) const override;
 
-    void
-    eval_D(
-      real_type,
-      real_type & x_D,
-      real_type & y_D
-    ) const override;
+    void eval_D( real_type const, real_type & x_D, real_type & y_D ) const override;
 
-    void
-    eval_DD(
-      real_type,
-      real_type & x_DD,
-      real_type & y_DD
-    ) const override;
+    void eval_DD( real_type const, real_type & x_DD, real_type & y_DD ) const override;
 
-    void
-    eval_DDD(
-      real_type,
-      real_type & x_DDD,
-      real_type & y_DDD
-    ) const override;
+    void eval_DDD( real_type const, real_type & x_DDD, real_type & y_DDD ) const override;
 
     /*\
      |  _____                   _   _   _
@@ -574,17 +500,17 @@ namespace G2lib {
      |   |_|    \__,_|_| |_|\__,_| |_| \_|
     \*/
 
-    [[nodiscard]] real_type tx( real_type const s ) const override { return cos(theta(s)); }
-    [[nodiscard]] real_type ty( real_type const s ) const override { return sin(theta(s)); }
+    [[nodiscard]] real_type tx( real_type const s ) const override { return cos( theta( s ) ); }
+    [[nodiscard]] real_type ty( real_type const s ) const override { return sin( theta( s ) ); }
 
-    [[nodiscard]] real_type tx_D( real_type const s ) const override { return -sin(theta(s))*m_k; }
-    [[nodiscard]] real_type ty_D( real_type const s ) const override { return cos(theta(s))*m_k; }
+    [[nodiscard]] real_type tx_D( real_type const s ) const override { return -sin( theta( s ) ) * m_k; }
+    [[nodiscard]] real_type ty_D( real_type const s ) const override { return cos( theta( s ) ) * m_k; }
 
-    [[nodiscard]] real_type tx_DD( real_type const s ) const override { return -cos(theta(s))*m_k*m_k; }
-    [[nodiscard]] real_type ty_DD( real_type const s ) const override { return -sin(theta(s))*m_k*m_k; }
+    [[nodiscard]] real_type tx_DD( real_type const s ) const override { return -cos( theta( s ) ) * m_k * m_k; }
+    [[nodiscard]] real_type ty_DD( real_type const s ) const override { return -sin( theta( s ) ) * m_k * m_k; }
 
-    [[nodiscard]] real_type tx_DDD( real_type const s ) const override { return sin(theta(s))*m_k*m_k*m_k; }
-    [[nodiscard]] real_type ty_DDD( real_type const s ) const override { return -cos(theta(s))*m_k*m_k*m_k; }
+    [[nodiscard]] real_type tx_DDD( real_type const s ) const override { return sin( theta( s ) ) * m_k * m_k * m_k; }
+    [[nodiscard]] real_type ty_DDD( real_type const s ) const override { return -cos( theta( s ) ) * m_k * m_k * m_k; }
 
     // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 
@@ -601,16 +527,20 @@ namespace G2lib {
      |  \__|_|  \__,_|_| |_|___/_|  \___/|_|  |_| |_| |_|
     \*/
 
-    void
-    translate( real_type const tx, real_type const ty ) override
-    { m_x0 += tx; m_y0 += ty; }
+    void translate( real_type const tx, real_type const ty ) override
+    {
+      m_x0 += tx;
+      m_y0 += ty;
+    }
 
     void rotate( real_type angle, real_type cx, real_type cy ) override;
     void reverse() override;
 
-    void
-    change_origin( real_type const newx0, real_type const newy0 ) override
-    { m_x0 = newx0; m_y0 = newy0; }
+    void change_origin( real_type const newx0, real_type const newy0 ) override
+    {
+      m_x0 = newx0;
+      m_y0 = newy0;
+    }
 
     void scale( real_type s ) override;
     void trim( real_type s_begin, real_type s_end ) override;
@@ -624,38 +554,30 @@ namespace G2lib {
      |
     \*/
 
-    integer
-    closest_point_ISO(
-      real_type   qx,
-      real_type   qy,
-      real_type & x,
-      real_type & y,
-      real_type & s,
-      real_type & t,
-      real_type & dst
-    ) const override;
+    integer closest_point_ISO(
+      real_type const qx,
+      real_type const qy,
+      real_type &     x,
+      real_type &     y,
+      real_type &     s,
+      real_type &     t,
+      real_type &     dst ) const override;
 
-    integer
-    closest_point_ISO(
-      real_type   qx,
-      real_type   qy,
-      real_type   offs,
-      real_type & x,
-      real_type & y,
-      real_type & s,
-      real_type & t,
-      real_type & dst
-    ) const override;
+    integer closest_point_ISO(
+      real_type const qx,
+      real_type const qy,
+      real_type const offs,
+      real_type &     x,
+      real_type &     y,
+      real_type &     s,
+      real_type &     t,
+      real_type &     dst ) const override;
 
     [[nodiscard]] string info() const;
 
-    void
-    info( ostream_type & stream ) const override
-    { stream << this->info(); }
+    void info( ostream_type & stream ) const override { stream << this->info(); }
 
-    friend
-    ostream_type &
-    operator << ( ostream_type & stream, CircleArc const & bi );
+    friend ostream_type & operator<<( ostream_type & stream, CircleArc const & bi );
 
     // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
     // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
@@ -682,24 +604,13 @@ namespace G2lib {
     //! \param[in] offs_obj offset of second circle arc
     //!
     [[nodiscard]]
-    bool
-    collision_ISO(
-      real_type         offs,
-      CircleArc const & C,
-      real_type         offs_obj
-    ) const;
+    bool collision_ISO( real_type const offs, CircleArc const & C, real_type const offs_obj ) const;
 
     [[nodiscard]]
-    bool
-    collision( BaseCurve const * pC ) const override;
+    bool collision( BaseCurve const * pC ) const override;
 
     [[nodiscard]]
-    bool
-    collision_ISO(
-      real_type         offs,
-      BaseCurve const * pC,
-      real_type         offs_C
-    ) const override;
+    bool collision_ISO( real_type const offs, BaseCurve const * pC, real_type const offs_C ) const override;
 
     /*\
      |   _       _                          _
@@ -715,11 +626,7 @@ namespace G2lib {
     //! \param[in]  obj   second biarc
     //! \param[out] ilist list of the intersection (as parameter on the curves)
     //!
-    void
-    intersect(
-      CircleArc const & obj,
-      IntersectList   & ilist
-    ) const;
+    void intersect( CircleArc const & obj, IntersectList & ilist ) const;
 
     //!
     //! Intersect a circle arc with another circle arc with offset (ISO).
@@ -729,39 +636,25 @@ namespace G2lib {
     //! \param[in]  offs_obj offset of second circle arc
     //! \param[out] ilist    list of the intersection (as parameter on the curves)
     //!
-    void
-    intersect_ISO(
-      real_type         offs,
-      CircleArc const & C,
-      real_type         offs_obj,
-      IntersectList   & ilist
-    ) const;
+    void intersect_ISO( real_type const offs, CircleArc const & C, real_type const offs_obj, IntersectList & ilist )
+      const;
 
-    void
-    intersect(
-      BaseCurve const * pC,
-      IntersectList   & ilist
-    ) const override;
+    void intersect( BaseCurve const * pC, IntersectList & ilist ) const override;
 
-    void
-    intersect_ISO(
-      real_type         offs,
-      BaseCurve const * pC,
-      real_type         offs_C,
-      IntersectList   & ilist
-    ) const override;
+    void intersect_ISO( real_type const offs, BaseCurve const * pC, real_type const offs_C, IntersectList & ilist )
+      const override;
 
     //!
     //! Return \f$ \sin \theta_0 \f$ where
     //! \f$ \theta_0 \f$ is the initial tangent angle.
     //!
-    [[nodiscard]] real_type sin_theta0() const { return sin(m_theta0); }
+    [[nodiscard]] real_type sin_theta0() const { return sin( m_theta0 ); }
 
     //!
     //! Return \f$ \cos \theta_0 \f$ where
     //! \f$ \theta_0 \f$ is the initial tangent angle.
     //!
-    [[nodiscard]] real_type cos_theta0() const { return cos(m_theta0); }
+    [[nodiscard]] real_type cos_theta0() const { return cos( m_theta0 ); }
 
     //!
     //! Return curvature of the circle arc.
@@ -772,12 +665,12 @@ namespace G2lib {
     //! Return the length of the arc that
     //! can approximated by a line segment.
     //!
-    [[nodiscard]] real_type len_tolerance( real_type tol ) const;
+    [[nodiscard]] real_type len_tolerance( real_type const tol ) const;
 
     //!
     //! Return the tangent angle variation in the circle arc.
     //!
-    [[nodiscard]] real_type delta_theta() const { return std::abs(m_L*m_k); }
+    [[nodiscard]] real_type delta_theta() const { return std::abs( m_L * m_k ); }
 
     //!
     //! Return the absolute value of the tangent
@@ -801,8 +694,7 @@ namespace G2lib {
     //! \param[in] s0   \f$ s_0 \f$
     //! \param[in] newL \f$ L   \f$
     //!
-    void
-    change_curvilinear_origin( real_type s0, real_type newL );
+    void change_curvilinear_origin( real_type const s0, real_type const newL );
 
     //!
     //! Get the center of the circle arc \f$ (c_x,c_y) \f$.
@@ -810,13 +702,12 @@ namespace G2lib {
     //! \param[in] cx \f$ c_x \f$
     //! \param[in] cy \f$ c_y \f$
     //!
-    void
-    center( real_type & cx, real_type & cy ) const;
+    void center( real_type & cx, real_type & cy ) const;
 
     //!
     //! Get the ray of the circle arc.
     //!
-    [[nodiscard]] real_type ray() const { return 1/std::abs(m_k); }
+    [[nodiscard]] real_type ray() const { return 1 / std::abs( m_k ); }
 
     /*\
      |   _   _ _   _ ____  ____ ____
@@ -832,8 +723,7 @@ namespace G2lib {
     //! \param[out] n_knots number of knots for the NURBS
     //! \param[out] n_pnts  number of point of the polygon of the NURBS
     //!
-    void
-    paramNURBS( integer & n_knots, integer & n_pnts ) const;
+    void paramNURBS( integer & n_knots, integer & n_pnts ) const;
 
     //!
     //! Get the parameters to build a NURBS for the circle ars.
@@ -841,18 +731,16 @@ namespace G2lib {
     //! \param[out] knots vector of the knots
     //! \param[out] Poly  points of the polygon of the NURBS
     //!
-    void
-    toNURBS( real_type knots[], real_type Poly[][3] ) const;
+    void toNURBS( real_type knots[], real_type Poly[][3] ) const;
 
     friend class ClothoidCurve;
 
 #ifdef CLOTHOIDS_BACK_COMPATIBILITY
 #include "Circle_compatibility.hxx"
 #endif
-
   };
 
-}
+}  // namespace G2lib
 
 ///
 /// eof: Circle.hxx

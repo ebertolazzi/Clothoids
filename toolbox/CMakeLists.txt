@@ -24,7 +24,8 @@ if ( NOT DEFINED CMAKE_BUILD_TYPE )
   set( CMAKE_BUILD_TYPE Release )
 endif()
 
-find_package( Matlab REQUIRED )
+set(Matlab_ROOT_DIR "/Applications/MATLAB_R2025b.app")
+find_package( Matlab REQUIRED COMPONENTS MX_LIBRARY MEX_LIBRARY MAIN_PROGRAM )
 
 message( STATUS "Matlab_ROOT_DIR = ${Matlab_ROOT_DIR}" )
 message( STATUS "PROJECT_NAME    = ${PROJECT_NAME}" )
@@ -118,6 +119,16 @@ include_directories( src src_lib src/Utils )
 
 message( STATUS "SOURCES = ${SOURCES}" )
 
+if(CMAKE_CXX_COMPILER_ID MATCHES "Clang")
+  add_compile_options(-Wno-deprecated-declarations)
+  add_compile_options(-Wno-deprecated)
+  add_compile_options(-Wno-covered-switch-default)
+  add_compile_options(-Wno-unused-result)
+  add_compile_options(-Wno-unused-member-function)
+  add_compile_options(-Wno-reserved-identifier)
+endif()
+
+
 #   _____                  _
 #  |_   _|_ _ _ _ __ _ ___| |_ ___
 #    | |/ _` | '_/ _` / -_)  _(_-<
@@ -157,18 +168,29 @@ endif()
 add_custom_command(TARGET ${PROJECT_NAME} PRE_BUILD COMMAND ${CMAKE_COMMAND} -E make_directory "${CMAKE_CURRENT_SOURCE_DIR}/bin")
 
 foreach(MEX ${MEX_LIST})
+
   matlab_add_mex(
     NAME mex_${MEX}
     SRC src_mex/mex_${MEX}.cc
-    LINK_TO Clothoids Matlab::mex Matlab::mx
+    LINK_TO Clothoids Matlab::mx Matlab::mex
     OUTPUT_NAME ${MEX}
-    NO_IMPLICIT_LINK_TO_MATLAB_LIBRARIES
   )
+
+  # Rimuove flag di linking inutili e usa dynamic lookup per macOS
+  set_target_properties(
+    mex_${MEX} PROPERTIES 
+    LINK_FLAGS "-Wl,-undefined,dynamic_lookup"
+    BUILD_RPATH "${Matlab_ROOT_DIR}/extern/bin/maca64"
+    INSTALL_RPATH "${Matlab_ROOT_DIR}/extern/bin/maca64"
+    MACOSX_RPATH ON
+  )
+
   add_custom_command(
     TARGET mex_${MEX}
-    POST_BUILD COMMAND ${CMAKE_COMMAND} -E copy
+    POST_BUILD COMMAND ${CMAKE_COMMAND} -E copy_if_different
     "$<TARGET_FILE:mex_${MEX}>"
     "${CMAKE_CURRENT_SOURCE_DIR}/bin"
+    COMMENT "Copying ${MEX} to bin directory"
   )
-  #target_precompile_headers(mex_${MEX} PUBLIC ${PRECOMPILED_HEADERS})
+
 endforeach()

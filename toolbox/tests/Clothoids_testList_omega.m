@@ -25,17 +25,30 @@ Y = [-1.707808758,-1.707808758,-2.367185958,-2.582810358,-2.582810358, ...
 
 
 S = ClothoidSplineG2();
-SL = S.buildP2( X, Y );
+S.use_pipal(true);
+SL = S.buildP4( X, Y );
+SL = S.buildP5( X, Y );
+SL = S.buildP6( X, Y );
+SL = S.buildP7( X, Y ); % @@@@@
+SL = S.buildP8( X, Y ); % @@@@@
+SL = S.buildP9( X, Y ); % @@@@@
 
-subplot(2,1,1);
+%SL = ClothoidList();
+%SL.build_G2_cyclic( X, Y );
+
+
+subplot(3,1,1);
 
 SL.plot();
 SL.deltaTheta()
 SL.deltaKappa()
 axis equal
 
-subplot(2,1,2);
+subplot(3,1,2);
 SL.plotCurvature(1000);
+
+subplot(3,1,3);
+SL.plotAngle(1000);
 
 
 axis equal

@@ -31,6 +31,9 @@ project(
   HOMEPAGE_URL "https://ebertolazzi.github.io/Clothoids/"
 )
 
+# Pulisce la directory (cross-platform)
+# file(REMOVE_RECURSE ${CMAKE_SOURCE_DIR}/lib3rd/PIPAL)
+
 if (APPLE)
   #set( CMAKE_OSX_DEPLOYMENT_TARGET "13.3" )
   execute_process( COMMAND uname -m COMMAND tr -d '\n' OUTPUT_VARIABLE ARCHITECTURE )
@@ -56,8 +59,31 @@ if( EXISTS "${CMAKE_CURRENT_LIST_DIR}/../CMakeLists-customize.txt" )
   include(${CMAKE_CURRENT_LIST_DIR}/../CMakeLists-customize.txt)
 endif()
 
-message( STATUS "Compiler used: ${CMAKE_CXX_COMPILER_ID}" )
-message( STATUS "BASE SUFFIXES = ${ARTIFACTS_STATIC_SUFFIX} ${ARTIFACTS_DYNAMIC_SUFFIX}" )
+#
+#  ___ ____            _
+# |_ _|  _ \ ___  ___ | |_   _____ _ __
+#  | || |_) / __|/ _ \| \ \ / / _ \ '__|
+#  | ||  __/\__ \ (_) | |\ V /  __/ |
+# |___|_|   |___/\___/|_| \_/ \___|_|
+# 
+
+# include(FetchContent)
+# 
+# set(FETCHCONTENT_BASE_DIR "${CMAKE_CURRENT_SOURCE_DIR}/lib3rd/PIPAL")
+# 
+# FetchContent_Declare(
+#   PIPAL
+#   GIT_REPOSITORY https://github.com/ebertolazzi/PIPAL.git
+#   GIT_SHALLOW TRUE
+#   GIT_TAG enrico
+# )
+# FetchContent_MakeAvailable(PIPAL)
+# 
+# # Copia gli header in lib3rd/include
+# set(PIPAL_INCLUDE_SRC  "${FETCHCONTENT_BASE_DIR}/PIPAL-src/include/")
+# set(PIPAL_INCLUDE_DEST "${CMAKE_CURRENT_SOURCE_DIR}/lib3rd/include/")
+# 
+# file(COPY ${PIPAL_INCLUDE_SRC} DESTINATION ${PIPAL_INCLUDE_DEST})
 
 #   ___
 #  / __| ___ _  _ _ _ __ ___ ___
@@ -113,6 +139,8 @@ message( STATUS "UTILS = ${UTILS}" )
 message( STATUS "ROOTS = ${ROOTS}" )
 message( STATUS "GC    = ${GC}" )
 message( STATUS "----------------------------------------------------------------" )
+message( STATUS "Compiler used: ${CMAKE_CXX_COMPILER_ID}" )
+message( STATUS "BASE SUFFIXES = ${ARTIFACTS_STATIC_SUFFIX} ${ARTIFACTS_DYNAMIC_SUFFIX}" )
 
 #   _____                  _
 #  |_   _|_ _ _ _ __ _ ___| |_ ___

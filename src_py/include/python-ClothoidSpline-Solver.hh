@@ -12,14 +12,17 @@
 
 #include "python-G2libHeaders.hh"
 
-namespace G2lib {
-  namespace Interpolation {
+namespace G2lib
+{
+  namespace Interpolation
+  {
 
     using G2lib::ClothoidSplineG2;
     using G2lib::integer;
     using G2lib::real_type;
 
-    class Solver {
+    class Solver
+    {
     private:
       ClothoidSplineG2 const & m_spline;
       integer                  m_theta_size;
@@ -32,7 +35,7 @@ namespace G2lib {
       std::vector<real_type>   m_theta_max;
 
     public:
-      Solver(const ClothoidSplineG2 & spline);
+      Solver( const ClothoidSplineG2 & spline );
 
       void guess();
 
