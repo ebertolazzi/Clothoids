@@ -141,7 +141,7 @@ namespace G2lib
   }
 
 
-  using G2derivative = struct
+  struct G2derivative
   {
     real_type L;
     real_type k0;
