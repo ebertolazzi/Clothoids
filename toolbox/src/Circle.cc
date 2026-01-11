@@ -681,16 +681,13 @@ namespace G2lib
     integer const   ni = intersectCircleCircle( m_x0, m_y0, m_theta0, m_k, C.m_x0, C.m_y0, C.m_theta0, C.m_k, s0, s1 );
     real_type const eps0 = machepsi100 * m_L;
     real_type const eps1 = machepsi100 * C.m_L;
-    real_type const L0   = m_L   + eps0;
+    real_type const L0   = m_L + eps0;
     real_type const L1   = C.m_L + eps1;
     for ( integer i{ 0 }; i < ni; ++i )
     {
       real_type ss0 = s0[i];
       real_type ss1 = s1[i];
-      if ( ss0 >= -eps0 && ss0 <= L0 && ss1 >= -eps1 && ss1 <= L1 )
-      {
-        ilist.emplace_back( ss0, ss1 );
-      }
+      if ( ss0 >= -eps0 && ss0 <= L0 && ss1 >= -eps1 && ss1 <= L1 ) { ilist.emplace_back( ss0, ss1 ); }
     }
   }
 

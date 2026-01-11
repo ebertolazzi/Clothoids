@@ -32,10 +32,10 @@ using namespace std;
 namespace Style
 {
   // Stili principali
-  const auto HEADER    = fg( fmt::color::steel_blue ) | fmt::emphasis::bold;
-  const auto SECTION   = fg( fmt::color::dodger_blue ) | fmt::emphasis::bold;
-  const auto SUCCESS   = fg( fmt::color::lime_green ) | fmt::emphasis::bold;
-  //const auto ERROR     = fg( fmt::color::crimson ) | fmt::emphasis::bold;
+  const auto HEADER  = fg( fmt::color::steel_blue ) | fmt::emphasis::bold;
+  const auto SECTION = fg( fmt::color::dodger_blue ) | fmt::emphasis::bold;
+  const auto SUCCESS = fg( fmt::color::lime_green ) | fmt::emphasis::bold;
+  // const auto ERROR     = fg( fmt::color::crimson ) | fmt::emphasis::bold;
   const auto WARNING   = fg( fmt::color::gold ) | fmt::emphasis::bold;
   const auto INFO      = fg( fmt::color::deep_sky_blue ) | fmt::emphasis::bold;
   const auto VALUE     = fg( fmt::color::light_gray );
@@ -876,11 +876,11 @@ int main()
   fmt::print( Style::INFO, "    ⏱️  Tempo di esecuzione: {} ms\n", duration.count() );
   fmt::print( Style::INFO, "    📊 Test completati: 9 categorie principali\n\n" );
 
-  fmt::print( Style::HEADER, 
+  fmt::print(
+    Style::HEADER,
     "╔══════════════════════════════════════════════════════════════╗\n"
     "║                    🎉 TEST COMPLETATI!                       ║\n"
-    "╚══════════════════════════════════════════════════════════════╝\n"
-  );
+    "╚══════════════════════════════════════════════════════════════╝\n" );
 
   return 0;
 }
