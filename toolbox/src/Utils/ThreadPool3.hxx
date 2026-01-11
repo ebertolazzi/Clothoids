@@ -71,7 +71,7 @@ namespace Utils
     //!
     //! Ensures all workers are stopped and joined before destruction.
     //!
-    virtual ~ThreadPool3() {}
+    virtual ~ThreadPool3() override {}
 
     //!
     //! \brief Executes a task and assigns it to an available worker.

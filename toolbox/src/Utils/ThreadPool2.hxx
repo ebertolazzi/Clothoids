@@ -112,7 +112,7 @@ namespace Utils
     //!
     //! \brief Destroys the ThreadPool1 and stops all worker threads.
     //!
-    virtual ~ThreadPool2() { close_all(); }
+    virtual ~ThreadPool2() override { close_all(); }
 
     //!
     //! \brief Executes a task in the thread pool.

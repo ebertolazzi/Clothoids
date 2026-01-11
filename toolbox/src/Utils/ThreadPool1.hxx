@@ -143,7 +143,7 @@ namespace Utils
     {
     }
 
-    virtual ~ThreadPool1() { m_workers.clear(); }
+    virtual ~ThreadPool1() override { m_workers.clear(); }
 
     void exec( FUN && fun ) override
     {

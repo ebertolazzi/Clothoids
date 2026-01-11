@@ -207,7 +207,7 @@ namespace Utils
     //!
     //! Ensures all workers are stopped and joined before destruction.
     //!
-    virtual ~ThreadPool5()
+    virtual ~ThreadPool5() override
     {
       wait();
       m_workers.clear();
