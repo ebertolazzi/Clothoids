@@ -35,10 +35,10 @@ struct TestPoint
 // Stili di formattazione predefiniti
 namespace Style
 {
-  const auto HEADER    = fg( fmt::color::steel_blue ) | fmt::emphasis::bold;
-  const auto SUCCESS   = fg( fmt::color::lime_green ) | fmt::emphasis::bold;
-  const auto WARNING   = fg( fmt::color::gold ) | fmt::emphasis::bold;
-  //const auto ERROR     = fg( fmt::color::crimson ) | fmt::emphasis::bold;
+  const auto HEADER  = fg( fmt::color::steel_blue ) | fmt::emphasis::bold;
+  const auto SUCCESS = fg( fmt::color::lime_green ) | fmt::emphasis::bold;
+  const auto WARNING = fg( fmt::color::gold ) | fmt::emphasis::bold;
+  // const auto ERROR     = fg( fmt::color::crimson ) | fmt::emphasis::bold;
   const auto INFO      = fg( fmt::color::deep_sky_blue ) | fmt::emphasis::bold;
   const auto VALUE     = fg( fmt::color::light_gray );
   const auto LABEL     = fg( fmt::color::silver );
