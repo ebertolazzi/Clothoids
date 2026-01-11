@@ -1043,6 +1043,13 @@ namespace GC_namespace
         std::copy_n( m_r->data(), m_r->num_rows() * m_r->num_cols(), m.data() );
       }
       break;
+      case GC_type::MAT_COMPLEX:
+      {
+        mat_complex_type const * m_c{ m_data.m_c };
+        m.resize( m_c->num_rows(), m_c->num_cols() );
+        std::copy_n( m_c->data(), m_c->num_rows() * m_c->num_cols(), m.data() );
+      }
+      break;
       case GC_type::VECTOR:
       {
         vector_type const & v{ *m_data.v };
@@ -1072,7 +1079,6 @@ namespace GC_namespace
       case GC_type::STRING:
       case GC_type::VEC_POINTER:
       case GC_type::VEC_STRING:
-      case GC_type::MAT_COMPLEX:
       case GC_type::MAP:
         GC_DO_ERROR( where << "copyto_mat_complex() cannot promote " << get_type_name() << " to mat_complex_type" )
     }

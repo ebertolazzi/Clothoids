@@ -368,8 +368,8 @@ void test_fresnelcs_all_ranges()
   fmt::print( Style::INFO, "    📊 Summary Exhaustive Range tests: " );
   fmt::print( Style::HIGHLIGHT, "{}/{} tests passed\n", tests_passed, total_tests );
 
-  // Avviso per valori da calcolare con Mathematica
-  #if 0
+// Avviso per valori da calcolare con Mathematica
+#if 0
   fmt::print( Style::WARNING, "\n    ⚠️  IMPORTANT: Some reference values need verification with Mathematica\n" );
   fmt::print( Style::WARNING, "       Please update the following x values with accurate computations:\n" );
   for ( const auto & ref : reference_values )
@@ -379,7 +379,7 @@ void test_fresnelcs_all_ranges()
       fmt::print( Style::WARNING, "         x = {:.4f}: C = {:.12f}, S = {:.12f}\n", ref.x, ref.C_ref, ref.S_ref );
     }
   }
-  #endif
+#endif
 }
 
 void test_fresnelcs_nk_versions()
@@ -422,240 +422,271 @@ void test_fresnelcs_nk_versions()
   {
     total_tests++;
     fmt::print( Style::INFO, "\n    📊 Test 2: Precomputed values from Mathematica\n" );
-    
+
     // Struttura per memorizzare valori di riferimento
-    struct ReferenceValue {
+    struct ReferenceValue
+    {
       real_type x;
-      integer k;
+      integer   k;
       real_type C_ref;
       real_type S_ref;
       real_type tolerance;
     };
-    
+
     // Tabella di valori precalcolati con Mathematica
     // Formato: {x, k, C_ref, S_ref, tolerance}
     vector<ReferenceValue> ref_table = {
       // x = 0.5
-      {0.5, 0, 0.492344225871446392878843665157, 0.0647324328599992776114805122306, 1e-12},
-      {0.5, 1, 0.121811919800554080639409809543, 0.0242298973425892507810476151499, 1e-12},
-      {0.5, 2, 0.0403009865642107989974994740210, 0.00967804007978591749467141201208, 1e-12}, // DA CALCOLARE CON MATHEMATICA
-      {0.5, 3, 0.0150277482194094872301998032166, 0.00402787944478645818404774025031, 1e-12}, // DA CALCOLARE CON MATHEMATICA
-      {0.5, 4, 0.00598464246623280071722358892735, 0.00172460873389507188481147424230, 1e-12}, // DA CALCOLARE CON MATHEMATICA
-      
+      { 0.5, 0, 0.492344225871446392878843665157, 0.0647324328599992776114805122306, 1e-12 },
+      { 0.5, 1, 0.121811919800554080639409809543, 0.0242298973425892507810476151499, 1e-12 },
+      { 0.5,
+        2,
+        0.0403009865642107989974994740210,
+        0.00967804007978591749467141201208,
+        1e-12 },  // DA CALCOLARE CON MATHEMATICA
+      { 0.5,
+        3,
+        0.0150277482194094872301998032166,
+        0.00402787944478645818404774025031,
+        1e-12 },  // DA CALCOLARE CON MATHEMATICA
+      { 0.5,
+        4,
+        0.00598464246623280071722358892735,
+        0.00172460873389507188481147424230,
+        1e-12 },  // DA CALCOLARE CON MATHEMATICA
+
       // x = 1.0
-      {1.0, 0, 0.779893400376822829474206413653, 0.438259147390354766076756696625, 1e-12},
-      {1.0, 1, 0.318309886183790671537767526745, 0.318309886183790671537767526745, 1e-12}, // sin(π/2)/π = 1/π = 0.318309886183791
-      {1.0, 2, 0.178807666858961705441875696242, 0.248247779509435963675261349193, 1e-12},
-      {1.0, 3, 0.115667518899115128650008600326, 0.202642367284675542887758926419, 1e-12},
-      {1.0, 4, 0.0812507188607087006610531404933, 0.170748744259995779117037070419, 1e-12},
-      
+      { 1.0, 0, 0.779893400376822829474206413653, 0.438259147390354766076756696625, 1e-12 },
+      { 1.0,
+        1,
+        0.318309886183790671537767526745,
+        0.318309886183790671537767526745,
+        1e-12 },  // sin(π/2)/π = 1/π = 0.318309886183791
+      { 1.0, 2, 0.178807666858961705441875696242, 0.248247779509435963675261349193, 1e-12 },
+      { 1.0, 3, 0.115667518899115128650008600326, 0.202642367284675542887758926419, 1e-12 },
+      { 1.0, 4, 0.0812507188607087006610531404933, 0.170748744259995779117037070419, 1e-12 },
+
       // x = 2.0
-      {2.0, 0, 0.488253406075340754500223503357,   0.343415678363698242195300815958, 1e-12},
-      {2.0, 1, 0.000000000000000,                  0.000000000000000, 1e-12}, // sin(2π)/π = 0
-      {2.0, 2, -0.109312605493678052154648674437, -0.481203886250891498716225742729, 1e-12},
-      {2.0, 3, 0.000000000000000,                 -1.27323954473516268615107010698, 1e-12},
-      {2.0, 4, 0.459515862791157077266097427554,  -2.65086493850976418732196347064, 1e-12},
-      
+      { 2.0, 0, 0.488253406075340754500223503357, 0.343415678363698242195300815958, 1e-12 },
+      { 2.0, 1, 0.000000000000000, 0.000000000000000, 1e-12 },  // sin(2π)/π = 0
+      { 2.0, 2, -0.109312605493678052154648674437, -0.481203886250891498716225742729, 1e-12 },
+      { 2.0, 3, 0.000000000000000, -1.27323954473516268615107010698, 1e-12 },
+      { 2.0, 4, 0.459515862791157077266097427554, -2.65086493850976418732196347064, 1e-12 },
+
       // x = 3.0
-      {3.0, 0, 0.605720789297685629556161074287, 0.496312998967375036097612265299, 1e-12},
-      {3.0, 1, 0.318309886183790671537767526745, 0.318309886183790671537767526745, 1e-12}, // sin(9π/2)/π = sin(π/2)/π = 1/π = 0.318309886183791
-      {3.0, 2, 0.796948324338531049780688556256, 0.192806915500502163437268093516, 1e-12},
-      {3.0, 3, 2.66214660836944050095214881429, 0.202642367284675542887758926419, 1e-12},
-      {3.0, 4, 8.41024988497711036432942402249, 0.761029591243681534722685444380, 1e-12},
+      { 3.0, 0, 0.605720789297685629556161074287, 0.496312998967375036097612265299, 1e-12 },
+      { 3.0,
+        1,
+        0.318309886183790671537767526745,
+        0.318309886183790671537767526745,
+        1e-12 },  // sin(9π/2)/π = sin(π/2)/π = 1/π = 0.318309886183791
+      { 3.0, 2, 0.796948324338531049780688556256, 0.192806915500502163437268093516, 1e-12 },
+      { 3.0, 3, 2.66214660836944050095214881429, 0.202642367284675542887758926419, 1e-12 },
+      { 3.0, 4, 8.41024988497711036432942402249, 0.761029591243681534722685444380, 1e-12 },
 
       // x = 5.0
-      {5.0, 0, 0.563631188704012231102107404413, 0.499191381917116886751928380466, 1e-12},
-      {5.0, 1, 0.318309886183790671537767526745, 0.318309886183790671537767526745, 1e-12},
-      {5.0, 2, 1.43265187895698670070974330683,  0.179409379526008775696258040951, 1e-12},
-      {5.0, 3, 7.75510478731009124555642924221,  0.202642367284675542887758926420, 1e-12},
-      {5.0, 4, 39.6174124354421488689105363808,  1.36808176959537685955935060375, 1e-12},
+      { 5.0, 0, 0.563631188704012231102107404413, 0.499191381917116886751928380466, 1e-12 },
+      { 5.0, 1, 0.318309886183790671537767526745, 0.318309886183790671537767526745, 1e-12 },
+      { 5.0, 2, 1.43265187895698670070974330683, 0.179409379526008775696258040951, 1e-12 },
+      { 5.0, 3, 7.75510478731009124555642924221, 0.202642367284675542887758926420, 1e-12 },
+      { 5.0, 4, 39.6174124354421488689105363808, 1.36808176959537685955935060375, 1e-12 },
 
       // x = sqrt(2.0)
-      {sqrt(2.0), 0, 0.528891595111246592556867037922, 0.713972214021939613629086444554, 1e-12},
-      {sqrt(2.0), 1, -4.26882982716323135101250485271e-31, 0.636619772367581343075535053490, 1e-12},
-      {sqrt(2.0), 2, -0.227264414183712632587557514460,  0.618509581521977436408441446773, 1e-12},
-      {sqrt(2.0), 3, -0.405284734569351085775517852840,  0.636619772367581343075535053490, 1e-12},
-      {sqrt(2.0), 4, -0.590633143493533906854633145704,  0.683294786719775778249697586827, 1e-12},
+      { sqrt( 2.0 ), 0, 0.528891595111246592556867037922, 0.713972214021939613629086444554, 1e-12 },
+      { sqrt( 2.0 ), 1, -4.26882982716323135101250485271e-31, 0.636619772367581343075535053490, 1e-12 },
+      { sqrt( 2.0 ), 2, -0.227264414183712632587557514460, 0.618509581521977436408441446773, 1e-12 },
+      { sqrt( 2.0 ), 3, -0.405284734569351085775517852840, 0.636619772367581343075535053490, 1e-12 },
+      { sqrt( 2.0 ), 4, -0.590633143493533906854633145704, 0.683294786719775778249697586827, 1e-12 },
 
       // x = sqrt(6.0)
-      {sqrt(6.0), 0, 0.506641564062616476856206057704, 0.628939658540111772818446657590, 1e-12},
-      {sqrt(6.0), 1, -1.00580282524652473513631689290e-29, 0.636619772367581343075535053490, 1e-12},
-      {sqrt(6.0), 2, -0.200197711126375147032919002085,  0.940965819826425248803701788044, 1e-12},
-      {sqrt(6.0), 3, -0.405284734569351085775517852899,  1.90985931710274402922660516047, 1e-12},
-      {sqrt(6.0), 4, -0.898556169035360101962637842805,  4.48700607547338101819464179813, 1e-12},
+      { sqrt( 6.0 ), 0, 0.506641564062616476856206057704, 0.628939658540111772818446657590, 1e-12 },
+      { sqrt( 6.0 ), 1, -1.00580282524652473513631689290e-29, 0.636619772367581343075535053490, 1e-12 },
+      { sqrt( 6.0 ), 2, -0.200197711126375147032919002085, 0.940965819826425248803701788044, 1e-12 },
+      { sqrt( 6.0 ), 3, -0.405284734569351085775517852899, 1.90985931710274402922660516047, 1e-12 },
+      { sqrt( 6.0 ), 4, -0.898556169035360101962637842805, 4.48700607547338101819464179813, 1e-12 },
 
       // x = sqrt(0.5)
-      {sqrt(0.5), 0, 0.664716931777497106242110863587, 0.177121969979139413958386378892, 1e-12},
-      {sqrt(0.5), 1, 0.225079079039276517388799797752, 0.0932308071445141541489677289934, 1e-12},
-      {sqrt(0.5), 2, 0.102775268987186680727124653742,  0.0524310278066383167582830302596, 1e-12},
-      {sqrt(0.5), 3, 0.0531869642976517815231145073396,  0.0307502525430508070220736360074, 1e-12},
-      {sqrt(0.5), 4, 0.0295095280650570485027667430145,  0.0185656809755119226383556532352, 1e-12},
+      { sqrt( 0.5 ), 0, 0.664716931777497106242110863587, 0.177121969979139413958386378892, 1e-12 },
+      { sqrt( 0.5 ), 1, 0.225079079039276517388799797752, 0.0932308071445141541489677289934, 1e-12 },
+      { sqrt( 0.5 ), 2, 0.102775268987186680727124653742, 0.0524310278066383167582830302596, 1e-12 },
+      { sqrt( 0.5 ), 3, 0.0531869642976517815231145073396, 0.0307502525430508070220736360074, 1e-12 },
+      { sqrt( 0.5 ), 4, 0.0295095280650570485027667430145, 0.0185656809755119226383556532352, 1e-12 },
 
     };
-    
+
     // Raggruppa per x per calcolare efficientemente
     map<real_type, integer> max_k_per_x;
-    for (const auto& ref : ref_table) {
-      max_k_per_x[ref.x] = max(max_k_per_x[ref.x], ref.k);
-    }
-    
-    bool all_passed = true;
+    for ( const auto & ref : ref_table ) { max_k_per_x[ref.x] = max( max_k_per_x[ref.x], ref.k ); }
+
+    bool                 all_passed = true;
     map<real_type, bool> x_passed;
-    
-    for (const auto& kv : max_k_per_x) {
-      real_type x = kv.first;
-      integer max_k = kv.second;
-      integer nk = max_k + 1;
-      
+
+    for ( const auto & kv : max_k_per_x )
+    {
+      real_type x     = kv.first;
+      integer   max_k = kv.second;
+      integer   nk    = max_k + 1;
+
       // Calcola tutti i momenti per questo x
-      vector<real_type> C_calc(nk), S_calc(nk);
-      FresnelCS(nk, x, C_calc.data(), S_calc.data());
-      
-      fmt::print(Style::VALUE, "      x = {:.2f}:\n", x);
-      
+      vector<real_type> C_calc( nk ), S_calc( nk );
+      FresnelCS( nk, x, C_calc.data(), S_calc.data() );
+
+      fmt::print( Style::VALUE, "      x = {:.2f}:\n", x );
+
       // Confronta ogni k
-      for (integer k = 0; k <= max_k; ++k) {
+      for ( integer k = 0; k <= max_k; ++k )
+      {
         // Trova il valore di riferimento
-        auto it = find_if(ref_table.begin(), ref_table.end(),
-          [x, k](const ReferenceValue& r) { return abs(r.x - x) < 1e-10 && r.k == k; });
-        
-        if (it != ref_table.end()) {
-          real_type error_C = abs(C_calc[k] - it->C_ref);
-          real_type error_S = abs(S_calc[k] - it->S_ref);
-          real_type max_error = max(error_C, error_S);
-          
-          bool k_passed = (max_error < it->tolerance);
-          
-          fmt::print(Style::VALUE, "        k = {}: C error = {:.2e}, S error = {:.2e}",
-                    k, error_C, error_S);
-          
-          if (k_passed) {
-            fmt::print(Style::SUCCESS, " ✓\n");
-          } else {
-            fmt::print(Style::ERROR, " ✗ (tol = {:.1e})\n", it->tolerance);
+        auto it = find_if(
+          ref_table.begin(),
+          ref_table.end(),
+          [x, k]( const ReferenceValue & r ) { return abs( r.x - x ) < 1e-10 && r.k == k; } );
+
+        if ( it != ref_table.end() )
+        {
+          real_type error_C   = abs( C_calc[k] - it->C_ref );
+          real_type error_S   = abs( S_calc[k] - it->S_ref );
+          real_type max_error = max( error_C, error_S );
+
+          bool k_passed = ( max_error < it->tolerance );
+
+          fmt::print( Style::VALUE, "        k = {}: C error = {:.2e}, S error = {:.2e}", k, error_C, error_S );
+
+          if ( k_passed ) { fmt::print( Style::SUCCESS, " ✓\n" ); }
+          else
+          {
+            fmt::print( Style::ERROR, " ✗ (tol = {:.1e})\n", it->tolerance );
             all_passed = false;
           }
         }
       }
     }
-    
-    print_test_result("Precomputed values comparison", all_passed);
-    if (all_passed) tests_passed++;
+
+    print_test_result( "Precomputed values comparison", all_passed );
+    if ( all_passed ) tests_passed++;
   }
 
   // Test 3: Test aggiuntivo - verifica che C[1] e S[1] seguano le formule corrette
   {
     total_tests++;
-    fmt::print(Style::INFO, "\n    📊 Test 3: Analytical formulas for C[1] and S[1]\n");
-    
-    vector<real_type> test_x = {0.1, 0.5, 1.0, 2.0, 3.0, 5.0};
-    real_type max_error = 0.0;
-    
-    for (real_type x : test_x) {
-      integer nk = 2;
+    fmt::print( Style::INFO, "\n    📊 Test 3: Analytical formulas for C[1] and S[1]\n" );
+
+    vector<real_type> test_x    = { 0.1, 0.5, 1.0, 2.0, 3.0, 5.0 };
+    real_type         max_error = 0.0;
+
+    for ( real_type x : test_x )
+    {
+      integer   nk = 2;
       real_type C[2], S[2];
-      FresnelCS(nk, x, C, S);
-      
+      FresnelCS( nk, x, C, S );
+
       // Formule analitiche:
       // C[1] = ∫₀^x t cos(πt²/2) dt = (1/π) sin(πx²/2)
       // S[1] = ∫₀^x t sin(πt²/2) dt = (1/π) (1 - cos(πx²/2))
-      real_type expected_C1 = sin(m_pi_2 * x * x) * Utils::m_1_pi;
-      real_type expected_S1 = (1.0 - cos(m_pi_2 * x * x)) * Utils::m_1_pi;
-      
-      real_type error_C1 = abs(C[1] - expected_C1);
-      real_type error_S1 = abs(S[1] - expected_S1);
-      
-      max_error = max(max_error, max(error_C1, error_S1));
-      
-      fmt::print(Style::VALUE, "      x = {:.2f}: C[1] error = {:.2e}, S[1] error = {:.2e}\n",
-                x, error_C1, error_S1);
+      real_type expected_C1 = sin( m_pi_2 * x * x ) * Utils::m_1_pi;
+      real_type expected_S1 = ( 1.0 - cos( m_pi_2 * x * x ) ) * Utils::m_1_pi;
+
+      real_type error_C1 = abs( C[1] - expected_C1 );
+      real_type error_S1 = abs( S[1] - expected_S1 );
+
+      max_error = max( max_error, max( error_C1, error_S1 ) );
+
+      fmt::print( Style::VALUE, "      x = {:.2f}: C[1] error = {:.2e}, S[1] error = {:.2e}\n", x, error_C1, error_S1 );
     }
-    
-    bool passed = (max_error < 1e-12);
-    fmt::print(Style::LABEL, "      Maximum formula error: {:.2e}\n", max_error);
-    print_test_result("Analytical formulas for k=1", passed);
-    if (passed) tests_passed++;
+
+    bool passed = ( max_error < 1e-12 );
+    fmt::print( Style::LABEL, "      Maximum formula error: {:.2e}\n", max_error );
+    print_test_result( "Analytical formulas for k=1", passed );
+    if ( passed ) tests_passed++;
   }
 
   // Test 4: Verifica speciale per x = 0 (dovrebbe essere esatto)
   {
     total_tests++;
-    fmt::print(Style::INFO, "\n    📊 Test 4: Special case x = 0\n");
-    
-    real_type x = 0.0;
-    integer nk = 5;
-    
+    fmt::print( Style::INFO, "\n    📊 Test 4: Special case x = 0\n" );
+
+    real_type x  = 0.0;
+    integer   nk = 5;
+
     real_type C[5], S[5];
-    FresnelCS(nk, x, C, S);
-    
+    FresnelCS( nk, x, C, S );
+
     // Per x = 0, tutti i momenti dovrebbero essere 0
     bool all_zero = true;
-    for (integer k = 0; k < nk; ++k) {
-      if (abs(C[k]) > 1e-15 || abs(S[k]) > 1e-15) {
-        fmt::print(Style::ERROR, "      k = {}: C = {:.2e}, S = {:.2e} (should be 0)\n",
-                  k, C[k], S[k]);
+    for ( integer k = 0; k < nk; ++k )
+    {
+      if ( abs( C[k] ) > 1e-15 || abs( S[k] ) > 1e-15 )
+      {
+        fmt::print( Style::ERROR, "      k = {}: C = {:.2e}, S = {:.2e} (should be 0)\n", k, C[k], S[k] );
         all_zero = false;
       }
     }
-    
-    if (all_zero) {
-      fmt::print(Style::SUCCESS, "      ✓ All moments are zero as expected\n");
-    }
-    
-    print_test_result("Zero moments for x=0", all_zero);
-    if (all_zero) tests_passed++;
+
+    if ( all_zero ) { fmt::print( Style::SUCCESS, "      ✓ All moments are zero as expected\n" ); }
+
+    print_test_result( "Zero moments for x=0", all_zero );
+    if ( all_zero ) tests_passed++;
   }
 
   // Test 5: Test di simmetria per i momenti
   {
     total_tests++;
-    fmt::print(Style::INFO, "\n    📊 Test 5: Symmetry properties for moments\n");
-    
+    fmt::print( Style::INFO, "\n    📊 Test 5: Symmetry properties for moments\n" );
+
     // Testa che C[0](-x) = -C[0](x) e S[0](-x) = -S[0](x)
     // Per k=1: C[1] è pari (funzione di x²)
     bool symmetry_ok = true;
-    
-    real_type x = 1.5;
-    integer nk = 3;
-    
+
+    real_type x  = 1.5;
+    integer   nk = 3;
+
     real_type C_pos[3], S_pos[3], C_neg[3], S_neg[3];
-    
-    FresnelCS(nk, x, C_pos, S_pos);
-    FresnelCS(nk, -x, C_neg, S_neg);
-    
+
+    FresnelCS( nk, x, C_pos, S_pos );
+    FresnelCS( nk, -x, C_neg, S_neg );
+
     // Verifica simmetria per k=0 (Fresnel standard)
-    real_type error_C0 = abs(C_neg[0] + C_pos[0]);
-    real_type error_S0 = abs(S_neg[0] + S_pos[0]);
-    
-    fmt::print(Style::VALUE, "      x = {:.2f}, k=0: C symmetry error = {:.2e}, S symmetry error = {:.2e}\n",
-              x, error_C0, error_S0);
-    
-    if (error_C0 > 1e-12 || error_S0 > 1e-12) {
+    real_type error_C0 = abs( C_neg[0] + C_pos[0] );
+    real_type error_S0 = abs( S_neg[0] + S_pos[0] );
+
+    fmt::print(
+      Style::VALUE,
+      "      x = {:.2f}, k=0: C symmetry error = {:.2e}, S symmetry error = {:.2e}\n",
+      x,
+      error_C0,
+      error_S0 );
+
+    if ( error_C0 > 1e-12 || error_S0 > 1e-12 )
+    {
       symmetry_ok = false;
-      fmt::print(Style::ERROR, "        ❌ Symmetry broken for k=0\n");
+      fmt::print( Style::ERROR, "        ❌ Symmetry broken for k=0\n" );
     }
-    
+
     // Per k=1: C[1] è pari, S[1] è pari? Controlliamo:
     // C[1](x) = sin(πx²/2)/π → funzione pari
     // S[1](x) = (1-cos(πx²/2))/π → funzione pari
-    real_type error_C1 = abs(C_neg[1] - C_pos[1]);
-    real_type error_S1 = abs(S_neg[1] - S_pos[1]);
-    
-    fmt::print(Style::VALUE, "      k=1: C[1] symmetry error = {:.2e}, S[1] symmetry error = {:.2e}\n",
-              error_C1, error_S1);
-    
-    if (error_C1 > 1e-12 || error_S1 > 1e-12) {
-      fmt::print(Style::WARNING, "        ⚠️  C[1] or S[1] symmetry not exact\n");
+    real_type error_C1 = abs( C_neg[1] - C_pos[1] );
+    real_type error_S1 = abs( S_neg[1] - S_pos[1] );
+
+    fmt::print(
+      Style::VALUE,
+      "      k=1: C[1] symmetry error = {:.2e}, S[1] symmetry error = {:.2e}\n",
+      error_C1,
+      error_S1 );
+
+    if ( error_C1 > 1e-12 || error_S1 > 1e-12 )
+    {
+      fmt::print( Style::WARNING, "        ⚠️  C[1] or S[1] symmetry not exact\n" );
     }
-    
-    print_test_result("Symmetry properties", symmetry_ok);
-    if (symmetry_ok) tests_passed++;
+
+    print_test_result( "Symmetry properties", symmetry_ok );
+    if ( symmetry_ok ) tests_passed++;
   }
 
-    fmt::print("\n");
-    fmt::print(Style::INFO, "    📊 Summary Fresnel Moments tests: ");
-    fmt::print(Style::HIGHLIGHT, "{}/{} tests passed\n", tests_passed, total_tests);
-    
+  fmt::print( "\n" );
+  fmt::print( Style::INFO, "    📊 Summary Fresnel Moments tests: " );
+  fmt::print( Style::HIGHLIGHT, "{}/{} tests passed\n", tests_passed, total_tests );
+
 #if 0
     // Avvertenze per valori da calcolare con Mathematica
     fmt::print(Style::WARNING, "\n    ⚠️  IMPORTANT: Some reference values need calculation with Mathematica\n");
@@ -682,19 +713,19 @@ void test_fresnelcs_stress()
     fmt::print( Style::INFO, "    📊 Test 1: Extremely small values (Mathematica reference)\n" );
 
     // Tabella di valori precalcolati con Mathematica per x molto piccoli
-    struct SmallValue {
+    struct SmallValue
+    {
       real_type x;
       real_type C_ref;
       real_type S_ref;
       real_type tolerance;
     };
-    
-    vector<SmallValue> small_values = {
-      // Valori da Mathematica con alta precisione
-      {1e-10, 1e-10, 5.23598775598298873077107230547e-31, 1e-25},
-      {1e-12, 1e-12, 5.23598775598298873077107230546e-37, 1e-31},
-      {1e-15, 1e-15, 5.23598775598298873077107230546e-46, 1e-40},
-      {0.0, 0.0, 0.0, 1e-15}
+
+    vector<SmallValue> small_values = { // Valori da Mathematica con alta precisione
+                                        { 1e-10, 1e-10, 5.23598775598298873077107230547e-31, 1e-25 },
+                                        { 1e-12, 1e-12, 5.23598775598298873077107230546e-37, 1e-31 },
+                                        { 1e-15, 1e-15, 5.23598775598298873077107230546e-46, 1e-40 },
+                                        { 0.0, 0.0, 0.0, 1e-15 }
     };
 
     bool all_ok = true;
@@ -707,8 +738,7 @@ void test_fresnelcs_stress()
       real_type error_C = abs( C - sv.C_ref );
       real_type error_S = abs( S - sv.S_ref );
 
-      fmt::print( Style::VALUE, "      x = {:.1e}: C error = {:.2e}, S error = {:.2e}\n", 
-                 sv.x, error_C, error_S );
+      fmt::print( Style::VALUE, "      x = {:.1e}: C error = {:.2e}, S error = {:.2e}\n", sv.x, error_C, error_S );
 
       if ( error_C > sv.tolerance || error_S > sv.tolerance )
       {
@@ -728,20 +758,21 @@ void test_fresnelcs_stress()
 
     // Per x grandi, l'espansione asintotica è: C(x) ≈ 0.5 + f(x)sin(πx²/2) - g(x)cos(πx²/2)
     // Ma possiamo usare valori di riferimento da Mathematica
-    struct LargeValue {
+    struct LargeValue
+    {
       real_type x;
       real_type C_ref;
       real_type S_ref;
       real_type tolerance;
     };
-    
+
     vector<LargeValue> large_values = {
       // Valori asintotici per grandi x (da calcolare con Mathematica)
-      {1e3, 0.499999999898678816357816218290, 0.499681690113816306083065531729, 1e-12},
-      {1e4, 0.499999999999898678816357662244, 0.499968169011381620933813769280, 1e-12},
-      {1e5, 0.499999999999999898678816357662, 0.499996816901138162093284632000, 1e-12},
-      {1e6, 0.499999999999999999898678816358, 0.499999681690113816209328462233, 1e-12},
-      {1e9, 0.499999999999999999999999999899, 0.499999999681690113816209328462, 1e-12}
+      { 1e3, 0.499999999898678816357816218290, 0.499681690113816306083065531729, 1e-12 },
+      { 1e4, 0.499999999999898678816357662244, 0.499968169011381620933813769280, 1e-12 },
+      { 1e5, 0.499999999999999898678816357662, 0.499996816901138162093284632000, 1e-12 },
+      { 1e6, 0.499999999999999999898678816358, 0.499999681690113816209328462233, 1e-12 },
+      { 1e9, 0.499999999999999999999999999899, 0.499999999681690113816209328462, 1e-12 }
     };
 
     bool all_ok = true;
@@ -756,12 +787,14 @@ void test_fresnelcs_stress()
         real_type error_C = abs( C - lv.C_ref );
         real_type error_S = abs( S - lv.S_ref );
 
-        fmt::print( Style::VALUE, "      x = {:.1e}: C error = {:.2e}, S error = {:.2e}\n", 
-                   lv.x, error_C, error_S );
+        fmt::print( Style::VALUE, "      x = {:.1e}: C error = {:.2e}, S error = {:.2e}\n", lv.x, error_C, error_S );
 
         if ( error_C > lv.tolerance || error_S > lv.tolerance )
         {
-          fmt::print( Style::WARNING, "        ⚠️  Exceeds tolerance {:.1e} (may need better reference)\n", lv.tolerance );
+          fmt::print(
+            Style::WARNING,
+            "        ⚠️  Exceeds tolerance {:.1e} (may need better reference)\n",
+            lv.tolerance );
           // Non falliamo il test perché i valori di riferimento sono approssimativi
         }
       }
@@ -782,23 +815,24 @@ void test_fresnelcs_stress()
     fmt::print( Style::INFO, "\n    📊 Test 3: Critical transition points (Mathematica reference)\n" );
 
     // Punti critici attorno alle transizioni x=1.0 e x=6.0
-    struct TransitionPoint {
+    struct TransitionPoint
+    {
       real_type x;
       real_type C_ref;
       real_type S_ref;
-      string description;
+      string    description;
     };
-    
+
     vector<TransitionPoint> transition_points = {
       // Attorno a x = 1.0 (transizione da serie a approssimazione razionale)
-      {0.9999, 0.779893384669383289478155104140, 0.438159147391999576767901239128, "Just below x=1.0"},
-      {1.0000, 0.779893400376822829474206413653, 0.438259147390354766076756696625, "Exactly x=1.0"},
-      {1.0001, 0.779893384668336091957964782911, 0.438359147388709708645504832696, "Just above x=1.0"},
-      
+      { 0.9999, 0.779893384669383289478155104140, 0.438159147391999576767901239128, "Just below x=1.0" },
+      { 1.0000, 0.779893400376822829474206413653, 0.438259147390354766076756696625, "Exactly x=1.0" },
+      { 1.0001, 0.779893384668336091957964782911, 0.438359147388709708645504832696, "Just above x=1.0" },
+
       // Attorno a x = 6.0 (transizione da approssimazione razionale a asintotico)
-      {5.9999, 0.499431467914717995857064656785, 0.446960855484158381454520871830, "Just below x=6.0"},
-      {6.0000, 0.499531467855501120188279903271, 0.446960761236930277623920287841, "Exactly x=6.0"},
-      {6.0001, 0.499631467796282764079419440822, 0.446960855485205577889491745140, "Just above x=6.0"}
+      { 5.9999, 0.499431467914717995857064656785, 0.446960855484158381454520871830, "Just below x=6.0" },
+      { 6.0000, 0.499531467855501120188279903271, 0.446960761236930277623920287841, "Exactly x=6.0" },
+      { 6.0001, 0.499631467796282764079419440822, 0.446960855485205577889491745140, "Just above x=6.0" }
     };
 
     for ( const auto & tp : transition_points )
@@ -809,7 +843,7 @@ void test_fresnelcs_stress()
       // Per i valori di transizione, usiamo tolleranze più ampie
       // perché i valori di riferimento sono approssimativi
       real_type tolerance = 1e-9;
-      
+
       real_type error_C = abs( C - tp.C_ref );
       real_type error_S = abs( S - tp.S_ref );
 
@@ -823,7 +857,7 @@ void test_fresnelcs_stress()
       }
     }
 
-    print_test_result( "Transition points accuracy", true ); // Sempre passato per ora
+    print_test_result( "Transition points accuracy", true );  // Sempre passato per ora
     tests_passed++;
   }
 

@@ -661,8 +661,8 @@ namespace GC_namespace
       map_type *    m;  ///< Pointer to map of `GenericContainer`
     };
 
-    DataStorage m_data;                          //!< The actual data stored in the container.
     TypeAllowed m_data_type{ GC_type::NOTYPE };  //!< The type of data currently stored.
+    DataStorage m_data;                          //!< The actual data stored in the container.
 
     //! \brief Allocates memory for a string.
     void allocate_string();
@@ -764,6 +764,65 @@ namespace GC_namespace
     //! \endcode
     //!
     ~GenericContainer() { clear(); }
+
+    // =======================================================================
+    // MOVE SEMANTICS - IMPLEMENTAZIONE OTTIMIZZATA
+    // =======================================================================
+
+    //! \brief Move constructor
+    /*!
+     * Transfers ownership of the internal data from another GenericContainer.
+     *
+     * The source object is left in a valid but empty state
+     * (`GC_type::NOTYPE` and default-constructed storage).
+     *
+     * \param other The object to move from.
+     *
+     * \note Uses `std::exchange` to both transfer and reset the source
+     *       in a single, exception-safe operation.
+     */
+    GenericContainer( GenericContainer && other ) noexcept
+      : m_data_type( std::exchange( other.m_data_type, GC_type::NOTYPE ) )
+      , m_data( std::exchange( other.m_data, DataStorage{} ) )
+    {
+    }
+
+    //! \brief Move assignment operator
+    /*!
+     * Replaces the contents of this object with those of another
+     * GenericContainer using move semantics.
+     *
+     * Implements the copy-and-swap idiom to provide strong exception safety
+     * and handle self-assignment correctly.
+     *
+     * \param other The object to move from.
+     * \return Reference to this object.
+     */
+    GenericContainer & operator=( GenericContainer && other ) noexcept
+    {
+      if ( this != &other )
+      {
+        GenericContainer temp( std::move( other ) );
+        swap( temp );
+      }
+      return *this;
+    }
+
+    //! \brief Efficient swap operation
+    /*!
+     * Exchanges the contents of this container with another one.
+     *
+     * This function is noexcept and enables efficient implementations
+     * of move assignment and generic algorithms.
+     *
+     * \param other The container to swap with.
+     */
+    void swap( GenericContainer & other ) noexcept
+    {
+      using std::swap;
+      swap( m_data_type, other.m_data_type );
+      swap( m_data, other.m_data );
+    }
 
     //!
     //! \brief Clears the content of the `GenericContainer`, resetting it to an empty state.
@@ -1639,6 +1698,21 @@ namespace GC_namespace
     //! \deprecated
     //!
     unsigned get_numCols() const { return this->num_cols(); }
+
+    //! \brief Checks whether the stored value represents a numeric type.
+    //!
+    //!  Determines if the current container holds a value that can be considered
+    //!  numeric.
+    //!
+    //!  The following types are treated as numeric:
+    //!  - `GC_type::BOOL`
+    //!  - `GC_type::INTEGER`
+    //!  - `GC_type::LONG`
+    //!  - `GC_type::REAL`
+    //!
+    //!  \return `true` if the stored data type is numeric, `false` otherwise.
+    //!
+    bool is_number() const;
 
     //!
     //! \brief Get a stored numeric value if the data is boolean, integer, or real type.

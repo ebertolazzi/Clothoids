@@ -287,9 +287,28 @@ namespace G2lib
      |                                |___/
     \*/
 
-    virtual bool bbTriangle( real_type & /* x0 */, real_type & /* y0 */, real_type & /* x1 */, real_type & /* y1 */, real_type & /* x2 */, real_type & /* y2 */ ) const { return false; }
+    virtual bool bbTriangle(
+      real_type & /* x0 */,
+      real_type & /* y0 */,
+      real_type & /* x1 */,
+      real_type & /* y1 */,
+      real_type & /* x2 */,
+      real_type & /* y2 */ ) const
+    {
+      return false;
+    }
 
-    virtual bool bbTriangle_ISO( real_type const /* offs */, real_type & /* x0 */, real_type & /* y0 */, real_type & /* x1 */, real_type & /* y1 */, real_type & /* x2 */, real_type & /* y2 */ ) const { return false; }
+    virtual bool bbTriangle_ISO(
+      real_type const /* offs */,
+      real_type & /* x0 */,
+      real_type & /* y0 */,
+      real_type & /* x1 */,
+      real_type & /* y1 */,
+      real_type & /* x2 */,
+      real_type & /* y2 */ ) const
+    {
+      return false;
+    }
 
     //!
     //! Build a cover with triangles of the curve.

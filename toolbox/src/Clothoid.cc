@@ -473,7 +473,7 @@ namespace G2lib
 
       // estimate angle variation and compute step accodingly
       real_type k   = m_CD.kappa( ss );
-      real_type dss = MX / ( 1 + abs(k * offs) );  // scale length with offset
+      real_type dss = MX / ( 1 + abs( k * offs ) );  // scale length with offset
       real_type sss = ss + dss;
       if ( sss > s_end )
       {
@@ -802,104 +802,101 @@ namespace G2lib
     Triangle2D const &    T2,
     real_type             offs_C,
     real_type &           ss1,
-    real_type &           ss2
-  ) const {
+    real_type &           ss2 ) const
+  {
     // Pre-calcolo valori costanti
-    real_type const eps1      = machepsi1000 * m_L;
-    real_type const eps2      = machepsi1000 * pC->m_L;
-    real_type const s1_min    = T1.S0() - eps1;
-    real_type const s1_max    = T1.S1() + eps1;
-    real_type const s2_min    = T2.S0() - eps2;
-    real_type const s2_max    = T2.S1() + eps2;
-    
+    real_type const eps1   = machepsi1000 * m_L;
+    real_type const eps2   = machepsi1000 * pC->m_L;
+    real_type const s1_min = T1.S0() - eps1;
+    real_type const s1_max = T1.S1() + eps1;
+    real_type const s2_min = T2.S0() - eps2;
+    real_type const s2_max = T2.S1() + eps2;
+
     // Valori iniziali al centro degli intervalli
-    ss1 = (s1_min + s1_max) * 0.5;
-    ss2 = (s2_min + s2_max) * 0.5;
-    
+    ss1 = ( s1_min + s1_max ) * 0.5;
+    ss2 = ( s2_min + s2_max ) * 0.5;
+
     // Variabili locali per ridurre accessi a memoria
     real_type p1[2], p2[2], t1[2], t2[2];
     real_type px, py, det;
-    integer nout = 0;
-    
+    integer   nout = 0;
+
     // Pre-calcolo tolleranza al quadrato per confronto più efficiente
-    real_type const tol = m_tolerance * std::max<real_type>(1,m_L);
-    
+    real_type const tol = m_tolerance * std::max<real_type>( 1, m_L );
+
     // Newton iteration con condizioni di uscita ottimizzate
-    for (integer i = 0; i < m_max_iter; ++i)
+    for ( integer i = 0; i < m_max_iter; ++i )
     {
-        // Valutazione punti e tangenti
-        m_CD.eval_ISO( ss1, offs, p1[0], p1[1] );
-        m_CD.eval_ISO_D( ss1, offs, t1[0], t1[1] );
-        pC->m_CD.eval_ISO( ss2, offs_C, p2[0], p2[1] );
-        pC->m_CD.eval_ISO_D( ss2, offs_C, t2[0], t2[1] );
+      // Valutazione punti e tangenti
+      m_CD.eval_ISO( ss1, offs, p1[0], p1[1] );
+      m_CD.eval_ISO_D( ss1, offs, t1[0], t1[1] );
+      pC->m_CD.eval_ISO( ss2, offs_C, p2[0], p2[1] );
+      pC->m_CD.eval_ISO_D( ss2, offs_C, t2[0], t2[1] );
 
-        // Calcolo vettore differenza
-        px = p2[0] - p1[0];
-        py = p2[1] - p1[1];
-        
-        // Verifica convergenza (uso norma² per evitare sqrt)
-        if ( hypot(px,py) <= tol )
-        {
-            // Clamp finale ai limiti esatti (senza epsilon)
-            ss1 = std::clamp(ss1, T1.S0(), T1.S1());
-            ss2 = std::clamp(ss2, T2.S0(), T2.S1());
-            return true;
-        }
+      // Calcolo vettore differenza
+      px = p2[0] - p1[0];
+      py = p2[1] - p1[1];
 
-        /*
-        // risolvo il sistema
-        // p1 + alpha * t1 = p2 + beta * t2
-        // alpha * t1 - beta * t2 = p2 - p1
-        //
-        //  / t1[0] -t2[0] \ / alpha \ = / p2[0] - p1[0] \
-        //  \ t1[1] -t2[1] / \ beta  /   \ p2[1] - p1[1] /
-        */
+      // Verifica convergenza (uso norma² per evitare sqrt)
+      if ( hypot( px, py ) <= tol )
+      {
+        // Clamp finale ai limiti esatti (senza epsilon)
+        ss1 = std::clamp( ss1, T1.S0(), T1.S1() );
+        ss2 = std::clamp( ss2, T2.S0(), T2.S1() );
+        return true;
+      }
 
-        // Calcolo determinante
-        det = t2[0] * t1[1] - t1[0] * t2[1];
-        
-        // Controllo determinante quasi zero
-        if (std::abs(det) < std::numeric_limits<real_type>::min())
-            break;
-        
-        // Update dei parametri
-        ss1 += (py * t2[0] - px * t2[1]) / det;
-        ss2 += (t1[0] * py - t1[1] * px) / det;
-        
-        // Verifica finitezza
-        if (!(std::isfinite(ss1) && std::isfinite(ss2)))
-            break;
-        
-        // Clamping e controllo uscita dai bounds
-        bool out_of_bounds = false;
-        
-        if (ss1 < s1_min)
-        {
-            ss1 = s1_min;
-            out_of_bounds = true;
-        }
-        else if (ss1 > s1_max)
-        {
-            ss1 = s1_max;
-            out_of_bounds = true;
-        }
-        
-        if (ss2 < s2_min)
-        {
-            ss2 = s2_min;
-            out_of_bounds = true;
-        }
-        else if (ss2 > s2_max)
-        {
-            ss2 = s2_max;
-            out_of_bounds = true;
-        }
-        
-        // Controllo troppe uscite dai bounds
-        if (out_of_bounds && (++nout > 3))
-            break;
+      /*
+      // risolvo il sistema
+      // p1 + alpha * t1 = p2 + beta * t2
+      // alpha * t1 - beta * t2 = p2 - p1
+      //
+      //  / t1[0] -t2[0] \ / alpha \ = / p2[0] - p1[0] \
+      //  \ t1[1] -t2[1] / \ beta  /   \ p2[1] - p1[1] /
+      */
+
+      // Calcolo determinante
+      det = t2[0] * t1[1] - t1[0] * t2[1];
+
+      // Controllo determinante quasi zero
+      if ( std::abs( det ) < std::numeric_limits<real_type>::min() ) break;
+
+      // Update dei parametri
+      ss1 += ( py * t2[0] - px * t2[1] ) / det;
+      ss2 += ( t1[0] * py - t1[1] * px ) / det;
+
+      // Verifica finitezza
+      if ( !( std::isfinite( ss1 ) && std::isfinite( ss2 ) ) ) break;
+
+      // Clamping e controllo uscita dai bounds
+      bool out_of_bounds = false;
+
+      if ( ss1 < s1_min )
+      {
+        ss1           = s1_min;
+        out_of_bounds = true;
+      }
+      else if ( ss1 > s1_max )
+      {
+        ss1           = s1_max;
+        out_of_bounds = true;
+      }
+
+      if ( ss2 < s2_min )
+      {
+        ss2           = s2_min;
+        out_of_bounds = true;
+      }
+      else if ( ss2 > s2_max )
+      {
+        ss2           = s2_max;
+        out_of_bounds = true;
+      }
+
+      // Controllo troppe uscite dai bounds
+      if ( out_of_bounds && ( ++nout > 3 ) ) break;
     }
-    
+
     return false;
   }
 
