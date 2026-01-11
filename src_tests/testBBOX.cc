@@ -80,56 +80,60 @@ void test_bbox( G2lib::BaseCurve const & curve, const string & curve_name )
   {
     real_type xmin, ymin, xmax, ymax;
     curve.bbox( xmin, ymin, xmax, ymax );
-    
+
     fmt::print( "  Standard BBOX:\n" );
     fmt::print( "    x: [{:.8g}, {:.8g}]  width: {:.8g}\n", xmin, xmax, xmax - xmin );
     fmt::print( "    y: [{:.8g}, {:.8g}]  height: {:.8g}\n", ymin, ymax, ymax - ymin );
-    
+
     // Check validity
-    bool valid = true;
+    bool           valid = true;
     vector<string> issues;
-    
-    if ( !isfinite( xmin ) || !isfinite( xmax ) || !isfinite( ymin ) || !isfinite( ymax ) ) {
+
+    if ( !isfinite( xmin ) || !isfinite( xmax ) || !isfinite( ymin ) || !isfinite( ymax ) )
+    {
       issues.push_back( "Non-finite values in BBOX" );
       valid = false;
     }
-    
-    if ( xmin > xmax ) {
+
+    if ( xmin > xmax )
+    {
       issues.push_back( "xmin > xmax" );
       valid = false;
     }
-    
-    if ( ymin > ymax ) {
+
+    if ( ymin > ymax )
+    {
       issues.push_back( "ymin > ymax" );
       valid = false;
     }
-    
-    if ( valid ) {
-      fmt::print( fg( fmt::color::green ), "    ✅ Valid BBOX\n" );
-    } else {
+
+    if ( valid ) { fmt::print( fg( fmt::color::green ), "    ✅ Valid BBOX\n" ); }
+    else
+    {
       fmt::print( fg( fmt::color::red ), "    ❌ Invalid BBOX:\n" );
-      for ( const auto & issue : issues ) {
-        fmt::print( fg( fmt::color::red ), "      - {}\n", issue );
-      }
+      for ( const auto & issue : issues ) { fmt::print( fg( fmt::color::red ), "      - {}\n", issue ); }
     }
   }
 
   // Test BBOX with ISO offset
   {
     real_type offsets[] = { 0.5, -0.5, 1.0, -1.0 };
-    for ( real_type offs : offsets ) {
+    for ( real_type offs : offsets )
+    {
       real_type xmin, ymin, xmax, ymax;
       curve.bbox_ISO( offs, xmin, ymin, xmax, ymax );
-      
+
       fmt::print( "  ISO Offset ({:+g}) BBOX:\n", offs );
       fmt::print( "    x: [{:.8g}, {:.8g}]  width: {:.8g}\n", xmin, xmax, xmax - xmin );
       fmt::print( "    y: [{:.8g}, {:.8g}]  height: {:.8g}\n", ymin, ymax, ymax - ymin );
-      
+
       // Quick validity check
-      if ( isfinite( xmin ) && isfinite( xmax ) && isfinite( ymin ) && isfinite( ymax ) &&
-           xmin <= xmax && ymin <= ymax ) {
+      if ( isfinite( xmin ) && isfinite( xmax ) && isfinite( ymin ) && isfinite( ymax ) && xmin <= xmax && ymin <= ymax )
+      {
         fmt::print( fg( fmt::color::green ), "    ✅ Valid\n" );
-      } else {
+      }
+      else
+      {
         fmt::print( fg( fmt::color::red ), "    ❌ Invalid\n" );
       }
     }
@@ -141,35 +145,42 @@ void test_bounding_triangle( G2lib::BaseCurve const & curve, const string & curv
 {
   fmt::print( fg( fmt::color::magenta ) | fmt::emphasis::bold, "\n🔺 BOUNDING TRIANGLE TEST for {}:\n", curve_name );
 
-    // Test standard triangle
+  // Test standard triangle
+  {
+    real_type x0, y0, x1, y1, x2, y2;
+    bool      has_triangle = curve.bbTriangle( x0, y0, x1, y1, x2, y2 );
+
+    if ( has_triangle )
     {
-      real_type x0, y0, x1, y1, x2, y2;
-      bool has_triangle = curve.bbTriangle( x0, y0, x1, y1, x2, y2 );
-      
-      if ( has_triangle ) {
-        fmt::print( "  Standard Triangle:\n" );
-        fmt::print( "    P0: ({:.8g}, {:.8g})\n", x0, y0 );
-        fmt::print( "    P1: ({:.8g}, {:.8g})\n", x1, y1 );
-        fmt::print( "    P2: ({:.8g}, {:.8g})\n", x2, y2 );
-        fmt::print( fg( fmt::color::green ), "    ✅ Triangle available\n" );
-        
-        // Test triangle with ISO offset
-        for ( real_type offs : { 0.5, -0.5 } ) {
-          bool has_offset_triangle = curve.bbTriangle_ISO( offs, x0, y0, x1, y1, x2, y2 );
-          
-          if ( has_offset_triangle ) {
-            fmt::print( "  ISO Offset ({:+g}) Triangle:\n", offs );
-            fmt::print( "    P0: ({:.8g}, {:.8g})\n", x0, y0 );
-            fmt::print( "    P1: ({:.8g}, {:.8g})\n", x1, y1 );
-            fmt::print( "    P2: ({:.8g}, {:.8g})\n", x2, y2 );
-          } else {
-            fmt::print( fg( fmt::color::yellow ), "  ⚠ ISO Offset ({:+g}) Triangle not available\n", offs );
-          }
+      fmt::print( "  Standard Triangle:\n" );
+      fmt::print( "    P0: ({:.8g}, {:.8g})\n", x0, y0 );
+      fmt::print( "    P1: ({:.8g}, {:.8g})\n", x1, y1 );
+      fmt::print( "    P2: ({:.8g}, {:.8g})\n", x2, y2 );
+      fmt::print( fg( fmt::color::green ), "    ✅ Triangle available\n" );
+
+      // Test triangle with ISO offset
+      for ( real_type offs : { 0.5, -0.5 } )
+      {
+        bool has_offset_triangle = curve.bbTriangle_ISO( offs, x0, y0, x1, y1, x2, y2 );
+
+        if ( has_offset_triangle )
+        {
+          fmt::print( "  ISO Offset ({:+g}) Triangle:\n", offs );
+          fmt::print( "    P0: ({:.8g}, {:.8g})\n", x0, y0 );
+          fmt::print( "    P1: ({:.8g}, {:.8g})\n", x1, y1 );
+          fmt::print( "    P2: ({:.8g}, {:.8g})\n", x2, y2 );
         }
-      } else {
-        fmt::print( fg( fmt::color::yellow ), "  ⚠ Triangle method not available for this curve type\n" );
+        else
+        {
+          fmt::print( fg( fmt::color::yellow ), "  ⚠ ISO Offset ({:+g}) Triangle not available\n", offs );
+        }
       }
     }
+    else
+    {
+      fmt::print( fg( fmt::color::yellow ), "  ⚠ Triangle method not available for this curve type\n" );
+    }
+  }
 }
 
 // Verify that curve points are inside BBOX and triangle
@@ -180,88 +191,109 @@ void verify_containment( G2lib::BaseCurve const & curve, const string & curve_na
   // Get standard BBOX
   real_type xmin, ymin, xmax, ymax;
   curve.bbox( xmin, ymin, xmax, ymax );
-  
+
   // Get triangle if available (only for ClothoidCurve)
   real_type tx0 = 0, ty0 = 0, tx1 = 0, ty1 = 0, tx2 = 0, ty2 = 0;
-  bool has_triangle = false;
-  
-  if ( auto clothoid = dynamic_cast<G2lib::ClothoidCurve const*>( &curve ) ) {
+  bool      has_triangle = false;
+
+  if ( auto clothoid = dynamic_cast<G2lib::ClothoidCurve const *>( &curve ) )
+  {
     has_triangle = clothoid->bbTriangle( tx0, ty0, tx1, ty1, tx2, ty2 );
   }
-  
-  const int n_samples = 100;
-  const real_type length = curve.length();
+
+  const int       n_samples = 100;
+  const real_type length    = curve.length();
   const real_type tolerance = 1e-12;
-  
-  int bbox_outside_count = 0;
-  int triangle_outside_count = 0;
+
+  int                                                 bbox_outside_count     = 0;
+  int                                                 triangle_outside_count = 0;
   vector<pair<real_type, pair<real_type, real_type>>> bbox_outside_points;
   vector<pair<real_type, pair<real_type, real_type>>> triangle_outside_points;
-  
-  for ( int i = 0; i <= n_samples; ++i ) {
+
+  for ( int i = 0; i <= n_samples; ++i )
+  {
     real_type s = ( length * i ) / n_samples;
     real_type x, y;
     curve.eval( s, x, y );
-    
+
     // Check BBOX containment
-    bool inside_bbox = ( x >= xmin - tolerance ) && ( x <= xmax + tolerance ) &&
-                       ( y >= ymin - tolerance ) && ( y <= ymax + tolerance );
-    
-    if ( !inside_bbox ) {
+    bool inside_bbox = ( x >= xmin - tolerance ) && ( x <= xmax + tolerance ) && ( y >= ymin - tolerance ) &&
+                       ( y <= ymax + tolerance );
+
+    if ( !inside_bbox )
+    {
       ++bbox_outside_count;
-      if ( bbox_outside_count <= 3 ) { // Store first 3 outside points
+      if ( bbox_outside_count <= 3 )
+      {  // Store first 3 outside points
         bbox_outside_points.emplace_back( s, make_pair( x, y ) );
       }
     }
-    
+
     // Check triangle containment if available
-    if ( has_triangle ) {
+    if ( has_triangle )
+    {
       // Simple barycentric coordinates test
       real_type denom = ( ( ty1 - ty2 ) * ( tx0 - tx2 ) + ( tx2 - tx1 ) * ( ty0 - ty2 ) );
-      if ( abs( denom ) > 1e-12 ) {
+      if ( abs( denom ) > 1e-12 )
+      {
         real_type a = ( ( ty1 - ty2 ) * ( x - tx2 ) + ( tx2 - tx1 ) * ( y - ty2 ) ) / denom;
         real_type b = ( ( ty2 - ty0 ) * ( x - tx2 ) + ( tx0 - tx2 ) * ( y - ty2 ) ) / denom;
         real_type c = 1 - a - b;
-        
+
         bool inside_triangle = ( a >= -tolerance ) && ( b >= -tolerance ) && ( c >= -tolerance );
-        if ( !inside_triangle ) {
+        if ( !inside_triangle )
+        {
           ++triangle_outside_count;
-          if ( triangle_outside_count <= 3 ) { // Store first 3 outside points
+          if ( triangle_outside_count <= 3 )
+          {  // Store first 3 outside points
             triangle_outside_points.emplace_back( s, make_pair( x, y ) );
           }
         }
       }
     }
   }
-  
+
   // Report BBOX results
-  if ( bbox_outside_count == 0 ) {
+  if ( bbox_outside_count == 0 )
+  {
     fmt::print( fg( fmt::color::green ), "  ✅ All {} points are inside BBOX\n", n_samples + 1 );
-  } else {
-    fmt::print( fg( fmt::color::red ), "  ❌ {} of {} points are outside BBOX\n", 
-                bbox_outside_count, n_samples + 1 );
-    
+  }
+  else
+  {
+    fmt::print( fg( fmt::color::red ), "  ❌ {} of {} points are outside BBOX\n", bbox_outside_count, n_samples + 1 );
+
     fmt::print( "  First few points outside BBOX:\n" );
-    for ( const auto & point : bbox_outside_points ) {
+    for ( const auto & point : bbox_outside_points )
+    {
       fmt::print( "    s={:.6g}: ({:.8g}, {:.8g})\n", point.first, point.second.first, point.second.second );
       fmt::print( "      BBOX: x[{:.8g}, {:.8g}], y[{:.8g}, {:.8g}]\n", xmin, xmax, ymin, ymax );
     }
   }
-  
+
   // Report triangle results
-  if ( has_triangle ) {
-    if ( triangle_outside_count == 0 ) {
+  if ( has_triangle )
+  {
+    if ( triangle_outside_count == 0 )
+    {
       fmt::print( fg( fmt::color::green ), "  ✅ All {} points are inside triangle\n", n_samples + 1 );
-    } else {
-      fmt::print( fg( fmt::color::red ), "  ❌ {} of {} points are outside triangle\n", 
-                  triangle_outside_count, n_samples + 1 );
-      
+    }
+    else
+    {
+      fmt::print(
+        fg( fmt::color::red ),
+        "  ❌ {} of {} points are outside triangle\n",
+        triangle_outside_count,
+        n_samples + 1 );
+
       fmt::print( "  First few points outside triangle:\n" );
-      for ( const auto & point : triangle_outside_points ) {
+      for ( const auto & point : triangle_outside_points )
+      {
         fmt::print( "    s={:.6g}: ({:.8g}, {:.8g})\n", point.first, point.second.first, point.second.second );
       }
     }
-  } else {
+  }
+  else
+  {
     fmt::print( fg( fmt::color::yellow ), "  ⚠ Triangle containment not checked (triangle not available)\n" );
   }
 }
@@ -269,19 +301,19 @@ void verify_containment( G2lib::BaseCurve const & curve, const string & curve_na
 // Test the specific problematic case from issue #55
 void test_problematic_case()
 {
-  fmt::print( fg( fmt::color::red ) | fmt::emphasis::bold,
+  fmt::print(
+    fg( fmt::color::red ) | fmt::emphasis::bold,
     "\n"
     "══════════════════════════════════════════════════════════\n"
     "🔴 TESTING PROBLEMATIC CASE FROM ISSUE #55\n"
-    "══════════════════════════════════════════════════════════\n"
-  );
+    "══════════════════════════════════════════════════════════\n" );
 
-  real_type x0 = 294.62490616135915;
-  real_type y0 = 40.399218502822201;
+  real_type x0  = 294.62490616135915;
+  real_type y0  = 40.399218502822201;
   real_type th0 = 2.8071926535896008;
-  real_type k0 = 0.40000000000205038;
-  real_type dk = 0.49046153747660820;
-  real_type L = 0.19160325242174281;
+  real_type k0  = 0.40000000000205038;
+  real_type dk  = 0.49046153747660820;
+  real_type L   = 0.19160325242174281;
 
   fmt::print( "Parameters:\n" );
   fmt::print( "  x0:  {:.15g}\n", x0 );
@@ -292,7 +324,7 @@ void test_problematic_case()
   fmt::print( "  L:   {:.15g}\n", L );
 
   G2lib::ClothoidCurve clothoid( x0, y0, th0, k0, dk, L, "problematic_case" );
-  
+
   test_bbox( clothoid, "Problematic Clothoid" );
   test_bounding_triangle( clothoid, "Problematic Clothoid" );
   verify_containment( clothoid, "Problematic Clothoid" );
@@ -301,7 +333,8 @@ void test_problematic_case()
 // Test various curve types
 void test_different_curve_types()
 {
-  fmt::print( fg( fmt::color::cyan ) | fmt::emphasis::bold,
+  fmt::print(
+    fg( fmt::color::cyan ) | fmt::emphasis::bold,
     "\n══════════════════════════════════════════════════════════\n"
     "🧪 TESTING DIFFERENT CURVE TYPES\n"
     "══════════════════════════════════════════════════════════\n" );
@@ -321,7 +354,7 @@ void test_different_curve_types()
     fmt::print( fg( fmt::color::green ), "\n⭕ CircleArc Test (quarter circle):\n" );
     // CircleArc constructor: (x0, y0, theta0, k, L, name)
     // For a circle of radius 1: k = 1/radius = 1, L = arc_length = radius * angle = 1 * (π/2)
-    G2lib::CircleArc circle( 0, 0, 0, 1, M_PI/2, "circle_test" );
+    G2lib::CircleArc circle( 0, 0, 0, 1, M_PI / 2, "circle_test" );
     test_bbox( circle, "CircleArc" );
     test_bounding_triangle( circle, "CircleArc" );
     verify_containment( circle, "CircleArc" );
@@ -345,8 +378,7 @@ int main()
     fg( fmt::color::cyan ) | fmt::emphasis::bold,
     "╔══════════════════════════════════════════════════════════╗\n"
     "║       CLOTHOID BBOX & TRIANGLE TEST SUITE                ║\n"
-    "╚══════════════════════════════════════════════════════════╝\n\n"
-  );
+    "╚══════════════════════════════════════════════════════════╝\n\n" );
 
   // Test the problematic case first
   test_problematic_case();
@@ -362,14 +394,12 @@ int main()
     real_type x1, y1, th1;
   };
 
-  vector<TestConfig> test_cases = {
-    { "Case 1: Symmetric Curve", 0, 0, M_PI / 2, 2, 0, -M_PI / 2 },
-    { "Case 2: Asymmetric Curve", -1, 0, M_PI / 12, 1, 0, -M_PI / 4 },
-    { "Case 3: Gentle Curve", 0, 0, 0, 3, 1, M_PI / 4 },
-    { "Case 4: Tight Curve", 0, 0, M_PI / 2, 1, 1, -M_PI / 2 },
-    { "Case 5: Straight Line", 0, 0, 0, 5, 0, 0 },
-    { "Case 6: Quarter Circle", 0, 0, 0, 1, 1, M_PI / 2 }
-  };
+  vector<TestConfig> test_cases = { { "Case 1: Symmetric Curve", 0, 0, M_PI / 2, 2, 0, -M_PI / 2 },
+                                    { "Case 2: Asymmetric Curve", -1, 0, M_PI / 12, 1, 0, -M_PI / 4 },
+                                    { "Case 3: Gentle Curve", 0, 0, 0, 3, 1, M_PI / 4 },
+                                    { "Case 4: Tight Curve", 0, 0, M_PI / 2, 1, 1, -M_PI / 2 },
+                                    { "Case 5: Straight Line", 0, 0, 0, 5, 0, 0 },
+                                    { "Case 6: Quarter Circle", 0, 0, 0, 1, 1, M_PI / 2 } };
 
   for ( size_t i = 0; i < test_cases.size(); ++i )
   {
@@ -377,21 +407,23 @@ int main()
 
     // Separator between test cases
     fmt::print( "\n" );
-    fmt::print( fg( fmt::color::yellow ) | fmt::emphasis::bold,
-                "══════════════════════════════════════════════════════════\n" );
-    fmt::print( fg( fmt::color::yellow ) | fmt::emphasis::bold, 
-                "🔹 {}:\n", test.name );
-    fmt::print( fg( fmt::color::yellow ) | fmt::emphasis::bold,
-                "══════════════════════════════════════════════════════════\n" );
+    fmt::print(
+      fg( fmt::color::yellow ) | fmt::emphasis::bold,
+      "══════════════════════════════════════════════════════════\n" );
+    fmt::print( fg( fmt::color::yellow ) | fmt::emphasis::bold, "🔹 {}:\n", test.name );
+    fmt::print(
+      fg( fmt::color::yellow ) | fmt::emphasis::bold,
+      "══════════════════════════════════════════════════════════\n" );
     fmt::print( "  P₀: ({:.2f}, {:.2f}), θ0: {:6.4f} rad\n", test.x0, test.y0, test.th0 );
     fmt::print( "  P₁: ({:.2f}, {:.2f}), θ1: {:6.4f} rad\n", test.x1, test.y1, test.th1 );
     fmt::print( "\n" );
 
     // Create and build clothoid
     G2lib::ClothoidCurve clothoid( "test_clothoid" );
-    bool cc_success = clothoid.build_G1( test.x0, test.y0, test.th0, test.x1, test.y1, test.th1 );
+    bool                 cc_success = clothoid.build_G1( test.x0, test.y0, test.th0, test.x1, test.y1, test.th1 );
 
-    if ( !cc_success ) {
+    if ( !cc_success )
+    {
       fmt::print( fg( fmt::color::red ), "❌ Failed to build clothoid\n\n" );
       continue;
     }
@@ -413,7 +445,8 @@ int main()
     // Sample points along Clothoid
     fmt::print( "\n📍 Clothoid Sample Points:\n" );
     real_type cc_len = clothoid.length();
-    for ( real_type s = 0; s <= cc_len; s += cc_len / 4 ) {
+    for ( real_type s = 0; s <= cc_len; s += cc_len / 4 )
+    {
       real_type x, y, th, k;
       clothoid.evaluate( s, th, k, x, y );
       print_curve_point( s, x, y, th, k );
@@ -427,12 +460,13 @@ int main()
 
   // Additional edge case tests
   fmt::print( "\n" );
-  fmt::print( fg( fmt::color::magenta ) | fmt::emphasis::bold,
-              "══════════════════════════════════════════════════════════\n" );
-  fmt::print( fg( fmt::color::magenta ) | fmt::emphasis::bold,
-              "🧪 EDGE CASE TESTS\n" );
-  fmt::print( fg( fmt::color::magenta ) | fmt::emphasis::bold,
-              "══════════════════════════════════════════════════════════\n" );
+  fmt::print(
+    fg( fmt::color::magenta ) | fmt::emphasis::bold,
+    "══════════════════════════════════════════════════════════\n" );
+  fmt::print( fg( fmt::color::magenta ) | fmt::emphasis::bold, "🧪 EDGE CASE TESTS\n" );
+  fmt::print(
+    fg( fmt::color::magenta ) | fmt::emphasis::bold,
+    "══════════════════════════════════════════════════════════\n" );
 
   // Test 1: Very short clothoid
   {
@@ -454,44 +488,42 @@ int main()
   {
     G2lib::ClothoidCurve base_clothoid( 0, 0, 0, 0.5, 0.1, 5, "offset_test" );
     fmt::print( fg( fmt::color::cyan ), "\n📐 Clothoid with Large Offsets:\n" );
-    
+
     // Test with various offsets
-    for ( real_type offset : { 0.0, 1.0, -1.0, 5.0, -5.0 } ) {
+    for ( real_type offset : { 0.0, 1.0, -1.0, 5.0, -5.0 } )
+    {
       real_type xmin, ymin, xmax, ymax;
       base_clothoid.bbox_ISO( offset, xmin, ymin, xmax, ymax );
-      
-      fmt::print( "  Offset {:+g}: x[{:.6g}, {:.6g}], y[{:.6g}, {:.6g}]\n", 
-                  offset, xmin, xmax, ymin, ymax );
-      
+
+      fmt::print( "  Offset {:+g}: x[{:.6g}, {:.6g}], y[{:.6g}, {:.6g}]\n", offset, xmin, xmax, ymin, ymax );
+
       // Verify points with offset
-      const int n = 20;
-      int outside = 0;
-      for ( int i = 0; i <= n; ++i ) {
+      const int n       = 20;
+      int       outside = 0;
+      for ( int i = 0; i <= n; ++i )
+      {
         real_type s = ( 5.0 * i ) / n;
         real_type x, y;
         base_clothoid.eval_ISO( s, offset, x, y );
-        
-        if ( !( x >= xmin - 1e-12 && x <= xmax + 1e-12 &&
-                y >= ymin - 1e-12 && y <= ymax + 1e-12 ) ) {
-          ++outside;
-        }
+
+        if ( !( x >= xmin - 1e-12 && x <= xmax + 1e-12 && y >= ymin - 1e-12 && y <= ymax + 1e-12 ) ) { ++outside; }
       }
-      
-      if ( outside == 0 ) {
-        fmt::print( fg( fmt::color::green ), "    ✅ All points inside\n" );
-      } else {
+
+      if ( outside == 0 ) { fmt::print( fg( fmt::color::green ), "    ✅ All points inside\n" ); }
+      else
+      {
         fmt::print( fg( fmt::color::red ), "    ❌ {} points outside\n", outside );
       }
     }
   }
 
   // Final summary
-  fmt::print( fg( fmt::color::cyan ) | fmt::emphasis::bold,
+  fmt::print(
+    fg( fmt::color::cyan ) | fmt::emphasis::bold,
     "\n"
     "══════════════════════════════════════════════════════════\n"
     "✅ ALL TESTS COMPLETED!\n"
-    "══════════════════════════════════════════════════════════\n"
-  );
+    "══════════════════════════════════════════════════════════\n" );
 
   return 0;
 }

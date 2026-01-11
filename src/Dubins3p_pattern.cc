@@ -27,7 +27,6 @@
 
 namespace G2lib
 {
-
   void Dubins3p::get_sample_angles(
     real_type const     xi,
     real_type const     yi,
@@ -41,49 +40,109 @@ namespace G2lib
     real_type const     tolerance,
     vector<real_type> & angles ) const
   {
+    // Assicuriamoci che m_sample_angle sia positivo
+    real_type sample_angle = m_sample_angle;
+    if ( sample_angle <= 0 )
+    {
+      sample_angle = Utils::m_pi / 18.0;  // 10 gradi come fallback
+    }
+
     // select angles
-    integer const NSEG{ static_cast<integer>( std::floor( Utils::m_2pi / m_sample_angle ) ) };
+    integer const NSEG = static_cast<integer>( std::floor( Utils::m_2pi / sample_angle ) );
     angles.clear();
     angles.reserve( 2 * NSEG + 12 );
+
+    real_type ang[12];
+    integer   npts = this->get_range_angles( xi, yi, thetai, xm, ym, xf, yf, thetaf, k_max, ang );
+
+    if ( npts > 0 )
     {
-      real_type ang[12];
-      integer   npts{ this->get_range_angles( xi, yi, thetai, xm, ym, xf, yf, thetaf, k_max, ang ) };
-      if ( npts > 0 )
+      for ( integer i{ 0 }; i < npts; ++i )
       {
-        for ( integer i{ 0 }; i < npts; ++i )
+        real_type       a{ i == 0 ? ang[npts - 1] - Utils::m_2pi : ang[i - 1] };
+        real_type const b{ ang[i] };
+        real_type const diff{ b - a };
+
+        if ( diff > 0 )
         {
-          real_type a{ i == 0 ? ang[npts - 1] - Utils::m_2pi : ang[i - 1] };
-          // real_type b{ i == npts ? ang[0]+Utils::m_2pi      : ang[i]   };
-          real_type const b{ ang[i] };
-          real_type const delta{ std::min( ( b - a ) / 2.99999, m_sample_angle ) };
-          while ( a < b )
+          // Assicuriamoci che delta sia positivo e non troppo piccolo
+          real_type delta = std::min( diff / 2.99999, sample_angle );
+
+          // Evita delta = 0 o negativo
+          if ( delta <= 0 ) { delta = diff / 2.99999; }
+
+          // Limita il numero massimo di iterazioni
+          const integer max_iterations = 1000;
+          integer       iteration      = 0;
+
+          real_type current = a;
+          while ( current < b && iteration < max_iterations )
           {
-            real_type aa{ a };
+            real_type aa{ current };
+            // Normalizza l'angolo tra 0 e 2π
             if ( aa < 0 )
               aa += Utils::m_2pi;
-            else if ( aa > Utils::m_2pi )
+            else if ( aa >= Utils::m_2pi )
               aa -= Utils::m_2pi;
+
             angles.push_back( aa );
-            a += delta;
+            current += delta;
+            ++iteration;
+          }
+
+          // Aggiungi l'ultimo punto se non l'abbiamo raggiunto
+          if ( current >= b && iteration < max_iterations )
+          {
+            real_type bb{ b };
+            if ( bb < 0 )
+              bb += Utils::m_2pi;
+            else if ( bb >= Utils::m_2pi )
+              bb -= Utils::m_2pi;
+            angles.push_back( bb );
+          }
+
+          if ( iteration >= max_iterations )
+          {
+            // Gestione di errore: aggiungi almeno gli estremi
+            real_type aa{ a };
+            real_type bb{ b };
+            if ( aa < 0 ) aa += Utils::m_2pi;
+            if ( bb < 0 ) bb += Utils::m_2pi;
+            angles.push_back( aa );
+            angles.push_back( bb );
           }
         }
       }
-      else
-      {
-        real_type a{ 0 };
-        while ( a < Utils::m_2pi )
-        {
-          angles.push_back( a );
-          a += m_sample_angle;
-        }
-      }
     }
-    std::sort( angles.begin(), angles.end() );
-    // remove duplicates
-    integer i{ static_cast<integer>( angles.size() ) };
-    for ( --i; i > 0; --i )
+    else
     {
-      if ( std::abs( angles[i] - angles[i - 1] ) < tolerance ) { angles.erase( angles.begin() + i ); }
+      // Nessun punto di range, campiona uniformemente
+      real_type     current        = 0.0;
+      const integer max_iterations = static_cast<integer>( Utils::m_2pi / sample_angle ) + 1;
+      integer       iteration      = 0;
+
+      while ( current < Utils::m_2pi && iteration < max_iterations )
+      {
+        angles.push_back( current );
+        current += sample_angle;
+        ++iteration;
+      }
+
+      // Assicurati di includere 2π
+      if ( current >= Utils::m_2pi && iteration < max_iterations ) { angles.push_back( Utils::m_2pi ); }
+    }
+
+    // Rimuovi duplicati e ordina
+    if ( !angles.empty() )
+    {
+      std::sort( angles.begin(), angles.end() );
+
+      // Rimuovi duplicati usando un approccio più efficiente
+      auto last = std::unique(
+        angles.begin(),
+        angles.end(),
+        [tolerance]( real_type a, real_type b ) { return std::abs( a - b ) < tolerance; } );
+      angles.erase( last, angles.end() );
     }
   }
 

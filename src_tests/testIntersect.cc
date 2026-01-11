@@ -42,7 +42,7 @@ namespace Style
   const auto LABEL     = fg( fmt::color::silver );
   const auto HIGHLIGHT = fg( fmt::color::cyan ) | fmt::emphasis::bold;
   const auto GEOMETRY  = fg( fmt::color::violet ) | fmt::emphasis::bold;
-  //const auto CURVE     = fg( fmt::color::orange ) | fmt::emphasis::bold;
+  // const auto CURVE     = fg( fmt::color::orange ) | fmt::emphasis::bold;
   const auto TEST_PASS = fg( fmt::color::green ) | fmt::emphasis::bold;
   const auto TEST_FAIL = fg( fmt::color::red ) | fmt::emphasis::bold;
   const auto POINT     = fg( fmt::color::spring_green ) | fmt::emphasis::bold;
@@ -1075,7 +1075,6 @@ void test_promotion_matrix()
 
 int main()
 {
-
   // Program header
   print_header( "COMPREHENSIVE CURVE INTERSECTION TEST SUITE", "🔍" );
 
