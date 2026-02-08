@@ -332,8 +332,6 @@ namespace G2lib
     [[nodiscard]] real_type theta_DD( real_type const ) const override { return 0; }
     [[nodiscard]] real_type theta_DDD( real_type const ) const override { return 0; }
 
-    G2LIB_DEFINE_1ARG_AUTODIFF( theta )
-
     [[nodiscard]] real_type X( real_type const s ) const override;
     [[nodiscard]] real_type Y( real_type const s ) const override;
 
@@ -345,9 +343,6 @@ namespace G2lib
 
     [[nodiscard]] real_type X_DDD( real_type const s ) const override;
     [[nodiscard]] real_type Y_DDD( real_type const s ) const override;
-
-    G2LIB_DEFINE_1ARG_AUTODIFF( X )
-    G2LIB_DEFINE_1ARG_AUTODIFF( Y )
 
     /*\
      |  _                        __
@@ -529,6 +524,16 @@ namespace G2lib
     friend ostream_type & operator<<( ostream_type & stream, Dubins const & bi );
 
     CurveType type() const override { return CurveType::DUBINS; }
+
+#ifdef AUTODIFF_SUPPORT
+    [[nodiscard]] autodiff::dual1st theta( autodiff::dual1st const & s ) const;
+    [[nodiscard]] autodiff::dual1st X( autodiff::dual1st const & s ) const;
+    [[nodiscard]] autodiff::dual1st Y( autodiff::dual1st const & s ) const;
+
+    [[nodiscard]] autodiff::dual2nd theta( autodiff::dual2nd const & s ) const;
+    [[nodiscard]] autodiff::dual2nd X( autodiff::dual2nd const & s ) const;
+    [[nodiscard]] autodiff::dual2nd Y( autodiff::dual2nd const & s ) const;
+#endif
 
     friend class Dubins3p;
   };

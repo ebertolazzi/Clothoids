@@ -646,9 +646,6 @@ namespace G2lib
     real_type tx_DDD( real_type const s ) const override { return m_CD.tg_x_DDD( s ); }
     real_type ty_DDD( real_type const s ) const override { return m_CD.tg_y_DDD( s ); }
 
-    G2LIB_DEFINE_1ARG_AUTODIFF( tx )
-    G2LIB_DEFINE_1ARG_AUTODIFF( ty )
-
     // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 
     void tg( real_type const s, real_type & tx, real_type & ty ) const override { m_CD.tg( s, tx, ty ); }
@@ -714,8 +711,6 @@ namespace G2lib
     //!
     real_type theta_DDD( real_type const ) const override { return 0; }
 
-    G2LIB_DEFINE_1ARG_AUTODIFF( theta )
-
     // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 
     //!
@@ -729,8 +724,6 @@ namespace G2lib
     real_type X_DD( real_type const s ) const override { return m_CD.X_DD( s ); }
     real_type X_DDD( real_type const s ) const override { return m_CD.X_DDD( s ); }
 
-    G2LIB_DEFINE_1ARG_AUTODIFF( X )
-
     //!
     //! Clothoid \f$y\f$ coordinate at curvilinear coordinate \f$s\f$.
     //!
@@ -741,8 +734,6 @@ namespace G2lib
     real_type Y_D( real_type const s ) const override { return m_CD.Y_D( s ); }
     real_type Y_DD( real_type const s ) const override { return m_CD.Y_DD( s ); }
     real_type Y_DDD( real_type const s ) const override { return m_CD.Y_DDD( s ); }
-
-    G2LIB_DEFINE_1ARG_AUTODIFF( Y )
 
     //!
     //! Clothoid \f$x\f$ coordinate at curvilinear coordinate \f$s\f$.
@@ -756,8 +747,6 @@ namespace G2lib
     real_type X_ISO_DD( real_type const s, real_type const offs ) const override { return m_CD.X_ISO_DD( s, offs ); }
     real_type X_ISO_DDD( real_type const s, real_type const offs ) const override { return m_CD.X_ISO_DDD( s, offs ); }
 
-    G2LIB_DEFINE_1ARG_1PAR_AUTODIFF( X_ISO )
-
     //!
     //! Clothoid \f$y\f$ coordinate at curvilinear coordinate \f$s\f$.
     //!
@@ -769,8 +758,6 @@ namespace G2lib
     real_type Y_ISO_D( real_type const s, real_type const offs ) const override { return m_CD.Y_ISO_D( s, offs ); }
     real_type Y_ISO_DD( real_type const s, real_type const offs ) const override { return m_CD.Y_ISO_DD( s, offs ); }
     real_type Y_ISO_DDD( real_type const s, real_type const offs ) const override { return m_CD.Y_ISO_DDD( s, offs ); }
-
-    G2LIB_DEFINE_1ARG_1PAR_AUTODIFF( Y_ISO )
 
     // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 
@@ -962,6 +949,36 @@ namespace G2lib
     void info( ostream_type & stream ) const override { stream << this->info(); }
 
     friend ostream_type & operator<<( ostream_type & stream, ClothoidCurve const & c );
+
+#ifdef AUTODIFF_SUPPORT
+    [[nodiscard]] autodiff::dual1st tx( autodiff::dual1st const & s ) const { return m_CD.tg_x( s ); }
+    [[nodiscard]] autodiff::dual1st ty( autodiff::dual1st const & s ) const { return m_CD.tg_y( s ); }
+    [[nodiscard]] autodiff::dual1st theta( autodiff::dual1st const & s ) const { return m_CD.theta( s ); }
+    [[nodiscard]] autodiff::dual1st X( autodiff::dual1st const & s ) const { return m_CD.X( s ); }
+    [[nodiscard]] autodiff::dual1st Y( autodiff::dual1st const & s ) const { return m_CD.Y( s ); }
+    [[nodiscard]] autodiff::dual1st X_ISO( autodiff::dual1st const & s, real_type const offs ) const
+    {
+      return m_CD.X_ISO( s, offs );
+    }
+    [[nodiscard]] autodiff::dual1st Y_ISO( autodiff::dual1st const & s, real_type const offs ) const
+    {
+      return m_CD.Y_ISO( s, offs );
+    }
+
+    [[nodiscard]] autodiff::dual2nd tx( autodiff::dual2nd const & s ) const { return m_CD.tg_x( s ); }
+    [[nodiscard]] autodiff::dual2nd ty( autodiff::dual2nd const & s ) const { return m_CD.tg_y( s ); }
+    [[nodiscard]] autodiff::dual2nd theta( autodiff::dual2nd const & s ) const { return m_CD.theta( s ); }
+    [[nodiscard]] autodiff::dual2nd X( autodiff::dual2nd const & s ) const { return m_CD.X( s ); }
+    [[nodiscard]] autodiff::dual2nd Y( autodiff::dual2nd const & s ) const { return m_CD.Y( s ); }
+    [[nodiscard]] autodiff::dual2nd X_ISO( autodiff::dual2nd const & s, real_type const offs ) const
+    {
+      return m_CD.X_ISO( s, offs );
+    }
+    [[nodiscard]] autodiff::dual2nd Y_ISO( autodiff::dual2nd const & s, real_type const offs ) const
+    {
+      return m_CD.Y_ISO( s, offs );
+    }
+#endif
 
 #ifdef CLOTHOIDS_BACK_COMPATIBILITY
 #include "Clothoid_compatibility.hxx"

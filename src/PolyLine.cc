@@ -49,10 +49,10 @@ namespace G2lib
 
   void PolyLine::setup( GenericContainer const & gc )
   {
-    string const                            where{ fmt::format( "PolyLine[{}]::setup( gc ):", this->name() ) };
-    GenericContainer::vec_real_type const & x = gc.get_map_vec_real( "x", where );
-    GenericContainer::vec_real_type const & y = gc.get_map_vec_real( "y", where );
-    integer const                           n{ static_cast<integer>( x.size() ) };
+    string const where = fmt::format( "PolyLine[{}]::setup( gc ):", this->name() );
+    auto const & x     = gc.get_map_vec_real( "x", where );
+    auto const & y     = gc.get_map_vec_real( "y", where );
+    auto const   n     = static_cast<integer>( x.size() );
     UTILS_ASSERT(
       n == static_cast<integer>( y.size() ),
       "PolyLine[{}]::setup( gc ) (size(x)={}) != (size(y)={})\n",
@@ -240,8 +240,8 @@ namespace G2lib
 
   void PolyLine::polygon( real_type x[], real_type y[] ) const
   {
-    integer const n{ static_cast<integer>( m_polyline_list.size() ) };
-    for ( integer k{ 0 }; k < n; ++k )
+    integer const n = static_cast<integer>( m_polyline_list.size() );
+    for ( integer k = 0; k < n; ++k )
     {
       x[k] = m_polyline_list[k].x_begin();
       y[k] = m_polyline_list[k].y_begin();
@@ -592,11 +592,11 @@ namespace G2lib
 
   void PolyLine::push_back( CircleArc const & C, real_type const tol )
   {
-    real_type const L{ C.length() };
-    integer const   ns{ static_cast<integer>( ceil( L / C.len_tolerance( tol ) ) ) };
-    real_type const tx{ m_xe - C.x_begin() };
-    real_type const ty{ m_ye - C.y_begin() };
-    for ( integer i{ 1 }; i < ns; ++i )
+    real_type const L  = C.length();
+    integer const   ns = static_cast<integer>( ceil( L / C.len_tolerance( tol ) ) );
+    real_type const tx = m_xe - C.x_begin();
+    real_type const ty = m_ye - C.y_begin();
+    for ( integer i = 1; i < ns; ++i )
     {
       real_type const s{ ( i * L ) / ns };
       this->push_back( tx + C.X( s ), ty + C.Y( s ) );
@@ -611,25 +611,25 @@ namespace G2lib
 
   void PolyLine::push_back( Biarc const & B, real_type const tol )
   {
-    CircleArc const & C0{ B.C0() };
-    CircleArc const & C1{ B.C1() };
-    real_type const   L0{ C0.length() };
-    real_type const   L1{ C1.length() };
-    integer const     ns0{ static_cast<integer>( ceil( L0 / C0.len_tolerance( tol ) ) ) };
-    integer const     ns1{ static_cast<integer>( ceil( L1 / C1.len_tolerance( tol ) ) ) };
+    CircleArc const & C0  = B.C0();
+    CircleArc const & C1  = B.C1();
+    real_type const   L0  = C0.length();
+    real_type const   L1  = C1.length();
+    integer const     ns0 = static_cast<integer>( ceil( L0 / C0.len_tolerance( tol ) ) );
+    integer const     ns1 = static_cast<integer>( ceil( L1 / C1.len_tolerance( tol ) ) );
 
-    real_type const tx{ m_xe - C0.x_begin() };
-    real_type const ty{ m_ye - C0.y_begin() };
+    real_type const tx = m_xe - C0.x_begin();
+    real_type const ty = m_ye - C0.y_begin();
 
-    for ( integer i{ 1 }; i < ns0; ++i )
+    for ( integer i = 1; i < ns0; ++i )
     {
-      real_type const s{ ( i * L0 ) / ns0 };
+      real_type const s = ( i * L0 ) / ns0;
       this->push_back( tx + C0.X( s ), ty + C0.Y( s ) );
     }
     this->push_back( tx + C1.x_begin(), ty + C1.y_begin() );
-    for ( integer i{ 1 }; i < ns1; ++i )
+    for ( integer i = 1; i < ns1; ++i )
     {
-      real_type const s{ ( i * L1 ) / ns1 };
+      real_type const s = ( i * L1 ) / ns1;
       this->push_back( tx + C1.X( s ), ty + C1.Y( s ) );
     }
     this->push_back( tx + C1.x_end(), ty + C1.y_end() );
@@ -642,17 +642,17 @@ namespace G2lib
 
   void PolyLine::push_back( ClothoidCurve const & C, real_type const tol )
   {
-    real_type const L{ C.length() };
-    real_type const absk{ max( abs( C.kappa_begin() ), abs( C.kappa_end() ) ) };
-    real_type const tmp{ absk * tol - 1 };
-    integer         ns{ 1 };
+    real_type const L    = C.length();
+    real_type const absk = max( abs( C.kappa_begin() ), abs( C.kappa_end() ) );
+    real_type const tmp  = absk * tol - 1;
+    integer         ns   = 1;
     if ( tmp > -1 ) ns = static_cast<integer>( ceil( L * absk / ( 2 * ( Utils::m_pi - acos( tmp ) ) ) ) );
 
-    real_type const tx{ m_xe - C.x_begin() };
-    real_type const ty{ m_ye - C.y_begin() };
-    for ( integer i{ 1 }; i < ns; ++i )
+    real_type const tx = m_xe - C.x_begin();
+    real_type const ty = m_ye - C.y_begin();
+    for ( integer i = 1; i < ns; ++i )
     {
-      real_type const s{ ( i * L ) / ns };
+      real_type const s = ( i * L ) / ns;
       this->push_back( tx + C.X( s ), ty + C.Y( s ) );
     }
 
@@ -666,10 +666,10 @@ namespace G2lib
 
   void PolyLine::push_back( ClothoidList const & L, real_type const tol )
   {
-    integer const ns{ L.num_segments() };
-    for ( integer idx{ 0 }; idx < ns; ++idx )
+    integer const ns = L.num_segments();
+    for ( integer idx = 0; idx < ns; ++idx )
     {
-      ClothoidCurve const & C{ L.get( idx ) };
+      ClothoidCurve const & C = L.get( idx );
       this->push_back( C, tol );
     }
     // aabb_done = false;
@@ -680,7 +680,7 @@ namespace G2lib
   void PolyLine::build( integer const npts, real_type const x[], real_type const y[] )
   {
     init( x[0], y[0] );
-    for ( integer k{ 1 }; k < npts; ++k ) this->push_back( x[k], y[k] );
+    for ( integer k = 1; k < npts; ++k ) this->push_back( x[k], y[k] );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -729,10 +729,10 @@ namespace G2lib
   {
     if ( pC->type() == CurveType::POLYLINE )
     {
-      PolyLine const & C{ *dynamic_cast<PolyLine const *>( pC ) };
+      PolyLine const & C = *dynamic_cast<PolyLine const *>( pC );
       return this->collision( C );
     }
-    if ( CurveType const CT{ curve_promote( this->type(), pC->type() ) }; CT == CurveType::POLYLINE )
+    if ( CurveType const CT = curve_promote( this->type(), pC->type() ); CT == CurveType::POLYLINE )
     {
       PolyLine const C( pC );
       return this->collision( C );
@@ -746,10 +746,10 @@ namespace G2lib
   {
     if ( pC->type() == CurveType::POLYLINE )
     {
-      PolyLine const & C{ *dynamic_cast<PolyLine const *>( pC ) };
+      PolyLine const & C = *dynamic_cast<PolyLine const *>( pC );
       return this->collision_ISO( offs, C, offs_C );
     }
-    if ( CurveType const CT{ curve_promote( this->type(), pC->type() ) }; CT == CurveType::POLYLINE )
+    if ( CurveType const CT = curve_promote( this->type(), pC->type() ); CT == CurveType::POLYLINE )
     {
       PolyLine const C( pC );
       return this->collision_ISO( offs, C, offs_C );
@@ -761,12 +761,12 @@ namespace G2lib
   {
     if ( pC->type() == CurveType::POLYLINE )
     {
-      PolyLine const & C{ *dynamic_cast<PolyLine const *>( pC ) };
+      PolyLine const & C = *dynamic_cast<PolyLine const *>( pC );
       this->intersect( C, ilist );
     }
     else
     {
-      if ( CurveType const CT{ curve_promote( this->type(), pC->type() ) }; CT == CurveType::POLYLINE )
+      if ( CurveType const CT = curve_promote( this->type(), pC->type() ); CT == CurveType::POLYLINE )
       {
         PolyLine const C( pC );
         this->intersect( C, ilist );
@@ -815,7 +815,7 @@ namespace G2lib
     real_type &     DST ) const
   {
     UTILS_ASSERT0( !m_polyline_list.empty(), "PolyLine::closest_point_ISO, empty list\n" );
-    integer   ipos{ 0 };
+    integer   ipos = 0;
     real_type X1, Y1, S1, T1, DST1;
 
     this->build_AABBtree();
@@ -848,7 +848,7 @@ namespace G2lib
     }
     else
     {
-      integer i{ 0 };
+      integer i = 0;
       for ( LineSegment const & LS : m_polyline_list )
       {
         LS.closest_point_ISO( x, y, X1, Y1, S1, T1, DST1 );

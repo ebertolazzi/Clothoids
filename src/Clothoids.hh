@@ -33,6 +33,9 @@
 // comment to disable threads support
 #define CLOTHOIDS_USE_THREADS 1
 
+// comment to disable AUTODIFF support
+#define AUTODIFF_SUPPORT
+
 #ifdef __clang__
 #pragma clang diagnostic ignored "-Wsign-compare"
 #endif
@@ -40,14 +43,18 @@
 #ifdef NO_SYSTEM_UTILS
 #include "Utils.hh"
 #include "Utils_TicToc.hh"
+#ifdef AUTODIFF_SUPPORT
 #include "Utils_autodiff.hh"
+#endif
 #include "Utils_AABB_tree.hh"
 #include "Utils_eigen.hh"
 #include "Utils_search_intervals.hh"
 #else
 #include <Utils.hh>
 #include <Utils_TicToc.hh>
+#ifdef AUTODIFF_SUPPORT
 #include <Utils_autodiff.hh>
+#endif
 #include <Utils_AABB_tree.hh>
 #include <Utils_eigen.hh>
 #include <Utils_search_intervals.hh>
@@ -100,27 +107,6 @@ namespace G2lib
   using AABB_SET         = Utils::AABBtree<real_type>::AABB_SET;  //!< Set type used in `AABB` tree object
   using AABB_MAP         = Utils::AABBtree<real_type>::AABB_MAP;  //!< Map type used in `AABB` tree object
   using GenericContainer = GC_namespace::GenericContainer;        //!< Generic container object
-
-  /*
-  //               _            _ _  __  __
-  //    __ _ _   _| |_ ___   __| (_)/ _|/ _|
-  //   / _` | | | | __/ _ \ / _` | | |_| |_
-  //  | (_| | |_| | || (_) | (_| | |  _|  _|
-  //   \__,_|\__,_|\__\___/ \__,_|_|_| |_|
-  */
-
-  using autodiff::dual0th;
-  using autodiff::dual1st;
-  using autodiff::dual2nd;
-  using autodiff::detail::DualOrder;
-
-  template <size_t N> using DualN      = autodiff::detail::HigherOrderDual<N, real_type>;
-  template <typename... T> using DualT = DualN<DualOrder<T...>::value>;
-
-  template <size_t N> constexpr void static_check_N()
-  {
-    static_assert( N <= 2, "DualOrder exceeded allowed limit" );
-  }
 
   //!
   //! Enumeration type for curve type

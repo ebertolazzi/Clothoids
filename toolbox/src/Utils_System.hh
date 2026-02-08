@@ -43,11 +43,11 @@ namespace Utils
   /**
    * @class Architecture
    * @brief Provides architecture detection and CPU feature querying utilities.
-   * 
+   *
    * This class encapsulates functionality to detect the system architecture
    * (x86, ARM, PowerPC, etc.) and query CPU-specific features (MMX, SSE, AVX,
    * NEON, etc.) for performance optimization and compatibility checking.
-   * 
+   *
    * @note The class uses compile-time macros and runtime detection where needed.
    */
   class Architecture
@@ -79,7 +79,7 @@ namespace Utils
     /**
      * @brief Detects the current system architecture.
      * @return ArchType enumeration value representing the detected architecture.
-     * 
+     *
      * This function uses compiler-defined macros to determine the architecture
      * at compile time. It's useful for conditional compilation and runtime
      * feature selection.
@@ -164,10 +164,10 @@ namespace Utils
      */
     struct CPUIDResult
     {
-      unsigned long eax; ///< EAX register value
-      unsigned long ebx; ///< EBX register value
-      unsigned long ecx; ///< ECX register value
-      unsigned long edx; ///< EDX register value
+      unsigned long eax;  ///< EAX register value
+      unsigned long ebx;  ///< EBX register value
+      unsigned long ecx;  ///< ECX register value
+      unsigned long edx;  ///< EDX register value
     };
 
     /**
@@ -229,42 +229,42 @@ namespace Utils
      */
     struct CPUFeatures
     {
-      bool mmx           = false; ///< MMX technology support
-      bool mmxplus       = false; ///< MMX+ extensions (AMD)
-      bool sse           = false; ///< SSE instructions
-      bool sse2          = false; ///< SSE2 instructions
-      bool sse3          = false; ///< SSE3 instructions
-      bool ssse3         = false; ///< SSSE3 instructions
-      bool sse41         = false; ///< SSE4.1 instructions
-      bool sse42         = false; ///< SSE4.2 instructions
-      bool sse4a         = false; ///< SSE4a instructions (AMD)
-      bool sse5          = false; ///< SSE5 instructions (AMD)
-      bool avx           = false; ///< AVX instructions
-      bool avx2          = false; ///< AVX2 instructions
-      bool avx512f       = false; ///< AVX-512 Foundation instructions
-      bool bmi1          = false; ///< Bit Manipulation Instruction Set 1
-      bool bmi2          = false; ///< Bit Manipulation Instruction Set 2
-      bool fma           = false; ///< Fused Multiply-Add
-      bool aes           = false; ///< AES instruction set
-      bool sha           = false; ///< SHA extensions
-      bool x64           = false; ///< 64-bit mode (Long Mode)
-      bool rdrand        = false; ///< RDRAND instruction
-      bool rdseed        = false; ///< RDSEED instruction
-      bool adx           = false; ///< Multi-precision Add-Carry
-      bool clmul         = false; ///< Carry-less Multiplication
-      bool pclmulqdq     = false; ///< PCLMULQDQ instruction
-      bool smap          = false; ///< Supervisor Mode Access Prevention
-      bool smep          = false; ///< Supervisor Mode Execution Protection
-      bool tsc           = false; ///< Time Stamp Counter
-      bool tscinvariant  = false; ///< Invariant TSC
-      bool invariant_tsc = false; ///< Invariant Time Stamp Counter
-      bool constant_tsc  = false; ///< Constant Time Stamp Counter
+      bool mmx           = false;  ///< MMX technology support
+      bool mmxplus       = false;  ///< MMX+ extensions (AMD)
+      bool sse           = false;  ///< SSE instructions
+      bool sse2          = false;  ///< SSE2 instructions
+      bool sse3          = false;  ///< SSE3 instructions
+      bool ssse3         = false;  ///< SSSE3 instructions
+      bool sse41         = false;  ///< SSE4.1 instructions
+      bool sse42         = false;  ///< SSE4.2 instructions
+      bool sse4a         = false;  ///< SSE4a instructions (AMD)
+      bool sse5          = false;  ///< SSE5 instructions (AMD)
+      bool avx           = false;  ///< AVX instructions
+      bool avx2          = false;  ///< AVX2 instructions
+      bool avx512f       = false;  ///< AVX-512 Foundation instructions
+      bool bmi1          = false;  ///< Bit Manipulation Instruction Set 1
+      bool bmi2          = false;  ///< Bit Manipulation Instruction Set 2
+      bool fma           = false;  ///< Fused Multiply-Add
+      bool aes           = false;  ///< AES instruction set
+      bool sha           = false;  ///< SHA extensions
+      bool x64           = false;  ///< 64-bit mode (Long Mode)
+      bool rdrand        = false;  ///< RDRAND instruction
+      bool rdseed        = false;  ///< RDSEED instruction
+      bool adx           = false;  ///< Multi-precision Add-Carry
+      bool clmul         = false;  ///< Carry-less Multiplication
+      bool pclmulqdq     = false;  ///< PCLMULQDQ instruction
+      bool smap          = false;  ///< Supervisor Mode Access Prevention
+      bool smep          = false;  ///< Supervisor Mode Execution Protection
+      bool tsc           = false;  ///< Time Stamp Counter
+      bool tscinvariant  = false;  ///< Invariant TSC
+      bool invariant_tsc = false;  ///< Invariant Time Stamp Counter
+      bool constant_tsc  = false;  ///< Constant Time Stamp Counter
     };
 
     /**
      * @brief Queries x86/x64 CPU features via CPUID instruction.
      * @return CPUFeatures structure with detected features.
-     * 
+     *
      * @note Only valid for x86/x64 architectures. Returns empty structure
      *       for other architectures.
      */
@@ -364,26 +364,26 @@ namespace Utils
      */
     struct ARMFeatures
     {
-      bool neon    = false; ///< NEON SIMD instructions
-      bool crypto  = false; ///< Cryptographic extensions
-      bool crc32   = false; ///< CRC32 instructions
-      bool sha1    = false; ///< SHA1 instructions
-      bool sha2    = false; ///< SHA2 instructions
-      bool aes     = false; ///< AES instructions
-      bool pmull   = false; ///< Polynomial Multiply Long
-      bool fp16    = false; ///< Half-precision floating point
-      bool dotprod = false; ///< Dot Product instructions
-      bool sve     = false; ///< Scalable Vector Extension
-      bool sve2    = false; ///< Scalable Vector Extension 2
-      bool bf16    = false; ///< Brain Float 16 support
-      bool i8mm    = false; ///< Int8 Matrix Multiply
-      bool fhm     = false; ///< FP16 Fused Multiply-Add
+      bool neon    = false;  ///< NEON SIMD instructions
+      bool crypto  = false;  ///< Cryptographic extensions
+      bool crc32   = false;  ///< CRC32 instructions
+      bool sha1    = false;  ///< SHA1 instructions
+      bool sha2    = false;  ///< SHA2 instructions
+      bool aes     = false;  ///< AES instructions
+      bool pmull   = false;  ///< Polynomial Multiply Long
+      bool fp16    = false;  ///< Half-precision floating point
+      bool dotprod = false;  ///< Dot Product instructions
+      bool sve     = false;  ///< Scalable Vector Extension
+      bool sve2    = false;  ///< Scalable Vector Extension 2
+      bool bf16    = false;  ///< Brain Float 16 support
+      bool i8mm    = false;  ///< Int8 Matrix Multiply
+      bool fhm     = false;  ///< FP16 Fused Multiply-Add
     };
 
     /**
      * @brief Queries ARM CPU features.
      * @return ARMFeatures structure with detected features.
-     * 
+     *
      * On Linux, reads /proc/cpuinfo. On Windows, uses IsProcessorFeaturePresent.
      */
     static ARMFeatures get_arm_features()
@@ -465,19 +465,19 @@ namespace Utils
      */
     struct PowerPCFeatures
     {
-      bool altivec = false; ///< AltiVec SIMD instructions
-      bool vsx     = false; ///< Vector Scalar Extension
-      bool vsx2    = false; ///< VSX version 2
-      bool vsx3    = false; ///< VSX version 3
-      bool power8  = false; ///< POWER8 architecture
-      bool power9  = false; ///< POWER9 architecture
-      bool power10 = false; ///< POWER10 architecture
+      bool altivec = false;  ///< AltiVec SIMD instructions
+      bool vsx     = false;  ///< Vector Scalar Extension
+      bool vsx2    = false;  ///< VSX version 2
+      bool vsx3    = false;  ///< VSX version 3
+      bool power8  = false;  ///< POWER8 architecture
+      bool power9  = false;  ///< POWER9 architecture
+      bool power10 = false;  ///< POWER10 architecture
     };
 
     /**
      * @brief Queries PowerPC CPU features.
      * @return PowerPCFeatures structure with detected features.
-     * 
+     *
      * Reads /proc/cpuinfo on Linux PowerPC systems.
      */
     static PowerPCFeatures get_ppc_features()
@@ -535,16 +535,16 @@ namespace Utils
      */
     struct MIPSFeatures
     {
-      bool msa   = false; ///< MIPS SIMD Architecture
-      bool dspr2 = false; ///< DSP Revision 2
-      bool dspr3 = false; ///< DSP Revision 3
-      bool eva   = false; ///< Enhanced Virtual Addressing
+      bool msa   = false;  ///< MIPS SIMD Architecture
+      bool dspr2 = false;  ///< DSP Revision 2
+      bool dspr3 = false;  ///< DSP Revision 3
+      bool eva   = false;  ///< Enhanced Virtual Addressing
     };
 
     /**
      * @brief Queries MIPS CPU features.
      * @return MIPSFeatures structure with detected features.
-     * 
+     *
      * Reads /proc/cpuinfo on Linux MIPS systems.
      */
     static MIPSFeatures get_mips_features()
@@ -591,17 +591,17 @@ namespace Utils
      */
     struct RISCVFeatures
     {
-      bool rva20u64    = false; ///< RV64GC (general purpose 64-bit)
-      bool vector      = false; ///< Vector extension (V)
-      bool packed_simd = false; ///< Packed SIMD extension (P)
-      bool bitmanip    = false; ///< Bit manipulation extension (B)
-      bool crypto      = false; ///< Cryptographic extension (K)
+      bool rva20u64    = false;  ///< RV64GC (general purpose 64-bit)
+      bool vector      = false;  ///< Vector extension (V)
+      bool packed_simd = false;  ///< Packed SIMD extension (P)
+      bool bitmanip    = false;  ///< Bit manipulation extension (B)
+      bool crypto      = false;  ///< Cryptographic extension (K)
     };
 
     /**
      * @brief Queries RISC-V CPU features.
      * @return RISCVFeatures structure with detected features.
-     * 
+     *
      * Reads /proc/cpuinfo on Linux RISC-V systems.
      */
     static RISCVFeatures get_riscv_features()
@@ -641,7 +641,7 @@ namespace Utils
     /**
      * @brief Gets the CPU vendor string.
      * @return Vendor string (e.g., "GenuineIntel", "AuthenticAMD").
-     * 
+     *
      * For x86/x64, uses CPUID. For other architectures, reads from /proc/cpuinfo
      * on Linux systems.
      */
@@ -697,7 +697,7 @@ namespace Utils
     /**
      * @brief Gets the CPU model name string.
      * @return Model name string (e.g., "Intel(R) Core(TM) i7-10700K CPU @ 3.80GHz").
-     * 
+     *
      * Reads from /proc/cpuinfo on Linux systems.
      */
     static std::string get_cpu_model()
@@ -732,7 +732,7 @@ namespace Utils
     /**
      * @brief Gets the number of available CPU cores.
      * @return Number of logical CPU cores.
-     * 
+     *
      * Uses system-specific APIs: GetSystemInfo (Windows), sysconf (Linux/macOS).
      */
     static int get_cpu_count()
@@ -817,7 +817,7 @@ namespace Utils
 
   /**
    * @brief Initializes Windows Sockets (Winsock) API.
-   * 
+   *
    * Uses RAII pattern to ensure cleanup on program exit.
    */
   inline void init_winsock()
@@ -1619,7 +1619,7 @@ namespace Utils
   /**
    * @brief Gets system memory information.
    * @return MemoryInfo structure with current memory statistics.
-   * 
+   *
    * Uses platform-specific APIs: GlobalMemoryStatusEx (Windows),
    * sysinfo (Linux), mach APIs (macOS).
    */
@@ -1723,7 +1723,7 @@ namespace Utils
    * @brief Gets disk space information for a specific path.
    * @param path Filesystem path to check.
    * @return DiskSpaceInfo structure with disk statistics for the path.
-   * 
+   *
    * Uses platform-specific APIs: GetDiskFreeSpaceEx (Windows),
    * statvfs (Linux/macOS).
    */
@@ -1777,7 +1777,7 @@ namespace Utils
   /**
    * @brief Gets system load average information.
    * @return SystemLoadInfo structure with load averages.
-   * 
+   *
    * Uses getloadavg (Linux/macOS) or performance counters (Windows).
    */
   inline SystemLoadInfo get_system_load()
@@ -1843,7 +1843,7 @@ namespace Utils
   /**
    * @brief Gets disk space information for all mounted filesystems.
    * @return Vector of pairs (mount point, DiskSpaceInfo).
-   * 
+   *
    * Platform-specific implementations:
    * - Windows: Iterates logical drives (A-Z)
    * - Linux: Parses /proc/mounts
@@ -1932,7 +1932,7 @@ namespace Utils
   /**
    * @brief Gets system uptime in seconds.
    * @return Uptime in seconds.
-   * 
+   *
    * Platform-specific implementations:
    * - Windows: GetTickCount64
    * - Linux: /proc/uptime

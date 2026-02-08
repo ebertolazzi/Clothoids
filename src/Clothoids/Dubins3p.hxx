@@ -470,11 +470,6 @@ namespace G2lib
     [[nodiscard]] real_type X_DDD( real_type const s ) const override;
     [[nodiscard]] real_type Y_DDD( real_type const s ) const override;
 
-    G2LIB_DEFINE_1ARG_AUTODIFF( theta )
-    G2LIB_DEFINE_1ARG_AUTODIFF( X )
-    G2LIB_DEFINE_1ARG_AUTODIFF( Y )
-
-
     /*\
      |  _                        __
      | | |_ _ __ __ _ _ __  ___ / _| ___  _ __ _ __ ___
@@ -650,6 +645,16 @@ namespace G2lib
     friend ostream_type & operator<<( ostream_type & stream, Dubins3p const & bi );
 
     [[nodiscard]] CurveType type() const override { return CurveType::DUBINS; }
+
+#ifdef AUTODIFF_SUPPORT
+    [[nodiscard]] autodiff::dual1st theta( autodiff::dual1st const & s ) const;
+    [[nodiscard]] autodiff::dual1st X( autodiff::dual1st const & s ) const;
+    [[nodiscard]] autodiff::dual1st Y( autodiff::dual1st const & s ) const;
+
+    [[nodiscard]] autodiff::dual2nd theta( autodiff::dual2nd const & s ) const;
+    [[nodiscard]] autodiff::dual2nd X( autodiff::dual2nd const & s ) const;
+    [[nodiscard]] autodiff::dual2nd Y( autodiff::dual2nd const & s ) const;
+#endif
   };
 
 }  // namespace G2lib

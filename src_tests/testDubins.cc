@@ -411,14 +411,7 @@ void test_dubins3p_comprehensive()
     }
     else
     {
-      fmt::print(
-        "{:<30} │ {:^7} │ {:10} │ {:10} │ {:^8} │ {:^10}\n",
-        name,
-        "❌",
-        "N/A",
-        "N/A",
-        "N/A",
-        "N/A" );
+      fmt::print( "{:<30} │ {:^7} │ {:10} │ {:10} │ {:^8} │ {:^10}\n", name, "❌", "N/A", "N/A", "N/A", "N/A" );
     }
   }
 
@@ -1176,8 +1169,8 @@ void test_dubins3p_edge_cases()
 
         // Validate the solution
         real_type error_start = hypot( db3p.x_begin() - xi, db3p.y_begin() - yi );
-        //real_type error_mid   = 0;  // Would need to compute closest point to (xm, ym)
-        real_type error_end   = hypot( db3p.x_end() - xf, db3p.y_end() - yf );
+        // real_type error_mid   = 0;  // Would need to compute closest point to (xm, ym)
+        real_type error_end = hypot( db3p.x_end() - xf, db3p.y_end() - yf );
 
         if ( error_start > 1e-6 || error_end > 1e-6 )
         {
@@ -1301,27 +1294,25 @@ int main()
     "\n"
     "╔══════════════════════════════════════════════════════════════════╗\n"
     "║                🚀 COMPREHENSIVE DUBINS TEST SUITE                ║\n"
-    "╚══════════════════════════════════════════════════════════════════╝\n"
-  );
+    "╚══════════════════════════════════════════════════════════════════╝\n" );
 
   auto total_start = chrono::high_resolution_clock::now();
 
   try
   {
     // Run all tests - AGGIUNGI I NUOVI TEST QUI
-    vector<pair<string, function<void()>>> tests = {
-      { "Basic Dubins Construction", test_basic_dubins },
-      { "CSV Validation", test_csv_validation },
-      { "Dubins Intersection", test_intersection },
-      { "Dubins3P Comprehensive", test_dubins3p_comprehensive },
-      { "Dubins3P Randomized", test_dubins3p_randomized },
-      { "Dubins Method Completeness", test_dubins_method_completeness },
-      { "Dubins3P Method Completeness", test_dubins3p_method_completeness },
-      { "Collision & Intersection", test_collision_and_intersection },
-      { "Transformations & Offsets", test_transformations_and_offsets },
-      { "Dubins3P Edge Cases", test_dubins3p_edge_cases },
-      { "Performance Benchmark", test_performance_benchmark }
-    };
+    vector<pair<string, function<void()>>> tests = { { "Basic Dubins Construction", test_basic_dubins },
+                                                     { "CSV Validation", test_csv_validation },
+                                                     { "Dubins Intersection", test_intersection },
+                                                     { "Dubins3P Comprehensive", test_dubins3p_comprehensive },
+                                                     { "Dubins3P Randomized", test_dubins3p_randomized },
+                                                     { "Dubins Method Completeness", test_dubins_method_completeness },
+                                                     { "Dubins3P Method Completeness",
+                                                       test_dubins3p_method_completeness },
+                                                     { "Collision & Intersection", test_collision_and_intersection },
+                                                     { "Transformations & Offsets", test_transformations_and_offsets },
+                                                     { "Dubins3P Edge Cases", test_dubins3p_edge_cases },
+                                                     { "Performance Benchmark", test_performance_benchmark } };
 
     int passed = 0;
     int failed = 0;
@@ -1367,8 +1358,7 @@ int main()
       fmt::format( "Passed:          {}", passed ),
       fmt::format( "Failed:          {}", failed ),
       fmt::format( "Success rate:    {:.1f}%", 100.0 * passed / tests.size() ),
-      fmt::format( "Total time:      {} ms", total_duration.count() )
-    );
+      fmt::format( "Total time:      {} ms", total_duration.count() ) );
 
 
     if ( failed == 0 )
