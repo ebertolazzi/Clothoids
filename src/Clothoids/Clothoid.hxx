@@ -950,39 +950,51 @@ namespace G2lib
 
     friend ostream_type & operator<<( ostream_type & stream, ClothoidCurve const & c );
 
-#ifdef AUTODIFF_SUPPORT
+    #ifdef AUTODIFF_SUPPORT
     [[nodiscard]] autodiff::dual1st tx( autodiff::dual1st const & s ) const { return m_CD.tg_x( s ); }
-    [[nodiscard]] autodiff::dual1st ty( autodiff::dual1st const & s ) const { return m_CD.tg_y( s ); }
-    [[nodiscard]] autodiff::dual1st theta( autodiff::dual1st const & s ) const { return m_CD.theta( s ); }
-    [[nodiscard]] autodiff::dual1st X( autodiff::dual1st const & s ) const { return m_CD.X( s ); }
-    [[nodiscard]] autodiff::dual1st Y( autodiff::dual1st const & s ) const { return m_CD.Y( s ); }
-    [[nodiscard]] autodiff::dual1st X_ISO( autodiff::dual1st const & s, real_type const offs ) const
-    {
-      return m_CD.X_ISO( s, offs );
-    }
-    [[nodiscard]] autodiff::dual1st Y_ISO( autodiff::dual1st const & s, real_type const offs ) const
-    {
-      return m_CD.Y_ISO( s, offs );
-    }
-
     [[nodiscard]] autodiff::dual2nd tx( autodiff::dual2nd const & s ) const { return m_CD.tg_x( s ); }
-    [[nodiscard]] autodiff::dual2nd ty( autodiff::dual2nd const & s ) const { return m_CD.tg_y( s ); }
-    [[nodiscard]] autodiff::dual2nd theta( autodiff::dual2nd const & s ) const { return m_CD.theta( s ); }
-    [[nodiscard]] autodiff::dual2nd X( autodiff::dual2nd const & s ) const { return m_CD.X( s ); }
-    [[nodiscard]] autodiff::dual2nd Y( autodiff::dual2nd const & s ) const { return m_CD.Y( s ); }
-    [[nodiscard]] autodiff::dual2nd X_ISO( autodiff::dual2nd const & s, real_type const offs ) const
-    {
-      return m_CD.X_ISO( s, offs );
-    }
-    [[nodiscard]] autodiff::dual2nd Y_ISO( autodiff::dual2nd const & s, real_type const offs ) const
-    {
-      return m_CD.Y_ISO( s, offs );
-    }
-#endif
 
-#ifdef CLOTHOIDS_BACK_COMPATIBILITY
-#include "Clothoid_compatibility.hxx"
-#endif
+    [[nodiscard]] autodiff::dual1st ty( autodiff::dual1st const & s ) const { return m_CD.tg_y( s ); }
+    [[nodiscard]] autodiff::dual2nd ty( autodiff::dual2nd const & s ) const { return m_CD.tg_y( s ); }
+
+    [[nodiscard]] autodiff::dual1st theta( autodiff::dual1st const & s ) const { return m_CD.theta( s ); }
+    [[nodiscard]] autodiff::dual2nd theta( autodiff::dual2nd const & s ) const { return m_CD.theta( s ); }
+
+    [[nodiscard]] autodiff::dual1st X( autodiff::dual1st const & s ) const { return m_CD.X( s ); }
+    [[nodiscard]] autodiff::dual2nd X( autodiff::dual2nd const & s ) const { return m_CD.X( s ); }
+
+    [[nodiscard]] autodiff::dual1st Y( autodiff::dual1st const & s ) const { return m_CD.Y( s ); }
+    [[nodiscard]] autodiff::dual2nd Y( autodiff::dual2nd const & s ) const { return m_CD.Y( s ); }
+
+    [[nodiscard]] autodiff::dual1st X_ISO( autodiff::dual1st const & s, real_type const offs ) const { return m_CD.X_ISO( s, offs ); }
+    [[nodiscard]] autodiff::dual2nd X_ISO( autodiff::dual2nd const & s, real_type const offs ) const { return m_CD.X_ISO( s, offs ); }
+
+    [[nodiscard]] autodiff::dual1st X_ISO( autodiff::dual1st const & s, autodiff::dual1st const & offs ) const { return m_CD.X_ISO( s, offs ); }
+    [[nodiscard]] autodiff::dual2nd X_ISO( autodiff::dual2nd const & s, autodiff::dual2nd const & offs ) const { return m_CD.X_ISO( s, offs ); }
+
+    [[nodiscard]] autodiff::dual1st Y_ISO( autodiff::dual1st const & s, real_type const offs ) const { return m_CD.Y_ISO( s, offs ); }
+    [[nodiscard]] autodiff::dual2nd Y_ISO( autodiff::dual2nd const & s, real_type const offs ) const { return m_CD.Y_ISO( s, offs ); }
+
+    [[nodiscard]] autodiff::dual1st Y_ISO( autodiff::dual1st const & s, autodiff::dual1st const & offs ) const { return m_CD.Y_ISO( s, offs ); }
+    [[nodiscard]] autodiff::dual2nd Y_ISO( autodiff::dual2nd const & s, autodiff::dual2nd const & offs ) const { return m_CD.Y_ISO( s, offs ); }
+
+    [[nodiscard]] autodiff::dual1st X_SAE( autodiff::dual1st const & s, real_type const offs ) const { return m_CD.X_SAE( s, offs ); }
+    [[nodiscard]] autodiff::dual2nd X_SAE( autodiff::dual2nd const & s, real_type const offs ) const { return m_CD.X_SAE( s, offs ); }
+
+    [[nodiscard]] autodiff::dual1st X_SAE( autodiff::dual1st const & s, autodiff::dual1st const & offs ) const { return m_CD.X_SAE( s, offs ); }
+    [[nodiscard]] autodiff::dual2nd X_SAE( autodiff::dual2nd const & s, autodiff::dual2nd const & offs ) const { return m_CD.X_SAE( s, offs ); }
+
+    [[nodiscard]] autodiff::dual1st Y_SAE( autodiff::dual1st const & s, real_type const offs ) const { return m_CD.Y_SAE( s, offs ); }
+    [[nodiscard]] autodiff::dual2nd Y_SAE( autodiff::dual2nd const & s, real_type const offs ) const { return m_CD.Y_SAE( s, offs ); }
+
+    [[nodiscard]] autodiff::dual1st Y_SAE( autodiff::dual1st const & s, autodiff::dual1st const & offs ) const { return m_CD.Y_SAE( s, offs ); }
+    [[nodiscard]] autodiff::dual2nd Y_SAE( autodiff::dual2nd const & s, autodiff::dual2nd const & offs ) const { return m_CD.Y_SAE( s, offs ); }
+
+    #endif
+
+    #ifdef CLOTHOIDS_BACK_COMPATIBILITY
+    #include "Clothoid_compatibility.hxx"
+    #endif
   };
 
 }  // namespace G2lib

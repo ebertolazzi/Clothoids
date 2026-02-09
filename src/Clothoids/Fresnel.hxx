@@ -438,41 +438,29 @@ namespace G2lib
     [[nodiscard]] autodiff::dual1st Y( autodiff::dual1st const & s ) const;
     [[nodiscard]] autodiff::dual2nd Y( autodiff::dual2nd const & s ) const;
 
-    [[nodiscard]] autodiff::dual1st X_ISO( autodiff::dual1st const & s, real_type const offs ) const
-    {
-      return X( s ) + offs * nor_x_ISO( s );
-    }
-    [[nodiscard]] autodiff::dual2nd X_ISO( autodiff::dual2nd const & s, real_type const offs ) const
-    {
-      return X( s ) + offs * nor_x_ISO( s );
-    }
+    [[nodiscard]] autodiff::dual1st X_ISO( autodiff::dual1st const & s, real_type const offs ) const { return X( s ) + offs * nor_x_ISO( s ); }
+    [[nodiscard]] autodiff::dual1st Y_ISO( autodiff::dual1st const & s, real_type const offs ) const { return Y( s ) + offs * nor_y_ISO( s ); }
 
-    [[nodiscard]] autodiff::dual1st Y_ISO( autodiff::dual1st const & s, real_type const offs ) const
-    {
-      return Y( s ) + offs * nor_y_ISO( s );
-    }
-    [[nodiscard]] autodiff::dual2nd Y_ISO( autodiff::dual2nd const & s, real_type const offs ) const
-    {
-      return Y( s ) + offs * nor_y_ISO( s );
-    }
+    [[nodiscard]] autodiff::dual2nd X_ISO( autodiff::dual2nd const & s, real_type const offs ) const { return X( s ) + offs * nor_x_ISO( s ); }
+    [[nodiscard]] autodiff::dual2nd Y_ISO( autodiff::dual2nd const & s, real_type const offs ) const { return Y( s ) + offs * nor_y_ISO( s ); }
 
-    [[nodiscard]] autodiff::dual1st X_SAE( autodiff::dual1st const & s, real_type const offs ) const
-    {
-      return X( s ) + offs * nor_x_SAE( s );
-    }
-    [[nodiscard]] autodiff::dual2nd X_SAE( autodiff::dual2nd const & s, real_type const offs ) const
-    {
-      return X( s ) + offs * nor_x_SAE( s );
-    }
+    [[nodiscard]] autodiff::dual1st X_SAE( autodiff::dual1st const & s, real_type const offs ) const { return X( s ) + offs * nor_x_SAE( s ); }
+    [[nodiscard]] autodiff::dual1st Y_SAE( autodiff::dual1st const & s, real_type const offs ) const { return Y( s ) + offs * nor_y_SAE( s ); }
 
-    [[nodiscard]] autodiff::dual1st Y_SAE( autodiff::dual1st const & s, real_type const offs ) const
-    {
-      return Y( s ) + offs * nor_y_SAE( s );
-    }
-    [[nodiscard]] autodiff::dual2nd Y_SAE( autodiff::dual2nd const & s, real_type const offs ) const
-    {
-      return Y( s ) + offs * nor_y_SAE( s );
-    }
+    [[nodiscard]] autodiff::dual2nd X_SAE( autodiff::dual2nd const & s, real_type const offs ) const { return X( s ) + offs * nor_x_SAE( s ); }
+    [[nodiscard]] autodiff::dual2nd Y_SAE( autodiff::dual2nd const & s, real_type const offs ) const { return Y( s ) + offs * nor_y_SAE( s ); }
+
+    [[nodiscard]] autodiff::dual1st X_ISO( autodiff::dual1st const & s, autodiff::dual1st const & offs ) const { return X( s ) + offs * nor_x_ISO( s ); }
+    [[nodiscard]] autodiff::dual1st Y_ISO( autodiff::dual1st const & s, autodiff::dual1st const & offs ) const { return Y( s ) + offs * nor_y_ISO( s ); }
+
+    [[nodiscard]] autodiff::dual2nd X_ISO( autodiff::dual2nd const & s, autodiff::dual2nd const & offs ) const { return X( s ) + offs * nor_x_ISO( s ); }
+    [[nodiscard]] autodiff::dual2nd Y_ISO( autodiff::dual2nd const & s, autodiff::dual2nd const & offs ) const { return Y( s ) + offs * nor_y_ISO( s ); }
+
+    [[nodiscard]] autodiff::dual1st X_SAE( autodiff::dual1st const & s, autodiff::dual1st const & offs ) const { return X( s ) + offs * nor_x_SAE( s ); }
+    [[nodiscard]] autodiff::dual1st Y_SAE( autodiff::dual1st const & s, autodiff::dual1st const & offs ) const { return Y( s ) + offs * nor_y_SAE( s ); }
+
+    [[nodiscard]] autodiff::dual2nd X_SAE( autodiff::dual2nd const & s, autodiff::dual2nd const & offs ) const { return X( s ) + offs * nor_x_SAE( s ); }
+    [[nodiscard]] autodiff::dual2nd Y_SAE( autodiff::dual2nd const & s, autodiff::dual2nd const & offs ) const { return Y( s ) + offs * nor_y_SAE( s ); }
 
     [[nodiscard]] autodiff::dual1st tg_x( autodiff::dual1st const & s ) const;
     [[nodiscard]] autodiff::dual2nd tg_x( autodiff::dual2nd const & s ) const;
