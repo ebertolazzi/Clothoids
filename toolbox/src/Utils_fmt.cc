@@ -35,7 +35,7 @@ namespace Utils
     string_view const align )
   {
     string const FMT{ fmt::format( "{{}}{{:{}{}{}}}{{}}", F, align, width ) };
-    return fmt::format( FMT, L, title, R );
+    return fmt::format( fmt::runtime( FMT ), L, title, R );
   }
 
   string fmt_table_row(
@@ -64,7 +64,7 @@ namespace Utils
     unsigned i{ 0 };
     for ( auto n : names )
     {
-      res += fmt::format( FMT, n );
+      res += fmt::format( fmt::runtime( FMT ), n );
       if ( ++i != N ) res += C;
     }
     while ( k < r )

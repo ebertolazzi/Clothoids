@@ -818,8 +818,6 @@ namespace G2lib
     real_type theta_DD( real_type const s ) const override;
     real_type theta_DDD( real_type const s ) const override;
 
-    G2LIB_DEFINE_1ARG_AUTODIFF( theta )
-
     /*\
      |  _____                   _   _   _
      | |_   _|   __ _ _ __   __| | | \ | |
@@ -836,9 +834,6 @@ namespace G2lib
     real_type ty_DD( real_type const s ) const override;
     real_type tx_DDD( real_type const s ) const override;
     real_type ty_DDD( real_type const s ) const override;
-
-    G2LIB_DEFINE_1ARG_AUTODIFF( tx )
-    G2LIB_DEFINE_1ARG_AUTODIFF( ty )
 
     // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 
@@ -875,9 +870,6 @@ namespace G2lib
     real_type X_DDD( real_type const s ) const override;
     real_type Y_DDD( real_type const s ) const override;
 
-    G2LIB_DEFINE_1ARG_AUTODIFF( X )
-    G2LIB_DEFINE_1ARG_AUTODIFF( Y )
-
     // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 
     void eval( real_type const s, real_type & x, real_type & y ) const override;
@@ -904,9 +896,6 @@ namespace G2lib
     real_type Y_ISO_DD( real_type const s, real_type const offs ) const override;
     real_type X_ISO_DDD( real_type const s, real_type const offs ) const override;
     real_type Y_ISO_DDD( real_type const s, real_type const offs ) const override;
-
-    G2LIB_DEFINE_1ARG_1PAR_AUTODIFF( X_ISO )
-    G2LIB_DEFINE_1ARG_1PAR_AUTODIFF( Y_ISO )
 
     // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 
@@ -1330,9 +1319,27 @@ namespace G2lib
     //!
     void load( istream_type & stream, real_type const epsi = 1e-8 );
 
-#ifdef CLOTHOIDS_BACK_COMPATIBILITY
-#include "ClothoidList_compatibility.hxx"
-#endif
+    #ifdef AUTODIFF_SUPPORT
+    [[nodiscard]] autodiff::dual1st theta( autodiff::dual1st const & s ) const;
+    [[nodiscard]] autodiff::dual1st tx( autodiff::dual1st const & s ) const;
+    [[nodiscard]] autodiff::dual1st ty( autodiff::dual1st const & s ) const;
+    [[nodiscard]] autodiff::dual1st X( autodiff::dual1st const & s ) const;
+    [[nodiscard]] autodiff::dual1st Y( autodiff::dual1st const & s ) const;
+    [[nodiscard]] autodiff::dual1st X_ISO( autodiff::dual1st const & s, real_type const offs ) const;
+    [[nodiscard]] autodiff::dual1st Y_ISO( autodiff::dual1st const & s, real_type const offs ) const;
+
+    [[nodiscard]] autodiff::dual2nd theta( autodiff::dual2nd const & s ) const;
+    [[nodiscard]] autodiff::dual2nd tx( autodiff::dual2nd const & s ) const;
+    [[nodiscard]] autodiff::dual2nd ty( autodiff::dual2nd const & s ) const;
+    [[nodiscard]] autodiff::dual2nd X( autodiff::dual2nd const & s ) const;
+    [[nodiscard]] autodiff::dual2nd Y( autodiff::dual2nd const & s ) const;
+    [[nodiscard]] autodiff::dual2nd X_ISO( autodiff::dual2nd const & s, real_type const offs ) const;
+    [[nodiscard]] autodiff::dual2nd Y_ISO( autodiff::dual2nd const & s, real_type const offs ) const;
+    #endif
+
+    #ifdef CLOTHOIDS_BACK_COMPATIBILITY
+    #include "ClothoidList_compatibility.hxx"
+    #endif
   };
 
 }  // namespace G2lib

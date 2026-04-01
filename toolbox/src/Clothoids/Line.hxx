@@ -191,8 +191,10 @@ namespace G2lib
     [[nodiscard]] real_type theta_DD( real_type const ) const override { return 0; }
     [[nodiscard]] real_type theta_DDD( real_type const ) const override { return 0; }
 
-    [[nodiscard]] dual1st theta( dual1st const & ) const { return m_theta0; }
-    [[nodiscard]] dual2nd theta( dual2nd const & ) const { return m_theta0; }
+#ifdef AUTODIFF_SUPPORT
+    [[nodiscard]] autodiff::dual1st theta( autodiff::dual1st const & ) const { return m_theta0; }
+    [[nodiscard]] autodiff::dual2nd theta( autodiff::dual2nd const & ) const { return m_theta0; }
+#endif
 
     /*\
      |  _____                   _   _   _
@@ -211,10 +213,12 @@ namespace G2lib
     [[nodiscard]] real_type tx_DDD( real_type ) const override { return 0; }
     [[nodiscard]] real_type ty_DDD( real_type ) const override { return 0; }
 
-    [[nodiscard]] dual1st tx( dual1st const & ) const { return m_c0; }
-    [[nodiscard]] dual1st ty( dual1st const & ) const { return m_s0; }
-    [[nodiscard]] dual2nd tx( dual2nd const & ) const { return m_c0; }
-    [[nodiscard]] dual2nd ty( dual2nd const & ) const { return m_s0; }
+#ifdef AUTODIFF_SUPPORT
+    [[nodiscard]] autodiff::dual1st tx( autodiff::dual1st const & ) const { return m_c0; }
+    [[nodiscard]] autodiff::dual1st ty( autodiff::dual1st const & ) const { return m_s0; }
+    [[nodiscard]] autodiff::dual2nd tx( autodiff::dual2nd const & ) const { return m_c0; }
+    [[nodiscard]] autodiff::dual2nd ty( autodiff::dual2nd const & ) const { return m_s0; }
+#endif
 
     // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 
@@ -244,11 +248,12 @@ namespace G2lib
     [[nodiscard]] real_type X_DDD( real_type const ) const override { return 0; }
     [[nodiscard]] real_type Y_DDD( real_type const ) const override { return 0; }
 
-    [[nodiscard]] dual1st X( dual1st const & s ) const { return m_x0 + s * m_c0; }
-    [[nodiscard]] dual1st Y( dual1st const & s ) const { return m_y0 + s * m_s0; }
-    [[nodiscard]] dual2nd X( dual2nd const & s ) const { return m_x0 + s * m_c0; }
-    [[nodiscard]] dual2nd Y( dual2nd const & s ) const { return m_y0 + s * m_s0; }
-
+#ifdef AUTODIFF_SUPPORT
+    [[nodiscard]] autodiff::dual1st X( autodiff::dual1st const & s ) const { return m_x0 + s * m_c0; }
+    [[nodiscard]] autodiff::dual1st Y( autodiff::dual1st const & s ) const { return m_y0 + s * m_s0; }
+    [[nodiscard]] autodiff::dual2nd X( autodiff::dual2nd const & s ) const { return m_x0 + s * m_c0; }
+    [[nodiscard]] autodiff::dual2nd Y( autodiff::dual2nd const & s ) const { return m_y0 + s * m_s0; }
+#endif
 
     // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 
@@ -299,22 +304,27 @@ namespace G2lib
     [[nodiscard]] real_type X_ISO_DDD( real_type const, real_type const ) const override { return 0; }
     [[nodiscard]] real_type Y_ISO_DDD( real_type const, real_type const ) const override { return 0; }
 
-    [[nodiscard]] dual1st X_ISO( dual1st const & s, real_type const offs ) const
+#ifdef AUTODIFF_SUPPORT
+    [[nodiscard]] autodiff::dual1st X_ISO( autodiff::dual1st const & s, real_type const offs ) const
     {
       return m_x0 + s * m_c0 + offs * nx_begin_ISO();
     }
-    [[nodiscard]] dual1st Y_ISO( dual1st const & s, real_type const offs ) const
+
+    [[nodiscard]] autodiff::dual1st Y_ISO( autodiff::dual1st const & s, real_type const offs ) const
     {
       return m_y0 + s * m_s0 + offs * ny_begin_ISO();
     }
-    [[nodiscard]] dual2nd X_ISO( dual2nd const & s, real_type const offs ) const
+
+    [[nodiscard]] autodiff::dual2nd X_ISO( autodiff::dual2nd const & s, real_type const offs ) const
     {
       return m_x0 + s * m_c0 + offs * nx_begin_ISO();
     }
-    [[nodiscard]] dual2nd Y_ISO( dual2nd const & s, real_type const offs ) const
+
+    [[nodiscard]] autodiff::dual2nd Y_ISO( autodiff::dual2nd const & s, real_type const offs ) const
     {
       return m_y0 + s * m_s0 + offs * ny_begin_ISO();
     }
+#endif
 
     // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 

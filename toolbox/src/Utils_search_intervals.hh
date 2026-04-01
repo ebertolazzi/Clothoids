@@ -27,6 +27,7 @@
 #define UTILS_SEARCH_INTERVALS_HH
 
 #include "Utils.hh"
+#include <algorithm>  // per std::upper_bound
 
 namespace Utils
 {
@@ -54,9 +55,9 @@ namespace Utils
     bool         closed,
     bool         can_extend )
   {
-    using std::lower_bound;
+    using std::upper_bound;
 
-    // check points
+    // Validazione iniziale
     T_int n{ npts - 1 };
     UTILS_ASSERT(
       npts > 1 && last_interval >= 0 && last_interval < n,
@@ -69,16 +70,39 @@ namespace Utils
       closed,
       can_extend );
 
-    // check range
     T_real xl{ X[0] };
     T_real xr{ X[n] };
+
     if ( closed )
-    {  // put x in range (change also its value)
+    {
       T_real L{ xr - xl };
-      x -= xl;
-      x = fmod( x, L );
-      if ( x < 0 ) x += L;
-      x += xl;
+
+      // Caso degenere: intervallo di lunghezza zero
+      if ( L <= 0 )
+      {
+        last_interval = 0;
+        return;
+      }
+
+      // Normalizza x nell'intervallo [xl, xr)
+      T_real t{ x - xl };
+      t = fmod( t, L );
+      if ( t < 0 ) t += L;
+
+      // CORREZIONE CRITICA: Gestione precisa dei bordi
+      // Dopo il wrapping, t è in [0, L)
+      // Se t == 0, x è esattamente sul bordo sinistro (xl) o un suo multiplo
+      // Per coerenza ciclica, deve appartenere al PRIMO intervallo [0,1]
+      // a meno che x non sia esattamente xr (nel qual caso è equivalente a xl)
+
+      x = xl + t;
+
+      // Gestione speciale per x esattamente uguale a xr
+      // (dopo il wrapping, t=0 ma il valore originale era xr)
+      // Lo trattiamo come se fosse xl, che va nel primo intervallo
+      // MA: c'è un caso speciale: se x è esattamente xr, dobbiamo decidere
+      // se assegnarlo all'ultimo intervallo o al primo.
+      // Per coerenza con la classe, probabilmente va al primo intervallo.
     }
     else
     {
@@ -96,69 +120,81 @@ namespace Utils
         xr );
     }
 
-    // find the interval of the support of the B-spline
+    // === OTTIMIZZAZIONE: Ricerca adattiva basata sulla posizione corrente ===
     T_real const * XL{ X + last_interval };
 
-    // Use <= instead of < for the right boundary check to handle exact matches
-    // but only if we're not at the last interval
-    if ( XL[1] < x || ( x == XL[1] && last_interval < n - 1 && !Utils::is_zero( XL[1] - XL[2] ) ) )
-    {  // x on the right (or exactly at the right boundary and not the last interval)
-      if ( x >= X[n - 1] )
-      {
-        last_interval = n - 1;  // last interval
-      }
-      else if ( x < XL[2] )
-      {  // x in (XL[1],XL[2]) or exactly at XL[1] when not degenerate
-        ++last_interval;
-      }
-      else
-      {  // x >= XL[2] search the right interval
-        T_real const * XE{ X + n };
-        last_interval += T_int( lower_bound( XL, XE, x ) - XL );
-        T_real const * XX = X + last_interval;
-        if ( x < XX[0] || Utils::is_zero( XX[0] - XX[1] ) ) --last_interval;
-      }
-    }
-    else if ( x < XL[0] )
-    {  // on the left
-      if ( x <= X[1] )
-      {                     // x in [X[0],X[1]]
-        last_interval = 0;  // first interval
-      }
-      else if ( XL[-1] <= x )
-      {  // x in [XL[-1],XL[0])
-        --last_interval;
-      }
-      else
-      {
-        last_interval     = T_int( lower_bound( X + 1, XL, x ) - X );
-        T_real const * XX = X + last_interval;
-        if ( x < XX[0] || Utils::is_zero( XX[0] - XX[1] ) ) --last_interval;
-      }
-    }
-    else
+    // Caso 1: x è a destra dell'intervallo corrente
+    if ( x >= XL[1] )
     {
-      // x in the interval [ XL[0], XL[1] ] nothing to do
-      // If x is exactly at XL[1] and we're at the last interval or it's a degenerate interval, stay here
+      if ( last_interval < n - 1 )
+      {
+        // Check rapido: intervallo successivo?
+        if ( x < XL[2] ) { ++last_interval; }
+        else
+        {
+          // Binary search nella parte destra
+          T_real const * XE = X + n + 1;
+          last_interval     = T_int( upper_bound( XL + 2, XE, x ) - X ) - 1;
+
+          // Clamp per sicurezza
+          if ( last_interval > n - 1 ) last_interval = n - 1;
+        }
+      }
+      // else: già all'ultimo intervallo, rimani lì
     }
-    // check computed interval
+    // Caso 2: x è a sinistra dell'intervallo corrente
+    else if ( x < XL[0] )
+    {
+      // Check rapido: intervallo precedente?
+      if ( last_interval > 0 && x >= XL[-1] ) { --last_interval; }
+      else
+      {
+        // Binary search nella parte sinistra
+        last_interval = T_int( upper_bound( X, XL, x ) - X ) - 1;
+
+        // Clamp per sicurezza
+        if ( last_interval < 0 ) last_interval = 0;
+      }
+    }
+    // Caso 3: x è già nell'intervallo corretto [XL[0], XL[1])
+    // => Non fare nulla
+
+    // === OTTIMIZZAZIONE: Protezione intervalli degeneri ===
+    // Cerca il primo intervallo non degenere a sinistra se necessario
+    if ( last_interval < n && X[last_interval + 1] <= X[last_interval] )
+    {
+      // L'intervallo è degenere o ha larghezza zero
+      // Cerca il primo intervallo valido a sinistra
+      T_int i = last_interval;
+      while ( i > 0 && X[i] <= X[i - 1] ) --i;
+      last_interval = i;
+    }
+
+    // CORREZIONE FINALE: Gestione del bordo destro in modalità chiusa
+    if ( closed )
+    {
+      // Se x è esattamente uguale a xr (dopo il wrapping è xl)
+      // e siamo nell'ultimo intervallo, dobbiamo spostarci al primo intervallo
+      // perché xl appartiene al primo intervallo [0,1] per coerenza ciclica
+      if ( x == xl && last_interval == n - 1 ) { last_interval = 0; }
+    }
+
+    // Validazione finale
     UTILS_ASSERT(
       last_interval >= 0 && last_interval < n,
       "In search_interval( npts={}, X, x={}, last_interval={}, "
       "closed={}, can_extend={})\n"
-      "computed last_interval of range: [{},{}]\n",
+      "computed last_interval={} out of range [0,{}]\n",
       npts,
       x,
       last_interval,
       closed,
       can_extend,
-      xl,
-      xr );
+      last_interval,
+      n - 1 );
   }
-
   /**
-   * \brief Legacy wrapper for search_interval function
-   * \deprecated Use search_interval() instead
+   * \brief Legacy wrapper (deprecated)
    */
   template <typename T_int, typename T_real> inline void searchInterval(
     T_int        npts,
@@ -173,8 +209,4 @@ namespace Utils
 
 }  // namespace Utils
 
-#endif  // UTILS_INTERVALS_HH
-
-//
-// eof: Utils_search_intervals.hh
-//
+#endif  // UTILS_SEARCH_INTERVALS_HH

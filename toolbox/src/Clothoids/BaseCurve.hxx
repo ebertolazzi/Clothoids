@@ -535,8 +535,6 @@ namespace G2lib
     //!
     virtual real_type theta_DDD( real_type const s ) const = 0;
 
-    G2LIB_DEFINE_1ARG_AUTODIFF( theta )
-
     /*\
      |   _
      |  | | ____ _ _ __  _ __   __ _
@@ -560,8 +558,6 @@ namespace G2lib
     //! Curvature second derivative at curvilinear coordinate \f$s\f$.
     //!
     real_type kappa_DD( real_type const s ) const { return theta_DDD( s ); }
-
-    G2LIB_DEFINE_1ARG_AUTODIFF( kappa )
 
     /*\
      |  _____                   _   _   _
@@ -610,9 +606,6 @@ namespace G2lib
     //! Tangent third derivative \f$y\f$-coordinate at curvilinear coordinate \f$s\f$.
     //!
     virtual real_type ty_DDD( real_type const s ) const;
-
-    G2LIB_DEFINE_1ARG_AUTODIFF( tx )
-    G2LIB_DEFINE_1ARG_AUTODIFF( ty )
 
     // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
     //!
@@ -694,11 +687,6 @@ namespace G2lib
     //! Normal third derivative \f$y\f$-coordinate at curvilinear coordinate \f$s\f$ (SAE).
     //!
     [[nodiscard]] real_type ny_SAE_DDD( real_type const s ) const { return -tx_DDD( s ); }
-
-    G2LIB_DEFINE_1ARG_AUTODIFF( nx_ISO )
-    G2LIB_DEFINE_1ARG_AUTODIFF( ny_ISO )
-    G2LIB_DEFINE_1ARG_AUTODIFF( nx_SAE )
-    G2LIB_DEFINE_1ARG_AUTODIFF( ny_SAE )
 
     // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 
@@ -920,9 +908,6 @@ namespace G2lib
     //!
     virtual real_type Y_DDD( real_type const s ) const = 0;
 
-    G2LIB_DEFINE_1ARG_AUTODIFF( X )
-    G2LIB_DEFINE_1ARG_AUTODIFF( Y )
-
     // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 
     //!
@@ -1050,11 +1035,6 @@ namespace G2lib
     {
       return this->Y_ISO_DDD( s, -offs );
     }
-
-    G2LIB_DEFINE_1ARG_1PAR_AUTODIFF( X_ISO )
-    G2LIB_DEFINE_1ARG_1PAR_AUTODIFF( Y_ISO )
-    G2LIB_DEFINE_1ARG_1PAR_AUTODIFF( X_SAE )
-    G2LIB_DEFINE_1ARG_1PAR_AUTODIFF( Y_SAE )
 
     // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 
@@ -1491,6 +1471,40 @@ namespace G2lib
     //! Pretty print of the curve data.
     //!
     virtual void info( ostream_type & stream ) const = 0;
+
+#ifdef AUTODIFF_SUPPORT
+
+    autodiff::dual1st theta( autodiff::dual1st const & s ) const;
+    autodiff::dual1st kappa( autodiff::dual1st const & s ) const;
+    autodiff::dual1st tx( autodiff::dual1st const & s ) const;
+    autodiff::dual1st ty( autodiff::dual1st const & s ) const;
+    autodiff::dual1st nx_ISO( autodiff::dual1st const & s ) const;
+    autodiff::dual1st ny_ISO( autodiff::dual1st const & s ) const;
+    autodiff::dual1st nx_SAE( autodiff::dual1st const & s ) const;
+    autodiff::dual1st ny_SAE( autodiff::dual1st const & s ) const;
+    autodiff::dual1st X( autodiff::dual1st const & s ) const;
+    autodiff::dual1st Y( autodiff::dual1st const & s ) const;
+    autodiff::dual1st X_ISO( autodiff::dual1st const & s, real_type const offs ) const;
+    autodiff::dual1st Y_ISO( autodiff::dual1st const & s, real_type const offs ) const;
+    autodiff::dual1st X_SAE( autodiff::dual1st const & s, real_type const offs ) const;
+    autodiff::dual1st Y_SAE( autodiff::dual1st const & s, real_type const offs ) const;
+
+    autodiff::dual2nd theta( autodiff::dual2nd const & s ) const;
+    autodiff::dual2nd kappa( autodiff::dual2nd const & s ) const;
+    autodiff::dual2nd tx( autodiff::dual2nd const & s ) const;
+    autodiff::dual2nd ty( autodiff::dual2nd const & s ) const;
+    autodiff::dual2nd nx_ISO( autodiff::dual2nd const & s ) const;
+    autodiff::dual2nd ny_ISO( autodiff::dual2nd const & s ) const;
+    autodiff::dual2nd nx_SAE( autodiff::dual2nd const & s ) const;
+    autodiff::dual2nd ny_SAE( autodiff::dual2nd const & s ) const;
+    autodiff::dual2nd X( autodiff::dual2nd const & s ) const;
+    autodiff::dual2nd Y( autodiff::dual2nd const & s ) const;
+    autodiff::dual2nd X_ISO( autodiff::dual2nd const & s, real_type const offs ) const;
+    autodiff::dual2nd Y_ISO( autodiff::dual2nd const & s, real_type const offs ) const;
+    autodiff::dual2nd X_SAE( autodiff::dual2nd const & s, real_type const offs ) const;
+    autodiff::dual2nd Y_SAE( autodiff::dual2nd const & s, real_type const offs ) const;
+
+#endif
 
 #ifdef CLOTHOIDS_BACK_COMPATIBILITY
 #include "BaseCurve_compatibility.hxx"

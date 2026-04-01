@@ -235,10 +235,6 @@ namespace G2lib
     real_type theta_DD( real_type const s ) const override;
     real_type theta_DDD( real_type const s ) const override;
 
-    G2LIB_DEFINE_1ARG_AUTODIFF( X )
-    G2LIB_DEFINE_1ARG_AUTODIFF( Y )
-    G2LIB_DEFINE_1ARG_AUTODIFF( theta )
-
     void eval( real_type s, real_type & x, real_type & y ) const override
     {
       integer   idx = this->find_at_s( s );
@@ -407,6 +403,16 @@ namespace G2lib
     friend ostream_type & operator<<( ostream_type & stream, PolyLine const & P );
 
     void build_AABBtree() const;
+
+#ifdef AUTODIFF_SUPPORT
+    [[nodiscard]] autodiff::dual1st X( autodiff::dual1st const & s ) const;
+    [[nodiscard]] autodiff::dual1st Y( autodiff::dual1st const & s ) const;
+    [[nodiscard]] autodiff::dual1st theta( autodiff::dual1st const & s ) const;
+
+    [[nodiscard]] autodiff::dual2nd X( autodiff::dual2nd const & s ) const;
+    [[nodiscard]] autodiff::dual2nd Y( autodiff::dual2nd const & s ) const;
+    [[nodiscard]] autodiff::dual2nd theta( autodiff::dual2nd const & s ) const;
+#endif
 
 #ifdef CLOTHOIDS_BACK_COMPATIBILITY
 #include "PolyLine_compatibility.hxx"

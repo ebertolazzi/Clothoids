@@ -164,22 +164,22 @@ namespace G2lib
   //!
   void FresnelCS( real_type y, real_type & C, real_type & S )
   {
-    constexpr real_type eps{ 1E-15 };
-    real_type const     x{ y > 0 ? y : -y };
+    constexpr real_type eps = 1E-15;
+    real_type const     x   = y > 0 ? y : -y;
 
     if ( x < 1.0 )
     {
       real_type term;
 
-      real_type const s{ Utils::m_pi_2 * ( x * x ) };
-      real_type const t{ -s * s };
+      real_type const s = Utils::m_pi_2 * ( x * x );
+      real_type const t = -s * s;
 
       // Cosine integral series
-      real_type twofn{ 0.0 };
-      real_type fact{ 1.0 };
-      real_type denterm{ 1.0 };
-      real_type numterm{ 1.0 };
-      real_type sum{ 1.0 };
+      real_type twofn   = 0;
+      real_type fact    = 1;
+      real_type denterm = 1;
+      real_type numterm = 1;
+      real_type sum     = 1;
       do
       {
         twofn += 2.0;
@@ -213,14 +213,14 @@ namespace G2lib
     else if ( x < 6.0 )
     {
       // Rational approximation for f
-      real_type sumn{ 0.0 };
-      real_type sumd{ fd[11] };
+      real_type sumn = 0.0;
+      real_type sumd = fd[11];
       for ( integer k = 10; k >= 0; --k )
       {
         sumn = fn[k] + x * sumn;
         sumd = fd[k] + x * sumd;
       }
-      real_type const f{ sumn / sumd };
+      real_type const f = sumn / sumd;
 
       // Rational approximation for g
       sumn = 0.0;
@@ -230,12 +230,12 @@ namespace G2lib
         sumn = gn[k] + x * sumn;
         sumd = gd[k] + x * sumd;
       }
-      real_type const g{ sumn / sumd };
-      real_type const U{ Utils::m_pi_2 * ( x * x ) };
-      real_type const SinU{ sin( U ) };
-      real_type const CosU{ cos( U ) };
-      C = 0.5 + f * SinU - g * CosU;
-      S = 0.5 - f * CosU - g * SinU;
+      real_type const g    = sumn / sumd;
+      real_type const U    = Utils::m_pi_2 * ( x * x );
+      real_type const SinU = sin( U );
+      real_type const CosU = cos( U );
+      C                    = 0.5 + f * SinU - g * CosU;
+      S                    = 0.5 - f * CosU - g * SinU;
     }
     else
     {
@@ -243,15 +243,15 @@ namespace G2lib
 
       // x >= 6; asymptotic expansions for  f  and  g
 
-      real_type const s{ Utils::m_pi * x * x };
-      real_type const t{ -1 / ( s * s ) };
+      real_type const s = Utils::m_pi * ( x * x );
+      real_type const t = -1 / ( s * s );
 
       // Expansion for f
-      real_type       numterm{ -1.0 };
-      real_type       term{ 1.0 };
-      real_type       sum{ 1.0 };
-      real_type       oldterm{ 1.0 };
-      real_type const eps10{ 0.1 * eps };
+      real_type       numterm = -1;
+      real_type       term    = 1;
+      real_type       sum     = 1;
+      real_type       oldterm = 1;
+      real_type const eps10   = 0.1 * eps;
 
       do
       {
@@ -268,13 +268,13 @@ namespace G2lib
         oldterm = absterm;
       } while ( absterm > eps10 * abs( sum ) );
 
-      real_type const f{ sum / ( Utils::m_pi * x ) };
+      real_type const f = sum / ( Utils::m_pi * x );
 
       //  Expansion for  g
-      numterm = -1.0;
-      term    = 1.0;
-      sum     = 1.0;
-      oldterm = 1.0;
+      numterm = -1;
+      term    = 1;
+      sum     = 1;
+      oldterm = 1;
 
       do
       {
@@ -291,13 +291,13 @@ namespace G2lib
         oldterm = absterm;
       } while ( absterm > eps10 * abs( sum ) );
 
-      real_type g{ Utils::m_pi * x };
-      g = sum / ( g * g * x );
-      real_type const U{ Utils::m_pi_2 * ( x * x ) };
-      real_type const SinU{ sin( U ) };
-      real_type const CosU{ cos( U ) };
-      C = 0.5 + f * SinU - g * CosU;
-      S = 0.5 - f * CosU - g * SinU;
+      real_type g          = Utils::m_pi * x;
+      g                    = sum / ( g * g * x );
+      real_type const U    = Utils::m_pi_2 * ( x * x );
+      real_type const SinU = sin( U );
+      real_type const CosU = cos( U );
+      C                    = 0.5 + f * SinU - g * CosU;
+      S                    = 0.5 - f * CosU - g * SinU;
     }
     if ( y < 0 )
     {
@@ -316,9 +316,9 @@ namespace G2lib
     if ( nk == 1 ) return;
 
     // precompute fattori trigonometrici e potenze di t
-    real_type const tt{ Utils::m_pi_2 * ( t * t ) };
-    real_type const ss{ sin( tt ) };
-    real_type const cc{ cos( tt ) };
+    real_type const tt = Utils::m_pi_2 * ( t * t );
+    real_type const ss = sin( tt );
+    real_type const cc = cos( tt );
 
     // livello 1
     C[1] = ss * Utils::m_1_pi;
@@ -326,7 +326,7 @@ namespace G2lib
     if ( nk == 2 ) return;
 
     // livelli successivi (ricorrenza generale)
-    real_type tk1{ 1 };
+    real_type tk1 = 1;
     for ( integer k = 2; k < nk; ++k )
     {
       tk1 *= t;
@@ -353,8 +353,8 @@ namespace G2lib
     FresnelCS( ell, Cl, Sl );
     FresnelCS( ell + z, Cz, Sz );
 
-    real_type const dC0{ Cz - Cl };
-    real_type const dS0{ Sz - Sl };
+    real_type const dC0 = Cz - Cl;
+    real_type const dS0 = Sz - Sl;
 
     X = cg * dC0 - s * sg * dS0;
     Y = sg * dC0 + s * cg * dS0;
@@ -367,49 +367,49 @@ namespace G2lib
   {
     UTILS_ASSERT( nk <= 5 && nk > 0, "In evalXYaLarge first argument nk must be in 1..5, nk {}\n", nk );
 
-    real_type const s{ static_cast<real_type>( a > 0 ? +1 : -1 ) };
-    real_type const absa{ abs( a ) };
-    real_type const z{ m_1_sqrt_pi * sqrt( absa ) };
-    real_type const ell{ s * b * m_1_sqrt_pi / sqrt( absa ) };
-    real_type const g{ -0.5 * s * ( b * b ) / absa };
-    real_type       cg{ cos( g ) / z };
-    real_type       sg{ sin( g ) / z };
+    real_type const s    = static_cast<real_type>( a > 0 ? +1 : -1 );
+    real_type const absa = abs( a );
+    real_type const z    = m_1_sqrt_pi * sqrt( absa );
+    real_type const ell  = s * b * m_1_sqrt_pi / sqrt( absa );
+    real_type const g    = -0.5 * s * ( b * b ) / absa;
+    real_type       cg   = cos( g ) / z;
+    real_type       sg   = sin( g ) / z;
 
     real_type Cl[5], Sl[5], Cz[5], Sz[5];
 
     FresnelCS( nk, ell, Cl, Sl );
     FresnelCS( nk, ell + z, Cz, Sz );
 
-    real_type const dC0{ Cz[0] - Cl[0] };
-    real_type const dS0{ Sz[0] - Sl[0] };
-    X[0] = cg * dC0 - s * sg * dS0;
-    Y[0] = sg * dC0 + s * cg * dS0;
+    real_type const dC0 = Cz[0] - Cl[0];
+    real_type const dS0 = Sz[0] - Sl[0];
+    X[0]                = cg * dC0 - s * sg * dS0;
+    Y[0]                = sg * dC0 + s * cg * dS0;
 
     if ( nk <= 1 ) return;
     cg /= z;
     sg /= z;
-    real_type const dC1{ Cz[1] - Cl[1] };
-    real_type const dS1{ Sz[1] - Sl[1] };
-    real_type       DC{ dC1 - ell * dC0 };
-    real_type       DS{ dS1 - ell * dS0 };
-    X[1] = cg * DC - s * sg * DS;
-    Y[1] = sg * DC + s * cg * DS;
+    real_type const dC1 = Cz[1] - Cl[1];
+    real_type const dS1 = Sz[1] - Sl[1];
+    real_type       DC  = dC1 - ell * dC0;
+    real_type       DS  = dS1 - ell * dS0;
+    X[1]                = cg * DC - s * sg * DS;
+    Y[1]                = sg * DC + s * cg * DS;
 
     if ( nk <= 2 ) return;
-    real_type const dC2{ Cz[2] - Cl[2] };
-    real_type const dS2{ Sz[2] - Sl[2] };
-    DC = dC2 + ell * ( ell * dC0 - 2 * dC1 );
-    DS = dS2 + ell * ( ell * dS0 - 2 * dS1 );
+    real_type const dC2 = Cz[2] - Cl[2];
+    real_type const dS2 = Sz[2] - Sl[2];
+    DC                  = dC2 + ell * ( ell * dC0 - 2 * dC1 );
+    DS                  = dS2 + ell * ( ell * dS0 - 2 * dS1 );
     cg /= z;
     sg /= z;
     X[2] = cg * DC - s * sg * DS;
     Y[2] = sg * DC + s * cg * DS;
 
     if ( nk <= 3 ) return;
-    real_type const dC3{ Cz[3] - Cl[3] };
-    real_type const dS3{ Sz[3] - Sl[3] };
-    DC = dC3 + ell * ( -3 * dC2 + ell * ( 3 * dC1 - ell * dC0 ) );
-    DS = dS3 + ell * ( -3 * dS2 + ell * ( 3 * dS1 - ell * dS0 ) );
+    real_type const dC3 = Cz[3] - Cl[3];
+    real_type const dS3 = Sz[3] - Sl[3];
+    DC                  = dC3 + ell * ( -3 * dC2 + ell * ( 3 * dC1 - ell * dC0 ) );
+    DS                  = dS3 + ell * ( -3 * dS2 + ell * ( 3 * dS1 - ell * dS0 ) );
 
     cg /= z;
     sg /= z;
@@ -417,10 +417,10 @@ namespace G2lib
     Y[3] = sg * DC + s * cg * DS;
 
     if ( nk <= 4 ) return;
-    real_type const dC4{ Cz[4] - Cl[4] };
-    real_type const dS4{ Sz[4] - Sl[4] };
-    DC = dC4 + ell * ( -4 * dC3 + ell * ( 6 * dC2 + ell * ( -4 * dC1 + ell * dC0 ) ) );
-    DS = dS4 + ell * ( -4 * dS3 + ell * ( 6 * dS2 + ell * ( -4 * dS1 + ell * dS0 ) ) );
+    real_type const dC4 = Cz[4] - Cl[4];
+    real_type const dS4 = Sz[4] - Sl[4];
+    DC                  = dC4 + ell * ( -4 * dC3 + ell * ( 6 * dC2 + ell * ( -4 * dC1 + ell * dC0 ) ) );
+    DS                  = dS4 + ell * ( -4 * dS3 + ell * ( 6 * dS2 + ell * ( -4 * dS1 + ell * dS0 ) ) );
 
     cg /= z;
     sg /= z;
@@ -433,8 +433,8 @@ namespace G2lib
 
   static real_type LommelReduced( real_type const mu, real_type const nu, real_type const b )
   {
-    real_type tmp{ 1 / ( ( mu + nu + 1 ) * ( mu - nu + 1 ) ) };
-    real_type res{ tmp };
+    real_type tmp = 1 / ( ( mu + nu + 1 ) * ( mu - nu + 1 ) );
+    real_type res = tmp;
     for ( integer n = 1; n <= 100; ++n )
     {
       tmp *= ( -b / ( 2 * n + mu - nu + 1 ) ) * ( b / ( 2 * n + mu + nu + 1 ) );
@@ -449,9 +449,9 @@ namespace G2lib
 
   static void evalXYazero( integer const nk, real_type const b, real_type X[], real_type Y[] )
   {
-    real_type const sb{ sin( b ) };
-    real_type const cb{ cos( b ) };
-    real_type const b2{ b * b };
+    real_type const sb = sin( b );
+    real_type const cb = cos( b );
+    real_type const b2 = b * b;
     if ( abs( b ) < 1e-3 )
     {
       X[0] = 1 - ( b2 / 6 ) * ( 1 - ( b2 / 20 ) * ( 1 - ( b2 / 42 ) ) );
@@ -463,10 +463,10 @@ namespace G2lib
       Y[0] = ( 1 - cb ) / b;
     }
     // use recurrence in the stable part
-    integer m{ static_cast<integer>( floor( 2 * b ) ) };
+    integer m = static_cast<integer>( floor( 2 * b ) );
     if ( m >= nk ) m = nk - 1;
     if ( m < 1 ) m = 1;
-    for ( integer k{ 1 }; k < m; ++k )
+    for ( integer k = 1; k < m; ++k )
     {
       X[k] = ( sb - k * Y[k - 1] ) / b;
       Y[k] = ( k * X[k - 1] - cb ) / b;
@@ -474,20 +474,20 @@ namespace G2lib
     //  use Lommel for the unstable part
     if ( m < nk )
     {
-      real_type const A{ b * sb };
-      real_type const D{ sb - b * cb };
-      real_type const B{ b * D };
-      real_type const C{ -b2 * sb };
-      real_type       rLa{ LommelReduced( m + 0.5, 1.5, b ) };
-      real_type       rLd{ LommelReduced( m + 0.5, 0.5, b ) };
-      for ( integer k{ m }; k < nk; ++k )
+      real_type const A   = b * sb;
+      real_type const D   = sb - b * cb;
+      real_type const B   = b * D;
+      real_type const C   = -b2 * sb;
+      real_type       rLa = LommelReduced( m + 0.5, 1.5, b );
+      real_type       rLd = LommelReduced( m + 0.5, 0.5, b );
+      for ( integer k = m; k < nk; ++k )
       {
-        real_type const rLb{ LommelReduced( k + 1.5, 0.5, b ) };
-        real_type const rLc{ LommelReduced( k + 1.5, 1.5, b ) };
-        X[k] = ( k * A * rLa + B * rLb + cb ) / ( 1 + k );
-        Y[k] = ( C * rLc + sb ) / ( 2 + k ) + D * rLd;
-        rLa  = rLc;
-        rLd  = rLb;
+        real_type const rLb = LommelReduced( k + 1.5, 0.5, b );
+        real_type const rLc = LommelReduced( k + 1.5, 1.5, b );
+        X[k]                = ( k * A * rLa + B * rLb + cb ) / ( 1 + k );
+        Y[k]                = ( C * rLc + sb ) / ( 2 + k ) + D * rLd;
+        rLa                 = rLc;
+        rLd                 = rLb;
       }
     }
   }
@@ -501,19 +501,19 @@ namespace G2lib
 
     real_type X0[43], Y0[43];
 
-    integer const nkk{ 4 * p + 3 };  // max 43
+    integer const nkk = 4 * p + 3;  // max 43
     evalXYazero( nkk, b, X0, Y0 );
 
     X = X0[0] - ( a / 2 ) * Y0[2];
     Y = Y0[0] + ( a / 2 ) * X0[2];
 
-    real_type       t{ 1 };
-    real_type const aa{ -a * a / 4 };  // controllare!
-    for ( integer n{ 1 }; n <= p; ++n )
+    real_type       t  = 1;
+    real_type const aa = -( a * a ) / 4;  // controllare!
+    for ( integer n = 1; n <= p; ++n )
     {
       t *= aa / ( 2 * n * ( 2 * n - 1 ) );
-      real_type const bf{ a / ( 4 * n + 2 ) };
-      integer const   jj{ 4 * n };
+      real_type const bf = a / ( 4 * n + 2 );
+      integer const   jj = 4 * n;
       X += t * ( X0[jj] - bf * Y0[jj + 2] );
       Y += t * ( Y0[jj] + bf * X0[jj + 2] );
     }
@@ -529,7 +529,7 @@ namespace G2lib
     real_type       X[],
     real_type       Y[] )
   {
-    integer   nkk{ nk + 4 * p + 2 };  // max 45
+    integer   nkk = nk + 4 * p + 2;  // max 45
     real_type X0[48], Y0[48];
 
     UTILS_ASSERT(
@@ -548,15 +548,15 @@ namespace G2lib
       Y[j] = Y0[j] + ( a / 2 ) * X0[j + 2];
     }
 
-    real_type       t{ 1 };
-    real_type const aa{ -a * a / 4 };  // controllare!
-    for ( integer n{ 1 }; n <= p; ++n )
+    real_type       t  = 1;
+    real_type const aa = -a * a / 4;  // controllare!
+    for ( integer n = 1; n <= p; ++n )
     {
       t *= aa / ( 2 * n * ( 2 * n - 1 ) );
-      real_type const bf{ a / ( 4 * n + 2 ) };
-      for ( integer j{ 0 }; j < nk; ++j )
+      real_type const bf = a / ( 4 * n + 2 );
+      for ( integer j = 0; j < nk; ++j )
       {
-        integer const jj{ 4 * n + j };
+        integer const jj = 4 * n + j;
         X[j] += t * ( X0[jj] - bf * Y0[jj + 2] );
         Y[j] += t * ( Y0[jj] + bf * X0[jj + 2] );
       }
@@ -580,8 +580,8 @@ namespace G2lib
     else
       evalXYaLarge( a, b, xx, yy );
 
-    real_type const cosc{ cos( c ) };
-    real_type const sinc{ sin( c ) };
+    real_type const cosc = cos( c );
+    real_type const sinc = sin( c );
 
     intC = xx * cosc - yy * sinc;
     intS = xx * sinc + yy * cosc;
@@ -605,89 +605,19 @@ namespace G2lib
     else
       evalXYaLarge( nk, a, b, intC, intS );
 
-    real_type const cosc{ cos( c ) };
-    real_type const sinc{ sin( c ) };
+    real_type const cosc = cos( c );
+    real_type const sinc = sin( c );
 
-    for ( integer k{ 0 }; k < nk; ++k )
+    for ( integer k = 0; k < nk; ++k )
     {
-      real_type const xx{ intC[k] };
-      real_type const yy{ intS[k] };
-      intC[k] = xx * cosc - yy * sinc;
-      intS[k] = xx * sinc + yy * cosc;
+      real_type const xx = intC[k];
+      real_type const yy = intS[k];
+      intC[k]            = xx * cosc - yy * sinc;
+      intS[k]            = xx * sinc + yy * cosc;
     }
   }
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
-
-  // -------------------------------------------------------------------------
-
-  void ClothoidData::nor_ISO( real_type const s, real_type & nx, real_type & ny ) const
-  {
-    this->tg( s, ny, nx );
-    nx = -nx;
-  }
-
-  void ClothoidData::nor_SAE( real_type const s, real_type & nx, real_type & ny ) const
-  {
-    this->tg( s, ny, nx );
-    ny = -ny;
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  void ClothoidData::nor_ISO_D( real_type const s, real_type & nx_D, real_type & ny_D ) const
-  {
-    this->tg_D( s, ny_D, nx_D );
-    nx_D = -nx_D;
-  }
-
-  void ClothoidData::nor_SAE_D( real_type const s, real_type & nx_D, real_type & ny_D ) const
-  {
-    this->tg_D( s, ny_D, nx_D );
-    ny_D = -ny_D;
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  void ClothoidData::nor_ISO_DD( real_type const s, real_type & nx_DD, real_type & ny_DD ) const
-  {
-    this->tg_DD( s, ny_DD, nx_DD );
-    nx_DD = -nx_DD;
-  }
-
-  void ClothoidData::nor_SAE_DD( real_type const s, real_type & nx_DD, real_type & ny_DD ) const
-  {
-    this->tg_DD( s, ny_DD, nx_DD );
-    ny_DD = -ny_DD;
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  void ClothoidData::nor_ISO_DDD( real_type const s, real_type & nx_DDD, real_type & ny_DDD ) const
-  {
-    this->tg_DDD( s, ny_DDD, nx_DDD );
-    nx_DDD = -nx_DDD;
-  }
-
-  void ClothoidData::nor_SAE_DDD( real_type const s, real_type & nx_DDD, real_type & ny_DDD ) const
-  {
-    this->tg_DDD( s, ny_DDD, nx_DDD );
-    ny_DDD = -ny_DDD;
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  real_type ClothoidData::tg_x_D( real_type const s ) const
-  {
-    return -sin( theta( s ) ) * theta_D( s );
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  real_type ClothoidData::tg_y_D( real_type const s ) const
-  {
-    return cos( theta( s ) ) * theta_D( s );
-  }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
@@ -737,15 +667,6 @@ namespace G2lib
     real_type const C     = cos( th );
     real_type const th_D2 = th_D * th_D;
     return -th_D * ( C * th_D2 + S * th_DD * ( 2 * th_D + 1 ) );
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  void ClothoidData::tg( real_type const s, real_type & tx, real_type & ty ) const
-  {
-    real_type const th = theta( s );
-    tx                 = cos( th );
-    ty                 = sin( th );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -805,25 +726,11 @@ namespace G2lib
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  real_type ClothoidData::X_D( real_type const s ) const
-  {
-    return cos( theta( s ) );
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  real_type ClothoidData::Y_D( real_type const s ) const
-  {
-    return sin( theta( s ) );
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
   real_type ClothoidData::X_DD( real_type const s ) const
   {
-    real_type const sdk{ s * m_dk };
-    real_type const theta{ m_theta0 + s * ( m_kappa0 + 0.5 * sdk ) };
-    real_type const theta_D{ m_kappa0 + sdk };
+    real_type const sdk     = s * m_dk;
+    real_type const theta   = m_theta0 + s * ( m_kappa0 + 0.5 * sdk );
+    real_type const theta_D = m_kappa0 + sdk;
     return -sin( theta ) * theta_D;
   }
 
@@ -855,90 +762,6 @@ namespace G2lib
     real_type const theta   = m_theta0 + s * ( m_kappa0 + 0.5 * sdk );
     real_type const theta_D = m_kappa0 + sdk;
     return -sin( theta ) * theta_D * theta_D + cos( theta ) * m_dk;
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  real_type ClothoidData::X_ISO( real_type const s, real_type const offs ) const
-  {
-    return X( s ) + offs * nor_x_ISO( s );
-  }
-
-  real_type ClothoidData::Y_ISO( real_type const s, real_type const offs ) const
-  {
-    return Y( s ) + offs * nor_y_ISO( s );
-  }
-
-  real_type ClothoidData::X_ISO_D( real_type const s, real_type const offs ) const
-  {
-    return X_D( s ) + offs * nor_x_ISO_D( s );
-  }
-
-  real_type ClothoidData::Y_ISO_D( real_type const s, real_type const offs ) const
-  {
-    return Y_D( s ) + offs * nor_y_ISO_D( s );
-  }
-
-  real_type ClothoidData::X_ISO_DD( real_type const s, real_type const offs ) const
-  {
-    return X_DD( s ) + offs * nor_x_ISO_DD( s );
-  }
-
-  real_type ClothoidData::Y_ISO_DD( real_type const s, real_type const offs ) const
-  {
-    return Y_DD( s ) + offs * nor_y_ISO_DD( s );
-  }
-
-  real_type ClothoidData::X_ISO_DDD( real_type const s, real_type const offs ) const
-  {
-    return X_DDD( s ) + offs * nor_x_ISO_DDD( s );
-  }
-
-  real_type ClothoidData::Y_ISO_DDD( real_type const s, real_type const offs ) const
-  {
-    return Y_DDD( s ) + offs * nor_y_ISO_DDD( s );
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  real_type ClothoidData::X_SAE( real_type const s, real_type const offs ) const
-  {
-    return X( s ) + offs * nor_x_SAE( s );
-  }
-
-  real_type ClothoidData::Y_SAE( real_type const s, real_type const offs ) const
-  {
-    return Y( s ) + offs * nor_y_SAE( s );
-  }
-
-  real_type ClothoidData::X_SAE_D( real_type const s, real_type const offs ) const
-  {
-    return X_D( s ) + offs * nor_x_SAE_D( s );
-  }
-
-  real_type ClothoidData::Y_SAE_D( real_type const s, real_type const offs ) const
-  {
-    return Y_D( s ) + offs * nor_y_SAE_D( s );
-  }
-
-  real_type ClothoidData::X_SAE_DD( real_type const s, real_type const offs ) const
-  {
-    return X_DD( s ) + offs * nor_x_SAE_DD( s );
-  }
-
-  real_type ClothoidData::Y_SAE_DD( real_type const s, real_type const offs ) const
-  {
-    return Y_DD( s ) + offs * nor_y_SAE_DD( s );
-  }
-
-  real_type ClothoidData::X_SAE_DDD( real_type const s, real_type const offs ) const
-  {
-    return X_DDD( s ) + offs * nor_x_SAE_DDD( s );
-  }
-
-  real_type ClothoidData::Y_SAE_DDD( real_type const s, real_type const offs ) const
-  {
-    return Y_DDD( s ) + offs * nor_y_SAE_DDD( s );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -1084,14 +907,6 @@ namespace G2lib
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  void ClothoidData::eval( real_type const s, ClothoidData & C ) const
-  {
-    this->evaluate( s, C.m_theta0, C.m_kappa0, C.m_x0, C.m_y0 );
-    C.m_dk = m_dk;
-  }
-
-  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
   void ClothoidData::reverse( real_type const L )
   {
     real_type C, S;
@@ -1200,8 +1015,8 @@ namespace G2lib
         real_type tx1, ty1;
         eval( L, xx1, yy1 );
         eval_D( L, tx1, ty1 );
-        real_type const det{ tx1 * ty0 - tx0 * ty1 };
-        alpha = ( ( yy1 - yy0 ) * tx1 - ( xx1 - xx0 ) * ty1 ) / det;
+        real_type const det = tx1 * ty0 - tx0 * ty1;
+        alpha               = ( ( yy1 - yy0 ) * tx1 - ( xx1 - xx0 ) * ty1 ) / det;
       }
       else
       {
@@ -1240,8 +1055,8 @@ namespace G2lib
         real_type tx1, ty1;
         eval_ISO( L, offs, xx1, yy1 );
         eval_D( L, tx1, ty1 );  // no offset solo scalato
-        real_type const det{ tx1 * ty0 - tx0 * ty1 };
-        alpha = ( ( yy1 - yy0 ) * tx1 - ( xx1 - xx0 ) * ty1 ) / det;
+        real_type const det = tx1 * ty0 - tx0 * ty1;
+        alpha               = ( ( yy1 - yy0 ) * tx1 - ( xx1 - xx0 ) * ty1 ) / det;
       }
       else
       {
@@ -1267,7 +1082,7 @@ namespace G2lib
     G2derivative &  G,
     real_type const tol )
   {
-    auto & L{ G.L };
+    auto & L = G.L;
 
     static constexpr real_type CF[]{ 2.989696028701907,  0.716228953608281, -0.458969738821509,
                                      -0.502821153340377, 0.261062141752652, -0.045854475238709 };
@@ -1299,21 +1114,22 @@ namespace G2lib
     real_type delta = phi1 - phi0;
 
     // punto iniziale
-    real_type       X{ phi0 * Utils::m_1_pi };
-    real_type       Y{ phi1 * Utils::m_1_pi };
-    real_type const xy{ X * Y };
+    real_type       X  = phi0 * Utils::m_1_pi;
+    real_type       Y  = phi1 * Utils::m_1_pi;
+    real_type const xy = X * Y;
     Y *= Y;
     X *= X;
-    real_type A{ ( phi0 + phi1 ) * ( CF[0] + xy * ( CF[1] + xy * CF[2] ) + ( CF[3] + xy * CF[4] ) * ( X + Y ) +
-                                     CF[5] * ( X * X + Y * Y ) ) };
+    real_type A = ( phi0 + phi1 ) * ( CF[0] + xy * ( CF[1] + xy * CF[2] ) + ( CF[3] + xy * CF[4] ) * ( X + Y ) +
+                                      CF[5] * ( X * X + Y * Y ) );
     // newton
-    real_type g{ 0 }, intC[3], intS[3];
-    integer   niter{ 0 };
+    real_type g = 0;
+    real_type intC[3], intS[3];
+    integer   niter = 0;
     do
     {
       GeneralizedFresnelCS( 3, 2 * A, delta - A, phi0, intC, intS );
-      g = intS[0];
-      real_type const dg{ intC[2] - intC[1] };
+      g                  = intS[0];
+      real_type const dg = intC[2] - intC[1];
       A -= g / dg;
     } while ( ++niter <= 10 && abs( g ) > tol );
 
@@ -1348,11 +1164,11 @@ namespace G2lib
   {
     real_type intC[3], intS[3];
 
-    int niter{ build_G1( x0, y0, theta0, x1, y1, theta1, G, tol ) };
+    int niter = build_G1( x0, y0, theta0, x1, y1, theta1, G, tol );
 
-    auto const & L{ G.L };
-    auto const & A{ G.A };
-    auto const & B{ G.B };
+    auto const & L = G.L;
+    auto const & A = G.A;
+    auto const & B = G.B;
 
     GeneralizedFresnelCS( 3, A, B, m_theta0, intC, intS );
 
@@ -1361,15 +1177,15 @@ namespace G2lib
     Eigen::Matrix<real_type, 3, 2> sol;
 
     // Alias per chiarezza
-    real_type const & X__0{ intC[0] };
-    real_type const & X__1{ intC[1] };
-    real_type const & X__2{ intC[2] };
-    real_type const & Y__0{ intS[0] };
-    real_type const & Y__1{ intS[1] };
-    real_type const & Y__2{ intS[2] };
+    real_type const & X__0 = intC[0];
+    real_type const & X__1 = intC[1];
+    real_type const & X__2 = intC[2];
+    real_type const & Y__0 = intS[0];
+    real_type const & Y__1 = intS[1];
+    real_type const & Y__2 = intS[2];
 
-    real_type const & kappa{ m_kappa0 };
-    real_type const & dk{ m_dk };
+    real_type const & kappa = m_kappa0;
+    real_type const & dk    = m_dk;
 
     // Costruzione matrice
     mat << X__0, -G.L * Y__1, -0.5 * G.L * Y__2, Y__0, G.L * X__1, 0.5 * G.L * X__2, 0, 1, 0.5;
@@ -1382,13 +1198,13 @@ namespace G2lib
     sol = solver.solve( rhs );
 
     // Estrazione risultati
-    auto const L__L{ sol( 0, 0 ) };
-    auto const B__L{ sol( 1, 0 ) };
-    auto const A__L{ sol( 2, 0 ) };
+    auto const L__L = sol.coeff( 0, 0 );
+    auto const B__L = sol.coeff( 1, 0 );
+    auto const A__L = sol.coeff( 2, 0 );
 
-    auto const L__R{ sol( 0, 1 ) };
-    auto const B__R{ sol( 1, 1 ) };
-    auto const A__R{ sol( 2, 1 ) };
+    auto const L__R = sol.coeff( 0, 1 );
+    auto const B__R = sol.coeff( 1, 1 );
+    auto const A__R = sol.coeff( 2, 1 );
 
     G.L__L  = L__L;
     G.A__L  = A__L;
@@ -1419,7 +1235,7 @@ namespace G2lib
   {
 #if 0
   
-    real_type eps{ 1e-5 };
+    real_type eps = 1e-5;
     G2derivative GL, GR;
     build_G1_D( x0, y0, theta0-eps, x1, y1, theta1, GL, tol );
     build_G1_D( x0, y0, theta0+eps, x1, y1, theta1, GR, tol );
@@ -1471,11 +1287,11 @@ namespace G2lib
 
     real_type intC[5], intS[5];
 
-    int niter{ build_G1( x0, y0, theta0, x1, y1, theta1, G, tol ) };
+    int niter = build_G1( x0, y0, theta0, x1, y1, theta1, G, tol );
 
-    auto const & L{ G.L };
-    auto const & A{ G.A };
-    auto const & B{ G.B };
+    auto const & L = G.L;
+    auto const & A = G.A;
+    auto const & B = G.B;
 
     GeneralizedFresnelCS( 5, A, B, m_theta0, intC, intS );
 
@@ -1484,20 +1300,20 @@ namespace G2lib
     Eigen::Matrix<real_type, 3, 2> sol;
 
     // Alias per chiarezza
-    auto const & X__0{ intC[0] };
-    auto const & X__1{ intC[1] };
-    auto const & X__2{ intC[2] };
-    auto const & X__3{ intC[3] };
-    auto const & X__4{ intC[4] };
+    auto const & X__0 = intC[0];
+    auto const & X__1 = intC[1];
+    auto const & X__2 = intC[2];
+    auto const & X__3 = intC[3];
+    auto const & X__4 = intC[4];
 
-    auto const & Y__0{ intS[0] };
-    auto const & Y__1{ intS[1] };
-    auto const & Y__2{ intS[2] };
-    auto const & Y__3{ intS[3] };
-    auto const & Y__4{ intS[4] };
+    auto const & Y__0 = intS[0];
+    auto const & Y__1 = intS[1];
+    auto const & Y__2 = intS[2];
+    auto const & Y__3 = intS[3];
+    auto const & Y__4 = intS[4];
 
-    auto const & kappa{ m_kappa0 };
-    auto const & dk{ m_dk };
+    auto const & kappa = m_kappa0;
+    auto const & dk    = m_dk;
 
     // Costruzione matrice
     mat << X__0, -L * Y__1, -0.5 * L * Y__2, Y__0, L * X__1, 0.5 * L * X__2, 0, 1, 0.5;
@@ -1510,13 +1326,13 @@ namespace G2lib
     sol = solver.solve( rhs );
 
     // Estrazione risultati
-    auto const L__L{ sol( 0, 0 ) };
-    auto const B__L{ sol( 1, 0 ) };
-    auto const A__L{ sol( 2, 0 ) };
+    auto const L__L = sol.coeff( 0, 0 );
+    auto const B__L = sol.coeff( 1, 0 );
+    auto const A__L = sol.coeff( 2, 0 );
 
-    auto const L__R{ sol( 0, 1 ) };
-    auto const B__R{ sol( 1, 1 ) };
-    auto const A__R{ sol( 2, 1 ) };
+    auto const L__R = sol.coeff( 0, 1 );
+    auto const B__R = sol.coeff( 1, 1 );
+    auto const A__R = sol.coeff( 2, 1 );
 
     G.L__L  = L__L;
     G.A__L  = A__L;
@@ -1530,11 +1346,11 @@ namespace G2lib
     G.k__R  = ( B__R - kappa * L__R ) / L;
     G.dk__R = ( A__R / L - 2 * dk * L__R ) / L;
 
-    auto const & kappa__L{ G.k__L };
-    auto const & dk__L{ G.dk__L };
+    auto const & kappa__L = G.k__L;
+    auto const & dk__L    = G.dk__L;
 
-    auto const & kappa__R{ G.k__R };
-    auto const & dk__R{ G.dk__R };
+    auto const & kappa__R = G.k__R;
+    auto const & dk__R    = G.dk__R;
 
     Eigen::Matrix<real_type, 3, 3> rhs2;
     Eigen::Matrix<real_type, 3, 3> sol2;
@@ -1581,17 +1397,17 @@ namespace G2lib
     sol2 = solver.solve( rhs2 );
 
     // Estrazione risultati
-    auto const L__LL{ sol2( 0, 0 ) };
-    auto const B__LL{ sol2( 1, 0 ) };
-    auto const A__LL{ sol2( 2, 0 ) };
+    auto const L__LL = sol2.coeff( 0, 0 );
+    auto const B__LL = sol2.coeff( 1, 0 );
+    auto const A__LL = sol2.coeff( 2, 0 );
 
-    auto const L__LR{ sol2( 0, 1 ) };
-    auto const B__LR{ sol2( 1, 1 ) };
-    auto const A__LR{ sol2( 2, 1 ) };
+    auto const L__LR = sol2.coeff( 0, 1 );
+    auto const B__LR = sol2.coeff( 1, 1 );
+    auto const A__LR = sol2.coeff( 2, 1 );
 
-    auto const L__RR{ sol2( 0, 2 ) };
-    auto const B__RR{ sol2( 1, 2 ) };
-    auto const A__RR{ sol2( 2, 2 ) };
+    auto const L__RR = sol2.coeff( 0, 2 );
+    auto const B__RR = sol2.coeff( 1, 2 );
+    auto const A__RR = sol2.coeff( 2, 2 );
 
     // LL
     G.L__LL  = L__LL;
@@ -1657,7 +1473,7 @@ namespace G2lib
     PolynomialRoots::Cubic const cubicSolver( A, B, C, D );
 
     real_type     r[3];
-    integer const nr{ cubicSolver.getRealRoots( r ) };
+    integer const nr = cubicSolver.getRealRoots( r );
 
     // cerco radice reale piu vicina
     real_type theta;
@@ -1674,7 +1490,7 @@ namespace G2lib
         break;
       case 3:
         theta = r[0];
-        for ( integer i{ 1 }; i < 3; ++i )
+        for ( integer i = 1; i < 3; ++i )
         {
           if ( abs( theta - theta0 ) > abs( r[i] - theta0 ) ) theta = r[i];
         }
@@ -1716,16 +1532,16 @@ namespace G2lib
     real_type const Kmin  = kappa_fun( th0, thmax );
     real_type const Kmax  = kappa_fun( th0, thmin );
     bool            ok;
-    real_type       th{ theta_guess( th0, max( min( k0, Kmax ), Kmin ), ok ) };
+    real_type       th = theta_guess( th0, max( min( k0, Kmax ), Kmin ), ok );
     if ( ok )
     {
       for ( integer iter = 0; iter < 20; ++iter )
       {
         G2derivative G;
         build_G1_D( 0, 0, th0, 1, 0, th, G, tol );
-        real_type const f{ m_kappa0 - G.k0 };  // use kappa0 of the class
-        real_type const df{ G.k__R };
-        real_type const dth{ f / df };
+        real_type const f   = m_kappa0 - k0;  // use kappa0 of the class
+        real_type const df  = G.k__R;
+        real_type const dth = f / df;
         th -= dth;
         if ( abs( dth ) < tol && abs( f ) < tol )
         {

@@ -153,9 +153,10 @@ namespace Utils
    * \param i Index in string (input/output, will be advanced past the character)
    * \return Unicode codepoint, or -1 on error (invalid UTF-8 sequence)
    */
-  inline int utf8_next( std::string const & s, size_t & i )
+  inline int utf8_next( std::string const & s, int & i )
   {
-    if ( i >= s.size() ) return -1;
+    int ss = static_cast<int>( s.size() );
+    if ( i >= ss ) return -1;
 
     unsigned char c = static_cast<unsigned char>( s[i] );
 
@@ -166,7 +167,7 @@ namespace Utils
     }
 
     int len = utf8_char_length( c );
-    if ( len == 0 || i + len > s.size() )
+    if ( len == 0 || i + len > ss )
     {
       ++i;
       return -1;
@@ -269,8 +270,9 @@ namespace Utils
    */
   inline int utf8_display_width( std::string const & s )
   {
-    int w = 0;
-    for ( size_t i = 0; i < s.size(); ) w += utf8_character_width( utf8_next( s, i ) );
+    int w  = 0;
+    int ss = static_cast<int>( s.size() );
+    for ( int i = 0; i < ss; ) w += utf8_character_width( utf8_next( s, i ) );
     return w;
   }
 
@@ -285,16 +287,17 @@ namespace Utils
   inline std::string utf8_truncate( std::string const & s, int max_width, std::string const & ellipsis = "" )
   {
     std::string out;
-    size_t      i = 0;
+    int         i = 0;
     int         w = 0;
 
     int ew = utf8_display_width( ellipsis );
+    int ss = static_cast<int>( s.size() );
 
-    while ( i < s.size() )
+    while ( i < ss )
     {
-      size_t prev = i;
-      int    cp   = utf8_next( s, i );
-      int    cw   = utf8_character_width( cp );
+      int prev = i;
+      int cp   = utf8_next( s, i );
+      int cw   = utf8_character_width( cp );
 
       if ( w + cw + ew > max_width ) break;
 
@@ -302,7 +305,7 @@ namespace Utils
       w += cw;
     }
 
-    if ( i < s.size() ) out += ellipsis;
+    if ( i < ss ) out += ellipsis;
     return out;
   }
 

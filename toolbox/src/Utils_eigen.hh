@@ -40,6 +40,7 @@
 #pragma clang diagnostic ignored "-Wglobal-constructors"
 #pragma clang diagnostic ignored "-Wextra-semi"
 #pragma clang diagnostic ignored "-Wunused-template"
+#pragma clang diagnostic ignored "-Wsign-conversion"
 #endif
 
 #ifdef _MSC_VER

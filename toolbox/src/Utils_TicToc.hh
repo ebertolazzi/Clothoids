@@ -33,13 +33,11 @@
 #include <thread>
 #endif
 
-#endif
-
 namespace Utils
 {
 
   //!
-  //! \brief A class for timing code execution.
+  //! \brief A class for timing code execution with nanosecond precision.
   //!
   //! The `TicToc` class provides a simple and efficient way to measure
   //! the execution time of code segments. It uses high-resolution clocks
@@ -60,17 +58,38 @@ namespace Utils
   //! timer.tic();
   //! // ... code to be timed ...
   //! timer.toc();
+  //! std::cout << "Elapsed time: " << timer.elapsed_ns() << " ns" << std::endl;
   //! std::cout << "Elapsed time: " << timer.elapsed_ms() << " ms" << std::endl;
   //! \endcode
   //!
 
 #ifdef UTILS_OS_WINDOWS
+
+  // Windows-specific helper function for high-resolution sleep
+  inline BOOLEAN nanosleep( LONGLONG ns100 )
+  {
+    LARGE_INTEGER li;  // Time definition
+    // Create timer
+    HANDLE timer = CreateWaitableTimerW( NULL, TRUE, NULL );
+    if ( !timer ) return FALSE;
+    // Set timer properties
+    li.QuadPart = -ns100;
+    if ( !SetWaitableTimer( timer, &li, 0, NULL, NULL, FALSE ) )
+    {
+      CloseHandle( timer );
+      return FALSE;
+    }
+    WaitForSingleObject( timer, INFINITE );  // Start & wait for timer
+    CloseHandle( timer );                    // Clean resources
+    return TRUE;                             // Slept without problems
+  }
+
   class TicToc
   {
     using real_type = double;
-    int64_t   m_frequency{ 0 };      // ticks per second
-    int64_t   m_t1{ 0 }, m_t2{ 0 };  // ticks
-    real_type m_elapsed_time{ 0 };
+    int64_t m_frequency{ 0 };      // ticks per second
+    int64_t m_t1{ 0 }, m_t2{ 0 };  // ticks
+    int64_t m_elapsed_ticks{ 0 };
 
     TicToc( TicToc const & )                         = delete;
     TicToc const & operator=( TicToc const & ) const = delete;
@@ -82,15 +101,24 @@ namespace Utils
     //! The constructor initializes the elapsed time to zero and calls
     //! the `tic()` function to start the timing.
     //!
-    TicToc() : m_elapsed_time( 0 )
-    {
-      LARGE_INTEGER frequency;
-      QueryPerformanceFrequency( &frequency );
-      m_frequency = frequency.QuadPart;
-      tic();
-    }
+    TicToc() { tic(); }
 
     ~TicToc() {}
+
+    //!
+    //! \brief Initialize the timer frequency.
+    //!
+    //! This should be called once before using timing functions.
+    //!
+    static void init()
+    {
+      static bool initialized = false;
+      if ( !initialized )
+      {
+        // QueryPerformanceFrequency is already called in constructor
+        initialized = true;
+      }
+    }
 
     //!
     //! \brief Start timing.
@@ -109,43 +137,55 @@ namespace Utils
     //! \brief End timing.
     //!
     //! This function captures the current time point, marking the end of the
-    //! timing and calculates the elapsed time.
+    //! timing and calculates the elapsed time in ticks.
     //!
     void toc()
     {
       LARGE_INTEGER t2;
       QueryPerformanceCounter( &t2 );
-      m_t2           = t2.QuadPart;
-      m_elapsed_time = ( m_t2 - m_t1 ) * 1000.0 / m_frequency;
+      m_t2            = t2.QuadPart;
+      m_elapsed_ticks = m_t2 - m_t1;
     }
+
+    //!
+    //! \brief Return elapsed time in ticks.
+    //!
+    //! \return The elapsed time in ticks as int64_t.
+    //!
+    int64_t elapsed_ticks() const { return m_elapsed_ticks; }
 
     //!
     //! \brief Return elapsed time (between tic-toc) in seconds.
     //!
     //! \return The elapsed time in seconds as a double.
     //!
-    real_type elapsed_s() const { return 1e-3 * m_elapsed_time; }
+    real_type elapsed_s() const
+    {
+      LARGE_INTEGER frequency;
+      QueryPerformanceFrequency( &frequency );
+      return static_cast<real_type>( m_elapsed_ticks ) / static_cast<real_type>( frequency.QuadPart );
+    }
 
     //!
     //! \brief Return elapsed time (between tic-toc) in milliseconds.
     //!
     //! \return The elapsed time in milliseconds as a double.
     //!
-    real_type elapsed_ms() const { return m_elapsed_time; }
+    real_type elapsed_ms() const { return elapsed_s() * 1000.0; }
 
     //!
     //! \brief Return elapsed time (between tic-toc) in microseconds.
     //!
     //! \return The elapsed time in microseconds as a double.
     //!
-    real_type elapsed_mus() const { return 1000 * m_elapsed_time; }
+    real_type elapsed_mus() const { return elapsed_s() * 1000000.0; }
 
     //!
     //! \brief Return elapsed time (between tic-toc) in nanoseconds.
     //!
     //! \return The elapsed time in nanoseconds as a double.
     //!
-    real_type elapsed_ns() const { return 1e6 * m_elapsed_time; }
+    real_type elapsed_ns() const { return elapsed_s() * 1000000000.0; }
   };
 
   //!
@@ -200,41 +240,23 @@ namespace Utils
     nanosleep( LONGLONG( ns / 100 ) );
   }
 
-  // Windows-specific helper function
-  inline BOOLEAN nanosleep( LONGLONG ns100 )
-  {
-    LARGE_INTEGER li;  // Time definition
-    // Create timer
-    HANDLE timer = CreateWaitableTimerW( NULL, TRUE, NULL );
-    if ( !timer ) return FALSE;
-    // Set timer properties
-    li.QuadPart = -ns100;
-    if ( !SetWaitableTimer( timer, &li, 0, NULL, NULL, FALSE ) )
-    {
-      CloseHandle( timer );
-      return FALSE;
-    }
-    WaitForSingleObject( timer, INFINITE );  // Start & wait for timer
-    CloseHandle( timer );                    // Clean resources
-    return TRUE;                             // Slept without problems
-  }
-
 #else
+
   class TicToc
   {
-    using real_type          = double;
-    using clock              = std::chrono::high_resolution_clock;
-    using elapsed_resolution = std::chrono::microseconds;
+    using real_type             = double;
+    using clock                 = std::chrono::high_resolution_clock;
+    using nanosecond_resolution = std::chrono::nanoseconds;
 
     clock::time_point m_start_time;
     clock::time_point m_stop_time;
 
-    elapsed_resolution m_elapsed_time{ 0 };
+    nanosecond_resolution m_elapsed_time{ 0 };
 
-  public:
     TicToc( TicToc const & )                         = delete;
     TicToc const & operator=( TicToc const & ) const = delete;
 
+  public:
     //!
     //! \brief Constructs a TicToc object and starts the timer.
     //!
@@ -257,41 +279,48 @@ namespace Utils
     //! \brief End timing.
     //!
     //! This function captures the current time point, marking the end of the
-    //! timing and calculates the elapsed time.
+    //! timing and calculates the elapsed time in nanoseconds.
     //!
     void toc()
     {
       m_stop_time    = clock::now();
-      m_elapsed_time = std::chrono::duration_cast<elapsed_resolution>( m_stop_time - m_start_time );
+      m_elapsed_time = std::chrono::duration_cast<nanosecond_resolution>( m_stop_time - m_start_time );
     }
+
+    //!
+    //! \brief Return elapsed time in nanoseconds as integer.
+    //!
+    //! \return The elapsed time in nanoseconds as int64_t.
+    //!
+    int64_t elapsed_ns_int() const { return m_elapsed_time.count(); }
 
     //!
     //! \brief Return elapsed time (between tic-toc) in seconds.
     //!
     //! \return The elapsed time in seconds as a double.
     //!
-    real_type elapsed_s() const { return real_type( 1e-6 * m_elapsed_time.count() ); }
+    real_type elapsed_s() const { return m_elapsed_time.count() * 1e-9; }
 
     //!
     //! \brief Return elapsed time (between tic-toc) in milliseconds.
     //!
     //! \return The elapsed time in milliseconds as a double.
     //!
-    real_type elapsed_ms() const { return real_type( 1e-3 * m_elapsed_time.count() ); }
+    real_type elapsed_ms() const { return m_elapsed_time.count() * 1e-6; }
 
     //!
     //! \brief Return elapsed time (between tic-toc) in microseconds.
     //!
     //! \return The elapsed time in microseconds as a double.
     //!
-    real_type elapsed_mus() const { return real_type( m_elapsed_time.count() ); }
+    real_type elapsed_mus() const { return m_elapsed_time.count() * 1e-3; }
 
     //!
     //! \brief Return elapsed time (between tic-toc) in nanoseconds.
     //!
     //! \return The elapsed time in nanoseconds as a double.
     //!
-    real_type elapsed_ns() const { return real_type( 1e3 * m_elapsed_time.count() ); }
+    real_type elapsed_ns() const { return static_cast<real_type>( m_elapsed_time.count() ); }
   };
 
   //!
@@ -346,10 +375,12 @@ namespace Utils
     std::this_thread::sleep_for( std::chrono::nanoseconds( ns ) );
   }
 
+#endif  // UTILS_OS_WINDOWS
+
 }  // namespace Utils
 
 #endif  // UTILS_TICTOC_HXX
 
-  //
-  // eof: TicToc.hh
-  //
+//
+// eof: TicToc.hh
+//
