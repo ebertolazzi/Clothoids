@@ -51,7 +51,7 @@ public:
   {
     real_type sumx  = x.sum();
     real_type prodx = x.prod();
-    for ( integer i = 0; i < n - 1; ++i ) f( i ) = x( i ) + ( sumx - ( n + 1 ) );
+    for ( integer i = 0; i < n - 1; ++i ) f( i ) = x( i ) + ( sumx - ( static_cast<real_type>( n ) + 1 ) );
     f( n - 1 ) = prodx - 1;
   }
 

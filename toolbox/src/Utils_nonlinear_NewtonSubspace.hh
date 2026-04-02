@@ -1050,6 +1050,9 @@ namespace Utils
 
         switch ( m_fallback_strategy )
         {
+          case NO_FALLBACK:
+            return false;
+
           case INCREASE_BLOCK:
             block_size = std::min( block_size * 2, n );
             if ( m_verbose > 0 ) { fmt::print( "  Increased block size to {:3d}\n", block_size ); }

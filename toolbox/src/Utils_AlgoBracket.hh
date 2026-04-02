@@ -772,7 +772,7 @@ namespace Utils
       //
       // While f(left) or f(right) are infinite perform bisection
       //
-      bool ffa, ffb;
+      bool ffa{ false }, ffb{ false };
       while ( ( ffa = !is_finite( fa ) ) || ( ffb = !is_finite( fb ) ) )
       {
         UTILS_ASSERT(
@@ -1449,9 +1449,9 @@ namespace Utils
         return c;
       };
 
-      auto newton_quadratic = [this, &d, &fd]( Integer const niter, Real & c ) -> bool
+      auto newton_quadratic = [this, &d, &fd]( Integer const max_newton_iter, Real & c ) -> bool
       {
-        // Uses `niter` newton steps to approximate the zero in (a,b) of the
+        // Uses `max_newton_iter` newton steps to approximate the zero in (a,b) of the
         // quadratic polynomial interpolating f(x) at a, b, and d.
         // Safeguard is used to avoid overflow.
 
@@ -1505,7 +1505,7 @@ namespace Utils
 
           // Start the safeguarded newton steps.
           bool ok{ true };
-          for ( Integer i{ 0 }; i < niter && ok; ++i )
+          for ( Integer i{ 0 }; i < max_newton_iter && ok; ++i )
           {
             Real PC  = A0 + ( A1 + A2 * ( c - b ) ) * ( c - a );
             Real PDC = A1 + A2 * ( ( 2 * c ) - ( a + b ) );

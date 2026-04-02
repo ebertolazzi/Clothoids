@@ -37,7 +37,7 @@ public:
   {
     for ( integer i = 0; i < NPT; ++i )
     {
-      z[i] = ( i + 1 ) * 0.01;
+      z[i] = ( static_cast<real_type>( i ) + 1 ) * 0.01;
       y[i] = 25 + pow( 50 * log( 1 / z[i] ), 2. / 3. );
     }
   }

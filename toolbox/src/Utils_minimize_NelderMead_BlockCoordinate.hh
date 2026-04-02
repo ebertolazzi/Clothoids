@@ -340,7 +340,7 @@ namespace Utils
         };
 
         // Run Inner Solver
-        bool sub_success = m_solver.minimize( x_sub, sub_cb );
+        [[maybe_unused]] bool sub_success = m_solver.minimize( x_sub, sub_cb );
         count_inner_iters += m_solver.get_iterations();
 
         // Update Global State

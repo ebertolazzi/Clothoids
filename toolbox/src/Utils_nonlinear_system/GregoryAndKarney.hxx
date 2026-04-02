@@ -68,7 +68,7 @@ public:
     x_vec.resize( 1 );
     auto & x0{ x_vec[0] };
     x0.resize( n );
-    for ( integer i{ 0 }; i < n; ++i ) x0( i ) = 2.0 * ( n - i );
+    for ( integer i{ 0 }; i < n; ++i ) x0( i ) = 2.0 * static_cast<real_type>( n - i );
   }
 
   virtual void initial_points( vector<Vector> & x_vec ) const override

@@ -303,7 +303,7 @@ namespace Utils
 
       for ( integer i = 0; i < m_population_size; ++i ) { diversity += ( m_population.col( i ) - mean ).squaredNorm(); }
 
-      return std::sqrt( diversity / m_population_size );
+      return std::sqrt( diversity / static_cast<real_type>( m_population_size ) );
     }
 
     // Adapt parameters based on success (JADE style)
@@ -338,7 +338,8 @@ namespace Utils
 
         m_memory_F = sum_F_sq / sum_F;  // Lehmer mean
 
-        m_memory_CR = std::accumulate( m_successful_CR.begin(), m_successful_CR.end(), 0.0 ) / m_successful_CR.size();
+        m_memory_CR = std::accumulate( m_successful_CR.begin(), m_successful_CR.end(), 0.0 ) /
+                      static_cast<real_type>( m_successful_CR.size() );
       }
     }
 
@@ -375,7 +376,8 @@ namespace Utils
         integer new_size = std::max(
           m_min_population_size,
           static_cast<integer>(
-            m_initial_population_size * ( 1.0 - static_cast<real_type>( m_current_iteration ) / m_max_iterations ) ) );
+            static_cast<real_type>( m_initial_population_size ) *
+            ( 1.0 - static_cast<real_type>( m_current_iteration ) / static_cast<real_type>( m_max_iterations ) ) ) );
 
         if ( new_size < m_population_size )
         {
@@ -669,7 +671,8 @@ namespace Utils
         reduce_population();
 
         // Apply local search if enabled and near convergence
-        if ( m_use_local_search && m_current_iteration > m_max_iterations * 0.8 )
+        if ( m_use_local_search &&
+             static_cast<real_type>( m_current_iteration ) > static_cast<real_type>( m_max_iterations ) * 0.8 )
         {
           real_type diversity = calculate_diversity();
           if ( diversity < m_local_search_threshold )
@@ -933,7 +936,8 @@ namespace Utils
               indices.end(),
               [this]( integer a, integer b ) { return m_fitness[a] < m_fitness[b]; } );
 
-            integer pbest_idx = indices[static_cast<integer>( m_uniform_dist( m_random_engine ) * p )];
+            integer pbest_idx = indices[static_cast<integer>(
+              m_uniform_dist( m_random_engine ) * static_cast<real_type>( p ) )];
             Vector  ind_pbest = m_population.col( pbest_idx );
 
             mutation_vector = original_individual + F * ( ind_pbest - original_individual ) + F * ( ind_r1 - ind_r2 );
@@ -951,7 +955,8 @@ namespace Utils
               indices.end(),
               [this]( integer a, integer b ) { return m_fitness[a] < m_fitness[b]; } );
 
-            integer pbest_idx = indices[static_cast<integer>( m_uniform_dist( m_random_engine ) * p )];
+            integer pbest_idx = indices[static_cast<integer>(
+              m_uniform_dist( m_random_engine ) * static_cast<real_type>( p ) )];
             Vector  ind_pbest = m_population.col( pbest_idx );
 
             // Select from archive if available
@@ -961,7 +966,7 @@ namespace Utils
               if ( m_uniform_dist( m_random_engine ) < 0.5 )
               {
                 integer archive_idx = static_cast<integer>(
-                  m_uniform_dist( m_random_engine ) * m_current_archive_size );
+                  m_uniform_dist( m_random_engine ) * static_cast<real_type>( m_current_archive_size ) );
                 ind_r2_used = m_archive.col( archive_idx );
               }
             }
@@ -978,7 +983,7 @@ namespace Utils
         if ( m_use_bounds ) { apply_boundary_constraints( mutation_vector, original_individual ); }
 
         // Binomial crossover
-        integer j_rand = static_cast<integer>( m_uniform_dist( m_random_engine ) * m_dimension );
+        integer j_rand = static_cast<integer>( m_uniform_dist( m_random_engine ) * static_cast<real_type>( m_dimension ) );
 
         for ( integer j = 0; j < m_dimension; ++j )
         {

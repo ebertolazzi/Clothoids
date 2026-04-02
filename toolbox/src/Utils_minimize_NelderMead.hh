@@ -766,7 +766,7 @@ namespace Utils
 
       Scalar variance = 0;
       for ( auto const & v : m_values ) { variance += ( v - mean ) * ( v - mean ); }
-      stats.std_dev = std::sqrt( variance / m_values.size() );
+      stats.std_dev = std::sqrt( variance / static_cast<Scalar>( m_values.size() ) );
 
       auto indices      = get_sorted_indices();
       stats.value_range = m_values[indices.back()] - m_values[indices[0]];
@@ -774,11 +774,11 @@ namespace Utils
       // EIGEN3: Efficient centroid computation using Eigen vector operations
       Vector centroid = Vector::Zero( m_dim );
       for ( auto const & v : m_simplex ) centroid += v;
-      centroid /= m_simplex.size();
+      centroid /= static_cast<Scalar>( m_simplex.size() );
 
       Scalar total_dist = 0;
       for ( auto const & v : m_simplex ) { total_dist += ( v - centroid ).norm(); }
-      stats.centroid_distance = total_dist / m_simplex.size();
+      stats.centroid_distance = total_dist / static_cast<Scalar>( m_simplex.size() );
 
       return stats;
     }
@@ -907,7 +907,8 @@ namespace Utils
       }
 
       // 2. Restart for insufficient progress relative to resources used
-      Scalar progress_per_eval = relative_improvement / ( 1.0 + current_result.function_evaluations );
+      Scalar progress_per_eval =
+        relative_improvement / ( 1.0 + static_cast<Scalar>( current_result.function_evaluations ) );
       if ( progress_per_eval < m_options.restart_progress_per_eval_threshold && current_result.iterations > 100 )
       {
         return true;
@@ -927,7 +928,7 @@ namespace Utils
 
       // 4. Restart for too many shrink operations without progress
       if (
-        m_shrink_count > m_options.restart_shrink_count_threshold &&
+        static_cast<Scalar>( m_shrink_count ) > m_options.restart_shrink_count_threshold &&
         relative_improvement < m_options.restart_after_shrink_improvement )
       {
         return true;
@@ -936,7 +937,7 @@ namespace Utils
       // 5. Restart for high-dimensional problems with slow progress
       if ( m_dim > 10 )
       {
-        Scalar expected_progress = 1.0 / std::sqrt( 1.0 + current_result.iterations );
+        Scalar expected_progress = 1.0 / std::sqrt( 1.0 + static_cast<Scalar>( current_result.iterations ) );
         if (
           relative_improvement < expected_progress * m_options.restart_expected_progress_ratio &&
           current_result.iterations > 200 )
@@ -1477,7 +1478,8 @@ namespace Utils
             best_result.final_function_value );
         }
 
-        Scalar perturbation_scale = m_options.restart_perturbation_ratio * ( 1.0 + m_restarts_performed * 0.1 );
+        Scalar perturbation_scale =
+          m_options.restart_perturbation_ratio * ( 1.0 + static_cast<Scalar>( m_restarts_performed ) * 0.1 );
 
         Vector restart_x0;
         Vector scale_vec = Vector::Ones( x0.size() );

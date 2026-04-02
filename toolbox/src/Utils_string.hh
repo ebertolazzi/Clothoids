@@ -46,7 +46,11 @@ namespace Utils
    */
   inline void to_upper( string & s )
   {
-    std::transform( s.begin(), s.end(), s.begin(), []( unsigned char c ) { return std::toupper( c ); } );
+    std::transform(
+      s.begin(),
+      s.end(),
+      s.begin(),
+      []( unsigned char c ) -> char { return static_cast<char>( std::toupper( c ) ); } );
   }
 
   /**
@@ -56,7 +60,11 @@ namespace Utils
    */
   inline void to_lower( string & s )
   {
-    std::transform( s.begin(), s.end(), s.begin(), []( unsigned char c ) { return std::tolower( c ); } );
+    std::transform(
+      s.begin(),
+      s.end(),
+      s.begin(),
+      []( unsigned char c ) -> char { return static_cast<char>( std::tolower( c ) ); } );
   }
 
   /**

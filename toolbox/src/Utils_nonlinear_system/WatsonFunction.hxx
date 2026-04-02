@@ -52,7 +52,7 @@ public:
   {
     for ( integer i = 0; i < 29; ++i )
     {
-      real_type ti = ( i + 1 ) / 29.0;
+      real_type ti = ( static_cast<real_type>( i ) + 1 ) / 29.0;
       t[i][0]      = 1;
       for ( integer j = 1; j < 31; ++j ) { t[i][j] = t[i][j - 1] * ti; }
     }
@@ -65,7 +65,7 @@ public:
     {
       real_type const * ti = t[i];
       real_type         fi = 0;
-      for ( integer j = 1; j < 31; ++j ) fi += j * x( j ) * ti[j - 1];
+      for ( integer j = 1; j < 31; ++j ) fi += static_cast<real_type>( j ) * x( j ) * ti[j - 1];
       real_type tmp = 0;
       for ( integer j = 0; j < 31; ++j ) tmp += x( j ) * ti[j];
       f( i ) = fi - tmp * tmp - 1;
@@ -81,7 +81,7 @@ public:
     for ( integer i = 0; i < 29; ++i )
     {
       real_type const * ti = t[i];
-      for ( integer j = 1; j < 31; ++j ) J_full( i, j ) += j * ti[j - 1];
+      for ( integer j = 1; j < 31; ++j ) J_full( i, j ) += static_cast<real_type>( j ) * ti[j - 1];
       real_type tmp = 0;
       for ( integer j = 0; j < 31; ++j ) tmp += x( j ) * ti[j];
       for ( integer j = 0; j < 31; ++j ) J_full( i, j ) -= 2 * tmp * ti[j];

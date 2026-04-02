@@ -59,12 +59,19 @@
 #define UTILS_ARCH32 1
 #endif
 #endif
-// windows headers, order matters!
-#include <Iphlpapi.h>
-#include <Windows.h>
-#include <Winsock2.h>
-#include <Ws2tcpip.h>
-#include <iptypes.h>
+  // Windows headers: include order matters.
+  // winsock2.h must come before windows.h.
+  #ifndef WIN32_LEAN_AND_MEAN
+  #define WIN32_LEAN_AND_MEAN
+  #endif
+  #ifndef NOMINMAX
+  #define NOMINMAX
+  #endif
+  #include <Winsock2.h>
+  #include <Ws2tcpip.h>
+  #include <Windows.h>
+  #include <Iphlpapi.h>
+  #include <iptypes.h>
 // --------------------
 #include <stdio.h>
 #include <tchar.h>
@@ -157,6 +164,9 @@
 #endif
 #ifdef min
 #undef min
+#endif
+#ifdef ERROR
+#undef ERROR
 #endif
 #endif
 

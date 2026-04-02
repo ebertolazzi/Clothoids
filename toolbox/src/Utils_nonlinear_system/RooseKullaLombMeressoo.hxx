@@ -127,7 +127,7 @@ public:
   virtual void evaluate( Vector const & x, Vector & f ) const override
   {
     f( 0 ) = 1 - x( 0 );
-    for ( integer k = 1; k < n; ++k ) f( k ) = 10 * k * power2( x( k ) - x( k - 1 ) );
+    for ( integer k = 1; k < n; ++k ) f( k ) = 10 * static_cast<real_type>( k ) * power2( x( k ) - x( k - 1 ) );
   }
 
   virtual void jacobian( Vector const & x, SparseMatrix & J ) const override
@@ -137,8 +137,8 @@ public:
     J.insert( 0, 0 ) = -1;
     for ( integer k = 1; k < n; ++k )
     {
-      J.insert( k, k - 1 ) = -20 * k * ( x( k ) - x( k - 1 ) );
-      J.insert( k, k )     = 20 * k * ( x( k ) - x( k - 1 ) );
+      J.insert( k, k - 1 ) = -20 * static_cast<real_type>( k ) * ( x( k ) - x( k - 1 ) );
+      J.insert( k, k )     = 20 * static_cast<real_type>( k ) * ( x( k ) - x( k - 1 ) );
     }
     J.makeCompressed();
   }
@@ -233,7 +233,7 @@ public:
   {
     real_type sum = 0;
     for ( integer i = 0; i < n; ++i ) sum += x( i );
-    for ( integer k = 0; k < n - 1; ++k ) f( k ) = x( k ) - ( n + 1 ) + sum;
+    for ( integer k = 0; k < n - 1; ++k ) f( k ) = x( k ) - ( static_cast<real_type>( n ) + 1 ) + sum;
     f( n - 1 ) = sum - 1;
   }
 
@@ -363,15 +363,16 @@ public:
   {
     real_type acc = 0;
     for ( integer j = 0; j < n; ++j ) acc += power3( x( j ) );
-    acc /= 2 * n;
-    for ( integer j = 0; j < n; ++j ) f( j ) = x( j ) - acc - ( 0.5 / n ) * ( j + 1 );
+    acc /= static_cast<real_type>( 2 * n );
+    for ( integer j = 0; j < n; ++j )
+      f( j ) = x( j ) - acc - ( 0.5 / static_cast<real_type>( n ) ) * static_cast<real_type>( j + 1 );
   }
 
   virtual void jacobian( Vector const & x, SparseMatrix & J ) const override
   {
     J.resize( n, n );
     J.setZero();
-    real_type bf = -1.5 / n;
+    real_type bf = -1.5 / static_cast<real_type>( n );
     for ( integer i = 0; i < n; ++i )
     {
       for ( integer j = 0; j < n; ++j )
@@ -525,7 +526,7 @@ public:
   RooseKullaLombMeressoo206( integer neq ) : NonlinearSystem( "Roose Kulla Lomb Meressoo N.206", RKM_BIBTEX, neq )
   {
     check_min_equations( n, 1 );
-    h2 = 1.0 / power2( n + 1 );
+    h2 = 1.0 / power2( static_cast<real_type>( n + 1 ) );
   }
 
   virtual void evaluate( Vector const & x, Vector & f ) const override
@@ -976,7 +977,7 @@ public:
   {
     real_type acc = 0;
     for ( integer j = 0; j < n; ++j ) acc += x( j );
-    for ( integer j = 0; j < n; ++j ) f( j ) = exp( cos( ( j + 1 ) * acc ) );
+    for ( integer j = 0; j < n; ++j ) f( j ) = exp( cos( static_cast<real_type>( j + 1 ) * acc ) );
   }
 
   virtual void jacobian( Vector const & x, SparseMatrix & J ) const override
@@ -989,9 +990,9 @@ public:
 
     for ( integer i = 0; i < n; ++i )
     {
-      real_type cc = cos( ( i + 1 ) * acc );
-      real_type ss = sin( ( i + 1 ) * acc );
-      for ( integer j = 0; j < n; ++j ) J.insert( i, j ) = -exp( cc ) * ss * ( i + 1 );
+      real_type cc = cos( static_cast<real_type>( i + 1 ) * acc );
+      real_type ss = sin( static_cast<real_type>( i + 1 ) * acc );
+      for ( integer j = 0; j < n; ++j ) J.insert( i, j ) = -exp( cc ) * ss * static_cast<real_type>( i + 1 );
     }
 
     J.makeCompressed();
@@ -1024,14 +1025,14 @@ public:
   {
     real_type acc = 0;
     for ( integer j = 0; j < n; ++j ) acc += power3( x( j ) );
-    for ( integer j = 0; j < n; ++j ) f( j ) = ( acc + j + 1 ) / ( 2 * n );
+    for ( integer j = 0; j < n; ++j ) f( j ) = ( acc + static_cast<real_type>( j + 1 ) ) / static_cast<real_type>( 2 * n );
   }
 
   virtual void jacobian( Vector const & x, SparseMatrix & J ) const override
   {
     J.resize( n, n );
     J.setZero();
-    real_type tmp = 1.5 / n;
+    real_type tmp = 1.5 / static_cast<real_type>( n );
     for ( integer i = 0; i < n; ++i )
       for ( integer j = 0; j < n; ++j ) J.insert( i, j ) = tmp * power2( x( j ) );
     J.makeCompressed();
@@ -1108,7 +1109,7 @@ public:
   RooseKullaLombMeressoo213( integer neq ) : NonlinearSystem( "Roose Kulla Lomb Meressoo N.213", RKM_BIBTEX, neq )
   {
     check_min_equations( n, 1 );
-    h2 = 1.0 / power2( n + 1 );
+    h2 = 1.0 / power2( static_cast<real_type>( n + 1 ) );
   }
 
   virtual void evaluate( Vector const & x, Vector & f ) const override
@@ -1339,7 +1340,7 @@ public:
     grad_S.resize( n );
   }
 
-  real_type g( integer k ) const { return ( k + 1.0 ) / 29.0; }
+  real_type g( integer k ) const { return static_cast<real_type>( k + 1 ) / 29.0; }
 
   real_type S( Vector const & x, integer k ) const
   {
@@ -1362,7 +1363,7 @@ public:
     real_type sum = 0;
     real_type gkj = 1;
     real_type gk  = g( k );
-    for ( integer j = 1; j < n; ++j, gkj *= gk ) sum += j * gkj * x( j );
+    for ( integer j = 1; j < n; ++j, gkj *= gk ) sum += static_cast<real_type>( j ) * gkj * x( j );
     return sum;
   }
 
@@ -1371,7 +1372,7 @@ public:
     real_type gkj = 1;
     real_type gk  = g( k );
     grad[0]       = 0;
-    for ( integer j = 1; j < n; ++j, gkj *= gk ) grad[j] = j * gkj;
+    for ( integer j = 1; j < n; ++j, gkj *= gk ) grad[j] = static_cast<real_type>( j ) * gkj;
   }
 
   real_type powergk( integer k, integer i ) const
@@ -1394,7 +1395,7 @@ public:
         real_type dSk   = dS( x, k );
         real_type gk    = g( k );
         real_type powgk = powergk( k, i );
-        f += powgk * ( i - 2 * gk * Sk ) * ( dSk - Sk * Sk - 1 );
+        f += powgk * ( static_cast<real_type>( i ) - 2 * gk * Sk ) * ( dSk - Sk * Sk - 1 );
       }
       if ( i == 0 ) f += x( 0 ) * ( 1 - 2 * ( x( 1 ) - x( 0 ) * x( 0 ) - 1 ) );
       if ( i == 1 ) f += x( 1 ) - x( 0 ) * x( 0 ) - 1;
@@ -1416,7 +1417,7 @@ public:
         real_type dSk   = dS( x, k );
         dS_1( x, k, grad_dS );
         S_1( x, k, grad_S );
-        real_type A = i - 2 * gk * Sk;
+        real_type A = static_cast<real_type>( i ) - 2 * gk * Sk;
         real_type B = dSk - Sk * Sk - 1;
         for ( integer j = 0; j < n; ++j )
         {
@@ -1546,8 +1547,8 @@ public:
     {
       f( k ) = 0;
       for ( integer j = 0; j < n; ++j ) f( k ) += Y( j, k );
-      f( k ) /= n;
-      if ( ( k % 2 ) == 1 ) f( k ) += 1.0 / ( power2( k + 1 ) - 1.0 );
+      f( k ) /= static_cast<real_type>( n );
+      if ( ( k % 2 ) == 1 ) f( k ) += 1.0 / ( power2( static_cast<real_type>( k + 1 ) ) - 1.0 );
     }
   }
 
@@ -1557,7 +1558,7 @@ public:
     J.setZero();
     evalY_D( x );
     for ( integer k = 0; k < n; ++k )
-      for ( integer j = 0; j < n; ++j ) J.insert( k, j ) = Y_D( j, k ) / n;
+      for ( integer j = 0; j < n; ++j ) J.insert( k, j ) = Y_D( j, k ) / static_cast<real_type>( n );
     J.makeCompressed();
   }
 
@@ -1632,8 +1633,8 @@ public:
     x_vec.resize( 1 );
     auto & x0{ x_vec[0] };
     x0.resize( n );
-    real_type bf = 1.0 / ( n + 1 );
-    for ( integer k{ 0 }; k < n; ++k ) x0( k ) = bf * ( k + 1 );
+    real_type bf = 1.0 / static_cast<real_type>( n + 1 );
+    for ( integer k{ 0 }; k < n; ++k ) x0( k ) = bf * static_cast<real_type>( k + 1 );
   }
 
   virtual void check_if_admissible( Vector const & x ) const override
@@ -1760,11 +1761,11 @@ public:
   RooseKullaLombMeressoo218( integer neq ) : NonlinearSystem( "Roose Kulla Lomb Meressoo N.218", RKM_BIBTEX, neq )
   {
     check_min_equations( n, 2 );
-    h  = 1.0 / ( n + 1 );
+    h  = 1.0 / static_cast<real_type>( n + 1 );
     h2 = h * h;
   }
 
-  real_type t( integer j ) const { return ( j + 1 ) * h; }
+  real_type t( integer j ) const { return static_cast<real_type>( j + 1 ) * h; }
 
   virtual void evaluate( Vector const & x, Vector & f ) const override
   {
@@ -1873,10 +1874,10 @@ public:
   RooseKullaLombMeressoo219( integer neq ) : NonlinearSystem( "Roose Kulla Lomb Meressoo N.219", RKM_BIBTEX, neq )
   {
     check_min_equations( n, 2 );
-    h = 1.0 / ( n + 1 );
+    h = 1.0 / static_cast<real_type>( n + 1 );
   }
 
-  real_type t( integer j ) const { return ( j + 1 ) * h; }
+  real_type t( integer j ) const { return static_cast<real_type>( j + 1 ) * h; }
 
   virtual void evaluate( Vector const & x, Vector & f ) const override
   {

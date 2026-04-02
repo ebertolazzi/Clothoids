@@ -38,10 +38,10 @@ public:
 private:
   static constexpr real_type eps = 1e-12;  // soglia per x0 vicino a zero
 
-  inline real_type safe_power( real_type x, int n ) const
+  inline real_type safe_power( real_type x, int exponent ) const
   {
     if ( std::abs( x ) < eps ) return 0.0;
-    return std::pow( x, n );
+    return std::pow( x, exponent );
   }
 
   /* Gradient contributions */

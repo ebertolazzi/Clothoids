@@ -64,7 +64,7 @@ public:
     x_vec.resize( 1 );
     auto & x0{ x_vec[0] };
     x0.resize( n );
-    for ( integer i{ 0 }; i < n; ++i ) x0( i ) = ( i + 1.0 ) / n;
+    for ( integer i{ 0 }; i < n; ++i ) x0( i ) = ( static_cast<real_type>( i ) + 1.0 ) / static_cast<real_type>( n );
   }
 };
 
@@ -83,14 +83,14 @@ public:
 
   virtual void evaluate( Vector const & x, Vector & f ) const override
   {
-    for ( integer i = 0; i < n; ++i ) f( i ) = ( ( i + 1.0 ) / 10.0 ) * ( exp( x( i ) ) - 1 );
+    for ( integer i = 0; i < n; ++i ) f( i ) = ( ( static_cast<real_type>( i ) + 1.0 ) / 10.0 ) * ( exp( x( i ) ) - 1 );
   }
 
   virtual void jacobian( Vector const & x, SparseMatrix & J ) const override
   {
     J.resize( n, n );
     J.setZero();
-    for ( integer i = 0; i < n; ++i ) J.insert( i, i ) = ( ( i + 1.0 ) / 10.0 ) * exp( x( i ) );
+    for ( integer i = 0; i < n; ++i ) J.insert( i, i ) = ( ( static_cast<real_type>( i ) + 1.0 ) / 10.0 ) * exp( x( i ) );
     J.makeCompressed();
   }
 

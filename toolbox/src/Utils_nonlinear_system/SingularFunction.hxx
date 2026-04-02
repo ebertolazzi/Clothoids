@@ -38,9 +38,9 @@ public:
   virtual void evaluate( Vector const & x, Vector & f ) const override
   {
     f( 0 )     = power3( x( 0 ) ) / 3 + power2( x( 1 ) ) / 2;
-    f( n - 1 ) = power2( x( n - 1 ) ) * ( ( n / 3.0 ) * x( n - 1 ) - 0.5 );
+    f( n - 1 ) = power2( x( n - 1 ) ) * ( ( static_cast<real_type>( n ) / 3.0 ) * x( n - 1 ) - 0.5 );
     for ( integer i = 1; i < n - 1; ++i )
-      f( i ) = power2( x( i ) ) * ( ( ( i + 1 ) / 3.0 ) * x( i ) - 0.5 ) + 0.5 * power2( x( i + 1 ) );
+      f( i ) = power2( x( i ) ) * ( ( ( static_cast<real_type>( i ) + 1 ) / 3.0 ) * x( i ) - 0.5 ) + 0.5 * power2( x( i + 1 ) );
   }
 
   virtual void jacobian( Vector const & x, SparseMatrix & J ) const override
@@ -49,10 +49,10 @@ public:
     J.setZero();
     J.insert( 0, 0 )         = power2( x( 0 ) );
     J.insert( 0, 1 )         = x( 1 );
-    J.insert( n - 1, n - 1 ) = ( n * x( n - 1 ) - 1 ) * x( n - 1 );
+    J.insert( n - 1, n - 1 ) = ( static_cast<real_type>( n ) * x( n - 1 ) - 1 ) * x( n - 1 );
     for ( integer i = 1; i < n - 1; ++i )
     {
-      J.insert( i, i )     = ( ( i + 1 ) * x( i ) - 1 ) * x( i );
+      J.insert( i, i )     = ( ( static_cast<real_type>( i ) + 1 ) * x( i ) - 1 ) * x( i );
       J.insert( i, i + 1 ) = x( i + 1 );
     }
     J.makeCompressed();

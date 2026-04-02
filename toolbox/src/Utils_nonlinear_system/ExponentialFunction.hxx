@@ -37,7 +37,7 @@ public:
   virtual void evaluate( Vector const & x, Vector & f ) const override
   {
     f( 0 ) = exp( x( 0 ) - 1 ) - 1;
-    for ( integer i = 1; i < n; ++i ) f( i ) = ( i + 1 ) * ( exp( x( i ) - 1 ) - x( i ) );
+    for ( integer i = 1; i < n; ++i ) f( i ) = ( static_cast<real_type>( i ) + 1 ) * ( exp( x( i ) - 1 ) - x( i ) );
   }
 
   virtual void jacobian( Vector const & x, SparseMatrix & J ) const override
@@ -45,7 +45,7 @@ public:
     J.resize( n, n );
     J.setZero();
     J.insert( 0, 0 ) = exp( x( 0 ) - 1 );
-    for ( integer i = 1; i < n; ++i ) J.insert( i, i ) = ( i + 1 ) * ( exp( x( i ) - 1 ) - 1 );
+    for ( integer i = 1; i < n; ++i ) J.insert( i, i ) = ( static_cast<real_type>( i ) + 1 ) * ( exp( x( i ) - 1 ) - 1 );
     J.makeCompressed();
   }
 
@@ -54,7 +54,7 @@ public:
     x_vec.resize( 1 );
     auto & x0{ x_vec[0] };
     x0.resize( n );
-    x0.fill( n / ( n - 1.0 ) );
+    x0.fill( static_cast<real_type>( n ) / ( static_cast<real_type>( n ) - 1.0 ) );
   }
 };
 
@@ -73,7 +73,9 @@ public:
   virtual void evaluate( Vector const & x, Vector & f ) const override
   {
     f( 0 ) = exp( x( 0 ) ) - 1;
-    for ( integer i = 1; i < n; ++i ) f( i ) = ( ( i + 1 ) / 10.0 ) * ( exp( x( i ) ) + x( i - 1 ) - 1 );
+    for ( integer i = 1; i < n; ++i ) {
+      f( i ) = ( ( static_cast<real_type>( i ) + 1 ) / 10.0 ) * ( exp( x( i ) ) + x( i - 1 ) - 1 );
+    }
   }
 
   virtual void jacobian( Vector const & x, SparseMatrix & J ) const override
@@ -83,8 +85,8 @@ public:
     J.insert( 0, 0 ) = exp( x( 0 ) );
     for ( integer i = 1; i < n; ++i )
     {
-      J.insert( i, i )     = ( ( i + 1 ) / 10.0 ) * exp( x( i ) );
-      J.insert( i, i - 1 ) = ( ( i + 1 ) / 10.0 );
+      J.insert( i, i )     = ( ( static_cast<real_type>( i ) + 1 ) / 10.0 ) * exp( x( i ) );
+      J.insert( i, i - 1 ) = ( ( static_cast<real_type>( i ) + 1 ) / 10.0 );
     }
     J.makeCompressed();
   }
@@ -94,7 +96,7 @@ public:
     x_vec.resize( 1 );
     auto & x0{ x_vec[0] };
     x0.resize( n );
-    x0.fill( 1.0 / ( n * n ) );
+    x0.fill( 1.0 / ( static_cast<real_type>( n ) * static_cast<real_type>( n ) ) );
   }
 };
 
@@ -112,17 +114,19 @@ public:
 
   virtual void evaluate( Vector const & x, Vector & f ) const override
   {
-    f( n - 1 ) = ( 0.1 * n ) * ( 1 - exp( -x( n - 1 ) * x( n - 1 ) ) );
+    f( n - 1 ) = ( 0.1 * static_cast<real_type>( n ) ) * ( 1 - exp( -x( n - 1 ) * x( n - 1 ) ) );
     for ( integer i = 0; i < n - 1; ++i )
-      f( i ) = ( 0.1 * ( i + 1 ) ) * ( 1 - x( i ) * x( i ) - exp( -x( i ) * x( i ) ) );
+      f( i ) = ( 0.1 * ( static_cast<real_type>( i ) + 1 ) ) * ( 1 - x( i ) * x( i ) - exp( -x( i ) * x( i ) ) );
   }
 
   virtual void jacobian( Vector const & x, SparseMatrix & J ) const override
   {
     J.resize( n, n );
     J.setZero();
-    for ( integer i = 0; i < n - 1; ++i ) J.insert( i, i ) = 0.2 * ( i + 1 ) * x( i ) * ( exp( -x( i ) * x( i ) ) - 1 );
-    J.insert( n - 1, n - 1 ) = 0.2 * n * x( n - 1 ) * exp( -x( n - 1 ) * x( n - 1 ) );
+    for ( integer i = 0; i < n - 1; ++i ) {
+      J.insert( i, i ) = 0.2 * ( static_cast<real_type>( i ) + 1 ) * x( i ) * ( exp( -x( i ) * x( i ) ) - 1 );
+    }
+    J.insert( n - 1, n - 1 ) = 0.2 * static_cast<real_type>( n ) * x( n - 1 ) * exp( -x( n - 1 ) * x( n - 1 ) );
     J.makeCompressed();
   }
 
@@ -131,7 +135,7 @@ public:
     x_vec.resize( 1 );
     auto & x0{ x_vec[0] };
     x0.resize( n );
-    real_type bf = 1.0 / ( 4.0 * n * n );
-    for ( integer i = 0; i < n; ++i ) x0( i ) = ( i + 1 ) * bf;
+    real_type bf = 1.0 / ( 4.0 * static_cast<real_type>( n ) * static_cast<real_type>( n ) );
+    for ( integer i = 0; i < n; ++i ) x0( i ) = ( static_cast<real_type>( i ) + 1 ) * bf;
   }
 };

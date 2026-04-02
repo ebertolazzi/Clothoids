@@ -36,14 +36,14 @@ public:
   virtual void evaluate( Vector const & x, Vector & f ) const override
   {
     real_type sumx = x.array().sum();
-    f              = x.array() - ( 2 * sumx / n ) + 1;
+    f              = x.array() - ( 2 * sumx / static_cast<real_type>( n ) ) + 1;
   }
 
   virtual void jacobian( Vector const &, SparseMatrix & J ) const override
   {
     J.resize( n, n );
     J.setZero();
-    real_type bf = real_type( 2 ) / n;
+    real_type bf = real_type( 2 ) / static_cast<real_type>( n );
     for ( integer i{ 0 }; i < n; ++i )
     {
       for ( integer j{ 0 }; j < n; ++j )

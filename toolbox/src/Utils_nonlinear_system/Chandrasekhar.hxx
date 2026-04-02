@@ -41,10 +41,10 @@ public:
         "  isbn      = {9780486605906}\n"
         "}\n",
         neq )
-    , w( c / ( 2 * neq ) )
+    , w( c / ( 2 * static_cast<real_type>( neq ) ) )
   {
     mu.resize( neq );
-    for ( integer i = 0; i < neq; ++i ) mu( i ) = i + 0.5;
+    for ( integer i = 0; i < neq; ++i ) mu( i ) = static_cast<real_type>( i ) + 0.5;
   }
 
   virtual void evaluate( Vector const & x, Vector & f ) const override

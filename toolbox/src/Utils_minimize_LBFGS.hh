@@ -207,7 +207,7 @@ namespace Utils
         m_box_handler.project_direction( m_x, m_p );
 
         // Use projected gradient if direction becomes zero
-        if ( m_p.isZero( m_epsi * m_p.size() ) ) { m_p = -m_box_handler.projected_gradient( m_x, m_g ); }
+        if ( m_p.isZero( m_epsi * static_cast<Scalar>( m_p.size() ) ) ) { m_p = -m_box_handler.projected_gradient( m_x, m_g ); }
       }
 
       // Check descent condition

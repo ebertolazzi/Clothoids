@@ -36,14 +36,14 @@ public:
 
   virtual void evaluate( Vector const & x, Vector & f ) const override
   {
-    real_type h = 1.0 / ( n - 1.0 );
+    real_type h = 1.0 / ( static_cast<real_type>( n ) - 1.0 );
 
     for ( integer i = 0; i < n; ++i ) f( i ) = x( i );
 
     real_type si = 0;
     for ( integer i = 1; i < n - 1; ++i )
     {
-      real_type t = h * i;
+      real_type t = h * static_cast<real_type>( i );
       si += power3( x( i ) + t + 1 );
       f( i ) += 0.5 * ( 1 - t ) * si;
     }
@@ -51,7 +51,7 @@ public:
     si = 0;
     for ( integer i = n - 2; i > 0; --i )
     {
-      real_type t = h * i;
+      real_type t = h * static_cast<real_type>( i );
       f( i ) += 0.5 * ( 1 - t ) * t * si;
       si += power2( x( i ) + t + 1 );
     }
@@ -62,15 +62,19 @@ public:
     Matrix J_full( n, n );
     J_full.setZero();
 
-    real_type h = 1.0 / ( n - 1.0 );
+    real_type h = 1.0 / ( static_cast<real_type>( n ) - 1.0 );
 
     for ( integer i = 0; i < n; ++i ) J_full( i, i ) = 1;
 
     for ( integer i = 0; i < n; ++i )
     {
-      real_type t = h * i;
-      for ( integer j = 1; j <= i; ++j ) { J_full( i, j ) += 1.5 * ( 1 - t ) * power2( x( j ) + h * j + 1 ); }
-      for ( integer j = i + 1; j < n - 1; ++j ) { J_full( i, j ) += ( 1 - t ) * t * ( x( j ) + h * j + 1 ); }
+      real_type t = h * static_cast<real_type>( i );
+      for ( integer j = 1; j <= i; ++j ) {
+        J_full( i, j ) += 1.5 * ( 1 - t ) * power2( x( j ) + h * static_cast<real_type>( j ) + 1 );
+      }
+      for ( integer j = i + 1; j < n - 1; ++j ) {
+        J_full( i, j ) += ( 1 - t ) * t * ( x( j ) + h * static_cast<real_type>( j ) + 1 );
+      }
     }
     J.resize( n, n );
     J = J_full.sparseView();
@@ -81,10 +85,10 @@ public:
     x_vec.resize( 1 );
     auto & x0{ x_vec[0] };
     x0.resize( n );
-    real_type h = 1.0 / ( n - 1.0 );
+    real_type h = 1.0 / ( static_cast<real_type>( n ) - 1.0 );
     for ( integer i{ 0 }; i < n; ++i )
     {
-      real_type t = h * i;
+      real_type t = h * static_cast<real_type>( i );
       x0( i )     = t * ( t - 1 );
     }
   }

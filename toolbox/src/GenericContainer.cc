@@ -1848,8 +1848,10 @@ namespace GC_namespace
       case GC_type::BOOL:
       case GC_type::INTEGER:
       case GC_type::LONG:
-      case GC_type::REAL: return true;
-      default: return false;
+      case GC_type::REAL:
+        return true;
+      default:
+        return false;
     }
     return false;
   }
@@ -2320,9 +2322,8 @@ namespace GC_namespace
     {
       msg += key;
       msg += ", ";
-      if ( this->exists( key ) )
-      {
-        if ( ( *m_data.m )[key].m_data_type == GC_type::BOOL ) return this->get_map_bool( key );
+      if ( this->exists( key ) ) {
+        if ( (*m_data.m)[key].m_data_type == GC_type::BOOL ) return this->get_map_bool( key );
       }
     }
     msg.pop_back();
@@ -2350,9 +2351,8 @@ namespace GC_namespace
     {
       msg += key;
       msg += ", ";
-      if ( this->exists( key ) )
-      {
-        if ( ( *m_data.m )[key].m_data_type == GC_type::INTEGER ) return this->get_map_int( key );
+      if ( this->exists( key ) ) {
+        if ( (*m_data.m)[key].m_data_type == GC_type::INTEGER ) return this->get_map_int( key );
       }
     }
     msg.pop_back();
@@ -2380,9 +2380,8 @@ namespace GC_namespace
     {
       msg += key;
       msg += ", ";
-      if ( this->exists( key ) )
-      {
-        if ( ( *m_data.m )[key].is_number() ) return this->get_map_number( key );
+      if ( this->exists( key ) ) {
+        if ( (*m_data.m)[key].is_number() ) return this->get_map_number( key );
       }
     }
     msg.pop_back();
@@ -2410,9 +2409,8 @@ namespace GC_namespace
     {
       msg += key;
       msg += ", ";
-      if ( this->exists( key ) )
-      {
-        if ( ( *m_data.m )[key].m_data_type == GC_type::STRING ) return this->get_map_string( key );
+      if ( this->exists( key ) ) {
+        if ( (*m_data.m)[key].m_data_type == GC_type::STRING ) return this->get_map_string( key );
       }
     }
     msg.pop_back();
@@ -2440,9 +2438,8 @@ namespace GC_namespace
     {
       msg += key;
       msg += ", ";
-      if ( this->exists( key ) )
-      {
-        if ( ( *m_data.m )[key].m_data_type == GC_type::VEC_REAL ) return this->get_vec_real( key );
+      if ( this->exists( key ) ) {
+        if ( (*m_data.m)[key].m_data_type == GC_type::VEC_REAL ) return this->get_vec_real( key );
       }
     }
     msg.pop_back();
@@ -2471,9 +2468,8 @@ namespace GC_namespace
     {
       msg += key;
       msg += ", ";
-      if ( this->exists( key ) )
-      {
-        if ( ( *m_data.m )[key].m_data_type == GC_type::VEC_COMPLEX ) return this->get_vec_complex( key );
+      if ( this->exists( key ) ) {
+        if ( (*m_data.m)[key].m_data_type == GC_type::VEC_COMPLEX ) return this->get_vec_complex( key );
       }
     }
     msg.pop_back();
@@ -2503,9 +2499,8 @@ namespace GC_namespace
     {
       msg += key;
       msg += ", ";
-      if ( this->exists( key ) )
-      {
-        if ( ( *m_data.m )[key].m_data_type == GC_type::STRING ) return this->get_vec_string( key );
+      if ( this->exists( key ) ) {
+        if ( (*m_data.m)[key].m_data_type == GC_type::STRING ) return this->get_vec_string( key );
       }
     }
     msg.pop_back();

@@ -41,19 +41,20 @@ public:
 
   real_type zfun( integer i, integer j, Vector const & x ) const
   {
-    return sqrt( x( j ) * x( j ) + ( i + 1.0 ) / ( j + 1.0 ) );
+    return sqrt( x( j ) * x( j ) + ( static_cast<real_type>( i ) + 1.0 ) / ( static_cast<real_type>( j ) + 1.0 ) );
   }
 
   real_type zfun_1( integer i, integer j, Vector const & x ) const
   {
-    return x( j ) / sqrt( x( j ) * x( j ) + ( i + 1.0 ) / ( j + 1.0 ) );
+    return x( j ) / sqrt( x( j ) * x( j ) + ( static_cast<real_type>( i ) + 1.0 ) / ( static_cast<real_type>( j ) + 1.0 ) );
   }
 
   virtual void evaluate( Vector const & x, Vector & f ) const override
   {
     for ( integer i = 0; i < n; ++i )
     {
-      f( i ) = beta * n * x( i ) + pow( i + 1 - 0.5 * n, gamma );
+      f( i ) = beta * static_cast<real_type>( n ) * x( i ) +
+               pow( static_cast<real_type>( i ) + 1 - 0.5 * static_cast<real_type>( n ), gamma );
       for ( integer j = 0; j < n; ++j )
       {
         if ( i != j )
@@ -88,7 +89,7 @@ public:
         }
         else
         {
-          J.insert( i, j ) = beta * n;
+          J.insert( i, j ) = beta * static_cast<real_type>( n );
         }
       }
     }
@@ -100,16 +101,16 @@ public:
     x_vec.resize( 1 );
     auto & x0{ x_vec[0] };
     x0.resize( n );
-    real_type c = beta * n - ( alpha + 1 ) * ( n - 1 );
-    real_type k = beta * n + ( alpha + 1 ) * ( n - 1 );
+    real_type c = beta * static_cast<real_type>( n ) - ( alpha + 1 ) * static_cast<real_type>( n - 1 );
+    real_type k = beta * static_cast<real_type>( n ) + ( alpha + 1 ) * static_cast<real_type>( n - 1 );
     for ( integer i = 0; i < n; ++i )
     {
-      x0( i ) = ( i + 0.5 * n ) * gamma;
+      x0( i ) = ( static_cast<real_type>( i ) + 0.5 * static_cast<real_type>( n ) ) * gamma;
       for ( integer j = 0; j < n; ++j )
       {
         if ( i != j )
         {
-          real_type zij = sqrt( ( i + 1.0 ) / ( j + 1.0 ) );
+          real_type zij = sqrt( ( static_cast<real_type>( i ) + 1.0 ) / ( static_cast<real_type>( j ) + 1.0 ) );
           x0( i ) += zij * ( pow( sin( log( zij ) ), alpha ) + pow( cos( log( zij ) ), alpha ) );
         }
       }

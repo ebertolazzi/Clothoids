@@ -37,7 +37,7 @@ public:
     f( 0 ) = f( 1 ) = f( 2 ) = 0;
     for ( integer i = 0; i < 10; ++i )
     {
-      real_type c  = -( i + 1 ) / 10.0;
+      real_type c  = -( static_cast<real_type>( i ) + 1 ) / 10.0;
       real_type fi = exp( c * x( 0 ) ) - exp( c * x( 1 ) ) - x( 2 ) * ( exp( c ) - exp( 10 * c ) );
 
       real_type dfidx1 = c * exp( c * x( 0 ) );
@@ -60,7 +60,7 @@ public:
 
     for ( integer i = 0; i < 10; ++i )
     {
-      real_type c = -( i + 1 ) / 10.0;
+      real_type c = -( static_cast<real_type>( i ) + 1 ) / 10.0;
 
       real_type fi = exp( c * x( 0 ) ) - exp( c * x( 1 ) ) - x( 2 ) * ( exp( c ) - exp( 10 * c ) );
 

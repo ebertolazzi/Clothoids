@@ -69,7 +69,7 @@ public:
   {
     z.resize( NPT );
     y.resize( NPT );
-    for ( integer i = 0; i < NPT; ++i ) z( i ) = ( i + 1 ) * 0.1;
+    for ( integer i = 0; i < NPT; ++i ) z( i ) = ( static_cast<real_type>( i ) + 1 ) * 0.1;
     y = exp( -z.array() ) - 5 * exp( -10 * z.array() );
   }
 
@@ -160,7 +160,7 @@ public:
   {
     z.resize( NPT );
     y.resize( NPT );
-    for ( integer i = 0; i < NPT; ++i ) z( i ) = ( i + 1 ) * 0.1;
+    for ( integer i = 0; i < NPT; ++i ) z( i ) = ( static_cast<real_type>( i ) + 1 ) * 0.1;
     y = exp( -z.array() ) - 5 * exp( -10 * z.array() );
   }
 
@@ -260,7 +260,7 @@ public:
   {
     z.resize( NPT );
     y.resize( NPT );
-    for ( integer i = 0; i < NPT; ++i ) z( i ) = ( i + 1 ) * 0.1;
+    for ( integer i = 0; i < NPT; ++i ) z( i ) = ( static_cast<real_type>( i ) + 1 ) * 0.1;
     y = exp( -z.array() ) - 5 * exp( -10 * z.array() );
   }
 
@@ -372,7 +372,7 @@ public:
   {
     z.resize( NPT );
     y.resize( NPT );
-    for ( integer k = 0; k < NPT; ++k ) z( k ) = ( k + 1 ) * 0.1;
+    for ( integer k = 0; k < NPT; ++k ) z( k ) = ( static_cast<real_type>( k ) + 1 ) * 0.1;
     y = exp( -z.array() ) - 5 * exp( -10 * z.array() ) + 3 * exp( -4 * z.array() );
   }
 
@@ -500,7 +500,7 @@ public:
   {
     y.resize( 6 );
     t.resize( 6 );
-    for ( integer i = 0; i < 6; ++i ) t( i ) = ( i + 1 ) * 0.1;
+    for ( integer i = 0; i < 6; ++i ) t( i ) = ( static_cast<real_type>( i ) + 1 ) * 0.1;
     y = exp( -t.array() ) - 5 * exp( -10 * t.array() ) + 3 * exp( -4 * t.array() );
   }
 

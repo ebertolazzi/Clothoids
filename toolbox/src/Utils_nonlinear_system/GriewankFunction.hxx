@@ -35,10 +35,10 @@ public:
 
   real_type grad( Vector const & x, integer k ) const
   {
-    real_type f = 1 / sqrt( k + 1.0 );
+    real_type f = 1 / sqrt( static_cast<real_type>( k ) + 1.0 );
     for ( integer i = 0; i < n; ++i )
     {
-      real_type t = x( i ) / sqrt( i + 1.0 );
+      real_type t = x( i ) / sqrt( static_cast<real_type>( i ) + 1.0 );
       if ( i == k )
         f *= sin( t );
       else
@@ -51,20 +51,20 @@ public:
   {
     if ( i == j )
     {
-      real_type f = 1 / ( i + 1.0 );
+      real_type f = 1 / ( static_cast<real_type>( i ) + 1.0 );
       for ( integer k = 0; k < n; ++k )
       {
-        real_type t = x( k ) / sqrt( k + 1.0 );
+        real_type t = x( k ) / sqrt( static_cast<real_type>( k ) + 1.0 );
         f *= cos( t );
       }
       return f;
     }
     else
     {
-      real_type f = -1 / sqrt( ( i + 1.0 ) * ( j + 1.0 ) );
+      real_type f = -1 / sqrt( ( static_cast<real_type>( i ) + 1.0 ) * ( static_cast<real_type>( j ) + 1.0 ) );
       for ( integer k = 0; k < n; ++k )
       {
-        real_type t = x( k ) / sqrt( k + 1.0 );
+        real_type t = x( k ) / sqrt( static_cast<real_type>( k ) + 1.0 );
         if ( k == i || k == j )
           f *= sin( t );
         else

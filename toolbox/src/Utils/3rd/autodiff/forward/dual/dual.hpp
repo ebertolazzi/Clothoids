@@ -1602,7 +1602,6 @@ AUTODIFF_DEVICE_FUNC constexpr void apply(Dual<T, G>& self, CoshOp)
 template<typename T, typename G>
 AUTODIFF_DEVICE_FUNC constexpr void apply(Dual<T, G>& self, TanhOp)
 {
-    
     self.val = tanh(self.val);
     self.grad *=  1 - self.val * self.val;
 }

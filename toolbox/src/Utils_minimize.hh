@@ -695,7 +695,7 @@ namespace Utils
       {
         // Choose solver based on problem characteristics
         integer nnz               = H.nonZeros();
-        Scalar  sparsity_ratio    = Scalar( nnz ) / ( n * n );
+        Scalar  sparsity_ratio    = Scalar( nnz ) / static_cast<Scalar>( n * n );
         bool    use_sparse_solver = ( n > 100 && sparsity_ratio < 0.1 );
 
         // Regularize Hessian matrix

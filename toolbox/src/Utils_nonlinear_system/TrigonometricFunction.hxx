@@ -44,7 +44,7 @@ public:
     for ( integer i = 0; i < n; ++i ) c_sum += cos( x( i ) );
     for ( integer i = 0; i < n; ++i )
     {
-      real_type t1 = n + ( i + 1 ) * ( 1 - cos( x( i ) ) ) - sin( x( i ) ) - c_sum;
+      real_type t1 = static_cast<real_type>( n ) + ( static_cast<real_type>( i ) + 1 ) * ( 1 - cos( x( i ) ) ) - sin( x( i ) ) - c_sum;
       real_type t2 = 2 * sin( x( i ) ) - cos( x( i ) );
       f( i )       = t1 * t2;
     }
@@ -58,13 +58,13 @@ public:
     {
       real_type c_sum = 0;
       for ( integer j = 0; j < n; ++j ) c_sum += cos( x( j ) );
-      real_type t1   = n + ( i + 1 ) * ( 1 - cos( x( i ) ) ) - sin( x( i ) ) - c_sum;
+      real_type t1   = static_cast<real_type>( n ) + ( static_cast<real_type>( i ) + 1 ) * ( 1 - cos( x( i ) ) ) - sin( x( i ) ) - c_sum;
       real_type t2   = 2 * sin( x( i ) ) - cos( x( i ) );
       real_type t2_D = 2 * cos( x( i ) ) + sin( x( i ) );
       for ( integer j = 0; j < n; ++j )
       {
         real_type tmp = t2 * sin( x( j ) );
-        if ( i == j ) tmp += t1 * t2_D + t2 * ( ( i + 1 ) * sin( x( i ) ) - cos( x( i ) ) );
+        if ( i == j ) tmp += t1 * t2_D + t2 * ( ( static_cast<real_type>( i ) + 1 ) * sin( x( i ) ) - cos( x( i ) ) );
         J.insert( i, j ) = tmp;
       }
     }

@@ -34,13 +34,13 @@ public:
 
   virtual void evaluate( Vector const & x, Vector & f ) const override
   {
-    real_type h = 1.0 / ( n - 1.0 );
+    real_type h = 1.0 / ( static_cast<real_type>( n ) - 1.0 );
 
     f( 0 )     = x( 0 );
     f( n - 1 ) = x( n - 1 );
     for ( integer i = 1; i < n - 1; ++i )
     {
-      real_type t = h * i;
+      real_type t = h * static_cast<real_type>( i );
       f( i )      = 2 * x( i ) - x( i - 1 ) - x( i + 1 ) + ( h * h / 2 ) * power3( x( i ) + t + 1 );
     }
   }
@@ -50,12 +50,12 @@ public:
     J.resize( n, n );
     J.setZero();
 
-    real_type h              = 1.0 / ( n - 1.0 );
+    real_type h              = 1.0 / ( static_cast<real_type>( n ) - 1.0 );
     J.insert( 0, 0 )         = 1;
     J.insert( n - 1, n - 1 ) = 1;
     for ( integer i = 1; i < n - 1; ++i )
     {
-      real_type t          = h * i;
+      real_type t          = h * static_cast<real_type>( i );
       J.insert( i, i - 1 ) = -1;
       J.insert( i, i )     = 2 + 1.5 * ( h * h ) * power2( x( i ) + t + 1 );
       J.insert( i, i + 1 ) = -1;
@@ -67,10 +67,10 @@ public:
     x_vec.resize( 1 );
     auto & x0{ x_vec[0] };
     x0.resize( n );
-    real_type h = 1.0 / ( n - 1.0 );
+    real_type h = 1.0 / ( static_cast<real_type>( n ) - 1.0 );
     for ( integer i{ 0 }; i < n; ++i )
     {
-      real_type t = h * i;
+      real_type t = h * static_cast<real_type>( i );
       x0( i )     = t * ( t - 1 );
     }
   }

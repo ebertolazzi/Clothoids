@@ -36,8 +36,8 @@ public:
   virtual void evaluate( Vector const & x, Vector & f ) const override
   {
     real_type sumx = 0;
-    for ( integer i = 0; i < n; ++i ) sumx += ( i + 1 ) * x( i );
-    for ( integer i = 0; i < n; ++i ) f( i ) = ( i + 1 ) * sumx - ( i + 1 );
+    for ( integer i = 0; i < n; ++i ) sumx += ( static_cast<real_type>( i ) + 1 ) * x( i );
+    for ( integer i = 0; i < n; ++i ) f( i ) = ( static_cast<real_type>( i ) + 1 ) * sumx - ( static_cast<real_type>( i ) + 1 );
   }
 
   virtual void jacobian( Vector const &, SparseMatrix & J ) const override
@@ -46,7 +46,9 @@ public:
     J.setZero();
     for ( integer i = 0; i < n; ++i )
     {
-      for ( integer j = 0; j < n; ++j ) { J.insert( i, j ) = ( i + 1.0 ) * ( j + 1.0 ); }
+      for ( integer j = 0; j < n; ++j ) {
+        J.insert( i, j ) = ( static_cast<real_type>( i ) + 1.0 ) * ( static_cast<real_type>( j ) + 1.0 );
+      }
     }
     J.makeCompressed();
   }

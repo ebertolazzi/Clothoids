@@ -47,7 +47,7 @@ public:
     real_type sum = 0;
     for ( integer i = 0; i < n; ++i ) sum += x( i ) * x( i );
     for ( integer i = 0; i < n - 1; ++i ) f( i ) = sqrt( 1e-5 ) * ( x( i ) - 1 );
-    f( n - 1 ) = ( sum / n - 1 ) / 4;
+    f( n - 1 ) = ( sum / static_cast<real_type>( n ) - 1 ) / 4;
   }
 
   virtual void jacobian( Vector const & x, SparseMatrix & J ) const override
@@ -55,7 +55,7 @@ public:
     J.resize( n, n );
     J.setZero();
     for ( integer i = 0; i < n - 1; ++i ) J.insert( i, i ) = sqrt( 1e-5 );
-    for ( integer i = 0; i < n; ++i ) J.insert( n - 1, i ) = 0.5 * x( i ) / n;
+    for ( integer i = 0; i < n; ++i ) J.insert( n - 1, i ) = 0.5 * x( i ) / static_cast<real_type>( n );
     J.makeCompressed();
   }
 
@@ -131,7 +131,7 @@ public:
     x_vec.resize( 1 );
     auto & x0{ x_vec[0] };
     x0.resize( n );
-    for ( integer i{ 0 }; i < n; ++i ) x0( i ) = i + 1;
+    for ( integer i{ 0 }; i < n; ++i ) x0( i ) = static_cast<real_type>( i ) + 1;
   }
 };
 
@@ -168,14 +168,14 @@ public:
     real_type ap = epsilon;
 
     real_type t1 = -1.0;
-    for ( integer j = 0; j < n; ++j ) t1 += ( n - j ) * ( x( j ) * x( j ) );
+    for ( integer j = 0; j < n; ++j ) t1 += static_cast<real_type>( n - j ) * ( x( j ) * x( j ) );
 
     real_type d2 = 1.0;
     real_type th = 4.0 * t1;
     real_type s2 = 0.0;
     for ( integer j = 0; j < n; ++j )
     {
-      f( j )       = ( n - j ) * x( j ) * th;
+      f( j )       = static_cast<real_type>( n - j ) * x( j ) * th;
       real_type s1 = exp( x( j ) / 10.0 );
       if ( j > 0 )
       {
@@ -197,7 +197,7 @@ public:
     real_type ap = 2 * epsilon;
 
     real_type t1 = -1.0;
-    for ( integer j = 0; j < n; ++j ) t1 += ( n - j ) * ( x( j ) * x( j ) );
+    for ( integer j = 0; j < n; ++j ) t1 += static_cast<real_type>( n - j ) * ( x( j ) * x( j ) );
 
     real_type d1 = exp( 0.1 );
     real_type d2 = 1.0;
@@ -206,7 +206,7 @@ public:
 
     for ( integer j = 0; j < n; ++j )
     {
-      J_full( j, j ) = 8.0 * power2( ( n - j ) * x( j ) ) + ( n - j ) * th;
+      J_full( j, j ) = 8.0 * power2( static_cast<real_type>( n - j ) * x( j ) ) + static_cast<real_type>( n - j ) * th;
 
       real_type s1 = exp( x( j ) / 10.0 );
 
@@ -215,7 +215,9 @@ public:
         real_type s3 = s1 + s2 - d2 * ( d1 + 1.0 );
         J_full( j, j ) += ap * s1 * ( s3 + s1 - 1.0 / d1 + 2.0 * s1 ) / 50.0;
         J_full( j - 1, j - 1 ) += ap * s2 * ( s2 + s3 ) / 50.0;
-        for ( integer k = 0; k < j; ++k ) { J_full( j, k ) = 8.0 * ( n - j ) * ( n - k ) * x( j ) * x( k ); }
+        for ( integer k = 0; k < j; ++k ) {
+          J_full( j, k ) = 8.0 * static_cast<real_type>( n - j ) * static_cast<real_type>( n - k ) * x( j ) * x( k );
+        }
         J_full( j, j - 1 ) += ap * s1 * s2 / 50.0;
       }
       s2 = s1;

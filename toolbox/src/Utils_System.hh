@@ -33,6 +33,12 @@
 #include <sys/statvfs.h>
 #endif
 
+#if defined( _WIN32 ) || defined( _WIN64 )
+#include <windows.h>
+#include <pdh.h>
+#include <pdhmsg.h>
+#endif
+
 namespace Utils
 {
 
@@ -647,9 +653,9 @@ namespace Utils
      */
     static std::string get_cpu_vendor()
     {
+#if defined( UTILS_CPU_X86 )
       switch ( get_architecture() )
       {
-#ifdef UTILS_CPU_X86
         case ArchType::X86:
         case ArchType::X64:
         {
@@ -661,7 +667,6 @@ namespace Utils
           memcpy( vendor + 8, &cpuid0.ecx, 4 );
           return vendor;
         }
-#endif
         default:
         {
 #if defined( __linux__ )
@@ -692,6 +697,9 @@ namespace Utils
           return "Unknown";
         }
       }
+#else
+      return "Unknown";
+#endif
     }
 
     /**
@@ -806,11 +814,17 @@ namespace Utils
 
 #if defined( _WIN32 ) || defined( _WIN64 )
 
-#include <windows.h>
+#ifndef WIN32_LEAN_AND_MEAN
+#define WIN32_LEAN_AND_MEAN
+#endif
+#ifndef NOMINMAX
+#define NOMINMAX
+#endif
 #include <winsock2.h>
+#include <ws2tcpip.h>
+#include <windows.h>
 #include <iphlpapi.h>
 #include <direct.h>
-#include <ws2tcpip.h>
 
 #pragma comment( lib, "Ws2_32.lib" )
 #pragma comment( lib, "Iphlpapi.lib" )
@@ -1556,9 +1570,9 @@ namespace Utils
     {
       return fmt::format(
         "Total: {:.2f} GB, Free: {:.2f} GB, Used: {:.2f} GB ({:.1f}%)",
-        total_bytes / ( 1024.0 * 1024.0 * 1024.0 ),
-        free_bytes / ( 1024.0 * 1024.0 * 1024.0 ),
-        used_bytes / ( 1024.0 * 1024.0 * 1024.0 ),
+        static_cast<double>( total_bytes ) / ( 1024.0 * 1024.0 * 1024.0 ),
+        static_cast<double>( free_bytes ) / ( 1024.0 * 1024.0 * 1024.0 ),
+        static_cast<double>( used_bytes ) / ( 1024.0 * 1024.0 * 1024.0 ),
         usage_percentage );
     }
   };
@@ -1586,8 +1600,8 @@ namespace Utils
     {
       return fmt::format(
         "Physical: {:.2f} GB total, {:.2f} GB available ({:.1f}% used)",
-        total_physical / ( 1024.0 * 1024.0 * 1024.0 ),
-        available_physical / ( 1024.0 * 1024.0 * 1024.0 ),
+        static_cast<double>( total_physical ) / ( 1024.0 * 1024.0 * 1024.0 ),
+        static_cast<double>( available_physical ) / ( 1024.0 * 1024.0 * 1024.0 ),
         usage_percentage );
     }
   };
@@ -1711,7 +1725,10 @@ namespace Utils
         info.available_physical = free_memory + inactive_memory;
         info.used_physical      = info.total_physical - info.available_physical;
 
-        if ( info.total_physical > 0 ) { info.usage_percentage = ( info.used_physical * 100.0 ) / info.total_physical; }
+        if ( info.total_physical > 0 ) {
+          info.usage_percentage =
+            static_cast<double>( info.used_physical ) * 100.0 / static_cast<double>( info.total_physical );
+        }
       }
     }
 #endif
@@ -1741,7 +1758,10 @@ namespace Utils
       info.free_bytes  = totalNumberOfFreeBytes.QuadPart;
       info.used_bytes  = info.total_bytes - info.free_bytes;
 
-      if ( info.total_bytes > 0 ) { info.usage_percentage = ( info.used_bytes * 100.0 ) / info.total_bytes; }
+      if ( info.total_bytes > 0 ) {
+        info.usage_percentage =
+          static_cast<double>( info.used_bytes ) * 100.0 / static_cast<double>( info.total_bytes );
+      }
     }
 
 #elif defined( __linux__ )
@@ -1754,7 +1774,10 @@ namespace Utils
       info.free_bytes  = stat.f_bfree * stat.f_frsize;
       info.used_bytes  = info.total_bytes - info.free_bytes;
 
-      if ( info.total_bytes > 0 ) { info.usage_percentage = ( info.used_bytes * 100.0 ) / info.total_bytes; }
+      if ( info.total_bytes > 0 ) {
+        info.usage_percentage =
+          static_cast<double>( info.used_bytes ) * 100.0 / static_cast<double>( info.total_bytes );
+      }
     }
 
 #elif defined( __APPLE__ )
@@ -1767,7 +1790,10 @@ namespace Utils
       info.free_bytes  = stat.f_bfree * stat.f_frsize;
       info.used_bytes  = info.total_bytes - info.free_bytes;
 
-      if ( info.total_bytes > 0 ) { info.usage_percentage = ( info.used_bytes * 100.0 ) / info.total_bytes; }
+      if ( info.total_bytes > 0 ) {
+        info.usage_percentage =
+          static_cast<double>( info.used_bytes ) * 100.0 / static_cast<double>( info.total_bytes );
+      }
     }
 #endif
 
@@ -1862,7 +1888,7 @@ namespace Utils
     {
       if ( drives & ( 1 << i ) )
       {
-        drive[0] = 'A' + i;
+        drive[0] = static_cast<char>( 'A' + i );
 
         // Check drive type
         UINT type = GetDriveTypeA( drive );

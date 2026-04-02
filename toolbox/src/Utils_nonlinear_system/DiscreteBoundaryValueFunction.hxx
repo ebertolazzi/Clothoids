@@ -51,7 +51,7 @@ public:
   {
     for ( integer k = 0; k < n; ++k )
     {
-      f( k ) = 2 * x( k ) + 0.5 * power2( h ) * power3( ( x( k ) + 1 ) + ( k + 1 ) * h );
+      f( k ) = 2 * x( k ) + 0.5 * power2( h ) * power3( ( x( k ) + 1 ) + ( static_cast<real_type>( k ) + 1 ) * h );
       if ( k > 0 ) f( k ) -= x( k - 1 );
       if ( k < n - 1 ) f( k ) -= x( k + 1 );
     }
@@ -61,7 +61,9 @@ public:
   {
     J.resize( n, n );
     J.setZero();
-    for ( integer i = 0; i < n; ++i ) J.insert( i, i ) = 2 + 1.5 * h * h * power2( x( i ) + h * ( i + 1 ) + 1 );
+    for ( integer i = 0; i < n; ++i ) {
+      J.insert( i, i ) = 2 + 1.5 * h * h * power2( x( i ) + h * ( static_cast<real_type>( i ) + 1 ) + 1 );
+    }
 
     for ( integer i = 0; i < n - 1; ++i )
     {
@@ -95,6 +97,8 @@ public:
     x_vec.resize( 1 );
     auto & x0{ x_vec[0] };
     x0.resize( n );
-    for ( integer k = 0; k < n; ++k ) x0( k ) = real_type( ( k + 1 ) * ( k - n ) ) / power2( n + 1.0 );
+    for ( integer k = 0; k < n; ++k ) {
+      x0( k ) = real_type( ( k + 1 ) * ( k - n ) ) / power2( static_cast<real_type>( n ) + 1.0 );
+    }
   }
 };

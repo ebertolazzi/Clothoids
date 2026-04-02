@@ -573,8 +573,8 @@ namespace Utils
     }
 
     // set m_x_opt from m_xpt row m_kopt (0-based)
-    m_x_opt               = m_xpt.col( m_kopt );
-    Scalar m_x_opt_square = m_x_opt.squaredNorm();
+    m_x_opt        = m_xpt.col( m_kopt );
+    m_x_opt_square = m_x_opt.squaredNorm();
 
     Scalar  fsave  = m_f_val( 0 );
     integer kbase  = 0;
@@ -2280,7 +2280,8 @@ namespace Utils
           // In Fortran: IP = PTSID(K), IQ = (PTSID(K)-IP) * (N+1)
 
           integer ip      = static_cast<integer>( m_ptsid( k ) );
-          Scalar  iq_real = np * m_ptsid( k ) - ip * np;
+          Scalar  iq_real =
+            static_cast<Scalar>( np ) * m_ptsid( k ) - static_cast<Scalar>( ip ) * static_cast<Scalar>( np );
           integer iq      = static_cast<integer>( iq_real );  // troncamento
 
           if ( ip > 0 ) { sum += w_vec( m_npt + ip - 1 ) * m_ptsaux( 0, ip - 1 ); }
@@ -2389,7 +2390,8 @@ namespace Utils
 
       // Decodifica PTSID
       integer ip      = static_cast<integer>( m_ptsid( kpt ) );
-      Scalar  iq_real = np * m_ptsid( kpt ) - ip * np;
+      Scalar  iq_real =
+        static_cast<Scalar>( np ) * m_ptsid( kpt ) - static_cast<Scalar>( ip ) * static_cast<Scalar>( np );
       integer iq      = static_cast<integer>( iq_real );  // troncamento
 
       Scalar xp = 0, xq = 0;
@@ -2470,7 +2472,8 @@ namespace Utils
         {
           // Punto artificiale: aggiorna HQ
           integer ipk      = static_cast<integer>( m_ptsid( k ) );
-          Scalar  iq_realk = np * m_ptsid( k ) - ipk * np;  // CORRETTO!
+          Scalar  iq_realk = static_cast<Scalar>( np ) * m_ptsid( k ) -
+                            static_cast<Scalar>( ipk ) * static_cast<Scalar>( np );  // CORRETTO!
           integer iqk      = static_cast<integer>( iq_realk );
 
           Scalar sum_z = m_Z.row( k ).dot( m_Z.row( kpt ) );
@@ -3281,10 +3284,10 @@ namespace Utils
 
       // Calculate update coefficients based on Powell's formula
       // These mix the Lagrange vector (vlag) and the work vector
-      Scalar const tempa = ( alpha * m_v_lag( jp ) - tau * work( jp ) ) / m_denom;
-      Scalar const tempb = ( -m_beta * work( jp ) - tau * m_v_lag( jp ) ) / m_denom;
+      Scalar const update_tempa = ( alpha * m_v_lag( jp ) - tau * work( jp ) ) / m_denom;
+      Scalar const update_tempb = ( -m_beta * work( jp ) - tau * m_v_lag( jp ) ) / m_denom;
 
-      m_B.row( j ).head( jp + 1 ) += tempa * m_v_lag.head( jp + 1 ) + tempb * work.head( jp + 1 );
+      m_B.row( j ).head( jp + 1 ) += update_tempa * m_v_lag.head( jp + 1 ) + update_tempb * work.head( jp + 1 );
 
       // Enforce symmetry in the Hessian block of BMAT.
       // If we are within the Hessian block (jp >= npt), copy the row segment

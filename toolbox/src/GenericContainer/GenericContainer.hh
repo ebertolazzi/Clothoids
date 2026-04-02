@@ -1698,7 +1698,7 @@ namespace GC_namespace
     //! \deprecated
     //!
     unsigned get_numCols() const { return this->num_cols(); }
-
+    
     //! \brief Checks whether the stored value represents a numeric type.
     //!
     //!  Determines if the current container holds a value that can be considered
@@ -3932,79 +3932,79 @@ namespace GC_namespace
     //! Construct a generic container storing a boolean
     //! \param[in] a initializer data
     //!
-    GenericContainer( bool const & a ) : m_data_type( GC_type::NOTYPE ) { this->operator=( a ); }
+    explicit GenericContainer( bool const & a ) : m_data_type( GC_type::NOTYPE ) { this->operator=( a ); }
 
     //!
     //! Construct a generic container storing an integer
     //! \param[in] a initializer data
     //!
-    GenericContainer( uint_type const & a ) : m_data_type( GC_type::NOTYPE ) { *this = a; }
+    explicit GenericContainer( uint_type const & a ) : m_data_type( GC_type::NOTYPE ) { *this = a; }
 
     //!
     //! Construct a generic container storing an integer
     //! \param[in] a initializer data
     //!
-    GenericContainer( int_type const & a ) : m_data_type( GC_type::NOTYPE ) { this->operator=( a ); }
+    explicit GenericContainer( int_type const & a ) : m_data_type( GC_type::NOTYPE ) { this->operator=( a ); }
 
     //!
     //! Construct a generic container storing an integer
     //! \param[in] a initializer data
     //!
-    GenericContainer( ulong_type const & a ) : m_data_type( GC_type::NOTYPE ) { *this = a; }
+    explicit GenericContainer( ulong_type const & a ) : m_data_type( GC_type::NOTYPE ) { *this = a; }
 
     //!
     //! Construct a generic container storing an integer
     //! \param[in] a initializer data
     //!
-    GenericContainer( long_type const & a ) : m_data_type( GC_type::NOTYPE ) { this->operator=( a ); }
+    explicit GenericContainer( long_type const & a ) : m_data_type( GC_type::NOTYPE ) { this->operator=( a ); }
 
     //!
     //! Construct a generic container storing a floating point number
     //! \param[in] a initializer data
     //!
-    GenericContainer( float const & a ) : m_data_type( GC_type::NOTYPE ) { this->operator=( a ); }
+    explicit GenericContainer( float const & a ) : m_data_type( GC_type::NOTYPE ) { this->operator=( a ); }
 
     //!
     //! Construct a generic container storing a floating point number
     //! \param[in] a initializer data
     //!
-    GenericContainer( double const & a ) : m_data_type( GC_type::NOTYPE ) { this->operator=( a ); }
+    explicit GenericContainer( double const & a ) : m_data_type( GC_type::NOTYPE ) { this->operator=( a ); }
 
     //!
     //! Construct a generic container storing a complex floating point number
     //! \param[in] a initializer data
     //!
-    GenericContainer( complex<float> const & a ) : m_data_type( GC_type::NOTYPE ) { this->operator=( a ); }
+    explicit GenericContainer( complex<float> const & a ) : m_data_type( GC_type::NOTYPE ) { this->operator=( a ); }
 
     //!
     //! Construct a generic container storing a complex floating point number
     //! \param[in] a initializer data
     //!
-    GenericContainer( complex<double> const & a ) : m_data_type( GC_type::NOTYPE ) { this->operator=( a ); }
+    explicit GenericContainer( complex<double> const & a ) : m_data_type( GC_type::NOTYPE ) { this->operator=( a ); }
 
     //!
     //! Construct a generic container storing a string or pointer
     //! \param[in] a initializer data
     //!
-    GenericContainer( char const * a ) : m_data_type( GC_type::NOTYPE ) { this->operator=( a ); }
+    explicit GenericContainer( char const * a ) : m_data_type( GC_type::NOTYPE ) { this->operator=( a ); }
 
     //!
     //! Construct a generic container storing a string or pointer
     //! \param[in] a initializer data
     //!
-    GenericContainer( string const & a ) : m_data_type( GC_type::NOTYPE ) { this->operator=( a ); }
+    explicit GenericContainer( string const & a ) : m_data_type( GC_type::NOTYPE ) { this->operator=( a ); }
 
     //!
     //! Construct a generic container storing a string or pointer
     //! \param[in] a initializer data
     //!
-    GenericContainer( string_view a ) : m_data_type( GC_type::NOTYPE ) { this->operator=( a ); }
+    explicit GenericContainer( string_view a ) : m_data_type( GC_type::NOTYPE ) { this->operator=( a ); }
 
     //!
     //! Construct a generic container storing a pointer
     //! \param[in] a initializer data
     //!
-    GenericContainer( pointer_type a ) : m_data_type( GC_type::NOTYPE ) { this->set_pointer( a ); }
+    explicit GenericContainer( pointer_type a ) : m_data_type( GC_type::NOTYPE ) { this->set_pointer( a ); }
 
     //!
     //! Construct a generic container copying container `gc`

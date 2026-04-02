@@ -40,17 +40,17 @@ public:
 
     for ( integer k{ 0 }; k < n; ++k )
     {
-      real_type tk   = ( k + 1.0 ) / ( n + 1.0 );
+      real_type tk   = ( static_cast<real_type>( k ) + 1.0 ) / ( static_cast<real_type>( n ) + 1.0 );
       real_type sum1 = 0;
       for ( integer j{ 0 }; j < k; ++j )
       {
-        real_type tj = ( j + 1 ) * h;
+        real_type tj = ( static_cast<real_type>( j ) + 1 ) * h;
         sum1 += tj * power3( x( j ) + tj + 1 );
       }
       real_type sum2 = 0;
       for ( integer j{ k }; j < n; ++j )
       {
-        real_type tj = ( j + 1 ) * h;
+        real_type tj = ( static_cast<real_type>( j ) + 1 ) * h;
         sum2 += ( 1 - tj ) * power3( x( j ) + tj + 1 );
       }
       f( k ) = x( k ) + ( h / 2 ) * ( ( 1 - tk ) * sum1 + tk * sum2 );
@@ -114,6 +114,8 @@ public:
     x_vec.resize( 1 );
     auto & x0{ x_vec[0] };
     x0.resize( n );
-    for ( integer k{ 0 }; k < n; ++k ) x0( k ) = real_type( ( k + 1 ) * ( k - n ) ) / power2( n + 1.0 );
+    for ( integer k{ 0 }; k < n; ++k ) {
+      x0( k ) = real_type( ( k + 1 ) * ( k - n ) ) / power2( static_cast<real_type>( n ) + 1.0 );
+    }
   }
 };

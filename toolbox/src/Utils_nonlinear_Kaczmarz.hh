@@ -102,7 +102,8 @@ namespace Utils
   public:
     NonlinearKaczmarz()
     {
-      unsigned seed = std::chrono::system_clock::now().time_since_epoch().count();
+      auto     ticks = std::chrono::system_clock::now().time_since_epoch().count();
+      unsigned seed  = static_cast<unsigned>( ticks );
       m_random_engine.seed( seed );
     }
 
@@ -505,7 +506,7 @@ namespace Utils
         // Criterio di arresto per progresso insufficiente
         if ( m_num_iterations > 100 && m_num_iterations % 100 == 0 )
         {
-          real_type avg_reduction = std::pow( norm_f / initial_norm, 1.0 / m_num_iterations );
+          real_type avg_reduction = std::pow( norm_f / initial_norm, 1.0 / static_cast<real_type>( m_num_iterations ) );
           if ( avg_reduction > 0.9995 )
           {
             if ( m_verbose_level > 0 )

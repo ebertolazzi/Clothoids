@@ -435,7 +435,7 @@ class CutlipsSteadyStateForReactionRateEquations : public NonlinearSystem
 public:
   CutlipsSteadyStateForReactionRateEquations( integer k_set_in )
     : NonlinearSystem(
-        ini_msg_CutlipsSteadyStateForReactionRateEquations( k_set_in ),
+        ini_msg_CutlipsSteadyStateForReactionRateEquations( static_cast<int>( k_set_in ) ),
         "@inbook{eden2014proceedings,\n"
         "  author    = {M. Shacham},\n"
         "  title     = {Recent developments in solution techniques for\n"
@@ -850,7 +850,7 @@ public:
     for ( integer i{ 0 }; i < 8; ++i )
     {
       x_vec[i].resize( n );
-      x_vec[i].fill( i * 0.1 );
+      x_vec[i].fill( static_cast<real_type>( i ) * 0.1 );
     }
   }
 
@@ -928,7 +928,7 @@ public:
     {
       auto & x{ x_vec[ini] };
       x.resize( n );
-      x( 0 ) = ini * 0.1;
+      x( 0 ) = static_cast<real_type>( ini ) * 0.1;
       x( 1 ) = 1 - x( 0 );
       x( 2 ) = 0.4 - 0.5 * x( 0 );
       if ( x( 2 ) <= 0 ) x( 2 ) = 0.1;

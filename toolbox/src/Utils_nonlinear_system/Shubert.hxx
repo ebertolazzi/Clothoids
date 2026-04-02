@@ -38,7 +38,7 @@ public:
     real_type df1dx1  = 0.0;
     for ( integer i = 0; i < 5; ++i )
     {
-      real_type y = i + 1;
+      real_type y = static_cast<real_type>( i ) + 1;
       factor1 += y * cos( ( y + 1.0 ) * x( 0 ) + y );
       df1dx1 -= y * ( y + 1.0 ) * sin( ( y + 1.0 ) * x( 0 ) + y );
     }
@@ -47,7 +47,7 @@ public:
     real_type df2dx2  = 0.0;
     for ( integer i = 0; i < 5; ++i )
     {
-      real_type y = i;
+      real_type y = static_cast<real_type>( i );
       factor2 += y * cos( ( y + 1.0 ) * x( 1 ) + y );
       df2dx2 -= y * ( y + 1.0 ) * sin( ( y + 1.0 ) * x( 1 ) + y );
     }
@@ -63,7 +63,7 @@ public:
     real_type df1dx1_D  = 0.0;
     for ( integer i = 0; i < 5; ++i )
     {
-      real_type y  = i + 1;
+      real_type y  = static_cast<real_type>( i ) + 1;
       real_type y1 = y + 1.0;
       factor1 += y * cos( y1 * x( 0 ) + y );
       df1dx1 -= y * y1 * sin( y1 * x( 0 ) + y );
@@ -78,7 +78,7 @@ public:
     real_type df2dx2_D  = 0.0;
     for ( integer i = 0; i < 5; ++i )
     {
-      real_type y  = i;
+      real_type y  = static_cast<real_type>( i );
       real_type y1 = y + 1.0;
       factor2 += y * cos( y1 * x( 1 ) + y );
       df2dx2 -= y * y1 * sin( y1 * x( 1 ) + y );

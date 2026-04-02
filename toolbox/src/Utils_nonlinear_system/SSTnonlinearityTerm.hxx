@@ -26,7 +26,7 @@ class SSTnonlinearityTerm : public NonlinearSystem
 public:
   SSTnonlinearityTerm( integer idx_in )
     : NonlinearSystem(
-        ini_msg_SSTnonlinearityTerm( idx_in ),
+        ini_msg_SSTnonlinearityTerm( static_cast<int>( idx_in ) ),
         "@article{Sincovec:1975,\n"
         "  author  = {Sincovec, Richard F. and Madsen, Niel K.},\n"
         "  title   = {Software for Nonlinear Partial Differential "

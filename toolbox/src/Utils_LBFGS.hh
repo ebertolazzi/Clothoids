@@ -395,10 +395,10 @@ namespace Utils
       // Second loop: Process pairs from oldest to newest
       // =====================================================================
       idx = m_oldest_index;
-      for ( size_t i{ 0 }; i < m_current_size; ++i )
+      for ( size_t k{ 0 }; k < m_current_size; ++k )
       {
         Scalar beta = m_rho( idx ) * m_Y.col( idx ).dot( m_r );
-        m_r += m_S.col( idx ) * ( m_alpha( i ) - beta );
+        m_r += m_S.col( idx ) * ( m_alpha( k ) - beta );
 
         // Move to next index in circular buffer
         idx = ( idx + 1 ) % m_capacity;

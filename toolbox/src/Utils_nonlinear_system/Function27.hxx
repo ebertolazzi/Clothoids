@@ -64,7 +64,7 @@ public:
     x_vec.resize( 1 );
     auto & x0{ x_vec[0] };
     x0.resize( n );
-    x0.fill( 1.0 / ( n * n ) );
+    x0.fill( 1.0 / ( static_cast<real_type>( n ) * static_cast<real_type>( n ) ) );
     x0( 0 ) = 100;
   }
 };

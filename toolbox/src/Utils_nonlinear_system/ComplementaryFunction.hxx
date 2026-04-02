@@ -55,7 +55,7 @@ public:
     {
       real_type t1 = x( i ) * x( i );
       real_type t2 = exp( x( i ) );
-      real_type t4 = 1.0 / n;
+      real_type t4 = 1.0 / static_cast<real_type>( n );
       real_type t6 = power2( t2 * x( i ) - t4 );
       real_type t8 = sqrt( t1 + t6 );
       f( i )       = t8 - ( t2 + 1.0 ) * x( i ) + t4;
@@ -80,7 +80,7 @@ public:
       real_type t1     = x( i ) * x( i );
       real_type t2     = exp( x( i ) );
       real_type t3     = t2 * x( i );
-      real_type t5     = t3 - 1.0 / n;
+      real_type t5     = t3 - 1.0 / static_cast<real_type>( n );
       real_type t6     = t5 * t5;
       real_type t8     = sqrt( t1 + t6 );
       J.insert( i, i ) = ( x( i ) + ( t2 + t3 ) * t5 ) / t8 - 1.0 - t2 - t3;

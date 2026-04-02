@@ -299,21 +299,21 @@ namespace Utils
     //!
     //! \return The elapsed time in seconds as a double.
     //!
-    real_type elapsed_s() const { return m_elapsed_time.count() * 1e-9; }
+    real_type elapsed_s() const { return static_cast<real_type>( m_elapsed_time.count() ) * 1e-9; }
 
     //!
     //! \brief Return elapsed time (between tic-toc) in milliseconds.
     //!
     //! \return The elapsed time in milliseconds as a double.
     //!
-    real_type elapsed_ms() const { return m_elapsed_time.count() * 1e-6; }
+    real_type elapsed_ms() const { return static_cast<real_type>( m_elapsed_time.count() ) * 1e-6; }
 
     //!
     //! \brief Return elapsed time (between tic-toc) in microseconds.
     //!
     //! \return The elapsed time in microseconds as a double.
     //!
-    real_type elapsed_mus() const { return m_elapsed_time.count() * 1e-3; }
+    real_type elapsed_mus() const { return static_cast<real_type>( m_elapsed_time.count() ) * 1e-3; }
 
     //!
     //! \brief Return elapsed time (between tic-toc) in nanoseconds.

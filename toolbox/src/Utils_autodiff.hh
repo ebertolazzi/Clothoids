@@ -156,12 +156,12 @@ namespace autodiff::detail
    *
    * \tparam Ts Parameter pack of types
    */
-  template <typename... Ts> struct DualOrder
+  template <typename... Ts>
+  struct DualOrder
   {
-    static constexpr size_t value = []()
-    {
+    static constexpr size_t value = []() {
       size_t max_order = 0;
-      ( ( max_order = ( NumberTraits<Ts>::Order > max_order ) ? NumberTraits<Ts>::Order : max_order ), ... );
+      ((max_order = (NumberTraits<Ts>::Order > max_order) ? NumberTraits<Ts>::Order : max_order), ...);
       return max_order;
     }();
   };
@@ -1513,7 +1513,7 @@ namespace Utils
  * \param PREFIX Function name prefix
  * \param CONST Const qualifier
  */
-#define UTILS_AUTODIFF_FUN_1_VARS_DECL( PREFIX, CONST )                     \
+#define UTILS_AUTODIFF_FUN_1_VARS_DECL( PREFIX, CONST )                       \
   UTILS_AUTODIFF_DECLARE_DERIV( PREFIX, D, UTILS_AUTODIFF_PARAMS_1, CONST ) \
   UTILS_AUTODIFF_DECLARE_DERIV( PREFIX, DD, UTILS_AUTODIFF_PARAMS_1, CONST )
 
@@ -1648,7 +1648,7 @@ namespace Utils
 #define UTILS_AUTODIFF_DERIV_1ARG_DEF( PREFIX, CONST ) UTILS_AUTODIFF_FUN_1_VARS_DECL( PREFIX, CONST )
 #define UTILS_AUTODIFF_DERIV_2ARG_DEF( PREFIX, CONST ) UTILS_AUTODIFF_FUN_2_VARS_DECL( PREFIX, CONST )
 #define UTILS_AUTODIFF_DERIV_3ARG_DEF( PREFIX, CONST ) UTILS_AUTODIFF_FUN_3_VARS_DECL( PREFIX, CONST )
-#define UTILS_AUTODIFF_DERIV_4ARG_DEF( PREFIX, CONST ) UTILS_AUTODIFF_FUN_1_VARS_DECL( PREFIX, CONST )
+#define UTILS_AUTODIFF_DERIV_4ARG_DEF( PREFIX, CONST ) UTILS_AUTODIFF_FUN_4_VARS_DECL( PREFIX, CONST )
 #define UTILS_AUTODIFF_DERIV_5ARG_DEF( PREFIX, CONST ) UTILS_AUTODIFF_FUN_5_VARS_DECL( PREFIX, CONST )
 #define UTILS_AUTODIFF_DERIV_6ARG_DEF( PREFIX, CONST ) UTILS_AUTODIFF_FUN_6_VARS_DECL( PREFIX, CONST )
 

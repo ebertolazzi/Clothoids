@@ -36,7 +36,7 @@ public:
   {
     for ( integer i = 0; i < 24; ++i )
     {
-      t_vec[i] = i / 10.0;
+      t_vec[i] = static_cast<real_type>( i ) / 10.0;
       y_vec[i] = 60.137 * pow( 1.371, t_vec[i] ) * sin( 3.112 * t_vec[i] + 1.761 );
     }
   }
@@ -173,7 +173,7 @@ public:
   {
     for ( integer i = 0; i < 24; ++i )
     {
-      t_vec[i] = i / 10.0;
+      t_vec[i] = static_cast<real_type>( i ) / 10.0;
       y_vec[i] = 53.81 * pow( 1.27, t_vec[i] ) * tanh( 3.012 * t_vec[i] + sin( 2.13 * t_vec[i] ) ) *
                  cos( exp( 0.507 ) * t_vec[i] );
     }

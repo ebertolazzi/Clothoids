@@ -46,7 +46,7 @@ public:
 
     for ( integer t = 1; t <= 5; ++t )
     {
-      real_type t1 = 0.2 * t;
+      real_type t1 = 0.2 * static_cast<real_type>( t );
       real_type t2 = t1 - 1;
 
       for ( integer i = 0; i < n; ++i )
@@ -89,7 +89,7 @@ public:
 
     for ( integer t = 1; t <= 5; ++t )
     {
-      real_type t1 = 0.2 * t;
+      real_type t1 = 0.2 * static_cast<real_type>( t );
       real_type t2 = t1 - 1;
       real_type t3 = t2 - 1;
 

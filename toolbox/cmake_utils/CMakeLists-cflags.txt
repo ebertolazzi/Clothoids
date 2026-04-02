@@ -7,7 +7,7 @@ set( CMAKE_VERBOSE_MAKEFILE            TRUE )
 # /Gz Uses the __stdcall calling convention (x86 only).
 
 set( CXX_WARN   "-Wall -Wno-float-equal -Wno-padded -Wno-comment ")
-set( CLANG_WARN "-Weverything -Wno-alloca -Wno-cast-align -Wno-cast-qual -Wno-conversion -Wno-c++2a-compat -Wno-c++98-compat -Wno-c++98-compat-pedantic -Wno-format-nonliteral -Wno-implicit-fallthrough -Wno-documentation -Wno-float-equal -Wno-padded -Wno-reserved-id-macro -Wno-unreachable-code-break -Wno-unused-macros -Wno-switch-enum -Wno-sign-conversion -Wno-signed-enum-bitfield -Wno-weak-vtables ")
+set( CLANG_WARN "-Weverything -Wno-alloca -Wno-allocator-wrappers -Wno-cast-align -Wno-cast-qual -Wno-conversion -Wno-c++2a-compat -Wno-c++98-compat -Wno-c++98-compat-pedantic -Wno-documentation -Wno-duplicate-enum -Wno-extra-semi-stmt -Wno-float-equal -Wno-format-nonliteral -Wno-implicit-fallthrough -Wno-inconsistent-missing-destructor-override -Wno-nrvo -Wno-padded -Wno-reserved-id-macro -Wno-shadow-field -Wno-sign-conversion -Wno-signed-enum-bitfield -Wno-suggest-destructor-override -Wno-suggest-override -Wno-switch-enum -Wno-thread-safety-negative -Wno-unreachable-code-break -Wno-unreachable-code-return -Wno-unused-macros -Wno-weak-vtables ")
 set( VS_WARN    "")
 
 if( CMAKE_CXX_COMPILER_ID MATCHES "GNU" )

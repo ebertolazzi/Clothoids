@@ -34,14 +34,14 @@ public:
   {
     for ( integer i = 0; i < 99; ++i )
     {
-      real_type arg = ( i + 1 ) / 100.0;
+      real_type arg = ( static_cast<real_type>( i ) + 1 ) / 100.0;
       rr[i]         = pow( -50.0 * log( arg ), 2.0 / 3.0 ) + 25.0;
     }
   }
 
   real_type t_fun( Vector const & x, integer i ) const
   {
-    real_type arg = ( i + 1 ) / 100.0;
+    real_type arg = ( static_cast<real_type>( i ) + 1 ) / 100.0;
     real_type r   = rr[i] - x( 1 );
     if ( r <= 0 ) return nan( "t_fun" );
     return exp( -pow( r, x( 2 ) ) / x( 0 ) ) - arg;

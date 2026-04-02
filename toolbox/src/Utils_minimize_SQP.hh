@@ -531,9 +531,9 @@ namespace Utils
 
             // Aggiorna i moltiplicatori quando usi il gradiente proiettato
             m_box_handler.update_multipliers( x, g );
-            integer n               = x.size();
-            m_multipliers.head( n ) = m_box_handler.lambda_lower();
-            m_multipliers.tail( n ) = m_box_handler.lambda_upper();
+            integer n_active               = x.size();
+            m_multipliers.head( n_active ) = m_box_handler.lambda_lower();
+            m_multipliers.tail( n_active ) = m_box_handler.lambda_upper();
 
             if ( m_opts.verbosity >= 3 ) { fmt::print( "  Using projected gradient, ‖pg‖_∞ = {:.2e}\n", pg_norm ); }
           }
@@ -542,9 +542,9 @@ namespace Utils
             // Projected gradient is too small, consider convergence
             // Assicurati che i moltiplicatori siano aggiornati
             m_box_handler.update_multipliers( x, g );
-            integer n               = x.size();
-            m_multipliers.head( n ) = m_box_handler.lambda_lower();
-            m_multipliers.tail( n ) = m_box_handler.lambda_upper();
+            integer n_active               = x.size();
+            m_multipliers.head( n_active ) = m_box_handler.lambda_lower();
+            m_multipliers.tail( n_active ) = m_box_handler.lambda_upper();
 
             // Ricalcola KKT con i moltiplicatori aggiornati
             kkt_norm = m_box_handler.total_kkt_error( x, g );

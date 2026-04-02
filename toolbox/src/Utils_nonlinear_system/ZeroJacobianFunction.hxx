@@ -59,8 +59,8 @@ public:
     x_vec.resize( 1 );
     auto & x0{ x_vec[0] };
     x0.resize( n );
-    real_type bf = ( 1.0 / 60.0 - 100.0 / ( 6.0 * n ) ) * ( 1.0 / 60.0 - 50.0 / 6.0 );
+    real_type bf = ( 1.0 / 60.0 - 100.0 / ( 6.0 * static_cast<real_type>( n ) ) ) * ( 1.0 / 60.0 - 50.0 / 6.0 );
     x0.fill( bf );
-    x0( 0 ) = 100.0 * ( n - 100.0 ) / n;
+    x0( 0 ) = 100.0 * ( static_cast<real_type>( n ) - 100.0 ) / static_cast<real_type>( n );
   }
 };

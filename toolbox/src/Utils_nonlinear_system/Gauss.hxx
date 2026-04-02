@@ -57,7 +57,7 @@ public:
     f( 0 ) = f( 1 ) = f( 2 ) = 0;
     for ( integer i = 0; i < 15; ++i )
     {
-      real_type d1  = 0.5 * i;
+      real_type d1  = 0.5 * static_cast<real_type>( i );
       real_type d2  = 3.5 - d1 - x3;
       real_type arg = -0.5 * x2 * d2 * d2;
       real_type t   = x1 * exp( arg ) - y[i];
@@ -81,7 +81,7 @@ public:
 
     for ( integer i = 0; i < 15; ++i )
     {
-      real_type d1  = 0.5 * i;
+      real_type d1  = 0.5 * static_cast<real_type>( i );
       real_type d2  = 3.5 - d1 - x3;
       real_type arg = 0.5 * x2 * d2 * d2;
       real_type r   = exp( -arg );

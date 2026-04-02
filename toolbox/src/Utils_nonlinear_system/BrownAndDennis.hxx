@@ -43,7 +43,7 @@ public:
 
     for ( integer i = 0; i < 20; ++i )
     {
-      real_type c = ( i + 1.0 ) / 5.0;
+      real_type c = ( static_cast<real_type>( i ) + 1.0 ) / 5.0;
 
       real_type sinc = sin( c );
       real_type f1   = x1 + c * x2 - exp( c );
@@ -81,7 +81,7 @@ public:
 
     for ( integer i = 0; i < 20; ++i )
     {
-      real_type c    = ( i + 1.0 ) / 5.0;
+      real_type c    = ( static_cast<real_type>( i ) + 1.0 ) / 5.0;
       real_type sinc = sin( c );
 
       real_type f1 = x1 + c * x2 - exp( c );
