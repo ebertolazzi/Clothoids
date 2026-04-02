@@ -252,7 +252,7 @@ int main()
   fmt::print( Style::LABEL, "        📋 Test totali:        " );
   fmt::print( Style::HIGHLIGHT, "{}\n", test_points.size() + 1 );
 
-  real_type success_rate = ( success_count * 100.0 ) / test_points.size();
+  real_type success_rate = ( success_count * 100.0 ) / static_cast<real_type>( test_points.size() );
   fmt::print( Style::LABEL, "        📈 Tasso di successo:  " );
 
   if ( success_rate >= 90 ) { fmt::print( Style::SUCCESS, "{:.1f}%\n", success_rate ); }

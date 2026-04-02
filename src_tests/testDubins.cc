@@ -506,7 +506,7 @@ void test_dubins3p_randomized()
       if ( success )
       {
         stats[name].success_count++;
-        stats[name].total_time += duration.count();
+        stats[name].total_time += static_cast<double>( duration.count() );
         stats[name].total_length += db.length();
         stats[name].total_evaluations += db.num_evaluation();
         stats[name].lengths.push_back( db.length() );
@@ -1207,7 +1207,7 @@ void test_performance_benchmark()
   // Warm-up runs
   {
     G2lib::Dubins warmup( "warmup" );
-    for ( int i = 0; i < 100; ++i ) { warmup.build( 0, 0, 0, 1, 1, m_pi / 2, 1.0 ); }
+    for ( int i = 0; i < 100; ++i ) { static_cast<void>( warmup.build( 0, 0, 0, 1, 1, m_pi / 2, 1.0 ) ); }
   }
 
   // Benchmark Dubins construction
@@ -1220,7 +1220,7 @@ void test_performance_benchmark()
     G2lib::Dubins db( "benchmark" );
     // Varying parameters slightly
     real_type angle = ( i % 100 ) * m_pi / 50.0;
-    db.build( 0, 0, 0, cos( angle ), sin( angle ), angle, 1.0 );
+    static_cast<void>( db.build( 0, 0, 0, cos( angle ), sin( angle ), angle, 1.0 ) );
   }
 
   auto end      = chrono::high_resolution_clock::now();
@@ -1228,9 +1228,9 @@ void test_performance_benchmark()
 
   fmt::print( fg( fmt::color::cyan ), "📈 Dubins Construction Benchmark:\n" );
   fmt::print( "├─ Iterations: {}\n", NUM_ITERATIONS );
-  fmt::print( "├─ Total time: {:.3f} ms\n", duration.count() / 1000.0 );
-  fmt::print( "├─ Average time: {:.3f} µs\n", duration.count() / static_cast<double>( NUM_ITERATIONS ) );
-  fmt::print( "└─ Operations/sec: {:.0f}\n", NUM_ITERATIONS / ( duration.count() / 1e6 ) );
+  fmt::print( "├─ Total time: {:.3f} ms\n", static_cast<double>( duration.count() ) / 1000.0 );
+  fmt::print( "├─ Average time: {:.3f} µs\n", static_cast<double>( duration.count() ) / static_cast<double>( NUM_ITERATIONS ) );
+  fmt::print( "└─ Operations/sec: {:.0f}\n", static_cast<double>( NUM_ITERATIONS ) / ( static_cast<double>( duration.count() ) / 1e6 ) );
 
   // Benchmark Dubins3P with different methods
   vector<pair<G2lib::Dubins3pBuildType, string>> methods = { { G2lib::Dubins3pBuildType::SAMPLE_ONE_DEGREE, "Sample" },
@@ -1271,9 +1271,9 @@ void test_performance_benchmark()
     fmt::print(
       "├─ {}: {:.3f} ms total, {:.3f} µs avg, {:.0f} ops/sec, {}% success\n",
       name,
-      duration_3p.count() / 1000.0,
-      duration_3p.count() / static_cast<double>( NUM_3P_ITERATIONS ),
-      NUM_3P_ITERATIONS / ( duration_3p.count() / 1e6 ),
+      static_cast<double>( duration_3p.count() ) / 1000.0,
+      static_cast<double>( duration_3p.count() ) / static_cast<double>( NUM_3P_ITERATIONS ),
+      static_cast<double>( NUM_3P_ITERATIONS ) / ( static_cast<double>( duration_3p.count() ) / 1e6 ),
       ( 100 * success_count ) / NUM_3P_ITERATIONS );
   }
 
@@ -1357,7 +1357,7 @@ int main()
       fmt::format( "Total tests run: {}", tests.size() ),
       fmt::format( "Passed:          {}", passed ),
       fmt::format( "Failed:          {}", failed ),
-      fmt::format( "Success rate:    {:.1f}%", 100.0 * passed / tests.size() ),
+      fmt::format( "Success rate:    {:.1f}%", 100.0 * passed / static_cast<double>( tests.size() ) ),
       fmt::format( "Total time:      {} ms", total_duration.count() ) );
 
 

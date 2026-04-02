@@ -94,6 +94,6 @@ int main()
     "ave     = {} [s]\n"
     "All done\n",
     tictoc.elapsed_s(),
-    tictoc.elapsed_s() / N );
+    tictoc.elapsed_s() / static_cast<real_type>( N ) );
   return 0;
 }

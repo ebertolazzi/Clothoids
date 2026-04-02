@@ -40,7 +40,7 @@ void create_waylines(
       const real_type wayline_spacing = dist / static_cast<real_type>( n_waylines + 1 );
       for ( size_t j = 1; j <= n_waylines; ++j )
       {
-        const real_type wayline_loc = prev_loc + j * wayline_spacing;
+        const real_type wayline_loc = prev_loc + static_cast<real_type>( j ) * wayline_spacing;
         Waylines.emplace_back( wayLine{ wayline_loc, -4.0, 4.0 } );
       }
     }

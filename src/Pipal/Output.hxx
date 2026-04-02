@@ -171,7 +171,7 @@ namespace Pipal
               << "  Hessian evaluations....................... : " << c.H << '\n'
               << "  Matrix factorizations..................... : " << c.M << '\n'
               << "  CPU millseconds........................... : " << std::scientific << std::setprecision( 4 )
-              << std::chrono::duration_cast<MicroSeconds>( SteadyClock::now() - this->t ).count() / 1.0e3 << '\n';
+              << static_cast<double>( std::chrono::duration_cast<MicroSeconds>( SteadyClock::now() - this->t ).count() ) / 1.0e3 << '\n';
     }
   };  // class Output
 

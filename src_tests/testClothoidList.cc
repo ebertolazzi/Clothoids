@@ -1355,7 +1355,8 @@ int main()
   // Summary
   fmt::print( fg( fmt::color::cyan ) | fmt::emphasis::bold, "\n{:=^80}\n", " 📊 TEST SUMMARY " );
 
-  float success_rate = static_cast<float>( 100 * tests_passed ) / ( tests_passed + tests_failed );
+  float success_rate = static_cast<float>( 100.0f * static_cast<float>( tests_passed ) ) /
+                       static_cast<float>( tests_passed + tests_failed );
 
   if ( tests_failed == 0 )
   {

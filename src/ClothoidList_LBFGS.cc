@@ -42,12 +42,6 @@ namespace G2lib
   static real_type const h_fraction{ 1e-3 };
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  static auto minmod = []( real_type a, real_type b ) -> real_type
-  {
-    if ( a * b <= 0 ) return 0;
-    return ( a > 0 ) ? std::min( a, b ) : std::max( a, b );
-  };
-
 #if 1
   bool ClothoidList::build_G2_with_target(
     integer const                                                n,
@@ -64,6 +58,7 @@ namespace G2lib
     using OPTIMIZER = Utils::BOBYQA_minimizer<real_type>;
 
     OPTIMIZER minimizer;
+    static_cast<void>( target );
 
     Vector                   nx( n ), ny( n );
     Eigen::Map<Vector const> THETA( theta, n );
@@ -73,18 +68,6 @@ namespace G2lib
     Eigen::Map<Vector const> WMIN( w_min, n );
     nx = -THETA.array().sin();
     ny = THETA.array().cos();
-
-    auto TARGET = [&]( Vector const & offs ) -> real_type
-    {
-      // Prepara X, Y originali
-      Vector X = X0 + offs.cwiseProduct( nx );
-      Vector Y = Y0 + offs.cwiseProduct( ny );
-
-      // Clotoide centrale
-      ClothoidList tmp( "tmp" );
-      tmp.build_G2( n, X.data(), Y.data(), theta_init, theta_end );
-      return target( tmp );
-    };
 
     Vector offs( n );
     offs.setZero();
@@ -310,7 +293,7 @@ namespace G2lib
       ClothoidList tmp( "temporary" );
       ClothoidList tmp1( "temporary" );
       ClothoidList tmp2( "temporary" );
-      bool         ok{ tmp.build_G2_cyclic( n, X.data(), Y.data() ) };
+      tmp.build_G2_cyclic( n, X.data(), Y.data() );
 
       real_type value{ target( tmp ) };
       if ( grad != nullptr )
@@ -323,11 +306,11 @@ namespace G2lib
           real_type ny_save{ ny.coeff( i ) };
           X.coeffRef( i ) = x_save + w_h * nx_save;
           Y.coeffRef( i ) = y_save + w_h * ny_save;
-          ok              = tmp1.build_G2_cyclic( n, X.data(), Y.data() );
+          static_cast<void>( tmp1.build_G2_cyclic( n, X.data(), Y.data() ) );
           real_type vp{ target( tmp1 ) };
           X.coeffRef( i ) = x_save - w_h * nx_save;
           Y.coeffRef( i ) = y_save - w_h * ny_save;
-          ok              = tmp2.build_G2_cyclic( n, X.data(), Y.data() );
+          static_cast<void>( tmp2.build_G2_cyclic( n, X.data(), Y.data() ) );
           real_type vm{ target( tmp2 ) };
           grad->coeffRef( i ) = ( vp - vm ) / ( 2 * w_h );  // minmod( vp - value, value - vm)/w_h;
         }
