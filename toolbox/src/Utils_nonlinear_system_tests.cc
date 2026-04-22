@@ -84,26 +84,20 @@ namespace Utils
   using real_type = double;
 
   static inline real_type power2( real_type a )
-  {
-    return a * a;
-  }
+  { return a * a; }
   static inline real_type power3( real_type a )
-  {
-    return a * a * a;
-  }
+  { return a * a * a; }
   static inline real_type power4( real_type a )
-  {
-    return a * a * a * a;
-  }
+  { return a * a * a * a; }
   static inline real_type power5( real_type a )
-  {
-    return a * a * a * a * a;
-  }
+  { return a * a * a * a * a; }
   static inline real_type power6( real_type a )
-  {
-    return a * a * a * a * a * a;
-  }
+  { return a * a * a * a * a * a; }
 
+#ifdef __clang__
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wimplicit-int-float-conversion"
+#endif
 #include "Utils_nonlinear_system/ArtificialTestOfNowakAndWeimann.hxx"
 #include "Utils_nonlinear_system/BUNLSI.hxx"
 #include "Utils_nonlinear_system/BadlyScaledAugmentedPowellFunction.hxx"
@@ -225,6 +219,9 @@ namespace Utils
 #include "Utils_nonlinear_system/XiaoYin.hxx"
 #include "Utils_nonlinear_system/YixunShi.hxx"
 #include "Utils_nonlinear_system/ZeroJacobianFunction.hxx"
+#ifdef __clang__
+#pragma clang diagnostic pop
+#endif
 
   std::vector<NonlinearSystem *> nonlinear_system_tests;
   std::map<string, unsigned>     nonlinear_system_tests_map;

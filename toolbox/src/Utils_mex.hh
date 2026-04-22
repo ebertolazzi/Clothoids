@@ -195,9 +195,7 @@ template <> struct fmt::formatter<matlab_output_handler>
   constexpr auto parse( format_parse_context & ctx ) { return ctx.begin(); }
 
   template <typename FormatContext> auto format( const matlab_output_handler &, FormatContext & ctx )
-  {
-    return ctx.out();
-  }
+  { return ctx.out(); }
 };
 
 // Global redirector (static to avoid multiple definitions in different translation units)
@@ -231,9 +229,7 @@ namespace Utils
   //! \param msg The error message to display.
   //!
   inline void mex_error_message( string_view msg )
-  {
-    mexErrMsgTxt( msg.data() );
-  }
+  { mexErrMsgTxt( msg.data() ); }
 
   // ==========================================================================
   // INPUT VALIDATION FUNCTIONS
@@ -419,9 +415,7 @@ namespace Utils
   //! \param value The boolean value to set.
   //!
   inline void mex_set_scalar_bool( mxArray *& arg, bool value )
-  {
-    arg = mxCreateLogicalScalar( value );
-  }
+  { arg = mxCreateLogicalScalar( value ); }
 
   //!
   //! \brief Creates a numeric matrix of type int32 and returns a pointer to its
@@ -505,8 +499,8 @@ namespace Utils
     double * VALS{ mex_create_matrix_value( args[2], 1, nnz ) };
 
     // Set the number of rows and columns in the sparse matrix
-    mex_set_scalar_value( args[3], nrows );
-    mex_set_scalar_value( args[4], ncols );
+    mex_set_scalar_value( args[3], static_cast<double>( nrows ) );
+    mex_set_scalar_value( args[4], static_cast<double>( ncols ) );
 
     // Convert the row and column indices to 1-based indexing for MATLAB
     std::transform( i_rows, i_rows + nnz, Irow, []( I val ) -> double { return static_cast<double>( val + 1 ); } );
@@ -650,9 +644,7 @@ namespace Utils
   //! \return Pointer to the original C++ object.
   //!
   template <typename base> inline base * mex_convert_mx_to_ptr( mxArray const * in )
-  {
-    return mex_convert_mx_to_handle_ptr<base>( in )->ptr();
-  }
+  { return mex_convert_mx_to_handle_ptr<base>( in )->ptr(); }
 
   //!
   //! \brief Destroys the object wrapped by the mex_class_handle.

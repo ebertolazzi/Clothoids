@@ -215,7 +215,7 @@ namespace GC_namespace
     template <typename T1, typename T2> void resize( T1 const nr, T2 const nc )
     {
       static_assert( std::is_integral_v<T1>, "resize() accepts only integral types!" );
-      static_assert( std::is_integral_v<T1>, "resize() accepts only integral types!" );
+      static_assert( std::is_integral_v<T2>, "resize() accepts only integral types!" );
       resize( static_cast<unsigned>( nr ), static_cast<unsigned>( nc ) );
     }
 
@@ -431,7 +431,7 @@ namespace GC_namespace
     //! int *dataPtr = matrix.data();  // Pointer to matrix data
     //! \endcode
     //!
-    TYPE * data() { return &vector<TYPE>::front(); }
+    TYPE * data() { return vector<TYPE>::empty() ? nullptr : vector<TYPE>::data(); }
 
     //!
     //! Returns a constant pointer to the underlying data block of the matrix.
@@ -444,7 +444,7 @@ namespace GC_namespace
     //! const int *dataPtr = matrix.data();  // Constant pointer to matrix data
     //! \endcode
     //!
-    TYPE const * data() const { return &vector<TYPE>::front(); }
+    TYPE const * data() const { return vector<TYPE>::empty() ? nullptr : vector<TYPE>::data(); }
   };
 
 // ---------------------------------------------------------------------------
@@ -860,7 +860,7 @@ namespace GC_namespace
     //! gc.erase("key1");  // Remove the entry with key "key1"
     //! \endcode
     //!
-    void erase( string_view name ) const;
+    void erase( string_view name );
 
     //!
     //! \brief Checks whether the `GenericContainer` is empty.

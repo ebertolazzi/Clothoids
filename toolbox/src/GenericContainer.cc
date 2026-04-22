@@ -651,11 +651,11 @@ namespace GC_namespace
     m_data_type = GC_type::NOTYPE;
   }
 
-  void GenericContainer::erase( string_view const name ) const
+  void GenericContainer::erase( string_view const name )
   {
     GC_ASSERT(
       GC_type::MAP == m_data_type,
-      "GenericContainer::erase('" << name << "') bad data type\nexpect: " << to_string( GC_type::POINTER )
+      "GenericContainer::erase('" << name << "') bad data type\nexpect: " << to_string( GC_type::MAP )
                                   << "\nbut data stored is of type: " << to_string( m_data_type ) )
     m_data.m->erase( string( name ) );
   }
@@ -2312,7 +2312,7 @@ namespace GC_namespace
   bool_type GenericContainer::get_map_bool( string_view const key, string_view const where ) const
   {
     GC_ASSERT( this->exists( key ), where << " key: `" << key << "` is missing" );
-    return this->m_data.m->at( string( key ) ).get_bool( where );
+    return this->m_data.m->at( string_type( key ) ).get_bool( where );
   }
 
   bool_type GenericContainer::get_map_bool( std::initializer_list<string> const args ) const
@@ -2341,7 +2341,7 @@ namespace GC_namespace
   int_type GenericContainer::get_map_int( string_view const key, string_view const where ) const
   {
     GC_ASSERT( this->exists( key ), where << " key: `" << key << "` is missing" );
-    return this->m_data.m->at( key.data() ).get_as_int( where );
+    return this->m_data.m->at( string_type( key ) ).get_as_int( where );
   }
 
   int_type GenericContainer::get_map_int( std::initializer_list<string> const args ) const
@@ -2370,7 +2370,7 @@ namespace GC_namespace
   real_type GenericContainer::get_map_number( string_view const key, string_view const where ) const
   {
     GC_ASSERT( this->exists( key ), where << " key: `" << key << "` is missing" );
-    return this->m_data.m->at( key.data() ).get_number( where );
+    return this->m_data.m->at( string_type( key ) ).get_number( where );
   }
 
   real_type GenericContainer::get_map_number( std::initializer_list<string> const args ) const
@@ -2399,7 +2399,7 @@ namespace GC_namespace
   string const & GenericContainer::get_map_string( string_view const key, string_view const where ) const
   {
     GC_ASSERT( this->exists( key ), where << " key: `" << key << "` is missing" );
-    return this->m_data.m->at( key.data() ).get_string( where );
+    return this->m_data.m->at( string_type( key ) ).get_string( where );
   }
 
   string const & GenericContainer::get_map_string( std::initializer_list<string> const args ) const
@@ -2428,7 +2428,7 @@ namespace GC_namespace
   vec_real_type const & GenericContainer::get_map_vec_real( string_view const key, string_view const where ) const
   {
     GC_ASSERT( this->exists( key ), where << " key: `" << key << "` is missing" );
-    return this->m_data.m->at( key.data() ).get_vec_real( where );
+    return this->m_data.m->at( string_type( key ) ).get_vec_real( where );
   }
 
   vec_real_type const & GenericContainer::get_map_vec_real( std::initializer_list<string> const args ) const
@@ -2439,7 +2439,7 @@ namespace GC_namespace
       msg += key;
       msg += ", ";
       if ( this->exists( key ) ) {
-        if ( (*m_data.m)[key].m_data_type == GC_type::VEC_REAL ) return this->get_vec_real( key );
+        if ( (*m_data.m)[key].m_data_type == GC_type::VEC_REAL ) return this->get_map_vec_real( key );
       }
     }
     msg.pop_back();
@@ -2458,7 +2458,7 @@ namespace GC_namespace
   vec_complex_type const & GenericContainer::get_map_vec_complex( string_view const key, string_view const where ) const
   {
     GC_ASSERT( this->exists( key ), where << " key: `" << key << "` is missing" );
-    return this->m_data.m->at( key.data() ).get_vec_complex( where );
+    return this->m_data.m->at( string_type( key ) ).get_vec_complex( where );
   }
 
   vec_complex_type const & GenericContainer::get_map_vec_complex( std::initializer_list<string> const args ) const
@@ -2469,7 +2469,7 @@ namespace GC_namespace
       msg += key;
       msg += ", ";
       if ( this->exists( key ) ) {
-        if ( (*m_data.m)[key].m_data_type == GC_type::VEC_COMPLEX ) return this->get_vec_complex( key );
+        if ( (*m_data.m)[key].m_data_type == GC_type::VEC_COMPLEX ) return this->get_map_vec_complex( key );
       }
     }
     msg.pop_back();
@@ -2489,7 +2489,7 @@ namespace GC_namespace
   vec_string_type const & GenericContainer::get_map_vec_string( string_view const key, string_view const where ) const
   {
     GC_ASSERT( this->exists( key ), where << " key: `" << key << "` is missing" );
-    return this->m_data.m->at( key.data() ).get_vec_string( where );
+    return this->m_data.m->at( string_type( key ) ).get_vec_string( where );
   }
 
   vec_string_type const & GenericContainer::get_map_vec_string( std::initializer_list<string> const args ) const
@@ -2500,7 +2500,7 @@ namespace GC_namespace
       msg += key;
       msg += ", ";
       if ( this->exists( key ) ) {
-        if ( (*m_data.m)[key].m_data_type == GC_type::STRING ) return this->get_vec_string( key );
+        if ( (*m_data.m)[key].m_data_type == GC_type::VEC_STRING ) return this->get_map_vec_string( key );
       }
     }
     msg.pop_back();
@@ -2521,7 +2521,7 @@ namespace GC_namespace
   bool GenericContainer::exists( string_view const s ) const
   {
     if ( m_data_type != GC_type::MAP ) return false;
-    auto const iv{ m_data.m->find( s.data() ) };
+    auto const iv{ m_data.m->find( string_type( s ) ) };
     return iv != m_data.m->end();
   }
 
@@ -2531,7 +2531,7 @@ namespace GC_namespace
     return std::any_of(
       vs.begin(),
       vs.end(),
-      [this]( string_type const & s ) { return m_data.m->find( s.data() ) != m_data.m->end(); } );
+      [this]( string_type const & s ) { return m_data.m->find( s ) != m_data.m->end(); } );
   }
   string GenericContainer::must_exists( vec_string_type const & vs, string_view const where ) const
   {
@@ -2551,7 +2551,7 @@ namespace GC_namespace
   bool GenericContainer::get_if_exists( string_view const field, bool & value ) const
   {
     if ( m_data_type != GC_type::MAP ) return false;
-    auto const iv{ m_data.m->find( field.data() ) };
+    auto const iv{ m_data.m->find( string_type( field ) ) };
     if ( iv == m_data.m->end() ) return false;
     if ( iv->second.m_data_type != GC_type::BOOL ) return false;
     value = iv->second.m_data.b;
@@ -2560,15 +2560,9 @@ namespace GC_namespace
 
   bool GenericContainer::get_if_exists( vec_string_type const & fields, bool & value ) const
   {
-    if ( m_data_type != GC_type::MAP ) return false;
-    map_type & m = *m_data.m;
-    for ( string_type const & field : fields )
+    for ( string_view const field : fields )
     {
-      if ( auto iv{ m.find( field ) }; iv != m.end() && iv->second.m_data_type != GC_type::BOOL )
-      {
-        value = iv->second.m_data.b;
-        return true;
-      }
+      if ( get_if_exists( field, value ) ) return true;
     }
     return false;
   }
@@ -2578,7 +2572,7 @@ namespace GC_namespace
   bool GenericContainer::get_if_exists( string_view const field, int_type & value ) const
   {
     if ( m_data_type != GC_type::MAP ) return false;
-    auto const iv{ m_data.m->find( field.data() ) };
+    auto const iv{ m_data.m->find( string_type( field ) ) };
     if ( iv == m_data.m->end() ) return false;
     switch ( iv->second.m_data_type )
     {
@@ -2618,7 +2612,7 @@ namespace GC_namespace
   bool GenericContainer::get_if_exists( string_view const field, uint_type & value ) const
   {
     if ( m_data_type != GC_type::MAP ) return false;
-    auto const iv{ m_data.m->find( field.data() ) };
+    auto const iv{ m_data.m->find( string_type( field ) ) };
     if ( iv == m_data.m->end() ) return false;
     switch ( iv->second.m_data_type )
     {
@@ -2664,7 +2658,7 @@ namespace GC_namespace
   bool GenericContainer::get_if_exists( string_view const field, long_type & value ) const
   {
     if ( m_data_type != GC_type::MAP ) return false;
-    auto const iv{ m_data.m->find( field.data() ) };
+    auto const iv{ m_data.m->find( string_type( field ) ) };
     if ( iv == m_data.m->end() ) return false;
     switch ( iv->second.m_data_type )
     {
@@ -2704,7 +2698,7 @@ namespace GC_namespace
   bool GenericContainer::get_if_exists( string_view const field, ulong_type & value ) const
   {
     if ( m_data_type != GC_type::MAP ) return false;
-    auto const iv{ m_data.m->find( field.data() ) };
+    auto const iv{ m_data.m->find( string_type( field ) ) };
     if ( iv == m_data.m->end() ) return false;
     switch ( iv->second.m_data_type )
     {
@@ -2750,7 +2744,7 @@ namespace GC_namespace
   bool GenericContainer::get_if_exists( string_view const field, real_type & value ) const
   {
     if ( m_data_type != GC_type::MAP ) return false;
-    auto const iv{ m_data.m->find( field.data() ) };
+    auto const iv{ m_data.m->find( string_type( field ) ) };
     if ( iv == m_data.m->end() ) return false;
     switch ( iv->second.m_data_type )
     {
@@ -2787,7 +2781,7 @@ namespace GC_namespace
   bool GenericContainer::get_if_exists( string_view const field, complex_type & value ) const
   {
     if ( m_data_type != GC_type::MAP ) return false;
-    auto const iv{ m_data.m->find( field.data() ) };
+    auto const iv{ m_data.m->find( string_type( field ) ) };
     if ( iv == m_data.m->end() ) return false;
     switch ( iv->second.m_data_type )
     {
@@ -2821,7 +2815,7 @@ namespace GC_namespace
   bool GenericContainer::get_if_exists( string_view const field, string_type & value ) const
   {
     if ( m_data_type != GC_type::MAP ) return false;
-    auto const iv{ m_data.m->find( field.data() ) };
+    auto const iv{ m_data.m->find( string_type( field ) ) };
     if ( iv == m_data.m->end() ) return false;
     if ( iv->second.m_data_type != GC_type::STRING ) return false;
     value = *iv->second.m_data.s;
@@ -2880,7 +2874,7 @@ namespace GC_namespace
   int_type & GenericContainer::get_int_at( unsigned const i, unsigned const j )
   {
     if ( m_data_type == GC_type::NOTYPE )
-      set_mat_real( i, j );
+      set_mat_int( i + 1, j + 1 );
     else if ( m_data_type == GC_type::VEC_BOOL || m_data_type == GC_type::VEC_INTEGER )
       promote_to_mat_int();
     GC_ASSERT(
@@ -2927,7 +2921,7 @@ namespace GC_namespace
   long_type & GenericContainer::get_long_at( unsigned const i, unsigned const j )
   {
     if ( m_data_type == GC_type::NOTYPE )
-      set_mat_real( i, j );
+      set_mat_long( i + 1, j + 1 );
     else if (
       m_data_type == GC_type::VEC_BOOL || m_data_type == GC_type::VEC_INTEGER || m_data_type == GC_type::VEC_LONG )
       promote_to_mat_long();
@@ -2974,7 +2968,7 @@ namespace GC_namespace
   real_type & GenericContainer::get_real_at( unsigned const i, unsigned const j )
   {
     if ( m_data_type == GC_type::NOTYPE )
-      set_mat_real( i, j );
+      set_mat_real( i + 1, j + 1 );
     else if (
       m_data_type == GC_type::VEC_BOOL || m_data_type == GC_type::VEC_INTEGER || m_data_type == GC_type::VEC_LONG ||
       m_data_type == GC_type::VEC_REAL )
@@ -2989,7 +2983,9 @@ namespace GC_namespace
   real_type const & GenericContainer::get_real_at( unsigned const i, unsigned const j, string_view const where ) const
   {
     ck( where, GC_type::MAT_REAL );
-    GC_ASSERT( i < m_data.v_r->size(), where << " get_real_at( " << i << ", " << j << " ) const, out of range" )
+    GC_ASSERT(
+      i < m_data.m_r->num_rows() && j < m_data.m_r->num_cols(),
+      where << " get_real_at( " << i << ", " << j << " ) const, out of range" )
     return ( *m_data.m_r )( i, j );
   }
 
@@ -3021,7 +3017,7 @@ namespace GC_namespace
   complex_type & GenericContainer::get_complex_at( unsigned const i, unsigned const j )
   {
     if ( m_data_type == GC_type::NOTYPE )
-      set_mat_complex( i, j );
+      set_mat_complex( i + 1, j + 1 );
     else if (
       m_data_type == GC_type::VEC_BOOL || m_data_type == GC_type::VEC_INTEGER || m_data_type == GC_type::VEC_LONG ||
       m_data_type == GC_type::VEC_REAL || m_data_type == GC_type::VEC_COMPLEX || m_data_type == GC_type::MAT_REAL )
@@ -3037,6 +3033,9 @@ namespace GC_namespace
     const
   {
     ck( where, GC_type::MAT_COMPLEX );
+    GC_ASSERT(
+      i < m_data.m_c->num_rows() && j < m_data.m_c->num_cols(),
+      where << " get_complex_at( " << i << ", " << j << " ) const, out of range" )
     return ( *m_data.m_c )( i, j );
   }
 
@@ -3169,13 +3168,14 @@ namespace GC_namespace
 
   GenericContainer & GenericContainer::operator()( string_view s, string_view const where )
   {
+    string_type const key{ s };
     GC_ASSERT(
       GC_type::MAP == m_data_type,
       where << " operator (), with string argument ``" << s
             << "''"
                "\nexpect: "
             << to_string( GC_type::MAP ) << "\nbut data stored is of type: " << to_string( m_data_type ) )
-    auto iv{ m_data.m->find( s.data() ) };
+    auto iv{ m_data.m->find( key ) };
     if ( iv == m_data.m->end() )
     {
       GC_DO_ERROR( where << " operator(): Cannot find key '" << s << "'!\npossibile keys: " << get_keys() )
@@ -3185,13 +3185,14 @@ namespace GC_namespace
 
   GenericContainer const & GenericContainer::operator()( string_view s, string_view const where ) const
   {
+    string_type const key{ s };
     GC_ASSERT(
       GC_type::MAP == m_data_type,
       where << "\noperator() const, with string argument ``" << s
             << "''"
                "\nexpect: "
             << to_string( GC_type::MAP ) << "\nbut data stored is of type: " << to_string( m_data_type ) )
-    auto iv{ m_data.m->find( s.data() ) };
+    auto iv{ m_data.m->find( key ) };
     if ( iv == m_data.m->end() )
     {
       GC_DO_ERROR( where << "\noperator() const: Cannot find key '" << s << "'!\npossibile keys: " << get_keys() )
@@ -3245,11 +3246,12 @@ namespace GC_namespace
   GenericContainer & GenericContainer::operator[]( string_view const s )
   {
     if ( ck( GC_type::MAP ) != 0 ) set_map();  // if not data present allocate!
-    return ( *m_data.m )[s.data()];
+    return ( *m_data.m )[string_type( s )];
   }
 
   GenericContainer const & GenericContainer::operator[]( string_view const s ) const
   {
+    string_type const key{ s };
     GC_ASSERT(
       GC_type::MAP == m_data_type,
       "operator [] string argument ``" << s
@@ -3257,7 +3259,12 @@ namespace GC_namespace
                                           "\nexpect: "
                                        << to_string( GC_type::MAP )
                                        << "\nbut data stored is of type: " << to_string( m_data_type ) )
-    return ( *m_data.m )[s.data()];
+    auto const iv{ m_data.m->find( key ) };
+    if ( iv == m_data.m->end() )
+    {
+      GC_DO_ERROR( "operator [] const: Cannot find key '" << s << "'!\npossible keys: " << get_keys() )
+    }
+    return iv->second;
   }
 
   /*
@@ -3737,7 +3744,7 @@ namespace GC_namespace
 
   void GenericContainer::exception( string_view const where )
   {
-    throw std::runtime_error( where.data() );
+    throw std::runtime_error( string_type( where ) );
   }
 
   // instantate classes
