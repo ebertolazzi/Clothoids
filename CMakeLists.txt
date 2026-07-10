@@ -43,11 +43,21 @@ endif()
 include( "${HOME}/CMakeLists-cflags.txt" )
 include( "${HOME}/CMakeLists-utilities.txt" )
 
+set(CMAKE_CXX_STANDARD 20)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+set(CMAKE_CXX_EXTENSIONS OFF)
+string(REPLACE "-std=c++17" "-std=c++20" CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS}")
+string(REPLACE "-std=gnu++17" "-std=gnu++20" CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS}")
+string(REPLACE "/std:c++17" "/std:c++20" CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE}")
+string(REPLACE "/std:c++17" "/std:c++20" CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG}")
+
 if( CMAKE_CXX_COMPILER_ID MATCHES "Clang|AppleClang" )
   add_compile_options( "$<$<COMPILE_LANGUAGE:C,CXX>:-Wno-poison-system-directories>" )
   add_compile_options( "$<$<COMPILE_LANGUAGE:C,CXX>:-Wno-switch-default>" )
   add_compile_options( "$<$<COMPILE_LANGUAGE:C,CXX>:-Wno-exit-time-destructors>" )
 endif()
+
+add_compile_definitions(FMT_HEADER_ONLY)
 
 # Evaluating the suffix to append to target built by this CMake file
 utils_artifacts_suffix(ARTIFACTS_STATIC_SUFFIX TRUE)
@@ -119,6 +129,9 @@ endforeach(F ${S})
 
 # extra include directory for compilation
 include_directories( ./lib3rd/include )
+if ( EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/../quarticRootsFlocke/src/PolynomialRoots-complex.hxx" )
+  include_directories( "${CMAKE_CURRENT_SOURCE_DIR}/../quarticRootsFlocke/src" )
+endif()
 
 #       _                           _                 _
 #    __| | ___ _ __   ___ _ __   __| | ___ _ __   ___(_) ___  ___

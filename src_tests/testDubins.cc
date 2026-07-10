@@ -47,7 +47,7 @@ template <typename... Args> void print_test_header( const string & title, Args..
   if constexpr ( sizeof...( args ) > 0 )
   {
     fmt::print( "\n" );
-    ( fmt::print( args ), ... );
+    ( fmt::print( "{}", args ), ... );
     fmt::print( "\n" );
   }
 }
@@ -58,7 +58,7 @@ template <typename... Args> void print_success( const string & message, Args... 
   if constexpr ( sizeof...( args ) > 0 )
   {
     fmt::print( ": " );
-    ( fmt::print( args ), ... );
+    ( fmt::print( "{}", args ), ... );
   }
   fmt::print( "\n" );
 }
@@ -69,7 +69,7 @@ template <typename... Args> void print_error( const string & message, Args... ar
   if constexpr ( sizeof...( args ) > 0 )
   {
     fmt::print( ": " );
-    ( fmt::print( args ), ... );
+    ( fmt::print( "{}", args ), ... );
   }
   fmt::print( "\n" );
 }
@@ -80,7 +80,7 @@ template <typename... Args> void print_warning( const string & message, Args... 
   if constexpr ( sizeof...( args ) > 0 )
   {
     fmt::print( ": " );
-    ( fmt::print( args ), ... );
+    ( fmt::print( "{}", args ), ... );
   }
   fmt::print( "\n" );
 }
@@ -91,7 +91,7 @@ template <typename... Args> void print_info( const string & message, Args... arg
   if constexpr ( sizeof...( args ) > 0 )
   {
     fmt::print( ": " );
-    ( fmt::print( args ), ... );
+    ( fmt::print( "{}", args ), ... );
   }
   fmt::print( "\n" );
 }
