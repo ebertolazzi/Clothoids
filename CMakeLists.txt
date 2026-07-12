@@ -1,18 +1,74 @@
 ############################################################################
 #                                                                          #
 #  file: CMakeLists.txt                                                    #
+#                                                                          #
+#  Clothoids -- self-contained modern CMake build.                         #
+#                                                                          #
+#  This build script configures the main Clothoids C++ library, pulls or    #
+#  reuses its project dependencies, arranges the local lib/ and lib3rd/     #
+#  development layout, builds optional tests and benchmarks, and installs   #
+#  headers and libraries in the layout expected by the historical build     #
+#  workflow.                                                               #
+#                                                                          #
 #  Copyright (C) 2016                                                      #
 #      Enrico Bertolazzi                                                   #
-#      Dipartimento di Ingegneria Industriale                              #
-#      Università degli Studi di Trento                                    #
+#      Department of Industrial Engineering                                #
+#      University of Trento                                                #
 #      email: enrico.bertolazzi@unitn.it                                   #
 #                                                                          #
 ############################################################################
 
 cmake_minimum_required(VERSION 3.25)
 
+# --------------------------------------------------------------------------
+# Apple FAT/universal build setup
+# --------------------------------------------------------------------------
+# On Apple platforms a single library can contain slices for several CPU
+# architectures, for example arm64 and x86_64.  This is controlled by
+# CMAKE_OSX_ARCHITECTURES.
+#
+# The variable must be set before project(), otherwise CMake may initialize
+# compilers and targets before the requested architectures are known.
+#
+# Default behavior:
+#   - ON  on Apple hosts or Apple cross-compilation targets.
+#   - OFF on Linux/Windows and other platforms, where there is no equivalent
+#     single-file universal library format.
+#
+# User overrides:
+#   -DUTILS_BUILD_FAT=OFF
+#   -DUTILS_FAT_ARCHITECTURES=arm64
+#   -DCMAKE_OSX_ARCHITECTURES=arm64\;x86_64
+set(UTILS_BUILD_FAT_DEFAULT OFF)
+if(CMAKE_HOST_APPLE OR CMAKE_SYSTEM_NAME MATCHES "Darwin|iOS|tvOS|watchOS|visionOS")
+  set(UTILS_BUILD_FAT_DEFAULT ON)
+endif()
+option(UTILS_BUILD_FAT "Build Apple universal/fat binaries when supported" ${UTILS_BUILD_FAT_DEFAULT})
+set(UTILS_FAT_ARCHITECTURES "arm64;x86_64" CACHE STRING "Apple architectures to build when UTILS_BUILD_FAT is ON")
+
+if(UTILS_BUILD_FAT AND NOT CMAKE_OSX_ARCHITECTURES)
+  set(
+    CMAKE_OSX_ARCHITECTURES
+    "${UTILS_FAT_ARCHITECTURES}"
+    CACHE STRING "Build architectures for Apple platforms"
+    FORCE
+  )
+endif()
+
 # ----------------------------------------------------------------------------
-# Estrai versione da git tag (se disponibile)
+# Project version discovery
+# ----------------------------------------------------------------------------
+# The project version is derived from the most recent Git tag when the source
+# tree is a Git checkout and the Git executable is available.  This keeps CMake
+# package metadata, install metadata, and generated archives aligned with the
+# repository tag used for a release.
+#
+# If Git is unavailable, or if the source tree is a release archive without tag
+# information, the script falls back to a neutral 0.0.0 version so configuration
+# remains deterministic and does not fail for users building from snapshots.
+#
+# Tags may be written either as "1.2.3" or "v1.2.3".  The optional leading
+# "v" is stripped before passing the version to project().
 # ----------------------------------------------------------------------------
 find_package(Git QUIET)
 if(Git_FOUND)
@@ -40,21 +96,44 @@ project(
 )
 
 # ----------------------------------------------------------------------------
-# Opzioni principali
+# Main user-facing build options
 # ----------------------------------------------------------------------------
-# Default a Release se non specificato (per generatori a singola configurazione)
+# Single-configuration generators such as Unix Makefiles and Ninja use
+# CMAKE_BUILD_TYPE.  If the user did not choose a build type explicitly, default
+# to Release so the produced local library is optimized.  Multi-configuration
+# generators, such as Visual Studio and Ninja Multi-Config, ignore this variable
+# and select the configuration at build time instead.
+# ----------------------------------------------------------------------------
 if(NOT CMAKE_BUILD_TYPE AND NOT CMAKE_CONFIGURATION_TYPES)
   set(CMAKE_BUILD_TYPE Release CACHE STRING "Build type" FORCE)
   set_property(CACHE CMAKE_BUILD_TYPE PROPERTY STRINGS "Debug" "Release" "RelWithDebInfo" "MinSizeRel")
 endif()
 
+# BUILD_SHARED_LIBS is the standard CMake switch used by add_library() when no
+# explicit STATIC or SHARED type is given.  Clothoids defaults to a static
+# library, matching the existing local-library workflow.
 option(BUILD_SHARED_LIBS "Build Clothoids as a shared library" OFF)
+
+# Tests, install rules, and benchmarks default to ON only when this source tree
+# is configured directly.  When Clothoids is pulled into another project with
+# FetchContent or add_subdirectory(), these optional targets stay disabled by
+# default to avoid surprising the parent build.
 option(BUILD_TESTING "Build the Clothoids test executables" ${PROJECT_IS_TOP_LEVEL})
 option(CLOTHOIDS_INSTALL "Generate the install target" ${PROJECT_IS_TOP_LEVEL})
 option(CLOTHOIDS_BUILD_BENCHMARKS "Build the micro-benchmarks" ${PROJECT_IS_TOP_LEVEL})
+
+# Strict warnings are useful for maintenance but are opt-in because they may be
+# too aggressive for users building with newer compilers or vendor toolchains.
 option(CLOTHOIDS_STRICT_WARNINGS "Compile with narrowing/conversion warnings" OFF)
 
-# Directory di installazione predefinita: ./lib
+# ----------------------------------------------------------------------------
+# Install prefix and directory layout
+# ----------------------------------------------------------------------------
+# The historical project layout installs into a project-local lib/ tree rather
+# than into a system prefix such as /usr/local.  When the user has not supplied
+# a custom install prefix, use <source>/lib and define GNUInstallDirs-compatible
+# subdirectories below it.
+# ----------------------------------------------------------------------------
 if(CMAKE_INSTALL_PREFIX_INITIALIZED_TO_DEFAULT)
   set(CMAKE_INSTALL_PREFIX "${CMAKE_CURRENT_SOURCE_DIR}/lib" CACHE PATH "Install prefix" FORCE)
 endif()
@@ -62,20 +141,45 @@ set(CMAKE_INSTALL_INCLUDEDIR "include" CACHE PATH "Install include directory" FO
 set(CMAKE_INSTALL_LIBDIR "lib" CACHE PATH "Install library directory" FORCE)
 set(CMAKE_INSTALL_BINDIR "bin" CACHE PATH "Install binary directory" FORCE)
 
-# Local install layout. Keep generated libraries only in lib/lib; the
-# project-root lib/ directory must not receive duplicate archives.
+# These absolute local paths are used by custom build/install helper commands.
+# They make the Rake-style local development layout explicit:
+#   - project headers are copied to lib/include;
+#   - project libraries are produced in lib/lib;
+#   - runtime executables are produced in lib/bin;
+#   - third-party headers are copied to lib3rd/include.
+#
+# Keeping libraries only in lib/lib avoids duplicate artifacts directly under
+# lib/, which was a common source of stale files in older build layouts.
 set(CLOTHOIDS_LOCAL_INCLUDE_DIR "${CMAKE_CURRENT_SOURCE_DIR}/lib/include")
 set(CLOTHOIDS_LOCAL_LIBRARY_DIR "${CMAKE_CURRENT_SOURCE_DIR}/lib/lib")
 set(CLOTHOIDS_LOCAL_RUNTIME_DIR "${CMAKE_CURRENT_SOURCE_DIR}/lib/bin")
 set(CLOTHOIDS_LOCAL_3RD_INCLUDE_DIR "${CMAKE_CURRENT_SOURCE_DIR}/lib3rd/include")
 
+# GNUInstallDirs defines standard installation directory variables such as
+# CMAKE_INSTALL_INCLUDEDIR, CMAKE_INSTALL_LIBDIR, and CMAKE_INSTALL_BINDIR.
+# FetchContent provides the dependency population mechanism used below.
 include(GNUInstallDirs)
 include(FetchContent)
 
 # ----------------------------------------------------------------------------
-# Helper per dipendenze: locale o FetchContent
+# Dependency helper: use a local checkout or fall back to FetchContent
+# ----------------------------------------------------------------------------
+# clothoids_use_local_or_fetch(NAME LOCAL_DIR) centralizes the dependency
+# loading policy used for GenericContainer, UtilsLite, and quarticRootsFlocke.
+#
+# Resolution order:
+#   1. If LOCAL_DIR contains a CMakeLists.txt, use it as a local checkout.
+#   2. Otherwise, use the FetchContent declaration already registered by the
+#      caller and let CMake download/populate the dependency.
+#
+# The helper also suppresses dependency install rules while a dependency is
+# included as part of this super-build.  This prevents nested projects from
+# installing their own files when only the Clothoids install target should
+# control the final layout.
 # ----------------------------------------------------------------------------
 function(clothoids_use_local_or_fetch NAME LOCAL_DIR)
+  # Normalize the user-supplied or default local path so existence checks and
+  # diagnostic messages do not depend on the current working directory.
   get_filename_component(
     _local_abs
     "${LOCAL_DIR}"
@@ -83,6 +187,8 @@ function(clothoids_use_local_or_fetch NAME LOCAL_DIR)
     BASE_DIR "${CMAKE_CURRENT_SOURCE_DIR}"
   )
 
+  # FetchContent override variables are conventionally upper-case, while the
+  # generated _deps build directories use lower-case names.
   string(TOUPPER "${NAME}" _name_upper)
   string(TOLOWER "${NAME}" _name_lower)
 
@@ -92,6 +198,9 @@ function(clothoids_use_local_or_fetch NAME LOCAL_DIR)
     set(_fetchcontent_base_dir "${CMAKE_BINARY_DIR}/_deps")
   endif()
 
+  # Dependencies included through FetchContent may create their own install
+  # targets.  Temporarily skip those rules while the dependency is made
+  # available; Clothoids owns the final install layout.
   set(_dependency_install_stub "${_fetchcontent_base_dir}/${_name_lower}-build/cmake_install.cmake")
   set(_saved_skip_install_rules "${CMAKE_SKIP_INSTALL_RULES}")
   set(CMAKE_SKIP_INSTALL_RULES ON)
@@ -111,6 +220,9 @@ function(clothoids_use_local_or_fetch NAME LOCAL_DIR)
     endif()
   endif()
 
+  # Some dependency projects or generated install steps expect a
+  # cmake_install.cmake file in their build directory.  Write a harmless stub
+  # when install rules have been suppressed, keeping the super-build robust.
   file(MAKE_DIRECTORY "${_fetchcontent_base_dir}/${_name_lower}-build")
   if(NOT EXISTS "${_dependency_install_stub}")
     file(WRITE "${_dependency_install_stub}" "# Install disabled for dependency ${NAME} inside Clothoids.\n")
@@ -120,14 +232,24 @@ function(clothoids_use_local_or_fetch NAME LOCAL_DIR)
 endfunction()
 
 # ----------------------------------------------------------------------------
-# Percorsi locali per checkout dei dipendenti (override via cache)
+# Local dependency checkout paths
+# ----------------------------------------------------------------------------
+# These cache variables allow a developer to keep sibling repositories next to
+# Clothoids and reuse them without network access.  Each value can be overridden
+# from the command line with -D<VAR>=<path>.  If the path is absent or invalid,
+# the corresponding FetchContent declaration below is used instead.
 # ----------------------------------------------------------------------------
 set(CLOTHOIDS_GC_LOCAL_DIR "${CMAKE_CURRENT_SOURCE_DIR}/../GC" CACHE PATH "Local GenericContainer checkout")
 set(CLOTHOIDS_UTILSLITE_LOCAL_DIR "${CMAKE_CURRENT_SOURCE_DIR}/../UtilsLite" CACHE PATH "Local UtilsLite checkout")
 set(CLOTHOIDS_QUARTIC_ROOTS_LOCAL_DIR "${CMAKE_CURRENT_SOURCE_DIR}/../quarticRootsFlocke" CACHE PATH "Local quarticRootsFlocke checkout")
 
 # ----------------------------------------------------------------------------
-# 1. GenericContainer
+# Dependency 1: GenericContainer
+# ----------------------------------------------------------------------------
+# GenericContainer provides heterogeneous container types and YAML/JSON/TOML/Lua
+# bridge targets used by higher-level examples and serialization paths.  Its
+# install rules and examples are disabled here because Clothoids is the outer
+# project controlling the build tree and install tree.
 # ----------------------------------------------------------------------------
 set(GENERIC_CONTAINER_INSTALL OFF CACHE BOOL "Disable GenericContainer install rules inside Clothoids" FORCE)
 set(GENERIC_CONTAINER_BUILD_EXAMPLES OFF CACHE BOOL "Disable GenericContainer examples inside Clothoids" FORCE)
@@ -140,7 +262,12 @@ FetchContent_Declare(
 )
 clothoids_use_local_or_fetch(GenericContainer "${CLOTHOIDS_GC_LOCAL_DIR}")
 
-# Patch per Clang: forzare -stdlib=libc++ se necessario (come in Splines)
+# Clang compatibility adjustment.
+# Some dependency targets may not propagate the standard C++ library choice in
+# the same way as the top-level target.  When using Clang, explicitly propagate
+# libc++ to the GenericContainer targets that Clothoids may link against.  The
+# code distinguishes INTERFACE targets from compiled targets because CMake uses
+# different visibility keywords for those cases.
 if(CMAKE_CXX_COMPILER_ID MATCHES "Clang")
   foreach(_gc_target GenericContainer GenericContainerYaml)
     if(TARGET ${_gc_target})
@@ -159,7 +286,11 @@ endif()
 # GenericContainer install/examples are disabled before FetchContent_MakeAvailable.
 
 # ----------------------------------------------------------------------------
-# 2. UtilsLite
+# Dependency 2: UtilsLite
+# ----------------------------------------------------------------------------
+# UtilsLite contains common utility headers and implementation code shared by
+# this project family.  Tests and local install rules are disabled because they
+# are not needed when UtilsLite is embedded as a dependency of Clothoids.
 # ----------------------------------------------------------------------------
 set(UTILS_INSTALL_LOCAL OFF CACHE BOOL "Disable UtilsLite install rules inside Clothoids" FORCE)
 set(UTILS_ENABLE_TESTS OFF CACHE BOOL "Disable UtilsLite test suite" FORCE)
@@ -172,7 +303,10 @@ FetchContent_Declare(
 )
 clothoids_use_local_or_fetch(UtilsLite "${CLOTHOIDS_UTILSLITE_LOCAL_DIR}")
 
-# Tratta gli header di UtilsLite come SYSTEM per evitare warning
+# Treat UtilsLite include directories as SYSTEM include directories.
+# This prevents third-party or dependency warnings from being reported as if
+# they were warnings in Clothoids itself, especially when strict warning flags
+# are enabled on the top-level target.
 foreach(_utils_tgt utils_UtilsLite_Static utils_UtilsLite)
   if(TARGET ${_utils_tgt})
     get_target_property(_utils_inc ${_utils_tgt} INTERFACE_INCLUDE_DIRECTORIES)
@@ -186,7 +320,11 @@ foreach(_utils_tgt utils_UtilsLite_Static utils_UtilsLite)
 endforeach()
 
 # ----------------------------------------------------------------------------
-# 3. quarticRootsFlocke
+# Dependency 3: quarticRootsFlocke
+# ----------------------------------------------------------------------------
+# quarticRootsFlocke supplies polynomial root solvers used internally by the
+# geometric algorithms.  It is declared through FetchContent but may be resolved
+# to a local sibling checkout by clothoids_use_local_or_fetch().
 # ----------------------------------------------------------------------------
 FetchContent_Declare(
   quarticRootsFlocke
@@ -196,13 +334,20 @@ FetchContent_Declare(
 )
 clothoids_use_local_or_fetch(quarticRootsFlocke "${CLOTHOIDS_QUARTIC_ROOTS_LOCAL_DIR}")
 
-# Raccogli i target delle dipendenze
+# Canonical dependency target names used by the Clothoids target.
+# These variables keep the final target_link_libraries() call compact and make
+# the expected imported or embedded target names explicit in one place.
 set(ROOTS utils_quarticRootsFlocke_Static)
 set(UTILS utils::UtilsLite_Static)
 set(GC GenericContainer::Yaml)
 
 # ----------------------------------------------------------------------------
-# Funzione per impostare le directory di output per un target
+# Output directory helper for project targets
+# ----------------------------------------------------------------------------
+# This helper forces a target's archives, shared libraries, and runtime
+# executables into the local project layout.  It is used for the Clothoids target
+# so generated artifacts end up in lib/lib and bin rather than in generator-
+# specific directories inside the build tree.
 # ----------------------------------------------------------------------------
 function(clothoids_set_target_output_dirs TARGET_NAME LIB_DIR)
   set_target_properties(${TARGET_NAME} PROPERTIES
@@ -213,7 +358,12 @@ function(clothoids_set_target_output_dirs TARGET_NAME LIB_DIR)
 endfunction()
 
 # ----------------------------------------------------------------------------
-# Funzione per impostare le directory di output per le dipendenze (alias)
+# Output directory helper for dependency targets
+# ----------------------------------------------------------------------------
+# Some dependencies are represented through ALIAS targets.  Since CMake
+# properties cannot be set directly on aliases, this function resolves each
+# alias to its real target before applying output-directory properties.  It
+# skips INTERFACE libraries because they do not produce binary artifacts.
 # ----------------------------------------------------------------------------
 function(clothoids_set_dependency_output_dirs LIB_DIR)
   foreach(tgt IN LISTS ARGN)
@@ -235,18 +385,29 @@ function(clothoids_set_dependency_output_dirs LIB_DIR)
 endfunction()
 
 # ----------------------------------------------------------------------------
-# Raccolta delle fonti (come originale)
+# Source discovery
+# ----------------------------------------------------------------------------
+# Collect all .cc files below src/.  The non-recursive glob preserves the
+# original top-level behavior, while the recursive glob also captures optional
+# implementation files stored in subdirectories.  Duplicates are removed after
+# combining both lists.
+#
+# CONFIGURE_DEPENDS asks CMake to re-check the glob when the build system is
+# regenerated.  This is convenient for this repository layout, although explicit
+# source lists remain the most reproducible approach for packaged libraries.
 # ----------------------------------------------------------------------------
 set(SOURCE_DIR "${CMAKE_CURRENT_SOURCE_DIR}/src")
 file(GLOB SOURCES "${SOURCE_DIR}/*.cc")
-# Aggiungi anche eventuali sottodirectory se necessario (es. src/*/*.cc)
+# Also include implementation files in nested source directories, if present.
 file(GLOB_RECURSE SOURCES_RECURSE "${SOURCE_DIR}/*.cc")
 list(APPEND SOURCES ${SOURCES_RECURSE})
 list(REMOVE_DUPLICATES SOURCES)
 
-# Header pubblici da rendere disponibili dopo rake build.
-# Alcuni header storici del progetto sono in include/, altri in src/.
-# Li copiamo entrambi in lib/include preservando la struttura relativa.
+# Public header discovery.
+# Clothoids historically exposes headers from both include/ and src/.  Both
+# trees are therefore scanned and later copied to lib/include, preserving the
+# relative directory layout expected by downstream projects and existing local
+# build scripts.
 set(CLOTHOIDS_PROJECT_HEADER_DIRS
   "${CMAKE_CURRENT_SOURCE_DIR}/include"
   "${SOURCE_DIR}"
@@ -273,7 +434,12 @@ foreach(_header IN LISTS PUBLIC_HEADERS)
 endforeach()
 
 # ----------------------------------------------------------------------------
-# Target Clothoids
+# Main Clothoids library target
+# ----------------------------------------------------------------------------
+# The Clothoids target is the primary build artifact.  It is created from the
+# discovered implementation files plus public headers, and exported through the
+# namespaced alias Clothoids::Clothoids so downstream CMake code can link to a
+# stable target name independent of the physical library filename.
 # ----------------------------------------------------------------------------
 add_library(Clothoids ${SOURCES} ${PUBLIC_HEADERS})
 add_library(Clothoids::Clothoids ALIAS Clothoids)
@@ -283,7 +449,11 @@ clothoids_set_target_output_dirs(Clothoids lib/lib)
 target_compile_features(Clothoids PUBLIC cxx_std_20)
 target_compile_definitions(Clothoids PUBLIC FMT_HEADER_ONLY)
 
-# Include directories: pubblico per gli utenti, privato per i sorgenti
+# Include directories.
+# BUILD_INTERFACE paths are used while building from the source tree.  The
+# INSTALL_INTERFACE path is used by consumers after installation.  The src/
+# directory is also listed privately so internal implementation files can keep
+# their historical include style.
 target_include_directories(
   Clothoids
   PUBLIC
@@ -294,7 +464,9 @@ target_include_directories(
     "${SOURCE_DIR}"
 )
 
-# Collegamento alle dipendenze
+# Link against the resolved dependency targets.  These are PUBLIC because the
+# Clothoids headers and linked library may expose types, compile definitions, or
+# transitive usage requirements from the dependency stack.
 target_link_libraries(
   Clothoids
   PUBLIC
@@ -303,7 +475,10 @@ target_link_libraries(
     ${UTILS}
 )
 
-# Flag di compilazione
+# Compiler warnings and platform-specific compile options.
+# Baseline warnings are enabled for GCC/Clang-like compilers.  Extra narrowing
+# and conversion diagnostics are guarded by CLOTHOIDS_STRICT_WARNINGS because
+# they can be too noisy for regular development builds.
 if(CMAKE_CXX_COMPILER_ID MATCHES "Clang|AppleClang|GNU")
   target_compile_options(Clothoids PRIVATE -Wall -Wextra)
   if(CLOTHOIDS_STRICT_WARNINGS)
@@ -323,7 +498,9 @@ if(MSVC)
   target_compile_options(Clothoids PUBLIC /utf-8 /bigobj)
 endif()
 
-# Imposta versioni
+# Target metadata used by shared-library versioning and CMake export metadata.
+# VERSION/SOVERSION affect shared objects on platforms that support sonames;
+# EXPORT_NAME controls how the target appears when exported to consumers.
 set_target_properties(
   Clothoids PROPERTIES
   VERSION     ${PROJECT_VERSION}
@@ -331,7 +508,9 @@ set_target_properties(
   EXPORT_NAME Clothoids
 )
 
-# Imposta directory di output per le dipendenze (vanno in lib3rd/lib)
+# Place compiled dependency artifacts under lib3rd/lib.  This keeps project
+# artifacts and third-party artifacts separate while preserving a predictable
+# local tree for the historical build workflow.
 clothoids_set_dependency_output_dirs(lib3rd/lib
   GenericContainer
   ${UTILS}
@@ -340,11 +519,17 @@ clothoids_set_dependency_output_dirs(lib3rd/lib
 
 
 # ----------------------------------------------------------------------------
-# Copia locale degli header dopo la compilazione
+# Local header copy target
 # ----------------------------------------------------------------------------
-# Le librerie sono prodotte direttamente in lib/lib e lib3rd/lib durante il
-# build; quindi gli header devono essere copiati con la stessa semantica, senza
-# dipendere solo dal target install.
+# Libraries are produced directly in lib/lib and lib3rd/lib during the normal
+# build, so headers must be copied with the same build-time semantics.  Relying
+# only on cmake --install would leave the local development layout incomplete
+# after a regular build.
+#
+# The script generated below copies project headers to lib/include and selected
+# dependency headers to lib3rd/include.  It uses a CMake script instead of shell
+# commands to remain portable across Unix, macOS, and Windows generators.
+# ----------------------------------------------------------------------------
 set(CLOTHOIDS_HEADER_COPY_SCRIPT "${CMAKE_CURRENT_BINARY_DIR}/copy_clothoids_headers.cmake")
 file(WRITE "${CLOTHOIDS_HEADER_COPY_SCRIPT}" [=[
 function(_clothoids_copy_header_tree source_dir destination_dir label)
@@ -391,11 +576,28 @@ add_custom_target(Clothoids_copy_headers ALL
 add_dependencies(Clothoids Clothoids_copy_headers)
 
 # ----------------------------------------------------------------------------
-# Alias con suffisso di piattaforma (come in Splines e GenericContainer)
+# Platform-specific library naming and compatibility aliases
+# ----------------------------------------------------------------------------
+# The real library filename carries the platform suffix, for example:
+#   libClothoids_osx_static.a
+#   libClothoids_linux_static.a
+#
+# A generic compatibility filename is also created:
+#   libClothoids.a
+#
+# On Unix-like platforms the generic file is a symlink to the real artifact.  On
+# Windows it is copied because symlink behavior depends on user privileges and
+# filesystem settings.
+#
+# CMAKE_OSX_ARCHITECTURES is intentionally not set in this block.  Apple
+# universal/fat architectures must be selected before project(), in the FAT
+# setup block at the top of this file.
 # ----------------------------------------------------------------------------
 if(APPLE)
-  execute_process(COMMAND uname -m COMMAND tr -d '\n' OUTPUT_VARIABLE ARCHITECTURE)
-  set(CMAKE_OSX_ARCHITECTURES ${ARCHITECTURE})
+  # The platform suffix names the produced artifact.  Do not set
+  # CMAKE_OSX_ARCHITECTURES here: Apple universal/fat architectures must be
+  # selected before project(), otherwise CMake may have already initialized the
+  # compiler and target defaults.
   set(CLOTHOIDS_PLATFORM_SUFFIX osx)
 elseif(WIN32)
   if(MINGW)
@@ -416,6 +618,9 @@ else()
 endif()
 
 function(clothoids_set_platform_output_name TARGET_NAME BASE_NAME)
+  # Compute the real artifact name.  The suffix records both platform and, for
+  # static builds, the static-library kind.  This matches the naming convention
+  # used by the related Splines, GenericContainer, and UtilsLite projects.
   if(BUILD_SHARED_LIBS)
     set(_output_name "${BASE_NAME}_${CLOTHOIDS_PLATFORM_SUFFIX}")
   else()
@@ -432,6 +637,9 @@ function(clothoids_set_platform_output_name TARGET_NAME BASE_NAME)
 endfunction()
 
 function(clothoids_add_generic_library_symlink TARGET_NAME BASE_NAME)
+  # Create the compatibility filename expected by legacy consumers.  The real
+  # artifact keeps the explicit platform suffix; the generic filename points to
+  # or copies that artifact after each build.
   if(BUILD_SHARED_LIBS)
     set(REAL_FILENAME "${CMAKE_SHARED_LIBRARY_PREFIX}${BASE_NAME}_${CLOTHOIDS_PLATFORM_SUFFIX}${CMAKE_SHARED_LIBRARY_SUFFIX}")
     set(LINK_FILENAME "${CMAKE_SHARED_LIBRARY_PREFIX}${BASE_NAME}${CMAKE_SHARED_LIBRARY_SUFFIX}")
@@ -472,6 +680,9 @@ function(clothoids_add_generic_library_symlink TARGET_NAME BASE_NAME)
   endif()
 endfunction()
 
+# Precompute the real and generic filenames used by both build-time aliasing and
+# install-time cleanup/symlink generation.  Keeping the names in variables avoids
+# repeating platform-specific filename logic in install(CODE).
 if(BUILD_SHARED_LIBS)
   set(CLOTHOIDS_REAL_LIBRARY_FILENAME "${CMAKE_SHARED_LIBRARY_PREFIX}Clothoids_${CLOTHOIDS_PLATFORM_SUFFIX}${CMAKE_SHARED_LIBRARY_SUFFIX}")
   set(CLOTHOIDS_GENERIC_LIBRARY_FILENAME "${CMAKE_SHARED_LIBRARY_PREFIX}Clothoids${CMAKE_SHARED_LIBRARY_SUFFIX}")
@@ -485,7 +696,12 @@ clothoids_set_platform_output_name(Clothoids Clothoids)
 clothoids_add_generic_library_symlink(Clothoids Clothoids)
 
 # ----------------------------------------------------------------------------
-# Test
+# Tests
+# ----------------------------------------------------------------------------
+# When BUILD_TESTING is enabled and this is the top-level project, every
+# src_tests/test*.cc file becomes an executable linked against Clothoids.  The
+# executables are emitted into bin/ and registered with CTest so they can be run
+# through ctest or through the generated all-tests convenience target.
 # ----------------------------------------------------------------------------
 include(CTest)
 if(BUILD_TESTING AND PROJECT_IS_TOP_LEVEL)
@@ -508,17 +724,26 @@ if(BUILD_TESTING AND PROJECT_IS_TOP_LEVEL)
 endif()
 
 # ----------------------------------------------------------------------------
-# Benchmarks (opzionali)
+# Optional benchmarks
+# ----------------------------------------------------------------------------
+# This block is intentionally empty unless benchmark sources are added later.
+# Keeping the option and block in place gives the project a stable extension
+# point without affecting regular library or test builds.
 # ----------------------------------------------------------------------------
 if(CLOTHOIDS_BUILD_BENCHMARKS AND PROJECT_IS_TOP_LEVEL)
-  # Aggiungi qui i target per i benchmark se presenti, ad esempio:
+  # Add benchmark targets here if benchmark sources are introduced later, for example:
   # add_executable(bench_clothoids "${CMAKE_CURRENT_SOURCE_DIR}/benchmarks/bench.cc")
   # target_link_libraries(bench_clothoids PRIVATE Clothoids::Clothoids)
   # set_target_properties(...)
 endif()
 
 # ----------------------------------------------------------------------------
-# Installazione
+# Install rules
+# ----------------------------------------------------------------------------
+# Install the library target, project headers, and the generated header-copy
+# script output.  The install-time symlink logic mirrors the build-time
+# compatibility alias so both regular builds and cmake --install leave the
+# project-local lib/lib directory in the same usable state.
 # ----------------------------------------------------------------------------
 if(CLOTHOIDS_INSTALL)
   install(
@@ -550,7 +775,8 @@ if(CLOTHOIDS_INSTALL)
     )\n
     file(REMOVE_RECURSE \"${CMAKE_CURRENT_SOURCE_DIR}/lib/Users\")"
   )
-  # Copia header del progetto in lib/include anche durante cmake --install.
+  # Copy project headers during cmake --install as well.  This duplicates the
+  # build-time header-copy behavior for users who rely exclusively on install.
   foreach(_header_dir IN LISTS CLOTHOIDS_PROJECT_HEADER_DIRS)
     if(EXISTS "${_header_dir}")
       install(
@@ -565,11 +791,13 @@ if(CLOTHOIDS_INSTALL)
     endif()
   endforeach()
 
-  # Ripeti la copia esplicita anche durante cmake --install.
-  # Uso install(SCRIPT) per evitare problemi di quoting in install(CODE).
+  # Reuse the generated copy script during installation.  install(SCRIPT) avoids
+  # fragile quoting in large install(CODE) strings and keeps the copy logic in a
+  # single generated file.
   install(SCRIPT "${CLOTHOIDS_HEADER_COPY_SCRIPT}")
 
-  # CPack (opzionale)
+  # Optional CPack configuration for source and binary archives generated from
+  # the same project metadata used by project() and install().
   set(CPACK_PACKAGE_NAME "${PROJECT_NAME}")
   set(CPACK_PACKAGE_VERSION "${PROJECT_VERSION}")
   set(CPACK_PACKAGE_DESCRIPTION_SUMMARY "${PROJECT_DESCRIPTION}")
@@ -580,7 +808,12 @@ if(CLOTHOIDS_INSTALL)
 endif()
 
 # ----------------------------------------------------------------------------
-# Riepilogo
+# Configuration summary
+# ----------------------------------------------------------------------------
+# Print the dependency resolution summary at the end of configuration.  These
+# messages make it immediately visible whether each dependency came from a local
+# checkout or from FetchContent, which is useful when debugging reproducibility
+# and offline builds.
 # ----------------------------------------------------------------------------
 message(STATUS "")
 message(STATUS "Clothoids dependency summary:")
