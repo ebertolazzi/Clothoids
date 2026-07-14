@@ -32,7 +32,7 @@ project(
 )
 
 # Pulisce la directory (cross-platform)
-# file(REMOVE_RECURSE ${CMAKE_SOURCE_DIR}/lib3rd/PIPAL)
+# file(REMOVE_RECURSE ${PROJECT_SOURCE_DIR}/lib3rd/PIPAL)
 
 if (APPLE)
   #set( CMAKE_OSX_DEPLOYMENT_TARGET "13.3" )
