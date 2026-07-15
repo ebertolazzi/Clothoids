@@ -4,12 +4,6 @@
 #                                                                          #
 #  Clothoids -- self-contained modern CMake build.                         #
 #                                                                          #
-#  This build script configures the main Clothoids C++ library, pulls or    #
-#  reuses its project dependencies, arranges the local lib/ and lib3rd/     #
-#  development layout, builds optional tests and benchmarks, and installs   #
-#  headers and libraries in the layout expected by the historical build     #
-#  workflow.                                                               #
-#                                                                          #
 #  Copyright (C) 2016                                                      #
 #      Enrico Bertolazzi                                                   #
 #      Department of Industrial Engineering                                #
