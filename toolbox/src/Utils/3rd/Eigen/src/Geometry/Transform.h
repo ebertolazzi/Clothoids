@@ -8,6 +8,7 @@
 // This Source Code Form is subject to the terms of the Mozilla
 // Public License v. 2.0. If a copy of the MPL was not distributed
 // with this file, You can obtain one at http://mozilla.org/MPL/2.0/.
+// SPDX-License-Identifier: MPL-2.0
 
 #ifndef EIGEN_TRANSFORM_H
 #define EIGEN_TRANSFORM_H
@@ -116,8 +117,8 @@ struct transform_make_affine;
  * its principle consists to first convert the right/left hand sides of the product
  * to a compatible (Dim+1)^2 matrix and then perform a pure matrix product.
  * Of course, internally, operator* tries to perform the minimal number of operations
- * according to the nature of each terms. Likewise, when applying the transform
- * to points, the latters are automatically promoted to homogeneous vectors
+ * according to the nature of each term. Likewise, when applying the transform
+ * to points, the latter are automatically promoted to homogeneous vectors
  * before doing the matrix product. The conventions to homogeneous representations
  * are performed as follow:
  *
@@ -198,7 +199,7 @@ class Transform {
     Options = Options_,
     Dim = Dim_,       ///< space dimension in which the transformation holds
     HDim = Dim_ + 1,  ///< size of a respective homogeneous vector
-    Rows = int(Mode) == (AffineCompact) ? Dim : HDim
+    Rows = int(Mode) == int(AffineCompact) ? Dim : HDim
   };
   /** the scalar type of the coefficients */
   typedef Scalar_ Scalar;
@@ -248,6 +249,11 @@ class Transform {
         m_matrix);
   }
 
+  // These conversion ctors are intentionally `explicit`: keeping copy-init
+  // (`Transform t = rot;`) from compiling stops a Dim+1 x Dim+1 matrix
+  // from being silently materialized in function-call argument lists.
+  // Use direct-init (`Transform t(rot);`) or assignment (`Transform t; t = rot;`)
+  // instead. See bug #1209.
   EIGEN_DEVICE_FUNC inline explicit Transform(const TranslationType& t) {
     check_template_params();
     *this = t;
@@ -268,7 +274,7 @@ class Transform {
   template <typename OtherDerived>
   EIGEN_DEVICE_FUNC inline explicit Transform(const EigenBase<OtherDerived>& other) {
     EIGEN_STATIC_ASSERT(
-        (internal::is_same<Scalar, typename OtherDerived::Scalar>::value),
+        (std::is_same<Scalar, typename OtherDerived::Scalar>::value),
         YOU_MIXED_DIFFERENT_NUMERIC_TYPES__YOU_NEED_TO_USE_THE_CAST_METHOD_OF_MATRIXBASE_TO_CAST_NUMERIC_TYPES_EXPLICITLY);
 
     check_template_params();
@@ -279,7 +285,7 @@ class Transform {
   template <typename OtherDerived>
   EIGEN_DEVICE_FUNC inline Transform& operator=(const EigenBase<OtherDerived>& other) {
     EIGEN_STATIC_ASSERT(
-        (internal::is_same<Scalar, typename OtherDerived::Scalar>::value),
+        (std::is_same<Scalar, typename OtherDerived::Scalar>::value),
         YOU_MIXED_DIFFERENT_NUMERIC_TYPES__YOU_NEED_TO_USE_THE_CAST_METHOD_OF_MATRIXBASE_TO_CAST_NUMERIC_TYPES_EXPLICITLY);
 
     internal::transform_construct_from_matrix<OtherDerived, Mode, Options, Dim, HDim>::run(this, other.derived());
@@ -364,6 +370,15 @@ class Transform {
   /** shortcut for m_matrix(row,col);
    * \sa MatrixBase::operator(Index,Index) */
   EIGEN_DEVICE_FUNC inline Scalar& operator()(Index row, Index col) { return m_matrix(row, col); }
+
+#ifdef EIGEN_MULTIDIMENSIONAL_SUBSCRIPT
+  /** shortcut for m_matrix(row,col);
+   * \sa MatrixBase::operator(Index,Index) const */
+  EIGEN_DEVICE_FUNC inline Scalar operator[](Index row, Index col) const { return m_matrix[row, col]; }
+  /** shortcut for m_matrix(row,col);
+   * \sa MatrixBase::operator(Index,Index) */
+  EIGEN_DEVICE_FUNC inline Scalar& operator[](Index row, Index col) { return m_matrix[row, col]; }
+#endif
 
   /** \returns a read-only expression of the transformation matrix */
   EIGEN_DEVICE_FUNC inline const MatrixType& matrix() const { return m_matrix; }
@@ -736,7 +751,7 @@ Transform<Scalar, Dim, Mode, Options>& Transform<Scalar, Dim, Mode, Options>::op
 
 /** \returns a QMatrix from \c *this assuming the dimension is 2.
  *
- * \warning this conversion might loss data if \c *this is not affine
+ * \warning this conversion might lose data if \c *this is not affine
  *
  * This function is available only if the token EIGEN_QT_SUPPORT is defined.
  */
@@ -806,7 +821,7 @@ EIGEN_DEVICE_FUNC Transform<Scalar, Dim, Mode, Options>& Transform<Scalar, Dim, 
     const MatrixBase<OtherDerived>& other) {
   EIGEN_STATIC_ASSERT_VECTOR_SPECIFIC_SIZE(OtherDerived, int(Dim))
   EIGEN_STATIC_ASSERT(Mode != int(Isometry), THIS_METHOD_IS_ONLY_FOR_SPECIFIC_TRANSFORMATIONS)
-  linearExt().noalias() = (linearExt() * other.asDiagonal());
+  linearExt().noalias() = linearExt() * other.asDiagonal();
   return *this;
 }
 
@@ -832,7 +847,7 @@ EIGEN_DEVICE_FUNC Transform<Scalar, Dim, Mode, Options>& Transform<Scalar, Dim, 
     const MatrixBase<OtherDerived>& other) {
   EIGEN_STATIC_ASSERT_VECTOR_SPECIFIC_SIZE(OtherDerived, int(Dim))
   EIGEN_STATIC_ASSERT(Mode != int(Isometry), THIS_METHOD_IS_ONLY_FOR_SPECIFIC_TRANSFORMATIONS)
-  affine().noalias() = (other.asDiagonal() * affine());
+  affine().noalias() = other.asDiagonal() * affine();
   return *this;
 }
 
@@ -1414,7 +1429,7 @@ struct transform_left_product_impl<Other, Mode, Options, Dim, HDim, Dim, Dim> {
   typedef TransformType ResultType;
   static EIGEN_DEVICE_FUNC ResultType run(const Other& other, const TransformType& tr) {
     TransformType res;
-    if (Mode != int(AffineCompact)) res.matrix().row(Dim) = tr.matrix().row(Dim);
+    EIGEN_IF_CONSTEXPR (Mode != int(AffineCompact)) res.matrix().row(Dim) = tr.matrix().row(Dim);
     res.matrix().template topRows<Dim>().noalias() = other * tr.matrix().template topRows<Dim>();
     return res;
   }

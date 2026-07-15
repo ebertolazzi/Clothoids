@@ -6,6 +6,7 @@
 // This Source Code Form is subject to the terms of the Mozilla
 // Public License v. 2.0. If a copy of the MPL was not distributed
 // with this file, You can obtain one at http://mozilla.org/MPL/2.0/.
+// SPDX-License-Identifier: MPL-2.0
 
 #ifndef EIGEN_CORE_THREAD_POOL_DEVICE_H
 #define EIGEN_CORE_THREAD_POOL_DEVICE_H
@@ -273,7 +274,7 @@ struct dense_assignment_loop_with_device<Kernel, CoreThreadPoolDevice, SliceVect
     device.template parallelFor<PacketAssignmentFunctor, PacketSize>(0, outerSize, 0, packetAccessSize, packetFunctor,
                                                                      packetCost);
     device.template parallelFor<ScalarAssignmentFunctor, 1>(0, outerSize, scalarFunctor, scalarCost);
-  };
+  }
 };
 
 template <typename Kernel>

@@ -6,6 +6,7 @@
 // This Source Code Form is subject to the terms of the Mozilla
 // Public License v. 2.0. If a copy of the MPL was not distributed
 // with this file, You can obtain one at http://mozilla.org/MPL/2.0/.
+// SPDX-License-Identifier: MPL-2.0
 
 #ifndef EIGEN_ARRAYBASE_H
 #define EIGEN_ARRAYBASE_H
@@ -168,18 +169,15 @@ class ArrayBase : public DenseBase<Derived> {
   }
 
  public:
-  EIGEN_DEVICE_FUNC ArrayBase<Derived>& array() { return *this; }
-  EIGEN_DEVICE_FUNC const ArrayBase<Derived>& array() const { return *this; }
+  EIGEN_DEVICE_FUNC constexpr ArrayBase<Derived>& array() { return *this; }
+  EIGEN_DEVICE_FUNC constexpr const ArrayBase<Derived>& array() const { return *this; }
 
   /** \returns an \link Eigen::MatrixBase Matrix \endlink expression of this array
    * \sa MatrixBase::array() */
-  EIGEN_DEVICE_FUNC MatrixWrapper<Derived> matrix() { return MatrixWrapper<Derived>(derived()); }
-  EIGEN_DEVICE_FUNC const MatrixWrapper<const Derived> matrix() const {
+  EIGEN_DEVICE_FUNC constexpr MatrixWrapper<Derived> matrix() { return MatrixWrapper<Derived>(derived()); }
+  EIGEN_DEVICE_FUNC constexpr const MatrixWrapper<const Derived> matrix() const {
     return MatrixWrapper<const Derived>(derived());
   }
-
-  //     template<typename Dest>
-  //     inline void evalTo(Dest& dst) const { dst = matrix(); }
 
  protected:
   EIGEN_DEFAULT_COPY_CONSTRUCTOR(ArrayBase)

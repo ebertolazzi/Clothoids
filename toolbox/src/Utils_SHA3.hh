@@ -411,4 +411,7 @@ namespace Utils
   };
 }  // namespace Utils
 
+#undef ROT_L
+#undef ROUNDS
+
 #endif

@@ -65,7 +65,7 @@ namespace G2lib
         real_type const * y =
           Utils::mex_vector_pointer( arg_in_1, ny, "XY_to_angle: argument `y` expected to be a real scalar/vector" );
 
-        UTILS_MEX_ASSERT( nx == ny, "XY_to_angle( x, y ), size(x) [{}] != size(y) [{}]\n", nx, ny );
+        Utils::mex_assert( nx == ny, "XY_to_angle( x, y ), size(x) [{}] != size(y) [{}]\n", nx, ny );
 
         real_type * theta     = Utils::mex_create_matrix_value( arg_out_0, 1, nx );
         real_type * theta_min = Utils::mex_create_matrix_value( arg_out_1, 1, nx );
@@ -76,7 +76,7 @@ namespace G2lib
       }
       else
       {
-        UTILS_MEX_ASSERT0( false, "XY_to_angle: expected 2 arguments" );
+        Utils::mex_assert( false, "XY_to_angle: expected 2 arguments" );
       }
     }
     catch ( std::exception const & e )

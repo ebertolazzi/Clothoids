@@ -6,6 +6,7 @@
 // This Source Code Form is subject to the terms of the Mozilla
 // Public License v. 2.0. If a copy of the MPL was not distributed
 // with this file, You can obtain one at http://mozilla.org/MPL/2.0/.
+// SPDX-License-Identifier: MPL-2.0
 
 #ifndef EIGEN_BASIC_PRECONDITIONERS_H
 #define EIGEN_BASIC_PRECONDITIONERS_H
@@ -16,7 +17,7 @@
 namespace Eigen {
 
 /** \ingroup IterativeLinearSolvers_Module
-  * \brief A preconditioner based on the digonal entries
+  * \brief A preconditioner based on the diagonal entries
   *
   * This class allows to approximately solve for A.x = b problems assuming A is a diagonal matrix.
   * In other words, this preconditioner neglects all off diagonal entries and, in Eigen's language, solves for:
@@ -44,7 +45,7 @@ class DiagonalPreconditioner {
   typedef typename Vector::StorageIndex StorageIndex;
   enum { ColsAtCompileTime = Dynamic, MaxColsAtCompileTime = Dynamic };
 
-  DiagonalPreconditioner() : m_isInitialized(false) {}
+  DiagonalPreconditioner() = default;
 
   template <typename MatType>
   explicit DiagonalPreconditioner(const MatType& mat) : m_invdiag(mat.cols()) {
@@ -62,7 +63,7 @@ class DiagonalPreconditioner {
   template <typename MatType>
   DiagonalPreconditioner& factorize(const MatType& mat) {
     m_invdiag.resize(mat.cols());
-    for (int j = 0; j < mat.outerSize(); ++j) {
+    for (Index j = 0; j < mat.outerSize(); ++j) {
       typename MatType::InnerIterator it(mat, j);
       while (it && it.index() != j) ++it;
       if (it && it.index() == j && it.value() != Scalar(0))
@@ -86,18 +87,18 @@ class DiagonalPreconditioner {
   }
 
   template <typename Rhs>
-  inline const Solve<DiagonalPreconditioner, Rhs> solve(const MatrixBase<Rhs>& b) const {
+  inline Solve<DiagonalPreconditioner, Rhs> solve(const MatrixBase<Rhs>& b) const {
     eigen_assert(m_isInitialized && "DiagonalPreconditioner is not initialized.");
     eigen_assert(m_invdiag.size() == b.rows() &&
                  "DiagonalPreconditioner::solve(): invalid number of rows of the right hand side matrix b");
     return Solve<DiagonalPreconditioner, Rhs>(*this, b.derived());
   }
 
-  ComputationInfo info() { return Success; }
+  ComputationInfo info() const { return Success; }
 
  protected:
   Vector m_invdiag;
-  bool m_isInitialized;
+  bool m_isInitialized = false;
 };
 
 /** \ingroup IterativeLinearSolvers_Module
@@ -125,7 +126,7 @@ class LeastSquareDiagonalPreconditioner : public DiagonalPreconditioner<Scalar_>
   using Base::m_invdiag;
 
  public:
-  LeastSquareDiagonalPreconditioner() : Base() {}
+  LeastSquareDiagonalPreconditioner() = default;
 
   template <typename MatType>
   explicit LeastSquareDiagonalPreconditioner(const MatType& mat) : Base() {
@@ -141,20 +142,19 @@ class LeastSquareDiagonalPreconditioner : public DiagonalPreconditioner<Scalar_>
   LeastSquareDiagonalPreconditioner& factorize(const MatType& mat) {
     // Compute the inverse squared-norm of each column of mat
     m_invdiag.resize(mat.cols());
-    if (MatType::IsRowMajor) {
+    EIGEN_IF_CONSTEXPR (MatType::IsRowMajor) {
       m_invdiag.setZero();
       for (Index j = 0; j < mat.outerSize(); ++j) {
         for (typename MatType::InnerIterator it(mat, j); it; ++it) m_invdiag(it.index()) += numext::abs2(it.value());
       }
-      for (Index j = 0; j < mat.cols(); ++j)
-        if (numext::real(m_invdiag(j)) > RealScalar(0)) m_invdiag(j) = RealScalar(1) / numext::real(m_invdiag(j));
+      for (Index j = 0; j < mat.cols(); ++j) {
+        RealScalar sum = numext::real(m_invdiag(j));
+        m_invdiag(j) = sum > RealScalar(0) ? RealScalar(1) / sum : RealScalar(1);
+      }
     } else {
       for (Index j = 0; j < mat.outerSize(); ++j) {
         RealScalar sum = mat.col(j).squaredNorm();
-        if (sum > RealScalar(0))
-          m_invdiag(j) = RealScalar(1) / sum;
-        else
-          m_invdiag(j) = RealScalar(1);
+        m_invdiag(j) = sum > RealScalar(0) ? RealScalar(1) / sum : RealScalar(1);
       }
     }
     Base::m_isInitialized = true;
@@ -166,9 +166,7 @@ class LeastSquareDiagonalPreconditioner : public DiagonalPreconditioner<Scalar_>
     return factorize(mat);
   }
 
-  ComputationInfo info() { return Success; }
-
- protected:
+  ComputationInfo info() const { return Success; }
 };
 
 /** \ingroup IterativeLinearSolvers_Module
@@ -180,7 +178,7 @@ class LeastSquareDiagonalPreconditioner : public DiagonalPreconditioner<Scalar_>
  */
 class IdentityPreconditioner {
  public:
-  IdentityPreconditioner() {}
+  IdentityPreconditioner() = default;
 
   template <typename MatrixType>
   explicit IdentityPreconditioner(const MatrixType&) {}
@@ -205,7 +203,7 @@ class IdentityPreconditioner {
     return b;
   }
 
-  ComputationInfo info() { return Success; }
+  ComputationInfo info() const { return Success; }
 };
 
 }  // end namespace Eigen

@@ -6,6 +6,7 @@
 // This Source Code Form is subject to the terms of the Mozilla
 // Public License v. 2.0. If a copy of the MPL was not distributed
 // with this file, You can obtain one at http://mozilla.org/MPL/2.0/.
+// SPDX-License-Identifier: MPL-2.0
 
 #ifndef EIGEN_COMPLEX_SSE_H
 #define EIGEN_COMPLEX_SSE_H
@@ -16,6 +17,8 @@
 namespace Eigen {
 
 namespace internal {
+
+EIGEN_GCC_FAST_MATH_COMPLEX_VECTORIZE_WORKAROUND_PUSH
 
 //---------- float ----------
 struct Packet2cf {
@@ -49,7 +52,6 @@ struct packet_traits<std::complex<float> > : default_packet_traits {
     HasMin = 0,
     HasMax = 0,
     HasSetLinear = 0,
-    HasBlend = 1
   };
 };
 #endif
@@ -245,7 +247,8 @@ struct packet_traits<std::complex<double> > : default_packet_traits {
     HasAbs2 = 0,
     HasMin = 0,
     HasMax = 0,
-    HasSetLinear = 0
+    HasSetLinear = 0,
+    HasExp = 1
   };
 };
 #endif
@@ -278,7 +281,7 @@ EIGEN_STRONG_INLINE Packet1cd pnegate(const Packet1cd& a) {
 }
 template <>
 EIGEN_STRONG_INLINE Packet1cd pconj(const Packet1cd& a) {
-  const __m128d mask = _mm_castsi128_pd(_mm_set_epi32(0x80000000, 0x0, 0x0, 0x0));
+  const __m128d mask = _mm_castsi128_pd(_mm_set_epi32(static_cast<int32_t>(0x80000000), 0x0, 0x0, 0x0));
   return Packet1cd(_mm_xor_pd(a.v, mask));
 }
 
@@ -324,7 +327,6 @@ EIGEN_STRONG_INLINE Packet1cd pandnot<Packet1cd>(const Packet1cd& a, const Packe
   return Packet1cd(_mm_andnot_pd(b.v, a.v));
 }
 
-// FIXME force unaligned load, this is a temporary fix
 template <>
 EIGEN_STRONG_INLINE Packet1cd pload<Packet1cd>(const std::complex<double>* from) {
   EIGEN_DEBUG_ALIGNED_LOAD return Packet1cd(_mm_load_pd((const double*)from));
@@ -344,7 +346,6 @@ EIGEN_STRONG_INLINE Packet1cd ploaddup<Packet1cd>(const std::complex<double>* fr
   return pset1<Packet1cd>(*from);
 }
 
-// FIXME force unaligned store, this is a temporary fix
 template <>
 EIGEN_STRONG_INLINE void pstore<std::complex<double> >(std::complex<double>* to, const Packet1cd& from) {
   EIGEN_DEBUG_ALIGNED_STORE _mm_store_pd((double*)to, from.v);
@@ -413,37 +414,8 @@ EIGEN_STRONG_INLINE Packet1cd pcmp_eq(const Packet1cd& a, const Packet1cd& b) {
   return Packet1cd(pand<Packet2d>(eq, vec2d_swizzle1(eq, 1, 0)));
 }
 
-template <>
-EIGEN_STRONG_INLINE Packet2cf pblend(const Selector<2>& ifPacket, const Packet2cf& thenPacket,
-                                     const Packet2cf& elsePacket) {
-  __m128d result = pblend<Packet2d>(ifPacket, _mm_castps_pd(thenPacket.v), _mm_castps_pd(elsePacket.v));
-  return Packet2cf(_mm_castpd_ps(result));
-}
-
-template <>
-EIGEN_STRONG_INLINE Packet1cd psqrt<Packet1cd>(const Packet1cd& a) {
-  return psqrt_complex<Packet1cd>(a);
-}
-
-template <>
-EIGEN_STRONG_INLINE Packet2cf psqrt<Packet2cf>(const Packet2cf& a) {
-  return psqrt_complex<Packet2cf>(a);
-}
-
-template <>
-EIGEN_STRONG_INLINE Packet1cd plog<Packet1cd>(const Packet1cd& a) {
-  return plog_complex<Packet1cd>(a);
-}
-
-template <>
-EIGEN_STRONG_INLINE Packet2cf plog<Packet2cf>(const Packet2cf& a) {
-  return plog_complex<Packet2cf>(a);
-}
-
-template <>
-EIGEN_STRONG_INLINE Packet2cf pexp<Packet2cf>(const Packet2cf& a) {
-  return pexp_complex<Packet2cf>(a);
-}
+EIGEN_INSTANTIATE_COMPLEX_MATH_FUNCS(Packet1cd)
+EIGEN_INSTANTIATE_COMPLEX_MATH_FUNCS(Packet2cf)
 
 #ifdef EIGEN_VECTORIZE_FMA
 // std::complex<float>
@@ -497,6 +469,8 @@ EIGEN_STRONG_INLINE Packet1cd pnmsub(const Packet1cd& a, const Packet1cd& b, con
   return pnegate(pmadd(a, b, c));
 }
 #endif
+
+EIGEN_GCC_FAST_MATH_COMPLEX_VECTORIZE_WORKAROUND_POP
 }  // end namespace internal
 }  // end namespace Eigen
 

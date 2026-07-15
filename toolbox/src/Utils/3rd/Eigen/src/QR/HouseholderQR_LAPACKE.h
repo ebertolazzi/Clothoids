@@ -30,6 +30,7 @@
  *    LAPACKE_?geqrf function.
  ********************************************************************************
 */
+// SPDX-License-Identifier: BSD-3-Clause
 
 #ifndef EIGEN_QR_LAPACKE_H
 #define EIGEN_QR_LAPACKE_H
@@ -45,12 +46,20 @@ namespace lapacke_helpers {
 
 template <typename MatrixQR, typename HCoeffs>
 struct lapacke_hqr {
-  static void run(MatrixQR& mat, HCoeffs& hCoeffs, Index = 32, typename MatrixQR::Scalar* = 0) {
+  static void run(MatrixQR& mat, HCoeffs& hCoeffs, Index maxBlockSize = 32, typename MatrixQR::Scalar* tempData = 0) {
     lapack_int m = to_lapack(mat.rows());
     lapack_int n = to_lapack(mat.cols());
     lapack_int lda = to_lapack(mat.outerStride());
     lapack_int matrix_order = lapack_storage_of(mat);
-    geqrf(matrix_order, m, n, to_lapack(mat.data()), lda, to_lapack(hCoeffs.data()));
+    lapack_int info = geqrf(matrix_order, m, n, to_lapack(mat.data()), lda, to_lapack(hCoeffs.data()));
+    if (info == -4) {
+      // High-level LAPACKE may reject NaN inputs before calling LAPACK. Eigen's native path still computes a
+      // compact QR representation for these values.
+      householder_qr_inplace_blocked<MatrixQR, HCoeffs, typename MatrixQR::Scalar, false>::run(mat, hCoeffs,
+                                                                                               maxBlockSize, tempData);
+      return;
+    }
+    eigen_assert(info == 0);
     hCoeffs.adjointInPlace();
   }
 };

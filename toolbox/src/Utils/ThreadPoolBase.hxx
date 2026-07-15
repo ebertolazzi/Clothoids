@@ -18,7 +18,7 @@
 \*--------------------------------------------------------------------------*/
 
 //
-// eof: ThreadPoolBase.hxx
+// file: ThreadPoolBase.hxx
 //
 
 namespace Utils
@@ -120,6 +120,20 @@ namespace Utils
       unsigned m_push_ptr{ 0 };
       unsigned m_pop_ptr{ 0 };
 
+      TaskData * pop_nolock()
+      {
+        unsigned ipos{ m_pop_ptr };
+        if ( ++m_pop_ptr == m_size ) m_pop_ptr = 0;
+        return m_queue_data[ipos];
+      }
+
+      void clear_nolock()
+      {
+        while ( m_push_ptr != m_pop_ptr ) delete pop_nolock();
+        m_push_ptr = 0;
+        m_pop_ptr  = 0;
+      }
+
     public:
       Queue( Queue const & )             = delete;
       Queue( Queue && )                  = delete;
@@ -141,9 +155,7 @@ namespace Utils
       TaskData * pop()
       {
         std::lock_guard<std::mutex> lock( m_mutex );
-        unsigned                    ipos{ m_pop_ptr };
-        if ( ++m_pop_ptr == m_size ) m_pop_ptr = 0;
-        return m_queue_data[ipos];
+        return pop_nolock();
       }
 
       unsigned size() const
@@ -171,13 +183,13 @@ namespace Utils
       void clear()
       {
         std::lock_guard<std::mutex> lock( m_mutex );
-        while ( m_push_ptr != m_pop_ptr ) delete pop();
+        clear_nolock();
       }
 
       void resize( unsigned capacity )
       {
         std::lock_guard<std::mutex> lock( m_mutex );
-        while ( m_push_ptr != m_pop_ptr ) delete pop();
+        clear_nolock();
         m_size     = capacity + 1;
         m_capacity = capacity;
         m_queue_data.resize( m_size );

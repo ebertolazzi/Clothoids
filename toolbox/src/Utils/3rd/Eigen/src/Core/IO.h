@@ -7,6 +7,7 @@
 // This Source Code Form is subject to the terms of the Mozilla
 // Public License v. 2.0. If a copy of the MPL was not distributed
 // with this file, You can obtain one at http://mozilla.org/MPL/2.0/.
+// SPDX-License-Identifier: MPL-2.0
 
 #ifndef EIGEN_IO_H
 #define EIGEN_IO_H
@@ -65,7 +66,7 @@ struct IOFormat {
         fill(_fill),
         precision(_precision),
         flags(_flags) {
-    // TODO check if rowPrefix, rowSuffix or rowSeparator contains a newline
+    // TODO: check if rowPrefix, rowSuffix or rowSeparator contains a newline
     // don't add rowSpacer if columns are not to be aligned
     if ((flags & DontAlignCols)) return;
     int i = int(matPrefix.length()) - 1;
@@ -125,8 +126,6 @@ struct significant_decimals_impl {
  * print the matrix \a _m to the output stream \a s using the output format \a fmt */
 template <typename Derived>
 std::ostream& print_matrix(std::ostream& s, const Derived& _m, const IOFormat& fmt) {
-  using internal::is_same;
-
   if (_m.size() == 0) {
     s << fmt.matPrefix << fmt.matSuffix;
     return s;
@@ -134,13 +133,14 @@ std::ostream& print_matrix(std::ostream& s, const Derived& _m, const IOFormat& f
 
   typename Derived::Nested m = _m;
   typedef typename Derived::Scalar Scalar;
-  typedef std::conditional_t<is_same<Scalar, char>::value || is_same<Scalar, unsigned char>::value ||
-                                 is_same<Scalar, numext::int8_t>::value || is_same<Scalar, numext::uint8_t>::value,
+  typedef std::conditional_t<std::is_same<Scalar, char>::value || std::is_same<Scalar, unsigned char>::value ||
+                                 std::is_same<Scalar, numext::int8_t>::value ||
+                                 std::is_same<Scalar, numext::uint8_t>::value,
                              int,
-                             std::conditional_t<is_same<Scalar, std::complex<char> >::value ||
-                                                    is_same<Scalar, std::complex<unsigned char> >::value ||
-                                                    is_same<Scalar, std::complex<numext::int8_t> >::value ||
-                                                    is_same<Scalar, std::complex<numext::uint8_t> >::value,
+                             std::conditional_t<std::is_same<Scalar, std::complex<char> >::value ||
+                                                    std::is_same<Scalar, std::complex<unsigned char> >::value ||
+                                                    std::is_same<Scalar, std::complex<numext::int8_t> >::value ||
+                                                    std::is_same<Scalar, std::complex<numext::uint8_t> >::value,
                                                 std::complex<int>, const Scalar&> >
       PrintType;
 
@@ -150,7 +150,7 @@ std::ostream& print_matrix(std::ostream& s, const Derived& _m, const IOFormat& f
   if (fmt.precision == StreamPrecision) {
     explicit_precision = 0;
   } else if (fmt.precision == FullPrecision) {
-    if (NumTraits<Scalar>::IsInteger) {
+    EIGEN_IF_CONSTEXPR (NumTraits<Scalar>::IsInteger) {
       explicit_precision = 0;
     } else {
       explicit_precision = significant_decimals_impl<Scalar>::run();

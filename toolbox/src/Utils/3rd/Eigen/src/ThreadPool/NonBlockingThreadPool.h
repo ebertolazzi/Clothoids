@@ -6,9 +6,10 @@
 // This Source Code Form is subject to the terms of the Mozilla
 // Public License v. 2.0. If a copy of the MPL was not distributed
 // with this file, You can obtain one at http://mozilla.org/MPL/2.0/.
+// SPDX-License-Identifier: MPL-2.0
 
-#ifndef EIGEN_CXX11_THREADPOOL_NONBLOCKING_THREAD_POOL_H
-#define EIGEN_CXX11_THREADPOOL_NONBLOCKING_THREAD_POOL_H
+#ifndef EIGEN_THREADPOOL_NONBLOCKING_THREAD_POOL_H
+#define EIGEN_THREADPOOL_NONBLOCKING_THREAD_POOL_H
 
 // IWYU pragma: private
 #include "./InternalHeaderCheck.h"
@@ -23,16 +24,15 @@ class ThreadPoolTempl : public Eigen::ThreadPoolInterface {
   typedef RunQueue<Task, 1024> Queue;
 
   struct PerThread {
-    constexpr PerThread() : pool(NULL), rand(0), thread_id(-1) {}
-    ThreadPoolTempl* pool;  // Parent pool, or null for normal threads.
-    uint64_t rand;          // Random generator state.
-    int thread_id;          // Worker thread index in pool.
+    ThreadPoolTempl* pool = nullptr;  // Parent pool, or null for normal threads.
+    uint64_t rand = 0;                // Random generator state.
+    int thread_id = -1;               // Worker thread index in pool.
   };
 
   struct ThreadData {
-    constexpr ThreadData() : thread(), steal_partition(0), queue() {}
+    constexpr ThreadData() = default;
     std::unique_ptr<Thread> thread;
-    std::atomic<unsigned> steal_partition;
+    std::atomic<unsigned> steal_partition{0};
     Queue queue;
   };
 
@@ -44,7 +44,7 @@ class ThreadPoolTempl : public Eigen::ThreadPoolInterface {
         allow_spinning_(allow_spinning),
         spin_count_(
             // TODO(dvyukov,rmlarsen): The time spent in NonEmptyQueueIndex() is proportional to num_threads_ and
-            // we assume that new work is scheduled at a constant rate, so we divide `kSpintCount` by number of
+            // we assume that new work is scheduled at a constant rate, so we divide `kSpinCount` by number of
             // threads and number of spinning threads. The constant was picked based on a fair dice roll, tune it.
             allow_spinning && num_threads > 0 ? kSpinCount / kMaxSpinningThreads / num_threads : 0),
         thread_data_(num_threads),
@@ -62,7 +62,7 @@ class ThreadPoolTempl : public Eigen::ThreadPoolInterface {
     // and NonEmptyQueueIndex. Iteration is based on the fact that if we take
     // a random starting thread index t and calculate num_threads - 1 subsequent
     // indices as (t + coprime) % num_threads, we will cover all threads without
-    // repetitions (effectively getting a presudo-random permutation of thread
+    // repetitions (effectively getting a pseudo-random permutation of thread
     // indices).
     eigen_plain_assert(num_threads_ < kMaxThreads);
     for (int i = 1; i <= num_threads_; ++i) {
@@ -137,10 +137,10 @@ class ThreadPoolTempl : public Eigen::ThreadPoolInterface {
       Queue& q = thread_data_[start + rnd].queue;
       t = q.PushBack(std::move(t));
     }
-    // Note: below we touch this after making w available to worker threads.
+    // Note: below we touch this after making t available to worker threads.
     // Strictly speaking, this can lead to a racy-use-after-free. Consider that
     // Schedule is called from a thread that is neither main thread nor a worker
-    // thread of this pool. Then, execution of w directly or indirectly
+    // thread of this pool. Then, execution of t directly or indirectly
     // completes overall computations, which in turn leads to destruction of
     // this. We expect that such scenario is prevented by program, that is,
     // this is kept alive while any threads can potentially be in Schedule.
@@ -239,6 +239,8 @@ class ThreadPoolTempl : public Eigen::ThreadPoolInterface {
     eigen_plain_assert(start >= 0);
     eigen_plain_assert(start < end);  // non-zero sized partition
     eigen_plain_assert(end <= num_threads_);
+    (void)start;
+    (void)end;
   }
 
   inline void SetStealPartition(size_t i, unsigned val) {
@@ -334,7 +336,6 @@ class ThreadPoolTempl : public Eigen::ThreadPoolInterface {
   std::unordered_map<uint64_t, std::unique_ptr<PerThread>> per_thread_map_;
 #endif
 
-  unsigned NumBlockedThreads() const { return blocked_.load(); }
   unsigned NumActiveThreads() const { return num_threads_ - blocked_.load(); }
 
   // Main worker thread loop.
@@ -433,7 +434,7 @@ class ThreadPoolTempl : public Eigen::ThreadPoolInterface {
     // If we are shutting down and all worker threads blocked without work,
     // that's we are done.
     blocked_++;
-    // TODO is blocked_ required to be unsigned?
+    // TODO: is blocked_ required to be unsigned?
     if (done_ && blocked_ == static_cast<unsigned>(num_threads_)) {
       ec_.CancelWait();
       // Almost done, but need to re-check queues.
@@ -584,4 +585,4 @@ typedef ThreadPoolTempl<StlThreadEnvironment> ThreadPool;
 
 }  // namespace Eigen
 
-#endif  // EIGEN_CXX11_THREADPOOL_NONBLOCKING_THREAD_POOL_H
+#endif  // EIGEN_THREADPOOL_NONBLOCKING_THREAD_POOL_H

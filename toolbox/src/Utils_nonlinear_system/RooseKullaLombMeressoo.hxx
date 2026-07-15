@@ -753,7 +753,7 @@ public:
 
   virtual void check_if_admissible( Vector const & x ) const override
   {
-    for ( integer i = 3; i < n; ++i ) UTILS_ASSERT( x( i ) < 0, "Bad range" );
+    for ( integer i = 3; i < n; ++i ) Utils::Assert( x( i ) < 0, "Bad range" );
   }
 
   virtual void bounding_box( Vector & L, Vector & U ) const override
@@ -906,7 +906,7 @@ public:
   void checkx( Vector const & x ) const
   {
     for ( integer i = 0; i < n; ++i )
-      UTILS_ASSERT( x( i ) > 0, "RooseKullaLombMeressoo209, found x[{}] = {} <= 0", i, x( i ) );
+      Utils::Assert( x( i ) > 0, "RooseKullaLombMeressoo209, found x[{}] = {} <= 0", i, x( i ) );
   }
 
   virtual void evaluate( Vector const & x, Vector & f ) const override
@@ -948,8 +948,8 @@ public:
   {
     for ( integer i = 1; i < n; ++i )
     {
-      UTILS_ASSERT( x( i ) > 0, "Bad range" );
-      UTILS_ASSERT( std::abs( x( i ) ) < 1000, "Bad range" );
+      Utils::Assert( x( i ) > 0, "Bad range" );
+      Utils::Assert( std::abs( x( i ) ) < 1000, "Bad range" );
     }
   }
 
@@ -1501,7 +1501,7 @@ class RooseKullaLombMeressoo216 : public NonlinearSystem
 public:
   RooseKullaLombMeressoo216( integer neq ) : NonlinearSystem( "Roose Kulla Lomb Meressoo N.216", RKM_BIBTEX, neq )
   {
-    UTILS_ASSERT( n > 0 && n != 8 && n < 10, "RooseKullaLombMeressoo216, neq={} must be [1..7] or 9", n );
+    Utils::Assert( n > 0 && n != 8 && n < 10, "RooseKullaLombMeressoo216, neq={} must be [1..7] or 9", n );
     m_y.resize( n );
     m_y_D.resize( n );
     for ( integer i = 0; i < n; ++i )
@@ -1639,7 +1639,7 @@ public:
 
   virtual void check_if_admissible( Vector const & x ) const override
   {
-    for ( integer i = 0; i < n; ++i ) UTILS_ASSERT( x( i ) > 0, "Bad range" );
+    for ( integer i = 0; i < n; ++i ) Utils::Assert( x( i ) > 0, "Bad range" );
   }
 
   string note() const { return "Each permutation of x is a solution"; }

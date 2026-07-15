@@ -7,6 +7,7 @@
 // This Source Code Form is subject to the terms of the Mozilla
 // Public License v. 2.0. If a copy of the MPL was not distributed
 // with this file, You can obtain one at http://mozilla.org/MPL/2.0/.
+// SPDX-License-Identifier: MPL-2.0
 
 #ifndef EIGEN_FORWARDDECLARATIONS_H
 #define EIGEN_FORWARDDECLARATIONS_H
@@ -28,9 +29,7 @@ template <typename T>
 struct traits<const T> : traits<T> {};
 
 template <typename Derived>
-struct has_direct_access {
-  enum { ret = (traits<Derived>::Flags & DirectAccessBit) ? 1 : 0 };
-};
+struct has_direct_access : std::integral_constant<bool, (traits<Derived>::Flags & DirectAccessBit) != 0> {};
 
 template <typename Derived>
 struct accessors_level {
@@ -74,8 +73,6 @@ class MatrixBase;
 template <typename Derived>
 class ArrayBase;
 
-template <typename ExpressionType, unsigned int Added, unsigned int Removed>
-class Flagged;
 template <typename ExpressionType, template <typename> class StorageBase>
 class NoAlias;
 template <typename ExpressionType>
@@ -160,7 +157,7 @@ template <typename Derived>
 class RefBase;
 template <typename PlainObjectType, int Options = 0,
           typename StrideType =
-              typename std::conditional_t<PlainObjectType::IsVectorAtCompileTime, InnerStride<1>, OuterStride<>>>
+              std::conditional_t<PlainObjectType::IsVectorAtCompileTime, InnerStride<1>, OuterStride<>>>
 class Ref;
 template <typename ViewOp, typename MatrixType, typename StrideType = Stride<0, 0>>
 class CwiseUnaryView;
@@ -219,15 +216,12 @@ namespace internal {
 template <typename Lhs, typename Rhs>
 struct product_type;
 
-template <bool>
-struct EnableIf;
-
 /** \internal
  * \class product_evaluator
  * Products need their own evaluator with more template arguments allowing for
  * easier partial template specializations.
  */
-template <typename T, int ProductTag = internal::product_type<typename T::Lhs, typename T::Rhs>::ret,
+template <typename T, int ProductTag = internal::product_type<typename T::Lhs, typename T::Rhs>::value,
           typename LhsShape = typename evaluator_traits<typename T::Lhs>::Shape,
           typename RhsShape = typename evaluator_traits<typename T::Rhs>::Shape,
           typename LhsScalar = typename traits<typename T::Lhs>::Scalar,
@@ -405,6 +399,8 @@ template <typename ExpressionType, int Direction>
 class VectorwiseOp;
 template <typename MatrixType, int RowFactor, int ColFactor>
 class Replicate;
+template <int Direction, typename LhsType, typename RhsType>
+class Concat;
 template <typename MatrixType, int Direction = BothDirections>
 class Reverse;
 
@@ -419,10 +415,6 @@ template <typename MatrixType, typename PermutationIndex = DefaultPermutationInd
 class FullPivLU;
 template <typename MatrixType, typename PermutationIndex = DefaultPermutationIndex>
 class PartialPivLU;
-namespace internal {
-template <typename MatrixType>
-struct inverse_impl;
-}
 template <typename MatrixType>
 class HouseholderQR;
 template <typename MatrixType, typename PermutationIndex = DefaultPermutationIndex>
@@ -430,7 +422,15 @@ class ColPivHouseholderQR;
 template <typename MatrixType, typename PermutationIndex = DefaultPermutationIndex>
 class FullPivHouseholderQR;
 template <typename MatrixType, typename PermutationIndex = DefaultPermutationIndex>
+class RandColPivHouseholderQR;
+template <typename MatrixType, typename PermutationIndex = DefaultPermutationIndex>
 class CompleteOrthogonalDecomposition;
+template <typename MatrixType, typename PermutationIndex = DefaultPermutationIndex>
+class RandCompleteOrthogonalDecomposition;
+namespace internal {
+template <typename MatrixType, typename PermutationIndex, template <typename, typename> class RankRevealingQR>
+class CompleteOrthogonalDecompositionImpl;
+}
 template <typename MatrixType>
 class SVDBase;
 template <typename MatrixType, int Options = 0>
@@ -441,6 +441,8 @@ template <typename MatrixType, int UpLo = Lower>
 class LLT;
 template <typename MatrixType, int UpLo = Lower>
 class LDLT;
+template <typename MatrixType, int UpLo = Lower>
+class BunchKaufman;
 template <typename VectorsType, typename CoeffsType, int Side = OnTheLeft>
 class HouseholderSequence;
 template <typename Scalar>
@@ -517,6 +519,9 @@ struct eigen_zero_impl;
 
 template <typename Packet>
 struct has_packet_segment : std::false_type {};
+
+template <typename T>
+struct complex_array_access;
 }  // namespace internal
 
 }  // end namespace Eigen

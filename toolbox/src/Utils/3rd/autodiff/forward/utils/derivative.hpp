@@ -205,7 +205,7 @@ AUTODIFF_DEVICE_FUNC auto derivative(const Vec& u)
     using T = NumericType<NumType>; // get the numeric/floating point type of the dual/real number
     using Res = VectorReplaceValueType<Vec, T>; // get the type of the vector containing numeric values instead of dual/real numbers (e.g., vector<real> becomes vector<double>, VectorXdual becomes VectorXd, etc.)
     Res res(len); // create an array to store the derivatives stored inside the dual/real number
-    for(auto i = 0; i < len; ++i)
+    for(size_t i = 0; i < len; ++i)
         res[i] = derivative<order>(u[i]); // get the derivative of given order from i-th dual/real number
     return res;
 }

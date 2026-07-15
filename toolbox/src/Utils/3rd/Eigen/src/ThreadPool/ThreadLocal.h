@@ -6,9 +6,10 @@
 // This Source Code Form is subject to the terms of the Mozilla
 // Public License v. 2.0. If a copy of the MPL was not distributed
 // with this file, You can obtain one at http://mozilla.org/MPL/2.0/.
+// SPDX-License-Identifier: MPL-2.0
 
-#ifndef EIGEN_CXX11_THREADPOOL_THREAD_LOCAL_H
-#define EIGEN_CXX11_THREADPOOL_THREAD_LOCAL_H
+#ifndef EIGEN_THREADPOOL_THREAD_LOCAL_H
+#define EIGEN_THREADPOOL_THREAD_LOCAL_H
 
 #ifdef EIGEN_AVOID_THREAD_LOCAL
 
@@ -18,37 +19,20 @@
 
 #else
 
-#if ((EIGEN_COMP_GNUC) || __has_feature(cxx_thread_local) || EIGEN_COMP_MSVC)
 #define EIGEN_THREAD_LOCAL static thread_local
-#endif
 
-// Disable TLS for Apple and Android builds with older toolchains.
+// Disable TLS for Apple builds with deployment targets that do not support it.
 #if defined(__APPLE__)
 // Included for TARGET_OS_IPHONE, __IPHONE_OS_VERSION_MIN_REQUIRED,
-// __IPHONE_8_0.
+// __IPHONE_9_0.
 #include <Availability.h>
 #include <TargetConditionals.h>
 #endif
-// Checks whether C++11's `thread_local` storage duration specifier is
-// supported.
-#if EIGEN_COMP_CLANGAPPLE && \
-    ((EIGEN_COMP_CLANGAPPLE < 8000042) || (TARGET_OS_IPHONE && __IPHONE_OS_VERSION_MIN_REQUIRED < __IPHONE_9_0))
-// Notes: Xcode's clang did not support `thread_local` until version
-// 8, and even then not for all iOS < 9.0.
-#undef EIGEN_THREAD_LOCAL
-
-#elif defined(__ANDROID__) && EIGEN_COMP_CLANG
-// There are platforms for which TLS should not be used even though the compiler
-// makes it seem like it's supported (Android NDK < r12b for example).
-// This is primarily because of linker problems and toolchain misconfiguration:
-// TLS isn't supported until NDK r12b per
-// https://developer.android.com/ndk/downloads/revision_history.html
-
-#if defined(__ANDROID__) && defined(__clang__) && defined(__NDK_MAJOR__) && defined(__NDK_MINOR__) && \
-    ((__NDK_MAJOR__ < 12) || ((__NDK_MAJOR__ == 12) && (__NDK_MINOR__ < 1)))
+// Checks whether the `thread_local` storage duration specifier is supported.
+#if EIGEN_COMP_CLANGAPPLE && TARGET_OS_IPHONE && __IPHONE_OS_VERSION_MIN_REQUIRED < __IPHONE_9_0
+// Notes: `thread_local` is not supported when targeting iOS versions before 9.0.
 #undef EIGEN_THREAD_LOCAL
 #endif
-#endif  // defined(__ANDROID__) && defined(__clang__)
 
 #endif  // EIGEN_AVOID_THREAD_LOCAL
 
@@ -90,7 +74,7 @@ struct ThreadLocalNoOpRelease {
 //
 //   Eigen::ThreadLocal<Counter> counter(10);
 //
-//   // Each thread will have access to it's own counter object.
+//   // Each thread will have access to its own counter object.
 //   Counter& cnt = counter.local();
 //   cnt++;
 //
@@ -141,7 +125,7 @@ class ThreadLocal {
     // to our hash-map like data structure. If we didn't find an element during
     // the initial traversal, it's guaranteed that no one else could have
     // inserted it while we are in this function. This allows to massively
-    // simplify out lock-free insert-only hash map.
+    // simplify our lock-free insert-only hash map.
 
     // Check if we already have an element for `this_thread`.
     int idx = start_idx;
@@ -168,7 +152,7 @@ class ThreadLocal {
     if (insertion_index >= capacity_) return SpilledLocal(this_thread);
 
     // At this point it's guaranteed that we can access to
-    // data_[insertion_index_] without a data race.
+    // data_[insertion_index] without a data race.
     data_[insertion_index].thread_id = this_thread;
     initialize_(data_[insertion_index].value);
 
@@ -286,4 +270,4 @@ class ThreadLocal {
 
 }  // namespace Eigen
 
-#endif  // EIGEN_CXX11_THREADPOOL_THREAD_LOCAL_H
+#endif  // EIGEN_THREADPOOL_THREAD_LOCAL_H

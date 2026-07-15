@@ -17,94 +17,73 @@
  |                                                                          |
 \*--------------------------------------------------------------------------*/
 
-#ifdef __GNUC__
-#pragma GCC diagnostic ignored "-Wunused-function"
-#endif
-#ifdef __clang__
-#pragma clang diagnostic ignored "-Wglobal-constructors"
-#pragma clang diagnostic ignored "-Wvla-extension"
-#pragma clang diagnostic ignored "-Wvla"
-#pragma clang diagnostic ignored "-Wunused-function"
-#pragma clang diagnostic ignored "-Wdocumentation-unknown-command"
-#endif
-
 #include "PolynomialRoots.hh"
 
-#include <cmath>
-#include <iostream>
-#include <algorithm>
-#include <limits>
+namespace PolynomialRoots
+{
 
-#ifndef DOXYGEN_SHOULD_SKIP_THIS
+  using std::abs;
+  using std::sqrt;
 
-namespace PolynomialRoots {
-
-  using  std::abs;
-  static constexpr real_type machepsi{ std::numeric_limits<real_type>::epsilon() };
-
-  integer
-  Quadratic::get_real_roots( real_type r[] ) const {
-    integer nr{0};
-    if ( !m_cplx ) {
+  template <typename T_real, typename T_complex>
+  integer QuadraticT<T_real, T_complex>::get_real_roots( T_real r[] ) const
+  {
+    integer nr = 0;
+    if ( !m_cplx )
+    {
       r[nr++] = m_r0;
       if ( m_nrts > 1 ) r[nr++] = m_r1;
     }
     return nr;
   }
 
-  integer
-  Quadratic::get_positive_roots( real_type r[] ) const {
-    integer nr{0};
-    if ( !m_cplx ) {
+  template <typename T_real, typename T_complex>
+  integer QuadraticT<T_real, T_complex>::get_positive_roots( T_real r[] ) const
+  {
+    integer nr = 0;
+    if ( !m_cplx )
+    {
       if ( m_nrts > 0 && m_r0 > 0 ) r[nr++] = m_r0;
       if ( m_nrts > 1 && m_r1 > 0 ) r[nr++] = m_r1;
     }
     return nr;
   }
 
-  integer
-  Quadratic::get_negative_roots( real_type r[] ) const {
-    integer nr{0};
-    if ( !m_cplx ) {
+  template <typename T_real, typename T_complex>
+  integer QuadraticT<T_real, T_complex>::get_negative_roots( T_real r[] ) const
+  {
+    integer nr = 0;
+    if ( !m_cplx )
+    {
       if ( m_nrts > 0 && m_r0 < 0 ) r[nr++] = m_r0;
       if ( m_nrts > 1 && m_r1 < 0 ) r[nr++] = m_r1;
     }
     return nr;
   }
 
-  integer
-  Quadratic::get_roots_in_range( real_type const a, real_type const b, real_type r[] ) const {
-    integer nr{0};
-    if ( !m_cplx ) {
+  template <typename T_real, typename T_complex>
+  integer QuadraticT<T_real, T_complex>::get_roots_in_range( T_real const & a, T_real const & b, T_real r[] ) const
+  {
+    integer nr = 0;
+    if ( !m_cplx )
+    {
       if ( m_nrts > 0 && m_r0 >= a && m_r0 <= b ) r[nr++] = m_r0;
       if ( m_nrts > 1 && m_r1 >= a && m_r1 <= b ) r[nr++] = m_r1;
     }
     return nr;
   }
 
-  integer
-  Quadratic::get_roots_in_open_range( real_type const a, real_type const b, real_type r[] ) const {
-    integer nr{0};
-    if ( !m_cplx ) {
+  template <typename T_real, typename T_complex>
+  integer QuadraticT<T_real, T_complex>::get_roots_in_open_range( T_real const & a, T_real const & b, T_real r[] ) const
+  {
+    integer nr = 0;
+    if ( !m_cplx )
+    {
       if ( m_nrts > 0 && m_r0 > a && m_r0 < b ) r[nr++] = m_r0;
       if ( m_nrts > 1 && m_r1 > a && m_r1 < b ) r[nr++] = m_r1;
     }
     return nr;
   }
-
-  // void
-  // Quadratic::eval( real_type x, real_type & p, real_type & dp ) const {
-  //   real_type const & A = ABC[0];
-  //   real_type const & B = ABC[1];
-  //   real_type const & C = ABC[2];
-  //   if ( std::abs(x) > 1 ) {
-  //     real_type z  = 1/x;
-  //     p = (((C*z+B)*z+A)/x)/x;
-  //   } else {
-  //     p = (A*x+B)*x+C;
-  //   }
-  //   dp = 2*A*x+B;
-  // }
 
   /*\
    *  Calculate the zeros of the quadratic a*z^2 + b*z + c.
@@ -114,116 +93,157 @@ namespace PolynomialRoots {
    *  the product of the zeros c/a.
   \*/
 
-  void
-  Quadratic::find_roots() {
-    real_type const & A{ m_ABC[0] };
-    real_type const & B{ m_ABC[1] };
-    real_type const & C{ m_ABC[2] };
+  template <typename T_real, typename T_complex> void QuadraticT<T_real, T_complex>::find_roots()
+  {
+    T_real const & A = m_ABC[0];
+    T_real const & B = m_ABC[1];
+    T_real const & C = m_ABC[2];
 
     m_r0 = m_r1 = 0;
-    m_nrts = 0;
+    m_nrts      = 0;
     m_cplx = m_dblx = false;
 
-    if ( isZero(A) ) { // less than two roots b*z + c = 0
-      if ( !isZero(B) ) { m_nrts = 1; m_r0 = -C/B; }
-    } else if ( isZero(C) ) { // a*z^2 + b*z  = 0
-      m_nrts = 2;
-      m_dblx = isZero(B);
-      if ( !m_dblx ) {
-        m_r0 = -B/A;
-        if ( m_r0 < 0 ) std::swap(m_r0,m_r1);
+    if ( A == 0 )
+    {  // less than two roots b*z + c = 0
+      if ( B != 0 )
+      {
+        m_nrts = 1;
+        m_r0   = -C / B;
       }
-    } else { // Compute discriminant avoiding overflow.
-      real_type const hb    { B/2          }; // b now b/2
-      real_type const abs_b { std::abs(hb) };
-      real_type const abs_c { std::abs(C)  };
-      real_type e, d;
-      if ( abs_b < abs_c ) {
+    }
+    else if ( C == 0 )
+    {  // a*z^2 + b*z  = 0
+      m_nrts = 2;
+      m_dblx = B == 0;
+      if ( !m_dblx )
+      {
+        m_r0 = -B / A;
+        if ( m_r0 < 0 ) std::swap( m_r0, m_r1 );
+      }
+    }
+    else
+    {                              // Compute discriminant avoiding overflow.
+      T_real const hb    = B / 2;  // b now b/2
+      T_real const abs_b = abs( hb );
+      T_real const abs_c = abs( C );
+      T_real       e;
+      T_real       d;
+      if ( abs_b < abs_c )
+      {
         e = C < 0 ? -A : A;
-        e = (hb*hb)-e*abs_c;
-        d = std::sqrt(std::abs(e));
-      } else {
-        e = 1 - (A/hb)*(C/hb);
-        d = std::sqrt(std::abs(e))*abs_b;
+        e = ( hb * hb ) - e * abs_c;
+        d = abs( e );
+        d = sqrt( d );
+      }
+      else
+      {
+        e = 1 - ( A / hb ) * ( C / hb );
+        d = sqrt( abs( e ) ) * abs_b;
       }
       m_nrts = 2;
       m_cplx = e < 0;
-      if ( m_cplx ) {
+      if ( m_cplx )
+      {
         // complex conjugate zeros
-        m_r0 = -hb/A;         // real part
-        m_r1 = std::abs(d/A); // immaginary part
-      } else {
+        m_r0 = -hb / A;       // real part
+        m_r1 = abs( d / A );  // immaginary part
+      }
+      else
+      {
         // real zeros
-        m_dblx = isZero(d);
-        if ( m_dblx ) {
-          m_r0 = m_r1 = -hb/A;
-        } else {
+        m_dblx = d == 0;
+        if ( m_dblx ) { m_r0 = m_r1 = -hb / A; }
+        else
+        {
           if ( hb >= 0 ) d = -d;
-          m_r0 = (d-hb)/A;
-          //r1 = (-d-hb)/a;
-          if ( !isZero(m_r0) ) m_r1 = (C/m_r0)/A;
-          if ( m_r0 > m_r1 ) std::swap(m_r0,m_r1); // order roots
+          m_r0 = ( d - hb ) / A;
+          // r1 = (-d-hb)/a;
+          if ( m_r0 != 0 ) m_r1 = ( C / m_r0 ) / A;
+          if ( m_r0 > m_r1 ) std::swap( m_r0, m_r1 );  // order roots
         }
       }
     }
   }
 
-  void
-  Quadratic::info( ostream_type & s ) const {
-    real_type const & A{ m_ABC[0] };
-    real_type const & B{ m_ABC[1] };
-    real_type const & C{ m_ABC[2] };
-    s << "\npoly A=" << A << " B=" << B << " C=" << C
-      << "\nn. roots = " << m_nrts
-      << "\ncomplex  = " << (m_cplx?"YES":"NO")
-      << "\ndouble   = " << (m_dblx?"YES":"NO");
-    if ( m_cplx ) {
-      s << "\nx0 = (" << m_r0 << "," <<  m_r1 << ')'
-        << "\nx1 = (" << m_r0 << "," << -m_r1 << ')';
-    } else if ( m_dblx ) {
-      s << "\nx0 = x1 = " << m_r0;
-    } else if ( m_nrts == 1 ) {
-      s << "\nx0 = " << m_r0;
-    } else if ( m_nrts == 2 ) {
-      s << "\nx0 = " << m_r0
-        << "\nx1 = " << m_r1;
-    }
-    s << '\n';
+  template <typename T_real, typename T_complex> void QuadraticT<T_real, T_complex>::info( ostream_type & s ) const
+  {
+    T_real const & A = m_ABC[0];
+    T_real const & B = m_ABC[1];
+    T_real const & C = m_ABC[2];
+    s << std::format(
+      "poly A={} B={} C={}\n"
+      "n. roots = {}\n"
+      "complex  = {}\n"
+      "double   = {}\n",
+      A,
+      B,
+      C,
+      m_nrts,
+      ( m_cplx ? "YES" : "NO" ),
+      ( m_dblx ? "YES" : "NO" ) );
+    if ( m_cplx )
+      s << std::format(
+        "x0 = ({},{})\n"
+        "x1 = ({},{})\n",
+        m_r0,
+        m_r1,
+        m_r0,
+        -m_r1 );
+    else if ( m_dblx )
+      s << std::format( "x0 = x1 = {}\n", m_r0 );
+    else if ( m_nrts == 1 )
+      s << std::format( "x0 = {}\n", m_r0 );
+    else if ( m_nrts == 2 )
+      s << std::format(
+        "x0 = {}\n"
+        "x1 = {}\n",
+        m_r0,
+        m_r1 );
   }
 
-  bool
-  Quadratic::check( ostream_type & s ) const {
-    real_type const & A{ m_ABC[0] };
-    real_type const & B{ m_ABC[1] };
-    real_type const & C{ m_ABC[2] };
-    bool ok{ true };
-    real_type const epsi{ 10 * ( std::abs(A) +
-                                 std::abs(B) +
-                                 std::abs(C) ) * machepsi };
-    if ( m_cplx ) {
-      real_type const z0{ std::abs(eval( root0() )) };
-      real_type const z1{ std::abs(eval( root1() )) };
-      s << "|p(r0)| = " << z0
-        << "\n|p(r1)| = " << z1
-        << '\n';
+  template <typename T_real, typename T_complex> bool QuadraticT<T_real, T_complex>::check( ostream_type & s ) const
+  {
+    T_real const & A    = m_ABC[0];
+    T_real const & B    = m_ABC[1];
+    T_real const & C    = m_ABC[2];
+    bool           ok   = true;
+    T_real const   epsi = ( abs( A ) + abs( B ) + abs( C ) ) * toleranceT<T_real>();
+    if ( m_cplx )
+    {
+      T_real const z0 = abs( eval( root0() ) );
+      T_real const z1 = abs( eval( root1() ) );
+      s << std::format(
+        "|p(r0)| = {}\n"
+        "|p(r1)| = {}\n",
+        z0,
+        z1 );
       ok = z0 < epsi && z1 < epsi;
-    } else if ( m_nrts == 1 ) {
-      real_type const z0{ eval( real_root0() ) };
-      s << "p(r0) = " << z0  << '\n';
-      ok = std::abs(z0) < epsi;
-    } else if ( m_nrts == 2 ) {
-      real_type const z0{ eval( real_root0() ) };
-      real_type const z1{ eval( real_root1() ) };
-      s << "p(r0) = " << z0
-        << "\np(r1) = " << z1
-        << '\n';
-      ok = std::abs(z0) < epsi && std::abs(z1) < epsi;
+    }
+    else if ( m_nrts == 1 )
+    {
+      T_real const z0 = eval( real_root0() );
+      s << std::format( "p(r0) = {}\n", z0 );
+      ok = abs( z0 ) < epsi;
+    }
+    else if ( m_nrts == 2 )
+    {
+      T_real const z0 = eval( real_root0() );
+      T_real const z1 = eval( real_root1() );
+      s << std::format(
+        "p(r0) = {}\n"
+        "p(r1) = {}\n",
+        z0,
+        z1 );
+      ok = abs( z0 ) < epsi && abs( z1 ) < epsi;
     }
     return ok;
   }
 
-}
-
+  template class QuadraticT<real_type, real_complex>;
+#if POLYNOMIAL_ROOTS_HAS_MULTIPRECISION
+  template class QuadraticT<quad_real, quad_complex>;
 #endif
+
+}  // namespace PolynomialRoots
 
 // EOF: PolynomialRoots-1-Quadratic.cc

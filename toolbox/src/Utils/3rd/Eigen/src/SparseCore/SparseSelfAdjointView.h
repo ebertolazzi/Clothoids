@@ -6,6 +6,7 @@
 // This Source Code Form is subject to the terms of the Mozilla
 // Public License v. 2.0. If a copy of the MPL was not distributed
 // with this file, You can obtain one at http://mozilla.org/MPL/2.0/.
+// SPDX-License-Identifier: MPL-2.0
 
 #ifndef EIGEN_SPARSE_SELFADJOINTVIEW_H
 #define EIGEN_SPARSE_SELFADJOINTVIEW_H
@@ -23,7 +24,7 @@ namespace Eigen {
  * \param MatrixType the type of the dense matrix storing the coefficients
  * \param Mode can be either \c #Lower or \c #Upper
  *
- * This class is an expression of a sefladjoint matrix from a triangular part of a matrix
+ * This class is an expression of a selfadjoint matrix from a triangular part of a matrix
  * with given dense storage of the coefficients. It is the return type of MatrixBase::selfadjointView()
  * and most of the time this is the only way that it is used.
  *
@@ -64,6 +65,8 @@ class SparseSelfAdjointView : public EigenBase<SparseSelfAdjointView<MatrixType,
   typedef Matrix<StorageIndex, Dynamic, 1> VectorI;
   typedef typename internal::ref_selector<MatrixType>::non_const_type MatrixTypeNested;
   typedef internal::remove_all_t<MatrixTypeNested> MatrixTypeNested_;
+  typedef SparseMatrix<Scalar, (MatrixTypeNested_::Flags & RowMajorBit) ? RowMajor : ColMajor, StorageIndex>
+      PlainObject;
 
   explicit inline SparseSelfAdjointView(MatrixType& matrix) : m_matrix(matrix) {
     eigen_assert(rows() == cols() && "SelfAdjointView is only for squared matrices");
@@ -107,11 +110,32 @@ class SparseSelfAdjointView : public EigenBase<SparseSelfAdjointView<MatrixType,
     return Product<SparseSelfAdjointView, OtherDerived>(*this, rhs.derived());
   }
 
+  template <typename OtherDerived>
+  Product<SparseSelfAdjointView, OtherDerived> operator*(const DiagonalBase<OtherDerived>& rhs) const {
+    return Product<SparseSelfAdjointView, OtherDerived>(*this, rhs.derived());
+  }
+
   /** Efficient dense vector/matrix times sparse self-adjoint matrix product */
   template <typename OtherDerived>
   friend Product<OtherDerived, SparseSelfAdjointView> operator*(const MatrixBase<OtherDerived>& lhs,
                                                                 const SparseSelfAdjointView& rhs) {
     return Product<OtherDerived, SparseSelfAdjointView>(lhs.derived(), rhs);
+  }
+
+  template <typename OtherDerived>
+  friend Product<OtherDerived, SparseSelfAdjointView> operator*(const DiagonalBase<OtherDerived>& lhs,
+                                                                const SparseSelfAdjointView& rhs) {
+    return Product<OtherDerived, SparseSelfAdjointView>(lhs.derived(), rhs);
+  }
+
+  // Scalar multiplication intentionally materializes the full matrix, unlike dense SelfAdjointView's lazy wrapper,
+  // matching the existing SparseSelfAdjointView products.
+  PlainObject operator*(const Scalar& s) const { return s * *this; }
+
+  friend PlainObject operator*(const Scalar& s, const SparseSelfAdjointView& mat) {
+    PlainObject res(mat);
+    res *= s;
+    return res;
   }
 
   /** Perform a symmetric rank K update of the selfadjoint matrix \c *this:
@@ -126,7 +150,7 @@ class SparseSelfAdjointView : public EigenBase<SparseSelfAdjointView<MatrixType,
   SparseSelfAdjointView& rankUpdate(const SparseMatrixBase<DerivedU>& u, const Scalar& alpha = Scalar(1));
 
   /** \returns an expression of P H P^-1 */
-  // TODO implement twists in a more evaluator friendly fashion
+  // TODO: implement twists in a more evaluator friendly fashion
   SparseSymmetricPermutationProduct<MatrixTypeNested_, Mode> twistedBy(
       const PermutationMatrix<Dynamic, Dynamic, StorageIndex>& perm) const {
     return SparseSymmetricPermutationProduct<MatrixTypeNested_, Mode>(m_matrix, perm);
@@ -161,8 +185,7 @@ class SparseSelfAdjointView : public EigenBase<SparseSelfAdjointView<MatrixType,
 
  protected:
   MatrixTypeNested m_matrix;
-  // mutable VectorI m_countPerRow;
-  // mutable VectorI m_countPerCol;
+
  private:
   template <typename Dest>
   void evalTo(Dest&) const;
@@ -205,7 +228,7 @@ SparseSelfAdjointView<MatrixType, Mode>& SparseSelfAdjointView<MatrixType, Mode>
 
 namespace internal {
 
-// TODO currently a selfadjoint expression has the form SelfAdjointView<.,.>
+// TODO: currently a selfadjoint expression has the form SelfAdjointView<.,.>
 //      in the future selfadjoint-ness should be defined by the expression traits
 //      such that Transpose<SelfAdjointView<.,.> > is valid. (currently TriangularBase::transpose() is overloaded to
 //      make it work)
@@ -267,7 +290,7 @@ struct Assignment<DstXprType, SrcXprType, Functor, SparseSelfAdjoint2Sparse> {
 }  // end namespace internal
 
 /***************************************************************************
- * Implementation of sparse self-adjoint time dense matrix
+ * Implementation of sparse self-adjoint times dense matrix
  ***************************************************************************/
 
 namespace internal {
@@ -312,7 +335,9 @@ inline void sparse_selfadjoint_time_dense_product(const SparseLhsType& lhs, cons
       typename DenseResType::Scalar res_j(0);
       for (; (ProcessFirstHalf ? i && i.index() < j : i); ++i) {
         LhsScalar lhs_ij = i.value();
-        if (!LhsIsRowMajor) lhs_ij = numext::conj(lhs_ij);
+        EIGEN_IF_CONSTEXPR (!LhsIsRowMajor) {
+          lhs_ij = numext::conj(lhs_ij);
+        }
         res_j += lhs_ij * rhs.coeff(i.index(), k);
         res(i.index(), k) += numext::conj(lhs_ij) * rhs_j;
       }
@@ -433,7 +458,7 @@ void permute_symm_to_fullsymm(
       Index r = it.row();
       Index c = it.col();
       Index ip = perm ? perm[i] : i;
-      if (Mode == int(Upper | Lower))
+      EIGEN_IF_CONSTEXPR (Mode == int(Upper | Lower))
         count[StorageOrderMatch ? jp : ip]++;
       else if (r == c)
         count[ip]++;
@@ -461,7 +486,7 @@ void permute_symm_to_fullsymm(
       StorageIndex jp = perm ? perm[j] : j;
       StorageIndex ip = perm ? perm[i] : i;
 
-      if (Mode == int(Upper | Lower)) {
+      EIGEN_IF_CONSTEXPR (Mode == int(Upper | Lower)) {
         Index k = count[StorageOrderMatch ? jp : ip]++;
         dest.innerIndexPtr()[k] = StorageOrderMatch ? ip : jp;
         dest.valuePtr()[k] = it.value();
@@ -470,7 +495,7 @@ void permute_symm_to_fullsymm(
         dest.innerIndexPtr()[k] = ip;
         dest.valuePtr()[k] = it.value();
       } else if (((Mode & Lower) == Lower && r > c) || ((Mode & Upper) == Upper && r < c)) {
-        if (!StorageOrderMatch) std::swap(ip, jp);
+        EIGEN_IF_CONSTEXPR (!StorageOrderMatch) std::swap(ip, jp);
         Index k = count[jp]++;
         dest.innerIndexPtr()[k] = ip;
         dest.valuePtr()[k] = it.value();
@@ -532,8 +557,8 @@ void permute_symm_to_symm(const MatrixType& mat,
       Index k = count[int(DstMode) == int(Lower) ? (std::min)(ip, jp) : (std::max)(ip, jp)]++;
       dest.innerIndexPtr()[k] = int(DstMode) == int(Lower) ? (std::max)(ip, jp) : (std::min)(ip, jp);
 
-      if (!StorageOrderMatch) std::swap(ip, jp);
-      if (((int(DstMode) == int(Lower) && ip < jp) || (int(DstMode) == int(Upper) && ip > jp)))
+      EIGEN_IF_CONSTEXPR (!StorageOrderMatch) std::swap(ip, jp);
+      if ((int(DstMode) == int(Lower) && ip < jp) || (int(DstMode) == int(Upper) && ip > jp))
         dest.valuePtr()[k] = (NonHermitian ? it.value() : numext::conj(it.value()));
       else
         dest.valuePtr()[k] = it.value();
@@ -542,8 +567,6 @@ void permute_symm_to_symm(const MatrixType& mat,
 }
 
 }  // namespace internal
-
-// TODO implement twists in a more evaluator friendly fashion
 
 namespace internal {
 
@@ -593,7 +616,6 @@ struct Assignment<DstXprType, SparseSymmetricPermutationProduct<MatrixType, Mode
   template <int Options>
   static void run(SparseMatrix<Scalar, Options, DstIndex>& dst, const SrcXprType& src,
                   const internal::assign_op<Scalar, typename MatrixType::Scalar>&) {
-    // internal::permute_symm_to_fullsymm<Mode>(m_matrix,_dest,m_perm.indices().data());
     SparseMatrix<Scalar, (Options & RowMajor) == RowMajor ? ColMajor : RowMajor, DstIndex> tmp;
     internal::permute_symm_to_fullsymm<Mode, false>(src.matrix(), tmp, src.perm().indices().data());
     dst = tmp;

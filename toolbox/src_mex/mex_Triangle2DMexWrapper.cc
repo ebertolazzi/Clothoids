@@ -64,8 +64,8 @@ namespace G2lib
 
   static void do_new( int nlhs, mxArray * plhs[], int nrhs, mxArray const * prhs[] )
   {
-    UTILS_MEX_ASSERT( nrhs >= 2, "Triangle2DMexWrapper, expected at least 2 inputs, nrhs = {}\n", nrhs );
-    UTILS_MEX_ASSERT( nlhs == 1, "Triangle2DMexWrapper, expected 1 output, nlhs = {}\n", nlhs );
+    Utils::mex_assert( nrhs >= 2, "Triangle2DMexWrapper, expected at least 2 inputs, nrhs = {}\n", nrhs );
+    Utils::mex_assert( nlhs == 1, "Triangle2DMexWrapper, expected 1 output, nlhs = {}\n", nlhs );
 
     Triangle2D * ptr = new Triangle2D();
     arg_out_0        = Utils::mex_convert_ptr_to_mx<Triangle2D>( ptr );
@@ -89,15 +89,15 @@ namespace G2lib
       real_type const * p0 = Utils::mex_vector_pointer( arg_in_1, sz0, CMD "`p0` expected to be a real vector" );
       real_type const * p1 = Utils::mex_vector_pointer( arg_in_2, sz1, CMD "`p1` expected to be a real vector" );
       real_type const * p2 = Utils::mex_vector_pointer( arg_in_3, sz2, CMD "`p2` expected to be a real vector" );
-      UTILS_MEX_ASSERT0( sz0 == 2, "Triangle2D, expected a vector of 2 elements for `p0`" );
-      UTILS_MEX_ASSERT0( sz1 == 2, "Triangle2D, expected a vector of 2 elements for `p1`" );
-      UTILS_MEX_ASSERT0( sz2 == 2, "Triangle2D, expected a vector of 2 elements for `p2`" );
+      Utils::mex_assert( sz0 == 2, "Triangle2D, expected a vector of 2 elements for `p0`" );
+      Utils::mex_assert( sz1 == 2, "Triangle2D, expected a vector of 2 elements for `p1`" );
+      Utils::mex_assert( sz2 == 2, "Triangle2D, expected a vector of 2 elements for `p2`" );
       ptr->build( p0, p1, p2, 0, 0, 0 );
 #undef CMD
     }
     else
     {
-      UTILS_MEX_ASSERT( false, "Triangle2D, expected 4 or 7 inputs, nrhs = {}\n", nrhs );
+      Utils::mex_assert( false, "Triangle2D, expected 4 or 7 inputs, nrhs = {}\n", nrhs );
     }
   }
 
@@ -105,8 +105,8 @@ namespace G2lib
 
   static void do_build( int nlhs, mxArray *[], int nrhs, mxArray const * prhs[] )
   {
-    UTILS_MEX_ASSERT( nrhs >= 2, "Triangle2DMexWrapper, expected at least 2 inputs, nrhs = {}\n", nrhs );
-    UTILS_MEX_ASSERT( nlhs == 0, "Triangle2DMexWrapper, expected no output, nlhs = {}\n", nlhs );
+    Utils::mex_assert( nrhs >= 2, "Triangle2DMexWrapper, expected at least 2 inputs, nrhs = {}\n", nrhs );
+    Utils::mex_assert( nlhs == 0, "Triangle2DMexWrapper, expected no output, nlhs = {}\n", nlhs );
 
     Triangle2D * ptr = Utils::mex_convert_mx_to_ptr<Triangle2D>( arg_in_1 );
 
@@ -129,15 +129,15 @@ namespace G2lib
       real_type const * p0 = Utils::mex_vector_pointer( arg_in_2, sz0, CMD "`p0` expected to be a real vector" );
       real_type const * p1 = Utils::mex_vector_pointer( arg_in_3, sz1, CMD "`p1` expected to be a real vector" );
       real_type const * p2 = Utils::mex_vector_pointer( arg_in_4, sz2, CMD "`p2` expected to be a real vector" );
-      UTILS_MEX_ASSERT0( sz0 == 2, "Triangle2D, expected a vector of 2 elements for `p0`" );
-      UTILS_MEX_ASSERT0( sz1 == 2, "Triangle2D, expected a vector of 2 elements for `p1`" );
-      UTILS_MEX_ASSERT0( sz2 == 2, "Triangle2D, expected a vector of 2 elements for `p2`" );
+      Utils::mex_assert( sz0 == 2, "Triangle2D, expected a vector of 2 elements for `p0`" );
+      Utils::mex_assert( sz1 == 2, "Triangle2D, expected a vector of 2 elements for `p1`" );
+      Utils::mex_assert( sz2 == 2, "Triangle2D, expected a vector of 2 elements for `p2`" );
       ptr->build( p0, p1, p2, 0, 0, 0 );
 #undef CMD
     }
     else
     {
-      UTILS_MEX_ASSERT( false, "Triangle2D, expected 5 or 8 inputs, nrhs = {}\n", nrhs );
+      Utils::mex_assert( false, "Triangle2D, expected 5 or 8 inputs, nrhs = {}\n", nrhs );
     }
   }
 
@@ -146,8 +146,8 @@ namespace G2lib
   static void do_delete( int nlhs, mxArray *[], int nrhs, mxArray const * prhs[] )
   {
 #define CMD "Triangle2DMexWrapper('delete',OBJ): "
-    UTILS_MEX_ASSERT( nrhs == 2, CMD "expected 2 inputs, nrhs = {}\n", nrhs );
-    UTILS_MEX_ASSERT( nlhs == 0, CMD "expected no output, nlhs = {}\n", nlhs );
+    Utils::mex_assert( nrhs == 2, CMD "expected 2 inputs, nrhs = {}\n", nrhs );
+    Utils::mex_assert( nlhs == 0, CMD "expected no output, nlhs = {}\n", nlhs );
     // Destroy the C++ object
     Utils::mex_destroy_object<Triangle2D>( arg_in_1 );
 #undef CMD
@@ -158,8 +158,8 @@ namespace G2lib
   static void do_translate( int nlhs, mxArray *[], int nrhs, mxArray const * prhs[] )
   {
 #define CMD "Triangle2DMexWrapper('translate',OBJ,tx,ty): "
-    UTILS_MEX_ASSERT( nrhs == 4, CMD "expected 4 inputs, nrhs = {}\n", nrhs );
-    UTILS_MEX_ASSERT( nlhs == 0, CMD "expected no output, nlhs = {}\n", nlhs );
+    Utils::mex_assert( nrhs == 4, CMD "expected 4 inputs, nrhs = {}\n", nrhs );
+    Utils::mex_assert( nlhs == 0, CMD "expected no output, nlhs = {}\n", nlhs );
 
     Triangle2D * ptr = Utils::mex_convert_mx_to_ptr<Triangle2D>( arg_in_1 );
 
@@ -176,8 +176,8 @@ namespace G2lib
   {
 #define CMD "Triangle2DMexWrapper('rotate',OBJ,angle,cx,cy): "
 
-    UTILS_MEX_ASSERT( nrhs == 5, CMD "expected 5 inputs, nrhs = {}\n", nrhs );
-    UTILS_MEX_ASSERT( nlhs == 0, CMD "expected no output, nlhs = {}\n", nlhs );
+    Utils::mex_assert( nrhs == 5, CMD "expected 5 inputs, nrhs = {}\n", nrhs );
+    Utils::mex_assert( nlhs == 0, CMD "expected no output, nlhs = {}\n", nlhs );
 
     Triangle2D * ptr = Utils::mex_convert_mx_to_ptr<Triangle2D>( arg_in_1 );
 
@@ -194,8 +194,8 @@ namespace G2lib
   static void do_scale( int nlhs, mxArray *[], int nrhs, mxArray const * prhs[] )
   {
 #define CMD "Triangle2DMexWrapper('scale',OBJ,scale): "
-    UTILS_MEX_ASSERT( nrhs == 3, CMD "expected 3 inputs, nrhs = {}\n", nrhs );
-    UTILS_MEX_ASSERT( nlhs == 0, CMD "expected no output, nlhs = {}\n", nlhs );
+    Utils::mex_assert( nrhs == 3, CMD "expected 3 inputs, nrhs = {}\n", nrhs );
+    Utils::mex_assert( nlhs == 0, CMD "expected no output, nlhs = {}\n", nlhs );
 
     Triangle2D * ptr = Utils::mex_convert_mx_to_ptr<Triangle2D>( arg_in_1 );
 
@@ -209,8 +209,8 @@ namespace G2lib
   static void do_distanceMin( int nlhs, mxArray * plhs[], int nrhs, mxArray const * prhs[] )
   {
 #define CMD "Triangle2DMexWrapper('distanceMin',OBJ,x,y): "
-    UTILS_MEX_ASSERT( nrhs == 4, CMD "expected 4 input, nrhs = {}\n", nrhs );
-    UTILS_MEX_ASSERT( nlhs == 1, CMD "expected 1 output, nlhs = {}\n", nlhs );
+    Utils::mex_assert( nrhs == 4, CMD "expected 4 input, nrhs = {}\n", nrhs );
+    Utils::mex_assert( nlhs == 1, CMD "expected 1 output, nlhs = {}\n", nlhs );
 
     Triangle2D * ptr = Utils::mex_convert_mx_to_ptr<Triangle2D>( arg_in_1 );
 
@@ -218,7 +218,7 @@ namespace G2lib
     real_type const * x =
       Utils::mex_matrix_pointer( arg_in_2, nrx, ncx, CMD "`x` expected to be a real vector/matrix" );
     real_type const * y = Utils::mex_matrix_pointer( arg_in_3, nry, ncy, CMD "`y` expected to be a real vectormatrix" );
-    UTILS_MEX_ASSERT(
+    Utils::mex_assert(
       nrx == nry && ncx == ncy,
       CMD
       "`x` and `y` expected to be of the same size, found\n"
@@ -241,8 +241,8 @@ namespace G2lib
   static void do_distanceMax( int nlhs, mxArray * plhs[], int nrhs, mxArray const * prhs[] )
   {
 #define CMD "Triangle2DMexWrapper('distanceMax',OBJ,x,y): "
-    UTILS_MEX_ASSERT( nrhs == 4, CMD "expected 4 input, nrhs = {}\n", nrhs );
-    UTILS_MEX_ASSERT( nlhs == 1, CMD "expected 1 output, nlhs = {}\n", nlhs );
+    Utils::mex_assert( nrhs == 4, CMD "expected 4 input, nrhs = {}\n", nrhs );
+    Utils::mex_assert( nlhs == 1, CMD "expected 1 output, nlhs = {}\n", nlhs );
 
     Triangle2D * ptr = Utils::mex_convert_mx_to_ptr<Triangle2D>( arg_in_1 );
 
@@ -250,7 +250,7 @@ namespace G2lib
     real_type const * x =
       Utils::mex_matrix_pointer( arg_in_2, nrx, ncx, CMD "`x` expected to be a real vector/matrix" );
     real_type const * y = Utils::mex_matrix_pointer( arg_in_3, nry, ncy, CMD "`y` expected to be a real vectormatrix" );
-    UTILS_MEX_ASSERT(
+    Utils::mex_assert(
       nrx == nry && ncx == ncy,
       CMD
       "`x` and `y` expected to be of the same size, found\n"
@@ -273,8 +273,8 @@ namespace G2lib
   static void do_isInside( int nlhs, mxArray * plhs[], int nrhs, mxArray const * prhs[] )
   {
 #define CMD "Triangle2DMexWrapper('isInside',OBJ,x,y): "
-    UTILS_MEX_ASSERT( nrhs == 4, CMD "expected 4 input, nrhs = {}\n", nrhs );
-    UTILS_MEX_ASSERT( nlhs == 1, CMD "expected 1 output, nlhs = {}\n", nlhs );
+    Utils::mex_assert( nrhs == 4, CMD "expected 4 input, nrhs = {}\n", nrhs );
+    Utils::mex_assert( nlhs == 1, CMD "expected 1 output, nlhs = {}\n", nlhs );
 
     Triangle2D * ptr = Utils::mex_convert_mx_to_ptr<Triangle2D>( arg_in_1 );
 
@@ -282,7 +282,7 @@ namespace G2lib
     real_type const * x =
       Utils::mex_matrix_pointer( arg_in_2, nrx, ncx, CMD "`x` expected to be a real vector/matrix" );
     real_type const * y = Utils::mex_matrix_pointer( arg_in_3, nry, ncy, CMD "`y` expected to be a real vectormatrix" );
-    UTILS_MEX_ASSERT(
+    Utils::mex_assert(
       nrx == nry && ncx == ncy,
       CMD
       "`x` and `y` expected to be of the same size, found\n"
@@ -305,8 +305,8 @@ namespace G2lib
   static void do_overlap( int nlhs, mxArray * plhs[], int nrhs, mxArray const * prhs[] )
   {
 #define CMD "Triangle2DMexWrapper('overlap',OBJ,OBJ2): "
-    UTILS_MEX_ASSERT( nrhs == 3, CMD "expected 3 input, nrhs = {}\n", nrhs );
-    UTILS_MEX_ASSERT( nlhs == 1, CMD "expected 1 output, nlhs = {}\n", nlhs );
+    Utils::mex_assert( nrhs == 3, CMD "expected 3 input, nrhs = {}\n", nrhs );
+    Utils::mex_assert( nlhs == 1, CMD "expected 1 output, nlhs = {}\n", nlhs );
 
     Triangle2D * ptr  = Utils::mex_convert_mx_to_ptr<Triangle2D>( arg_in_1 );
     Triangle2D * ptr2 = Utils::mex_convert_mx_to_ptr<Triangle2D>( arg_in_2 );
@@ -321,8 +321,8 @@ namespace G2lib
   static void do_points( int nlhs, mxArray * plhs[], int nrhs, mxArray const * prhs[] )
   {
 #define CMD "Triangle2DMexWrapper('points',OBJ): "
-    UTILS_MEX_ASSERT( nrhs == 2, CMD "expected 2 input, nrhs = {}\n", nrhs );
-    UTILS_MEX_ASSERT( nlhs == 3, CMD "expected 3 output, nlhs = {}\n", nlhs );
+    Utils::mex_assert( nrhs == 2, CMD "expected 2 input, nrhs = {}\n", nrhs );
+    Utils::mex_assert( nlhs == 3, CMD "expected 3 output, nlhs = {}\n", nlhs );
 
     Triangle2D * ptr = Utils::mex_convert_mx_to_ptr<Triangle2D>( arg_in_1 );
 
@@ -343,8 +343,8 @@ namespace G2lib
   {
 #define CMD "Triangle2DMexWrapper('info',OBJ): "
 
-    UTILS_MEX_ASSERT( nrhs == 2, CMD "expected 2 inputs, nrhs = {}\n", nrhs );
-    UTILS_MEX_ASSERT( nlhs == 0, CMD "expected NO outputs, nlhs = {}\n", nlhs );
+    Utils::mex_assert( nrhs == 2, CMD "expected 2 inputs, nrhs = {}\n", nrhs );
+    Utils::mex_assert( nlhs == 0, CMD "expected NO outputs, nlhs = {}\n", nlhs );
 
     Triangle2D * ptr = Utils::mex_convert_mx_to_ptr<Triangle2D>( arg_in_1 );
 
@@ -384,7 +384,7 @@ namespace G2lib
 
     try
     {
-      UTILS_MEX_ASSERT0( mxIsChar( arg_in_0 ), "Triangle2DMexWrapper(...): First argument must be a string" );
+      Utils::mex_assert( mxIsChar( arg_in_0 ), "Triangle2DMexWrapper(...): First argument must be a string" );
       mxGetString( arg_in_0, cmd, 256 );
       cmd_to_fun.at( cmd )( nlhs, plhs, nrhs, prhs );
     }

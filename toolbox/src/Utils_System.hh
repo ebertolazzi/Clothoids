@@ -28,9 +28,16 @@
 #if defined( __APPLE__ )
 #include <mach/mach.h>
 #include <mach/mach_host.h>
-#include <sys/sysctl.h>
 #include <sys/mount.h>
+#include <sys/sysctl.h>
 #include <sys/statvfs.h>
+#include <unistd.h>
+#endif
+
+#if defined( __linux__ )
+#include <set>
+#include <sys/sysinfo.h>
+#include <unistd.h>
 #endif
 
 #if defined( _WIN32 ) || defined( _WIN64 )
@@ -767,7 +774,7 @@ namespace Utils
       std::string model  = get_cpu_model();
       int         cores  = get_cpu_count();
 
-      return fmt::format( "Architecture: {}, Vendor: {}, Model: {}, Cores: {}", arch, vendor, model, cores );
+      return std::format( "Architecture: {}, Vendor: {}, Model: {}, Cores: {}", arch, vendor, model, cores );
     }
   };
 
@@ -912,7 +919,7 @@ namespace Utils
       if ( pAdapterInfo->Type == MIB_IF_TYPE_ETHERNET || pAdapterInfo->Type == IF_TYPE_IEEE80211 )
       {
         unsigned char const * MACData{ pAdapterInfo->Address };
-        std::string           str = fmt::format(
+        std::string           str = std::format(
           "{:02x}:{:02x}:{:02x}:{:02x}:{:02x}:{:02x}",
           MACData[0],
           MACData[1],
@@ -1031,7 +1038,7 @@ namespace Utils
   {
     SYSTEMTIME st;
     GetLocalTime( &st );
-    return fmt::format( "{:04}-{:02}-{:02}", st.wYear, st.wMonth, st.wDay );
+    return std::format( "{:04}-{:02}-{:02}", st.wYear, st.wMonth, st.wDay );
   }
 
   /**
@@ -1042,7 +1049,7 @@ namespace Utils
   {
     SYSTEMTIME st;
     GetLocalTime( &st );
-    return fmt::format( "{:02}:{:02}:{:02}", st.wHour, st.wMinute, st.wSecond );
+    return std::format( "{:02}:{:02}:{:02}", st.wHour, st.wMinute, st.wSecond );
   }
 
   /**
@@ -1053,7 +1060,7 @@ namespace Utils
   {
     SYSTEMTIME st;
     GetLocalTime( &st );
-    return fmt::format(
+    return std::format(
       "date_{:04}-{:02}-{:02}_time_{:02}-{:02}-{:02}",
       st.wYear,
       st.wMonth,
@@ -1071,7 +1078,7 @@ namespace Utils
   {
     SYSTEMTIME st;
     GetLocalTime( &st );
-    return fmt::format(
+    return std::format(
       "{:02}:{:02}:{:02} {:04}-{:02}-{:02}",
       st.wHour,
       st.wMinute,
@@ -1144,7 +1151,7 @@ namespace Utils
   inline void get_MAC_address( std::map<std::string, std::string> & mac_addr )
   {
     char           buf[8192] = { 0 };
-    struct ifconf  ifc       = { 0 };
+    struct ifconf  ifc{};
     struct ifreq * ifr       = nullptr;
 
     int sck = socket( PF_INET, SOCK_DGRAM, 0 );
@@ -1173,7 +1180,7 @@ namespace Utils
       {
         if ( ioctl( sck, SIOCGIFHWADDR, item ) >= 0 )
         {
-          std::string mac_str = fmt::format(
+          std::string mac_str = std::format(
             "{:02x}:{:02x}:{:02x}:{:02x}:{:02x}:{:02x}",
             static_cast<unsigned char>( item->ifr_hwaddr.sa_data[0] ),
             static_cast<unsigned char>( item->ifr_hwaddr.sa_data[1] ),
@@ -1208,7 +1215,7 @@ namespace Utils
         for ( int j = 0; j < pHost->h_length; j++ )
         {
           if ( j > 0 ) str += '.';
-          str += fmt::format( "{}", static_cast<int>( h[j] ) );
+          str += std::format( "{}", static_cast<int>( h[j] ) );
         }
         addr.emplace_back( str );
       }
@@ -1366,7 +1373,7 @@ namespace Utils
         unsigned char *      ptr = reinterpret_cast<unsigned char *>( LLADDR( tmp ) );
 
         std::string mac_str =
-          fmt::format( "{:02x}:{:02x}:{:02x}:{:02x}:{:02x}:{:02x}", ptr[0], ptr[1], ptr[2], ptr[3], ptr[4], ptr[5] );
+          std::format( "{:02x}:{:02x}:{:02x}:{:02x}:{:02x}:{:02x}", ptr[0], ptr[1], ptr[2], ptr[3], ptr[4], ptr[5] );
         addr[ifaptr->ifa_name] = mac_str;
       }
     }
@@ -1393,7 +1400,7 @@ namespace Utils
         for ( int j = 0; j < pHost->h_length; j++ )
         {
           if ( j > 0 ) str += '.';
-          str += fmt::format( "{}", static_cast<int>( h[j] ) );
+          str += std::format( "{}", static_cast<int>( h[j] ) );
         }
         addr.emplace_back( str );
       }
@@ -1568,7 +1575,7 @@ namespace Utils
      */
     std::string to_string() const
     {
-      return fmt::format(
+      return std::format(
         "Total: {:.2f} GB, Free: {:.2f} GB, Used: {:.2f} GB ({:.1f}%)",
         static_cast<double>( total_bytes ) / ( 1024.0 * 1024.0 * 1024.0 ),
         static_cast<double>( free_bytes ) / ( 1024.0 * 1024.0 * 1024.0 ),
@@ -1598,7 +1605,7 @@ namespace Utils
      */
     std::string to_string() const
     {
-      return fmt::format(
+      return std::format(
         "Physical: {:.2f} GB total, {:.2f} GB available ({:.1f}% used)",
         static_cast<double>( total_physical ) / ( 1024.0 * 1024.0 * 1024.0 ),
         static_cast<double>( available_physical ) / ( 1024.0 * 1024.0 * 1024.0 ),
@@ -1622,7 +1629,7 @@ namespace Utils
      */
     std::string to_string() const
     {
-      return fmt::format(
+      return std::format(
         "Load averages: {:.2f} (1min), {:.2f} (5min), {:.2f} (15min)",
         load_1min,
         load_5min,
@@ -1665,7 +1672,8 @@ namespace Utils
       info.total_physical     = sysInfo.totalram * sysInfo.mem_unit;
       info.available_physical = sysInfo.freeram * sysInfo.mem_unit;
       info.used_physical      = info.total_physical - info.available_physical;
-      info.usage_percentage   = ( info.used_physical * 100.0 ) / info.total_physical;
+      info.usage_percentage =
+        ( static_cast<double>( info.used_physical ) * 100.0 ) / static_cast<double>( info.total_physical );
 
       info.total_virtual     = ( sysInfo.totalram + sysInfo.totalswap ) * sysInfo.mem_unit;
       info.available_virtual = ( sysInfo.freeram + sysInfo.freeswap ) * sysInfo.mem_unit;
@@ -1694,7 +1702,8 @@ namespace Utils
         // More accurate available memory calculation for Linux
         info.available_physical = ( mem_free + buffers + cached ) * 1024;
         info.used_physical      = info.total_physical - info.available_physical;
-        info.usage_percentage   = ( info.used_physical * 100.0 ) / info.total_physical;
+        info.usage_percentage =
+          ( static_cast<double>( info.used_physical ) * 100.0 ) / static_cast<double>( info.total_physical );
       }
     }
 
@@ -2013,10 +2022,10 @@ namespace Utils
     uint64_t minutes = seconds / 60;
     seconds %= 60;
 
-    if ( days > 0 ) { return fmt::format( "{} days, {:02}:{:02}:{:02}", days, hours, minutes, seconds ); }
+    if ( days > 0 ) { return std::format( "{} days, {:02}:{:02}:{:02}", days, hours, minutes, seconds ); }
     else
     {
-      return fmt::format( "{:02}:{:02}:{:02}", hours, minutes, seconds );
+      return std::format( "{:02}:{:02}:{:02}", hours, minutes, seconds );
     }
   }
 
@@ -2025,60 +2034,77 @@ namespace Utils
    * @return Formatted string with architecture, CPU, memory, load, uptime,
    *         disk space, host information, and current date/time.
    */
-  inline std::string get_system_summary()
+  inline std::string
+  get_system_summary()
   {
-    fmt::memory_buffer buf;
-    auto               out = fmt::appender( buf );
-
+    std::string res;
+    res.reserve( 1024 );
+  
     // Architecture info
-    fmt::format_to(
-      out,
-      "Architecture: {}\n"
-      "CPU: {} ({} cores)\n"
-      "CPU Vendor: {}\n",
-      Architecture::get_architecture_string(),
-      Architecture::get_cpu_model(),
-      Architecture::get_cpu_count(),
-      Architecture::get_cpu_vendor() );
-
+    res += "Architecture: ";
+    res += Architecture::get_architecture_string();
+    res += '\n';
+  
+    res += "CPU: ";
+    res += Architecture::get_cpu_model();
+    res += " (";
+    res += std::to_string( Architecture::get_cpu_count() );
+    res += " cores)\n";
+  
+    res += "CPU Vendor: ";
+    res += Architecture::get_cpu_vendor();
+    res += '\n';
+  
     // Memory info
-    MemoryInfo mem = get_memory_info();
-    fmt::format_to( out, "Memory: {}\n", mem.to_string() );
-
+    MemoryInfo const mem = get_memory_info();
+    res += "Memory: ";
+    res += mem.to_string();
+    res += '\n';
+  
     // System load
-    SystemLoadInfo load = get_system_load();
-    fmt::format_to( out, "System Load: {}\n", load.to_string() );
-
+    SystemLoadInfo const load = get_system_load();
+    res += "System Load: ";
+    res += load.to_string();
+    res += '\n';
+  
     // Uptime
-    uint64_t uptime = get_system_uptime();
-    fmt::format_to( out, "Uptime: {}\n", format_uptime( uptime ) );
-
+    std::uint64_t const uptime = get_system_uptime();
+    res += "Uptime: ";
+    res += format_uptime( uptime );
+    res += '\n';
+  
     // Disk space (root filesystem)
-#if defined( _WIN32 ) || defined( _WIN64 )
-    constexpr const char * root_path = "C:\\";
-#else
-    constexpr const char * root_path = "/";
-#endif
-
-    DiskSpaceInfo disk = get_disk_space( root_path );
-    fmt::format_to( out, "Root Filesystem: {}\n", disk.to_string() );
-
+  #if defined( _WIN32 ) || defined( _WIN64 )
+    constexpr char const * root_path = "C:\\";
+  #else
+    constexpr char const * root_path = "/";
+  #endif
+  
+    DiskSpaceInfo const disk = get_disk_space( root_path );
+    res += "Root Filesystem: ";
+    res += disk.to_string();
+    res += '\n';
+  
     // Host information
-    fmt::format_to(
-      out,
-      "Hostname: {}\n"
-      "Username: {}\n"
-      "Home Directory: {}\n",
-      get_host_name(),
-      get_user_name(),
-      get_home_directory() );
-
+    res += "Hostname: ";
+    res += get_host_name();
+    res += '\n';
+  
+    res += "Username: ";
+    res += get_user_name();
+    res += '\n';
+  
+    res += "Home Directory: ";
+    res += get_home_directory();
+    res += '\n';
+  
     // Date and time
-    fmt::format_to( out, "Current Date/Time: {}\n", get_day_time_and_date() );
-
-    return fmt::to_string( buf );
+    res += "Current Date/Time: ";
+    res += get_day_time_and_date();
+    res += '\n';
+  
+    return res;
   }
-
 
 }  // namespace Utils
 

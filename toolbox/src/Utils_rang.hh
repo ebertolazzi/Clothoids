@@ -6,6 +6,11 @@
 
 \*/
 
+#pragma once
+
+#ifndef UTILS_RANG_HH
+#define UTILS_RANG_HH
+
 #include <algorithm>
 #include <atomic>
 #include <cstdlib>
@@ -516,6 +521,8 @@ namespace rang
 
 }  // namespace rang
 
+#endif
+
 //
-// eof: rang.hh
+// eof: Utils_rang.hh
 //

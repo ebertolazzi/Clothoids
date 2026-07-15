@@ -7,6 +7,7 @@
 // This Source Code Form is subject to the terms of the Mozilla
 // Public License v. 2.0. If a copy of the MPL was not distributed
 // with this file, You can obtain one at http://mozilla.org/MPL/2.0/.
+// SPDX-License-Identifier: MPL-2.0
 
 #ifndef EIGEN_EIGENSOLVER_H
 #define EIGEN_EIGENSOLVER_H
@@ -270,7 +271,7 @@ class EigenSolver {
    * (where \f$ n \f$ is the size of the matrix) if \p computeEigenvectors
    * is true, and \f$ 10n^3 \f$ if \p computeEigenvectors is false.
    *
-   * This method reuses of the allocated data in the EigenSolver object.
+   * This method reuses the allocated data in the EigenSolver object.
    *
    * Example: \include EigenSolver_compute.cpp
    * Output: \verbinclude EigenSolver_compute.out
@@ -292,7 +293,7 @@ class EigenSolver {
   }
 
   /** \brief Returns the maximum number of iterations. */
-  Index getMaxIterations() { return m_realSchur.getMaxIterations(); }
+  Index getMaxIterations() const { return m_realSchur.getMaxIterations(); }
 
  private:
   void doComputeEigenvectors();

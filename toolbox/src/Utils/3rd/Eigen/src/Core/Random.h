@@ -6,6 +6,7 @@
 // This Source Code Form is subject to the terms of the Mozilla
 // Public License v. 2.0. If a copy of the MPL was not distributed
 // with this file, You can obtain one at http://mozilla.org/MPL/2.0/.
+// SPDX-License-Identifier: MPL-2.0
 
 #ifndef EIGEN_RANDOM_H
 #define EIGEN_RANDOM_H
@@ -19,7 +20,7 @@ namespace internal {
 
 template <typename Scalar>
 struct scalar_random_op {
-  inline const Scalar operator()() const { return random<Scalar>(); }
+  inline Scalar operator()() const { return random<Scalar>(); }
 };
 
 template <typename Scalar>
@@ -51,7 +52,7 @@ struct functor_traits<scalar_random_op<Scalar> > {
  * a temporary matrix whenever it is nested in a larger expression. This prevents unexpected
  * behavior with expressions involving random matrices.
  *
- * See DenseBase::NullaryExpr(Index, const CustomNullaryOp&) for an example using C++11 random generators.
+ * See DenseBase::NullaryExpr(Index, const CustomNullaryOp&) for an example using std random generators.
  *
  * \sa DenseBase::setRandom(), DenseBase::Random(Index), DenseBase::Random()
  */

@@ -6,6 +6,7 @@
 // This Source Code Form is subject to the terms of the Mozilla
 // Public License v. 2.0. If a copy of the MPL was not distributed
 // with this file, You can obtain one at http://mozilla.org/MPL/2.0/.
+// SPDX-License-Identifier: MPL-2.0
 
 #ifndef EIGEN_PRODUCT_H
 #define EIGEN_PRODUCT_H
@@ -29,10 +30,9 @@ struct traits<Product<Lhs, Rhs, Option>> {
 
   typedef MatrixXpr XprKind;
 
-  typedef typename ScalarBinaryOpTraits<typename traits<LhsCleaned>::Scalar,
-                                        typename traits<RhsCleaned>::Scalar>::ReturnType Scalar;
+  typedef typename ScalarBinaryOpTraits<typename LhsTraits::Scalar, typename RhsTraits::Scalar>::ReturnType Scalar;
   typedef typename product_promote_storage_type<typename LhsTraits::StorageKind, typename RhsTraits::StorageKind,
-                                                internal::product_type<Lhs, Rhs>::ret>::ret StorageKind;
+                                                internal::product_type<Lhs, Rhs>::value>::ret StorageKind;
   typedef typename promote_index_type<typename LhsTraits::StorageIndex, typename RhsTraits::StorageIndex>::type
       StorageIndex;
 
@@ -199,7 +199,7 @@ class Product
     : public ProductImpl<Lhs_, Rhs_, Option,
                          typename internal::product_promote_storage_type<
                              typename internal::traits<Lhs_>::StorageKind, typename internal::traits<Rhs_>::StorageKind,
-                             internal::product_type<Lhs_, Rhs_>::ret>::ret> {
+                             internal::product_type<Lhs_, Rhs_>::value>::ret> {
  public:
   typedef Lhs_ Lhs;
   typedef Rhs_ Rhs;
@@ -208,7 +208,7 @@ class Product
       typename ProductImpl<Lhs, Rhs, Option,
                            typename internal::product_promote_storage_type<
                                typename internal::traits<Lhs>::StorageKind, typename internal::traits<Rhs>::StorageKind,
-                               internal::product_type<Lhs, Rhs>::ret>::ret>::Base Base;
+                               internal::product_type<Lhs, Rhs>::value>::ret>::Base Base;
   EIGEN_GENERIC_PUBLIC_INTERFACE(Product)
 
   typedef typename internal::ref_selector<Lhs>::type LhsNested;
@@ -219,16 +219,16 @@ class Product
   using TransposeReturnType = typename internal::product_transpose_helper<Lhs, Rhs, Option>::TransposeType;
   using AdjointReturnType = typename internal::product_transpose_helper<Lhs, Rhs, Option>::AdjointType;
 
-  EIGEN_DEVICE_FUNC EIGEN_STRONG_INLINE Product(const Lhs& lhs, const Rhs& rhs) : m_lhs(lhs), m_rhs(rhs) {
+  EIGEN_DEVICE_FUNC constexpr EIGEN_STRONG_INLINE Product(const Lhs& lhs, const Rhs& rhs) : m_lhs(lhs), m_rhs(rhs) {
     eigen_assert(lhs.cols() == rhs.rows() && "invalid matrix product" &&
                  "if you wanted a coeff-wise or a dot product use the respective explicit functions");
   }
 
-  EIGEN_DEVICE_FUNC EIGEN_STRONG_INLINE constexpr Index rows() const noexcept { return m_lhs.rows(); }
-  EIGEN_DEVICE_FUNC EIGEN_STRONG_INLINE constexpr Index cols() const noexcept { return m_rhs.cols(); }
+  EIGEN_DEVICE_FUNC constexpr Index rows() const noexcept { return m_lhs.rows(); }
+  EIGEN_DEVICE_FUNC constexpr Index cols() const noexcept { return m_rhs.cols(); }
 
-  EIGEN_DEVICE_FUNC EIGEN_STRONG_INLINE const LhsNestedCleaned& lhs() const { return m_lhs; }
-  EIGEN_DEVICE_FUNC EIGEN_STRONG_INLINE const RhsNestedCleaned& rhs() const { return m_rhs; }
+  EIGEN_DEVICE_FUNC constexpr EIGEN_STRONG_INLINE const LhsNestedCleaned& lhs() const { return m_lhs; }
+  EIGEN_DEVICE_FUNC constexpr EIGEN_STRONG_INLINE const RhsNestedCleaned& rhs() const { return m_rhs; }
 
   EIGEN_DEVICE_FUNC EIGEN_STRONG_INLINE TransposeReturnType transpose() const {
     return internal::product_transpose_helper<Lhs, Rhs, Option>::run_transpose(*this);
@@ -244,7 +244,7 @@ class Product
 
 namespace internal {
 
-template <typename Lhs, typename Rhs, int Option, int ProductTag = internal::product_type<Lhs, Rhs>::ret>
+template <typename Lhs, typename Rhs, int Option, int ProductTag = internal::product_type<Lhs, Rhs>::value>
 class dense_product_base : public internal::dense_xpr_base<Product<Lhs, Rhs, Option>>::type {};
 
 /** Conversion to scalar for inner-products */

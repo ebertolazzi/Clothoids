@@ -59,16 +59,16 @@ namespace Utils
   public:
     explicit DenseSymmetricSolver( Matrix const & A, Scalar lambda )
     {
-      UTILS_ASSERT( A.rows() == A.cols(), "DenseSymmetricSolver( A, λ={} ) Matrix A must be square.", lambda );
-      UTILS_ASSERT( Utils::isSymmetric( A ), "DenseSymmetricSolver( A, λ={} ) Matrix A must be symmetric.", lambda );
+      Utils::Assert( A.rows() == A.cols(), "DenseSymmetricSolver( A, λ={} ) Matrix A must be square.", lambda );
+      Utils::Assert( Utils::isSymmetric( A ), "DenseSymmetricSolver( A, λ={} ) Matrix A must be symmetric.", lambda );
       m_dim = A.rows();
       new ( &m_solver ) Solver( A + lambda * Matrix::Identity( A.rows(), A.cols() ) );
     }
 
     explicit DenseSymmetricSolver( SparseMatrix const & A, Scalar lambda )
     {
-      UTILS_ASSERT( A.rows() == A.cols(), "DenseSymmetricSolver( A, λ={} ) Matrix A must be square.", lambda );
-      UTILS_ASSERT( Utils::isSymmetric( A ), "DenseSymmetricSolver( A, λ={} ) Matrix A must be symmetric.", lambda );
+      Utils::Assert( A.rows() == A.cols(), "DenseSymmetricSolver( A, λ={} ) Matrix A must be square.", lambda );
+      Utils::Assert( Utils::isSymmetric( A ), "DenseSymmetricSolver( A, λ={} ) Matrix A must be symmetric.", lambda );
       m_dim     = A.rows();
       Matrix AA = A;
       AA += lambda * Matrix::Identity( A.rows(), A.cols() );
@@ -77,7 +77,7 @@ namespace Utils
 
     Vector solve( Vector const & b ) const
     {
-      UTILS_ASSERT(
+      Utils::Assert(
         b.size() == m_dim,
         "DenseSymmetricSolver.solve( b ) b has incorrect dimension #b = {} expected {}",
         b.size(),
@@ -87,7 +87,7 @@ namespace Utils
 
     void solve_in_place( Vector & b ) const
     {
-      UTILS_ASSERT(
+      Utils::Assert(
         b.size() == m_dim,
         "DenseSymmetricSolver.solve_in_place( b ) b has incorrect dimension #b = {} expected {}",
         b.size(),
@@ -116,8 +116,8 @@ namespace Utils
   public:
     explicit SparseSymmetricSolver( SparseMatrix const & A, Scalar lambda )
     {
-      UTILS_ASSERT( A.rows() == A.cols(), "SparseSymmetricSolver( A, λ={} ) Matrix A must be square.", lambda );
-      UTILS_ASSERT( Utils::isSymmetric( A ), "SparseSymmetricSolver( A, λ={} ) Matrix A must be symmetric.", lambda );
+      Utils::Assert( A.rows() == A.cols(), "SparseSymmetricSolver( A, λ={} ) Matrix A must be square.", lambda );
+      Utils::Assert( Utils::isSymmetric( A ), "SparseSymmetricSolver( A, λ={} ) Matrix A must be symmetric.", lambda );
       m_dim = A.rows();
 
       SparseMatrix M = A;
@@ -126,7 +126,7 @@ namespace Utils
 
       m_solver.compute( M );
 
-      UTILS_ASSERT(
+      Utils::Assert(
         m_solver.info() == Eigen::Success,
         "SparseSymmetricSolver( A, λ={} ) Factorization failed. Matrix may be singular or indefinite.",
         lambda );
@@ -134,8 +134,8 @@ namespace Utils
 
     explicit SparseSymmetricSolver( Matrix const & A, Scalar lambda )
     {
-      UTILS_ASSERT( A.rows() == A.cols(), "SparseSymmetricSolver( A, λ={} ) Matrix A must be square.", lambda );
-      UTILS_ASSERT( Utils::isSymmetric( A ), "SparseSymmetricSolver( A, λ={} ) Matrix A must be symmetric.", lambda );
+      Utils::Assert( A.rows() == A.cols(), "SparseSymmetricSolver( A, λ={} ) Matrix A must be square.", lambda );
+      Utils::Assert( Utils::isSymmetric( A ), "SparseSymmetricSolver( A, λ={} ) Matrix A must be symmetric.", lambda );
       m_dim = A.rows();
 
       SparseMatrix M = A;
@@ -144,7 +144,7 @@ namespace Utils
 
       m_solver.compute( M );
 
-      UTILS_ASSERT(
+      Utils::Assert(
         m_solver.info() == Eigen::Success,
         "SparseSymmetricSolver( A, λ={} ) Factorization failed. Matrix may be singular or indefinite.",
         lambda );
@@ -152,7 +152,7 @@ namespace Utils
 
     Vector solve( Vector const & b ) const
     {
-      UTILS_ASSERT(
+      Utils::Assert(
         b.size() == m_dim,
         "SparseSymmetricSolver.solve( b ) b has incorrect dimension #b = {} expected {}",
         b.size(),
@@ -162,7 +162,7 @@ namespace Utils
 
     void solve_in_place( Vector & b ) const
     {
-      UTILS_ASSERT(
+      Utils::Assert(
         b.size() == m_dim,
         "SparseSymmetricSolver.solve_in_place( b ) b has incorrect dimension #b = {} expected {}",
         b.size(),
@@ -332,13 +332,13 @@ namespace Utils
       {
         if ( block.is_dense && dense_solver ) { return dense_solver->solve( b_block ); }
         else if ( !block.is_dense && sparse_solver ) { return sparse_solver->solve( b_block ); }
-        UTILS_ASSERT( false, "BlockSolver: solver not initialized" );
+        Utils::Assert( false, "BlockSolver: solver not initialized" );
         return Vector();
       }
 
       void solve_in_place( Vector & b_block ) const
       {
-        UTILS_ASSERT(
+        Utils::Assert(
           b_block.size() == block.size,
           "BlockSolver.solve_in_place: wrong dimension {} expected {}",
           b_block.size(),
@@ -348,7 +348,7 @@ namespace Utils
         else if ( !block.is_dense && sparse_solver ) { sparse_solver->solve_in_place( b_block ); }
         else
         {
-          UTILS_ASSERT( false, "BlockSolver: solver not initialized" );
+          Utils::Assert( false, "BlockSolver: solver not initialized" );
         }
       }
     };
@@ -378,8 +378,8 @@ namespace Utils
       m_dim    = A.rows();
       m_lambda = lambda;
 
-      UTILS_ASSERT( A.rows() == A.cols(), "SymmetricSolver( A, λ={} ) Matrix A must be square.", lambda );
-      UTILS_ASSERT( Utils::isSymmetric( A ), "SymmetricSolver( A, λ={} ) Matrix A must be symmetric.", lambda );
+      Utils::Assert( A.rows() == A.cols(), "SymmetricSolver( A, λ={} ) Matrix A must be square.", lambda );
+      Utils::Assert( Utils::isSymmetric( A ), "SymmetricSolver( A, λ={} ) Matrix A must be symmetric.", lambda );
 
       if ( m_dim <= DenseThreshold )
       {
@@ -401,8 +401,8 @@ namespace Utils
       m_dim    = A.rows();
       m_lambda = lambda;
 
-      UTILS_ASSERT( A.rows() == A.cols(), "SymmetricSolver( A, λ={} ) Matrix A must be square.", lambda );
-      UTILS_ASSERT( Utils::isSymmetric( A ), "SymmetricSolver( A, λ={} ) Matrix A must be symmetric.", lambda );
+      Utils::Assert( A.rows() == A.cols(), "SymmetricSolver( A, λ={} ) Matrix A must be square.", lambda );
+      Utils::Assert( Utils::isSymmetric( A ), "SymmetricSolver( A, λ={} ) Matrix A must be symmetric.", lambda );
 
       Partitioning part = partitioning.has_partitioning()
                             ? partitioning
@@ -472,7 +472,7 @@ namespace Utils
 
     Vector solve( const Vector & b ) const
     {
-      UTILS_ASSERT(
+      Utils::Assert(
         b.size() == m_dim,
         "SymmetricSolver.solve(b): b has incorrect dimension #b = {} expected {}",
         b.size(),
@@ -505,13 +505,13 @@ namespace Utils
         }
       }
 
-      UTILS_ASSERT( false, "SymmetricSolver: invalid strategy" );
+      Utils::Assert( false, "SymmetricSolver: invalid strategy" );
       return Vector();
     }
 
     void solve_in_place( Vector & b ) const
     {
-      UTILS_ASSERT(
+      Utils::Assert(
         b.size() == m_dim,
         "SymmetricSolver.solve_in_place(b): b has incorrect dimension #b = {} expected {}",
         b.size(),
@@ -536,7 +536,7 @@ namespace Utils
           }
           break;
 
-        default: UTILS_ASSERT( false, "SymmetricSolver: invalid strategy" );
+        default: Utils::Assert( false, "SymmetricSolver: invalid strategy" );
       }
     }
 
@@ -564,7 +564,7 @@ namespace Utils
       if constexpr ( !UseParallel || m_strategy != Strategy::BlockDiagonal ) { return solve( b ); }
       else
       {
-        UTILS_ASSERT(
+        Utils::Assert(
           b.size() == m_dim,
           "SymmetricSolver.solve_parallel(b): b has incorrect dimension #b = {} expected {}",
           b.size(),

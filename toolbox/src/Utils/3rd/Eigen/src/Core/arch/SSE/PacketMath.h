@@ -6,6 +6,7 @@
 // This Source Code Form is subject to the terms of the Mozilla
 // Public License v. 2.0. If a copy of the MPL was not distributed
 // with this file, You can obtain one at http://mozilla.org/MPL/2.0/.
+// SPDX-License-Identifier: MPL-2.0
 
 #ifndef EIGEN_PACKET_MATH_SSE_H
 #define EIGEN_PACKET_MATH_SSE_H
@@ -55,41 +56,29 @@ typedef eigen_packet_wrapper<__m128i, 4> Packet4ui;
 typedef eigen_packet_wrapper<__m128i, 5> Packet2l;
 
 template <>
-struct is_arithmetic<__m128> {
-  enum { value = true };
-};
+struct is_arithmetic<__m128> : std::true_type {};
 template <>
-struct is_arithmetic<__m128i> {
-  enum { value = true };
-};
+struct is_arithmetic<__m128i> : std::true_type {};
 template <>
-struct is_arithmetic<__m128d> {
-  enum { value = true };
-};
+struct is_arithmetic<__m128d> : std::true_type {};
 template <>
-struct is_arithmetic<Packet4i> {
-  enum { value = true };
-};
+struct is_arithmetic<Packet4i> : std::true_type {};
 template <>
-struct is_arithmetic<Packet2l> {
-  enum { value = true };
-};
+struct is_arithmetic<Packet2l> : std::true_type {};
 // Note that `Packet4ui` uses the underlying type `__m128i`, which is
 // interpreted as a vector of _signed_ `int32`s, which breaks some arithmetic
 // operations used in `GenericPacketMath.h`.
 template <>
-struct is_arithmetic<Packet4ui> {
-  enum { value = false };
-};
+struct is_arithmetic<Packet4ui> : std::false_type {};
 template <>
-struct is_arithmetic<Packet16b> {
-  enum { value = true };
-};
+struct is_arithmetic<Packet16b> : std::true_type {};
 
 template <int p, int q, int r, int s>
 struct shuffle_mask {
   enum { mask = (s) << 6 | (r) << 4 | (q) << 2 | (p) };
 };
+
+#define SIGN_MASK_I32 static_cast<int32_t>(0x80000000)
 
 // TODO: change the implementation of all swizzle* ops from macro to template,
 #define vec4f_swizzle1(v, p, q, r, s) \
@@ -183,12 +172,18 @@ struct packet_traits<float> : default_packet_traits {
     HasReciprocal = EIGEN_FAST_MATH,
     HasSin = EIGEN_FAST_MATH,
     HasCos = EIGEN_FAST_MATH,
+    HasTan = EIGEN_FAST_MATH,
     HasACos = 1,
     HasASin = 1,
     HasATan = 1,
     HasATanh = 1,
+    HasSinh = 1,
+    HasCosh = 1,
+    HasASinh = 1,
+    HasACosh = 1,
     HasLog = 1,
     HasLog1p = 1,
+    HasLog10 = 1,
     HasExpm1 = 1,
     HasNdtri = 1,
     HasExp = 1,
@@ -200,7 +195,6 @@ struct packet_traits<float> : default_packet_traits {
     HasTanh = EIGEN_FAST_MATH,
     HasErf = EIGEN_FAST_MATH,
     HasErfc = EIGEN_FAST_MATH,
-    HasBlend = 1,
     HasSign = 0  // The manually vectorized version is slightly slower for SSE.
   };
 };
@@ -217,18 +211,25 @@ struct packet_traits<double> : default_packet_traits {
     HasDiv = 1,
     HasSin = EIGEN_FAST_MATH,
     HasCos = EIGEN_FAST_MATH,
+    HasTan = EIGEN_FAST_MATH,
+    HasSinh = 1,
+    HasCosh = 1,
+    HasASinh = 1,
+    HasACosh = 1,
     HasTanh = EIGEN_FAST_MATH,
-    HasLog = 1,
     HasErf = EIGEN_FAST_MATH,
     HasErfc = EIGEN_FAST_MATH,
+    HasLog = 1,
+    HasLog10 = 1,
     HasExp = 1,
+    HasLog1p = 1,
+    HasExpm1 = 1,
     HasPow = 1,
     HasSqrt = 1,
     HasRsqrt = 1,
     HasCbrt = 1,
     HasATan = 1,
     HasATanh = 1,
-    HasBlend = 1
   };
 };
 template <>
@@ -243,7 +244,6 @@ struct packet_traits<int> : default_packet_traits {
     HasCmp = 1,
     HasDiv = 1,
     HasShift = 1,
-    HasBlend = 1
   };
 };
 template <>
@@ -255,11 +255,9 @@ struct packet_traits<uint32_t> : default_packet_traits {
     AlignedOnScalar = 1,
     size = 4,
 
-    HasDiv = 0,
     HasNegate = 0,
     HasCmp = 1,
     HasShift = 1,
-    HasBlend = 1
   };
 };
 template <>
@@ -271,10 +269,8 @@ struct packet_traits<int64_t> : default_packet_traits {
     AlignedOnScalar = 1,
     size = 2,
 
-    HasDiv = 0,
     HasCmp = 1,
     HasShift = 1,
-    HasBlend = 1
   };
 };
 #endif
@@ -290,7 +286,6 @@ struct packet_traits<bool> : default_packet_traits {
     HasCmp = 1,
     HasShift = 0,
     HasAbs = 0,
-    HasAbs2 = 0,
     HasMin = 0,
     HasMax = 0,
     HasConj = 0,
@@ -377,13 +372,9 @@ struct unpacket_traits<Packet16b> {
 
 #ifndef EIGEN_VECTORIZE_AVX
 template <>
-struct scalar_div_cost<float, true> {
-  enum { value = 7 };
-};
+struct scalar_div_cost<float, true> : std::integral_constant<int, 7> {};
 template <>
-struct scalar_div_cost<double, true> {
-  enum { value = 8 };
-};
+struct scalar_div_cost<double, true> : std::integral_constant<int, 8> {};
 #endif
 
 template <>
@@ -463,7 +454,7 @@ EIGEN_STRONG_INLINE Packet4ui pzero(const Packet4ui& /*a*/) {
 }
 
 // GCC generates a shufps instruction for _mm_set1_ps/_mm_load1_ps instead of the more efficient pshufd instruction.
-// However, using inrinsics for pset1 makes gcc to generate crappy code in some cases (see bug 203)
+// However, using intrinsics for pset1 makes gcc to generate crappy code in some cases (see bug 203)
 // Using inline assembly is also not an option because then gcc fails to reorder properly the instructions.
 // Therefore, we introduced the pload1 functions to be used in product kernels for which bug 203 does not apply.
 // Also note that with AVX, we want it to generate a vbroadcastss.
@@ -564,7 +555,7 @@ EIGEN_STRONG_INLINE Packet4f paddsub<Packet4f>(const Packet4f& a, const Packet4f
 #ifdef EIGEN_VECTORIZE_SSE3
   return _mm_addsub_ps(a, b);
 #else
-  const Packet4f mask = _mm_castsi128_ps(_mm_setr_epi32(0x80000000, 0x0, 0x80000000, 0x0));
+  const Packet4f mask = _mm_castsi128_ps(_mm_setr_epi32(SIGN_MASK_I32, 0x0, SIGN_MASK_I32, 0x0));
   return padd(a, pxor(mask, b));
 #endif
 }
@@ -576,19 +567,19 @@ EIGEN_STRONG_INLINE Packet2d paddsub<Packet2d>(const Packet2d& a, const Packet2d
 #ifdef EIGEN_VECTORIZE_SSE3
   return _mm_addsub_pd(a, b);
 #else
-  const Packet2d mask = _mm_castsi128_pd(_mm_setr_epi32(0x0, 0x80000000, 0x0, 0x0));
+  const Packet2d mask = _mm_castsi128_pd(_mm_setr_epi32(0x0, SIGN_MASK_I32, 0x0, 0x0));
   return padd(a, pxor(mask, b));
 #endif
 }
 
 template <>
 EIGEN_STRONG_INLINE Packet4f pnegate(const Packet4f& a) {
-  const Packet4f mask = _mm_castsi128_ps(_mm_setr_epi32(0x80000000, 0x80000000, 0x80000000, 0x80000000));
+  const Packet4f mask = _mm_castsi128_ps(_mm_setr_epi32(SIGN_MASK_I32, SIGN_MASK_I32, SIGN_MASK_I32, SIGN_MASK_I32));
   return _mm_xor_ps(a, mask);
 }
 template <>
 EIGEN_STRONG_INLINE Packet2d pnegate(const Packet2d& a) {
-  const Packet2d mask = _mm_castsi128_pd(_mm_setr_epi32(0x0, 0x80000000, 0x0, 0x80000000));
+  const Packet2d mask = _mm_castsi128_pd(_mm_setr_epi32(0x0, SIGN_MASK_I32, 0x0, SIGN_MASK_I32));
   return _mm_xor_pd(a, mask);
 }
 template <>
@@ -1253,7 +1244,7 @@ EIGEN_STRONG_INLINE Packet4f pabs(const Packet4f& a) {
 }
 template <>
 EIGEN_STRONG_INLINE Packet2d pabs(const Packet2d& a) {
-  const __m128i mask = _mm_setr_epi32(0xFFFFFFFF, 0x7FFFFFFF, 0xFFFFFFFF, 0x7FFFFFFF);
+  const __m128i mask = _mm_setr_epi32(-1, 0x7FFFFFFF, -1, 0x7FFFFFFF);
   return _mm_castsi128_pd(_mm_and_si128(mask, _mm_castpd_si128(a)));
 }
 template <>
@@ -1400,7 +1391,7 @@ template <typename Packet>
 EIGEN_STRONG_INLINE Packet ploadl(const typename unpacket_traits<Packet>::type* from);
 template <>
 EIGEN_STRONG_INLINE Packet4f ploadl<Packet4f>(const float* from) {
-  EIGEN_DEBUG_UNALIGNED_LOAD return _mm_castpd_ps(_mm_load_sd(reinterpret_cast<const double*>(from)));
+  EIGEN_DEBUG_UNALIGNED_LOAD return _mm_castsi128_ps(_mm_loadu_si64(reinterpret_cast<const void*>(from)));
 }
 template <>
 EIGEN_STRONG_INLINE Packet2d ploadl<Packet2d>(const double* from) {
@@ -1421,7 +1412,7 @@ EIGEN_STRONG_INLINE Packet2d ploads<Packet2d>(const double* from) {
 
 template <>
 EIGEN_STRONG_INLINE Packet4f ploaddup<Packet4f>(const float* from) {
-  return vec4f_swizzle1(_mm_castpd_ps(_mm_load_sd(reinterpret_cast<const double*>(from))), 0, 0, 1, 1);
+  return vec4f_swizzle1(_mm_castsi128_ps(_mm_loadu_si64(reinterpret_cast<const void*>(from))), 0, 0, 1, 1);
 }
 template <>
 EIGEN_STRONG_INLINE Packet2d ploaddup<Packet2d>(const double* from) {
@@ -1448,15 +1439,18 @@ EIGEN_STRONG_INLINE Packet4ui ploaddup<Packet4ui>(const uint32_t* from) {
 // {b0, b0, b1, b1, b2, b2, b3, b3, b4, b4, b5, b5, b6, b6, b7, b7}
 template <>
 EIGEN_STRONG_INLINE Packet16b ploaddup<Packet16b>(const bool* from) {
-  __m128i tmp = _mm_castpd_si128(pload1<Packet2d>(reinterpret_cast<const double*>(from)));
+  __m128i tmp = _mm_loadu_si64(reinterpret_cast<const void*>(from));
   return _mm_unpacklo_epi8(tmp, tmp);
 }
 
 // Loads 4 bools from memory and returns the packet
-// {b0, b0  b0, b0, b1, b1, b1, b1, b2, b2, b2, b2, b3, b3, b3, b3}
+// {b0, b0, b0, b0, b1, b1, b1, b1, b2, b2, b2, b2, b3, b3, b3, b3}
 template <>
 EIGEN_STRONG_INLINE Packet16b ploadquad<Packet16b>(const bool* from) {
-  __m128i tmp = _mm_castps_si128(pload1<Packet4f>(reinterpret_cast<const float*>(from)));
+  EIGEN_USING_STD(memcpy);
+  int val;
+  memcpy(&val, from, sizeof(int));
+  __m128i tmp = _mm_cvtsi32_si128(val);
   tmp = _mm_unpacklo_epi8(tmp, tmp);
   return _mm_unpacklo_epi16(tmp, tmp);
 }
@@ -1679,9 +1673,9 @@ EIGEN_STRONG_INLINE Packet16b pgather<bool, Packet16b>(const bool* from, Index s
 template <>
 EIGEN_STRONG_INLINE void pscatter<float, Packet4f>(float* to, const Packet4f& from, Index stride) {
   to[stride * 0] = pfirst(from);
-  to[stride * 1] = pfirst(_mm_shuffle_ps(from, from, 1));
-  to[stride * 2] = pfirst(_mm_shuffle_ps(from, from, 2));
-  to[stride * 3] = pfirst(_mm_shuffle_ps(from, from, 3));
+  to[stride * 1] = pfirst(Packet4f(_mm_shuffle_ps(from, from, 1)));
+  to[stride * 2] = pfirst(Packet4f(_mm_shuffle_ps(from, from, 2)));
+  to[stride * 3] = pfirst(Packet4f(_mm_shuffle_ps(from, from, 3)));
 }
 template <>
 EIGEN_STRONG_INLINE void pscatter<double, Packet2d>(double* to, const Packet2d& from, Index stride) {
@@ -1805,15 +1799,15 @@ EIGEN_STRONG_INLINE Packet2d pldexp<Packet2d>(const Packet2d& a, const Packet2d&
   // Convert e to integer and swizzle to low-order bits.
   const Packet4i ei = vec4i_swizzle1(_mm_cvtpd_epi32(e), 0, 3, 1, 3);
 
-  // Split 2^e into four factors and multiply:
+  // 4-way split + depth-3 multiply tree; see pldexp_generic for derivation.
   const Packet4i bias = _mm_set_epi32(0, 1023, 0, 1023);
-  Packet4i b = parithmetic_shift_right<2>(ei);                       // floor(e/4)
-  Packet2d c = _mm_castsi128_pd(_mm_slli_epi64(padd(b, bias), 52));  // 2^b
-  Packet2d out = pmul(pmul(pmul(a, c), c), c);                       // a * 2^(3b)
-  b = psub(psub(psub(ei, b), b), b);                                 // e - 3b
-  c = _mm_castsi128_pd(_mm_slli_epi64(padd(b, bias), 52));           // 2^(e - 3b)
-  out = pmul(out, c);                                                // a * 2^e
-  return out;
+  const Packet4i b = parithmetic_shift_right<2>(ei);                                  // floor(e/4)
+  const Packet4i b_remainder = psub(psub(ei, b), padd(b, b));                         // e - 3b (depth 2)
+  const Packet2d c1 = _mm_castsi128_pd(_mm_slli_epi64(padd(b, bias), 52));            // 2^b
+  const Packet2d c2 = _mm_castsi128_pd(_mm_slli_epi64(padd(b_remainder, bias), 52));  // 2^(e - 3b)
+  const Packet2d c1_squared = pmul(c1, c1);
+  const Packet2d a_c1 = pmul(a, c1);
+  return pmul(pmul(a_c1, c1_squared), c2);  // a * 2^e
 }
 
 // We specialize pldexp here, since the generic implementation uses Packet2l, which is not well
@@ -1998,44 +1992,6 @@ EIGEN_STRONG_INLINE void ptranspose(PacketBlock<Packet16b, 16>& kernel) {
   kernel.packet[15] = _mm_unpackhi_epi64(u7, uf);
 }
 
-EIGEN_STRONG_INLINE __m128i sse_blend_mask(const Selector<2>& ifPacket) {
-  return _mm_set_epi64x(0 - ifPacket.select[1], 0 - ifPacket.select[0]);
-}
-
-EIGEN_STRONG_INLINE __m128i sse_blend_mask(const Selector<4>& ifPacket) {
-  return _mm_set_epi32(0 - ifPacket.select[3], 0 - ifPacket.select[2], 0 - ifPacket.select[1], 0 - ifPacket.select[0]);
-}
-
-template <>
-EIGEN_STRONG_INLINE Packet2l pblend(const Selector<2>& ifPacket, const Packet2l& thenPacket,
-                                    const Packet2l& elsePacket) {
-  const __m128i true_mask = sse_blend_mask(ifPacket);
-  return pselect<Packet2l>(true_mask, thenPacket, elsePacket);
-}
-template <>
-EIGEN_STRONG_INLINE Packet4i pblend(const Selector<4>& ifPacket, const Packet4i& thenPacket,
-                                    const Packet4i& elsePacket) {
-  const __m128i true_mask = sse_blend_mask(ifPacket);
-  return pselect<Packet4i>(true_mask, thenPacket, elsePacket);
-}
-template <>
-EIGEN_STRONG_INLINE Packet4ui pblend(const Selector<4>& ifPacket, const Packet4ui& thenPacket,
-                                     const Packet4ui& elsePacket) {
-  return (Packet4ui)pblend(ifPacket, (Packet4i)thenPacket, (Packet4i)elsePacket);
-}
-template <>
-EIGEN_STRONG_INLINE Packet4f pblend(const Selector<4>& ifPacket, const Packet4f& thenPacket,
-                                    const Packet4f& elsePacket) {
-  const __m128i true_mask = sse_blend_mask(ifPacket);
-  return pselect<Packet4f>(_mm_castsi128_ps(true_mask), thenPacket, elsePacket);
-}
-template <>
-EIGEN_STRONG_INLINE Packet2d pblend(const Selector<2>& ifPacket, const Packet2d& thenPacket,
-                                    const Packet2d& elsePacket) {
-  const __m128i true_mask = sse_blend_mask(ifPacket);
-  return pselect<Packet2d>(_mm_castsi128_pd(true_mask), thenPacket, elsePacket);
-}
-
 // Scalar path for pmadd with FMA to ensure consistency with vectorized path.
 #if defined(EIGEN_VECTORIZE_FMA)
 template <>
@@ -2165,206 +2121,6 @@ EIGEN_STRONG_INLINE __m128i float2half(__m128 f) {
   // 16 bit values
   return _mm_and_si128(o, _mm_set1_epi32(0xffff));
 }
-#endif
-
-// Packet math for Eigen::half
-// Disable the following code since it's broken on too many platforms / compilers.
-// #elif defined(EIGEN_VECTORIZE_SSE) && (!EIGEN_ARCH_x86_64) && (!EIGEN_COMP_MSVC)
-#if 0
-
-typedef struct {
-  __m64 x;
-} Packet4h;
-
-
-template<> struct is_arithmetic<Packet4h> { enum { value = true }; };
-
-template <>
-struct packet_traits<Eigen::half> : default_packet_traits {
-  typedef Packet4h type;
-  // There is no half-size packet for Packet4h.
-  typedef Packet4h half;
-  enum {
-    Vectorizable = 1,
-    AlignedOnScalar = 1,
-    size = 4,
-    HasAdd    = 1,
-    HasSub    = 1,
-    HasMul    = 1,
-    HasDiv    = 1,
-    HasNegate = 0,
-    HasAbs    = 0,
-    HasAbs2   = 0,
-    HasMin    = 0,
-    HasMax    = 0,
-    HasConj   = 0,
-    HasSetLinear = 0,
-  };
-};
-
-
-template<> struct unpacket_traits<Packet4h> { typedef Eigen::half type; enum {size=4, alignment=Aligned16, vectorizable=true, masked_load_available=false, masked_store_available=false}; typedef Packet4h half; };
-
-template<> EIGEN_STRONG_INLINE Packet4h pset1<Packet4h>(const Eigen::half& from) {
-  Packet4h result;
-  result.x = _mm_set1_pi16(from.x);
-  return result;
-}
-
-template<> EIGEN_STRONG_INLINE Eigen::half pfirst<Packet4h>(const Packet4h& from) {
-  return half_impl::raw_uint16_to_half(static_cast<unsigned short>(_mm_cvtsi64_si32(from.x)));
-}
-
-template<> EIGEN_STRONG_INLINE Packet4h pconj(const Packet4h& a) { return a; }
-
-template<> EIGEN_STRONG_INLINE Packet4h padd<Packet4h>(const Packet4h& a, const Packet4h& b) {
-  __int64_t a64 = _mm_cvtm64_si64(a.x);
-  __int64_t b64 = _mm_cvtm64_si64(b.x);
-
-  Eigen::half h[4];
-
-  Eigen::half ha = half_impl::raw_uint16_to_half(static_cast<unsigned short>(a64));
-  Eigen::half hb = half_impl::raw_uint16_to_half(static_cast<unsigned short>(b64));
-  h[0] = ha + hb;
-  ha = half_impl::raw_uint16_to_half(static_cast<unsigned short>(a64 >> 16));
-  hb = half_impl::raw_uint16_to_half(static_cast<unsigned short>(b64 >> 16));
-  h[1] = ha + hb;
-  ha = half_impl::raw_uint16_to_half(static_cast<unsigned short>(a64 >> 32));
-  hb = half_impl::raw_uint16_to_half(static_cast<unsigned short>(b64 >> 32));
-  h[2] = ha + hb;
-  ha = half_impl::raw_uint16_to_half(static_cast<unsigned short>(a64 >> 48));
-  hb = half_impl::raw_uint16_to_half(static_cast<unsigned short>(b64 >> 48));
-  h[3] = ha + hb;
-  Packet4h result;
-  result.x = _mm_set_pi16(h[3].x, h[2].x, h[1].x, h[0].x);
-  return result;
-}
-
-template<> EIGEN_STRONG_INLINE Packet4h psub<Packet4h>(const Packet4h& a, const Packet4h& b) {
-  __int64_t a64 = _mm_cvtm64_si64(a.x);
-  __int64_t b64 = _mm_cvtm64_si64(b.x);
-
-  Eigen::half h[4];
-
-  Eigen::half ha = half_impl::raw_uint16_to_half(static_cast<unsigned short>(a64));
-  Eigen::half hb = half_impl::raw_uint16_to_half(static_cast<unsigned short>(b64));
-  h[0] = ha - hb;
-  ha = half_impl::raw_uint16_to_half(static_cast<unsigned short>(a64 >> 16));
-  hb = half_impl::raw_uint16_to_half(static_cast<unsigned short>(b64 >> 16));
-  h[1] = ha - hb;
-  ha = half_impl::raw_uint16_to_half(static_cast<unsigned short>(a64 >> 32));
-  hb = half_impl::raw_uint16_to_half(static_cast<unsigned short>(b64 >> 32));
-  h[2] = ha - hb;
-  ha = half_impl::raw_uint16_to_half(static_cast<unsigned short>(a64 >> 48));
-  hb = half_impl::raw_uint16_to_half(static_cast<unsigned short>(b64 >> 48));
-  h[3] = ha - hb;
-  Packet4h result;
-  result.x = _mm_set_pi16(h[3].x, h[2].x, h[1].x, h[0].x);
-  return result;
-}
-
-template<> EIGEN_STRONG_INLINE Packet4h pmul<Packet4h>(const Packet4h& a, const Packet4h& b) {
-  __int64_t a64 = _mm_cvtm64_si64(a.x);
-  __int64_t b64 = _mm_cvtm64_si64(b.x);
-
-  Eigen::half h[4];
-
-  Eigen::half ha = half_impl::raw_uint16_to_half(static_cast<unsigned short>(a64));
-  Eigen::half hb = half_impl::raw_uint16_to_half(static_cast<unsigned short>(b64));
-  h[0] = ha * hb;
-  ha = half_impl::raw_uint16_to_half(static_cast<unsigned short>(a64 >> 16));
-  hb = half_impl::raw_uint16_to_half(static_cast<unsigned short>(b64 >> 16));
-  h[1] = ha * hb;
-  ha = half_impl::raw_uint16_to_half(static_cast<unsigned short>(a64 >> 32));
-  hb = half_impl::raw_uint16_to_half(static_cast<unsigned short>(b64 >> 32));
-  h[2] = ha * hb;
-  ha = half_impl::raw_uint16_to_half(static_cast<unsigned short>(a64 >> 48));
-  hb = half_impl::raw_uint16_to_half(static_cast<unsigned short>(b64 >> 48));
-  h[3] = ha * hb;
-  Packet4h result;
-  result.x = _mm_set_pi16(h[3].x, h[2].x, h[1].x, h[0].x);
-  return result;
-}
-
-template<> EIGEN_STRONG_INLINE Packet4h pdiv<Packet4h>(const Packet4h& a, const Packet4h& b) {
-  __int64_t a64 = _mm_cvtm64_si64(a.x);
-  __int64_t b64 = _mm_cvtm64_si64(b.x);
-
-  Eigen::half h[4];
-
-  Eigen::half ha = half_impl::raw_uint16_to_half(static_cast<unsigned short>(a64));
-  Eigen::half hb = half_impl::raw_uint16_to_half(static_cast<unsigned short>(b64));
-  h[0] = ha / hb;
-  ha = half_impl::raw_uint16_to_half(static_cast<unsigned short>(a64 >> 16));
-  hb = half_impl::raw_uint16_to_half(static_cast<unsigned short>(b64 >> 16));
-  h[1] = ha / hb;
-  ha = half_impl::raw_uint16_to_half(static_cast<unsigned short>(a64 >> 32));
-  hb = half_impl::raw_uint16_to_half(static_cast<unsigned short>(b64 >> 32));
-  h[2] = ha / hb;
-  ha = half_impl::raw_uint16_to_half(static_cast<unsigned short>(a64 >> 48));
-  hb = half_impl::raw_uint16_to_half(static_cast<unsigned short>(b64 >> 48));
-  h[3] = ha / hb;
-  Packet4h result;
-  result.x = _mm_set_pi16(h[3].x, h[2].x, h[1].x, h[0].x);
-  return result;
-}
-
-template<> EIGEN_STRONG_INLINE Packet4h pload<Packet4h>(const Eigen::half* from) {
-  Packet4h result;
-  result.x = _mm_cvtsi64_m64(*reinterpret_cast<const __int64_t*>(from));
-  return result;
-}
-
-template<> EIGEN_STRONG_INLINE Packet4h ploadu<Packet4h>(const Eigen::half* from) {
-  Packet4h result;
-  result.x = _mm_cvtsi64_m64(*reinterpret_cast<const __int64_t*>(from));
-  return result;
-}
-
-template<> EIGEN_STRONG_INLINE void pstore<Eigen::half>(Eigen::half* to, const Packet4h& from) {
-  __int64_t r = _mm_cvtm64_si64(from.x);
-  *(reinterpret_cast<__int64_t*>(to)) = r;
-}
-
-template<> EIGEN_STRONG_INLINE void pstoreu<Eigen::half>(Eigen::half* to, const Packet4h& from) {
-  __int64_t r = _mm_cvtm64_si64(from.x);
-  *(reinterpret_cast<__int64_t*>(to)) = r;
-}
-
-template<> EIGEN_STRONG_INLINE Packet4h
-ploadquad<Packet4h>(const Eigen::half* from) {
-  return pset1<Packet4h>(*from);
-}
-
-template<> EIGEN_STRONG_INLINE Packet4h pgather<Eigen::half, Packet4h>(const Eigen::half* from, Index stride)
-{
-  Packet4h result;
-  result.x = _mm_set_pi16(from[3*stride].x, from[2*stride].x, from[1*stride].x, from[0*stride].x);
-  return result;
-}
-
-template<> EIGEN_STRONG_INLINE void pscatter<Eigen::half, Packet4h>(Eigen::half* to, const Packet4h& from, Index stride)
-{
-  __int64_t a = _mm_cvtm64_si64(from.x);
-  to[stride*0].x = static_cast<unsigned short>(a);
-  to[stride*1].x = static_cast<unsigned short>(a >> 16);
-  to[stride*2].x = static_cast<unsigned short>(a >> 32);
-  to[stride*3].x = static_cast<unsigned short>(a >> 48);
-}
-
-EIGEN_STRONG_INLINE void
-ptranspose(PacketBlock<Packet4h,4>& kernel) {
-  __m64 T0 = _mm_unpacklo_pi16(kernel.packet[0].x, kernel.packet[1].x);
-  __m64 T1 = _mm_unpacklo_pi16(kernel.packet[2].x, kernel.packet[3].x);
-  __m64 T2 = _mm_unpackhi_pi16(kernel.packet[0].x, kernel.packet[1].x);
-  __m64 T3 = _mm_unpackhi_pi16(kernel.packet[2].x, kernel.packet[3].x);
-
-  kernel.packet[0].x = _mm_unpacklo_pi32(T0, T1);
-  kernel.packet[1].x = _mm_unpackhi_pi32(T0, T1);
-  kernel.packet[2].x = _mm_unpacklo_pi32(T2, T3);
-  kernel.packet[3].x = _mm_unpackhi_pi32(T2, T3);
-}
-
 #endif
 
 }  // end namespace internal

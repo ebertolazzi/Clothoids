@@ -248,9 +248,9 @@ public:
 
   virtual void check_if_admissible( Vector const & x ) const override
   {
-    UTILS_ASSERT( x( 0 ) > 0, "check_if_admissible x(0) = {} must be > 0", x( 0 ) );
-    UTILS_ASSERT( x( 1 ) > 0, "check_if_admissible x(1) = {} must be > 0", x( 1 ) );
-    UTILS_ASSERT( x( 2 ) > 0, "check_if_admissible x(2) = {} must be > 0", x( 2 ) );
+    Utils::Assert( x( 0 ) > 0, "check_if_admissible x(0) = {} must be > 0", x( 0 ) );
+    Utils::Assert( x( 1 ) > 0, "check_if_admissible x(1) = {} must be > 0", x( 1 ) );
+    Utils::Assert( x( 2 ) > 0, "check_if_admissible x(2) = {} must be > 0", x( 2 ) );
   }
 
   virtual void bounding_box( Vector & L, Vector & U ) const override

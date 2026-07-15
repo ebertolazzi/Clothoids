@@ -6,6 +6,7 @@
 // This Source Code Form is subject to the terms of the Mozilla
 // Public License v. 2.0. If a copy of the MPL was not distributed
 // with this file, You can obtain one at http://mozilla.org/MPL/2.0/.
+// SPDX-License-Identifier: MPL-2.0
 
 #ifndef EIGEN_SPARSEMATRIXBASE_H
 #define EIGEN_SPARSEMATRIXBASE_H
@@ -31,7 +32,7 @@ class SparseMatrixBase : public EigenBase<Derived> {
  public:
   typedef typename internal::traits<Derived>::Scalar Scalar;
 
-  /** The numeric type of the expression' coefficients, e.g. float, double, int or std::complex<float>, etc.
+  /** The numeric type of the expression's coefficients, e.g. float, double, int or std::complex<float>, etc.
    *
    * It is an alias for the Scalar type */
   typedef Scalar value_type;
@@ -40,7 +41,7 @@ class SparseMatrixBase : public EigenBase<Derived> {
   typedef typename internal::traits<Derived>::StorageKind StorageKind;
 
   /** The integer type used to \b store indices within a SparseMatrix.
-   * For a \c SparseMatrix<Scalar,Options,IndexType> it an alias of the third template parameter \c IndexType. */
+   * For a \c SparseMatrix<Scalar,Options,IndexType> it is an alias of the third template parameter \c IndexType. */
   typedef typename internal::traits<Derived>::StorageIndex StorageIndex;
 
   typedef typename internal::add_const_on_value_type_if_arithmetic<typename internal::packet_traits<Scalar>::type>::type
@@ -68,7 +69,7 @@ class SparseMatrixBase : public EigenBase<Derived> {
      * it is set to the \a Dynamic constant.
      * \sa MatrixBase::rows(), MatrixBase::cols(), RowsAtCompileTime, SizeAtCompileTime */
 
-    SizeAtCompileTime = (internal::size_of_xpr_at_compile_time<Derived>::ret),
+    SizeAtCompileTime = (internal::size_of_xpr_at_compile_time<Derived>::value),
     /**< This is equal to the number of coefficients, i.e. the number of
      * rows times the number of columns, or to \a Dynamic if this is not
      * known at compile-time. \sa RowsAtCompileTime, ColsAtCompileTime */
@@ -115,7 +116,7 @@ class SparseMatrixBase : public EigenBase<Derived> {
   typedef Transpose<Derived> TransposeReturnType;
   typedef Transpose<const Derived> ConstTransposeReturnType;
 
-  // FIXME storage order do not match evaluator storage order
+  // FIXME: storage order may not match evaluator storage order.
   typedef SparseMatrix<Scalar, Flags & RowMajorBit ? RowMajor : ColMajor, StorageIndex> PlainObject;
 
   /** This is the "real scalar" type; if the \a Scalar type is already real numbers
@@ -191,10 +192,10 @@ class SparseMatrixBase : public EigenBase<Derived> {
    * \sa rows(), cols(), IsVectorAtCompileTime. */
   inline bool isVector() const { return rows() == 1 || cols() == 1; }
   /** \returns the size of the storage major dimension,
-   * i.e., the number of columns for a columns major matrix, and the number of rows otherwise */
+   * i.e., the number of columns for a column major matrix, and the number of rows otherwise */
   Index outerSize() const { return (int(Flags) & RowMajorBit) ? this->rows() : this->cols(); }
   /** \returns the size of the inner dimension according to the storage order,
-   * i.e., the number of rows for a columns major matrix, and the number of cols otherwise */
+   * i.e., the number of rows for a column major matrix, and the number of cols otherwise */
   Index innerSize() const { return (int(Flags) & RowMajorBit) ? this->cols() : this->rows(); }
 
   bool isRValue() const { return m_isRValue; }
@@ -203,7 +204,7 @@ class SparseMatrixBase : public EigenBase<Derived> {
     return derived();
   }
 
-  SparseMatrixBase() : m_isRValue(false) { /* TODO check flags */
+  SparseMatrixBase() : m_isRValue(false) { /* TODO: validate traits flags. */
   }
 
   template <typename OtherDerived>
@@ -225,9 +226,9 @@ class SparseMatrixBase : public EigenBase<Derived> {
 #ifndef EIGEN_NO_IO
   friend std::ostream& operator<<(std::ostream& s, const SparseMatrixBase& m) {
     using Nested = typename Derived::Nested;
-    using NestedCleaned = typename internal::remove_all<Nested>::type;
+    using NestedCleaned = internal::remove_all_t<Nested>;
 
-    if (Flags & RowMajorBit) {
+    EIGEN_IF_CONSTEXPR (Flags & RowMajorBit) {
       Nested nm(m.derived());
       internal::evaluator<NestedCleaned> thisEval(nm);
 

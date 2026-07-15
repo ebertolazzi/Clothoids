@@ -7,6 +7,7 @@
 // This Source Code Form is subject to the terms of the Mozilla
 // Public License v. 2.0. If a copy of the MPL was not distributed
 // with this file, You can obtain one at http://mozilla.org/MPL/2.0/.
+// SPDX-License-Identifier: MPL-2.0
 
 /*
 
@@ -118,7 +119,7 @@ void SparseLUImpl<Scalar, StorageIndex>::panel_bmod(const Index m, const Index w
 
         Index isub = lptr + no_zeros;
         Index off = u_rows - segsize;
-        for (Index i = 0; i < off; i++) U(i, u_col) = 0;
+        for (Index i = 0; i < off; i++) U(i, u_col) = Scalar(0);
         for (Index i = 0; i < segsize; i++) {
           Index irow = glu.lsub(isub);
           U(i + off, u_col) = dense_col(irow);
@@ -163,14 +164,14 @@ void SparseLUImpl<Scalar, StorageIndex>::panel_bmod(const Index m, const Index w
         for (Index i = 0; i < segsize; i++) {
           Index irow = glu.lsub(isub++);
           dense_col(irow) = U.coeff(i + off, u_col);
-          U.coeffRef(i + off, u_col) = 0;
+          U.coeffRef(i + off, u_col) = Scalar(0);
         }
 
         // Scatter l into SPA dense[]
         for (Index i = 0; i < nrow; i++) {
           Index irow = glu.lsub(isub++);
           dense_col(irow) -= L.coeff(i, u_col);
-          L.coeffRef(i, u_col) = 0;
+          L.coeffRef(i, u_col) = Scalar(0);
         }
         u_col++;
       }
@@ -190,7 +191,7 @@ void SparseLUImpl<Scalar, StorageIndex>::panel_bmod(const Index m, const Index w
 
         Index lda = glu.xlusup(fsupc + 1) - glu.xlusup(fsupc);  // nsupr
 
-        // Perform a trianglar solve and block update,
+        // Perform a triangular solve and block update,
         // then scatter the result of sup-col update to dense[]
         no_zeros = kfnz - fsupc;
         if (segsize == 1)

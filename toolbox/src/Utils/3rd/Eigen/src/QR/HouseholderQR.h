@@ -8,6 +8,7 @@
 // This Source Code Form is subject to the terms of the Mozilla
 // Public License v. 2.0. If a copy of the MPL was not distributed
 // with this file, You can obtain one at http://mozilla.org/MPL/2.0/.
+// SPDX-License-Identifier: MPL-2.0
 
 #ifndef EIGEN_QR_H
 #define EIGEN_QR_H
@@ -156,7 +157,7 @@ class HouseholderQR : public SolverBase<HouseholderQR<MatrixType_>> {
    * Output: \verbinclude HouseholderQR_solve.out
    */
   template <typename Rhs>
-  inline const Solve<HouseholderQR, Rhs> solve(const MatrixBase<Rhs>& b) const;
+  inline Solve<HouseholderQR, Rhs> solve(const MatrixBase<Rhs>& b) const;
 #endif
 
   /** This method returns an expression of the unitary matrix Q as a sequence of Householder transformations.
@@ -378,21 +379,25 @@ void householder_qr_inplace_unblocked(MatrixQR& mat, HCoeffs& hCoeffs, typename 
     mat.col(k).tail(remainingRows).makeHouseholderInPlace(hCoeffs.coeffRef(k), beta);
     mat.coeffRef(k, k) = beta;
 
-    // apply H to remaining part of m_qr from the left
+    // apply H to remaining part of mat from the left
     mat.bottomRightCorner(remainingRows, remainingCols)
         .applyHouseholderOnTheLeft(mat.col(k).tail(remainingRows - 1), hCoeffs.coeffRef(k), tempData + k + 1);
   }
 }
 
-// TODO: add a corresponding public API for updating a QR factorization
 /** \internal
- * Basically a modified copy of @c Eigen::internal::householder_qr_inplace_unblocked that
- * performs a rank-1 update of the QR matrix in compact storage. This function assumes, that
- * the first @c k-1 columns of the matrix @c mat contain the QR decomposition of \f$A^N\f$ up to
- * column k-1. Then the QR decomposition of the k-th column (given by @c newColumn) is computed by
- * applying the k-1 Householder projectors on it and finally compute the projector \f$H_k\f$ of
- * it. On exit the matrix @c mat and the vector @c hCoeffs contain the QR decomposition of the
- * first k columns of \f$A^N\f$. The \a tempData argument must point to at least mat.cols() scalars.  */
+ * Column-insert / column-replace helper for a compact-storage Householder QR.
+ * Given a matrix @c mat and @c hCoeffs holding the QR factorization of the first @c k columns of
+ * some matrix A, this function replaces column @c k of that factorization with @c newColumn: it
+ * applies the existing k Householder reflectors (stored in columns 0..k-1 of @c mat and in
+ * @c hCoeffs.head(k)) to @c newColumn, then computes the k-th reflector in place. On exit
+ * @c mat.leftCols(k+1) and @c hCoeffs.head(k+1) hold the QR factorization of A.leftCols(k) with
+ * @c newColumn inserted at position @c k. @c tempData must point to at least @c mat.cols() scalars.
+ *
+ * Despite the historical "rank-1 update" label, this is not a full QR update in the
+ * Gill-Golub-Murray-Saunders sense: there is no public API for @c QR(A + u vT) or for column/row
+ * delete. See libeigen/eigen#3072 for a tracker of that feature gap. Currently only NNLS relies on
+ * this helper; the signature is tuned to its active-set bookkeeping. */
 template <typename MatrixQR, typename HCoeffs, typename VectorQR>
 void householder_qr_inplace_update(MatrixQR& mat, HCoeffs& hCoeffs, const VectorQR& newColumn,
                                    typename MatrixQR::Index k, typename MatrixQR::Scalar* tempData) {
@@ -455,7 +460,7 @@ struct householder_qr_inplace_blocked {
       //        A20 | A21 | A22
       // and performs the qr dec of [A11^T A12^T]^T
       // and update [A21^T A22^T]^T using level 3 operations.
-      // Finally, the algorithm continue on A22
+      // Finally, the algorithm continues on A22
 
       BlockType A11_21 = mat.block(k, k, brows, bs);
       Block<HCoeffs, Dynamic, 1> hCoeffsSegment = hCoeffs.segment(k, bs);
@@ -534,7 +539,7 @@ void HouseholderQR<MatrixType>::computeInPlace() {
  * \sa class HouseholderQR
  */
 template <typename Derived>
-const HouseholderQR<typename MatrixBase<Derived>::PlainObject> MatrixBase<Derived>::householderQr() const {
+HouseholderQR<typename MatrixBase<Derived>::PlainObject> MatrixBase<Derived>::householderQr() const {
   return HouseholderQR<PlainObject>(eval());
 }
 

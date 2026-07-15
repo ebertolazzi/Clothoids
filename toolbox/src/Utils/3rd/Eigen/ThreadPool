@@ -6,6 +6,7 @@
 // This Source Code Form is subject to the terms of the Mozilla
 // Public License v. 2.0. If a copy of the MPL was not distributed
 // with this file, You can obtain one at http://mozilla.org/MPL/2.0/.
+// SPDX-License-Identifier: MPL-2.0
 
 #ifndef EIGEN_THREADPOOL_MODULE_H
 #define EIGEN_THREADPOOL_MODULE_H
@@ -27,7 +28,7 @@
 
 #include <cstddef>
 #include <cstring>
-#include <time.h>
+#include <ctime>
 
 #include <vector>
 #include <atomic>
@@ -77,4 +78,4 @@
 
 #include "src/Core/util/ReenableStupidWarnings.h"
 
-#endif  // EIGEN_CXX11_THREADPOOL_MODULE_H
+#endif  // EIGEN_THREADPOOL_MODULE_H

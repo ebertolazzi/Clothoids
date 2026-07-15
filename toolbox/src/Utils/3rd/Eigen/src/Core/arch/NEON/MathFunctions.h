@@ -4,6 +4,8 @@
 // This Source Code Form is subject to the terms of the Mozilla
 // Public License v. 2.0. If a copy of the MPL was not distributed
 // with this file, You can obtain one at http://mozilla.org/MPL/2.0/.
+// SPDX-FileCopyrightText: The Eigen Authors
+// SPDX-License-Identifier: MPL-2.0
 
 #ifndef EIGEN_MATH_FUNCTIONS_NEON_H
 #define EIGEN_MATH_FUNCTIONS_NEON_H
@@ -18,7 +20,7 @@ namespace internal {
 EIGEN_INSTANTIATE_GENERIC_MATH_FUNCS_FLOAT(Packet2f)
 EIGEN_INSTANTIATE_GENERIC_MATH_FUNCS_FLOAT(Packet4f)
 
-#if EIGEN_HAS_ARM64_FP16_VECTOR_ARITHMETIC
+#if EIGEN_ARCH_ARM64 && EIGEN_HAS_ARM64_FP16
 template <>
 EIGEN_STRONG_INLINE EIGEN_DEVICE_FUNC Packet4hf ptanh<Packet4hf>(const Packet4hf& x) {
   // Convert to float, call the float ptanh, and then convert back.
@@ -29,16 +31,11 @@ template <>
 EIGEN_STRONG_INLINE EIGEN_DEVICE_FUNC Packet8hf ptanh<Packet8hf>(const Packet8hf& x) {
   // Convert each 4 half types to float, call the float ptanh, and then convert back.
   return vcombine_f16(vcvt_f16_f32(ptanh<Packet4f>(vcvt_f32_f16(vget_low_f16(x)))),
-                      vcvt_f16_f32(ptanh<Packet4f>(vcvt_high_f32_f16(x))));
+                      vcvt_f16_f32(ptanh<Packet4f>(vcvt_f32_f16(vget_high_f16(x)))));
 }
-#endif  // EIGEN_HAS_ARM64_FP16_VECTOR_ARITHMETIC
+#endif  // EIGEN_ARCH_ARM64 && EIGEN_HAS_ARM64_FP16
 
-BF16_PACKET_FUNCTION(Packet4f, Packet4bf, psin)
-BF16_PACKET_FUNCTION(Packet4f, Packet4bf, pcos)
-BF16_PACKET_FUNCTION(Packet4f, Packet4bf, plog)
-BF16_PACKET_FUNCTION(Packet4f, Packet4bf, pexp)
-BF16_PACKET_FUNCTION(Packet4f, Packet4bf, pexp2)
-BF16_PACKET_FUNCTION(Packet4f, Packet4bf, ptanh)
+EIGEN_INSTANTIATE_GENERIC_MATH_FUNCS_BF16(Packet4f, Packet4bf)
 
 template <>
 EIGEN_STRONG_INLINE Packet4bf pfrexp(const Packet4bf& a, Packet4bf& exponent) {
@@ -55,7 +52,7 @@ EIGEN_STRONG_INLINE Packet4bf pldexp(const Packet4bf& a, const Packet4bf& expone
 
 //---------- double ----------
 
-#if EIGEN_ARCH_ARM64 && !EIGEN_APPLE_DOUBLE_NEON_BUG
+#if EIGEN_ARCH_ARM64
 
 EIGEN_INSTANTIATE_GENERIC_MATH_FUNCS_DOUBLE(Packet2d)
 

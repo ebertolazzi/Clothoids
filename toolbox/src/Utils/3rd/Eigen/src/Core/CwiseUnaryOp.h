@@ -7,6 +7,7 @@
 // This Source Code Form is subject to the terms of the Mozilla
 // Public License v. 2.0. If a copy of the MPL was not distributed
 // with this file, You can obtain one at http://mozilla.org/MPL/2.0/.
+// SPDX-License-Identifier: MPL-2.0
 
 #ifndef EIGEN_CWISE_UNARY_OP_H
 #define EIGEN_CWISE_UNARY_OP_H
@@ -57,22 +58,26 @@ class CwiseUnaryOp : public CwiseUnaryOpImpl<UnaryOp, XprType, typename internal
   typedef typename internal::ref_selector<XprType>::type XprTypeNested;
   typedef internal::remove_all_t<XprType> NestedExpression;
 
-  EIGEN_DEVICE_FUNC EIGEN_STRONG_INLINE explicit CwiseUnaryOp(const XprType& xpr, const UnaryOp& func = UnaryOp())
+  EIGEN_DEVICE_FUNC constexpr EIGEN_STRONG_INLINE explicit CwiseUnaryOp(const XprType& xpr,
+                                                                        const UnaryOp& func = UnaryOp())
       : m_xpr(xpr), m_functor(func) {}
 
-  EIGEN_DEVICE_FUNC EIGEN_STRONG_INLINE constexpr Index rows() const noexcept { return m_xpr.rows(); }
-  EIGEN_DEVICE_FUNC EIGEN_STRONG_INLINE constexpr Index cols() const noexcept { return m_xpr.cols(); }
+  EIGEN_DEVICE_FUNC constexpr Index rows() const noexcept { return m_xpr.rows(); }
+  EIGEN_DEVICE_FUNC constexpr Index cols() const noexcept { return m_xpr.cols(); }
 
   /** \returns the functor representing the unary operation */
-  EIGEN_DEVICE_FUNC EIGEN_STRONG_INLINE const UnaryOp& functor() const { return m_functor; }
+  EIGEN_DEVICE_FUNC constexpr EIGEN_STRONG_INLINE const UnaryOp& functor() const { return m_functor; }
 
   /** \returns the nested expression */
-  EIGEN_DEVICE_FUNC EIGEN_STRONG_INLINE const internal::remove_all_t<XprTypeNested>& nestedExpression() const {
+  EIGEN_DEVICE_FUNC constexpr EIGEN_STRONG_INLINE const internal::remove_all_t<XprTypeNested>& nestedExpression()
+      const {
     return m_xpr;
   }
 
   /** \returns the nested expression */
-  EIGEN_DEVICE_FUNC EIGEN_STRONG_INLINE internal::remove_all_t<XprTypeNested>& nestedExpression() { return m_xpr; }
+  EIGEN_DEVICE_FUNC constexpr EIGEN_STRONG_INLINE internal::remove_all_t<XprTypeNested>& nestedExpression() {
+    return m_xpr;
+  }
 
  protected:
   XprTypeNested m_xpr;

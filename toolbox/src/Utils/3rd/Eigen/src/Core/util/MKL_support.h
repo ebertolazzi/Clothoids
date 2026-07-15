@@ -29,6 +29,7 @@
  *   Include file with common MKL declarations
  ********************************************************************************
 */
+// SPDX-License-Identifier: BSD-3-Clause
 
 #ifndef EIGEN_MKL_SUPPORT_H
 #define EIGEN_MKL_SUPPORT_H
@@ -72,7 +73,6 @@
 #undef EIGEN_USE_LAPACKE
 #undef EIGEN_USE_MKL_VML
 #undef EIGEN_USE_LAPACKE_STRICT
-#undef EIGEN_USE_LAPACKE
 #ifdef MKL_DIRECT_CALL_JUST_SET
 #undef MKL_DIRECT_CALL
 #endif

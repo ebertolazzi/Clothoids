@@ -6,6 +6,7 @@
 // This Source Code Form is subject to the terms of the Mozilla
 // Public License v. 2.0. If a copy of the MPL was not distributed
 // with this file, You can obtain one at http://mozilla.org/MPL/2.0/.
+// SPDX-License-Identifier: MPL-2.0
 
 #ifndef EIGEN_NUMTRAITS_H
 #define EIGEN_NUMTRAITS_H
@@ -99,12 +100,12 @@ namespace numext {
 /** \internal bit-wise cast without changing the underlying bit representation. */
 #if defined(__cpp_lib_bit_cast) && __cpp_lib_bit_cast >= 201806L
 template <typename Tgt, typename Src>
-EIGEN_STRONG_INLINE EIGEN_DEVICE_FUNC constexpr Tgt bit_cast(const Src& src) {
+EIGEN_DEVICE_FUNC constexpr Tgt bit_cast(const Src& src) {
   return std::bit_cast<Tgt>(src);
 }
 #elif EIGEN_HAS_BUILTIN(__builtin_bit_cast)
 template <typename Tgt, typename Src>
-EIGEN_STRONG_INLINE EIGEN_DEVICE_FUNC constexpr Tgt bit_cast(const Src& src) {
+EIGEN_DEVICE_FUNC constexpr Tgt bit_cast(const Src& src) {
   EIGEN_STATIC_ASSERT(std::is_trivially_copyable<Src>::value, THIS_TYPE_IS_NOT_SUPPORTED)
   EIGEN_STATIC_ASSERT(std::is_trivially_copyable<Tgt>::value, THIS_TYPE_IS_NOT_SUPPORTED)
   EIGEN_STATIC_ASSERT(sizeof(Src) == sizeof(Tgt), THIS_TYPE_IS_NOT_SUPPORTED)
@@ -155,7 +156,7 @@ EIGEN_STRONG_INLINE EIGEN_DEVICE_FUNC Tgt bit_cast(const Src& src) {
  *     this means, just use \a T here.
  * \li An enum value \c IsComplex. It is equal to 1 if \a T is a \c std::complex type, and to 0 otherwise.
  * \li An enum value \c IsInteger. It is equal to \c 1 if \a T is an integer type such as \c int, and to \c 0 otherwise.
- * \li Enum values \c ReadCost, \c AddCost and \c MulCost representing a rough estimate of the number of CPU cycles needed to by
+ * \li Enum values \c ReadCost, \c AddCost and \c MulCost representing a rough estimate of the number of CPU cycles needed by
  *     move / add / mul instructions respectively, assuming the data is already stored in CPU registers. Stay vague here.
  *     No need to do architecture-specific stuff. If you don't know what this means, just use \c Eigen::HugeCost.
  * \li An enum value \c IsSigned. It is equal to \c 1 if \a T is a signed type and to 0 if \a T is unsigned.

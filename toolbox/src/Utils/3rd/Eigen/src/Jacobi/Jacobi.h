@@ -7,6 +7,7 @@
 // This Source Code Form is subject to the terms of the Mozilla
 // Public License v. 2.0. If a copy of the MPL was not distributed
 // with this file, You can obtain one at http://mozilla.org/MPL/2.0/.
+// SPDX-License-Identifier: MPL-2.0
 
 #ifndef EIGEN_JACOBI_H
 #define EIGEN_JACOBI_H
@@ -50,7 +51,7 @@ class JacobiRotation {
   EIGEN_DEVICE_FUNC Scalar& s() { return m_s; }
   EIGEN_DEVICE_FUNC Scalar s() const { return m_s; }
 
-  /** Concatenates two planar rotation */
+  /** Concatenates two planar rotations */
   EIGEN_DEVICE_FUNC JacobiRotation operator*(const JacobiRotation& other) {
     using numext::conj;
     return JacobiRotation(m_c * other.m_c - conj(m_s) * other.m_s,
@@ -76,8 +77,8 @@ class JacobiRotation {
   EIGEN_DEVICE_FUNC void makeGivens(const Scalar& p, const Scalar& q, Scalar* r = 0);
 
  protected:
-  EIGEN_DEVICE_FUNC void makeGivens(const Scalar& p, const Scalar& q, Scalar* r, internal::true_type);
-  EIGEN_DEVICE_FUNC void makeGivens(const Scalar& p, const Scalar& q, Scalar* r, internal::false_type);
+  EIGEN_DEVICE_FUNC void makeGivens(const Scalar& p, const Scalar& q, Scalar* r, std::true_type);
+  EIGEN_DEVICE_FUNC void makeGivens(const Scalar& p, const Scalar& q, Scalar* r, std::false_type);
 
   Scalar m_c, m_s;
 };
@@ -150,13 +151,12 @@ EIGEN_DEVICE_FUNC inline bool JacobiRotation<Scalar>::makeJacobi(const MatrixBas
  */
 template <typename Scalar>
 EIGEN_DEVICE_FUNC void JacobiRotation<Scalar>::makeGivens(const Scalar& p, const Scalar& q, Scalar* r) {
-  makeGivens(p, q, r, std::conditional_t<NumTraits<Scalar>::IsComplex, internal::true_type, internal::false_type>());
+  makeGivens(p, q, r, std::conditional_t<NumTraits<Scalar>::IsComplex, std::true_type, std::false_type>());
 }
 
 // specialization for complexes
 template <typename Scalar>
-EIGEN_DEVICE_FUNC void JacobiRotation<Scalar>::makeGivens(const Scalar& p, const Scalar& q, Scalar* r,
-                                                          internal::true_type) {
+EIGEN_DEVICE_FUNC void JacobiRotation<Scalar>::makeGivens(const Scalar& p, const Scalar& q, Scalar* r, std::true_type) {
   using numext::conj;
   using std::abs;
   using std::sqrt;
@@ -205,31 +205,75 @@ EIGEN_DEVICE_FUNC void JacobiRotation<Scalar>::makeGivens(const Scalar& p, const
 // specialization for reals
 template <typename Scalar>
 EIGEN_DEVICE_FUNC void JacobiRotation<Scalar>::makeGivens(const Scalar& p, const Scalar& q, Scalar* r,
-                                                          internal::false_type) {
+                                                          std::false_type) {
   using std::abs;
   using std::sqrt;
   if (numext::is_exactly_zero(q)) {
     m_c = p < Scalar(0) ? Scalar(-1) : Scalar(1);
     m_s = Scalar(0);
     if (r) *r = abs(p);
-  } else if (numext::is_exactly_zero(p)) {
+    return;
+  }
+  if (numext::is_exactly_zero(p)) {
     m_c = Scalar(0);
     m_s = q < Scalar(0) ? Scalar(1) : Scalar(-1);
     if (r) *r = abs(q);
-  } else if (abs(p) > abs(q)) {
-    Scalar t = q / p;
-    Scalar u = sqrt(Scalar(1) + numext::abs2(t));
-    if (p < Scalar(0)) u = -u;
-    m_c = Scalar(1) / u;
-    m_s = -t * m_c;
-    if (r) *r = p * u;
+    return;
+  }
+
+  // Safe-range thresholds following Anderson, "Algorithm 978: Safe Scaling
+  // in the Level 1 BLAS", ACM TOMS 44(1), 2017.  When both |p| and |q| lie
+  // in (rtmin, rtmax), the direct formula r = p * sqrt(1 + (q/p)^2) cannot
+  // over- or underflow before the true result would.  Outside that range
+  // we prescale by max(|p|, |q|) (clamped into [safmin, safmax]) so that
+  // the squared sum stays in the representable range.  This preserves the
+  // existing Eigen sign convention (r >= 0, sign carried in c).
+  const Scalar safmin = (std::numeric_limits<Scalar>::min)();
+  const Scalar safmax = Scalar(1) / safmin;
+  const Scalar rtmin = sqrt(safmin);
+  const Scalar rtmax = sqrt(safmax / Scalar(2));
+  const Scalar abs_p = abs(p);
+  const Scalar abs_q = abs(q);
+  const Scalar mx = numext::maxi(abs_p, abs_q);
+  const Scalar mn = numext::mini(abs_p, abs_q);
+
+  if (EIGEN_PREDICT_TRUE(mx < rtmax && mn > rtmin)) {
+    // Safe range: existing direct formulas are stable.
+    if (abs_p > abs_q) {
+      Scalar t = q / p;
+      Scalar u = sqrt(Scalar(1) + numext::abs2(t));
+      if (p < Scalar(0)) u = -u;
+      m_c = Scalar(1) / u;
+      m_s = -t * m_c;
+      if (r) *r = p * u;
+    } else {
+      Scalar t = p / q;
+      Scalar u = sqrt(Scalar(1) + numext::abs2(t));
+      if (q < Scalar(0)) u = -u;
+      m_s = -Scalar(1) / u;
+      m_c = -t * m_s;
+      if (r) *r = q * u;
+    }
   } else {
-    Scalar t = p / q;
-    Scalar u = sqrt(Scalar(1) + numext::abs2(t));
-    if (q < Scalar(0)) u = -u;
-    m_s = -Scalar(1) / u;
-    m_c = -t * m_s;
-    if (r) *r = q * u;
+    // Out of safe range: prescale by max(|p|, |q|) clamped into [safmin, safmax].
+    const Scalar scale = numext::mini(safmax, numext::maxi(safmin, numext::maxi(abs_p, abs_q)));
+    const Scalar ps = p / scale;
+    const Scalar qs = q / scale;
+    if (abs_p > abs_q) {
+      Scalar t = qs / ps;
+      Scalar u = sqrt(Scalar(1) + numext::abs2(t));
+      if (ps < Scalar(0)) u = -u;
+      m_c = Scalar(1) / u;
+      m_s = -t * m_c;
+      if (r) *r = (ps * u) * scale;
+    } else {
+      Scalar t = ps / qs;
+      Scalar u = sqrt(Scalar(1) + numext::abs2(t));
+      if (qs < Scalar(0)) u = -u;
+      m_s = -Scalar(1) / u;
+      m_c = -t * m_s;
+      if (r) *r = (qs * u) * scale;
+    }
   }
 }
 
@@ -239,7 +283,7 @@ EIGEN_DEVICE_FUNC void JacobiRotation<Scalar>::makeGivens(const Scalar& p, const
 
 namespace internal {
 /** \jacobi_module
- * Applies the clock wise 2D rotation \a j to the set of 2D vectors of coordinates \a x and \a y:
+ * Applies the clockwise 2D rotation \a j to the set of 2D vectors of coordinates \a x and \a y:
  * \f$ \left ( \begin{array}{cc} x \\ y \end{array} \right )  =  J \left ( \begin{array}{cc} x \\ y \end{array} \right )
  * \f$
  *
@@ -305,7 +349,7 @@ struct apply_rotation_in_the_plane_selector<Scalar, OtherScalar, SizeAtCompileTi
     typedef typename packet_traits<OtherScalar>::type OtherPacket;
 
     constexpr int RequiredAlignment =
-        (std::max)(unpacket_traits<Packet>::alignment, unpacket_traits<OtherPacket>::alignment);
+        (std::max<int>)(unpacket_traits<Packet>::alignment, unpacket_traits<OtherPacket>::alignment);
     constexpr Index PacketSize = packet_traits<Scalar>::size;
 
     /*** dynamic-size vectorized paths ***/
@@ -335,8 +379,8 @@ struct apply_rotation_in_the_plane_selector<Scalar, OtherScalar, SizeAtCompileTi
         for (Index i = alignedStart; i < alignedEnd; i += PacketSize) {
           Packet xi = pload<Packet>(px);
           Packet yi = pload<Packet>(py);
-          pstore(px, padd(pm.pmul(pc, xi), pcj.pmul(ps, yi)));
-          pstore(py, psub(pcj.pmul(pc, yi), pm.pmul(ps, xi)));
+          pstore(px, pm.pmadd(pc, xi, pcj.pmul(ps, yi)));
+          pstore(py, pcj.pmsub(pc, yi, pm.pmul(ps, xi)));
           px += PacketSize;
           py += PacketSize;
         }
@@ -347,18 +391,18 @@ struct apply_rotation_in_the_plane_selector<Scalar, OtherScalar, SizeAtCompileTi
           Packet xi1 = ploadu<Packet>(px + PacketSize);
           Packet yi = pload<Packet>(py);
           Packet yi1 = pload<Packet>(py + PacketSize);
-          pstoreu(px, padd(pm.pmul(pc, xi), pcj.pmul(ps, yi)));
-          pstoreu(px + PacketSize, padd(pm.pmul(pc, xi1), pcj.pmul(ps, yi1)));
-          pstore(py, psub(pcj.pmul(pc, yi), pm.pmul(ps, xi)));
-          pstore(py + PacketSize, psub(pcj.pmul(pc, yi1), pm.pmul(ps, xi1)));
+          pstoreu(px, pm.pmadd(pc, xi, pcj.pmul(ps, yi)));
+          pstoreu(px + PacketSize, pm.pmadd(pc, xi1, pcj.pmul(ps, yi1)));
+          pstore(py, pcj.pmsub(pc, yi, pm.pmul(ps, xi)));
+          pstore(py + PacketSize, pcj.pmsub(pc, yi1, pm.pmul(ps, xi1)));
           px += Peeling * PacketSize;
           py += Peeling * PacketSize;
         }
         if (alignedEnd != peelingEnd) {
           Packet xi = ploadu<Packet>(x + peelingEnd);
           Packet yi = pload<Packet>(y + peelingEnd);
-          pstoreu(x + peelingEnd, padd(pm.pmul(pc, xi), pcj.pmul(ps, yi)));
-          pstore(y + peelingEnd, psub(pcj.pmul(pc, yi), pm.pmul(ps, xi)));
+          pstoreu(x + peelingEnd, pm.pmadd(pc, xi, pcj.pmul(ps, yi)));
+          pstore(y + peelingEnd, pcj.pmsub(pc, yi, pm.pmul(ps, xi)));
         }
       }
 
@@ -381,8 +425,8 @@ struct apply_rotation_in_the_plane_selector<Scalar, OtherScalar, SizeAtCompileTi
       for (Index i = 0; i < size; i += PacketSize) {
         Packet xi = pload<Packet>(px);
         Packet yi = pload<Packet>(py);
-        pstore(px, padd(pm.pmul(pc, xi), pcj.pmul(ps, yi)));
-        pstore(py, psub(pcj.pmul(pc, yi), pm.pmul(ps, xi)));
+        pstore(px, pm.pmadd(pc, xi, pcj.pmul(ps, yi)));
+        pstore(py, pcj.pmsub(pc, yi, pm.pmul(ps, xi)));
         px += PacketSize;
         py += PacketSize;
       }
@@ -418,6 +462,47 @@ EIGEN_DEVICE_FUNC void inline apply_rotation_in_the_plane(DenseBase<VectorX>& xp
   constexpr int Alignment = (std::min)(int(evaluator<VectorX>::Alignment), int(evaluator<VectorY>::Alignment));
   apply_rotation_in_the_plane_selector<Scalar, OtherScalar, VectorX::SizeAtCompileTime, Alignment, Vectorizable>::run(
       x, incrx, y, incry, size, c, s);
+}
+
+template <typename MatrixType, typename RealScalar, typename Index>
+EIGEN_DONT_INLINE void real_2x2_jacobi_svd(const MatrixType& matrix, Index p, Index q,
+                                           JacobiRotation<RealScalar>* j_left, JacobiRotation<RealScalar>* j_right) {
+  // Extract 2x2 submatrix into scalars (avoids Matrix construction on stack).
+  const RealScalar m00 = numext::real(matrix.coeff(p, p));
+  const RealScalar m01 = numext::real(matrix.coeff(p, q));
+  const RealScalar m10 = numext::real(matrix.coeff(q, p));
+  const RealScalar m11 = numext::real(matrix.coeff(q, q));
+
+  // Compute the symmetrizing rotation rot1 such that rot1 * [m] is symmetric.
+  const RealScalar t = m00 + m11;
+  const RealScalar d = m10 - m01;
+
+  RealScalar c1, s1;
+  if (numext::abs(d) < (std::numeric_limits<RealScalar>::min)()) {
+    c1 = RealScalar(1);
+    s1 = RealScalar(0);
+  } else {
+    // If d!=0, then t/d cannot overflow because the magnitude of the
+    // entries forming d are not too small compared to the ones forming t.
+    RealScalar u = t / d;
+    s1 = RealScalar(1) / numext::sqrt(RealScalar(1) + numext::abs2(u));
+    c1 = u * s1;
+  }
+
+  // Apply rot1 to the 2x2 submatrix inline (avoids rotation dispatch overhead).
+  // Result is symmetric, so we only need 3 values: a00, a01 (== a10), a11.
+  const RealScalar a00 = c1 * m00 + s1 * m10;
+  const RealScalar a01 = c1 * m01 + s1 * m11;
+  const RealScalar a11 = -s1 * m01 + c1 * m11;
+
+  // Compute the diagonalizing rotation j_right from the symmetrized matrix.
+  j_right->makeJacobi(a00, a01, a11);
+
+  // Compose j_left = rot1 * j_right^T inline (avoids template machinery overhead).
+  const RealScalar jr_c = j_right->c();
+  const RealScalar jr_s = j_right->s();
+  j_left->c() = c1 * jr_c + s1 * jr_s;
+  j_left->s() = s1 * jr_c - c1 * jr_s;
 }
 
 }  // end namespace internal

@@ -6,6 +6,7 @@
 // This Source Code Form is subject to the terms of the Mozilla
 // Public License v. 2.0. If a copy of the MPL was not distributed
 // with this file, You can obtain one at http://mozilla.org/MPL/2.0/.
+// SPDX-License-Identifier: MPL-2.0
 
 #ifndef EIGEN_INVERSE_H
 #define EIGEN_INVERSE_H
@@ -49,12 +50,12 @@ class Inverse : public InverseImpl<XprType, typename internal::traits<XprType>::
   typedef typename internal::ref_selector<Inverse>::type Nested;
   typedef internal::remove_all_t<XprType> NestedExpression;
 
-  explicit EIGEN_DEVICE_FUNC Inverse(const XprType& xpr) : m_xpr(xpr) {}
+  explicit EIGEN_DEVICE_FUNC constexpr Inverse(const XprType& xpr) : m_xpr(xpr) {}
 
   EIGEN_DEVICE_FUNC constexpr Index rows() const noexcept { return m_xpr.cols(); }
   EIGEN_DEVICE_FUNC constexpr Index cols() const noexcept { return m_xpr.rows(); }
 
-  EIGEN_DEVICE_FUNC const XprTypeNestedCleaned& nestedExpression() const { return m_xpr; }
+  EIGEN_DEVICE_FUNC constexpr const XprTypeNestedCleaned& nestedExpression() const { return m_xpr; }
 
  protected:
   XprTypeNested m_xpr;
@@ -77,10 +78,10 @@ namespace internal {
 /** \internal
  * \brief Default evaluator for Inverse expression.
  *
- * This default evaluator for Inverse expression simply evaluate the inverse into a temporary
+ * This default evaluator for Inverse expression simply evaluates the inverse into a temporary
  * by a call to internal::call_assignment_no_alias.
  * Therefore, inverse implementers only have to specialize Assignment<Dst,Inverse<...>, ...> for
- * there own nested expression.
+ * their own nested expression.
  *
  * \sa class Inverse
  */

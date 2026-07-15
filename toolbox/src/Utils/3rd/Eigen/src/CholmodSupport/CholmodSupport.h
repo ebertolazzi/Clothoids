@@ -6,6 +6,7 @@
 // This Source Code Form is subject to the terms of the Mozilla
 // Public License v. 2.0. If a copy of the MPL was not distributed
 // with this file, You can obtain one at http://mozilla.org/MPL/2.0/.
+// SPDX-License-Identifier: MPL-2.0
 
 #ifndef EIGEN_CHOLMODSUPPORT_H
 #define EIGEN_CHOLMODSUPPORT_H
@@ -82,9 +83,9 @@ cholmod_sparse viewAsCholmod(Ref<SparseMatrix<Scalar_, Options_, StorageIndex_> 
   res.dtype = 0;
   res.stype = -1;
 
-  if (internal::is_same<StorageIndex_, int>::value) {
+  EIGEN_IF_CONSTEXPR ((std::is_same<StorageIndex_, int>::value)) {
     res.itype = CHOLMOD_INT;
-  } else if (internal::is_same<StorageIndex_, SuiteSparse_long>::value) {
+  } else EIGEN_IF_CONSTEXPR ((std::is_same<StorageIndex_, SuiteSparse_long>::value)) {
     res.itype = CHOLMOD_LONG;
   } else {
     eigen_assert(false && "Index type not supported yet");
@@ -259,14 +260,14 @@ class CholmodBase : public SparseSolverBase<Derived> {
 
  public:
   CholmodBase() : m_cholmodFactor(0), m_info(Success), m_factorizationIsOk(false), m_analysisIsOk(false) {
-    EIGEN_STATIC_ASSERT((internal::is_same<double, RealScalar>::value), CHOLMOD_SUPPORTS_DOUBLE_PRECISION_ONLY);
+    EIGEN_STATIC_ASSERT((std::is_same<double, RealScalar>::value), CHOLMOD_SUPPORTS_DOUBLE_PRECISION_ONLY);
     m_shiftOffset[0] = m_shiftOffset[1] = 0.0;
     internal::cm_start<StorageIndex>(m_cholmod);
   }
 
   explicit CholmodBase(const MatrixType& matrix)
       : m_cholmodFactor(0), m_info(Success), m_factorizationIsOk(false), m_analysisIsOk(false) {
-    EIGEN_STATIC_ASSERT((internal::is_same<double, RealScalar>::value), CHOLMOD_SUPPORTS_DOUBLE_PRECISION_ONLY);
+    EIGEN_STATIC_ASSERT((std::is_same<double, RealScalar>::value), CHOLMOD_SUPPORTS_DOUBLE_PRECISION_ONLY);
     m_shiftOffset[0] = m_shiftOffset[1] = 0.0;
     internal::cm_start<StorageIndex>(m_cholmod);
     compute(matrix);
@@ -283,7 +284,7 @@ class CholmodBase : public SparseSolverBase<Derived> {
   /** \brief Reports whether previous computation was successful.
    *
    * \returns \c Success if computation was successful,
-   *          \c NumericalIssue if the matrix.appears to be negative.
+   *          \c NumericalIssue if the matrix appears to be negative.
    */
   ComputationInfo info() const {
     eigen_assert(m_isInitialized && "Decomposition is not initialized.");
@@ -360,7 +361,7 @@ class CholmodBase : public SparseSolverBase<Derived> {
       this->m_info = NumericalIssue;
       return;
     }
-    // TODO optimize this copy by swapping when possible (be careful with alignment, etc.)
+    // TODO: optimize this copy by swapping when possible (be careful with alignment, etc.)
     // NOTE Actually, the copy can be avoided by calling cholmod_solve2 instead of cholmod_solve
     dest = Matrix<Scalar, Dest::RowsAtCompileTime, Dest::ColsAtCompileTime>::Map(reinterpret_cast<Scalar*>(x_cd->x),
                                                                                  b.rows(), b.cols());
@@ -386,7 +387,7 @@ class CholmodBase : public SparseSolverBase<Derived> {
       this->m_info = NumericalIssue;
       return;
     }
-    // TODO optimize this copy by swapping when possible (be careful with alignment, etc.)
+    // TODO: optimize this copy by swapping when possible (be careful with alignment, etc.)
     // NOTE cholmod_spsolve in fact just calls the dense solver for blocks of 4 columns at a time (similar to Eigen's
     // sparse solver)
     dest.derived() = viewAsEigen<typename DestDerived::Scalar, typename DestDerived::StorageIndex>(*x_cs);
@@ -428,7 +429,7 @@ class CholmodBase : public SparseSolverBase<Derived> {
       // Supernodal factorization stored as a packed list of dense column-major blocks,
       // as described by the following structure:
 
-      // super[k] == index of the first column of the j-th super node
+      // super[k] == index of the first column of the k-th super node
       StorageIndex* super = static_cast<StorageIndex*>(m_cholmodFactor->super);
       // pi[k] == offset to the description of row indices
       StorageIndex* pi = static_cast<StorageIndex*>(m_cholmodFactor->pi);
@@ -508,8 +509,6 @@ class CholmodSimplicialLLT : public CholmodBase<MatrixType_, UpLo_, CholmodSimpl
     this->compute(matrix);
   }
 
-  ~CholmodSimplicialLLT() {}
-
   /** \returns an expression of the factor L */
   inline MatrixL matrixL() const { return viewAsEigen<Scalar, StorageIndex>(*Base::m_cholmodFactor); }
 
@@ -567,8 +566,6 @@ class CholmodSimplicialLDLT : public CholmodBase<MatrixType_, UpLo_, CholmodSimp
     init();
     this->compute(matrix);
   }
-
-  ~CholmodSimplicialLDLT() {}
 
   /** \returns a vector expression of the diagonal D */
   inline VectorType vectorD() const {
@@ -638,8 +635,6 @@ class CholmodSupernodalLLT : public CholmodBase<MatrixType_, UpLo_, CholmodSuper
     this->compute(matrix);
   }
 
-  ~CholmodSupernodalLLT() {}
-
   /** \returns an expression of the factor L */
   inline MatrixType matrixL() const {
     // Convert Cholmod factor's supernodal storage format to Eigen's CSC storage format
@@ -699,8 +694,6 @@ class CholmodDecomposition : public CholmodBase<MatrixType_, UpLo_, CholmodDecom
     init();
     this->compute(matrix);
   }
-
-  ~CholmodDecomposition() {}
 
   void setMode(CholmodMode mode) {
     switch (mode) {

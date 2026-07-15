@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MPL-2.0
 
 // This file is part of Eigen, a lightweight C++ template library
 // for linear algebra.
@@ -16,31 +17,13 @@
 #include "Eigen_Colamd.h"
 
 namespace Eigen {
-namespace internal {
-
-/** \internal
- * \ingroup OrderingMethods_Module
- * \param[in] A the input non-symmetric matrix
- * \param[out] symmat the symmetric pattern A^T+A from the input matrix \a A.
- * FIXME: The values should not be considered here
- */
-template <typename MatrixType>
-void ordering_helper_at_plus_a(const MatrixType& A, MatrixType& symmat) {
-  MatrixType C;
-  C = A.transpose();  // NOTE: Could be  costly
-  for (int i = 0; i < C.rows(); i++) {
-    for (typename MatrixType::InnerIterator it(C, i); it; ++it) it.valueRef() = typename MatrixType::Scalar(0);
-  }
-  symmat = C + A;
-}
-
-}  // namespace internal
 
 /** \ingroup OrderingMethods_Module
  * \class AMDOrdering
  *
  * Functor computing the \em approximate \em minimum \em degree ordering
- * If the matrix is not structurally symmetric, an ordering of A^T+A is computed
+ * If the matrix is not structurally symmetric, an ordering of A^T+A is computed.
+ * Only the sparsity pattern of the input is read — scalar values are not.
  * \tparam  StorageIndex The type of indices of the matrix
  * \sa COLAMDOrdering
  */
@@ -49,29 +32,39 @@ class AMDOrdering {
  public:
   typedef PermutationMatrix<Dynamic, Dynamic, StorageIndex> PermutationType;
 
-  /** Compute the permutation vector from a sparse matrix
-   * This routine is much faster if the input matrix is column-major
+  /** Compute the permutation vector from a sparse matrix.
+   * Only the sparsity pattern of \a mat is read; scalar values are not.
+   * This routine is much faster if the input matrix is column-major.
    */
   template <typename MatrixType>
-  void operator()(const MatrixType& mat, PermutationType& perm) {
-    // Compute the symmetric pattern
-    SparseMatrix<typename MatrixType::Scalar, ColMajor, StorageIndex> symm;
-    internal::ordering_helper_at_plus_a(mat, symm);
-
-    // Call the AMD routine
-    // m_mat.prune(keep_diag());
+  void operator()(const MatrixType& mat, PermutationType& perm) const {
+    // AMD only reads the sparsity pattern. Build a column-major view of mat,
+    // then materialize \c pattern(mat + mat^T) directly into a
+    // SparseMatrix<signed char> (1-byte placeholder values), bypassing
+    // Eigen's generic transpose + sparse-sum evaluators.
+    Matrix<StorageIndex, Dynamic, 1> outer_buf;
+    Matrix<StorageIndex, Dynamic, 1> inner_buf;
+    internal::SparsityPatternRef<StorageIndex> pat = internal::make_col_major_pattern_ref(mat, outer_buf, inner_buf);
+    SparseMatrix<signed char, ColMajor, StorageIndex> symm;
+    internal::materialize_at_plus_a_pattern(pat, symm);
     internal::minimum_degree_ordering(symm, perm);
   }
 
-  /** Compute the permutation with a selfadjoint matrix */
+  /** Compute the permutation with a selfadjoint matrix.
+   * Only the sparsity pattern is used; scalar values are not.
+   */
   template <typename SrcType, unsigned int SrcUpLo>
-  void operator()(const SparseSelfAdjointView<SrcType, SrcUpLo>& mat, PermutationType& perm) {
-    SparseMatrix<typename SrcType::Scalar, ColMajor, StorageIndex> C;
-    C = mat;
-
-    // Call the AMD routine
-    // m_mat.prune(keep_diag()); //Remove the diagonal elements
-    internal::minimum_degree_ordering(C, perm);
+  void operator()(const SparseSelfAdjointView<SrcType, SrcUpLo>& mat, PermutationType& perm) const {
+    // Build a column-major pattern view of the underlying matrix and expand
+    // its UpLo triangle to the full symmetric pattern in one pass, bypassing
+    // Eigen's generic selfadjointView assignment evaluator.
+    Matrix<StorageIndex, Dynamic, 1> outer_buf;
+    Matrix<StorageIndex, Dynamic, 1> inner_buf;
+    internal::SparsityPatternRef<StorageIndex> pat =
+        internal::make_col_major_pattern_ref(mat.matrix(), outer_buf, inner_buf);
+    SparseMatrix<signed char, ColMajor, StorageIndex> symm;
+    internal::materialize_selfadjoint_pattern<SrcUpLo>(pat, symm);
+    internal::minimum_degree_ordering(symm, perm);
   }
 };
 
@@ -90,7 +83,7 @@ class NaturalOrdering {
 
   /** Compute the permutation vector from a column-major sparse matrix */
   template <typename MatrixType>
-  void operator()(const MatrixType& /*mat*/, PermutationType& perm) {
+  void operator()(const MatrixType& /*mat*/, PermutationType& perm) const {
     perm.resize(0);
   }
 };
@@ -100,8 +93,8 @@ class NaturalOrdering {
  *
  * \tparam  StorageIndex The type of indices of the matrix
  *
- * Functor computing the \em column \em approximate \em minimum \em degree ordering
- * The matrix should be in column-major and \b compressed format (see SparseMatrix::makeCompressed()).
+ * Functor computing the \em column \em approximate \em minimum \em degree ordering.
+ * Only the sparsity pattern of the input is read — scalar values are not.
  */
 template <typename StorageIndex>
 class COLAMDOrdering {
@@ -109,35 +102,57 @@ class COLAMDOrdering {
   typedef PermutationMatrix<Dynamic, Dynamic, StorageIndex> PermutationType;
   typedef Matrix<StorageIndex, Dynamic, 1> IndexVector;
 
-  /** Compute the permutation vector \a perm form the sparse matrix \a mat
-   * \warning The input sparse matrix \a mat must be in compressed mode (see SparseMatrix::makeCompressed()).
-   */
+  /** Compute the permutation vector \a perm from the sparse matrix \a mat. */
   template <typename MatrixType>
-  void operator()(const MatrixType& mat, PermutationType& perm) {
-    eigen_assert(mat.isCompressed() &&
-                 "COLAMDOrdering requires a sparse matrix in compressed mode. Call .makeCompressed() before passing it "
-                 "to COLAMDOrdering");
+  void operator()(const MatrixType& mat, PermutationType& perm) const {
+    typedef typename MatrixType::StorageIndex MatrixStorageIndex;
+    Matrix<MatrixStorageIndex, Dynamic, 1> outer_buf, inner_buf;
+    internal::SparsityPatternRef<MatrixStorageIndex> pat =
+        internal::make_col_major_pattern_ref(mat, outer_buf, inner_buf);
+    const StorageIndex m = internal::convert_index<StorageIndex>(pat.innerSize);
+    const StorageIndex n = internal::convert_index<StorageIndex>(pat.outerSize);
+    // Accumulate in Index — Eigen's contract is that any valid nnz fits there
+    // (mat.nonZeros() returns Index), so the sum can't overflow. One
+    // bounds-checked narrow to StorageIndex at the end catches the only real
+    // overflow case (total > StorageIndex range).
+    Index total_nnz = 0;
+    for (Index j = 0; j < pat.outerSize; ++j) total_nnz += pat.nonZeros(j);
+    const StorageIndex nnz = internal::convert_index<StorageIndex>(total_nnz);
 
-    StorageIndex m = StorageIndex(mat.rows());
-    StorageIndex n = StorageIndex(mat.cols());
-    StorageIndex nnz = StorageIndex(mat.nonZeros());
-    // Get the recommended value of Alen to be used by colamd
     StorageIndex Alen = internal::Colamd::recommended(nnz, m, n);
-    // Set the default parameters
     double knobs[internal::Colamd::NKnobs];
     StorageIndex stats[internal::Colamd::NStats];
     internal::Colamd::set_defaults(knobs);
 
+    // Colamd writes into A[] in place and needs a contiguous CSC layout, so
+    // always compact per column — handles both compressed and uncompressed
+    // sources uniformly via SparsityPatternRef::nonZeros(j).
     IndexVector p(n + 1), A(Alen);
-    for (StorageIndex i = 0; i <= n; i++) p(i) = mat.outerIndexPtr()[i];
-    for (StorageIndex i = 0; i < nnz; i++) A(i) = mat.innerIndexPtr()[i];
-    // Call Colamd routine to compute the ordering
+    p(0) = 0;
+    for (StorageIndex j = 0; j < n; ++j) {
+      const Index nz = pat.nonZeros(j);
+      const MatrixStorageIndex* src = pat.inner + pat.outer[j];
+      copy_colamd_indices(src, nz, A.data() + p(j), std::is_same<MatrixStorageIndex, StorageIndex>());
+      p(j + 1) = p(j) + static_cast<StorageIndex>(nz);
+    }
+
     StorageIndex info = internal::Colamd::compute_ordering(m, n, Alen, A.data(), p.data(), knobs, stats);
     EIGEN_UNUSED_VARIABLE(info);
-    eigen_assert(info && "COLAMD failed ");
+    eigen_assert(info && "COLAMD failed");
 
     perm.resize(n);
     for (StorageIndex i = 0; i < n; i++) perm.indices()(p(i)) = i;
+  }
+
+ private:
+  template <typename SrcStorageIndex>
+  static void copy_colamd_indices(const SrcStorageIndex* src, Index nz, StorageIndex* dst, std::true_type) {
+    std::copy_n(src, nz, dst);
+  }
+
+  template <typename SrcStorageIndex>
+  static void copy_colamd_indices(const SrcStorageIndex* src, Index nz, StorageIndex* dst, std::false_type) {
+    for (Index k = 0; k < nz; ++k) dst[k] = internal::convert_index<StorageIndex>(src[k]);
   }
 };
 

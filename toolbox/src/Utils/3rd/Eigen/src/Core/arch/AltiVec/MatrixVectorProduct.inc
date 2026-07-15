@@ -6,6 +6,7 @@
 // This Source Code Form is subject to the terms of the Mozilla
 // Public License v. 2.0. If a copy of the MPL was not distributed
 // with this file, You can obtain one at http://mozilla.org/MPL/2.0/.
+// SPDX-License-Identifier: MPL-2.0
 
 #ifndef EIGEN_MATRIX_VECTOR_PRODUCT_ALTIVEC_H
 #define EIGEN_MATRIX_VECTOR_PRODUCT_ALTIVEC_H
@@ -90,13 +91,13 @@ EIGEN_ALWAYS_INLINE void storeMaddData(ResScalar* res, ResScalar& alpha, ResScal
   func(0, N, which) func(1, N, which) func(2, N, which) func(3, N, which) func(4, N, which) func(5, N, which) \
       func(6, N, which) func(7, N, which)
 
-#define GEMV_UNUSED_VAR(iter, N, which) \
-  if (GEMV_GETN(N) <= iter) {           \
-    EIGEN_UNUSED_VARIABLE(which##iter); \
+#define GEMV_UNUSED_VAR(iter, N, which)       \
+  EIGEN_IF_CONSTEXPR (GEMV_GETN(N) <= iter) { \
+    EIGEN_UNUSED_VARIABLE(which##iter);       \
   }
 
 #define GEMV_UNUSED_EXTRA_VAR(iter, N, which) \
-  if (N <= iter) {                            \
+  EIGEN_IF_CONSTEXPR (N <= iter) {            \
     EIGEN_UNUSED_VARIABLE(which##iter);       \
   }
 
@@ -104,9 +105,9 @@ EIGEN_ALWAYS_INLINE void storeMaddData(ResScalar* res, ResScalar& alpha, ResScal
 
 #define GEMV_UNUSED(N, which) GEMV_UNROLL3(GEMV_UNUSED_VAR, N, which)
 
-#define GEMV_INIT_MMA(iter, N)         \
-  if (GEMV_GETN(N) > iter) {           \
-    __builtin_mma_xxsetaccz(&e##iter); \
+#define GEMV_INIT_MMA(iter, N)               \
+  EIGEN_IF_CONSTEXPR (GEMV_GETN(N) > iter) { \
+    __builtin_mma_xxsetaccz(&e##iter);       \
   }
 
 #if EIGEN_COMP_LLVM
@@ -119,8 +120,8 @@ EIGEN_ALWAYS_INLINE void storeMaddData(ResScalar* res, ResScalar& alpha, ResScal
 #endif
 
 #define GEMV_LOAD1A_COL_MMA(iter, N)         \
-  if (GEMV_GETN(N) > iter) {                 \
-    if (GEMV_IS_FLOAT) {                     \
+  EIGEN_IF_CONSTEXPR (GEMV_GETN(N) > iter) { \
+    EIGEN_IF_CONSTEXPR (GEMV_IS_FLOAT) {     \
       g##iter = GEMV_LOADPACKET_COL(iter);   \
       EIGEN_UNUSED_VARIABLE(b##iter);        \
     } else {                                 \
@@ -133,8 +134,8 @@ EIGEN_ALWAYS_INLINE void storeMaddData(ResScalar* res, ResScalar& alpha, ResScal
   }
 
 #define GEMV_WORK1A_COL_MMA(iter, N)                                      \
-  if (GEMV_GETN(N) > iter) {                                              \
-    if (GEMV_IS_FLOAT) {                                                  \
+  EIGEN_IF_CONSTEXPR (GEMV_GETN(N) > iter) {                              \
+    EIGEN_IF_CONSTEXPR (GEMV_IS_FLOAT) {                                  \
       pger_vecMMA_acc<LhsPacket, RhsPacket, true>(&e##iter, a0, g##iter); \
     } else {                                                              \
       pger_vecMMA_acc<LhsPacket, RhsPacket, true>(&e##iter, b##iter, a0); \
@@ -142,8 +143,8 @@ EIGEN_ALWAYS_INLINE void storeMaddData(ResScalar* res, ResScalar& alpha, ResScal
   }
 
 #define GEMV_LOAD1B_COL_MMA(iter1, iter2, iter3, N) \
-  if (GEMV_GETN(N) > iter1) {                       \
-    if (GEMV_IS_FLOAT) {                            \
+  EIGEN_IF_CONSTEXPR (GEMV_GETN(N) > iter1) {       \
+    EIGEN_IF_CONSTEXPR (GEMV_IS_FLOAT) {            \
       GEMV_LOADPAIR_COL_MMA(iter2, iter2)           \
       EIGEN_UNUSED_VARIABLE(b##iter3);              \
     } else {                                        \
@@ -158,8 +159,8 @@ EIGEN_ALWAYS_INLINE void storeMaddData(ResScalar* res, ResScalar& alpha, ResScal
   EIGEN_UNUSED_VARIABLE(g##iter3);
 
 #define GEMV_WORK1B_COL_MMA(iter1, iter2, iter3, N)                          \
-  if (GEMV_GETN(N) > iter1) {                                                \
-    if (GEMV_IS_FLOAT) {                                                     \
+  EIGEN_IF_CONSTEXPR (GEMV_GETN(N) > iter1) {                                \
+    EIGEN_IF_CONSTEXPR (GEMV_IS_FLOAT) {                                     \
       LhsPacket h[2];                                                        \
       __builtin_vsx_disassemble_pair(reinterpret_cast<void*>(h), &b##iter2); \
       pger_vecMMA_acc<LhsPacket, RhsPacket, true>(&e##iter2, a0, h[0]);      \
@@ -172,14 +173,14 @@ EIGEN_ALWAYS_INLINE void storeMaddData(ResScalar* res, ResScalar& alpha, ResScal
 
 #if EIGEN_COMP_LLVM
 #define GEMV_LOAD_COL_MMA(N)                        \
-  if (GEMV_GETN(N) > 1) {                           \
+  EIGEN_IF_CONSTEXPR (GEMV_GETN(N) > 1) {           \
     GEMV_UNROLL_HALF(GEMV_LOAD1B_COL_MMA, (N >> 1)) \
   } else {                                          \
     GEMV_UNROLL(GEMV_LOAD1A_COL_MMA, N)             \
   }
 
 #define GEMV_WORK_COL_MMA(N)                        \
-  if (GEMV_GETN(N) > 1) {                           \
+  EIGEN_IF_CONSTEXPR (GEMV_GETN(N) > 1) {           \
     GEMV_UNROLL_HALF(GEMV_WORK1B_COL_MMA, (N >> 1)) \
   } else {                                          \
     GEMV_UNROLL(GEMV_WORK1A_COL_MMA, N)             \
@@ -191,9 +192,9 @@ EIGEN_ALWAYS_INLINE void storeMaddData(ResScalar* res, ResScalar& alpha, ResScal
 #endif
 
 #define GEMV_DISASSEMBLE_MMA(iter, N)                              \
-  if (GEMV_GETN(N) > iter) {                                       \
+  EIGEN_IF_CONSTEXPR (GEMV_GETN(N) > iter) {                       \
     __builtin_mma_disassemble_acc(&result##iter.packet, &e##iter); \
-    if (!GEMV_IS_FLOAT) {                                          \
+    EIGEN_IF_CONSTEXPR (!GEMV_IS_FLOAT) {                          \
       result##iter.packet[0][1] = result##iter.packet[1][0];       \
       result##iter.packet[2][1] = result##iter.packet[3][0];       \
     }                                                              \
@@ -203,8 +204,8 @@ EIGEN_ALWAYS_INLINE void storeMaddData(ResScalar* res, ResScalar& alpha, ResScal
   b##iter1 = *reinterpret_cast<__vector_pair*>(res + i + ((iter2) * ResPacketSize));
 
 #define GEMV_LOAD2_COL_MMA(iter1, iter2, iter3, N) \
-  if (GEMV_GETN(N) > iter1) {                      \
-    if (GEMV_IS_FLOAT) {                           \
+  EIGEN_IF_CONSTEXPR (GEMV_GETN(N) > iter1) {      \
+    EIGEN_IF_CONSTEXPR (GEMV_IS_FLOAT) {           \
       GEMV_LOADPAIR2_COL_MMA(iter2, iter2);        \
       EIGEN_UNUSED_VARIABLE(b##iter3);             \
     } else {                                       \
@@ -225,7 +226,7 @@ EIGEN_ALWAYS_INLINE void storeMaddData(ResScalar* res, ResScalar& alpha, ResScal
   GEMV_BUILDPAIR_MMA(b##iter2, f##iter2[0], f##iter2[1]);
 #else
 #define GEMV_WORKPAIR2_COL_MMA(iter2, iter3, iter4)                                        \
-  if (GEMV_IS_FLOAT) {                                                                     \
+  EIGEN_IF_CONSTEXPR (GEMV_IS_FLOAT) {                                                     \
     __asm__("xvmaddasp %0,%x1,%x3\n\txvmaddasp %L0,%x2,%x3"                                \
             : "+&d"(b##iter2)                                                              \
             : "wa"(result##iter3.packet[0]), "wa"(result##iter2.packet[0]), "wa"(palpha)); \
@@ -237,8 +238,8 @@ EIGEN_ALWAYS_INLINE void storeMaddData(ResScalar* res, ResScalar& alpha, ResScal
 #endif
 
 #define GEMV_WORK2_COL_MMA(iter1, iter2, iter3, N)      \
-  if (GEMV_GETN(N) > iter1) {                           \
-    if (GEMV_IS_FLOAT) {                                \
+  EIGEN_IF_CONSTEXPR (GEMV_GETN(N) > iter1) {           \
+    EIGEN_IF_CONSTEXPR (GEMV_IS_FLOAT) {                \
       GEMV_WORKPAIR2_COL_MMA(iter2, iter3, iter2);      \
     } else {                                            \
       GEMV_WORKPAIR2_COL_MMA(iter2, iter2, iter2 << 1); \
@@ -250,8 +251,8 @@ EIGEN_ALWAYS_INLINE void storeMaddData(ResScalar* res, ResScalar& alpha, ResScal
   *reinterpret_cast<__vector_pair*>(res + i + ((iter2) * ResPacketSize)) = b##iter1;
 
 #define GEMV_STORE_COL_MMA(iter, N)                                                                          \
-  if (GEMV_GETN(N) > iter) {                                                                                 \
-    if (GEMV_IS_FLOAT) {                                                                                     \
+  EIGEN_IF_CONSTEXPR (GEMV_GETN(N) > iter) {                                                                 \
+    EIGEN_IF_CONSTEXPR (GEMV_IS_FLOAT) {                                                                     \
       storeMaddData<ResPacket, ResScalar>(res + i + (iter * ResPacketSize), palpha, result##iter.packet[0]); \
     } else {                                                                                                 \
       GEMV_LOADPAIR2_COL_MMA(iter, iter << 1)                                                                \
@@ -261,8 +262,8 @@ EIGEN_ALWAYS_INLINE void storeMaddData(ResScalar* res, ResScalar& alpha, ResScal
   }
 
 #define GEMV_STORE2_COL_MMA(iter1, iter2, iter3, N) \
-  if (GEMV_GETN(N) > iter1) {                       \
-    if (GEMV_IS_FLOAT) {                            \
+  EIGEN_IF_CONSTEXPR (GEMV_GETN(N) > iter1) {       \
+    EIGEN_IF_CONSTEXPR (GEMV_IS_FLOAT) {            \
       GEMV_STOREPAIR2_COL_MMA(iter2, iter2);        \
     } else {                                        \
       GEMV_STOREPAIR2_COL_MMA(iter2, iter2 << 1)    \
@@ -270,51 +271,50 @@ EIGEN_ALWAYS_INLINE void storeMaddData(ResScalar* res, ResScalar& alpha, ResScal
     }                                               \
   }
 
-#define GEMV_PROCESS_COL_ONE_MMA(N)                 \
-  GEMV_UNROLL(GEMV_INIT_MMA, N)                     \
-  Index j = j2;                                     \
-  __vector_pair b0, b1, b2, b3, b4, b5, b6, b7;     \
-  do {                                              \
-    LhsPacket g0, g1, g2, g3, g4, g5, g6, g7;       \
-    RhsPacket a0 = pset1<RhsPacket>(rhs2(j, 0));    \
-    GEMV_UNROLL(GEMV_PREFETCH, N)                   \
-    GEMV_LOAD_COL_MMA(N)                            \
-    GEMV_WORK_COL_MMA(N)                            \
-  } while (++j < jend);                             \
-  GEMV_UNROLL(GEMV_DISASSEMBLE_MMA, N)              \
-  if (GEMV_GETN(N) <= 1) {                          \
-    GEMV_UNROLL(GEMV_STORE_COL_MMA, N)              \
-  } else {                                          \
-    GEMV_UNROLL_HALF(GEMV_LOAD2_COL_MMA, (N >> 1))  \
-    GEMV_UNROLL_HALF(GEMV_WORK2_COL_MMA, (N >> 1))  \
-    GEMV_UNROLL_HALF(GEMV_STORE2_COL_MMA, (N >> 1)) \
-  }                                                 \
+#define GEMV_PROCESS_COL_ONE_MMA(N)                                                                \
+  GEMV_UNROLL(GEMV_INIT_MMA, N)                                                                    \
+  Index j = j2;                                                                                    \
+  __vector_pair b0, b1, b2, b3, b4, b5, b6, b7;                                                    \
+  do {                                                                                             \
+    LhsPacket g0, g1, g2, g3, g4, g5, g6, g7;                                                      \
+    RhsPacket a0 = pset1<RhsPacket>(rhs2(j, 0));                                                   \
+    GEMV_UNROLL(GEMV_PREFETCH, N)                                                                  \
+    GEMV_LOAD_COL_MMA(N)                                                                           \
+    GEMV_WORK_COL_MMA(N)                                                                           \
+  } while (++j < jend);                                                                            \
+  GEMV_UNROLL(GEMV_DISASSEMBLE_MMA, N)                                                             \
+  EIGEN_IF_CONSTEXPR (GEMV_GETN(N) <= 1) {                                                         \
+    GEMV_UNROLL(GEMV_STORE_COL_MMA, N)                                                             \
+  } else {                                                                                         \
+    GEMV_UNROLL_HALF(GEMV_LOAD2_COL_MMA, (N >> 1))                                                 \
+    GEMV_UNROLL_HALF(GEMV_WORK2_COL_MMA, (N >> 1)) GEMV_UNROLL_HALF(GEMV_STORE2_COL_MMA, (N >> 1)) \
+  }                                                                                                \
   i += (ResPacketSize * N);
 #endif
 
 #define GEMV_INIT(iter, N)                    \
-  if (N > iter) {                             \
+  EIGEN_IF_CONSTEXPR (N > iter) {             \
     c##iter = pset1<ResPacket>(ResScalar(0)); \
   } else {                                    \
     EIGEN_UNUSED_VARIABLE(c##iter);           \
   }
 
 #ifdef EIGEN_POWER_USE_GEMV_PREFETCH
-#define GEMV_PREFETCH(iter, N)                                   \
-  if (GEMV_GETN(N) > ((iter >> 1) + ((N >> 1) * (iter & 1)))) {  \
-    lhs.prefetch(i + (iter * LhsPacketSize) + prefetch_dist, j); \
+#define GEMV_PREFETCH(iter, N)                                                  \
+  EIGEN_IF_CONSTEXPR (GEMV_GETN(N) > ((iter >> 1) + ((N >> 1) * (iter & 1)))) { \
+    lhs.prefetch(i + (iter * LhsPacketSize) + prefetch_dist, j);                \
   }
 #else
 #define GEMV_PREFETCH(iter, N)
 #endif
 
 #define GEMV_WORK_COL(iter, N)                                   \
-  if (N > iter) {                                                \
+  EIGEN_IF_CONSTEXPR (N > iter) {                                \
     c##iter = pcj.pmadd(GEMV_LOADPACKET_COL(iter), a0, c##iter); \
   }
 
 #define GEMV_STORE_COL(iter, N)                                                           \
-  if (N > iter) {                                                                         \
+  EIGEN_IF_CONSTEXPR (N > iter) {                                                         \
     pstoreu(res + i + (iter * ResPacketSize),                                             \
             pmadd(c##iter, palpha, ploadu<ResPacket>(res + i + (iter * ResPacketSize)))); \
   }
@@ -380,7 +380,8 @@ EIGEN_STRONG_INLINE void gemv_col(Index rows, Index cols, const LhsMapper& alhs,
   conj_helper<LhsPacket, RhsPacket, false, false> pcj;
 
   const Index lhsStride = lhs.stride();
-  // TODO: for padded aligned inputs, we could enable aligned reads
+  // LhsAlignment stays Unaligned; enabling aligned reads would require
+  // propagating the Mapper's Alignment through the run() template.
   enum {
     LhsAlignment = Unaligned,
     ResPacketSize = Traits::ResPacketSize,
@@ -445,7 +446,7 @@ template <bool extraRows>
 EIGEN_ALWAYS_INLINE void outputVecCol(Packet4f acc, float* result, Packet4f pAlpha, Index extra_rows) {
   Packet4f d0 = ploadu<Packet4f>(result);
   d0 = pmadd(acc, pAlpha, d0);
-  if (extraRows) {
+  EIGEN_IF_CONSTEXPR (extraRows) {
     pstoreu_partial(result, d0, extra_rows);
   } else {
     pstoreu(result, d0);
@@ -459,7 +460,7 @@ EIGEN_ALWAYS_INLINE void outputVecColResults(Packet4f (&acc)[num_acc][size], flo
   for (Index k = 0; k < real_acc; k++) {
     outputVecCol<false>(acc[k][0], result + k * 4, pAlpha, extra_rows);
   }
-  if (extraRows) {
+  EIGEN_IF_CONSTEXPR (extraRows) {
     outputVecCol<true>(acc[real_acc][0], result + real_acc * 4, pAlpha, extra_rows);
   }
 }
@@ -471,16 +472,16 @@ template <Index num_acc, typename LhsMapper, bool zero>
 EIGEN_ALWAYS_INLINE void loadVecLoopVSX(Index k, LhsMapper& lhs, Packet4f (&a0)[num_acc][2]) {
   Packet8bf c0 = lhs.template loadPacket<Packet8bf>(k * 4, 0);
   Packet8bf b1;
-  if (!zero) {
+  EIGEN_IF_CONSTEXPR (!zero) {
     b1 = lhs.template loadPacket<Packet8bf>(k * 4, 1);
 
     a0[k + 0][1] = oneConvertBF16Hi(b1.m_val);
   }
   a0[k + 0][0] = oneConvertBF16Hi(c0.m_val);
 
-  if (num_acc > (k + 1)) {
+  EIGEN_IF_CONSTEXPR (num_acc > (k + 1)) {
     a0[k + 1][0] = oneConvertBF16Lo(c0.m_val);
-    if (!zero) {
+    EIGEN_IF_CONSTEXPR (!zero) {
       a0[k + 1][1] = oneConvertBF16Lo(b1.m_val);
     }
   }
@@ -528,7 +529,7 @@ EIGEN_ALWAYS_INLINE void vecColLoopVSX(Index j, LhsMapper& lhs, RhsMapper& rhs, 
   Packet8bf b2 = loadColData<RhsMapper, linear>(rhs, j);
 
   b0[0] = oneConvertBF16Perm(b2.m_val, p16uc_MERGE16_32_V1);
-  if (!zero) {
+  EIGEN_IF_CONSTEXPR (!zero) {
     b0[1] = oneConvertBF16Perm(b2.m_val, p16uc_MERGE16_32_V2);
   }
 
@@ -585,7 +586,7 @@ void colVSXVecColLoopBody(Index& row, Index cend, Index rows, LhsMapper& lhs, Rh
 template <const Index num_acc, typename LhsMapper, typename RhsMapper, bool extraRows, bool linear>
 EIGEN_ALWAYS_INLINE void colVSXVecColLoopBodyExtraN(Index& row, Index cend, Index rows, LhsMapper& lhs, RhsMapper& rhs,
                                                     const Packet4f pAlpha, float* result) {
-  if (MAX_BFLOAT16_VEC_ACC_VSX > num_acc) {
+  EIGEN_IF_CONSTEXPR (MAX_BFLOAT16_VEC_ACC_VSX > num_acc) {
     colVSXVecColLoopBody<num_acc + (extraRows ? 1 : 0), LhsMapper, RhsMapper, extraRows, linear>(row, cend, rows, lhs,
                                                                                                  rhs, pAlpha, result);
   }
@@ -617,7 +618,7 @@ EIGEN_ALWAYS_INLINE void colVSXVecColLoopBodyExtra(Index& row, Index cend, Index
       colVSXVecColLoopBodyExtraN<1, LhsMapper, RhsMapper, extraRows, linear>(row, cend, rows, lhs, rhs, pAlpha, result);
       break;
     default:
-      if (extraRows) {
+      EIGEN_IF_CONSTEXPR (extraRows) {
         colVSXVecColLoopBody<1, LhsMapper, RhsMapper, true, linear>(row, cend, rows, lhs, rhs, pAlpha, result);
       }
       break;
@@ -643,13 +644,13 @@ EIGEN_ALWAYS_INLINE void calcVSXVecColLoops(Index cend, Index rows, LhsMapper& l
 template <const Index size, bool inc, Index delta>
 EIGEN_ALWAYS_INLINE void storeBF16fromResult(bfloat16* dst, Packet8bf data, Index resInc, Index extra) {
   if (inc) {
-    if (size < 8) {
+    EIGEN_IF_CONSTEXPR (size < 8) {
       pscatter_partial(dst + delta * resInc, data, resInc, extra);
     } else {
       pscatter(dst + delta * resInc, data, resInc);
     }
   } else {
-    if (size < 8) {
+    EIGEN_IF_CONSTEXPR (size < 8) {
       pstoreu_partial(dst + delta, data, extra);
     } else {
       pstoreu(dst + delta, data);
@@ -664,24 +665,24 @@ EIGEN_ALWAYS_INLINE void convertPointerF32toBF16VSX(Index& i, float* result, Ind
   while (i + size <= rows) {
     PacketBlock<Packet8bf, (size + 7) / 8> r32;
     r32.packet[0] = convertF32toBF16VSX(result + i + 0);
-    if (size >= 16) {
+    EIGEN_IF_CONSTEXPR (size >= 16) {
       r32.packet[1] = convertF32toBF16VSX(result + i + 8);
     }
-    if (size >= 32) {
+    EIGEN_IF_CONSTEXPR (size >= 32) {
       r32.packet[2] = convertF32toBF16VSX(result + i + 16);
       r32.packet[3] = convertF32toBF16VSX(result + i + 24);
     }
     storeBF16fromResult<size, inc, 0>(dst, r32.packet[0], resInc, rows & 7);
-    if (size >= 16) {
+    EIGEN_IF_CONSTEXPR (size >= 16) {
       storeBF16fromResult<size, inc, 8>(dst, r32.packet[1], resInc);
     }
-    if (size >= 32) {
+    EIGEN_IF_CONSTEXPR (size >= 32) {
       storeBF16fromResult<size, inc, 16>(dst, r32.packet[2], resInc);
       storeBF16fromResult<size, inc, 24>(dst, r32.packet[3], resInc);
     }
     i += extra;
     dst += extra * resInc;
-    if (size != 32) break;
+    EIGEN_IF_CONSTEXPR (size != 32) break;
   }
 }
 
@@ -764,7 +765,7 @@ EIGEN_ALWAYS_INLINE void outputVecResults(Packet4f (&acc)[num_acc][size], float*
     Packet4f d0 = ploadu<Packet4f>(result + k);
     d0 = pmadd(acc[k + 0][0], pAlpha, d0);
 
-    if (num_acc > (k + 3)) {
+    EIGEN_IF_CONSTEXPR (num_acc > (k + 3)) {
       pstoreu(result + k, d0);
     } else {
       if (extra == 3) {
@@ -778,7 +779,7 @@ EIGEN_ALWAYS_INLINE void outputVecResults(Packet4f (&acc)[num_acc][size], float*
 
 template <Index num_acc>
 EIGEN_ALWAYS_INLINE void preduxVecResults2VSX(Packet4f (&acc)[num_acc][2], Index k) {
-  if (num_acc > (k + 1)) {
+  EIGEN_IF_CONSTEXPR (num_acc > (k + 1)) {
     acc[k][1] = vec_mergel(acc[k + 0][0], acc[k + 1][0]);
     acc[k][0] = vec_mergeh(acc[k + 0][0], acc[k + 1][0]);
     acc[k][0] = acc[k][0] + acc[k][1];
@@ -797,7 +798,7 @@ template <Index num_acc>
 EIGEN_ALWAYS_INLINE void preduxVecResultsVSX(Packet4f (&acc)[num_acc][2]) {
   for (Index k = 0; k < num_acc; k += 4) {
     preduxVecResults2VSX<num_acc>(acc, k + 0);
-    if (num_acc > (k + 2)) {
+    EIGEN_IF_CONSTEXPR (num_acc > (k + 2)) {
       preduxVecResults2VSX<num_acc>(acc, k + 2);
 #ifdef EIGEN_VECTORIZE_VSX
       acc[k + 0][0] = reinterpret_cast<Packet4f>(
@@ -894,7 +895,7 @@ void colVSXVecLoopBody(Index& row, Index cols, Index rows, LhsMapper& lhs, RhsMa
 template <const Index num_acc, typename LhsMapper, typename RhsMapper>
 EIGEN_ALWAYS_INLINE void colVSXVecLoopBodyExtraN(Index& row, Index cols, Index rows, LhsMapper& lhs, RhsMapper& rhs,
                                                  const Packet4f pAlpha, float* result) {
-  if (MAX_BFLOAT16_VEC_ACC_VSX > num_acc) {
+  EIGEN_IF_CONSTEXPR (MAX_BFLOAT16_VEC_ACC_VSX > num_acc) {
     colVSXVecLoopBody<num_acc, LhsMapper, RhsMapper>(row, cols, rows, lhs, rhs, pAlpha, result);
   }
 }
@@ -1199,7 +1200,7 @@ EIGEN_ALWAYS_INLINE Packet2d pload_realimag_combine_row(std::complex<double>* sr
 /** \internal load a scalar or a vector from complex location */
 template <typename ResPacket>
 EIGEN_ALWAYS_INLINE Packet4f pload_complex(std::complex<float>* src) {
-  if (GEMV_IS_SCALAR) {
+  EIGEN_IF_CONSTEXPR (GEMV_IS_SCALAR) {
     return pload_complex_half(src);
   } else {
     return ploadu<Packet4f>(reinterpret_cast<float*>(src));
@@ -1262,7 +1263,7 @@ EIGEN_ALWAYS_INLINE Packet2d pload_real_full(std::complex<double>* src) {
 /** \internal load a vector from a real-only scalar location - row-wise */
 template <typename ResPacket>
 EIGEN_ALWAYS_INLINE Packet4f pload_real_row(float* src) {
-  if (GEMV_IS_SCALAR) {
+  EIGEN_IF_CONSTEXPR (GEMV_IS_SCALAR) {
     return pload_real_full(src);
   } else {
     return ploadu<Packet4f>(src);
@@ -1328,7 +1329,7 @@ EIGEN_ALWAYS_INLINE Packet1cd pset_zero<Packet1cd>() {
 /** \internal initialize a vector from another vector */
 template <typename Packet, typename LhsPacket, typename RhsPacket>
 EIGEN_ALWAYS_INLINE Packet pset_init(Packet& c1) {
-  if (GEMV_IS_COMPLEX_COMPLEX) {
+  EIGEN_IF_CONSTEXPR (GEMV_IS_COMPLEX_COMPLEX) {
     EIGEN_UNUSED_VARIABLE(c1);
     return pset_zero<Packet>();
   } else {
@@ -1359,7 +1360,7 @@ template <typename Scalar, typename ScalarPacket, typename PResPacket, typename 
           typename AlphaData>
 EIGEN_ALWAYS_INLINE void pstoreu_pmadd_complex(PResPacket& c0, AlphaData& b0, ResScalar* res) {
   PResPacket c2 = pcplxflipconj(c0);
-  if (GEMV_IS_SCALAR) {
+  EIGEN_IF_CONSTEXPR (GEMV_IS_SCALAR) {
     ScalarPacket c4 = ploadu<ScalarPacket>(reinterpret_cast<Scalar*>(res));
     ScalarPacket c3 = pmadd_complex<ScalarPacket, AlphaData>(c0.v, c2.v, c4, b0);
     pstoreu(reinterpret_cast<Scalar*>(res), c3);
@@ -1391,7 +1392,7 @@ EIGEN_ALWAYS_INLINE void pstoreu_pmadd_complex(PResPacket& c0, PResPacket& c1, A
   c6[1] = PResPacket(pmadd_complex<ScalarPacket, AlphaData>(c1.v, c3.v, c6[1].v, b0));
   GEMV_BUILDPAIR_MMA(a, c6[0].v, c6[1].v);
 #else
-  if (GEMV_IS_COMPLEX_FLOAT) {
+  EIGEN_IF_CONSTEXPR (GEMV_IS_COMPLEX_FLOAT) {
     __asm__("xvmaddasp %L0,%x1,%x2\n\txvmaddasp %0,%x1,%x3" : "+&d"(a) : "wa"(b0.separate.r.v), "wa"(c0.v), "wa"(c1.v));
     __asm__("xvmaddasp %L0,%x1,%x2\n\txvmaddasp %0,%x1,%x3" : "+&d"(a) : "wa"(b0.separate.i.v), "wa"(c2.v), "wa"(c3.v));
   } else {
@@ -1406,7 +1407,7 @@ EIGEN_ALWAYS_INLINE void pstoreu_pmadd_complex(PResPacket& c0, PResPacket& c1, A
 /** \internal load lhs packet */
 template <typename Scalar, typename LhsScalar, typename LhsMapper, typename LhsPacket>
 EIGEN_ALWAYS_INLINE LhsPacket loadLhsPacket(LhsMapper& lhs, Index i, Index j) {
-  if (sizeof(Scalar) == sizeof(LhsScalar)) {
+  EIGEN_IF_CONSTEXPR (sizeof(Scalar) == sizeof(LhsScalar)) {
     const LhsScalar& src = lhs(i + 0, j);
     return LhsPacket(pload_real_full(const_cast<LhsScalar*>(&src)));
   }
@@ -1416,9 +1417,9 @@ EIGEN_ALWAYS_INLINE LhsPacket loadLhsPacket(LhsMapper& lhs, Index i, Index j) {
 /** \internal madd for complex times complex */
 template <typename ComplexPacket, typename RealPacket, bool ConjugateLhs, bool ConjugateRhs, bool Negate>
 EIGEN_ALWAYS_INLINE RealPacket pmadd_complex_complex(RealPacket& a, RealPacket& b, RealPacket& c) {
-  if (ConjugateLhs && ConjugateRhs) {
+  EIGEN_IF_CONSTEXPR (ConjugateLhs && ConjugateRhs) {
     return vec_madd(a, pconj2(ComplexPacket(b)).v, c);
-  } else if (Negate && !ConjugateLhs && ConjugateRhs) {
+  } else EIGEN_IF_CONSTEXPR (Negate && !ConjugateLhs && ConjugateRhs) {
     return vec_nmsub(a, b, c);
   } else {
     return vec_madd(a, b, c);
@@ -1428,7 +1429,7 @@ EIGEN_ALWAYS_INLINE RealPacket pmadd_complex_complex(RealPacket& a, RealPacket& 
 /** \internal madd for complex times real */
 template <typename ComplexPacket, typename RealPacket, bool Conjugate>
 EIGEN_ALWAYS_INLINE RealPacket pmadd_complex_real(RealPacket& a, RealPacket& b, RealPacket& c) {
-  if (Conjugate) {
+  EIGEN_IF_CONSTEXPR (Conjugate) {
     return vec_madd(a, pconj2(ComplexPacket(b)).v, c);
   } else {
     return vec_madd(a, b, c);
@@ -1440,7 +1441,7 @@ template <typename LhsPacket, typename RhsScalar, typename RhsPacket, typename P
 EIGEN_ALWAYS_INLINE void gemv_mult_generic(LhsPacket& a0, RhsScalar* b, PResPacket& c0) {
   conj_helper<LhsPacket, RhsPacket, ConjugateLhs, ConjugateRhs> pcj;
   RhsPacket b0;
-  if (StorageOrder == ColMajor) {
+  EIGEN_IF_CONSTEXPR (StorageOrder == ColMajor) {
     b0 = pset1<RhsPacket>(*b);
   } else {
     b0 = ploadu<RhsPacket>(b);
@@ -1453,12 +1454,12 @@ template <typename ScalarPacket, typename LhsPacket, typename RhsScalar, typenam
           typename ResPacket, bool ConjugateLhs, bool ConjugateRhs, int StorageOrder>
 EIGEN_ALWAYS_INLINE void gemv_mult_complex_complex(LhsPacket& a0, RhsScalar* b, PResPacket& c0, ResPacket& c1) {
   ScalarPacket br, bi;
-  if (StorageOrder == ColMajor) {
+  EIGEN_IF_CONSTEXPR (StorageOrder == ColMajor) {
     pload_realimag<RhsScalar>(b, br, bi);
   } else {
     pload_realimag_row<RhsScalar>(b, br, bi);
   }
-  if (ConjugateLhs && !ConjugateRhs) a0 = pconj2(a0);
+  EIGEN_IF_CONSTEXPR (ConjugateLhs && !ConjugateRhs) a0 = pconj2(a0);
   LhsPacket a1 = pcplxflipconj(a0);
   ScalarPacket cr = pmadd_complex_complex<LhsPacket, ScalarPacket, ConjugateLhs, ConjugateRhs, false>(a0.v, br, c0.v);
   ScalarPacket ci = pmadd_complex_complex<LhsPacket, ScalarPacket, ConjugateLhs, ConjugateRhs, true>(a1.v, bi, c1.v);
@@ -1471,7 +1472,7 @@ template <typename ScalarPacket, typename LhsPacket, typename RhsScalar, typenam
           typename ResPacket, bool ConjugateLhs, bool ConjugateRhs, int StorageOrder>
 EIGEN_ALWAYS_INLINE void gemv_mult_real_complex(LhsPacket& a0, RhsScalar* b, PResPacket& c0) {
   ScalarPacket b0;
-  if (StorageOrder == ColMajor) {
+  EIGEN_IF_CONSTEXPR (StorageOrder == ColMajor) {
     b0 = pload_complex_full(b);
   } else {
     b0 = pload_complex_full_row(b);
@@ -1486,7 +1487,7 @@ template <typename ScalarPacket, typename LhsPacket, typename RhsScalar, typenam
 EIGEN_ALWAYS_INLINE void gemv_mult_complex_real(LhsPacket& a0, RhsScalar* b, PResPacket& c0) {
   ScalarPacket a1 = pload_complex<ResPacket>(&a0);
   ScalarPacket b0;
-  if (StorageOrder == ColMajor) {
+  EIGEN_IF_CONSTEXPR (StorageOrder == ColMajor) {
     b0 = pload_real(b);
   } else {
     b0 = pload_real_row<ResPacket>(b);
@@ -1567,7 +1568,7 @@ EIGEN_ALWAYS_INLINE void pload_complex_MMA(__vector_pair&) {
 /** \internal perform a matrix multiply and accumulate (positive and negative) of packet a and packet b */
 template <typename LhsPacket, typename RhsPacket, bool NegativeAccumulate>
 EIGEN_ALWAYS_INLINE void pger_vecMMA(__vector_quad* acc, RhsPacket& a, LhsPacket& b) {
-  if (NegativeAccumulate) {
+  EIGEN_IF_CONSTEXPR (NegativeAccumulate) {
     __builtin_mma_xvf32gernp(acc, (__vector unsigned char)a, (__vector unsigned char)b);
   } else {
     __builtin_mma_xvf32gerpp(acc, (__vector unsigned char)a, (__vector unsigned char)b);
@@ -1577,7 +1578,7 @@ EIGEN_ALWAYS_INLINE void pger_vecMMA(__vector_quad* acc, RhsPacket& a, LhsPacket
 /** \internal perform a matrix multiply and accumulate (positive and negative) of vector_pair a and packet b */
 template <typename LhsPacket, typename RhsPacket, bool NegativeAccumulate>
 EIGEN_ALWAYS_INLINE void pger_vecMMA(__vector_quad* acc, __vector_pair& a, Packet2d& b) {
-  if (NegativeAccumulate) {
+  EIGEN_IF_CONSTEXPR (NegativeAccumulate) {
     __builtin_mma_xvf64gernp(acc, (__vector_pair)a, (__vector unsigned char)b);
   } else {
     __builtin_mma_xvf64gerpp(acc, (__vector_pair)a, (__vector unsigned char)b);
@@ -1592,10 +1593,10 @@ EIGEN_ALWAYS_INLINE void pger_vecMMA(__vector_quad*, __vector_pair&, Packet4f&) 
 /** \internal madd for complex times complex (MMA version) */
 template <typename RealPacket, typename LhsPacket, bool ConjugateLhs, bool ConjugateRhs, bool Negate>
 EIGEN_ALWAYS_INLINE void pmadd_complex_complex_MMA(LhsPacket& a, RealPacket& b, __vector_quad* c) {
-  if (ConjugateLhs && ConjugateRhs) {
+  EIGEN_IF_CONSTEXPR (ConjugateLhs && ConjugateRhs) {
     RealPacket b2 = pconj2(convertComplex(b)).v;
     return pger_vecMMA<RealPacket, RealPacket, false>(c, b2, a.v);
-  } else if (Negate && !ConjugateLhs && ConjugateRhs) {
+  } else EIGEN_IF_CONSTEXPR (Negate && !ConjugateLhs && ConjugateRhs) {
     return pger_vecMMA<RealPacket, RealPacket, true>(c, b, a.v);
   } else {
     return pger_vecMMA<RealPacket, RealPacket, false>(c, b, a.v);
@@ -1604,10 +1605,10 @@ EIGEN_ALWAYS_INLINE void pmadd_complex_complex_MMA(LhsPacket& a, RealPacket& b, 
 
 template <typename RealPacket, typename LhsPacket, bool ConjugateLhs, bool ConjugateRhs, bool Negate>
 EIGEN_ALWAYS_INLINE void pmadd_complex_complex_MMA(__vector_pair& a, RealPacket& b, __vector_quad* c) {
-  if (ConjugateLhs && ConjugateRhs) {
+  EIGEN_IF_CONSTEXPR (ConjugateLhs && ConjugateRhs) {
     RealPacket b2 = pconj2(convertComplex(b)).v;
     return pger_vecMMA<RealPacket, __vector_pair, false>(c, a, b2);
-  } else if (Negate && !ConjugateLhs && ConjugateRhs) {
+  } else EIGEN_IF_CONSTEXPR (Negate && !ConjugateLhs && ConjugateRhs) {
     return pger_vecMMA<RealPacket, __vector_pair, true>(c, a, b);
   } else {
     return pger_vecMMA<RealPacket, __vector_pair, false>(c, a, b);
@@ -1618,15 +1619,15 @@ EIGEN_ALWAYS_INLINE void pmadd_complex_complex_MMA(__vector_pair& a, RealPacket&
 template <typename RealPacket, typename LhsPacket, bool Conjugate, int StorageOrder>
 EIGEN_ALWAYS_INLINE void pmadd_complex_real_MMA(LhsPacket& a, RealPacket& b, __vector_quad* c) {
   RealPacket a2 = convertReal(a);
-  if (Conjugate) {
+  EIGEN_IF_CONSTEXPR (Conjugate) {
     RealPacket b2 = pconj2(convertComplex(b)).v;
-    if (StorageOrder == ColMajor) {
+    EIGEN_IF_CONSTEXPR (StorageOrder == ColMajor) {
       return pger_vecMMA<RealPacket, RealPacket, false>(c, b2, a2);
     } else {
       return pger_vecMMA<RealPacket, RealPacket, false>(c, a2, b2);
     }
   } else {
-    if (StorageOrder == ColMajor) {
+    EIGEN_IF_CONSTEXPR (StorageOrder == ColMajor) {
       return pger_vecMMA<RealPacket, RealPacket, false>(c, b, a2);
     } else {
       return pger_vecMMA<RealPacket, RealPacket, false>(c, a2, b);
@@ -1637,7 +1638,7 @@ EIGEN_ALWAYS_INLINE void pmadd_complex_real_MMA(LhsPacket& a, RealPacket& b, __v
 /** \internal madd for real times complex (MMA version) */
 template <typename RealPacket, typename LhsPacket, bool Conjugate, int StorageOrder>
 EIGEN_ALWAYS_INLINE void pmadd_complex_real_MMA(__vector_pair& a, RealPacket& b, __vector_quad* c) {
-  if (Conjugate) {
+  EIGEN_IF_CONSTEXPR (Conjugate) {
     RealPacket b2 = pconj2(convertComplex(b)).v;
     return pger_vecMMA<RealPacket, __vector_pair, false>(c, a, b2);
   } else {
@@ -1650,7 +1651,7 @@ template <typename ScalarPacket, typename LhsPacket, typename SLhsPacket, typena
           bool ConjugateLhs, bool ConjugateRhs, int StorageOrder>
 EIGEN_ALWAYS_INLINE void gemv_mult_complex_complex_MMA(SLhsPacket& a0, RhsScalar* b, __vector_quad* c0) {
   ScalarPacket b0;
-  if (StorageOrder == ColMajor) {
+  EIGEN_IF_CONSTEXPR (StorageOrder == ColMajor) {
     b0 = pload_realimag_combine(b);
   } else {
     b0 = pload_realimag_combine_row(b);
@@ -1664,7 +1665,7 @@ template <typename ScalarPacket, typename LhsPacket, typename SLhsPacket, typena
 EIGEN_ALWAYS_INLINE void gemv_mult_complex_real_MMA(SLhsPacket& a0, RhsScalar* b, __vector_quad* c0) {
   pload_complex_MMA<ScalarPacket, LhsPacket, SLhsPacket, ResPacket>(a0);
   ScalarPacket b0;
-  if (StorageOrder == ColMajor) {
+  EIGEN_IF_CONSTEXPR (StorageOrder == ColMajor) {
     b0 = pload_real(b);
   } else {
     b0 = pload_real_row<ResPacket>(b);
@@ -1677,7 +1678,7 @@ template <typename ScalarPacket, typename LhsPacket, typename SLhsPacket, typena
           bool ConjugateLhs, bool ConjugateRhs, int StorageOrder>
 EIGEN_ALWAYS_INLINE void gemv_mult_real_complex_MMA(SLhsPacket& a0, RhsScalar* b, __vector_quad* c0) {
   ScalarPacket b0;
-  if (StorageOrder == ColMajor) {
+  EIGEN_IF_CONSTEXPR (StorageOrder == ColMajor) {
     b0 = pload_complex_full(b);
   } else {
     b0 = pload_complex_full_row(b);
@@ -1702,7 +1703,7 @@ GEMV_MULT_COMPLEX_COMPLEX_MMA(Packet1cd, std::complex<double>)
 template <typename ScalarPacket, typename LhsScalar, typename LhsPacket, typename SLhsPacket, typename RhsScalar,
           typename RhsPacket, typename ResPacket, bool ConjugateLhs, bool ConjugateRhs, int StorageOrder>
 EIGEN_ALWAYS_INLINE void gemv_mult_complex_MMA(__vector_pair& a0, std::complex<double>* b, __vector_quad* c0) {
-  if (sizeof(LhsScalar) == 16) {
+  EIGEN_IF_CONSTEXPR (sizeof(LhsScalar) == 16) {
     gemv_mult_complex_complex_MMA<ScalarPacket, LhsPacket, SLhsPacket, RhsScalar, ResPacket, ConjugateLhs, ConjugateRhs,
                                   StorageOrder>(a0, b, c0);
   } else {
@@ -1740,8 +1741,8 @@ template <typename Scalar, typename ScalarPacket, typename LhsPacket, typename R
           bool ConjugateRhs>
 EIGEN_ALWAYS_INLINE void disassembleResults2(__vector_quad* c0, PacketBlock<ScalarPacket, 4>& result0) {
   __builtin_mma_disassemble_acc(&result0.packet, c0);
-  if (sizeof(LhsPacket) == 16) {
-    if (sizeof(RhsPacket) == 16) {
+  EIGEN_IF_CONSTEXPR (sizeof(LhsPacket) == 16) {
+    EIGEN_IF_CONSTEXPR (sizeof(RhsPacket) == 16) {
       ScalarPacket tmp0, tmp2;
       tmp2 = vec_mergeh(result0.packet[2], result0.packet[3]);
       tmp0 = vec_mergeh(result0.packet[0], result0.packet[1]);
@@ -1750,10 +1751,10 @@ EIGEN_ALWAYS_INLINE void disassembleResults2(__vector_quad* c0, PacketBlock<Scal
       result0.packet[2] = tmp2;
       result0.packet[0] = tmp0;
 
-      if (ConjugateLhs) {
+      EIGEN_IF_CONSTEXPR (ConjugateLhs) {
         result0.packet[0] = pconj2(convertComplex(result0.packet[0])).v;
         result0.packet[2] = pconj2(convertComplex(result0.packet[2])).v;
-      } else if (ConjugateRhs) {
+      } else EIGEN_IF_CONSTEXPR (ConjugateRhs) {
         result0.packet[1] = pconj2(convertComplex(result0.packet[1])).v;
         result0.packet[3] = pconj2(convertComplex(result0.packet[3])).v;
       } else {
@@ -1773,20 +1774,20 @@ template <typename Scalar, typename ScalarPacket, typename LhsPacket, typename R
           bool ConjugateRhs>
 EIGEN_ALWAYS_INLINE void disassembleResults4(__vector_quad* c0, PacketBlock<ScalarPacket, 4>& result0) {
   __builtin_mma_disassemble_acc(&result0.packet, c0);
-  if (GEMV_IS_COMPLEX_COMPLEX) {
-    if (ConjugateLhs) {
+  EIGEN_IF_CONSTEXPR (GEMV_IS_COMPLEX_COMPLEX) {
+    EIGEN_IF_CONSTEXPR (ConjugateLhs) {
       result0.packet[0] = pconj2(convertComplex(result0.packet[0])).v;
       result0.packet[1] = pcplxflip2(convertComplex(result0.packet[1])).v;
     } else {
-      if (ConjugateRhs) {
+      EIGEN_IF_CONSTEXPR (ConjugateRhs) {
         result0.packet[1] = pcplxconjflip(convertComplex(result0.packet[1])).v;
       } else {
         result0.packet[1] = pcplxflipconj(convertComplex(result0.packet[1])).v;
       }
     }
     result0.packet[0] = vec_add(result0.packet[0], result0.packet[1]);
-  } else if (sizeof(LhsPacket) == sizeof(std::complex<float>)) {
-    if (ConjugateLhs) {
+  } else EIGEN_IF_CONSTEXPR (sizeof(LhsPacket) == sizeof(std::complex<float>)) {
+    EIGEN_IF_CONSTEXPR (ConjugateLhs) {
       result0.packet[0] = pconj2(convertComplex(result0.packet[0])).v;
     }
   } else {
@@ -1797,7 +1798,7 @@ EIGEN_ALWAYS_INLINE void disassembleResults4(__vector_quad* c0, PacketBlock<Scal
 template <typename Scalar, typename ScalarPacket, int ResPacketSize, typename LhsPacket, typename RhsPacket,
           bool ConjugateLhs, bool ConjugateRhs>
 EIGEN_ALWAYS_INLINE void disassembleResults(__vector_quad* c0, PacketBlock<ScalarPacket, 4>& result0) {
-  if (!GEMV_IS_COMPLEX_FLOAT) {
+  EIGEN_IF_CONSTEXPR (!GEMV_IS_COMPLEX_FLOAT) {
     disassembleResults2<Scalar, ScalarPacket, LhsPacket, RhsPacket, ConjugateLhs, ConjugateRhs>(c0, result0);
   } else {
     disassembleResults4<Scalar, ScalarPacket, LhsPacket, RhsPacket, ConjugateLhs, ConjugateRhs>(c0, result0);
@@ -1813,9 +1814,9 @@ EIGEN_ALWAYS_INLINE void disassembleResults(__vector_quad* c0, PacketBlock<Scala
 #define GEMV_LOADPACKET_COL_COMPLEX_DATA(iter) convertReal(GEMV_LOADPACKET_COL_COMPLEX(iter))
 
 #ifdef USE_GEMV_MMA
-#define GEMV_INIT_COL_COMPLEX_MMA(iter, N) \
-  if (GEMV_GETN_COMPLEX(N) > iter) {       \
-    __builtin_mma_xxsetaccz(&e0##iter);    \
+#define GEMV_INIT_COL_COMPLEX_MMA(iter, N)           \
+  EIGEN_IF_CONSTEXPR (GEMV_GETN_COMPLEX(N) > iter) { \
+    __builtin_mma_xxsetaccz(&e0##iter);              \
   }
 
 #if EIGEN_COMP_LLVM
@@ -1825,7 +1826,7 @@ EIGEN_ALWAYS_INLINE void disassembleResults(__vector_quad* c0, PacketBlock<Scala
   EIGEN_UNUSED_VARIABLE(f##iter1);
 #else
 #define GEMV_LOADPAIR_COL_COMPLEX_MMA(iter1, iter2)                                                         \
-  if (sizeof(LhsPacket) == 16) {                                                                            \
+  EIGEN_IF_CONSTEXPR (sizeof(LhsPacket) == 16) {                                                            \
     const LhsScalar& src = lhs(i + ((32 * iter1) / sizeof(LhsScalar)), j);                                  \
     a##iter1 = *reinterpret_cast<__vector_pair*>(const_cast<LhsScalar*>(&src));                             \
     EIGEN_UNUSED_VARIABLE(f##iter1);                                                                        \
@@ -1836,8 +1837,8 @@ EIGEN_ALWAYS_INLINE void disassembleResults(__vector_quad* c0, PacketBlock<Scala
 #endif
 
 #define GEMV_LOAD1_COL_COMPLEX_MMA(iter, N)          \
-  if (GEMV_GETN_COMPLEX(N) > iter) {                 \
-    if (GEMV_IS_COMPLEX_FLOAT) {                     \
+  EIGEN_IF_CONSTEXPR (GEMV_GETN_COMPLEX(N) > iter) { \
+    EIGEN_IF_CONSTEXPR (GEMV_IS_COMPLEX_FLOAT) {     \
       f##iter = GEMV_LOADPACKET_COL_COMPLEX(iter);   \
       EIGEN_UNUSED_VARIABLE(a##iter);                \
     } else {                                         \
@@ -1849,8 +1850,8 @@ EIGEN_ALWAYS_INLINE void disassembleResults(__vector_quad* c0, PacketBlock<Scala
   }
 
 #define GEMV_WORK1_COL_COMPLEX_MMA(iter, N)                                                                      \
-  if (GEMV_GETN_COMPLEX(N) > iter) {                                                                             \
-    if (GEMV_IS_COMPLEX_FLOAT) {                                                                                 \
+  EIGEN_IF_CONSTEXPR (GEMV_GETN_COMPLEX(N) > iter) {                                                             \
+    EIGEN_IF_CONSTEXPR (GEMV_IS_COMPLEX_FLOAT) {                                                                 \
       gemv_mult_complex_MMA<ScalarPacket, LhsScalar, PLhsPacket, PLhsPacket, RhsScalar, RhsPacket, ResPacket,    \
                             ConjugateLhs, ConjugateRhs, ColMajor>(f##iter, b, &e0##iter);                        \
     } else {                                                                                                     \
@@ -1863,10 +1864,10 @@ EIGEN_ALWAYS_INLINE void disassembleResults(__vector_quad* c0, PacketBlock<Scala
   GEMV_BUILDPAIR_MMA(a##iter1, GEMV_LOADPACKET_COL_COMPLEX_DATA(iter2), GEMV_LOADPACKET_COL_COMPLEX_DATA((iter2) + 1));
 
 #define GEMV_LOAD2_COL_COMPLEX_MMA(iter1, iter2, iter3, N) \
-  if (GEMV_GETN_COMPLEX(N) > iter1) {                      \
-    if (GEMV_IS_COMPLEX_FLOAT) {                           \
+  EIGEN_IF_CONSTEXPR (GEMV_GETN_COMPLEX(N) > iter1) {      \
+    EIGEN_IF_CONSTEXPR (GEMV_IS_COMPLEX_FLOAT) {           \
       GEMV_LOADPAIR2_COL_COMPLEX_MMA(iter2, iter2);        \
-      EIGEN_UNUSED_VARIABLE(a##iter3)                      \
+      EIGEN_UNUSED_VARIABLE(a##iter3);                     \
     } else {                                               \
       GEMV_LOADPAIR2_COL_COMPLEX_MMA(iter2, iter2 << 1);   \
       GEMV_LOADPAIR2_COL_COMPLEX_MMA(iter3, iter3 << 1);   \
@@ -1879,8 +1880,8 @@ EIGEN_ALWAYS_INLINE void disassembleResults(__vector_quad* c0, PacketBlock<Scala
   EIGEN_UNUSED_VARIABLE(f##iter3);
 
 #define GEMV_WORK2_COL_COMPLEX_MMA(iter1, iter2, iter3, N)                                                       \
-  if (GEMV_GETN_COMPLEX(N) > iter1) {                                                                            \
-    if (GEMV_IS_COMPLEX_FLOAT) {                                                                                 \
+  EIGEN_IF_CONSTEXPR (GEMV_GETN_COMPLEX(N) > iter1) {                                                            \
+    EIGEN_IF_CONSTEXPR (GEMV_IS_COMPLEX_FLOAT) {                                                                 \
       PLhsPacket g[2];                                                                                           \
       __builtin_vsx_disassemble_pair(reinterpret_cast<void*>(g), &a##iter2);                                     \
       gemv_mult_complex_MMA<ScalarPacket, LhsScalar, PLhsPacket, PLhsPacket, RhsScalar, RhsPacket, ResPacket,    \
@@ -1897,14 +1898,14 @@ EIGEN_ALWAYS_INLINE void disassembleResults(__vector_quad* c0, PacketBlock<Scala
 
 #if EIGEN_COMP_LLVM
 #define GEMV_LOAD_COL_COMPLEX_MMA(N)                       \
-  if (GEMV_GETN_COMPLEX(N) > 1) {                          \
+  EIGEN_IF_CONSTEXPR (GEMV_GETN_COMPLEX(N) > 1) {          \
     GEMV_UNROLL_HALF(GEMV_LOAD2_COL_COMPLEX_MMA, (N >> 1)) \
   } else {                                                 \
     GEMV_UNROLL(GEMV_LOAD1_COL_COMPLEX_MMA, N)             \
   }
 
 #define GEMV_WORK_COL_COMPLEX_MMA(N)                       \
-  if (GEMV_GETN_COMPLEX(N) > 1) {                          \
+  EIGEN_IF_CONSTEXPR (GEMV_GETN_COMPLEX(N) > 1) {          \
     GEMV_UNROLL_HALF(GEMV_WORK2_COL_COMPLEX_MMA, (N >> 1)) \
   } else {                                                 \
     GEMV_UNROLL(GEMV_WORK1_COL_COMPLEX_MMA, N)             \
@@ -1920,10 +1921,10 @@ EIGEN_ALWAYS_INLINE void disassembleResults(__vector_quad* c0, PacketBlock<Scala
       &e0##iter, result0##iter);
 
 #define GEMV_STORE_COL_COMPLEX_MMA(iter, N)                                                     \
-  if (GEMV_GETN_COMPLEX(N) > iter) {                                                            \
+  EIGEN_IF_CONSTEXPR (GEMV_GETN_COMPLEX(N) > iter) {                                            \
     GEMV_DISASSEMBLE_COMPLEX_MMA(iter);                                                         \
     c0##iter = PResPacket(result0##iter.packet[0]);                                             \
-    if (GEMV_IS_COMPLEX_FLOAT) {                                                                \
+    EIGEN_IF_CONSTEXPR (GEMV_IS_COMPLEX_FLOAT) {                                                \
       pstoreu_pmadd_complex<Scalar, ScalarPacket, PResPacket, ResPacket, ResScalar, AlphaData>( \
           c0##iter, alpha_data, res + i + (iter * ResPacketSize));                              \
     } else {                                                                                    \
@@ -1936,11 +1937,11 @@ EIGEN_ALWAYS_INLINE void disassembleResults(__vector_quad* c0, PacketBlock<Scala
   }
 
 #define GEMV_STORE2_COL_COMPLEX_MMA(iter1, iter2, iter3, N)                                                        \
-  if (GEMV_GETN_COMPLEX(N) > iter1) {                                                                              \
+  EIGEN_IF_CONSTEXPR (GEMV_GETN_COMPLEX(N) > iter1) {                                                              \
     GEMV_DISASSEMBLE_COMPLEX_MMA(iter2);                                                                           \
     GEMV_DISASSEMBLE_COMPLEX_MMA(iter3);                                                                           \
     c0##iter2 = PResPacket(result0##iter2.packet[0]);                                                              \
-    if (GEMV_IS_COMPLEX_FLOAT) {                                                                                   \
+    EIGEN_IF_CONSTEXPR (GEMV_IS_COMPLEX_FLOAT) {                                                                   \
       c0##iter3 = PResPacket(result0##iter3.packet[0]);                                                            \
       pstoreu_pmadd_complex<ScalarPacket, PResPacket, ResPacket, ResScalar, AlphaData, ResPacketSize, iter2>(      \
           c0##iter2, c0##iter3, alpha_data, res + i);                                                              \
@@ -1965,7 +1966,7 @@ EIGEN_ALWAYS_INLINE void disassembleResults(__vector_quad* c0, PacketBlock<Scala
     GEMV_LOAD_COL_COMPLEX_MMA(N)                            \
     GEMV_WORK_COL_COMPLEX_MMA(N)                            \
   } while (++j < jend);                                     \
-  if (GEMV_GETN(N) <= 2) {                                  \
+  EIGEN_IF_CONSTEXPR (GEMV_GETN(N) <= 2) {                  \
     GEMV_UNROLL(GEMV_STORE_COL_COMPLEX_MMA, N)              \
   } else {                                                  \
     GEMV_UNROLL_HALF(GEMV_STORE2_COL_COMPLEX_MMA, (N >> 1)) \
@@ -1974,7 +1975,7 @@ EIGEN_ALWAYS_INLINE void disassembleResults(__vector_quad* c0, PacketBlock<Scala
 #endif
 
 #define GEMV_INIT_COMPLEX(iter, N)                                   \
-  if (N > iter) {                                                    \
+  EIGEN_IF_CONSTEXPR (N > iter) {                                    \
     c0##iter = pset_zero<PResPacket>();                              \
     c1##iter = pset_init<ResPacket, LhsPacket, RhsPacket>(c1##iter); \
   } else {                                                           \
@@ -1983,7 +1984,7 @@ EIGEN_ALWAYS_INLINE void disassembleResults(__vector_quad* c0, PacketBlock<Scala
   }
 
 #define GEMV_WORK_COL_COMPLEX(iter, N)                                                                     \
-  if (N > iter) {                                                                                          \
+  EIGEN_IF_CONSTEXPR (N > iter) {                                                                          \
     f##iter = GEMV_LOADPACKET_COL_COMPLEX(iter);                                                           \
     gemv_mult_complex<ScalarPacket, PLhsPacket, RhsScalar, RhsPacket, PResPacket, ResPacket, ConjugateLhs, \
                       ConjugateRhs, ColMajor>(f##iter, b, c0##iter, c1##iter);                             \
@@ -1992,8 +1993,8 @@ EIGEN_ALWAYS_INLINE void disassembleResults(__vector_quad* c0, PacketBlock<Scala
   }
 
 #define GEMV_STORE_COL_COMPLEX(iter, N)                                                       \
-  if (N > iter) {                                                                             \
-    if (GEMV_IS_COMPLEX_COMPLEX) {                                                            \
+  EIGEN_IF_CONSTEXPR (N > iter) {                                                             \
+    EIGEN_IF_CONSTEXPR (GEMV_IS_COMPLEX_COMPLEX) {                                            \
       c0##iter = padd(c0##iter, c1##iter);                                                    \
     }                                                                                         \
     pstoreu_pmadd_complex<Scalar, ScalarPacket, PResPacket, ResPacket, ResScalar, AlphaData>( \
@@ -2021,11 +2022,11 @@ EIGEN_ALWAYS_INLINE void disassembleResults(__vector_quad* c0, PacketBlock<Scala
 #define GEMV_PROCESS_COL_COMPLEX(N) GEMV_PROCESS_COL_COMPLEX_ONE_MMA(N)
 #else
 #if defined(USE_GEMV_MMA) && (__GNUC__ > 10)
-#define GEMV_PROCESS_COL_COMPLEX(N)          \
-  if (sizeof(Scalar) != sizeof(LhsPacket)) { \
-    GEMV_PROCESS_COL_COMPLEX_ONE_MMA(N)      \
-  } else {                                   \
-    GEMV_PROCESS_COL_COMPLEX_ONE(N)          \
+#define GEMV_PROCESS_COL_COMPLEX(N)                          \
+  EIGEN_IF_CONSTEXPR (sizeof(Scalar) != sizeof(LhsPacket)) { \
+    GEMV_PROCESS_COL_COMPLEX_ONE_MMA(N)                      \
+  } else {                                                   \
+    GEMV_PROCESS_COL_COMPLEX_ONE(N)                          \
   }
 #else
 #define GEMV_PROCESS_COL_COMPLEX(N) GEMV_PROCESS_COL_COMPLEX_ONE(N)
@@ -2058,7 +2059,8 @@ EIGEN_STRONG_INLINE void gemv_complex_col(Index rows, Index cols, const LhsMappe
   conj_helper<LhsScalar, RhsScalar, ConjugateLhs, ConjugateRhs> cj;
 
   const Index lhsStride = lhs.stride();
-  // TODO: for padded aligned inputs, we could enable aligned reads
+  // LhsAlignment stays Unaligned; enabling aligned reads would require
+  // propagating the Mapper's Alignment through the run() template.
   enum {
     LhsAlignment = Unaligned,
     ResPacketSize = PTraits::ResPacketSize,
@@ -2097,7 +2099,7 @@ EIGEN_STRONG_INLINE void gemv_complex_col(Index rows, Index cols, const LhsMappe
     GEMV_UNUSED(8, a)
     GEMV_UNUSED(8, f)
 #if !defined(GCC_ONE_VECTORPAIR_BUG) && defined(USE_GEMV_COL_COMPLEX_MMA)
-    if (GEMV_IS_COMPLEX_COMPLEX || !GEMV_IS_COMPLEX_FLOAT)
+    EIGEN_IF_CONSTEXPR (GEMV_IS_COMPLEX_COMPLEX || !GEMV_IS_COMPLEX_FLOAT)
 #endif
 #endif
 #ifndef GCC_ONE_VECTORPAIR_BUG
@@ -2174,23 +2176,23 @@ EIGEN_ALWAYS_INLINE ScalarBlock<std::complex<float>, 2> addComplexResults(Packet
   result0.packet[2] = reinterpret_cast<Packet4f>(
       vec_mergel(reinterpret_cast<Packet2d>(result0.packet[2]), reinterpret_cast<Packet2d>(result1.packet[2])));
   result0.packet[0] = vec_add(result0.packet[0], result0.packet[2]);
-  if (GEMV_IS_COMPLEX_COMPLEX) {
+  EIGEN_IF_CONSTEXPR (GEMV_IS_COMPLEX_COMPLEX) {
     result0.packet[1] = reinterpret_cast<Packet4f>(
         vec_mergeh(reinterpret_cast<Packet2d>(result0.packet[1]), reinterpret_cast<Packet2d>(result1.packet[1])));
     result0.packet[3] = reinterpret_cast<Packet4f>(
         vec_mergel(reinterpret_cast<Packet2d>(result0.packet[3]), reinterpret_cast<Packet2d>(result1.packet[3])));
     result0.packet[1] = vec_add(result0.packet[1], result0.packet[3]);
-    if (ConjugateLhs) {
+    EIGEN_IF_CONSTEXPR (ConjugateLhs) {
       result0.packet[0] = pconj2(convertComplex(result0.packet[0])).v;
       result0.packet[1] = pcplxflip2(convertComplex(result0.packet[1])).v;
-    } else if (ConjugateRhs) {
+    } else EIGEN_IF_CONSTEXPR (ConjugateRhs) {
       result0.packet[1] = pcplxconjflip(convertComplex(result0.packet[1])).v;
     } else {
       result0.packet[1] = pcplxflipconj(convertComplex(result0.packet[1])).v;
     }
     result0.packet[0] = vec_add(result0.packet[0], result0.packet[1]);
   } else {
-    if (ConjugateLhs && (sizeof(LhsPacket) == sizeof(std::complex<float>))) {
+    EIGEN_IF_CONSTEXPR (ConjugateLhs && (sizeof(LhsPacket) == sizeof(std::complex<float>))) {
       result0.packet[0] = pconj2(convertComplex(result0.packet[0])).v;
     }
   }
@@ -2234,11 +2236,11 @@ EIGEN_ALWAYS_INLINE ScalarBlock<ResScalar, 2> predux_complex(__vector_quad* acc0
   ScalarBlock<ResScalar, 2> cc0;
   PacketBlock<ResPacket, 4> result0;
   __builtin_mma_disassemble_acc(&result0.packet, acc0);
-  if (GEMV_IS_COMPLEX_COMPLEX) {
-    if (ConjugateLhs) {
+  EIGEN_IF_CONSTEXPR (GEMV_IS_COMPLEX_COMPLEX) {
+    EIGEN_IF_CONSTEXPR (ConjugateLhs) {
       result0.packet[1] = pconjinv(convertComplex(result0.packet[1])).v;
       result0.packet[3] = pconjinv(convertComplex(result0.packet[3])).v;
-    } else if (ConjugateRhs) {
+    } else EIGEN_IF_CONSTEXPR (ConjugateRhs) {
       result0.packet[0] = pconj2(convertComplex(result0.packet[0])).v;
       result0.packet[2] = pconj2(convertComplex(result0.packet[2])).v;
     } else {
@@ -2285,17 +2287,17 @@ EIGEN_ALWAYS_INLINE ScalarBlock<ResScalar, 2> predux_complex(ResPacket& a, ResPa
 
 #define GEMV_UNUSED_ROW(N, which) GEMV_UNROLL3_ROW(GEMV_UNUSED_VAR, N, which)
 
-#define GEMV_INIT_ROW(iter, N)         \
-  if (GEMV_GETN(N) > iter) {           \
-    __builtin_mma_xxsetaccz(&c##iter); \
+#define GEMV_INIT_ROW(iter, N)               \
+  EIGEN_IF_CONSTEXPR (GEMV_GETN(N) > iter) { \
+    __builtin_mma_xxsetaccz(&c##iter);       \
   }
 
 #define GEMV_LOADPAIR_ROW(iter1, iter2) \
   GEMV_BUILDPAIR_MMA(b##iter1, GEMV_LOADPACKET_ROW(iter2), GEMV_LOADPACKET_ROW((iter2) + 1));
 
 #define GEMV_WORK_ROW(iter, N)                                                              \
-  if (GEMV_GETN(N) > iter) {                                                                \
-    if (GEMV_IS_FLOAT) {                                                                    \
+  EIGEN_IF_CONSTEXPR (GEMV_GETN(N) > iter) {                                                \
+    EIGEN_IF_CONSTEXPR (GEMV_IS_FLOAT) {                                                    \
       pger_vecMMA_acc<LhsPacket, RhsPacket, true>(&c##iter, a0, GEMV_LOADPACKET_ROW(iter)); \
     } else {                                                                                \
       __vector_pair b##iter;                                                                \
@@ -2305,8 +2307,8 @@ EIGEN_ALWAYS_INLINE ScalarBlock<ResScalar, 2> predux_complex(ResPacket& a, ResPa
   }
 
 #define GEMV_PREDUX2(iter1, iter2, iter3, N)                               \
-  if (N > iter1) {                                                         \
-    if (GEMV_IS_FLOAT) {                                                   \
+  EIGEN_IF_CONSTEXPR (N > iter1) {                                         \
+    EIGEN_IF_CONSTEXPR (GEMV_IS_FLOAT) {                                   \
       cc##iter1 = predux_real<ResScalar, ResPacket>(&c##iter2, &c##iter3); \
     } else {                                                               \
       cc##iter1 = predux_real<ResScalar, ResPacket>(&c##iter1);            \
@@ -2316,19 +2318,19 @@ EIGEN_ALWAYS_INLINE ScalarBlock<ResScalar, 2> predux_complex(ResPacket& a, ResPa
   }
 #else
 #define GEMV_INIT_ROW(iter, N)                \
-  if (N > iter) {                             \
+  EIGEN_IF_CONSTEXPR (N > iter) {             \
     c##iter = pset1<ResPacket>(ResScalar(0)); \
   } else {                                    \
     EIGEN_UNUSED_VARIABLE(c##iter);           \
   }
 
 #define GEMV_WORK_ROW(iter, N)                                   \
-  if (N > iter) {                                                \
+  EIGEN_IF_CONSTEXPR (N > iter) {                                \
     c##iter = pcj.pmadd(GEMV_LOADPACKET_ROW(iter), a0, c##iter); \
   }
 
 #define GEMV_PREDUX2(iter1, iter2, iter3, N)                           \
-  if (N > iter1) {                                                     \
+  EIGEN_IF_CONSTEXPR (N > iter1) {                                     \
     cc##iter1 = predux_real<ResScalar, ResPacket>(c##iter2, c##iter3); \
   } else {                                                             \
     EIGEN_UNUSED_VARIABLE(cc##iter1);                                  \
@@ -2336,13 +2338,13 @@ EIGEN_ALWAYS_INLINE ScalarBlock<ResScalar, 2> predux_complex(ResPacket& a, ResPa
 #endif
 
 #define GEMV_MULT(iter1, iter2, iter3, N)                  \
-  if (N > iter1) {                                         \
+  EIGEN_IF_CONSTEXPR (N > iter1) {                         \
     cc##iter1.scalar[0] += cj.pmul(lhs(i + iter2, j), a0); \
     cc##iter1.scalar[1] += cj.pmul(lhs(i + iter3, j), a0); \
   }
 
 #define GEMV_STORE_ROW(iter1, iter2, iter3, N)                                           \
-  if (N > iter1) {                                                                       \
+  EIGEN_IF_CONSTEXPR (N > iter1) {                                                       \
     storeMaddData<ResScalar>(res + ((i + iter2) * resIncr), alpha, cc##iter1.scalar[0]); \
     storeMaddData<ResScalar>(res + ((i + iter3) * resIncr), alpha, cc##iter1.scalar[1]); \
   }
@@ -2390,7 +2392,8 @@ EIGEN_STRONG_INLINE void gemv_row(Index rows, Index cols, const LhsMapper& alhs,
   const Index n2 = rows - 1;
 #endif
 
-  // TODO: for padded aligned inputs, we could enable aligned reads
+  // LhsAlignment stays Unaligned; enabling aligned reads would require
+  // propagating the Mapper's Alignment through the run() template.
   enum {
     LhsAlignment = Unaligned,
     ResPacketSize = Traits::ResPacketSize,
@@ -2436,6 +2439,7 @@ EIGEN_STRONG_INLINE void gemv_row(Index rows, Index cols, const LhsMapper& alhs,
     EIGEN_DEVICE_FUNC EIGEN_DONT_INLINE static void run(Index rows, Index cols, const LhsMapper& lhs,                  \
                                                         const RhsMapper& rhs, ResScalar* res, Index resIncr,           \
                                                         ResScalar alpha) {                                             \
+      if (numext::is_exactly_zero(alpha)) return;                                                                      \
       gemv_col<Scalar, LhsMapper, Scalar, RhsMapper, ResScalar>(rows, cols, lhs, rhs, res, resIncr, alpha);            \
     }                                                                                                                  \
   };
@@ -2449,6 +2453,7 @@ EIGEN_STRONG_INLINE void gemv_row(Index rows, Index cols, const LhsMapper& alhs,
     EIGEN_DEVICE_FUNC EIGEN_DONT_INLINE static void run(Index rows, Index cols, const LhsMapper& lhs,                  \
                                                         const RhsMapper& rhs, ResScalar* res, Index resIncr,           \
                                                         ResScalar alpha) {                                             \
+      if (numext::is_exactly_zero(alpha)) return;                                                                      \
       gemv_row<Scalar, LhsMapper, Scalar, RhsMapper, ResScalar>(rows, cols, lhs, rhs, res, resIncr, alpha);            \
     }                                                                                                                  \
   };
@@ -2473,6 +2478,7 @@ EIGEN_POWER_GEMV_REAL_SPECIALIZE_ROW(double)
     EIGEN_DEVICE_FUNC EIGEN_DONT_INLINE static void run(Index rows, Index cols, const LhsMapper& lhs,                  \
                                                         const RhsMapper& rhs, bfloat16* res, Index resIncr,            \
                                                         bfloat16 alpha) {                                              \
+      if (numext::is_exactly_zero(alpha)) return;                                                                      \
       gemv_bf16_col<LhsMapper, RhsMapper>(rows, cols, lhs, rhs, res, resIncr, alpha);                                  \
     }                                                                                                                  \
   };
@@ -2484,6 +2490,7 @@ EIGEN_POWER_GEMV_REAL_SPECIALIZE_ROW(double)
     EIGEN_DEVICE_FUNC EIGEN_DONT_INLINE static void run(Index rows, Index cols, const LhsMapper& lhs,                  \
                                                         const RhsMapper& rhs, bfloat16* res, Index resIncr,            \
                                                         bfloat16 alpha) {                                              \
+      if (numext::is_exactly_zero(alpha)) return;                                                                      \
       gemv_bf16_row<LhsMapper, RhsMapper>(rows, cols, lhs, rhs, res, resIncr, alpha);                                  \
     }                                                                                                                  \
   };
@@ -2494,7 +2501,7 @@ EIGEN_POWER_GEMV_REAL_SPECIALIZE_ROW_BFLOAT16()
 template <typename ResScalar, typename PResPacket, typename ResPacket, typename LhsPacket, typename RhsPacket>
 EIGEN_ALWAYS_INLINE ScalarBlock<ResScalar, 2> predux_complex(PResPacket& a0, PResPacket& b0, ResPacket& a1,
                                                              ResPacket& b1) {
-  if (GEMV_IS_COMPLEX_COMPLEX) {
+  EIGEN_IF_CONSTEXPR (GEMV_IS_COMPLEX_COMPLEX) {
     a0 = padd(a0, a1);
     b0 = padd(b0, b1);
   }
@@ -2521,17 +2528,17 @@ EIGEN_ALWAYS_INLINE ScalarBlock<ResScalar, 2> predux_complex(PResPacket& a0, PRe
   GEMV_UNROLL_ROW_HALF(GEMV_STORE_ROW_COMPLEX, (N >> 1))
 
 #ifdef USE_GEMV_MMA
-#define GEMV_INIT_ROW_COMPLEX_MMA(iter, N) \
-  if (GEMV_GETN_COMPLEX(N) > iter) {       \
-    __builtin_mma_xxsetaccz(&e0##iter);    \
+#define GEMV_INIT_ROW_COMPLEX_MMA(iter, N)           \
+  EIGEN_IF_CONSTEXPR (GEMV_GETN_COMPLEX(N) > iter) { \
+    __builtin_mma_xxsetaccz(&e0##iter);              \
   }
 
 #define GEMV_LOADPAIR_ROW_COMPLEX_MMA(iter1, iter2) \
   GEMV_BUILDPAIR_MMA(a##iter1, GEMV_LOADPACKET_ROW_COMPLEX_DATA(iter2), GEMV_LOADPACKET_ROW_COMPLEX_DATA((iter2) + 1));
 
 #define GEMV_WORK_ROW_COMPLEX_MMA(iter, N)                                                                       \
-  if (GEMV_GETN_COMPLEX(N) > iter) {                                                                             \
-    if (GEMV_IS_COMPLEX_FLOAT) {                                                                                 \
+  EIGEN_IF_CONSTEXPR (GEMV_GETN_COMPLEX(N) > iter) {                                                             \
+    EIGEN_IF_CONSTEXPR (GEMV_IS_COMPLEX_FLOAT) {                                                                 \
       PLhsPacket a##iter = GEMV_LOADPACKET_ROW_COMPLEX(iter);                                                    \
       gemv_mult_complex_MMA<ScalarPacket, LhsScalar, PLhsPacket, PLhsPacket, RhsScalar, RhsPacket, ResPacket,    \
                             ConjugateLhs, ConjugateRhs, RowMajor>(a##iter, b, &e0##iter);                        \
@@ -2544,8 +2551,8 @@ EIGEN_ALWAYS_INLINE ScalarBlock<ResScalar, 2> predux_complex(PResPacket& a0, PRe
   }
 
 #define GEMV_PREDUX4_COMPLEX_MMA(iter1, iter2, iter3, N)                                                         \
-  if (N > iter1) {                                                                                               \
-    if (GEMV_IS_COMPLEX_FLOAT) {                                                                                 \
+  EIGEN_IF_CONSTEXPR (N > iter1) {                                                                               \
+    EIGEN_IF_CONSTEXPR (GEMV_IS_COMPLEX_FLOAT) {                                                                 \
       cc##iter1 = predux_complex<ResScalar, ScalarPacket, LhsPacket, RhsPacket, ConjugateLhs, ConjugateRhs>(     \
           &e0##iter2, &e0##iter3);                                                                               \
     } else {                                                                                                     \
@@ -2569,14 +2576,14 @@ EIGEN_ALWAYS_INLINE ScalarBlock<ResScalar, 2> predux_complex(PResPacket& a0, PRe
 #endif
 
 #define GEMV_WORK_ROW_COMPLEX(iter, N)                                                                     \
-  if (N > iter) {                                                                                          \
+  EIGEN_IF_CONSTEXPR (N > iter) {                                                                          \
     PLhsPacket a##iter = GEMV_LOADPACKET_ROW_COMPLEX(iter);                                                \
     gemv_mult_complex<ScalarPacket, PLhsPacket, RhsScalar, RhsPacket, PResPacket, ResPacket, ConjugateLhs, \
                       ConjugateRhs, RowMajor>(a##iter, b, c0##iter, c1##iter);                             \
   }
 
 #define GEMV_PREDUX4_COMPLEX(iter1, iter2, iter3, N)                                                          \
-  if (N > iter1) {                                                                                            \
+  EIGEN_IF_CONSTEXPR (N > iter1) {                                                                            \
     cc##iter1 = predux_complex<ResScalar, PResPacket, ResPacket, LhsPacket, RhsPacket>(c0##iter2, c0##iter3,  \
                                                                                        c1##iter2, c1##iter3); \
   } else {                                                                                                    \
@@ -2584,13 +2591,13 @@ EIGEN_ALWAYS_INLINE ScalarBlock<ResScalar, 2> predux_complex(PResPacket& a0, PRe
   }
 
 #define GEMV_MULT_COMPLEX(iter1, iter2, iter3, N)          \
-  if (N > iter1) {                                         \
+  EIGEN_IF_CONSTEXPR (N > iter1) {                         \
     cc##iter1.scalar[0] += cj.pmul(lhs(i + iter2, j), b0); \
     cc##iter1.scalar[1] += cj.pmul(lhs(i + iter3, j), b0); \
   }
 
 #define GEMV_STORE_ROW_COMPLEX(iter1, iter2, iter3, N)                                   \
-  if (N > iter1) {                                                                       \
+  EIGEN_IF_CONSTEXPR (N > iter1) {                                                       \
     storeMaddData<ResScalar>(res + ((i + iter2) * resIncr), alpha, cc##iter1.scalar[0]); \
     storeMaddData<ResScalar>(res + ((i + iter3) * resIncr), alpha, cc##iter1.scalar[1]); \
   }
@@ -2609,7 +2616,7 @@ EIGEN_ALWAYS_INLINE ScalarBlock<ResScalar, 2> predux_complex(PResPacket& a0, PRe
   }
 
 #define GEMV_PROCESS_ROW_COMPLEX_PREDUX_NEW(iter) \
-  if (GEMV_IS_COMPLEX_COMPLEX) {                  \
+  EIGEN_IF_CONSTEXPR (GEMV_IS_COMPLEX_COMPLEX) {  \
     c0##iter = padd(c0##iter, c1##iter);          \
   }                                               \
   dd0 = predux(c0##iter);
@@ -2628,20 +2635,20 @@ EIGEN_ALWAYS_INLINE ScalarBlock<ResScalar, 2> predux_complex(PResPacket& a0, PRe
 
 #define GEMV_INIT_COMPLEX_OLD(iter, N) \
   EIGEN_UNUSED_VARIABLE(c0##iter);     \
-  if (N > iter) {                      \
+  EIGEN_IF_CONSTEXPR (N > iter) {      \
     c1##iter = pset_zero<ResPacket>(); \
   } else {                             \
     EIGEN_UNUSED_VARIABLE(c1##iter);   \
   }
 
 #define GEMV_WORK_ROW_COMPLEX_OLD(iter, N)                     \
-  if (N > iter) {                                              \
+  EIGEN_IF_CONSTEXPR (N > iter) {                              \
     LhsPacket a##iter = GEMV_LOADPACKET_ROW_COMPLEX_OLD(iter); \
     c1##iter = pcj.pmadd(a##iter, b0, c1##iter);               \
   }
 
 #define GEMV_PREDUX4_COMPLEX_OLD(iter1, iter2, iter3, N) \
-  if (N > iter1) {                                       \
+  EIGEN_IF_CONSTEXPR (N > iter1) {                       \
     cc##iter1.scalar[0] = predux(c1##iter2);             \
     cc##iter1.scalar[1] = predux(c1##iter3);             \
   } else {                                               \
@@ -2733,7 +2740,8 @@ EIGEN_STRONG_INLINE void gemv_complex_row(Index rows, Index cols, const LhsMappe
   const Index n2 = rows - 1;
 #endif
 
-  // TODO: for padded aligned inputs, we could enable aligned reads
+  // LhsAlignment stays Unaligned; enabling aligned reads would require
+  // propagating the Mapper's Alignment through the run() template.
   enum {
     LhsAlignment = Unaligned,
     ResPacketSize = PTraits::ResPacketSize,
@@ -2754,7 +2762,7 @@ EIGEN_STRONG_INLINE void gemv_complex_row(Index rows, Index cols, const LhsMappe
 #ifndef GCC_ONE_VECTORPAIR_BUG
   ScalarBlock<ResScalar, 2> cc0, cc1, cc2, cc3;
 #ifdef USE_GEMV_MMA
-  if (!GEMV_IS_COMPLEX_COMPLEX)
+  EIGEN_IF_CONSTEXPR (!GEMV_IS_COMPLEX_COMPLEX)
 #endif
   {
     GEMV_PROCESS_ROW_COMPLEX(8)
@@ -2781,6 +2789,7 @@ EIGEN_STRONG_INLINE void gemv_complex_row(Index rows, Index cols, const LhsMappe
     EIGEN_DEVICE_FUNC EIGEN_DONT_INLINE static void run(Index rows, Index cols, const LhsMapper& lhs,                  \
                                                         const RhsMapper& rhs, ResScalar* res, Index resIncr,           \
                                                         ResScalar alpha) {                                             \
+      if (numext::is_exactly_zero(alpha)) return;                                                                      \
       gemv_complex_col<Scalar, LhsScalar, LhsMapper, ConjugateLhs, sizeof(Scalar) == sizeof(LhsScalar), RhsScalar,     \
                        RhsMapper, ConjugateRhs, sizeof(Scalar) == sizeof(RhsScalar), ResScalar>(rows, cols, lhs, rhs,  \
                                                                                                 res, resIncr, alpha);  \
@@ -2796,6 +2805,7 @@ EIGEN_STRONG_INLINE void gemv_complex_row(Index rows, Index cols, const LhsMappe
     EIGEN_DEVICE_FUNC EIGEN_DONT_INLINE static void run(Index rows, Index cols, const LhsMapper& lhs,                  \
                                                         const RhsMapper& rhs, ResScalar* res, Index resIncr,           \
                                                         ResScalar alpha) {                                             \
+      if (numext::is_exactly_zero(alpha)) return;                                                                      \
       gemv_complex_row<Scalar, LhsScalar, LhsMapper, ConjugateLhs, sizeof(Scalar) == sizeof(LhsScalar), RhsScalar,     \
                        RhsMapper, ConjugateRhs, sizeof(Scalar) == sizeof(RhsScalar), ResScalar>(rows, cols, lhs, rhs,  \
                                                                                                 res, resIncr, alpha);  \

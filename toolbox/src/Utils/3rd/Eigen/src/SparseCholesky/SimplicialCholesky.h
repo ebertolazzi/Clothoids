@@ -6,6 +6,7 @@
 // This Source Code Form is subject to the terms of the Mozilla
 // Public License v. 2.0. If a copy of the MPL was not distributed
 // with this file, You can obtain one at http://mozilla.org/MPL/2.0/.
+// SPDX-License-Identifier: MPL-2.0
 
 #ifndef EIGEN_SIMPLICIAL_CHOLESKY_H
 #define EIGEN_SIMPLICIAL_CHOLESKY_H
@@ -31,6 +32,37 @@ template <typename MatrixType>
 struct simplicial_cholesky_grab_input<MatrixType, MatrixType> {
   typedef MatrixType const* ConstMatrixPtr;
   static void run(const MatrixType& input, ConstMatrixPtr& pmat, MatrixType& /*tmp*/) { pmat = &input; }
+};
+
+// Compute a fill-reducing permutation for SimplicialCholesky. The generic path
+// builds the full Scalar-valued symmetric matrix that the user's OrderingType
+// expects. The AMDOrdering specialization below skips that copy: AMD reads
+// only the sparsity pattern, so we can hand it a SparseSelfAdjointView<UpLo>
+// whose pattern-only overload materializes the underlying triangle as
+// SparseMatrix<signed char> and expands once.
+template <bool UseAMDFastPath>
+struct simplicial_cholesky_amd_dispatch {
+  template <int UpLo_, bool NonHermitian, typename Ordering, typename MatrixType, typename CholMatrixType,
+            typename Perm>
+  static void run(const MatrixType& a, CholMatrixType& C, Perm& perm) {
+    permute_symm_to_fullsymm<UpLo_, NonHermitian>(a, C, NULL);
+    Ordering ordering;
+    ordering(C, perm);
+  }
+};
+
+template <>
+struct simplicial_cholesky_amd_dispatch<true> {
+  template <int UpLo_, bool /*NonHermitian*/, typename Ordering, typename MatrixType, typename CholMatrixType,
+            typename Perm>
+  static void run(const MatrixType& a, CholMatrixType& /*C*/, Perm& perm) {
+    // Pattern-only: works for both Hermitian and NonHermitian variants because
+    // AMD's selfadjointView overload never reads scalar values, so the
+    // selfadjoint-vs-symmetric distinction (which only affects value
+    // expansion) is irrelevant.
+    Ordering ordering;
+    ordering(a.template selfadjointView<UpLo_>(), perm);
+  }
 };
 }  // end namespace internal
 
@@ -79,8 +111,6 @@ class SimplicialCholeskyBase : public SparseSolverBase<Derived> {
     derived().compute(matrix);
   }
 
-  ~SimplicialCholeskyBase() {}
-
   Derived& derived() { return *static_cast<Derived*>(this); }
   const Derived& derived() const { return *static_cast<const Derived*>(this); }
 
@@ -90,7 +120,7 @@ class SimplicialCholeskyBase : public SparseSolverBase<Derived> {
   /** \brief Reports whether previous computation was successful.
    *
    * \returns \c Success if computation was successful,
-   *          \c NumericalIssue if the matrix.appears to be negative.
+   *          \c NumericalIssue if the matrix appears to be negative.
    */
   ComputationInfo info() const {
     eigen_assert(m_isInitialized && "Decomposition is not initialized.");
@@ -416,7 +446,8 @@ class SimplicialLLT : public SimplicialCholeskyBase<SimplicialLLT<MatrixType_, U
 
   /** Performs a numeric decomposition of \a matrix
    *
-   * The given matrix must has the same sparsity than the matrix on which the symbolic decomposition has been performed.
+   * The given matrix must have the same sparsity as the matrix on which the symbolic decomposition has been
+   * performed.
    *
    * \sa analyzePattern()
    */
@@ -504,7 +535,8 @@ class SimplicialLDLT : public SimplicialCholeskyBase<SimplicialLDLT<MatrixType_,
 
   /** Performs a numeric decomposition of \a matrix
    *
-   * The given matrix must has the same sparsity than the matrix on which the symbolic decomposition has been performed.
+   * The given matrix must have the same sparsity as the matrix on which the symbolic decomposition has been
+   * performed.
    *
    * \sa analyzePattern()
    */
@@ -585,7 +617,8 @@ class SimplicialNonHermitianLLT
 
   /** Performs a numeric decomposition of \a matrix
    *
-   * The given matrix must has the same sparsity than the matrix on which the symbolic decomposition has been performed.
+   * The given matrix must have the same sparsity as the matrix on which the symbolic decomposition has been
+   * performed.
    *
    * \sa analyzePattern()
    */
@@ -674,7 +707,8 @@ class SimplicialNonHermitianLDLT
 
   /** Performs a numeric decomposition of \a matrix
    *
-   * The given matrix must has the same sparsity than the matrix on which the symbolic decomposition has been performed.
+   * The given matrix must have the same sparsity as the matrix on which the symbolic decomposition has been
+   * performed.
    *
    * \sa analyzePattern()
    */
@@ -757,7 +791,8 @@ class SimplicialCholesky : public SimplicialCholeskyBase<SimplicialCholesky<Matr
 
   /** Performs a numeric decomposition of \a matrix
    *
-   * The given matrix must has the same sparsity than the matrix on which the symbolic decomposition has been performed.
+   * The given matrix must have the same sparsity as the matrix on which the symbolic decomposition has been
+   * performed.
    *
    * \sa analyzePattern()
    */
@@ -793,7 +828,7 @@ class SimplicialCholesky : public SimplicialCholeskyBase<SimplicialCholesky<Matr
 
     if (Base::m_diag.size() > 0) dest = Base::m_diag.real().asDiagonal().inverse() * dest;
 
-    if (Base::m_matrix.nonZeros() > 0)  // otherwise I==I
+    if (Base::m_matrix.nonZeros() > 0)  // otherwise U==I
     {
       if (m_LDLT)
         LDLTTraits::getU(Base::m_matrix).solveInPlace(dest);
@@ -830,13 +865,12 @@ void SimplicialCholeskyBase<Derived>::ordering(const MatrixType& a, ConstCholMat
   const Index size = a.rows();
   pmat = &ap;
   // Note that ordering methods compute the inverse permutation
-  if (!internal::is_same<OrderingType, NaturalOrdering<StorageIndex> >::value) {
+  EIGEN_IF_CONSTEXPR ((!std::is_same<OrderingType, NaturalOrdering<StorageIndex> >::value)) {
     {
       CholMatrixType C;
-      internal::permute_symm_to_fullsymm<UpLo, NonHermitian>(a, C, NULL);
-
-      OrderingType ordering;
-      ordering(C, m_Pinv);
+      constexpr bool kUseAMDFastPath = std::is_same<OrderingType, AMDOrdering<StorageIndex> >::value;
+      internal::simplicial_cholesky_amd_dispatch<kUseAMDFastPath>::template run<UpLo, NonHermitian, OrderingType>(
+          a, C, m_Pinv);
     }
 
     if (m_Pinv.size() > 0)
@@ -849,8 +883,8 @@ void SimplicialCholeskyBase<Derived>::ordering(const MatrixType& a, ConstCholMat
   } else {
     m_Pinv.resize(0);
     m_P.resize(0);
-    if (int(UpLo) == int(Lower) || MatrixType::IsRowMajor) {
-      // we have to transpose the lower part to to the upper one
+    EIGEN_IF_CONSTEXPR (int(UpLo) == int(Lower) || MatrixType::IsRowMajor) {
+      // we have to transpose the lower part to the upper one
       ap.resize(size, size);
       internal::permute_symm_to_symm<UpLo, Upper, NonHermitian>(a, ap, NULL);
     } else

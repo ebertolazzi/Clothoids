@@ -127,7 +127,7 @@ namespace Utils
   {
     s << "[";
     int const pos{ static_cast<int>( width * progress ) };
-    for ( int i{ 0 }; i < width; ++i ) s << ( i < pos ? u8"\u25A0" : u8"\u25A1" );
+    for ( int i{ 0 }; i < width; ++i ) s << ( i < pos ? "\u25A0" : "\u25A1" );
     fmt::print( s, "] {:3.0f}% {}\r", ceil( 100 * progress ), msg );
     s << std::flush;
   }

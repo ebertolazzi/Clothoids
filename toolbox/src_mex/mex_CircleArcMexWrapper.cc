@@ -85,8 +85,8 @@ namespace G2lib
   static void do_new( int nlhs, mxArray * plhs[], int nrhs, mxArray const * prhs[] )
   {
 #define CMD "CircleArcMexWrapper('new',...): "
-    UTILS_MEX_ASSERT( nrhs == 1 || nrhs == 6, CMD "expected 1 or 6 inputs, nrhs = {}\n", nrhs );
-    UTILS_MEX_ASSERT( nlhs == 1, CMD "expected 1 output, nlhs = {}\n", nlhs );
+    Utils::mex_assert( nrhs == 1 || nrhs == 6, CMD "expected 1 or 6 inputs, nrhs = {}\n", nrhs );
+    Utils::mex_assert( nlhs == 1, CMD "expected 1 output, nlhs = {}\n", nlhs );
 #undef CMD
 
     CircleArc * ptr = new CircleArc( "circle" );
@@ -112,8 +112,8 @@ namespace G2lib
   static void do_build_arc( int nlhs, mxArray *[], int nrhs, mxArray const * prhs[] )
   {
 #define CMD "CircleArcMexWrapper('build_arc',OBJ,x0,y0,theta0,k0,L): "
-    UTILS_MEX_ASSERT( nrhs == 7, CMD "expected 7 inputs, nrhs = {}\n", nrhs );
-    UTILS_MEX_ASSERT( nlhs == 0, CMD "expected NO output, nlhs = {}\n", nlhs );
+    Utils::mex_assert( nrhs == 7, CMD "expected 7 inputs, nrhs = {}\n", nrhs );
+    Utils::mex_assert( nlhs == 0, CMD "expected NO output, nlhs = {}\n", nlhs );
 
     CircleArc * ptr = Utils::mex_convert_mx_to_ptr<CircleArc>( arg_in_1 );
 
@@ -133,7 +133,7 @@ namespace G2lib
   static void do_build_3P( int nlhs, mxArray * plhs[], int nrhs, mxArray const * prhs[] )
   {
 #define CMD "CircleArcMexWrapper('build_3P',...): "
-    UTILS_MEX_ASSERT( nlhs == 0 || nlhs == 1, CMD " expected 1 or no output, nlhs = {}\n", nlhs );
+    Utils::mex_assert( nlhs == 0 || nlhs == 1, CMD " expected 1 or no output, nlhs = {}\n", nlhs );
 #undef CMD
 
     CircleArc * ptr = Utils::mex_convert_mx_to_ptr<CircleArc>( arg_in_1 );
@@ -151,7 +151,7 @@ namespace G2lib
       p1 = Utils::mex_vector_pointer( arg_in_3, size1, CMD "`p1` expected to be a real vector" );
       p2 = Utils::mex_vector_pointer( arg_in_4, size2, CMD "`p2` expected to be a real vector" );
 
-      UTILS_MEX_ASSERT(
+      Utils::mex_assert(
         size0 == 2 && size1 == 2 && size2 == 2,
         CMD "bad dimension size(p0) = {}, size(p1) = {}, size(p2) = {}\n",
         size0,
@@ -179,7 +179,7 @@ namespace G2lib
     }
     else
     {
-      UTILS_MEX_ASSERT( false, "CircleArc, expected 5 or 7 inputs, nrhs = {}\n", nrhs );
+      Utils::mex_assert( false, "CircleArc, expected 5 or 7 inputs, nrhs = {}\n", nrhs );
     }
 
     bool ok = ptr->build_3P( x0, y0, x1, y1, x2, y2 );
@@ -193,7 +193,7 @@ namespace G2lib
   static void do_build_G1( int nlhs, mxArray * plhs[], int nrhs, mxArray const * prhs[] )
   {
 #define CMD "CircleArcMexWrapper('build_G1',...): "
-    UTILS_MEX_ASSERT( nlhs == 0 || nlhs == 1, CMD "expected 1 or no output, nlhs = {}\n", nlhs );
+    Utils::mex_assert( nlhs == 0 || nlhs == 1, CMD "expected 1 or no output, nlhs = {}\n", nlhs );
 #undef CMD
 
     CircleArc * ptr = Utils::mex_convert_mx_to_ptr<CircleArc>( arg_in_1 );
@@ -209,7 +209,7 @@ namespace G2lib
       p1     = Utils::mex_vector_pointer( arg_in_4, size1, CMD "`p1` expected to be a real vector" );
       theta0 = Utils::mex_get_scalar_value( arg_in_3, CMD "`theta0` expected to be a real vector" );
 
-      UTILS_MEX_ASSERT( size0 == 2 && size1 == 2, CMD "bad dimension size(p0) = {}, size(p1) = {}\n", size0, size1 );
+      Utils::mex_assert( size0 == 2 && size1 == 2, CMD "bad dimension size(p0) = {}, size(p1) = {}\n", size0, size1 );
 #undef CMD
 
       x0 = p0[0];
@@ -229,7 +229,7 @@ namespace G2lib
     }
     else
     {
-      UTILS_MEX_ASSERT( false, "CircleArc, expected 5 or 7 inputs, nrhs = {}\n", nrhs );
+      Utils::mex_assert( false, "CircleArc, expected 5 or 7 inputs, nrhs = {}\n", nrhs );
     }
 
     bool ok = ptr->build_G1( x0, y0, theta0, x1, y1 );
@@ -242,8 +242,8 @@ namespace G2lib
   static void do_change_curvilinear_origin( int nlhs, mxArray *[], int nrhs, mxArray const * prhs[] )
   {
 #define CMD "CircleArcMexWrapper('change_curvilinear_origin',OBJ,s0,L): "
-    UTILS_MEX_ASSERT( nlhs == 0, CMD "expected NOoutputs, nlhs = {}\n", nlhs );
-    UTILS_MEX_ASSERT( nrhs == 4, CMD "expected 4 inputs, nrhs = {}\n", nrhs );
+    Utils::mex_assert( nlhs == 0, CMD "expected NOoutputs, nlhs = {}\n", nlhs );
+    Utils::mex_assert( nrhs == 4, CMD "expected 4 inputs, nrhs = {}\n", nrhs );
 
     CircleArc * ptr = Utils::mex_convert_mx_to_ptr<CircleArc>( arg_in_1 );
 
@@ -260,8 +260,8 @@ namespace G2lib
     CircleArc * ptr = Utils::mex_convert_mx_to_ptr<CircleArc>( arg_in_1 );
 
 #define CMD "CircleArcMexWrapper('to_nurbs',OBJ): "
-    UTILS_MEX_ASSERT( nrhs == 2, CMD "expected 2 inputs, nrhs = {}\n", nrhs );
-    UTILS_MEX_ASSERT( nlhs == 1, CMD "expected 1 output, nlhs = {}\n", nlhs );
+    Utils::mex_assert( nrhs == 2, CMD "expected 2 inputs, nrhs = {}\n", nrhs );
+    Utils::mex_assert( nlhs == 1, CMD "expected 1 output, nlhs = {}\n", nlhs );
 
     integer npts, nknots;
     ptr->paramNURBS( nknots, npts );
@@ -310,7 +310,7 @@ namespace G2lib
 
     try
     {
-      UTILS_MEX_ASSERT0( mxIsChar( arg_in_0 ), "First argument must be a string" );
+      Utils::mex_assert( mxIsChar( arg_in_0 ), "First argument must be a string" );
       mxGetString( arg_in_0, cmd, 256 );
       cmd_to_fun.at( cmd )( nlhs, plhs, nrhs, prhs );
     }

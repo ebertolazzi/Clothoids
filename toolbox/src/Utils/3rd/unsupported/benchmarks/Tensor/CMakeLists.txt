@@ -1,0 +1,18 @@
+# SPDX-FileCopyrightText: The Eigen Authors
+# SPDX-License-Identifier: MPL-2.0
+
+eigen_add_benchmark(bench_contraction bench_contraction.cpp)
+eigen_add_benchmark(bench_convolution bench_convolution.cpp)
+eigen_add_benchmark(bench_reduction bench_reduction.cpp)
+eigen_add_benchmark(bench_broadcasting bench_broadcasting.cpp)
+eigen_add_benchmark(bench_shuffling bench_shuffling.cpp)
+eigen_add_benchmark(bench_tensor_fft bench_tensor_fft.cpp)
+eigen_add_benchmark(bench_morphing bench_morphing.cpp)
+eigen_add_benchmark(bench_coefficient_wise bench_coefficient_wise.cpp)
+eigen_add_benchmark(bench_image_patch bench_image_patch.cpp)
+eigen_add_benchmark(bench_reverse bench_reverse.cpp)
+eigen_add_benchmark(bench_roll bench_roll.cpp)
+eigen_add_benchmark(bench_layout_swap bench_layout_swap.cpp)
+eigen_add_benchmark(bench_chained_expressions bench_chained_expressions.cpp)
+eigen_add_benchmark(bench_threadpool_device bench_threadpool_device.cpp)
+eigen_add_benchmark(bench_concatenation bench_concatenation.cpp)

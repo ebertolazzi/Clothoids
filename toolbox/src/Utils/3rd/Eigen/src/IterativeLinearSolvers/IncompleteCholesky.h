@@ -7,6 +7,7 @@
 // This Source Code Form is subject to the terms of the Mozilla
 // Public License v. 2.0. If a copy of the MPL was not distributed
 // with this file, You can obtain one at http://mozilla.org/MPL/2.0/.
+// SPDX-License-Identifier: MPL-2.0
 
 #ifndef EIGEN_INCOMPLETE_CHOlESKY_H
 #define EIGEN_INCOMPLETE_CHOlESKY_H
@@ -238,10 +239,10 @@ void IncompleteCholesky<Scalar, UpLo_, OrderingType>::factorize(const MatrixType
   Index nnz = m_L.nonZeros();
   Map<VectorSx> vals(m_L.valuePtr(), nnz);           // values
   Map<VectorIx> rowIdx(m_L.innerIndexPtr(), nnz);    // Row indices
-  Map<VectorIx> colPtr(m_L.outerIndexPtr(), n + 1);  // Pointer to the beginning of each row
+  Map<VectorIx> colPtr(m_L.outerIndexPtr(), n + 1);  // Pointer to the beginning of each column
   VectorIx firstElt(n - 1);  // for each j, points to the next entry in vals that will be used in the factorization
   VectorList listCol(n);     // listCol(j) is a linked list of columns to update column j
-  VectorSx col_vals(n);      // Store a  nonzero values in each column
+  VectorSx col_vals(n);      // Store the nonzero values in each column
   VectorIx col_irow(n);      // Row indices of nonzero elements in each column
   VectorIx col_pattern(n);
   col_pattern.fill(-1);
@@ -264,7 +265,7 @@ void IncompleteCholesky<Scalar, UpLo_, OrderingType>::factorize(const MatrixType
     else
       m_scale(j) = 1;
 
-  // TODO disable scaling if not needed, i.e., if it is roughly uniform? (this will make solve() faster)
+  // TODO: disable scaling when roughly uniform to speed up solve().
 
   // Scale and compute the shift for the matrix
   RealScalar mindiag = NumTraits<RealScalar>::highest();

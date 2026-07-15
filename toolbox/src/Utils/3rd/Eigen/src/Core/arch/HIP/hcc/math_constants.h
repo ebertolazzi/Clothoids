@@ -2,6 +2,8 @@
  * math_constants.h -
  *  HIP equivalent of the CUDA header of the same name
  */
+// SPDX-FileCopyrightText: The Eigen Authors
+// SPDX-License-Identifier: MPL-2.0
 
 #ifndef __MATH_CONSTANTS_H__
 #define __MATH_CONSTANTS_H__

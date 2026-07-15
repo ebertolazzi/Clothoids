@@ -6,6 +6,7 @@
 // This Source Code Form is subject to the terms of the Mozilla
 // Public License v. 2.0. If a copy of the MPL was not distributed
 // with this file, You can obtain one at http://mozilla.org/MPL/2.0/.
+// SPDX-License-Identifier: MPL-2.0
 
 // Function void Eigen::AlignedBox::transform(const Transform& transform)
 // is provided under the following license agreement:
@@ -123,8 +124,6 @@ class AlignedBox {
   template <typename Derived>
   EIGEN_DEVICE_FUNC inline explicit AlignedBox(const MatrixBase<Derived>& p) : m_min(p), m_max(m_min) {}
 
-  EIGEN_DEVICE_FUNC ~AlignedBox() {}
-
   /** \returns the dimension in which the box holds */
   EIGEN_DEVICE_FUNC inline Index dim() const {
     return AmbientDimAtCompileTime == Dynamic ? m_min.size() : Index(AmbientDimAtCompileTime);
@@ -164,7 +163,7 @@ class AlignedBox {
 
   /** \returns the lengths of the sides of the bounding box.
    * Note that this function does not get the same
-   * result for integral or floating scalar types: see
+   * result for integral or floating scalar types.
    */
   EIGEN_DEVICE_FUNC inline const CwiseBinaryOp<internal::scalar_difference_op<Scalar, Scalar>, const VectorType,
                                                const VectorType>

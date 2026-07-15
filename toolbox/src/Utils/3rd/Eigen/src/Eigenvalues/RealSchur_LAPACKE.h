@@ -29,6 +29,7 @@
  *    Real Schur needed to real unsymmetrical eigenvalues/eigenvectors.
  ********************************************************************************
 */
+// SPDX-License-Identifier: BSD-3-Clause
 
 #ifndef EIGEN_REAL_SCHUR_LAPACKE_H
 #define EIGEN_REAL_SCHUR_LAPACKE_H
@@ -77,6 +78,8 @@ EIGEN_LAPACKE_SCHUR_REAL(double, double, d, D, ColMajor, LAPACK_COL_MAJOR)
 EIGEN_LAPACKE_SCHUR_REAL(float, float, s, S, ColMajor, LAPACK_COL_MAJOR)
 EIGEN_LAPACKE_SCHUR_REAL(double, double, d, D, RowMajor, LAPACK_ROW_MAJOR)
 EIGEN_LAPACKE_SCHUR_REAL(float, float, s, S, RowMajor, LAPACK_ROW_MAJOR)
+
+#undef EIGEN_LAPACKE_SCHUR_REAL
 
 }  // end namespace Eigen
 

@@ -24,8 +24,8 @@
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
 
-#ifndef UTILS_AUTODIFF_dot_HH
-#define UTILS_AUTODIFF_dot_HH
+#ifndef UTILS_AUTODIFF_EIGEN_dot_HH
+#define UTILS_AUTODIFF_EIGEN_dot_HH
 
 #include "Utils.hh"
 #include "Utils/3rd/autodiff/forward/dual/eigen.hpp"

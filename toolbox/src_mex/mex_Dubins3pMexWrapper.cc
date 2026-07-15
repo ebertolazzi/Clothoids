@@ -80,8 +80,8 @@ namespace G2lib
   static void do_new( int nlhs, mxArray * plhs[], int nrhs, mxArray const *[] )
   {
 #define CMD CMD_BASE "('new'): "
-    UTILS_MEX_ASSERT( nrhs == 1, CMD "expected 1 inputs, nrhs = {}\n", nrhs );
-    UTILS_MEX_ASSERT( nlhs == 1, CMD "expected 1 output, nlhs = {}\n", nlhs );
+    Utils::mex_assert( nrhs == 1, CMD "expected 1 inputs, nrhs = {}\n", nrhs );
+    Utils::mex_assert( nlhs == 1, CMD "expected 1 output, nlhs = {}\n", nlhs );
 #undef CMD
 
     arg_out_0 = Utils::mex_convert_ptr_to_mx<Dubins3p>( new Dubins3p( "Dubins3p" ) );
@@ -93,8 +93,8 @@ namespace G2lib
   {
 #define CMD "Dubins3pMexWrapper('build',OBJ,x0,y0,theta0,xm,ym,x1,y1,theta1,k_max,method): "
 
-    UTILS_MEX_ASSERT( nrhs == 12, CMD "expected 12 inputs, nrhs = {}\n", nrhs );
-    UTILS_MEX_ASSERT( nlhs == 1, CMD "expected 1 output, nlhs = {}\n", nlhs );
+    Utils::mex_assert( nrhs == 12, CMD "expected 12 inputs, nrhs = {}\n", nrhs );
+    Utils::mex_assert( nlhs == 1, CMD "expected 1 output, nlhs = {}\n", nlhs );
 
     Dubins3p * ptr{ Utils::mex_convert_mx_to_ptr<Dubins3p>( arg_in_1 ) };
 
@@ -109,7 +109,7 @@ namespace G2lib
     real_type k_max  = Utils::mex_get_scalar_value( arg_in_10, CMD "Error in reading k_max" );
 
     char method_str[256];
-    UTILS_MEX_ASSERT0( mxIsChar( arg_in_11 ), CMD "last argument must be a string" );
+    Utils::mex_assert( mxIsChar( arg_in_11 ), CMD "last argument must be a string" );
     mxGetString( arg_in_11, method_str, 256 );
 
     Dubins3pBuildType method{ string_to_Dubins3pBuildType( method_str ) };
@@ -126,8 +126,8 @@ namespace G2lib
   static void do_get_pars( int nlhs, mxArray * plhs[], int nrhs, mxArray const * prhs[] )
   {
 #define CMD "Dubins3pMexWrapper('get_pars',OBJ): "
-    UTILS_MEX_ASSERT( nrhs == 2, CMD "expected 2 inputs, nrhs = {}\n", nrhs );
-    UTILS_MEX_ASSERT( nlhs == 1, CMD "expected 1 output, nlhs = {}\n", nlhs );
+    Utils::mex_assert( nrhs == 2, CMD "expected 2 inputs, nrhs = {}\n", nrhs );
+    Utils::mex_assert( nlhs == 1, CMD "expected 1 output, nlhs = {}\n", nlhs );
 
     Dubins3p * ptr{ Utils::mex_convert_mx_to_ptr<Dubins3p>( arg_in_1 ) };
 
@@ -227,8 +227,8 @@ namespace G2lib
   static void do_curve_type( int nlhs, mxArray * plhs[], int nrhs, mxArray const * prhs[] )
   {
 #define CMD "Dubins3pMexWrapper('curve_type',OBJ): "
-    UTILS_MEX_ASSERT( nrhs == 2, CMD "expected 2 inputs, nrhs = {}\n", nrhs );
-    UTILS_MEX_ASSERT( nlhs == 2, CMD "expected 2 output, nlhs = {}\n", nlhs );
+    Utils::mex_assert( nrhs == 2, CMD "expected 2 inputs, nrhs = {}\n", nrhs );
+    Utils::mex_assert( nlhs == 2, CMD "expected 2 output, nlhs = {}\n", nlhs );
 
     Dubins3p * ptr{ Utils::mex_convert_mx_to_ptr<Dubins3p>( arg_in_1 ) };
 
@@ -243,8 +243,8 @@ namespace G2lib
   static void do_curve_type_string( int nlhs, mxArray * plhs[], int nrhs, mxArray const * prhs[] )
   {
 #define CMD "Dubins3pMexWrapper('curve_type_string',OBJ): "
-    UTILS_MEX_ASSERT( nrhs == 2, CMD "expected 2 inputs, nrhs = {}\n", nrhs );
-    UTILS_MEX_ASSERT( nlhs == 2, CMD "expected 2 output, nlhs = {}\n", nlhs );
+    Utils::mex_assert( nrhs == 2, CMD "expected 2 inputs, nrhs = {}\n", nrhs );
+    Utils::mex_assert( nlhs == 2, CMD "expected 2 output, nlhs = {}\n", nlhs );
 
     Dubins3p * ptr{ Utils::mex_convert_mx_to_ptr<Dubins3p>( arg_in_1 ) };
 
@@ -262,8 +262,8 @@ namespace G2lib
   static void do_num_evaluation( int nlhs, mxArray * plhs[], int nrhs, mxArray const * prhs[] )
   {
 #define CMD "Dubins3pMexWrapper('num_evaluation',OBJ): "
-    UTILS_MEX_ASSERT( nrhs == 2, CMD "expected 2 inputs, nrhs = {}\n", nrhs );
-    UTILS_MEX_ASSERT( nlhs == 1, CMD "expected 1 output, nlhs = {}\n", nlhs );
+    Utils::mex_assert( nrhs == 2, CMD "expected 2 inputs, nrhs = {}\n", nrhs );
+    Utils::mex_assert( nlhs == 1, CMD "expected 1 output, nlhs = {}\n", nlhs );
 
     Dubins3p * ptr{ Utils::mex_convert_mx_to_ptr<Dubins3p>( arg_in_1 ) };
 
@@ -278,8 +278,8 @@ namespace G2lib
   {
 #define CMD "Dubins3pMexWrapper('set_tolerance',OBJ,tol): "
 
-    UTILS_MEX_ASSERT( nrhs == 3, CMD "expected 3 inputs, nrhs = {}\n", nrhs );
-    UTILS_MEX_ASSERT( nlhs == 0, CMD "expected NO output, nlhs = {}\n", nlhs );
+    Utils::mex_assert( nrhs == 3, CMD "expected 3 inputs, nrhs = {}\n", nrhs );
+    Utils::mex_assert( nlhs == 0, CMD "expected NO output, nlhs = {}\n", nlhs );
 
     Dubins3p * ptr{ Utils::mex_convert_mx_to_ptr<Dubins3p>( arg_in_1 ) };
 
@@ -295,8 +295,8 @@ namespace G2lib
   {
 #define CMD "Dubins3pMexWrapper('set_sample_angle',OBJ,ang): "
 
-    UTILS_MEX_ASSERT( nrhs == 3, CMD "expected 3 inputs, nrhs = {}\n", nrhs );
-    UTILS_MEX_ASSERT( nlhs == 0, CMD "expected NO output, nlhs = {}\n", nlhs );
+    Utils::mex_assert( nrhs == 3, CMD "expected 3 inputs, nrhs = {}\n", nrhs );
+    Utils::mex_assert( nlhs == 0, CMD "expected NO output, nlhs = {}\n", nlhs );
 
     Dubins3p * ptr{ Utils::mex_convert_mx_to_ptr<Dubins3p>( arg_in_1 ) };
 
@@ -312,8 +312,8 @@ namespace G2lib
   {
 #define CMD "Dubins3pMexWrapper('set_sample_points',OBJ,ang): "
 
-    UTILS_MEX_ASSERT( nrhs == 3, CMD "expected 3 inputs, nrhs = {}\n", nrhs );
-    UTILS_MEX_ASSERT( nlhs == 0, CMD "expected NO output, nlhs = {}\n", nlhs );
+    Utils::mex_assert( nrhs == 3, CMD "expected 3 inputs, nrhs = {}\n", nrhs );
+    Utils::mex_assert( nlhs == 0, CMD "expected NO output, nlhs = {}\n", nlhs );
 
     Dubins3p * ptr{ Utils::mex_convert_mx_to_ptr<Dubins3p>( arg_in_1 ) };
 
@@ -329,8 +329,8 @@ namespace G2lib
   {
 #define CMD "Dubins3pMexWrapper('set_max_evaluation',OBJ,tol): "
 
-    UTILS_MEX_ASSERT( nrhs == 3, CMD "expected 3 inputs, nrhs = {}\n", nrhs );
-    UTILS_MEX_ASSERT( nlhs == 0, CMD "expected NO output, nlhs = {}\n", nlhs );
+    Utils::mex_assert( nrhs == 3, CMD "expected 3 inputs, nrhs = {}\n", nrhs );
+    Utils::mex_assert( nlhs == 0, CMD "expected NO output, nlhs = {}\n", nlhs );
 
     Dubins3p * ptr{ Utils::mex_convert_mx_to_ptr<Dubins3p>( arg_in_1 ) };
 
@@ -346,8 +346,8 @@ namespace G2lib
   {
 #define CMD "DubinsMexWrapper('get_range_angles',OBJ,xi,yi,thetai,xm,ym,xf,yf,thetaf,k_max): "
 
-    UTILS_MEX_ASSERT( nrhs == 11, CMD "expected 8 inputs, nrhs = {}\n", nrhs );
-    UTILS_MEX_ASSERT( nlhs == 1, CMD "expected 1 output, nlhs = {}\n", nlhs );
+    Utils::mex_assert( nrhs == 11, CMD "expected 8 inputs, nrhs = {}\n", nrhs );
+    Utils::mex_assert( nlhs == 1, CMD "expected 1 output, nlhs = {}\n", nlhs );
 
     Dubins3p * ptr{ Utils::mex_convert_mx_to_ptr<Dubins3p>( arg_in_1 ) };
 
@@ -376,8 +376,8 @@ namespace G2lib
   {
 #define CMD "DubinsMexWrapper('get_sample_angles',OBJ,xi,yi,thetai,xm,ym,xf,yf,thetaf,k_max,tolerance): "
 
-    UTILS_MEX_ASSERT( nrhs == 12, CMD "expected 12 inputs, nrhs = {}\n", nrhs );
-    UTILS_MEX_ASSERT( nlhs == 1, CMD "expected 1 output, nlhs = {}\n", nlhs );
+    Utils::mex_assert( nrhs == 12, CMD "expected 12 inputs, nrhs = {}\n", nrhs );
+    Utils::mex_assert( nlhs == 1, CMD "expected 1 output, nlhs = {}\n", nlhs );
 
     Dubins3p * ptr{ Utils::mex_convert_mx_to_ptr<Dubins3p>( arg_in_1 ) };
 
@@ -436,7 +436,7 @@ namespace G2lib
 
     try
     {
-      UTILS_MEX_ASSERT0( mxIsChar( arg_in_0 ), "First argument must be a string" );
+      Utils::mex_assert( mxIsChar( arg_in_0 ), "First argument must be a string" );
       mxGetString( arg_in_0, cmd, 256 );
       cmd_to_fun.at( cmd )( nlhs, plhs, nrhs, prhs );
     }

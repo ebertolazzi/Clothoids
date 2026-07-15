@@ -1,17 +1,18 @@
 // This file is part of Eigen, a lightweight C++ template library
 // for linear algebra.
 //
-// Copyright (C) 2018 Rasmus Munk Larsen <rmlarsen@google.com>
+// Copyright (C) 2018 Rasmus Munk Larsen <rmlarsen@gmail.com>
 //
 // This Source Code Form is subject to the terms of the Mozilla
 // Public License v. 2.0. If a copy of the MPL was not distributed
 // with this file, You can obtain one at http://mozilla.org/MPL/2.0/.
+// SPDX-License-Identifier: MPL-2.0
 
 // Barrier is an object that allows one or more threads to wait until
 // Notify has been called a specified number of times.
 
-#ifndef EIGEN_CXX11_THREADPOOL_BARRIER_H
-#define EIGEN_CXX11_THREADPOOL_BARRIER_H
+#ifndef EIGEN_THREADPOOL_BARRIER_H
+#define EIGEN_THREADPOOL_BARRIER_H
 
 // IWYU pragma: private
 #include "./InternalHeaderCheck.h"
@@ -56,15 +57,15 @@ class Barrier {
   bool notified_;
 };
 
-// Notification is an object that allows a user to to wait for another
+// Notification is an object that allows a user to wait for another
 // thread to signal a notification that an event has occurred.
 //
 // Multiple threads can wait on the same Notification object,
 // but only one caller must call Notify() on the object.
 struct Notification : Barrier {
-  Notification() : Barrier(1){};
+  Notification() : Barrier(1) {}
 };
 
 }  // namespace Eigen
 
-#endif  // EIGEN_CXX11_THREADPOOL_BARRIER_H
+#endif  // EIGEN_THREADPOOL_BARRIER_H

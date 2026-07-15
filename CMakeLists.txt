@@ -513,7 +513,7 @@ clothoids_set_dependency_output_dirs(lib3rd/lib
 
 
 # ----------------------------------------------------------------------------
-# Local header copy target
+# Local header and toolbox source copy target
 # ----------------------------------------------------------------------------
 # Libraries are produced directly in lib/lib and lib3rd/lib during the normal
 # build, so headers must be copied with the same build-time semantics.  Relying
@@ -521,8 +521,11 @@ clothoids_set_dependency_output_dirs(lib3rd/lib
 # after a regular build.
 #
 # The script generated below copies project headers to lib/include and selected
-# dependency headers to lib3rd/include.  It uses a CMake script instead of shell
-# commands to remain portable across Unix, macOS, and Windows generators.
+# dependency headers to lib3rd/include.  It also collects the C/C++ headers and
+# implementation files used by Clothoids into toolbox/src.  Dependency source
+# directories come from the helper above, so this works both for local checkouts
+# and for sources populated by FetchContent.  A CMake script is used instead of
+# shell commands to remain portable across Unix, macOS, and Windows generators.
 # ----------------------------------------------------------------------------
 set(CLOTHOIDS_HEADER_COPY_SCRIPT "${CMAKE_CURRENT_BINARY_DIR}/copy_clothoids_headers.cmake")
 file(WRITE "${CLOTHOIDS_HEADER_COPY_SCRIPT}" [=[
@@ -542,9 +545,49 @@ function(_clothoids_copy_header_tree source_dir destination_dir label)
   )
 endfunction()
 
+function(_clothoids_copy_toolbox_tree source_dir destination_dir label)
+  if(NOT source_dir OR NOT EXISTS "${source_dir}")
+    message(STATUS "Skipping ${label} toolbox sources: ${source_dir} not found")
+    return()
+  endif()
+
+  file(MAKE_DIRECTORY "${destination_dir}")
+  file(COPY "${source_dir}/" DESTINATION "${destination_dir}"
+    FILES_MATCHING
+      PATTERN "*.c"
+      PATTERN "*.cc"
+      PATTERN "*.cpp"
+      PATTERN "*.cxx"
+      PATTERN "*.h"
+      PATTERN "*.hh"
+      PATTERN "*.hpp"
+      PATTERN "*.hxx"
+      PATTERN "*.inc"
+      PATTERN "*.inl"
+      PATTERN "*.ipp"
+      PATTERN "*.tcc"
+      PATTERN "*.tpp"
+  )
+endfunction()
+
+# Eigen exposes a number of public module headers without a file extension,
+# such as Eigen/Core, Eigen/Dense and unsupported/Eigen/AutoDiff.  These files
+# cannot be selected reliably with the suffix-based filter above, therefore the
+# resolved Eigen trees vendored by UtilsLite must be copied in their entirety.
+function(_clothoids_copy_complete_tree source_dir destination_dir label)
+  if(NOT source_dir OR NOT EXISTS "${source_dir}")
+    message(STATUS "Skipping ${label}: ${source_dir} not found")
+    return()
+  endif()
+
+  file(MAKE_DIRECTORY "${destination_dir}")
+  file(COPY "${source_dir}/" DESTINATION "${destination_dir}")
+endfunction()
+
 file(MAKE_DIRECTORY
   "@CLOTHOIDS_LOCAL_INCLUDE_DIR@"
   "@CLOTHOIDS_LOCAL_3RD_INCLUDE_DIR@"
+  "@CMAKE_CURRENT_SOURCE_DIR@/toolbox/src"
 )
 
 _clothoids_copy_header_tree("@CMAKE_CURRENT_SOURCE_DIR@/include" "@CLOTHOIDS_LOCAL_INCLUDE_DIR@" "Clothoids include")
@@ -555,6 +598,21 @@ _clothoids_copy_header_tree("@UtilsLite_SOURCE_DIR@/include" "@CLOTHOIDS_LOCAL_3
 _clothoids_copy_header_tree("@UtilsLite_SOURCE_DIR@/src" "@CLOTHOIDS_LOCAL_3RD_INCLUDE_DIR@" "UtilsLite src")
 _clothoids_copy_header_tree("@quarticRootsFlocke_SOURCE_DIR@/include" "@CLOTHOIDS_LOCAL_3RD_INCLUDE_DIR@" "quarticRootsFlocke include")
 _clothoids_copy_header_tree("@quarticRootsFlocke_SOURCE_DIR@/src" "@CLOTHOIDS_LOCAL_3RD_INCLUDE_DIR@" "quarticRootsFlocke src")
+
+# Merge the public and implementation trees into the flat toolbox source root.
+# file(COPY) preserves nested directories (for example Clothoids/, Utils/ and
+# GenericContainer/) while files located at the tree root remain directly in
+# toolbox/src, matching the historical populate_toolbox.rb layout.
+_clothoids_copy_toolbox_tree("@CMAKE_CURRENT_SOURCE_DIR@/include" "@CMAKE_CURRENT_SOURCE_DIR@/toolbox/src" "Clothoids include")
+_clothoids_copy_toolbox_tree("@SOURCE_DIR@" "@CMAKE_CURRENT_SOURCE_DIR@/toolbox/src" "Clothoids src")
+_clothoids_copy_toolbox_tree("@GenericContainer_SOURCE_DIR@/include" "@CMAKE_CURRENT_SOURCE_DIR@/toolbox/src" "GenericContainer include")
+_clothoids_copy_toolbox_tree("@GenericContainer_SOURCE_DIR@/src" "@CMAKE_CURRENT_SOURCE_DIR@/toolbox/src" "GenericContainer src")
+_clothoids_copy_toolbox_tree("@UtilsLite_SOURCE_DIR@/include" "@CMAKE_CURRENT_SOURCE_DIR@/toolbox/src" "UtilsLite include")
+_clothoids_copy_toolbox_tree("@UtilsLite_SOURCE_DIR@/src" "@CMAKE_CURRENT_SOURCE_DIR@/toolbox/src" "UtilsLite src")
+_clothoids_copy_complete_tree("@UtilsLite_SOURCE_DIR@/src/Utils/3rd/Eigen" "@CMAKE_CURRENT_SOURCE_DIR@/toolbox/src/Utils/3rd/Eigen" "Eigen headers")
+_clothoids_copy_complete_tree("@UtilsLite_SOURCE_DIR@/src/Utils/3rd/unsupported" "@CMAKE_CURRENT_SOURCE_DIR@/toolbox/src/Utils/3rd/unsupported" "Eigen unsupported headers")
+_clothoids_copy_toolbox_tree("@quarticRootsFlocke_SOURCE_DIR@/include" "@CMAKE_CURRENT_SOURCE_DIR@/toolbox/src" "quarticRootsFlocke include")
+_clothoids_copy_toolbox_tree("@quarticRootsFlocke_SOURCE_DIR@/src" "@CMAKE_CURRENT_SOURCE_DIR@/toolbox/src" "quarticRootsFlocke src")
 ]=])
 configure_file(
   "${CLOTHOIDS_HEADER_COPY_SCRIPT}"
@@ -564,7 +622,7 @@ configure_file(
 
 add_custom_target(Clothoids_copy_headers ALL
   COMMAND "${CMAKE_COMMAND}" -P "${CLOTHOIDS_HEADER_COPY_SCRIPT}"
-  COMMENT "Copying Clothoids headers to lib/include and dependency headers to lib3rd/include"
+  COMMENT "Copying Clothoids/dependency headers and populating toolbox/src"
   VERBATIM
 )
 add_dependencies(Clothoids Clothoids_copy_headers)

@@ -91,10 +91,9 @@ namespace Utils
     //!
     //! \brief Returns the number of threads in the pool.
     //!
-    //! This method returns the number of threads in the pool,
-    //! which is always 1 for this fake thread pool.
+    //! This method returns the number of threads in the pool.
     //!
-    //! \return Always returns 1.
+    //! \return Number of allocated threads
     //!
     unsigned thread_count() const override { return n_thread; }
 

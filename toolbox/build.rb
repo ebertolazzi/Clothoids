@@ -1,5 +1,4 @@
-require_relative 'populate_toolbox.rb'
-#require 'FileUtils'
+require 'FileUtils'
 
 FileUtils.rm_rf "build"
 FileUtils.mkdir "build"

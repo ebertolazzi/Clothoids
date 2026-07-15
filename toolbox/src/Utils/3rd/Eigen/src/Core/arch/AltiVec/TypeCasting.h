@@ -1,12 +1,13 @@
 // This file is part of Eigen, a lightweight C++ template library
 // for linear algebra.
 //
-// Copyright (C) 2019 Rasmus Munk Larsen <rmlarsen@google.com>
+// Copyright (C) 2019 Rasmus Munk Larsen <rmlarsen@gmail.com>
 // Copyright (C) 2023 Chip Kerchner (chip.kerchner@ibm.com)
 //
 // This Source Code Form is subject to the terms of the Mozilla
 // Public License v. 2.0. If a copy of the MPL was not distributed
 // with this file, You can obtain one at http://mozilla.org/MPL/2.0/.
+// SPDX-License-Identifier: MPL-2.0
 
 #ifndef EIGEN_TYPE_CASTING_ALTIVEC_H
 #define EIGEN_TYPE_CASTING_ALTIVEC_H

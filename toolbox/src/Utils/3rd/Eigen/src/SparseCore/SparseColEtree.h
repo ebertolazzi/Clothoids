@@ -6,6 +6,7 @@
 // This Source Code Form is subject to the terms of the Mozilla
 // Public License v. 2.0. If a copy of the MPL was not distributed
 // with this file, You can obtain one at http://mozilla.org/MPL/2.0/.
+// SPDX-License-Identifier: MPL-2.0
 
 /*
 
@@ -128,7 +129,6 @@ void nr_etdfs(typename IndexVector::Scalar n, IndexVector& parent, IndexVector& 
   typedef typename IndexVector::Scalar StorageIndex;
   StorageIndex current = n, first, next;
   while (postnum != n) {
-    // No kid for the current node
     first = first_kid(current);
 
     // no kid for the current node

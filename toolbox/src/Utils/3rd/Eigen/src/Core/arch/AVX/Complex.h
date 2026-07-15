@@ -6,6 +6,7 @@
 // This Source Code Form is subject to the terms of the Mozilla
 // Public License v. 2.0. If a copy of the MPL was not distributed
 // with this file, You can obtain one at http://mozilla.org/MPL/2.0/.
+// SPDX-License-Identifier: MPL-2.0
 
 #ifndef EIGEN_COMPLEX_AVX_H
 #define EIGEN_COMPLEX_AVX_H
@@ -16,6 +17,8 @@
 namespace Eigen {
 
 namespace internal {
+
+EIGEN_GCC_FAST_MATH_COMPLEX_VECTORIZE_WORKAROUND_PUSH
 
 //---------- float ----------
 struct Packet4cf {
@@ -79,8 +82,8 @@ EIGEN_STRONG_INLINE Packet4cf pnegate(const Packet4cf& a) {
 }
 template <>
 EIGEN_STRONG_INLINE Packet4cf pconj(const Packet4cf& a) {
-  const __m256 mask = _mm256_castsi256_ps(_mm256_setr_epi32(0x00000000, 0x80000000, 0x00000000, 0x80000000, 0x00000000,
-                                                            0x80000000, 0x00000000, 0x80000000));
+  const __m256 mask = _mm256_castsi256_ps(_mm256_setr_epi32(0x00000000, SIGN_MASK_I32, 0x00000000, SIGN_MASK_I32,
+                                                            0x00000000, SIGN_MASK_I32, 0x00000000, SIGN_MASK_I32));
   return Packet4cf(_mm256_xor_ps(a.v, mask));
 }
 
@@ -134,17 +137,36 @@ EIGEN_STRONG_INLINE Packet4cf ploadu<Packet4cf>(const std::complex<float>* from)
 
 template <>
 EIGEN_STRONG_INLINE Packet4cf pset1<Packet4cf>(const std::complex<float>& from) {
-  const float re = std::real(from);
-  const float im = std::imag(from);
-  return Packet4cf(_mm256_set_ps(im, re, im, re, im, re, im, re));
+  // Broadcast one complex<float> (64 bits) to all four 64-bit lanes.
+  // _mm256_set_ps with 8 scalar arguments generates a store-to-load forwarding
+  // sequence (4 × 64-bit stores then a 256-bit load) that causes ~15-cycle stalls
+  // on every call.
+  //
+  // _mm_loadl_epi64 is an 8-byte unaligned load through __m128i* (__may_alias__),
+  // so it is safe regardless of complex<float>'s 4-byte alignment and avoids the
+  // strict-aliasing UB that would arise from casting to double* or int64_t*.
+  const __m128i lo64 = _mm_loadl_epi64(reinterpret_cast<const __m128i*>(&from));
+#ifdef EIGEN_VECTORIZE_AVX2
+  return Packet4cf(_mm256_castsi256_ps(_mm256_broadcastq_epi64(lo64)));
+#else
+  // No vpbroadcastq without AVX2: first duplicate the 64-bit complex across both
+  // halves of the 128-bit lane (movedup_pd: {x,_} -> {x,x}), otherwise the upper
+  // complex of each lane stays zeroed by _mm_loadl_epi64. Then vinsertf128 the
+  // filled lane into the high 256-bit lane.
+  const __m128 lo = _mm_castpd_ps(_mm_movedup_pd(_mm_castsi128_pd(lo64)));
+  return Packet4cf(_mm256_insertf128_ps(_mm256_castps128_ps256(lo), lo, 1));
+#endif
 }
 
 template <>
 EIGEN_STRONG_INLINE Packet4cf ploaddup<Packet4cf>(const std::complex<float>* from) {
-  // FIXME The following might be optimized using _mm256_movedup_pd
-  Packet2cf a = ploaddup<Packet2cf>(from);
-  Packet2cf b = ploaddup<Packet2cf>(from + 1);
-  return Packet4cf(_mm256_insertf128_ps(_mm256_castps128_ps256(a.v), b.v, 1));
+  // vbroadcastf128 + vpermilpd, 2 uops: broadcast the 16 bytes holding two
+  // complex<float> into both 128-bit lanes, then duplicate each complex so
+  // the result is {c0, c0, c1, c1}. The load has no alignment requirement;
+  // we cast the source pointer through void* rather than through double*
+  // because alignof(std::complex<float>) == 4 < alignof(double).
+  __m256 bcast = _mm256_broadcast_ps(reinterpret_cast<const __m128*>(static_cast<const void*>(from)));
+  return Packet4cf(_mm256_castpd_ps(_mm256_permute_pd(_mm256_castps_pd(bcast), 3 << 2)));
 }
 
 template <>
@@ -245,6 +267,7 @@ struct packet_traits<std::complex<double> > : default_packet_traits {
     HasNegate = 1,
     HasSqrt = 1,
     HasLog = 1,
+    HasExp = 1,
     HasAbs = 0,
     HasAbs2 = 0,
     HasMin = 0,
@@ -282,7 +305,8 @@ EIGEN_STRONG_INLINE Packet2cd pnegate(const Packet2cd& a) {
 }
 template <>
 EIGEN_STRONG_INLINE Packet2cd pconj(const Packet2cd& a) {
-  const __m256d mask = _mm256_castsi256_pd(_mm256_set_epi32(0x80000000, 0x0, 0x0, 0x0, 0x80000000, 0x0, 0x0, 0x0));
+  const __m256d mask =
+      _mm256_castsi256_pd(_mm256_set_epi32(SIGN_MASK_I32, 0x0, 0x0, 0x0, SIGN_MASK_I32, 0x0, 0x0, 0x0));
   return Packet2cd(_mm256_xor_pd(a.v, mask));
 }
 
@@ -430,29 +454,20 @@ EIGEN_DEVICE_FUNC inline void ptranspose(PacketBlock<Packet2cd, 2>& kernel) {
   kernel.packet[0].v = tmp;
 }
 
-template <>
-EIGEN_STRONG_INLINE Packet2cd psqrt<Packet2cd>(const Packet2cd& a) {
-  return psqrt_complex<Packet2cd>(a);
-}
+EIGEN_INSTANTIATE_COMPLEX_MATH_FUNCS_NO_EXP(Packet2cd)
+EIGEN_INSTANTIATE_COMPLEX_MATH_FUNCS(Packet4cf)
 
 template <>
-EIGEN_STRONG_INLINE Packet4cf psqrt<Packet4cf>(const Packet4cf& a) {
-  return psqrt_complex<Packet4cf>(a);
-}
-
-template <>
-EIGEN_STRONG_INLINE Packet2cd plog<Packet2cd>(const Packet2cd& a) {
-  return plog_complex<Packet2cd>(a);
-}
-
-template <>
-EIGEN_STRONG_INLINE Packet4cf plog<Packet4cf>(const Packet4cf& a) {
-  return plog_complex<Packet4cf>(a);
-}
-
-template <>
-EIGEN_STRONG_INLINE Packet4cf pexp<Packet4cf>(const Packet4cf& a) {
-  return pexp_complex<Packet4cf>(a);
+EIGEN_STRONG_INLINE Packet2cd pexp<Packet2cd>(const Packet2cd& a) {
+#ifdef EIGEN_VECTORIZE_AVX2
+  return pexp_complex<Packet2cd>(a);
+#else
+  // Without AVX2, pexp_complex<Packet2cd> requires psincos_double<Packet4d> which needs
+  // 256-bit integer operations (Packet4l) not available on AVX-only targets.
+  // Process as two independent Packet1cd using the SSE implementation instead.
+  return Packet2cd(_mm256_insertf128_pd(_mm256_castpd128_pd256(pexp(Packet1cd(_mm256_castpd256_pd128(a.v))).v),
+                                        pexp(Packet1cd(_mm256_extractf128_pd(a.v, 1))).v, 1));
+#endif
 }
 
 #ifdef EIGEN_VECTORIZE_FMA
@@ -557,6 +572,8 @@ inline void pstoreuSegment<std::complex<double>, Packet2cd>(std::complex<double>
 }
 
 /*---------------- end load/store segment support ----------------*/
+
+EIGEN_GCC_FAST_MATH_COMPLEX_VECTORIZE_WORKAROUND_POP
 
 }  // end namespace internal
 

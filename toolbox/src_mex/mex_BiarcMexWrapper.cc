@@ -84,8 +84,8 @@ namespace G2lib
   static void do_new( int nlhs, mxArray * plhs[], int nrhs, mxArray const *[] )
   {
 #define CMD "BiarcMexWrapper('new'): "
-    UTILS_MEX_ASSERT( nrhs == 1, CMD "expected 1 inputs, nrhs = {}\n", nrhs );
-    UTILS_MEX_ASSERT( nlhs == 1, CMD "expected 1 output, nlhs = {}\n", nlhs );
+    Utils::mex_assert( nrhs == 1, CMD "expected 1 inputs, nrhs = {}\n", nrhs );
+    Utils::mex_assert( nlhs == 1, CMD "expected 1 output, nlhs = {}\n", nlhs );
 #undef CMD
 
     arg_out_0 = Utils::mex_convert_ptr_to_mx<Biarc>( new Biarc( "biarc" ) );
@@ -97,8 +97,8 @@ namespace G2lib
   {
 #define CMD "BiarcMexWrapper('build',OBJ,x0,y0,theta0,x1,y1,theta1): "
 
-    UTILS_MEX_ASSERT( nrhs == 8, CMD "expected 8 inputs, nrhs = {}\n", nrhs );
-    UTILS_MEX_ASSERT( nlhs == 1, CMD "expected 1 output, nlhs = {}\n", nlhs );
+    Utils::mex_assert( nrhs == 8, CMD "expected 8 inputs, nrhs = {}\n", nrhs );
+    Utils::mex_assert( nlhs == 1, CMD "expected 1 output, nlhs = {}\n", nlhs );
 
     Biarc * ptr = Utils::mex_convert_mx_to_ptr<Biarc>( arg_in_1 );
 
@@ -124,7 +124,7 @@ namespace G2lib
     Biarc * ptr = Utils::mex_convert_mx_to_ptr<Biarc>( arg_in_1 );
 
 #define CMD "BiarcMexWrapper('build_3P',OBJ,...): "
-    UTILS_MEX_ASSERT( nlhs == 1, CMD "expected 1 output, nlhs = {}\n", nlhs );
+    Utils::mex_assert( nlhs == 1, CMD "expected 1 output, nlhs = {}\n", nlhs );
 #undef CMD
 
     if ( nrhs == 8 )
@@ -154,11 +154,11 @@ namespace G2lib
 
       mwSize n;
       p0 = Utils::mex_vector_pointer( arg_in_2, n, CMD "Error in reading p0" );
-      UTILS_MEX_ASSERT( n == 2, CMD "Error in reading length(p0) == {} expect length(p0) == 2\n", n );
+      Utils::mex_assert( n == 2, CMD "Error in reading length(p0) == {} expect length(p0) == 2\n", n );
       p1 = Utils::mex_vector_pointer( arg_in_3, n, CMD "Error in reading p1" );
-      UTILS_MEX_ASSERT( n == 2, CMD "Error in reading length(p1) == {} expect length(p1) == 2\n", n );
+      Utils::mex_assert( n == 2, CMD "Error in reading length(p1) == {} expect length(p1) == 2\n", n );
       p2 = Utils::mex_vector_pointer( arg_in_4, n, CMD "Error in reading p2" );
-      UTILS_MEX_ASSERT( n == 2, CMD "Error in reading length(p2) == {} expect length(p2) == 2\n", n );
+      Utils::mex_assert( n == 2, CMD "Error in reading length(p2) == {} expect length(p2) == 2\n", n );
 
       bool ok = ptr->build_3P( p0[0], p0[1], p1[0], p1[1], p2[0], p2[1] );
 
@@ -169,7 +169,7 @@ namespace G2lib
     }
     else
     {
-      UTILS_MEX_ASSERT0( false, "BiarcMexWrapper('build_3P',OBJ,...) expected 5 or 8 arguments\n" );
+      Utils::mex_assert( false, "BiarcMexWrapper('build_3P',OBJ,...) expected 5 or 8 arguments\n" );
     }
   }
 
@@ -180,8 +180,8 @@ namespace G2lib
     Biarc * ptr = Utils::mex_convert_mx_to_ptr<Biarc>( arg_in_1 );
 
 #define CMD "BiarcMexWrapper('x_middle',OBJ): "
-    UTILS_MEX_ASSERT( nrhs == 2, CMD "expected 2 inputs, nrhs = {}\n", nrhs );
-    UTILS_MEX_ASSERT( nlhs == 1, CMD "expected 1 output, nlhs = {}\n", nlhs );
+    Utils::mex_assert( nrhs == 2, CMD "expected 2 inputs, nrhs = {}\n", nrhs );
+    Utils::mex_assert( nlhs == 1, CMD "expected 1 output, nlhs = {}\n", nlhs );
     Utils::mex_set_scalar_value( arg_out_0, ptr->x_middle() );
 #undef CMD
   }
@@ -193,8 +193,8 @@ namespace G2lib
     Biarc * ptr = Utils::mex_convert_mx_to_ptr<Biarc>( arg_in_1 );
 
 #define CMD "BiarcMexWrapper('y_middle',OBJ): "
-    UTILS_MEX_ASSERT( nrhs == 2, CMD "expected 2 inputs, nrhs = {}\n", nrhs );
-    UTILS_MEX_ASSERT( nlhs == 1, CMD "expected 1 output, nlhs = {}\n", nlhs );
+    Utils::mex_assert( nrhs == 2, CMD "expected 2 inputs, nrhs = {}\n", nrhs );
+    Utils::mex_assert( nlhs == 1, CMD "expected 1 output, nlhs = {}\n", nlhs );
     Utils::mex_set_scalar_value( arg_out_0, ptr->y_middle() );
 #undef CMD
   }
@@ -206,8 +206,8 @@ namespace G2lib
     Biarc * ptr = Utils::mex_convert_mx_to_ptr<Biarc>( arg_in_1 );
 
 #define CMD "BiarcMexWrapper('theta_middle',OBJ): "
-    UTILS_MEX_ASSERT( nrhs == 2, CMD "expected 2 inputs, nrhs = {}\n", nrhs );
-    UTILS_MEX_ASSERT( nlhs == 1, CMD "expected 1 output, nlhs = {}\n", nlhs );
+    Utils::mex_assert( nrhs == 2, CMD "expected 2 inputs, nrhs = {}\n", nrhs );
+    Utils::mex_assert( nlhs == 1, CMD "expected 1 output, nlhs = {}\n", nlhs );
     Utils::mex_set_scalar_value( arg_out_0, ptr->theta_middle() );
 #undef CMD
   }
@@ -219,8 +219,8 @@ namespace G2lib
     Biarc * ptr = Utils::mex_convert_mx_to_ptr<Biarc>( arg_in_1 );
 
 #define CMD "BiarcMexWrapper('s_middle',OBJ): "
-    UTILS_MEX_ASSERT( nrhs == 2, CMD "expected 2 inputs, nrhs = {}\n", nrhs );
-    UTILS_MEX_ASSERT( nlhs == 1, CMD "expected 1 output, nlhs = {}\n", nlhs );
+    Utils::mex_assert( nrhs == 2, CMD "expected 2 inputs, nrhs = {}\n", nrhs );
+    Utils::mex_assert( nlhs == 1, CMD "expected 1 output, nlhs = {}\n", nlhs );
     Utils::mex_set_scalar_value( arg_out_0, ptr->length0() );
 #undef CMD
   }
@@ -232,8 +232,8 @@ namespace G2lib
     Biarc * ptr = Utils::mex_convert_mx_to_ptr<Biarc>( arg_in_1 );
 
 #define CMD "BiarcMexWrapper('kappa0',OBJ): "
-    UTILS_MEX_ASSERT( nrhs == 2, CMD "expected 2 inputs, nrhs = {}\n", nrhs );
-    UTILS_MEX_ASSERT( nlhs == 1, CMD "expected 1 output, nlhs = {}\n", nlhs );
+    Utils::mex_assert( nrhs == 2, CMD "expected 2 inputs, nrhs = {}\n", nrhs );
+    Utils::mex_assert( nlhs == 1, CMD "expected 1 output, nlhs = {}\n", nlhs );
     Utils::mex_set_scalar_value( arg_out_0, ptr->kappa0() );
 #undef CMD
   }
@@ -245,8 +245,8 @@ namespace G2lib
     Biarc * ptr = Utils::mex_convert_mx_to_ptr<Biarc>( arg_in_1 );
 
 #define CMD "BiarcMexWrapper('kappa1',OBJ): "
-    UTILS_MEX_ASSERT( nrhs == 2, CMD "expected 2 inputs, nrhs = {}\n", nrhs );
-    UTILS_MEX_ASSERT( nlhs == 1, CMD "expected 1 output, nlhs = {}\n", nlhs );
+    Utils::mex_assert( nrhs == 2, CMD "expected 2 inputs, nrhs = {}\n", nrhs );
+    Utils::mex_assert( nlhs == 1, CMD "expected 1 output, nlhs = {}\n", nlhs );
     Utils::mex_set_scalar_value( arg_out_0, ptr->kappa1() );
 #undef CMD
   }
@@ -258,8 +258,8 @@ namespace G2lib
     Biarc * ptr = Utils::mex_convert_mx_to_ptr<Biarc>( arg_in_1 );
 
 #define CMD "BiarcMexWrapper('length0',OBJ): "
-    UTILS_MEX_ASSERT( nrhs == 2, CMD "expected 2 inputs, nrhs = {}\n", nrhs );
-    UTILS_MEX_ASSERT( nlhs == 1, CMD "expected 1 output, nlhs = {}\n", nlhs );
+    Utils::mex_assert( nrhs == 2, CMD "expected 2 inputs, nrhs = {}\n", nrhs );
+    Utils::mex_assert( nlhs == 1, CMD "expected 1 output, nlhs = {}\n", nlhs );
     Utils::mex_set_scalar_value( arg_out_0, ptr->length0() );
 #undef CMD
   }
@@ -271,8 +271,8 @@ namespace G2lib
     Biarc * ptr = Utils::mex_convert_mx_to_ptr<Biarc>( arg_in_1 );
 
 #define CMD "BiarcMexWrapper('length1',OBJ): "
-    UTILS_MEX_ASSERT( nrhs == 2, CMD "expected 2 inputs, nrhs = {}\n", nrhs );
-    UTILS_MEX_ASSERT( nlhs == 1, CMD "expected 1 output, nlhs = {}\n", nlhs );
+    Utils::mex_assert( nrhs == 2, CMD "expected 2 inputs, nrhs = {}\n", nrhs );
+    Utils::mex_assert( nlhs == 1, CMD "expected 1 output, nlhs = {}\n", nlhs );
     Utils::mex_set_scalar_value( arg_out_0, ptr->length1() );
     ;
 #undef CMD
@@ -285,8 +285,8 @@ namespace G2lib
     Biarc * ptr = Utils::mex_convert_mx_to_ptr<Biarc>( arg_in_1 );
 
 #define CMD "BiarcMexWrapper('to_nurbs',OBJ): "
-    UTILS_MEX_ASSERT( nrhs == 2, CMD "expected 2 inputs, nrhs = {}\n", nrhs );
-    UTILS_MEX_ASSERT( nlhs == 2, CMD "expected 2 output, nlhs = {}\n", nlhs );
+    Utils::mex_assert( nrhs == 2, CMD "expected 2 inputs, nrhs = {}\n", nrhs );
+    Utils::mex_assert( nlhs == 2, CMD "expected 2 output, nlhs = {}\n", nlhs );
 
     CircleArc const & C0 = ptr->C0();
     CircleArc const & C1 = ptr->C1();
@@ -359,7 +359,7 @@ namespace G2lib
 
     try
     {
-      UTILS_MEX_ASSERT0( mxIsChar( arg_in_0 ), "First argument must be a string" );
+      Utils::mex_assert( mxIsChar( arg_in_0 ), "First argument must be a string" );
       mxGetString( arg_in_0, cmd, 256 );
       cmd_to_fun.at( cmd )( nlhs, plhs, nrhs, prhs );
     }

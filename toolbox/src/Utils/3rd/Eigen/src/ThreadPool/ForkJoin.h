@@ -6,6 +6,7 @@
 // This Source Code Form is subject to the terms of the Mozilla
 // Public License v. 2.0. If a copy of the MPL was not distributed
 // with this file, You can obtain one at http://mozilla.org/MPL/2.0/.
+// SPDX-License-Identifier: MPL-2.0
 
 #ifndef EIGEN_THREADPOOL_FORKJOIN_H
 #define EIGEN_THREADPOOL_FORKJOIN_H
@@ -60,7 +61,11 @@ class ForkJoinScheduler {
  public:
   // Runs `do_func` asynchronously for the range [start, end) with a specified
   // granularity. `do_func` should be of type `std::function<void(Index,
-  // Index)`. `done()` is called exactly once after all tasks have been executed.
+  // Index)>`. `done()` is called exactly once after all tasks have been executed.
+  //
+  // WARNING: like `ParallelFor` below, scheduling nested `ParallelForAsync`
+  // calls (one task body invokes ParallelForAsync on the same pool) can deadlock
+  // because `ForkJoin`'s help-while-waiting loop is not reentrancy-aware.
   template <typename DoFnType, typename DoneFnType, typename ThreadPoolEnv>
   static void ParallelForAsync(Index start, Index end, Index granularity, DoFnType&& do_func, DoneFnType&& done,
                                ThreadPoolTempl<ThreadPoolEnv>* thread_pool) {
@@ -84,7 +89,7 @@ class ForkJoinScheduler {
     if (start >= end) return;
     Barrier barrier(1);
     auto done = [&barrier]() { barrier.Notify(); };
-    ParallelForAsync(start, end, granularity, do_func, done, thread_pool);
+    ParallelForAsync(start, end, granularity, std::forward<DoFnType>(do_func), done, thread_pool);
     barrier.Wait();
   }
 
@@ -98,7 +103,7 @@ class ForkJoinScheduler {
       std::forward<RightType>(right_thunk)();
       right_done.store(true, std::memory_order_release);
     };
-    thread_pool->Schedule(execute_right);
+    thread_pool->Schedule(std::move(execute_right));
     std::forward<LeftType>(left_thunk)();
     Task task;
     while (!right_done.load(std::memory_order_acquire)) {
@@ -108,7 +113,7 @@ class ForkJoinScheduler {
   }
 
   static Index ComputeMidpoint(Index start, Index end, Index granularity) {
-    // Typical workloads choose initial values of `{start, end, granularity}` such that `start - end` and
+    // Typical workloads choose initial values of `{start, end, granularity}` such that `end - start` and
     // `granularity` are powers of two. Since modern processors usually implement (2^x)-way
     // set-associative caches, we minimize the number of cache misses by choosing midpoints that are not
     // powers of two (to avoid having two addresses in the main memory pointing to the same point in the

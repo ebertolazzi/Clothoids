@@ -6,6 +6,7 @@
 // This Source Code Form is subject to the terms of the Mozilla
 // Public License v. 2.0. If a copy of the MPL was not distributed
 // with this file, You can obtain one at http://mozilla.org/MPL/2.0/.
+// SPDX-License-Identifier: MPL-2.0
 
 /*
 
@@ -53,7 +54,7 @@ namespace internal {
  * \param jcol The current column of L
  * \param diagpivotthresh diagonal pivoting threshold
  * \param[in,out] perm_r Row permutation (threshold pivoting)
- * \param[in] iperm_c column permutation - used to finf diagonal of Pc*A*Pc'
+ * \param[in] iperm_c column permutation - used to find diagonal of Pc*A*Pc'
  * \param[out] pivrow  The pivot row
  * \param glu Global LU data
  * \return 0 if success, i > 0 if U(i,i) is exactly zero
@@ -63,8 +64,8 @@ template <typename Scalar, typename StorageIndex>
 Index SparseLUImpl<Scalar, StorageIndex>::pivotL(const Index jcol, const RealScalar& diagpivotthresh,
                                                  IndexVector& perm_r, IndexVector& iperm_c, Index& pivrow,
                                                  GlobalLU_t& glu) {
-  Index fsupc = (glu.xsup)((glu.supno)(jcol));  // First column in the supernode containing the column jcol
-  Index nsupc = jcol - fsupc;                   // Number of columns in the supernode portion, excluding jcol; nsupc >=0
+  Index fsupc = glu.xsup(glu.supno(jcol));  // First column in the supernode containing the column jcol
+  Index nsupc = jcol - fsupc;               // Number of columns in the supernode portion, excluding jcol; nsupc >=0
   Index lptr = glu.xlsub(fsupc);  // pointer to the starting location of the row subscripts for this supernode portion
   Index nsupr = glu.xlsub(fsupc + 1) - lptr;                    // Number of rows in the supernode
   Index lda = glu.xlusup(fsupc + 1) - glu.xlusup(fsupc);        // leading dimension

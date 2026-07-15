@@ -6,6 +6,7 @@
 // This Source Code Form is subject to the terms of the Mozilla
 // Public License v. 2.0. If a copy of the MPL was not distributed
 // with this file, You can obtain one at http://mozilla.org/MPL/2.0/.
+// SPDX-License-Identifier: MPL-2.0
 
 #ifndef EIGEN_ROTATIONBASE_H
 #define EIGEN_ROTATIONBASE_H
@@ -47,7 +48,7 @@ class RotationBase {
   EIGEN_DEVICE_FUNC inline RotationMatrixType toRotationMatrix() const { return derived().toRotationMatrix(); }
 
   /** \returns an equivalent rotation matrix
-   * This function is added to be conform with the Transform class' naming scheme.
+   * This function is added to conform with the Transform class' naming scheme.
    */
   EIGEN_DEVICE_FUNC inline RotationMatrixType matrix() const { return derived().toRotationMatrix(); }
 
@@ -168,7 +169,7 @@ namespace internal {
 
 /** \internal
  *
- * Helper function to return an arbitrary rotation object to a rotation matrix.
+ * Helper function to convert an arbitrary rotation object to a rotation matrix.
  *
  * \tparam Scalar the numeric type of the matrix coefficients
  * \tparam Dim the dimension of the current space

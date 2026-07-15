@@ -1,3 +1,6 @@
+// SPDX-FileCopyrightText: The Eigen Authors
+// SPDX-License-Identifier: MPL-2.0
+
 #ifndef EIGEN_WARNINGS_DISABLED
 #define EIGEN_WARNINGS_DISABLED
 
@@ -17,9 +20,7 @@
 // 4714 - function marked as __forceinline not inlined
 // 4717 - 'function' : recursive on all control paths, function will cause runtime stack overflow
 // 4800 - 'type' : forcing value to bool 'true' or 'false' (performance warning)
-#ifndef EIGEN_PERMANENTLY_DISABLE_STUPID_WARNINGS
 #pragma warning(push)
-#endif
 #pragma warning(disable : 4100 4101 4127 4181 4211 4244 4273 4324 4503 4512 4522 4700 4714 4717 4800)
 // We currently rely on has_denorm in tests, and need it defined correctly for half/bfloat16.
 #ifndef _SILENCE_CXX23_DENORM_DEPRECATION_WARNING
@@ -36,15 +37,11 @@
 //        a legitimate use case.
 // 1684 - conversion from pointer to same-sized integral type (potential portability problem)
 // 2259 - non-pointer conversion from "Eigen::Index={ptrdiff_t={long}}" to "int" may lose significant bits
-#ifndef EIGEN_PERMANENTLY_DISABLE_STUPID_WARNINGS
 #pragma warning push
-#endif
 #pragma warning disable 2196 279 1684 2259
 
 #elif defined __clang__
-#ifndef EIGEN_PERMANENTLY_DISABLE_STUPID_WARNINGS
 #pragma clang diagnostic push
-#endif
 #if defined(__has_warning)
 // -Wconstant-logical-operand - warning: use of logical && with constant operand; switch to bitwise & or remove constant
 //     this is really a stupid warning as it warns on compile-time expressions involving enums
@@ -65,15 +62,9 @@
 
 #elif defined __GNUC__ && !defined(__FUJITSU)
 
-#if (!defined(EIGEN_PERMANENTLY_DISABLE_STUPID_WARNINGS)) && (__GNUC__ > 4 || (__GNUC__ == 4 && __GNUC_MINOR__ >= 6))
 #pragma GCC diagnostic push
-#endif
 // g++ warns about local variables shadowing member functions, which is too strict
 #pragma GCC diagnostic ignored "-Wshadow"
-#if __GNUC__ == 4 && __GNUC_MINOR__ < 8
-// Until g++-4.7 there are warnings when comparing unsigned int vs 0, even in templated functions:
-#pragma GCC diagnostic ignored "-Wtype-limits"
-#endif
 #if __GNUC__ >= 6
 #pragma GCC diagnostic ignored "-Wignored-attributes"
 #endif
@@ -84,8 +75,7 @@
 #endif
 
 #if defined __NVCC__ && defined __CUDACC__
-// MSVC 14.16 (required by CUDA 9.*) does not support the _Pragma keyword, so
-// we instead use Microsoft's __pragma extension.
+// MSVC does not support the _Pragma keyword, so we use Microsoft's __pragma extension.
 #if defined _MSC_VER
 #define EIGEN_MAKE_PRAGMA(X) __pragma(#X)
 #else

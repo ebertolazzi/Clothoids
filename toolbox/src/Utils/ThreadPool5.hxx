@@ -21,6 +21,8 @@
 // file: ThreadPool5.hxx
 //
 
+#include <memory>
+
 namespace Utils
 {
 
@@ -149,7 +151,7 @@ namespace Utils
     // =========================================================================
 
     // Vector of workers managed by the thread pool.
-    std::vector<Worker>     m_workers;
+    std::vector<std::unique_ptr<Worker>> m_workers;
     std::list<unsigned>     m_queue;
     std::mutex              m_queue_mutex;  //!< Mutex for accessing the worker queue.
     std::condition_variable m_queue_cond;   //!< Condition variable for worker availability.
@@ -189,17 +191,16 @@ namespace Utils
     //! the maximum hardware threads available.
     //!
     ThreadPool5( unsigned nthread = std::max( unsigned( 1 ), unsigned( std::thread::hardware_concurrency() - 1 ) ) )
-      : ThreadPoolBase(), m_workers( size_t( nthread ) )
+      : ThreadPoolBase()
     {
       m_queue.clear();
-      unsigned id{ 0 };
-      for ( Worker & w : m_workers )
+      m_workers.reserve( size_t( nthread ) );
+      for ( unsigned id{ 0 }; id < nthread; ++id )
       {
-        new ( &w ) Worker( this, id );
-        ++id;
+        m_workers.emplace_back( std::make_unique<Worker>( this, id ) );
       }
-      // FIXED: Workers will add themselves to the queue once they're ready
-      // No need to push them here, they'll call push_worker() from worker_loop()
+      // Workers add themselves to the queue once they are ready.
+      // No need to push them here: worker_loop() calls push_worker().
     }
 
     //!
@@ -221,7 +222,7 @@ namespace Utils
     void exec( FUN && fun ) override
     {
       // cerca prima thread libera
-      m_workers[pop_worker()].exec( std::move( fun ) );
+      m_workers[pop_worker()]->exec( std::move( fun ) );
     }
 
     //!
@@ -229,7 +230,7 @@ namespace Utils
     //!
     void wait() override
     {
-      for ( auto & w : m_workers ) w.wait();
+      for ( auto & w : m_workers ) w->wait();
     }
 
     //!

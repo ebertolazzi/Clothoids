@@ -1,3 +1,6 @@
+// SPDX-FileCopyrightText: The Eigen Authors
+// SPDX-License-Identifier: MPL-2.0
+
 #ifndef EIGEN_ACCELERATESUPPORT_H
 #define EIGEN_ACCELERATESUPPORT_H
 
@@ -110,7 +113,7 @@ using AccelerateCholeskyAtA = AccelerateImpl<MatrixType, 0, SparseFactorizationC
 namespace internal {
 template <typename T>
 struct AccelFactorizationDeleter {
-  void operator()(T* sym) {
+  void operator()(T* sym) const {
     if (sym) {
       SparseCleanup(*sym);
       delete sym;
@@ -173,27 +176,25 @@ class AccelerateImpl : public SparseSolverBase<AccelerateImpl<MatrixType_, UpLo_
   AccelerateImpl() {
     m_isInitialized = false;
 
-    auto check_flag_set = [](int value, int flag) { return ((value & flag) == flag); };
-
-    if (check_flag_set(UpLo_, Symmetric)) {
+    EIGEN_IF_CONSTEXPR ((UpLo_ & Symmetric) == Symmetric) {
       m_sparseKind = SparseSymmetric;
       m_triType = (UpLo_ & Lower) ? SparseLowerTriangle : SparseUpperTriangle;
-    } else if (check_flag_set(UpLo_, UnitLower)) {
+    } else EIGEN_IF_CONSTEXPR ((UpLo_ & UnitLower) == UnitLower) {
       m_sparseKind = SparseUnitTriangular;
       m_triType = SparseLowerTriangle;
-    } else if (check_flag_set(UpLo_, UnitUpper)) {
+    } else EIGEN_IF_CONSTEXPR ((UpLo_ & UnitUpper) == UnitUpper) {
       m_sparseKind = SparseUnitTriangular;
       m_triType = SparseUpperTriangle;
-    } else if (check_flag_set(UpLo_, StrictlyLower)) {
+    } else EIGEN_IF_CONSTEXPR ((UpLo_ & StrictlyLower) == StrictlyLower) {
       m_sparseKind = SparseTriangular;
       m_triType = SparseLowerTriangle;
-    } else if (check_flag_set(UpLo_, StrictlyUpper)) {
+    } else EIGEN_IF_CONSTEXPR ((UpLo_ & StrictlyUpper) == StrictlyUpper) {
       m_sparseKind = SparseTriangular;
       m_triType = SparseUpperTriangle;
-    } else if (check_flag_set(UpLo_, Lower)) {
+    } else EIGEN_IF_CONSTEXPR ((UpLo_ & Lower) == Lower) {
       m_sparseKind = SparseTriangular;
       m_triType = SparseLowerTriangle;
-    } else if (check_flag_set(UpLo_, Upper)) {
+    } else EIGEN_IF_CONSTEXPR ((UpLo_ & Upper) == Upper) {
       m_sparseKind = SparseTriangular;
       m_triType = SparseUpperTriangle;
     } else {
@@ -205,8 +206,6 @@ class AccelerateImpl : public SparseSolverBase<AccelerateImpl<MatrixType_, UpLo_
   }
 
   explicit AccelerateImpl(const MatrixType& matrix) : AccelerateImpl() { compute(matrix); }
-
-  ~AccelerateImpl() {}
 
   inline Index cols() const { return m_nCols; }
   inline Index rows() const { return m_nRows; }

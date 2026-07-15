@@ -6,6 +6,7 @@
 // This Source Code Form is subject to the terms of the Mozilla
 // Public License v. 2.0. If a copy of the MPL was not distributed
 // with this file, You can obtain one at http://mozilla.org/MPL/2.0/.
+// SPDX-License-Identifier: MPL-2.0
 
 #ifndef EIGEN_SPARSEDENSEPRODUCT_H
 #define EIGEN_SPARSEDENSEPRODUCT_H
@@ -26,49 +27,139 @@ struct product_promote_storage_type<Dense, Sparse, OuterProduct> {
   typedef Sparse ret;
 };
 
+// Type trait to detect if a sparse type supports direct compressed storage access
+// (i.e., has valuePtr(), innerIndexPtr(), outerIndexPtr(), isCompressed()).
+// All types deriving from SparseCompressedBase provide these methods.
+template <typename T>
+struct has_compressed_storage : std::is_base_of<SparseCompressedBase<T>, T> {};
+
 template <typename SparseLhsType, typename DenseRhsType, typename DenseResType, typename AlphaType,
           int LhsStorageOrder = ((SparseLhsType::Flags & RowMajorBit) == RowMajorBit) ? RowMajor : ColMajor,
           bool ColPerCol = ((DenseRhsType::Flags & RowMajorBit) == 0) || DenseRhsType::ColsAtCompileTime == 1>
 struct sparse_time_dense_product_impl;
 
+// RowMajor, single column (ColPerCol=true): CSR SpMV
 template <typename SparseLhsType, typename DenseRhsType, typename DenseResType>
 struct sparse_time_dense_product_impl<SparseLhsType, DenseRhsType, DenseResType, typename DenseResType::Scalar,
                                       RowMajor, true> {
   typedef internal::remove_all_t<SparseLhsType> Lhs;
-  typedef internal::remove_all_t<DenseRhsType> Rhs;
   typedef internal::remove_all_t<DenseResType> Res;
   typedef typename evaluator<Lhs>::InnerIterator LhsInnerIterator;
   typedef evaluator<Lhs> LhsEval;
+  typedef typename Res::Scalar ResScalar;
+
   static void run(const SparseLhsType& lhs, const DenseRhsType& rhs, DenseResType& res,
                   const typename Res::Scalar& alpha) {
     LhsEval lhsEval(lhs);
-
     Index n = lhs.outerSize();
-#ifdef EIGEN_HAS_OPENMP
-    Index threads = Eigen::nbThreads();
-#endif
 
     for (Index c = 0; c < rhs.cols(); ++c) {
-#ifdef EIGEN_HAS_OPENMP
-      // This 20000 threshold has been found experimentally on 2D and 3D Poisson problems.
-      // It basically represents the minimal amount of work to be done to be worth it.
-      if (threads > 1 && lhsEval.nonZerosEstimate() > 20000) {
-#pragma omp parallel for schedule(dynamic, (n + threads * 4 - 1) / (threads * 4)) num_threads(threads)
-        for (Index i = 0; i < n; ++i) processRow(lhsEval, rhs, res, alpha, i, c);
-      } else
-#endif
-      {
-        for (Index i = 0; i < n; ++i) processRow(lhsEval, rhs, res, alpha, i, c);
-      }
+      runCol(lhsEval, lhs, rhs, res, alpha, n, c, std::integral_constant<bool, has_compressed_storage<Lhs>::value>());
     }
   }
 
-  static void processRow(const LhsEval& lhsEval, const DenseRhsType& rhs, DenseResType& res,
-                         const typename Res::Scalar& alpha, Index i, Index col) {
-    // Two accumulators, which breaks the dependency chain on the accumulator
-    // and allows more instruction-level parallelism in the following loop
-    typename Res::Scalar tmp_a(0);
-    typename Res::Scalar tmp_b(0);
+  // Direct pointer path: works for both compressed and non-compressed storage.
+  static void runCol(const LhsEval& /*lhsEval*/, const SparseLhsType& lhs, const DenseRhsType& rhs, DenseResType& res,
+                     const ResScalar& alpha, Index n, Index c, std::true_type /* has_compressed_storage */) {
+    runColImpl(lhs, rhs, res, alpha, n, c, std::integral_constant<bool, bool(DenseRhsType::Flags & DirectAccessBit)>());
+  }
+
+  template <typename RhsT>
+  static void runColImpl(const SparseLhsType& lhs, const RhsT& rhs, DenseResType& res, const ResScalar& alpha, Index n,
+                         Index c, std::true_type) {
+    const Lhs& mat = lhs;
+    const auto* vals = mat.valuePtr();
+    const auto* inds = mat.innerIndexPtr();
+    // Sparse vectors don't store outer indices.
+    const auto* outer = mat.outerIndexPtr();
+    const auto* innerNnz = mat.innerNonZeroPtr();
+    // The fast rhs pointer path requires unit inner stride (common case: VectorXd, contiguous matrix column).
+    if (rhs.innerStride() == 1) {
+      const auto* x = rhs.data() + c * rhs.outerStride();
+#ifdef EIGEN_HAS_OPENMP
+      Index threads = Eigen::nbThreads();
+      if (threads > 1 && mat.nonZeros() > 20000) {
+#pragma omp parallel for schedule(dynamic, (n + threads * 4 - 1) / (threads * 4)) num_threads(threads)
+        for (Index i = 0; i < n; ++i) {
+          Index k = outer ? outer[i] : 0;
+          const Index end = innerNnz ? (outer ? outer[i] : 0) + innerNnz[i] : (outer ? outer[i + 1] : mat.nonZeros());
+          ResScalar sum0(0), sum1(0);
+          for (; k < end; ++k) {
+            sum0 += vals[k] * x[inds[k]];
+            ++k;
+            if (k < end) {
+              sum1 += vals[k] * x[inds[k]];
+            }
+          }
+          res.coeffRef(i, c) += alpha * (sum0 + sum1);
+        }
+      } else
+#endif
+      {
+        for (Index i = 0; i < n; ++i) {
+          Index k = outer ? outer[i] : 0;
+          const Index end = innerNnz ? (outer ? outer[i] : 0) + innerNnz[i] : (outer ? outer[i + 1] : mat.nonZeros());
+          // Two independent accumulators to break the dependency chain
+          ResScalar sum0(0), sum1(0);
+          for (; k < end; ++k) {
+            sum0 += vals[k] * x[inds[k]];
+            ++k;
+            if (k < end) {
+              sum1 += vals[k] * x[inds[k]];
+            }
+          }
+          res.coeffRef(i, c) += alpha * (sum0 + sum1);
+        }
+      }
+    } else {
+      runColImpl(lhs, rhs, res, alpha, n, c, std::false_type());
+    }
+  }
+
+  // Use fall-back path without direct access to rhs.
+  template <typename RhsT>
+  static void runColImpl(const SparseLhsType& lhs, const RhsT& rhs, DenseResType& res, const ResScalar& alpha, Index n,
+                         Index c, std::false_type) {
+    const Lhs& mat = lhs;
+    const auto* vals = mat.valuePtr();
+    const auto* inds = mat.innerIndexPtr();
+    const auto* outer = mat.outerIndexPtr();
+    const auto* innerNnz = mat.innerNonZeroPtr();
+    // Non-unit rhs stride (or no direct access): use direct pointers for sparse side, coeff() for rhs
+    for (Index i = 0; i < n; ++i) {
+      Index k = outer ? outer[i] : 0;
+      const Index end = innerNnz ? (outer ? outer[i] : 0) + innerNnz[i] : (outer ? outer[i + 1] : mat.nonZeros());
+      ResScalar sum0(0), sum1(0);
+      for (; k < end; ++k) {
+        sum0 += vals[k] * rhs.coeff(inds[k], c);
+        ++k;
+        if (k < end) {
+          sum1 += vals[k] * rhs.coeff(inds[k], c);
+        }
+      }
+      res.coeffRef(i, c) += alpha * (sum0 + sum1);
+    }
+  }
+
+  // Iterator fallback path
+  static void runCol(const LhsEval& lhsEval, const SparseLhsType& /*lhs*/, const DenseRhsType& rhs, DenseResType& res,
+                     const ResScalar& alpha, Index n, Index c, std::false_type /* has_compressed_storage */) {
+#ifdef EIGEN_HAS_OPENMP
+    Index threads = Eigen::nbThreads();
+    if (threads > 1 && lhsEval.nonZerosEstimate() > 20000) {
+#pragma omp parallel for schedule(dynamic, (n + threads * 4 - 1) / (threads * 4)) num_threads(threads)
+      for (Index i = 0; i < n; ++i) processRow(lhsEval, rhs, res, alpha, i, c);
+    } else
+#endif
+    {
+      for (Index i = 0; i < n; ++i) processRow(lhsEval, rhs, res, alpha, i, c);
+    }
+  }
+
+  static void processRow(const LhsEval& lhsEval, const DenseRhsType& rhs, DenseResType& res, const ResScalar& alpha,
+                         Index i, Index col) {
+    ResScalar tmp_a(0);
+    ResScalar tmp_b(0);
     for (LhsInnerIterator it(lhsEval, i); it; ++it) {
       tmp_a += it.value() * rhs.coeff(it.index(), col);
       ++it;
@@ -80,17 +171,7 @@ struct sparse_time_dense_product_impl<SparseLhsType, DenseRhsType, DenseResType,
   }
 };
 
-// FIXME: what is the purpose of the following specialization? Is it for the BlockedSparse format?
-// -> let's disable it for now as it is conflicting with generic scalar*matrix and matrix*scalar operators
-// template<typename T1, typename T2/*, int Options_, typename StrideType_*/>
-// struct ScalarBinaryOpTraits<T1, Ref<T2/*, Options_, StrideType_*/> >
-// {
-//   enum {
-//     Defined = 1
-//   };
-//   typedef typename CwiseUnaryOp<scalar_multiple2_op<T1, typename T2::Scalar>, T2>::PlainObject ReturnType;
-// };
-
+// ColMajor, single column (ColPerCol=true): CSC SpMV
 template <typename SparseLhsType, typename DenseRhsType, typename DenseResType, typename AlphaType>
 struct sparse_time_dense_product_impl<SparseLhsType, DenseRhsType, DenseResType, AlphaType, ColMajor, true> {
   typedef internal::remove_all_t<SparseLhsType> Lhs;
@@ -98,11 +179,164 @@ struct sparse_time_dense_product_impl<SparseLhsType, DenseRhsType, DenseResType,
   typedef internal::remove_all_t<DenseResType> Res;
   typedef evaluator<Lhs> LhsEval;
   typedef typename LhsEval::InnerIterator LhsInnerIterator;
+
   static void run(const SparseLhsType& lhs, const DenseRhsType& rhs, DenseResType& res, const AlphaType& alpha) {
+    runImpl(lhs, rhs, res, alpha, std::integral_constant<bool, has_compressed_storage<Lhs>::value>());
+  }
+
+  // Direct pointer path: works for both compressed and non-compressed storage.
+  static void runImpl(const SparseLhsType& lhs, const DenseRhsType& rhs, DenseResType& res, const AlphaType& alpha,
+                      std::true_type /* has_compressed_storage */) {
+    typedef typename Lhs::Scalar LhsScalar;
+    typedef typename Lhs::StorageIndex StorageIndex;
+    const Lhs& mat = lhs;
+    const LhsScalar* vals = mat.valuePtr();
+    const StorageIndex* inds = mat.innerIndexPtr();
+    // Sparse vectors don't store outer indices.
+    const auto* outer = mat.outerIndexPtr();
+    const auto* innerNnz = mat.innerNonZeroPtr();
+    // The fast result pointer path requires contiguous ColMajor result layout.
+    // Transpose<ColMajor> reports innerStride()==1 but is actually RowMajor, so check both.
+    EIGEN_IF_CONSTEXPR (!(Res::Flags & RowMajorBit)) {
+      if (res.innerStride() == 1) {
+        const Index n = lhs.outerSize();
+        // The threaded scatter+reduce path relies on a thread_local scratch buffer for
+        // host-thread safety (see below), so it is only available where thread_local is
+        // usable; under EIGEN_AVOID_THREAD_LOCAL fall through to the serial scatter.
+#if defined(EIGEN_HAS_OPENMP) && !defined(EIGEN_AVOID_THREAD_LOCAL)
+        typedef typename Res::Scalar ResScalar;
+        const Index m = res.rows();
+        const Index threads = Eigen::nbThreads();
+        // Per-thread scratch + reduction: the natural per-column partition would
+        // race on the output (writes to y[inds[k]] are scattered across rows),
+        // so each thread accumulates into its own m-sized output buffer and the
+        // results are summed at the end. Activated above the same 20000-nnz
+        // threshold as the RowMajor kernel, plus a second gate on per-thread
+        // scratch size: `threads * m` scalars are touched by the reduction,
+        // and on tall / very-sparse matrices that can dwarf the SpMV cost --
+        // require avg nnz per row >= threads so the reduction can't dominate.
+        // `outer` is null for SparseVector lhs; the nnz-balanced partition needs
+        // the outer-index array, so fall back to the serial scatter below.
+        if (outer && threads > 1 && mat.nonZeros() > 20000 && mat.nonZeros() >= Index(threads) * m) {
+          // Per-calling-thread persistent scratch (per template instantiation).
+          // Grows monotonically; reused across calls. The buffer is left at
+          // all-zeros after each call by folding the zero-out into the reduction
+          // step, which avoids a separate init pass on every SpMV. `thread_local`
+          // is required: two unrelated host threads concurrently calling
+          // y = A*x would otherwise race on this static buffer (and a reallocating
+          // grow on one would dangle the other's scratch_ptr).
+          thread_local static std::vector<ResScalar> scratch_buf;
+          const std::size_t need = static_cast<std::size_t>(threads) * static_cast<std::size_t>(m);
+          if (scratch_buf.size() < need) scratch_buf.assign(need, ResScalar(0));
+          ResScalar* scratch_ptr = scratch_buf.data();
+          // nnz-balanced column partition: each thread t owns the contiguous
+          // column range [part[t], part[t+1]). Deterministic mapping of j to
+          // thread (required for bit-reproducible reduction below) AND
+          // nnz-balanced load (dynamic scheduling would balance but break
+          // determinism; static round-robin would be deterministic but
+          // imbalanced on skewed matrices).
+          std::vector<Index> part(static_cast<std::size_t>(threads) + 1);
+          part[threads] = n;
+          part[0] = 0;
+          // Targets are monotonically increasing in t, so each lower_bound starts
+          // from the previous result; total work is O(T + log n) rather than
+          // T * log n.
+          const StorageIndex* const part_last = outer + n + 1;
+          const StorageIndex* part_lo = outer;
+          for (Index t = 1; t < threads; ++t) {
+            const Index target = (t * mat.nonZeros()) / threads;
+            part_lo = std::lower_bound(part_lo, part_last, StorageIndex(target));
+            part[t] = part_lo - outer;
+          }
+          for (Index c = 0; c < rhs.cols(); ++c) {
+            typename Res::Scalar* y = res.data() + c * res.outerStride();
+#pragma omp parallel for schedule(static, 1) num_threads(threads)
+            for (Index t = 0; t < threads; ++t) {
+              ResScalar* yt = scratch_ptr + t * m;
+              const Index j_lo = part[t], j_hi = part[t + 1];
+              for (Index j = j_lo; j < j_hi; ++j) {
+                typename ScalarBinaryOpTraits<AlphaType, typename Rhs::Scalar>::ReturnType rhs_j(alpha *
+                                                                                                 rhs.coeff(j, c));
+                const Index start = outer ? outer[j] : 0;
+                const Index end = innerNnz ? start + innerNnz[j] : (outer ? outer[j + 1] : mat.nonZeros());
+                Index k = start;
+                for (; k + 3 < end; k += 4) {
+                  yt[inds[k]] += vals[k] * rhs_j;
+                  yt[inds[k + 1]] += vals[k + 1] * rhs_j;
+                  yt[inds[k + 2]] += vals[k + 2] * rhs_j;
+                  yt[inds[k + 3]] += vals[k + 3] * rhs_j;
+                }
+                for (; k < end; ++k) yt[inds[k]] += vals[k] * rhs_j;
+              }
+            }
+            // Reduce per-thread buffers into y AND zero them, so the next call
+            // doesn't have to re-init. Process rows in cache-resident blocks: the
+            // natural [t*m+i] scratch layout makes the cross-thread read for a
+            // single row a stride-m gather (one cache line per thread, ~threads*m
+            // bytes apart, unvectorizable). Blocking lets each thread's stripe be
+            // swept as a unit-stride, vectorizable stream into a small per-block
+            // accumulator. Each thread owns a contiguous range of row blocks
+            // (static schedule) so the zero stores stay independent, and the
+            // accumulator is summed in the exact t = 0..threads-1 order, keeping
+            // the result bit-identical to the scalar reduction it replaces.
+            constexpr Index kReduceBlock = 512;
+#pragma omp parallel for schedule(static) num_threads(threads)
+            for (Index i0 = 0; i0 < m; i0 += kReduceBlock) {
+              const Index i1 = numext::mini(i0 + kReduceBlock, m);
+              const Index len = i1 - i0;
+              EIGEN_ALIGN_MAX ResScalar acc[kReduceBlock];
+              for (Index ii = 0; ii < len; ++ii) acc[ii] = ResScalar(0);
+              for (Index t = 0; t < threads; ++t) {
+                ResScalar* row = scratch_ptr + t * m + i0;
+                for (Index ii = 0; ii < len; ++ii) {
+                  acc[ii] += row[ii];
+                  row[ii] = ResScalar(0);
+                }
+              }
+              for (Index ii = 0; ii < len; ++ii) y[i0 + ii] += acc[ii];
+            }
+          }
+        } else
+#endif
+        {
+          for (Index c = 0; c < rhs.cols(); ++c) {
+            typename Res::Scalar* y = res.data() + c * res.outerStride();
+            for (Index j = 0; j < n; ++j) {
+              typename ScalarBinaryOpTraits<AlphaType, typename Rhs::Scalar>::ReturnType rhs_j(alpha * rhs.coeff(j, c));
+              const Index start = outer ? outer[j] : 0;
+              const Index end = innerNnz ? start + innerNnz[j] : (outer ? outer[j + 1] : mat.nonZeros());
+              Index k = start;
+              // 4-way unrolled scatter-add (no SIMD: writes are scattered)
+              for (; k + 3 < end; k += 4) {
+                y[inds[k]] += vals[k] * rhs_j;
+                y[inds[k + 1]] += vals[k + 1] * rhs_j;
+                y[inds[k + 2]] += vals[k + 2] * rhs_j;
+                y[inds[k + 3]] += vals[k + 3] * rhs_j;
+              }
+              for (; k < end; ++k) y[inds[k]] += vals[k] * rhs_j;
+            }
+          }
+        }
+        return;
+      }
+    }
+    // Non-unit result stride: use coeffRef() for result access
+    for (Index c = 0; c < rhs.cols(); ++c) {
+      for (Index j = 0; j < lhs.outerSize(); ++j) {
+        typename ScalarBinaryOpTraits<AlphaType, typename Rhs::Scalar>::ReturnType rhs_j(alpha * rhs.coeff(j, c));
+        const Index start = outer ? outer[j] : 0;
+        const Index end = innerNnz ? start + innerNnz[j] : (outer ? outer[j + 1] : mat.nonZeros());
+        for (Index k = start; k < end; ++k) res.coeffRef(inds[k], c) += vals[k] * rhs_j;
+      }
+    }
+  }
+
+  // Iterator-based fallback
+  static void runImpl(const SparseLhsType& lhs, const DenseRhsType& rhs, DenseResType& res, const AlphaType& alpha,
+                      std::false_type /* has_compressed_storage */) {
     LhsEval lhsEval(lhs);
     for (Index c = 0; c < rhs.cols(); ++c) {
       for (Index j = 0; j < lhs.outerSize(); ++j) {
-        //        typename Res::Scalar rhs_j = alpha * rhs.coeff(j,c);
         typename ScalarBinaryOpTraits<AlphaType, typename Rhs::Scalar>::ReturnType rhs_j(alpha * rhs.coeff(j, c));
         for (LhsInnerIterator it(lhsEval, j); it; ++it) res.coeffRef(it.index(), c) += it.value() * rhs_j;
       }
@@ -110,14 +344,17 @@ struct sparse_time_dense_product_impl<SparseLhsType, DenseRhsType, DenseResType,
   }
 };
 
+// RowMajor, multiple columns (ColPerCol=false): sparse * dense_matrix
 template <typename SparseLhsType, typename DenseRhsType, typename DenseResType>
 struct sparse_time_dense_product_impl<SparseLhsType, DenseRhsType, DenseResType, typename DenseResType::Scalar,
                                       RowMajor, false> {
   typedef internal::remove_all_t<SparseLhsType> Lhs;
-  typedef internal::remove_all_t<DenseRhsType> Rhs;
   typedef internal::remove_all_t<DenseResType> Res;
   typedef evaluator<Lhs> LhsEval;
   typedef typename LhsEval::InnerIterator LhsInnerIterator;
+
+  static constexpr bool IsCompressedLhs = has_compressed_storage<Lhs>::value;
+
   static void run(const SparseLhsType& lhs, const DenseRhsType& rhs, DenseResType& res,
                   const typename Res::Scalar& alpha) {
     Index n = lhs.rows();
@@ -129,21 +366,41 @@ struct sparse_time_dense_product_impl<SparseLhsType, DenseRhsType, DenseResType,
     // It basically represents the minimal amount of work to be done to be worth it.
     if (threads > 1 && lhsEval.nonZerosEstimate() * rhs.cols() > 20000) {
 #pragma omp parallel for schedule(dynamic, (n + threads * 4 - 1) / (threads * 4)) num_threads(threads)
-      for (Index i = 0; i < n; ++i) processRow(lhsEval, rhs, res, alpha, i);
+      for (Index i = 0; i < n; ++i)
+        processRow(lhsEval, lhs, rhs, res, alpha, i, std::integral_constant<bool, IsCompressedLhs>());
     } else
 #endif
     {
-      for (Index i = 0; i < n; ++i) processRow(lhsEval, rhs, res, alpha, i);
+      for (Index i = 0; i < n; ++i)
+        processRow(lhsEval, lhs, rhs, res, alpha, i, std::integral_constant<bool, IsCompressedLhs>());
     }
   }
 
-  static void processRow(const LhsEval& lhsEval, const DenseRhsType& rhs, Res& res, const typename Res::Scalar& alpha,
-                         Index i) {
+  // Direct pointer path: works for both compressed and non-compressed storage.
+  static void processRow(const LhsEval& /*lhsEval*/, const SparseLhsType& lhs, const DenseRhsType& rhs, Res& res,
+                         const typename Res::Scalar& alpha, Index i, std::true_type /* has_compressed_storage */) {
+    typedef typename Lhs::Scalar LhsScalar;
+    typedef typename Lhs::StorageIndex StorageIndex;
+    const Lhs& mat = lhs;
+    const LhsScalar* vals = mat.valuePtr();
+    const StorageIndex* inds = mat.innerIndexPtr();
+    // Sparse vectors don't store outer indices.
+    const Index start = mat.outerIndexPtr() ? mat.outerIndexPtr()[i] : 0;
+    const auto* innerNnz = mat.innerNonZeroPtr();
+    const Index end =
+        innerNnz ? start + innerNnz[i] : (mat.outerIndexPtr() ? mat.outerIndexPtr()[i + 1] : mat.nonZeros());
+    typename Res::RowXpr res_i(res.row(i));
+    for (Index k = start; k < end; ++k) res_i += (alpha * vals[k]) * rhs.row(inds[k]);
+  }
+
+  static void processRow(const LhsEval& lhsEval, const SparseLhsType& /*lhs*/, const DenseRhsType& rhs, Res& res,
+                         const typename Res::Scalar& alpha, Index i, std::false_type /* has_compressed_storage */) {
     typename Res::RowXpr res_i(res.row(i));
     for (LhsInnerIterator it(lhsEval, i); it; ++it) res_i += (alpha * it.value()) * rhs.row(it.index());
   }
 };
 
+// ColMajor, multiple columns (ColPerCol=false): sparse * dense_matrix
 template <typename SparseLhsType, typename DenseRhsType, typename DenseResType>
 struct sparse_time_dense_product_impl<SparseLhsType, DenseRhsType, DenseResType, typename DenseResType::Scalar,
                                       ColMajor, false> {
@@ -151,8 +408,33 @@ struct sparse_time_dense_product_impl<SparseLhsType, DenseRhsType, DenseResType,
   typedef internal::remove_all_t<DenseRhsType> Rhs;
   typedef internal::remove_all_t<DenseResType> Res;
   typedef typename evaluator<Lhs>::InnerIterator LhsInnerIterator;
+
   static void run(const SparseLhsType& lhs, const DenseRhsType& rhs, DenseResType& res,
                   const typename Res::Scalar& alpha) {
+    runImpl(lhs, rhs, res, alpha, std::integral_constant<bool, has_compressed_storage<Lhs>::value>());
+  }
+
+  // Direct pointer path: works for both compressed and non-compressed storage.
+  static void runImpl(const SparseLhsType& lhs, const DenseRhsType& rhs, DenseResType& res,
+                      const typename Res::Scalar& alpha, std::true_type /* has_compressed_storage */) {
+    typedef typename Lhs::Scalar LhsScalar;
+    typedef typename Lhs::StorageIndex StorageIndex;
+    const Lhs& mat = lhs;
+    const LhsScalar* vals = mat.valuePtr();
+    const StorageIndex* inds = mat.innerIndexPtr();
+    // Sparse vectors don't store outer indices.
+    const auto* outer = mat.outerIndexPtr();
+    const auto* innerNnz = mat.innerNonZeroPtr();
+    for (Index j = 0; j < lhs.outerSize(); ++j) {
+      typename Rhs::ConstRowXpr rhs_j(rhs.row(j));
+      const Index start = outer ? outer[j] : 0;
+      const Index end = innerNnz ? start + innerNnz[j] : (outer ? outer[j + 1] : mat.nonZeros());
+      for (Index k = start; k < end; ++k) res.row(inds[k]) += (alpha * vals[k]) * rhs_j;
+    }
+  }
+
+  static void runImpl(const SparseLhsType& lhs, const DenseRhsType& rhs, DenseResType& res,
+                      const typename Res::Scalar& alpha, std::false_type /* has_compressed_storage */) {
     evaluator<Lhs> lhsEval(lhs);
     for (Index j = 0; j < lhs.outerSize(); ++j) {
       typename Rhs::ConstRowXpr rhs_j(rhs.row(j));
@@ -222,10 +504,10 @@ struct sparse_dense_outer_product_evaluator {
 
   // if the actual left-hand side is a dense vector,
   // then build a sparse-view so that we can seamlessly iterate over it.
-  typedef std::conditional_t<is_same<typename internal::traits<Lhs1>::StorageKind, Sparse>::value, Lhs1,
+  typedef std::conditional_t<std::is_same<typename internal::traits<Lhs1>::StorageKind, Sparse>::value, Lhs1,
                              SparseView<Lhs1> >
       ActualLhs;
-  typedef std::conditional_t<is_same<typename internal::traits<Lhs1>::StorageKind, Sparse>::value, Lhs1 const&,
+  typedef std::conditional_t<std::is_same<typename internal::traits<Lhs1>::StorageKind, Sparse>::value, Lhs1 const&,
                              SparseView<Lhs1> >
       LhsArg;
 

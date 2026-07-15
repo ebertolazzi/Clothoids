@@ -7,6 +7,7 @@
 // This Source Code Form is subject to the terms of the Mozilla
 // Public License v. 2.0. If a copy of the MPL was not distributed
 // with this file, You can obtain one at http://mozilla.org/MPL/2.0/.
+// SPDX-License-Identifier: MPL-2.0
 
 #ifndef EIGEN_NESTBYVALUE_H
 #define EIGEN_NESTBYVALUE_H
@@ -39,28 +40,28 @@ template <typename ExpressionType>
 class NestByValue : public internal::dense_xpr_base<NestByValue<ExpressionType> >::type {
  public:
   typedef typename internal::dense_xpr_base<NestByValue>::type Base;
-  static constexpr bool HasDirectAccess = internal::has_direct_access<ExpressionType>::ret;
+  static constexpr bool HasDirectAccess = internal::has_direct_access<ExpressionType>::value;
 
   EIGEN_DENSE_PUBLIC_INTERFACE(NestByValue)
 
-  EIGEN_DEVICE_FUNC explicit inline NestByValue(const ExpressionType& matrix) : m_expression(matrix) {}
+  EIGEN_DEVICE_FUNC constexpr explicit inline NestByValue(const ExpressionType& matrix) : m_expression(matrix) {}
 
   EIGEN_DEVICE_FUNC constexpr Index rows() const noexcept { return m_expression.rows(); }
   EIGEN_DEVICE_FUNC constexpr Index cols() const noexcept { return m_expression.cols(); }
 
-  EIGEN_DEVICE_FUNC operator const ExpressionType&() const { return m_expression; }
+  EIGEN_DEVICE_FUNC constexpr operator const ExpressionType&() const { return m_expression; }
 
-  EIGEN_DEVICE_FUNC const ExpressionType& nestedExpression() const { return m_expression; }
+  EIGEN_DEVICE_FUNC constexpr const ExpressionType& nestedExpression() const { return m_expression; }
 
-  EIGEN_DEVICE_FUNC typename std::enable_if<HasDirectAccess, const Scalar*>::type data() const {
+  EIGEN_DEVICE_FUNC constexpr std::enable_if_t<HasDirectAccess, const Scalar*> data() const {
     return m_expression.data();
   }
 
-  EIGEN_DEVICE_FUNC typename std::enable_if<HasDirectAccess, Index>::type innerStride() const {
+  EIGEN_DEVICE_FUNC constexpr std::enable_if_t<HasDirectAccess, Index> innerStride() const {
     return m_expression.innerStride();
   }
 
-  EIGEN_DEVICE_FUNC typename std::enable_if<HasDirectAccess, Index>::type outerStride() const {
+  EIGEN_DEVICE_FUNC constexpr std::enable_if_t<HasDirectAccess, Index> outerStride() const {
     return m_expression.outerStride();
   }
 
@@ -71,18 +72,18 @@ class NestByValue : public internal::dense_xpr_base<NestByValue<ExpressionType> 
 /** \returns an expression of the temporary version of *this.
  */
 template <typename Derived>
-EIGEN_DEVICE_FUNC inline const NestByValue<Derived> DenseBase<Derived>::nestByValue() const {
+EIGEN_DEVICE_FUNC constexpr inline const NestByValue<Derived> DenseBase<Derived>::nestByValue() const {
   return NestByValue<Derived>(derived());
 }
 
 namespace internal {
 
-// Evaluator of Solve -> eval into a temporary
+// Evaluator of NestByValue<> -> forwards to the evaluator of the nested expression
 template <typename ArgType>
 struct evaluator<NestByValue<ArgType> > : public evaluator<ArgType> {
   typedef evaluator<ArgType> Base;
 
-  EIGEN_DEVICE_FUNC explicit evaluator(const NestByValue<ArgType>& xpr) : Base(xpr.nestedExpression()) {}
+  EIGEN_DEVICE_FUNC constexpr explicit evaluator(const NestByValue<ArgType>& xpr) : Base(xpr.nestedExpression()) {}
 };
 }  // namespace internal
 

@@ -7,6 +7,7 @@
 // This Source Code Form is subject to the terms of the Mozilla
 // Public License v. 2.0. If a copy of the MPL was not distributed
 // with this file, You can obtain one at http://mozilla.org/MPL/2.0/.
+// SPDX-License-Identifier: MPL-2.0
 
 #ifndef EIGEN_REDUX_H
 #define EIGEN_REDUX_H
@@ -101,7 +102,7 @@ struct redux_novec_unroller {
 
   typedef typename Evaluator::Scalar Scalar;
 
-  EIGEN_DEVICE_FUNC static EIGEN_STRONG_INLINE Scalar run(const Evaluator& eval, const Func& func) {
+  EIGEN_DEVICE_FUNC static constexpr EIGEN_STRONG_INLINE Scalar run(const Evaluator& eval, const Func& func) {
     return func(redux_novec_unroller<Func, Evaluator, Start, HalfLength>::run(eval, func),
                 redux_novec_unroller<Func, Evaluator, Start + HalfLength, Length - HalfLength>::run(eval, func));
   }
@@ -114,7 +115,7 @@ struct redux_novec_unroller<Func, Evaluator, Start, 1> {
 
   typedef typename Evaluator::Scalar Scalar;
 
-  EIGEN_DEVICE_FUNC static EIGEN_STRONG_INLINE Scalar run(const Evaluator& eval, const Func&) {
+  EIGEN_DEVICE_FUNC static constexpr EIGEN_STRONG_INLINE Scalar run(const Evaluator& eval, const Func&) {
     return eval.coeffByOuterInner(outer, inner);
   }
 };
@@ -125,7 +126,7 @@ struct redux_novec_unroller<Func, Evaluator, Start, 1> {
 template <typename Func, typename Evaluator, Index Start>
 struct redux_novec_unroller<Func, Evaluator, Start, 0> {
   typedef typename Evaluator::Scalar Scalar;
-  EIGEN_DEVICE_FUNC static EIGEN_STRONG_INLINE Scalar run(const Evaluator&, const Func&) { return Scalar(); }
+  EIGEN_DEVICE_FUNC static constexpr EIGEN_STRONG_INLINE Scalar run(const Evaluator&, const Func&) { return Scalar(); }
 };
 
 template <typename Func, typename Evaluator, Index Start, Index Length>
@@ -134,7 +135,7 @@ struct redux_novec_linear_unroller {
 
   typedef typename Evaluator::Scalar Scalar;
 
-  EIGEN_DEVICE_FUNC static EIGEN_STRONG_INLINE Scalar run(const Evaluator& eval, const Func& func) {
+  EIGEN_DEVICE_FUNC static constexpr EIGEN_STRONG_INLINE Scalar run(const Evaluator& eval, const Func& func) {
     return func(redux_novec_linear_unroller<Func, Evaluator, Start, HalfLength>::run(eval, func),
                 redux_novec_linear_unroller<Func, Evaluator, Start + HalfLength, Length - HalfLength>::run(eval, func));
   }
@@ -144,7 +145,7 @@ template <typename Func, typename Evaluator, Index Start>
 struct redux_novec_linear_unroller<Func, Evaluator, Start, 1> {
   typedef typename Evaluator::Scalar Scalar;
 
-  EIGEN_DEVICE_FUNC static EIGEN_STRONG_INLINE Scalar run(const Evaluator& eval, const Func&) {
+  EIGEN_DEVICE_FUNC static constexpr EIGEN_STRONG_INLINE Scalar run(const Evaluator& eval, const Func&) {
     return eval.coeff(Start);
   }
 };
@@ -155,7 +156,7 @@ struct redux_novec_linear_unroller<Func, Evaluator, Start, 1> {
 template <typename Func, typename Evaluator, Index Start>
 struct redux_novec_linear_unroller<Func, Evaluator, Start, 0> {
   typedef typename Evaluator::Scalar Scalar;
-  EIGEN_DEVICE_FUNC static EIGEN_STRONG_INLINE Scalar run(const Evaluator&, const Func&) { return Scalar(); }
+  EIGEN_DEVICE_FUNC static constexpr EIGEN_STRONG_INLINE Scalar run(const Evaluator&, const Func&) { return Scalar(); }
 };
 
 /*** vectorization ***/
@@ -367,7 +368,7 @@ struct redux_impl<Func, Evaluator, LinearVectorizedTraversal, CompleteUnrolling>
 
   template <typename XprType>
   EIGEN_DEVICE_FUNC static EIGEN_STRONG_INLINE Scalar run(const Evaluator& eval, const Func& func, const XprType& xpr) {
-    EIGEN_ONLY_USED_FOR_DEBUG(xpr)
+    EIGEN_ONLY_USED_FOR_DEBUG(xpr);
     eigen_assert(xpr.rows() > 0 && xpr.cols() > 0 && "you are using an empty matrix");
     if (VectorizedSize > 0) {
       Scalar res = func.predux(
@@ -398,8 +399,8 @@ class redux_evaluator : public internal::evaluator<XprType_> {
   enum {
     MaxRowsAtCompileTime = XprType::MaxRowsAtCompileTime,
     MaxColsAtCompileTime = XprType::MaxColsAtCompileTime,
-    // TODO we should not remove DirectAccessBit and rather find an elegant way to query the alignment offset at runtime
-    // from the evaluator
+    // TODO: we should not remove DirectAccessBit and rather find an elegant way to query the alignment offset at
+    // runtime from the evaluator
     Flags = Base::Flags & ~DirectAccessBit,
     IsRowMajor = XprType::IsRowMajor,
     SizeAtCompileTime = XprType::SizeAtCompileTime,
@@ -423,6 +424,52 @@ class redux_evaluator : public internal::evaluator<XprType_> {
   }
 };
 
+// A reduction over an expression whose inner stride is not statically 1 (e.g. a dynamic-inner-stride
+// Map/Ref, or a row of a dynamic matrix) falls back to a scalar traversal, because the evaluator
+// drops PacketAccessBit when the inner stride is unknown at compile time. Yet such expressions are
+// very often contiguous at runtime. This trait flags the cases where it is worth checking at runtime
+// whether the data is contiguous and, if so, reducing it as a contiguous vector to recover full
+// vectorization. We only bother when the expression has direct access, the functor and scalar are
+// vectorizable, and the inner stride is not already statically 1 (otherwise it is handled directly).
+template <typename Func, typename Evaluator>
+struct redux_has_runtime_unit_stride_path {
+  using XprType = typename Evaluator::XprType;
+  using Scalar = typename Evaluator::Scalar;
+  static constexpr bool value = bool(traits<XprType>::Flags & DirectAccessBit) &&
+                                bool(functor_traits<Func>::PacketAccess) && bool(packet_traits<Scalar>::Vectorizable) &&
+                                (int(inner_stride_at_compile_time<XprType>::value) != 1);
+};
+
+template <typename Func, typename Evaluator, typename XprType,
+          bool = redux_has_runtime_unit_stride_path<Func, Evaluator>::value>
+struct redux_dispatch {
+  static EIGEN_DEVICE_FUNC EIGEN_STRONG_INLINE typename Evaluator::Scalar run(const Evaluator& thisEval,
+                                                                              const Func& func, const XprType& xpr) {
+    return redux_impl<Func, Evaluator>::run(thisEval, func, xpr);
+  }
+};
+
+// Runtime contiguity fast path: when the inner stride is 1 and the data is fully packed
+// (a single inner panel, or no gap between inner panels), reduce the underlying buffer as a
+// contiguous vector. The reduction is over all coefficients with an associative functor, so
+// reducing in storage order yields the same result (up to the usual floating-point reassociation
+// already inherent to vectorized reductions).
+template <typename Func, typename Evaluator, typename XprType>
+struct redux_dispatch<Func, Evaluator, XprType, true> {
+  using Scalar = typename Evaluator::Scalar;
+  static EIGEN_DEVICE_FUNC EIGEN_STRONG_INLINE Scalar run(const Evaluator& thisEval, const Func& func,
+                                                          const XprType& xpr) {
+    if (xpr.innerStride() == 1 && (xpr.outerSize() == 1 || xpr.outerStride() == xpr.innerSize())) {
+      using PlainVector = Matrix<Scalar, Dynamic, 1>;
+      using MapType = Map<const PlainVector, Evaluator::Alignment>;
+      MapType contiguous(xpr.data(), xpr.size());
+      redux_evaluator<MapType> mapEval(contiguous);
+      return redux_impl<Func, redux_evaluator<MapType>>::run(mapEval, func, contiguous);
+    }
+    return redux_impl<Func, Evaluator>::run(thisEval, func, xpr);
+  }
+};
+
 }  // end namespace internal
 
 /***************************************************************************
@@ -432,7 +479,7 @@ class redux_evaluator : public internal::evaluator<XprType_> {
 /** \returns the result of a full redux operation on the whole matrix or vector using \a func
  *
  * The template parameter \a BinaryOp is the type of the functor \a func which must be
- * an associative operator. Both current C++98 and C++11 functor styles are handled.
+ * an associative operator.
  *
  * \warning the matrix must be not empty, otherwise an assertion is triggered.
  *
@@ -448,8 +495,10 @@ EIGEN_DEVICE_FUNC EIGEN_STRONG_INLINE typename internal::traits<Derived>::Scalar
   ThisEvaluator thisEval(derived());
 
   // The initial expression is passed to the reducer as an additional argument instead of
-  // passing it as a member of redux_evaluator to help
-  return internal::redux_impl<Func, ThisEvaluator>::run(thisEval, func, derived());
+  // passing it as a member of redux_evaluator. redux_dispatch additionally takes a runtime
+  // contiguity fast path for expressions that lose compile-time vectorization to a dynamic
+  // inner stride but are contiguous at runtime (see redux_dispatch).
+  return internal::redux_dispatch<Func, ThisEvaluator, Derived>::run(thisEval, func, derived());
 }
 
 /** \returns the minimum of all coefficients of \c *this.

@@ -6,16 +6,17 @@
 // This Source Code Form is subject to the terms of the Mozilla
 // Public License v. 2.0. If a copy of the MPL was not distributed
 // with this file, You can obtain one at http://mozilla.org/MPL/2.0/.
+// SPDX-License-Identifier: MPL-2.0
 
-#ifndef EIGEN_CXX11_THREADPOOL_RUNQUEUE_H
-#define EIGEN_CXX11_THREADPOOL_RUNQUEUE_H
+#ifndef EIGEN_THREADPOOL_RUNQUEUE_H
+#define EIGEN_THREADPOOL_RUNQUEUE_H
 
 // IWYU pragma: private
 #include "./InternalHeaderCheck.h"
 
 namespace Eigen {
 
-// RunQueue is a fixed-size, partially non-blocking deque or Work items.
+// RunQueue is a fixed-size, partially non-blocking deque of Work items.
 // Operations on front of the queue must be done by a single thread (owner),
 // operations on back of the queue can be done by multiple threads concurrently.
 //
@@ -57,7 +58,7 @@ class RunQueue {
     Elem* e = &array_[front & kMask];
     uint8_t s = e->state.load(std::memory_order_relaxed);
     if (s != kEmpty || !e->state.compare_exchange_strong(s, kBusy, std::memory_order_acquire)) return w;
-    front_.store(front + 1 + (kSize << 1), std::memory_order_relaxed);
+    front_.store(front + 1 + (kSize << 1), std::memory_order_release);
     e->w = std::move(w);
     e->state.store(kReady, std::memory_order_release);
     return Work();
@@ -73,7 +74,7 @@ class RunQueue {
     Work w = std::move(e->w);
     e->state.store(kEmpty, std::memory_order_release);
     front = ((front - 1) & kMask2) | (front & ~kMask2);
-    front_.store(front, std::memory_order_relaxed);
+    front_.store(front, std::memory_order_release);
     return w;
   }
 
@@ -86,13 +87,13 @@ class RunQueue {
     uint8_t s = e->state.load(std::memory_order_relaxed);
     if (s != kEmpty || !e->state.compare_exchange_strong(s, kBusy, std::memory_order_acquire)) return w;
     back = ((back - 1) & kMask2) | (back & ~kMask2);
-    back_.store(back, std::memory_order_relaxed);
+    back_.store(back, std::memory_order_release);
     e->w = std::move(w);
     e->state.store(kReady, std::memory_order_release);
     return Work();
   }
 
-  // PopBack removes and returns the last elements in the queue.
+  // PopBack removes and returns the last element in the queue.
   Work PopBack() {
     if (Empty()) return Work();
     EIGEN_MUTEX_LOCK lock(mutex_);
@@ -102,7 +103,7 @@ class RunQueue {
     if (s != kReady || !e->state.compare_exchange_strong(s, kBusy, std::memory_order_acquire)) return Work();
     Work w = std::move(e->w);
     e->state.store(kEmpty, std::memory_order_release);
-    back_.store(back + 1 + (kSize << 1), std::memory_order_relaxed);
+    back_.store(back + 1 + (kSize << 1), std::memory_order_release);
     return w;
   }
 
@@ -132,7 +133,7 @@ class RunQueue {
       e->state.store(kEmpty, std::memory_order_release);
       n++;
     }
-    if (n != 0) back_.store(start + 1 + (kSize << 1), std::memory_order_relaxed);
+    if (n != 0) back_.store(start + 1 + (kSize << 1), std::memory_order_release);
     return n;
   }
 
@@ -188,7 +189,7 @@ class RunQueue {
     // effort to not produce false positives (claim non-empty queue as empty).
     unsigned front = front_.load(std::memory_order_acquire);
     for (;;) {
-      // Capture a consistent snapshot of front/tail.
+      // Capture a consistent snapshot of front/back.
       unsigned back = back_.load(std::memory_order_acquire);
       unsigned front1 = front_.load(std::memory_order_relaxed);
       if (front != front1) {
@@ -196,7 +197,7 @@ class RunQueue {
         std::atomic_thread_fence(std::memory_order_acquire);
         continue;
       }
-      if (NeedSizeEstimate) {
+      EIGEN_IF_CONSTEXPR (NeedSizeEstimate) {
         return CalculateSize(front, back);
       } else {
         // This value will be 0 if the queue is empty, and undefined otherwise.
@@ -227,4 +228,4 @@ class RunQueue {
 
 }  // namespace Eigen
 
-#endif  // EIGEN_CXX11_THREADPOOL_RUNQUEUE_H
+#endif  // EIGEN_THREADPOOL_RUNQUEUE_H

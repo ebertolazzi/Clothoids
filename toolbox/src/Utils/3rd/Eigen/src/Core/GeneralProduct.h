@@ -7,6 +7,7 @@
 // This Source Code Form is subject to the terms of the Mozilla
 // Public License v. 2.0. If a copy of the MPL was not distributed
 // with this file, You can obtain one at http://mozilla.org/MPL/2.0/.
+// SPDX-License-Identifier: MPL-2.0
 
 #ifndef EIGEN_GENERAL_PRODUCT_H
 #define EIGEN_GENERAL_PRODUCT_H
@@ -61,20 +62,14 @@ struct product_type {
     Depth = min_size_prefer_fixed(traits<Lhs_>::ColsAtCompileTime, traits<Rhs_>::RowsAtCompileTime)
   };
 
-  // the splitting into different lines of code here, introducing the _select enums and the typedef below,
-  // is to work around an internal compiler error with gcc 4.1 and 4.2.
- private:
-  enum {
-    rows_select = product_size_category<Rows, MaxRows>::value,
-    cols_select = product_size_category<Cols, MaxCols>::value,
-    depth_select = product_size_category<Depth, MaxDepth>::value
-  };
-  typedef product_type_selector<rows_select, cols_select, depth_select> selector;
-
- public:
-  enum { value = selector::ret, ret = selector::ret };
+  static constexpr int value =
+      product_type_selector<product_size_category<Rows, MaxRows>::value, product_size_category<Cols, MaxCols>::value,
+                            product_size_category<Depth, MaxDepth>::value>::value;
 #ifdef EIGEN_DEBUG_PRODUCT
   static void debug() {
+    const int rows_select = product_size_category<Rows, MaxRows>::value;
+    const int cols_select = product_size_category<Cols, MaxCols>::value;
+    const int depth_select = product_size_category<Depth, MaxDepth>::value;
     EIGEN_DEBUG_VAR(Rows);
     EIGEN_DEBUG_VAR(Cols);
     EIGEN_DEBUG_VAR(Depth);
@@ -89,103 +84,55 @@ struct product_type {
 /* The following allows to select the kind of product at compile time
  * based on the three dimensions of the product.
  * This is a compile time mapping from {1,Small,Large}^3 -> {product types} */
-// FIXME I'm not sure the current mapping is the ideal one.
+// FIXME: the current compile-time product-type mapping may not be optimal.
 template <int M, int N>
-struct product_type_selector<M, N, 1> {
-  enum { ret = OuterProduct };
-};
+struct product_type_selector<M, N, 1> : std::integral_constant<int, OuterProduct> {};
 template <int M>
-struct product_type_selector<M, 1, 1> {
-  enum { ret = LazyCoeffBasedProductMode };
-};
+struct product_type_selector<M, 1, 1> : std::integral_constant<int, LazyCoeffBasedProductMode> {};
 template <int N>
-struct product_type_selector<1, N, 1> {
-  enum { ret = LazyCoeffBasedProductMode };
-};
+struct product_type_selector<1, N, 1> : std::integral_constant<int, LazyCoeffBasedProductMode> {};
 template <int Depth>
-struct product_type_selector<1, 1, Depth> {
-  enum { ret = InnerProduct };
-};
+struct product_type_selector<1, 1, Depth> : std::integral_constant<int, InnerProduct> {};
 template <>
-struct product_type_selector<1, 1, 1> {
-  enum { ret = InnerProduct };
-};
+struct product_type_selector<1, 1, 1> : std::integral_constant<int, InnerProduct> {};
 template <>
-struct product_type_selector<Small, 1, Small> {
-  enum { ret = CoeffBasedProductMode };
-};
+struct product_type_selector<Small, 1, Small> : std::integral_constant<int, CoeffBasedProductMode> {};
 template <>
-struct product_type_selector<1, Small, Small> {
-  enum { ret = CoeffBasedProductMode };
-};
+struct product_type_selector<1, Small, Small> : std::integral_constant<int, CoeffBasedProductMode> {};
 template <>
-struct product_type_selector<Small, Small, Small> {
-  enum { ret = CoeffBasedProductMode };
-};
+struct product_type_selector<Small, Small, Small> : std::integral_constant<int, CoeffBasedProductMode> {};
 template <>
-struct product_type_selector<Small, Small, 1> {
-  enum { ret = LazyCoeffBasedProductMode };
-};
+struct product_type_selector<Small, Small, 1> : std::integral_constant<int, LazyCoeffBasedProductMode> {};
 template <>
-struct product_type_selector<Small, Large, 1> {
-  enum { ret = LazyCoeffBasedProductMode };
-};
+struct product_type_selector<Small, Large, 1> : std::integral_constant<int, LazyCoeffBasedProductMode> {};
 template <>
-struct product_type_selector<Large, Small, 1> {
-  enum { ret = LazyCoeffBasedProductMode };
-};
+struct product_type_selector<Large, Small, 1> : std::integral_constant<int, LazyCoeffBasedProductMode> {};
 template <>
-struct product_type_selector<1, Large, Small> {
-  enum { ret = CoeffBasedProductMode };
-};
+struct product_type_selector<1, Large, Small> : std::integral_constant<int, CoeffBasedProductMode> {};
 template <>
-struct product_type_selector<1, Large, Large> {
-  enum { ret = GemvProduct };
-};
+struct product_type_selector<1, Large, Large> : std::integral_constant<int, GemvProduct> {};
 template <>
-struct product_type_selector<1, Small, Large> {
-  enum { ret = CoeffBasedProductMode };
-};
+struct product_type_selector<1, Small, Large> : std::integral_constant<int, CoeffBasedProductMode> {};
 template <>
-struct product_type_selector<Large, 1, Small> {
-  enum { ret = CoeffBasedProductMode };
-};
+struct product_type_selector<Large, 1, Small> : std::integral_constant<int, CoeffBasedProductMode> {};
 template <>
-struct product_type_selector<Large, 1, Large> {
-  enum { ret = GemvProduct };
-};
+struct product_type_selector<Large, 1, Large> : std::integral_constant<int, GemvProduct> {};
 template <>
-struct product_type_selector<Small, 1, Large> {
-  enum { ret = CoeffBasedProductMode };
-};
+struct product_type_selector<Small, 1, Large> : std::integral_constant<int, CoeffBasedProductMode> {};
 template <>
-struct product_type_selector<Small, Small, Large> {
-  enum { ret = GemmProduct };
-};
+struct product_type_selector<Small, Small, Large> : std::integral_constant<int, GemmProduct> {};
 template <>
-struct product_type_selector<Large, Small, Large> {
-  enum { ret = GemmProduct };
-};
+struct product_type_selector<Large, Small, Large> : std::integral_constant<int, GemmProduct> {};
 template <>
-struct product_type_selector<Small, Large, Large> {
-  enum { ret = GemmProduct };
-};
+struct product_type_selector<Small, Large, Large> : std::integral_constant<int, GemmProduct> {};
 template <>
-struct product_type_selector<Large, Large, Large> {
-  enum { ret = GemmProduct };
-};
+struct product_type_selector<Large, Large, Large> : std::integral_constant<int, GemmProduct> {};
 template <>
-struct product_type_selector<Large, Small, Small> {
-  enum { ret = CoeffBasedProductMode };
-};
+struct product_type_selector<Large, Small, Small> : std::integral_constant<int, CoeffBasedProductMode> {};
 template <>
-struct product_type_selector<Small, Large, Small> {
-  enum { ret = CoeffBasedProductMode };
-};
+struct product_type_selector<Small, Large, Small> : std::integral_constant<int, CoeffBasedProductMode> {};
 template <>
-struct product_type_selector<Large, Large, Small> {
-  enum { ret = GemmProduct };
-};
+struct product_type_selector<Large, Large, Small> : std::integral_constant<int, GemmProduct> {};
 
 }  // end namespace internal
 
@@ -193,12 +140,11 @@ struct product_type_selector<Large, Large, Small> {
  *  Implementation of Inner Vector Vector Product
  ***********************************************************************/
 
-// FIXME : maybe the "inner product" could return a Scalar
-// instead of a 1x1 matrix ??
-// Pro: more natural for the user
-// Cons: this could be a problem if in a meta unrolled algorithm a matrix-matrix
-// product ends up to a row-vector times col-vector product... To tackle this use
-// case, we could have a specialization for Block<MatrixType,1,1> with: operator=(Scalar x);
+// FIXME: consider returning a Scalar instead of a 1x1 matrix for inner products.
+// Pro: more natural for the user.
+// Con: in a meta-unrolled algorithm a matrix-matrix product may reduce to a
+// row-vector times column-vector product. To handle this, we could specialize
+// Block<MatrixType,1,1> with operator=(Scalar x).
 
 /***********************************************************************
  *  Implementation of Outer Vector Vector Product
@@ -208,7 +154,7 @@ struct product_type_selector<Large, Large, Small> {
  *  Implementation of General Matrix Vector Product
  ***********************************************************************/
 
-/*  According to the shape/flags of the matrix we have to distinghish 3 different cases:
+/*  According to the shape/flags of the matrix we have to distinguish 3 different cases:
  *   1 - the matrix is col-major, BLAS compatible and M is large => call fast BLAS-like colmajor routine
  *   2 - the matrix is row-major, BLAS compatible and N is large => call fast BLAS-like rowmajor routine
  *   3 - all other cases are handled using a simple loop along the outer-storage direction.
@@ -229,7 +175,7 @@ struct gemv_static_vector_if;
 
 template <typename Scalar, int Size, int MaxSize>
 struct gemv_static_vector_if<Scalar, Size, MaxSize, false> {
-  EIGEN_STRONG_INLINE EIGEN_DEVICE_FUNC constexpr Scalar* data() {
+  EIGEN_DEVICE_FUNC constexpr Scalar* data() {
     eigen_internal_assert(false && "should never be called");
     return 0;
   }
@@ -237,19 +183,19 @@ struct gemv_static_vector_if<Scalar, Size, MaxSize, false> {
 
 template <typename Scalar, int Size>
 struct gemv_static_vector_if<Scalar, Size, Dynamic, true> {
-  EIGEN_STRONG_INLINE EIGEN_DEVICE_FUNC constexpr Scalar* data() { return 0; }
+  EIGEN_DEVICE_FUNC constexpr Scalar* data() { return 0; }
 };
 
 template <typename Scalar, int Size, int MaxSize>
 struct gemv_static_vector_if<Scalar, Size, MaxSize, true> {
 #if EIGEN_MAX_STATIC_ALIGN_BYTES != 0
   internal::plain_array<Scalar, internal::min_size_prefer_fixed(Size, MaxSize), 0, AlignedMax> m_data;
-  EIGEN_STRONG_INLINE constexpr Scalar* data() { return m_data.array; }
+  constexpr Scalar* data() { return m_data.array; }
 #else
   // Some architectures cannot align on the stack,
   // => let's manually enforce alignment by allocating more data and return the address of the first aligned element.
   internal::plain_array<Scalar, internal::min_size_prefer_fixed(Size, MaxSize) + EIGEN_MAX_ALIGN_BYTES, 0> m_data;
-  EIGEN_STRONG_INLINE constexpr Scalar* data() {
+  constexpr Scalar* data() {
     return reinterpret_cast<Scalar*>((std::uintptr_t(m_data.array) & ~(std::size_t(EIGEN_MAX_ALIGN_BYTES - 1))) +
                                      EIGEN_MAX_ALIGN_BYTES);
   }
@@ -293,8 +239,8 @@ struct gemv_dense_selector<OnTheRight, ColMajor, true> {
     typedef std::conditional_t<Dest::IsVectorAtCompileTime, Dest, typename Dest::ColXpr> ActualDest;
 
     enum {
-      // FIXME find a way to allow an inner stride on the result if packet_traits<Scalar>::size==1
-      // on, the other hand it is good for the cache to pack the vector anyways...
+      // FIXME: find a way to allow an inner stride on the result if packet_traits<Scalar>::size==1
+      // on the other hand it is good for the cache to pack the vector anyways...
       EvalToDestAtCompileTime = (ActualDest::InnerStrideAtCompileTime == 1),
       ComplexByReal = (NumTraits<LhsScalar>::IsComplex) && (!NumTraits<RhsScalar>::IsComplex),
       MightCannotUseDest = ((!EvalToDestAtCompileTime) || ComplexByReal) && (ActualDest::MaxSizeAtCompileTime != 0)
@@ -306,7 +252,7 @@ struct gemv_dense_selector<OnTheRight, ColMajor, true> {
 
     if (!MightCannotUseDest) {
       // shortcut if we are sure to be able to use dest directly,
-      // this ease the compiler to generate cleaner and more optimzized code for most common cases
+      // this eases the compiler to generate cleaner and more optimized code for most common cases
       general_matrix_vector_product<Index, LhsScalar, LhsMapper, ColMajor, LhsBlasTraits::NeedToConjugate, RhsScalar,
                                     RhsMapper, RhsBlasTraits::NeedToConjugate>::run(actualLhs.rows(), actualLhs.cols(),
                                                                                     LhsMapper(actualLhs.data(),
@@ -376,8 +322,8 @@ struct gemv_dense_selector<OnTheRight, RowMajor, true> {
     ResScalar actualAlpha = combine_scalar_factors(alpha, lhs, rhs);
 
     enum {
-      // FIXME find a way to allow an inner stride on the result if packet_traits<Scalar>::size==1
-      // on, the other hand it is good for the cache to pack the vector anyways...
+      // FIXME: find a way to allow an inner stride on the result if packet_traits<Scalar>::size==1
+      // on the other hand it is good for the cache to pack the vector anyways...
       DirectlyUseRhs =
           ActualRhsTypeCleaned::InnerStrideAtCompileTime == 1 || ActualRhsTypeCleaned::MaxSizeAtCompileTime == 0
     };
@@ -417,7 +363,7 @@ struct gemv_dense_selector<OnTheRight, ColMajor, false> {
   static void run(const Lhs& lhs, const Rhs& rhs, Dest& dest, const typename Dest::Scalar& alpha) {
     EIGEN_STATIC_ASSERT((!nested_eval<Lhs, 1>::Evaluate),
                         EIGEN_INTERNAL_COMPILATION_ERROR_OR_YOU_MADE_A_PROGRAMMING_MISTAKE);
-    // TODO if rhs is large enough it might be beneficial to make sure that dest is sequentially stored in memory,
+    // TODO: if rhs is large enough it might be beneficial to make sure that dest is sequentially stored in memory,
     // otherwise use a temp
     typename nested_eval<Rhs, 1>::type actual_rhs(rhs);
     const Index size = rhs.rows();
@@ -516,4 +462,4 @@ MatrixBase<Derived>::lazyProduct(const MatrixBase<OtherDerived>& other) const {
 
 }  // end namespace Eigen
 
-#endif  // EIGEN_PRODUCT_H
+#endif  // EIGEN_GENERAL_PRODUCT_H

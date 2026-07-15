@@ -6,6 +6,7 @@
 // This Source Code Form is subject to the terms of the Mozilla
 // Public License v. 2.0. If a copy of the MPL was not distributed
 // with this file, You can obtain one at http://mozilla.org/MPL/2.0/.
+// SPDX-License-Identifier: MPL-2.0
 
 #ifndef EIGEN_CWISE_NULLARY_OP_H
 #define EIGEN_CWISE_NULLARY_OP_H
@@ -50,7 +51,7 @@ struct traits<CwiseNullaryOp<NullaryOp, PlainObjectType> > : traits<PlainObjectT
   for vectors.
   *
   * See DenseBase::NullaryExpr(Index,const CustomNullaryOp&) for an example binding
-  * C++11 random number generators.
+  * std random number generators.
   *
   * A nullary expression can also be used to implement custom sophisticated matrix manipulations
   * that cannot be covered by the existing set of natively supported matrix manipulations.
@@ -66,21 +67,21 @@ class CwiseNullaryOp : public internal::dense_xpr_base<CwiseNullaryOp<NullaryOp,
   typedef typename internal::dense_xpr_base<CwiseNullaryOp>::type Base;
   EIGEN_DENSE_PUBLIC_INTERFACE(CwiseNullaryOp)
 
-  EIGEN_DEVICE_FUNC CwiseNullaryOp(Index rows, Index cols, const NullaryOp& func = NullaryOp())
+  EIGEN_DEVICE_FUNC constexpr CwiseNullaryOp(Index rows, Index cols, const NullaryOp& func = NullaryOp())
       : m_rows(rows), m_cols(cols), m_functor(func) {
     eigen_assert(rows >= 0 && (RowsAtCompileTime == Dynamic || RowsAtCompileTime == rows) && cols >= 0 &&
                  (ColsAtCompileTime == Dynamic || ColsAtCompileTime == cols));
   }
-  EIGEN_DEVICE_FUNC CwiseNullaryOp(Index size, const NullaryOp& func = NullaryOp())
+  EIGEN_DEVICE_FUNC constexpr CwiseNullaryOp(Index size, const NullaryOp& func = NullaryOp())
       : CwiseNullaryOp(RowsAtCompileTime == 1 ? 1 : size, RowsAtCompileTime == 1 ? size : 1, func) {
     EIGEN_STATIC_ASSERT(CwiseNullaryOp::IsVectorAtCompileTime, YOU_TRIED_CALLING_A_VECTOR_METHOD_ON_A_MATRIX);
   }
 
-  EIGEN_DEVICE_FUNC EIGEN_STRONG_INLINE constexpr Index rows() const { return m_rows.value(); }
-  EIGEN_DEVICE_FUNC EIGEN_STRONG_INLINE constexpr Index cols() const { return m_cols.value(); }
+  EIGEN_DEVICE_FUNC constexpr Index rows() const { return m_rows.value(); }
+  EIGEN_DEVICE_FUNC constexpr Index cols() const { return m_cols.value(); }
 
   /** \returns the functor representing the nullary operation */
-  EIGEN_DEVICE_FUNC const NullaryOp& functor() const { return m_functor; }
+  EIGEN_DEVICE_FUNC constexpr const NullaryOp& functor() const { return m_functor; }
 
  protected:
   const internal::variable_if_dynamic<Index, RowsAtCompileTime> m_rows;
@@ -94,7 +95,7 @@ class CwiseNullaryOp : public internal::dense_xpr_base<CwiseNullaryOp<NullaryOp,
  * the returned matrix. Must be compatible with this MatrixBase type.
  *
  * This variant is meant to be used for dynamic-size matrix types. For fixed-size types,
- * it is redundant to pass \a rows and \a cols as arguments, so Zero() should be used
+ * it is redundant to pass \a rows and \a cols as arguments, so NullaryExpr(const CustomNullaryOp&) should be used
  * instead.
  *
  * The template parameter \a CustomNullaryOp is the type of the functor.
@@ -121,13 +122,13 @@ EIGEN_DEVICE_FUNC EIGEN_STRONG_INLINE
  * \only_for_vectors
  *
  * This variant is meant to be used for dynamic-size vector types. For fixed-size types,
- * it is redundant to pass \a size as argument, so Zero() should be used
+ * it is redundant to pass \a size as argument, so NullaryExpr(const CustomNullaryOp&) should be used
  * instead.
  *
  * The template parameter \a CustomNullaryOp is the type of the functor.
  *
- * Here is an example with C++11 random generators: \include random_cpp11.cpp
- * Output: \verbinclude random_cpp11.out
+ * Here is an example with std random generators: \include random_generators.cpp
+ * Output: \verbinclude random_generators.out
  *
  * \sa class CwiseNullaryOp
  */
@@ -141,10 +142,11 @@ EIGEN_DEVICE_FUNC EIGEN_STRONG_INLINE
 #endif
     DenseBase<Derived>::NullaryExpr(Index size, const CustomNullaryOp& func) {
   EIGEN_STATIC_ASSERT_VECTOR_ONLY(Derived)
-  if (RowsAtCompileTime == 1)
+  EIGEN_IF_CONSTEXPR (RowsAtCompileTime == 1) {
     return CwiseNullaryOp<CustomNullaryOp, PlainObject>(1, size, func);
-  else
+  } else {
     return CwiseNullaryOp<CustomNullaryOp, PlainObject>(size, 1, func);
+  }
 }
 
 /** \returns an expression of a matrix defined by a custom functor \a func
@@ -174,10 +176,8 @@ EIGEN_DEVICE_FUNC EIGEN_STRONG_INLINE
  * the returned matrix. Must be compatible with this DenseBase type.
  *
  * This variant is meant to be used for dynamic-size matrix types. For fixed-size types,
- * it is redundant to pass \a rows and \a cols as arguments, so Zero() should be used
+ * it is redundant to pass \a rows and \a cols as arguments, so Constant(const Scalar&) should be used
  * instead.
- *
- * The template parameter \a CustomNullaryOp is the type of the functor.
  *
  * \sa class CwiseNullaryOp
  */
@@ -195,10 +195,8 @@ DenseBase<Derived>::Constant(Index rows, Index cols, const Scalar& value) {
  * \only_for_vectors
  *
  * This variant is meant to be used for dynamic-size vector types. For fixed-size types,
- * it is redundant to pass \a size as argument, so Zero() should be used
+ * it is redundant to pass \a size as argument, so Constant(const Scalar&) should be used
  * instead.
- *
- * The template parameter \a CustomNullaryOp is the type of the functor.
  *
  * \sa class CwiseNullaryOp
  */
@@ -212,8 +210,6 @@ DenseBase<Derived>::Constant(Index size, const Scalar& value) {
  *
  * This variant is only for fixed-size DenseBase types. For dynamic-size types, you
  * need to use the variants taking size arguments.
- *
- * The template parameter \a CustomNullaryOp is the type of the functor.
  *
  * \sa class CwiseNullaryOp
  */
@@ -267,8 +263,8 @@ DenseBase<Derived>::LinSpaced(Sequential_t, const Scalar& low, const Scalar& hig
  *
  * For integer scalar types, an even spacing is possible if and only if the length of the range,
  * i.e., \c high-low is a scalar multiple of \c size-1, or if \c size is a scalar multiple of the
- * number of values \c high-low+1 (meaning each value can be repeated the same number of time).
- * If one of these two considions is not satisfied, then \c high is lowered to the largest value
+ * number of values \c high-low+1 (meaning each value can be repeated the same number of times).
+ * If one of these two conditions is not satisfied, then \c high is lowered to the largest value
  * satisfying one of this constraint.
  * Here are some examples:
  *

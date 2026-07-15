@@ -9,6 +9,7 @@
 // This Source Code Form is subject to the terms of the Mozilla
 // Public License v. 2.0. If a copy of the MPL was not distributed
 // with this file, You can obtain one at http://mozilla.org/MPL/2.0/.
+// SPDX-License-Identifier: MPL-2.0
 
 #ifndef EIGEN_LDLT_H
 #define EIGEN_LDLT_H
@@ -84,7 +85,13 @@ class LDLT : public SolverBase<LDLT<MatrixType_, UpLo_> > {
    * The default constructor is useful in cases in which the user intends to
    * perform decompositions via LDLT::compute(const MatrixType&).
    */
-  LDLT() : m_matrix(), m_transpositions(), m_sign(internal::ZeroSign), m_isInitialized(false) {}
+  LDLT()
+      : m_matrix(),
+        m_l1_norm(0),
+        m_transpositions(),
+        m_sign(internal::ZeroSign),
+        m_isInitialized(false),
+        m_info(InvalidInput) {}
 
   /** \brief Default Constructor with memory preallocation
    *
@@ -94,10 +101,12 @@ class LDLT : public SolverBase<LDLT<MatrixType_, UpLo_> > {
    */
   explicit LDLT(Index size)
       : m_matrix(size, size),
+        m_l1_norm(0),
         m_transpositions(size),
         m_temporary(size),
         m_sign(internal::ZeroSign),
-        m_isInitialized(false) {}
+        m_isInitialized(false),
+        m_info(InvalidInput) {}
 
   /** \brief Constructor with decomposition
    *
@@ -108,10 +117,12 @@ class LDLT : public SolverBase<LDLT<MatrixType_, UpLo_> > {
   template <typename InputType>
   explicit LDLT(const EigenBase<InputType>& matrix)
       : m_matrix(matrix.rows(), matrix.cols()),
+        m_l1_norm(0),
         m_transpositions(matrix.rows()),
         m_temporary(matrix.rows()),
         m_sign(internal::ZeroSign),
-        m_isInitialized(false) {
+        m_isInitialized(false),
+        m_info(InvalidInput) {
     compute(matrix.derived());
   }
 
@@ -125,10 +136,12 @@ class LDLT : public SolverBase<LDLT<MatrixType_, UpLo_> > {
   template <typename InputType>
   explicit LDLT(EigenBase<InputType>& matrix)
       : m_matrix(matrix.derived()),
+        m_l1_norm(0),
         m_transpositions(matrix.rows()),
         m_temporary(matrix.rows()),
         m_sign(internal::ZeroSign),
-        m_isInitialized(false) {
+        m_isInitialized(false),
+        m_info(InvalidInput) {
     compute(matrix.derived());
   }
 
@@ -191,7 +204,7 @@ class LDLT : public SolverBase<LDLT<MatrixType_, UpLo_> > {
    * \sa MatrixBase::ldlt(), SelfAdjointView::ldlt()
    */
   template <typename Rhs>
-  inline const Solve<LDLT, Rhs> solve(const MatrixBase<Rhs>& b) const;
+  inline Solve<LDLT, Rhs> solve(const MatrixBase<Rhs>& b) const;
 #endif
 
   template <typename Derived>
@@ -213,7 +226,7 @@ class LDLT : public SolverBase<LDLT<MatrixType_, UpLo_> > {
 
   /** \returns the internal LDLT decomposition matrix
    *
-   * TODO: document the storage layout
+   * TODO: document the storage layout.
    */
   inline const MatrixType& matrixLDLT() const {
     eigen_assert(m_isInitialized && "LDLT is not initialized.");
@@ -319,7 +332,7 @@ struct ldlt_inplace<Lower> {
           mat.coeffRef(i, k) = numext::conj(mat.coeffRef(index_of_biggest_in_corner, i));
           mat.coeffRef(index_of_biggest_in_corner, i) = numext::conj(tmp);
         }
-        if (NumTraits<Scalar>::IsComplex)
+        EIGEN_IF_CONSTEXPR (NumTraits<Scalar>::IsComplex)
           mat.coeffRef(index_of_biggest_in_corner, k) = numext::conj(mat.coeff(index_of_biggest_in_corner, k));
       }
 
@@ -477,19 +490,8 @@ LDLT<MatrixType, UpLo_>& LDLT<MatrixType, UpLo_>::compute(const EigenBase<InputT
 
   m_matrix = a.derived();
 
-  // Compute matrix L1 norm = max abs column sum.
-  m_l1_norm = RealScalar(0);
-  // TODO move this code to SelfAdjointView
-  for (Index col = 0; col < size; ++col) {
-    RealScalar abs_col_sum;
-    if (UpLo_ == Lower)
-      abs_col_sum =
-          m_matrix.col(col).tail(size - col).template lpNorm<1>() + m_matrix.row(col).head(col).template lpNorm<1>();
-    else
-      abs_col_sum =
-          m_matrix.col(col).head(col).template lpNorm<1>() + m_matrix.row(col).tail(size - col).template lpNorm<1>();
-    if (abs_col_sum > m_l1_norm) m_l1_norm = abs_col_sum;
-  }
+  // Compute matrix L1 norm = max abs column sum over the implicit self-adjoint matrix.
+  m_l1_norm = m_matrix.template selfadjointView<UpLo_>().l1Norm();
 
   m_transpositions.resize(size);
   m_isInitialized = false;
@@ -630,8 +632,8 @@ MatrixType LDLT<MatrixType, UpLo_>::reconstructedMatrix() const {
  * \sa MatrixBase::ldlt()
  */
 template <typename MatrixType, unsigned int UpLo>
-inline const LDLT<typename SelfAdjointView<MatrixType, UpLo>::PlainObject, UpLo>
-SelfAdjointView<MatrixType, UpLo>::ldlt() const {
+inline LDLT<typename SelfAdjointView<MatrixType, UpLo>::PlainObject, UpLo> SelfAdjointView<MatrixType, UpLo>::ldlt()
+    const {
   return LDLT<PlainObject, UpLo>(m_matrix);
 }
 
@@ -640,7 +642,7 @@ SelfAdjointView<MatrixType, UpLo>::ldlt() const {
  * \sa SelfAdjointView::ldlt()
  */
 template <typename Derived>
-inline const LDLT<typename MatrixBase<Derived>::PlainObject> MatrixBase<Derived>::ldlt() const {
+inline LDLT<typename MatrixBase<Derived>::PlainObject> MatrixBase<Derived>::ldlt() const {
   return LDLT<PlainObject>(derived());
 }
 

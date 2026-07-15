@@ -6,6 +6,7 @@
 // This Source Code Form is subject to the terms of the Mozilla
 // Public License v. 2.0. If a copy of the MPL was not distributed
 // with this file, You can obtain one at http://mozilla.org/MPL/2.0/.
+// SPDX-License-Identifier: MPL-2.0
 
 #ifndef EIGEN_SPARSESOLVERBASE_H
 #define EIGEN_SPARSESOLVERBASE_H
@@ -64,14 +65,17 @@ std::enable_if_t<Rhs::ColsAtCompileTime == 1 || Dest::ColsAtCompileTime == 1> so
  *
  */
 template <typename Derived>
-class SparseSolverBase : internal::noncopyable {
+class SparseSolverBase {
  public:
   /** Default constructor */
-  SparseSolverBase() : m_isInitialized(false) {}
+  SparseSolverBase() = default;
 
-  SparseSolverBase(SparseSolverBase&& other) : internal::noncopyable{}, m_isInitialized{other.m_isInitialized} {}
+  SparseSolverBase(const SparseSolverBase&) = delete;
+  SparseSolverBase& operator=(const SparseSolverBase&) = delete;
 
-  ~SparseSolverBase() {}
+  SparseSolverBase(SparseSolverBase&& other) : m_isInitialized{other.m_isInitialized} {}
+
+  ~SparseSolverBase() = default;
 
   Derived& derived() { return *static_cast<Derived*>(this); }
   const Derived& derived() const { return *static_cast<const Derived*>(this); }
@@ -81,7 +85,7 @@ class SparseSolverBase : internal::noncopyable {
    * \sa compute()
    */
   template <typename Rhs>
-  inline const Solve<Derived, Rhs> solve(const MatrixBase<Rhs>& b) const {
+  inline Solve<Derived, Rhs> solve(const MatrixBase<Rhs>& b) const {
     eigen_assert(m_isInitialized && "Solver is not initialized.");
     eigen_assert(derived().rows() == b.rows() && "solve(): invalid number of rows of the right hand side matrix b");
     return Solve<Derived, Rhs>(derived(), b.derived());
@@ -92,7 +96,7 @@ class SparseSolverBase : internal::noncopyable {
    * \sa compute()
    */
   template <typename Rhs>
-  inline const Solve<Derived, Rhs> solve(const SparseMatrixBase<Rhs>& b) const {
+  inline Solve<Derived, Rhs> solve(const SparseMatrixBase<Rhs>& b) const {
     eigen_assert(m_isInitialized && "Solver is not initialized.");
     eigen_assert(derived().rows() == b.rows() && "solve(): invalid number of rows of the right hand side matrix b");
     return Solve<Derived, Rhs>(derived(), b.derived());
@@ -107,7 +111,7 @@ class SparseSolverBase : internal::noncopyable {
 #endif  // EIGEN_PARSED_BY_DOXYGEN
 
  protected:
-  mutable bool m_isInitialized;
+  mutable bool m_isInitialized = false;
 };
 
 }  // end namespace Eigen

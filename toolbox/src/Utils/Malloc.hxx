@@ -34,6 +34,8 @@
 #ifndef UTILS_MALLOC_HXX
 #define UTILS_MALLOC_HXX
 
+#include <stdexcept>
+
 namespace Utils
 {
 
@@ -43,6 +45,7 @@ namespace Utils
   using std::int64_t;
   using std::lock_guard;
   using std::mutex;
+  using std::runtime_error;
   using std::size_t;
   using std::string;
   using std::string_view;
@@ -51,11 +54,11 @@ namespace Utils
   inline std::mutex MallocMutex;
 
   //! Global variables for tracking memory allocation statistics.
-  inline int64_t CountAlloc{ 0 };
-  inline int64_t CountFreed{ 0 };
-  inline int64_t AllocatedBytes{ 0 };
-  inline int64_t MaximumAllocatedBytes{ 0 };
-  inline bool    MallocDebug{ false };
+  inline int64_t CountAlloc            = 0;
+  inline int64_t CountFreed            = 0;
+  inline int64_t AllocatedBytes        = 0;
+  inline int64_t MaximumAllocatedBytes = 0;
+  inline bool    MallocDebug           = false;
 
   //! Utility function to convert byte size into a human-readable format.
   /*!
@@ -65,24 +68,24 @@ namespace Utils
    */
   inline string out_bytes( size_t nb )
   {
-    size_t const Kb{ nb >> 10 };
-    size_t const Mb{ Kb >> 10 };
-    if ( size_t const Gb{ Mb >> 10 }; Gb > 0 )
+    size_t const Kb = nb >> 10;
+    size_t const Mb = Kb >> 10;
+    if ( size_t const Gb = Mb >> 10; Gb > 0 )
     {
-      size_t const mb{ ( 100 * ( Mb & 0x3FF ) ) / 1024 };
-      return fmt::format( "{}Gb(+{}Mb)", Gb, mb );
+      size_t const mb = ( 100 * ( Mb & 0x3FF ) ) / 1024;
+      return std::format( "{}Gb(+{}Mb)", Gb, mb );
     }
     if ( Mb > 0 )
     {
-      size_t const kb{ ( 100 * ( Kb & 0x3FF ) ) / 1024 };
-      return fmt::format( "{}Mb(+{}Kb)", Mb, kb );
+      size_t const kb = ( 100 * ( Kb & 0x3FF ) ) / 1024;
+      return std::format( "{}Mb(+{}Kb)", Mb, kb );
     }
     if ( Kb > 0 )
     {
-      size_t const b{ ( 100 * ( nb & 0x3FF ) ) / 1024 };
-      return fmt::format( "{}Kb(+{}b)", Kb, b );
+      size_t const b = ( 100 * ( nb & 0x3FF ) ) / 1024;
+      return std::format( "{}Kb(+{}b)", Kb, b );
     }
-    return fmt::format( "{}bytes", nb );
+    return std::format( "{}bytes", nb );
   }
 
   /*\
@@ -107,11 +110,11 @@ namespace Utils
     using valueType = T;
 
   private:
-    string      m_name;                     //!< Name identifier for the allocated memory.
-    size_t      m_num_total_values{ 0 };    //!< Total number of objects allocated.
-    size_t      m_num_total_reserved{ 0 };  //!< Total reserved space.
-    size_t      m_num_allocated{ 0 };       //!< Number of currently allocated objects.
-    valueType * m_p_memory{ nullptr };      //!< Pointer to the allocated memory.
+    string      m_name;                         //!< Name identifier for the allocated memory.
+    size_t      m_num_total_values   = 0;       //!< Total number of objects allocated.
+    size_t      m_num_total_reserved = 0;       //!< Total reserved space.
+    size_t      m_num_allocated      = 0;       //!< Number of currently allocated objects.
+    valueType * m_p_memory           = nullptr; //!< Pointer to the allocated memory.
 
     //! Internal method to allocate memory for a specified number of objects.
     void allocate_internal( size_t n )
@@ -139,20 +142,18 @@ namespace Utils
           if ( MaximumAllocatedBytes < AllocatedBytes ) MaximumAllocatedBytes = AllocatedBytes;
         }
 
-        if ( MallocDebug ) fmt::print( "Allocating {} for {}\n", out_bytes( nb ), m_name );
+        if ( MallocDebug ) std::cerr << std::format( "Allocating {} for {}\n", out_bytes( nb ), m_name );
       }
       catch ( exception const & exc )
       {
         string const reason =
-          fmt::format( "Memory allocation failed: {}\nTry to allocate {} bytes for {}\n", exc.what(), n, m_name );
-        std::cerr << reason;
-        exit( 0 );
+          std::format( "Memory allocation failed: {}\nTry to allocate {} bytes for {}\n", exc.what(), n, m_name );
+        throw runtime_error( reason );
       }
       catch ( ... )
       {
-        string const reason = fmt::format( "Memory allocation failed for {}: memory exausted\n", m_name );
-        std::cerr << reason;
-        exit( 0 );
+        string const reason = std::format( "Memory allocation failed for {}: memory exausted\n", m_name );
+        throw runtime_error( reason );
       }
       m_num_total_values = n;
       m_num_allocated    = 0;
@@ -161,7 +162,7 @@ namespace Utils
     //! Handle memory exhaustion errors.
     void memory_exausted( size_t sz )
     {
-      string const reason = fmt::format( "Malloc<{}>::operator () ({}) -- Memory EXAUSTED\n", m_name, sz );
+      string const reason = std::format( "Malloc<{}>::operator () ({}) -- Memory EXAUSTED\n", m_name, sz );
       std::cerr << reason;
       exit( 0 );
     }
@@ -169,7 +170,7 @@ namespace Utils
     //! Handle errors when attempting to pop more than allocated.
     void pop_exausted( size_t sz )
     {
-      string const reason = fmt::format( "Malloc<{}>::pop({}) -- Not enough element on Stack\n", m_name, sz );
+      string const reason = std::format( "Malloc<{}>::pop({}) -- Not enough element on Stack\n", m_name, sz );
       std::cerr << reason;
       exit( 0 );
     }
@@ -179,7 +180,7 @@ namespace Utils
     Malloc( Malloc<T> const & ) = delete;
 
     //! Assignment operator is deleted.
-    Malloc<T> const & operator=( Malloc<T> const & ) const = delete;
+    Malloc<T> const & operator=( Malloc<T> const & ) = delete;
 
     //! Constructor.
     /*!
@@ -201,7 +202,7 @@ namespace Utils
     {
       if ( m_num_allocated != 0 )
       {
-        fmt::print( "Malloc[{}]::allocate( {} ), try to allocate already allocated memory!\n", m_name, n );
+        std::cerr << std::format( "Malloc[{}]::allocate( {} ), try to allocate already allocated memory!\n", m_name, n );
         exit( 0 );
       }
       if ( n > m_num_total_reserved ) allocate_internal( n );
@@ -247,7 +248,7 @@ namespace Utils
           AllocatedBytes -= nb;
         }
 
-        if ( MallocDebug ) fmt::print( "Freeing {} for {}\n", out_bytes( nb ), m_name );
+        if ( MallocDebug ) std::cerr << std::format( "Freeing {} for {}\n", out_bytes( nb ), m_name );
 
         delete[] m_p_memory;
         m_p_memory           = nullptr;
@@ -307,7 +308,7 @@ namespace Utils
     {
       if ( m_num_allocated != 0 )
       {
-        fmt::print( "Malloc[{}]::malloc( {} ), try to allocate already allocated memory!\n", m_name, n );
+        std::cerr << std::format( "Malloc[{}]::malloc( {} ), try to allocate already allocated memory!\n", m_name, n );
         exit( 0 );
       }
       if ( n > m_num_total_reserved ) allocate_internal( n );
@@ -355,7 +356,7 @@ namespace Utils
     {
       if ( m_num_allocated < m_num_total_values )
       {
-        string const tmp = fmt::format(
+        string const tmp = std::format(
           "in {} {}: not fully used!\nUnused: {} values\n",
           m_name,
           where,
@@ -364,7 +365,7 @@ namespace Utils
       }
       if ( m_num_allocated > m_num_total_values )
       {
-        string const tmp = fmt::format(
+        string const tmp = std::format(
           "in {} {}: too much used!\nMore used: {} values\n",
           m_name,
           where,
@@ -382,7 +383,7 @@ namespace Utils
     {
       std::size_t diff = m_num_allocated > m_num_total_values ? m_num_allocated - m_num_total_values
                                                               : m_num_total_values - m_num_allocated;
-      return fmt::format(
+      return std::format(
         "in {} {}\n"
         "Allocated:  {}\n"
         "Reserved:   {}\n"
@@ -418,13 +419,13 @@ namespace Utils
 
   private:
     string    m_name;                //!< Name identifier for the allocated memory.
-    size_t    m_num_allocated{ 0 };  //!< Number of currently allocated objects.
+    size_t    m_num_allocated = 0;  //!< Number of currently allocated objects.
     valueType m_data[mem_size];      //!< Array to store objects of type `T`.
 
     //! Handle memory exhaustion errors for fixed allocator.
     void memory_exausted( size_t sz )
     {
-      string const reason = fmt::format( "MallocFixed<{}>::operator () ({}) -- Memory EXAUSTED\n", m_name, sz );
+      string const reason = std::format( "MallocFixed<{}>::operator () ({}) -- Memory EXAUSTED\n", m_name, sz );
       std::cerr << reason;
       exit( 0 );
     }
@@ -432,7 +433,7 @@ namespace Utils
     //! Handle errors when attempting to pop more than allocated for fixed allocator.
     void pop_exausted( size_t sz )
     {
-      string const reason = fmt::format( "MallocFixed<{}>::pop({}) -- Not enough element on Stack\n", m_name, sz );
+      string const reason = std::format( "MallocFixed<{}>::pop({}) -- Not enough element on Stack\n", m_name, sz );
       std::cerr << reason;
       exit( 0 );
     }
@@ -442,7 +443,7 @@ namespace Utils
     MallocFixed( MallocFixed<T, mem_size> const & ) = delete;  // blocco costruttore di copia
 
     //! Assignment operator is deleted.
-    MallocFixed<T, mem_size> const & operator=( MallocFixed<T, mem_size> const & ) const = delete;  // blocco copia
+    MallocFixed<T, mem_size> const & operator=( MallocFixed<T, mem_size> const & ) = delete;  // blocco copia
 
     //! Constructor.
     /*!

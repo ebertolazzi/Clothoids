@@ -6,6 +6,7 @@
 // This Source Code Form is subject to the terms of the Mozilla
 // Public License v. 2.0. If a copy of the MPL was not distributed
 // with this file, You can obtain one at http://mozilla.org/MPL/2.0/.
+// SPDX-License-Identifier: MPL-2.0
 
 #ifndef EIGEN_PACKET_MATH_SVE_H
 #define EIGEN_PACKET_MATH_SVE_H
@@ -49,12 +50,10 @@ struct packet_traits<numext::int32_t> : default_packet_traits {
     HasNegate = 1,
     HasAbs = 1,
     HasArg = 0,
-    HasAbs2 = 1,
     HasMin = 1,
     HasMax = 1,
     HasConj = 1,
     HasSetLinear = 0,
-    HasBlend = 0,
     HasReduxp = 0  // Not implemented in SVE
   };
 };
@@ -231,7 +230,7 @@ EIGEN_STRONG_INLINE void pstoreu<numext::int32_t>(numext::int32_t* to, const Pac
 
 template <>
 EIGEN_DEVICE_FUNC inline PacketXi pgather<numext::int32_t, PacketXi>(const numext::int32_t* from, Index stride) {
-  // Indice format: {base=0, base+stride, base+stride*2, base+stride*3, ...}
+  // Index format: {base=0, base+stride, base+stride*2, base+stride*3, ...}
   svint32_t indices = svindex_s32(0, stride);
   return svld1_gather_s32index_s32(svptrue_b32(), from, indices);
 }
@@ -239,7 +238,7 @@ EIGEN_DEVICE_FUNC inline PacketXi pgather<numext::int32_t, PacketXi>(const numex
 template <>
 EIGEN_DEVICE_FUNC inline void pscatter<numext::int32_t, PacketXi>(numext::int32_t* to, const PacketXi& from,
                                                                   Index stride) {
-  // Indice format: {base=0, base+stride, base+stride*2, base+stride*3, ...}
+  // Index format: {base=0, base+stride, base+stride*2, base+stride*3, ...}
   svint32_t indices = svindex_s32(0, stride);
   svst1_scatter_s32index_s32(svptrue_b32(), to, indices, from);
 }
@@ -344,12 +343,10 @@ struct packet_traits<float> : default_packet_traits {
     HasNegate = 1,
     HasAbs = 1,
     HasArg = 0,
-    HasAbs2 = 1,
     HasMin = 1,
     HasMax = 1,
     HasConj = 1,
     HasSetLinear = 0,
-    HasBlend = 0,
     HasReduxp = 0,  // Not implemented in SVE
 
     HasDiv = 1,
@@ -357,10 +354,18 @@ struct packet_traits<float> : default_packet_traits {
     HasCmp = 1,
     HasSin = EIGEN_FAST_MATH,
     HasCos = EIGEN_FAST_MATH,
+    HasTan = EIGEN_FAST_MATH,
+    HasACos = 1,
+    HasASin = 1,
+    HasATan = 1,
+    HasATanh = 1,
     HasLog = 1,
+    HasLog1p = 1,
+    HasExpm1 = 1,
     HasExp = 1,
     HasPow = 1,
     HasSqrt = 1,
+    HasCbrt = 1,
     HasTanh = EIGEN_FAST_MATH,
     HasErf = EIGEN_FAST_MATH,
     HasErfc = EIGEN_FAST_MATH
@@ -493,6 +498,22 @@ template <>
 EIGEN_STRONG_INLINE PacketXf pfloor<PacketXf>(const PacketXf& a) {
   return svrintm_f32_x(svptrue_b32(), a);
 }
+template <>
+EIGEN_STRONG_INLINE PacketXf pceil<PacketXf>(const PacketXf& a) {
+  return svrintp_f32_x(svptrue_b32(), a);
+}
+template <>
+EIGEN_STRONG_INLINE PacketXf print<PacketXf>(const PacketXf& a) {
+  return svrintn_f32_x(svptrue_b32(), a);
+}
+template <>
+EIGEN_STRONG_INLINE PacketXf ptrunc<PacketXf>(const PacketXf& a) {
+  return svrintz_f32_x(svptrue_b32(), a);
+}
+template <>
+EIGEN_STRONG_INLINE PacketXf pround<PacketXf>(const PacketXf& a) {
+  return svrinta_f32_x(svptrue_b32(), a);
+}
 
 template <>
 EIGEN_STRONG_INLINE PacketXf ptrue<PacketXf>(const PacketXf& /*a*/) {
@@ -557,14 +578,14 @@ EIGEN_STRONG_INLINE void pstoreu<float>(float* to, const PacketXf& from) {
 
 template <>
 EIGEN_DEVICE_FUNC inline PacketXf pgather<float, PacketXf>(const float* from, Index stride) {
-  // Indice format: {base=0, base+stride, base+stride*2, base+stride*3, ...}
+  // Index format: {base=0, base+stride, base+stride*2, base+stride*3, ...}
   svint32_t indices = svindex_s32(0, stride);
   return svld1_gather_s32index_f32(svptrue_b32(), from, indices);
 }
 
 template <>
 EIGEN_DEVICE_FUNC inline void pscatter<float, PacketXf>(float* to, const PacketXf& from, Index stride) {
-  // Indice format: {base=0, base+stride, base+stride*2, base+stride*3, ...}
+  // Index format: {base=0, base+stride, base+stride*2, base+stride*3, ...}
   svint32_t indices = svindex_s32(0, stride);
   svst1_scatter_s32index_f32(svptrue_b32(), to, indices, from);
 }

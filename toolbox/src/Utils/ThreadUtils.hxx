@@ -47,7 +47,7 @@ namespace Utils
         FALSE,  // mutex not owned
         NULL    // object name
       );
-      UTILS_ASSERT( m_mutex != NULL, "WinMutex(): error: {}.\n", GetLastError() );
+      Utils::Assert( m_mutex != NULL, "WinMutex(): error: {}.\n", GetLastError() );
     }
 
     ~WinMutex()
@@ -365,7 +365,7 @@ namespace Utils
     {
       std::unique_lock<std::mutex> lock( m_mutex );
       ++m_waiting_green;
-      while ( m_is_red ) m_cv_green.wait( m_mutex );
+      while ( m_is_red ) m_cv_green.wait( lock );
       --m_waiting_green;
     }
 
@@ -373,7 +373,7 @@ namespace Utils
     {
       std::unique_lock<std::mutex> lock( m_mutex );
       ++m_waiting_red;
-      while ( !m_is_red ) m_cv_red.wait( m_mutex );
+      while ( !m_is_red ) m_cv_red.wait( lock );
       --m_waiting_red;
     }
   };
@@ -399,10 +399,10 @@ namespace Utils
 
     void worker_loop()
     {
-      while ( m_active )
+      for (;;)
       {
         std::unique_lock lk( m_mutex );
-        m_cv.wait( lk, [this] { return this->m_do_job; } );
+        m_cv.wait( lk, [this] { return this->m_do_job || !this->m_active; } );
         if ( !m_active ) break;
         m_running = true;
         m_job();
@@ -425,11 +425,14 @@ namespace Utils
 
     ~WorkerLoop()
     {
-      m_active  = false;
-      m_running = true;
-      m_do_job  = true;
+      {
+        std::lock_guard lk( m_mutex );
+        m_active  = false;
+        m_running = true;
+        m_do_job  = true;
+      }
       m_cv.notify_one();
-      m_running_thread.join();
+      if ( m_running_thread.joinable() ) m_running_thread.join();
     }
 
     void exec( std::function<void()> & fun )

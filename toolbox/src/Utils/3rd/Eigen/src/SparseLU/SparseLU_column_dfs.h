@@ -6,6 +6,7 @@
 // This Source Code Form is subject to the terms of the Mozilla
 // Public License v. 2.0. If a copy of the MPL was not distributed
 // with this file, You can obtain one at http://mozilla.org/MPL/2.0/.
+// SPDX-License-Identifier: MPL-2.0
 
 /*
 
@@ -125,7 +126,7 @@ Index SparseLUImpl<Scalar, StorageIndex>::column_dfs(const Index m, const Index 
     StorageIndex jm1ptr = glu.xlsub(jcolm1);
 
     // Use supernodes of type T2 : see SuperLU paper
-    if ((nextl - jptr != jptr - jm1ptr - 1)) jsuper = emptyIdxLU;
+    if (nextl - jptr != jptr - jm1ptr - 1) jsuper = emptyIdxLU;
 
     // Make sure the number of columns in a supernode doesn't
     // exceed threshold
@@ -136,8 +137,8 @@ Index SparseLUImpl<Scalar, StorageIndex>::column_dfs(const Index m, const Index 
      * the subscript set of the first and last columns of
      * a supernode. (first for num values, last for pruning)
      */
-    if (jsuper == emptyIdxLU) {    // starts a new supernode
-      if ((fsupc < jcolm1 - 1)) {  // >= 3 columns in nsuper
+    if (jsuper == emptyIdxLU) {  // starts a new supernode
+      if (fsupc < jcolm1 - 1) {  // >= 3 columns in nsuper
         StorageIndex ito = glu.xlsub(fsupc + 1);
         glu.xlsub(jcolm1) = ito;
         StorageIndex istop = ito + jptr - jm1ptr;

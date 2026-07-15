@@ -6,6 +6,7 @@
 // This Source Code Form is subject to the terms of the Mozilla
 // Public License v. 2.0. If a copy of the MPL was not distributed
 // with this file, You can obtain one at http://mozilla.org/MPL/2.0/.
+// SPDX-License-Identifier: MPL-2.0
 
 #ifndef EIGEN_REDUCTIONS_AVX512_H
 #define EIGEN_REDUCTIONS_AVX512_H
@@ -55,7 +56,7 @@ EIGEN_STRONG_INLINE int64_t predux(const Packet8l& a) {
 // MSVC's _mm512_reduce_mul_epi64 is borked, at least up to and including 1939.
 //    alignas(64) int64_t data[] = { 1,1,-1,-1,1,-1,-1,-1 };
 //    int64_t out = _mm512_reduce_mul_epi64(_mm512_load_epi64(data));
-// produces garbage: 4294967295.  It seems to happen whenever the output is supposed to be negative.
+// produces garbage: 4294967295.  This occurs when the result should be negative.
 // Fall back to a manual approach:
 template <>
 EIGEN_STRONG_INLINE int64_t predux_mul(const Packet8l& a) {

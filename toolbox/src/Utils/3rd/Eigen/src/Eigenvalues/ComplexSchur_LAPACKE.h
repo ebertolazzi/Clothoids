@@ -29,6 +29,7 @@
  *    Complex Schur needed to complex unsymmetrical eigenvalues/eigenvectors.
  ********************************************************************************
 */
+// SPDX-License-Identifier: BSD-3-Clause
 
 #ifndef EIGEN_COMPLEX_SCHUR_LAPACKE_H
 #define EIGEN_COMPLEX_SCHUR_LAPACKE_H
@@ -89,6 +90,8 @@ EIGEN_LAPACKE_SCHUR_COMPLEX(dcomplex, lapack_complex_double, z, Z, ColMajor, LAP
 EIGEN_LAPACKE_SCHUR_COMPLEX(scomplex, lapack_complex_float, c, C, ColMajor, LAPACK_COL_MAJOR)
 EIGEN_LAPACKE_SCHUR_COMPLEX(dcomplex, lapack_complex_double, z, Z, RowMajor, LAPACK_ROW_MAJOR)
 EIGEN_LAPACKE_SCHUR_COMPLEX(scomplex, lapack_complex_float, c, C, RowMajor, LAPACK_ROW_MAJOR)
+
+#undef EIGEN_LAPACKE_SCHUR_COMPLEX
 
 }  // end namespace Eigen
 

@@ -29,6 +29,7 @@
  *    Self-adjoint eigenvalues/eigenvectors.
  ********************************************************************************
 */
+// SPDX-License-Identifier: BSD-3-Clause
 
 #ifndef EIGEN_SAEIGENSOLVER_LAPACKE_H
 #define EIGEN_SAEIGENSOLVER_LAPACKE_H
@@ -85,6 +86,9 @@ EIGEN_LAPACKE_EIG_SELFADJ(float, float, float, ssyev)
 EIGEN_LAPACKE_EIG_SELFADJ(dcomplex, lapack_complex_double, double, zheev)
 EIGEN_LAPACKE_EIG_SELFADJ(scomplex, lapack_complex_float, float, cheev)
 
+#undef EIGEN_LAPACKE_EIG_SELFADJ
+#undef EIGEN_LAPACKE_EIG_SELFADJ_2
+
 }  // end namespace Eigen
 
-#endif  // EIGEN_SAEIGENSOLVER_H
+#endif  // EIGEN_SAEIGENSOLVER_LAPACKE_H

@@ -6,6 +6,7 @@
 // This Source Code Form is subject to the terms of the Mozilla
 // Public License v. 2.0. If a copy of the MPL was not distributed
 // with this file, You can obtain one at http://mozilla.org/MPL/2.0/.
+// SPDX-License-Identifier: MPL-2.0
 
 #ifndef EIGEN_CONJUGATE_GRADIENT_H
 #define EIGEN_CONJUGATE_GRADIENT_H
@@ -31,7 +32,10 @@ EIGEN_DONT_INLINE void conjugate_gradient(const MatrixType& mat, const Rhs& rhs,
                                           Index& iters, typename Dest::RealScalar& tol_error) {
   typedef typename Dest::RealScalar RealScalar;
   typedef typename Dest::Scalar Scalar;
-  typedef Matrix<Scalar, Dynamic, 1> VectorType;
+  // Use Dest's plain (owning) type as VectorType. For CPU Matrix/Map this
+  // resolves to Matrix<Scalar,Dynamic,1>. For GPU DeviceMatrix, PlainObject
+  // is DeviceMatrix itself (already owning).
+  typedef typename Dest::PlainObject VectorType;
 
   RealScalar tol = tol_error;
   Index maxIters = iters;
@@ -40,21 +44,26 @@ EIGEN_DONT_INLINE void conjugate_gradient(const MatrixType& mat, const Rhs& rhs,
 
   VectorType residual = rhs - mat * x;  // initial residual
 
-  RealScalar rhsNorm2 = rhs.squaredNorm();
-  if (rhsNorm2 == 0) {
+  RealScalar rhsNorm = rhs.stableNorm();
+  if (rhsNorm == 0) {
     x.setZero();
     iters = 0;
     tol_error = 0;
     return;
   }
   const RealScalar considerAsZero = (std::numeric_limits<RealScalar>::min)();
-  RealScalar threshold = numext::maxi(RealScalar(tol * tol * rhsNorm2), considerAsZero);
-  RealScalar residualNorm2 = residual.squaredNorm();
-  if (residualNorm2 < threshold) {
+  RealScalar threshold = numext::maxi(RealScalar(tol * rhsNorm), considerAsZero);
+  RealScalar residualNorm = residual.stableNorm();
+  if (residualNorm < threshold) {
     iters = 0;
-    tol_error = numext::sqrt(residualNorm2 / rhsNorm2);
+    tol_error = residualNorm / rhsNorm;
     return;
   }
+
+  // Keep the quadratic recurrence terms representable for very small or large residuals.
+  const RealScalar residualScale = internal::iterative_solver_scaling_factor(residualNorm);
+  residual /= residualScale;
+  threshold /= residualScale;
 
   VectorType p(n);
   p = precond.solve(residual);  // initial search direction
@@ -66,11 +75,11 @@ EIGEN_DONT_INLINE void conjugate_gradient(const MatrixType& mat, const Rhs& rhs,
     tmp.noalias() = mat * p;  // the bottleneck of the algorithm
 
     Scalar alpha = absNew / p.dot(tmp);  // the amount we travel on dir
-    x += alpha * p;                      // update solution
+    x += (residualScale * alpha) * p;    // update solution
     residual -= alpha * tmp;             // update residual
 
-    residualNorm2 = residual.squaredNorm();
-    if (residualNorm2 < threshold) break;
+    residualNorm = residual.stableNorm();
+    if (residualNorm < threshold) break;
 
     z = precond.solve(residual);  // approximately solve for "A z = residual"
 
@@ -80,7 +89,7 @@ EIGEN_DONT_INLINE void conjugate_gradient(const MatrixType& mat, const Rhs& rhs,
     p = z + beta * p;                        // update search direction
     i++;
   }
-  tol_error = numext::sqrt(residualNorm2 / rhsNorm2);
+  tol_error = residualNorm / (rhsNorm / residualScale);
   iters = i;
 }
 
@@ -150,6 +159,7 @@ struct traits<ConjugateGradient<MatrixType_, UpLo_, Preconditioner_> > {
   */
 template <typename MatrixType_, int UpLo_, typename Preconditioner_>
 class ConjugateGradient : public IterativeSolverBase<ConjugateGradient<MatrixType_, UpLo_, Preconditioner_> > {
+ protected:
   typedef IterativeSolverBase<ConjugateGradient> Base;
   using Base::m_error;
   using Base::m_info;
@@ -182,8 +192,6 @@ class ConjugateGradient : public IterativeSolverBase<ConjugateGradient<MatrixTyp
   template <typename MatrixDerived>
   explicit ConjugateGradient(const EigenBase<MatrixDerived>& A) : Base(A.derived()) {}
 
-  ~ConjugateGradient() {}
-
   /** \internal */
   template <typename Rhs, typename Dest>
   void _solve_vector_with_guess_impl(const Rhs& b, Dest& x) const {
@@ -208,8 +216,6 @@ class ConjugateGradient : public IterativeSolverBase<ConjugateGradient<MatrixTyp
     internal::conjugate_gradient(SelfAdjointWrapper(row_mat), b, x, Base::m_preconditioner, m_iterations, m_error);
     m_info = m_error <= Base::m_tolerance ? Success : NoConvergence;
   }
-
- protected:
 };
 
 }  // end namespace Eigen

@@ -7,6 +7,7 @@
 // This Source Code Form is subject to the terms of the Mozilla
 // Public License v. 2.0. If a copy of the MPL was not distributed
 // with this file, You can obtain one at http://mozilla.org/MPL/2.0/.
+// SPDX-License-Identifier: MPL-2.0
 
 #ifndef EIGEN_CWISE_BINARY_OP_H
 #define EIGEN_CWISE_BINARY_OP_H
@@ -60,7 +61,7 @@ class CwiseBinaryOpImpl;
  * \tparam LhsType the type of the left-hand side
  * \tparam RhsType the type of the right-hand side
  *
- * This class represents an expression  where a coefficient-wise binary operator is applied to two expressions.
+ * This class represents an expression where a coefficient-wise binary operator is applied to two expressions.
  * It is the return type of binary operators, by which we mean only those binary operators where
  * both the left-hand side and the right-hand side are Eigen expressions.
  * For example, the return type of matrix1+matrix2 is a CwiseBinaryOp.
@@ -89,7 +90,7 @@ class CwiseBinaryOp : public CwiseBinaryOpImpl<BinaryOp, LhsType, RhsType,
       Base;
   EIGEN_GENERIC_PUBLIC_INTERFACE(CwiseBinaryOp)
 
-  EIGEN_CHECK_BINARY_COMPATIBILIY(BinaryOp, typename Lhs::Scalar, typename Rhs::Scalar)
+  EIGEN_CHECK_BINARY_COMPATIBILITY(BinaryOp, typename Lhs::Scalar, typename Rhs::Scalar)
   EIGEN_STATIC_ASSERT_SAME_MATRIX_SIZE(Lhs, Rhs)
 
   typedef typename internal::ref_selector<LhsType>::type LhsNested;
@@ -98,33 +99,33 @@ class CwiseBinaryOp : public CwiseBinaryOpImpl<BinaryOp, LhsType, RhsType,
   typedef std::remove_reference_t<RhsNested> RhsNested_;
 
 #if EIGEN_COMP_MSVC
-  // Required for Visual Studio or the Copy constructor will probably not get inlined!
+  // Required for Visual Studio, which may fail to inline the copy constructor otherwise.
   EIGEN_STRONG_INLINE CwiseBinaryOp(const CwiseBinaryOp<BinaryOp, LhsType, RhsType>&) = default;
 #endif
 
-  EIGEN_DEVICE_FUNC EIGEN_STRONG_INLINE CwiseBinaryOp(const Lhs& aLhs, const Rhs& aRhs,
-                                                      const BinaryOp& func = BinaryOp())
+  EIGEN_DEVICE_FUNC constexpr EIGEN_STRONG_INLINE CwiseBinaryOp(const Lhs& aLhs, const Rhs& aRhs,
+                                                                const BinaryOp& func = BinaryOp())
       : m_lhs(aLhs), m_rhs(aRhs), m_functor(func) {
     eigen_assert(aLhs.rows() == aRhs.rows() && aLhs.cols() == aRhs.cols());
   }
 
-  EIGEN_DEVICE_FUNC EIGEN_STRONG_INLINE constexpr Index rows() const noexcept {
+  EIGEN_DEVICE_FUNC constexpr Index rows() const noexcept {
     // return the fixed size type if available to enable compile time optimizations
     return internal::traits<internal::remove_all_t<LhsNested>>::RowsAtCompileTime == Dynamic ? m_rhs.rows()
                                                                                              : m_lhs.rows();
   }
-  EIGEN_DEVICE_FUNC EIGEN_STRONG_INLINE constexpr Index cols() const noexcept {
+  EIGEN_DEVICE_FUNC constexpr Index cols() const noexcept {
     // return the fixed size type if available to enable compile time optimizations
     return internal::traits<internal::remove_all_t<LhsNested>>::ColsAtCompileTime == Dynamic ? m_rhs.cols()
                                                                                              : m_lhs.cols();
   }
 
   /** \returns the left hand side nested expression */
-  EIGEN_DEVICE_FUNC EIGEN_STRONG_INLINE const LhsNested_& lhs() const { return m_lhs; }
+  EIGEN_DEVICE_FUNC constexpr EIGEN_STRONG_INLINE const LhsNested_& lhs() const { return m_lhs; }
   /** \returns the right hand side nested expression */
-  EIGEN_DEVICE_FUNC EIGEN_STRONG_INLINE const RhsNested_& rhs() const { return m_rhs; }
+  EIGEN_DEVICE_FUNC constexpr EIGEN_STRONG_INLINE const RhsNested_& rhs() const { return m_rhs; }
   /** \returns the functor representing the binary operation */
-  EIGEN_DEVICE_FUNC EIGEN_STRONG_INLINE const BinaryOp& functor() const { return m_functor; }
+  EIGEN_DEVICE_FUNC constexpr EIGEN_STRONG_INLINE const BinaryOp& functor() const { return m_functor; }
 
  protected:
   LhsNested m_lhs;
@@ -145,7 +146,7 @@ class CwiseBinaryOpImpl : public internal::generic_xpr_base<CwiseBinaryOp<Binary
  */
 template <typename Derived>
 template <typename OtherDerived>
-EIGEN_DEVICE_FUNC EIGEN_STRONG_INLINE Derived& MatrixBase<Derived>::operator-=(const MatrixBase<OtherDerived>& other) {
+EIGEN_DEVICE_FUNC EIGEN_ALWAYS_INLINE Derived& MatrixBase<Derived>::operator-=(const MatrixBase<OtherDerived>& other) {
   call_assignment(derived(), other.derived(), internal::sub_assign_op<Scalar, typename OtherDerived::Scalar>());
   return derived();
 }
@@ -156,7 +157,7 @@ EIGEN_DEVICE_FUNC EIGEN_STRONG_INLINE Derived& MatrixBase<Derived>::operator-=(c
  */
 template <typename Derived>
 template <typename OtherDerived>
-EIGEN_DEVICE_FUNC EIGEN_STRONG_INLINE Derived& MatrixBase<Derived>::operator+=(const MatrixBase<OtherDerived>& other) {
+EIGEN_DEVICE_FUNC EIGEN_ALWAYS_INLINE Derived& MatrixBase<Derived>::operator+=(const MatrixBase<OtherDerived>& other) {
   call_assignment(derived(), other.derived(), internal::add_assign_op<Scalar, typename OtherDerived::Scalar>());
   return derived();
 }

@@ -6,6 +6,7 @@
 // This Source Code Form is subject to the terms of the Mozilla
 // Public License v. 2.0. If a copy of the MPL was not distributed
 // with this file, You can obtain one at http://mozilla.org/MPL/2.0/.
+// SPDX-License-Identifier: MPL-2.0
 
 #ifndef EIGEN_SWAP_H
 #define EIGEN_SWAP_H
@@ -28,7 +29,6 @@ class generic_dense_assignment_kernel<DstEvaluatorTypeT, SrcEvaluatorTypeT,
                                           swap_assign_op<typename DstEvaluatorTypeT::Scalar>, BuiltIn>
       Base;
   using Base::m_dst;
-  using Base::m_functor;
   using Base::m_src;
 
  public:
@@ -36,9 +36,10 @@ class generic_dense_assignment_kernel<DstEvaluatorTypeT, SrcEvaluatorTypeT,
   typedef typename Base::DstXprType DstXprType;
   typedef swap_assign_op<Scalar> Functor;
 
-  EIGEN_DEVICE_FUNC EIGEN_STRONG_INLINE generic_dense_assignment_kernel(DstEvaluatorTypeT &dst,
-                                                                        const SrcEvaluatorTypeT &src,
-                                                                        const Functor &func, DstXprType &dstExpr)
+  EIGEN_DEVICE_FUNC constexpr EIGEN_STRONG_INLINE generic_dense_assignment_kernel(DstEvaluatorTypeT &dst,
+                                                                                  const SrcEvaluatorTypeT &src,
+                                                                                  const Functor &func,
+                                                                                  DstXprType &dstExpr)
       : Base(dst, src, func, dstExpr) {}
 
   template <int StoreMode, int LoadMode, typename PacketType>
@@ -57,8 +58,6 @@ class generic_dense_assignment_kernel<DstEvaluatorTypeT, SrcEvaluatorTypeT,
     m_dst.template writePacket<StoreMode>(index, tmp);
   }
 
-  // TODO find a simple way not to have to copy/paste this function from generic_dense_assignment_kernel, by simple I
-  // mean no CRTP (Gael)
   template <int StoreMode, int LoadMode, typename PacketType>
   EIGEN_STRONG_INLINE void assignPacketByOuterInner(Index outer, Index inner) {
     Index row = Base::rowIndexByOuterInner(outer, inner);
@@ -82,8 +81,6 @@ class generic_dense_assignment_kernel<DstEvaluatorTypeT, SrcEvaluatorTypeT,
     m_dst.template writePacketSegment<StoreMode>(index, tmp, begin, count);
   }
 
-  // TODO find a simple way not to have to copy/paste this function from generic_dense_assignment_kernel, by simple I
-  // mean no CRTP (Gael)
   template <int StoreMode, int LoadMode, typename PacketType>
   EIGEN_STRONG_INLINE void assignPacketSegmentByOuterInner(Index outer, Index inner, Index begin, Index count) {
     Index row = Base::rowIndexByOuterInner(outer, inner);

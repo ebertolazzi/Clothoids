@@ -6,6 +6,7 @@
 // This Source Code Form is subject to the terms of the Mozilla
 // Public License v. 2.0. If a copy of the MPL was not distributed
 // with this file, You can obtain one at http://mozilla.org/MPL/2.0/.
+// SPDX-License-Identifier: MPL-2.0
 
 #ifndef EIGEN_TYPE_CASTING_GPU_H
 #define EIGEN_TYPE_CASTING_GPU_H
@@ -17,8 +18,7 @@ namespace Eigen {
 
 namespace internal {
 
-#if (defined(EIGEN_HAS_CUDA_FP16) && defined(EIGEN_CUDA_ARCH) && EIGEN_CUDA_ARCH >= 300) || \
-    (defined(EIGEN_HAS_HIP_FP16) && defined(EIGEN_HIP_DEVICE_COMPILE))
+#if defined(EIGEN_GPU_COMPILE_PHASE)
 
 template <>
 struct type_casting_traits<Eigen::half, float> {

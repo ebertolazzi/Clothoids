@@ -78,9 +78,13 @@ namespace Utils
       }
 
     public:
-      // disable copy
+      // A Worker owns a std::thread started with &Worker::worker_loop and this.
+      // Therefore its address must remain stable for the whole thread lifetime.
+      // Moving a live Worker would leave the running thread referring to the old
+      // object address.
       Worker( Worker const & )             = delete;
       Worker & operator=( Worker const & ) = delete;
+      Worker( Worker && )                  = delete;
       Worker & operator=( Worker && )      = delete;
 
       Worker() : m_active( true ), m_task_done( true ), m_startup_future( m_startup_promise.get_future().share() )
@@ -105,17 +109,6 @@ namespace Utils
         if ( m_running_thread.joinable() ) m_running_thread.join();
       }
 
-      Worker( Worker && rhs ) noexcept
-        : m_active( rhs.m_active )
-        , m_task_done( rhs.m_task_done )
-        , m_task( std::move( rhs.m_task ) )
-        , m_startup_promise()  // std::promise cannot be moved, re-create for
-                               // new instance
-        , m_startup_future( m_startup_promise.get_future().share() )
-        , m_running_thread( std::move( rhs.m_running_thread ) )
-      {
-        m_startup_promise.set_value();
-      }
 
       void wait()
       {

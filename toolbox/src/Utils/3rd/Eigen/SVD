@@ -4,19 +4,17 @@
 // This Source Code Form is subject to the terms of the Mozilla
 // Public License v. 2.0. If a copy of the MPL was not distributed
 // with this file, You can obtain one at http://mozilla.org/MPL/2.0/.
+// SPDX-FileCopyrightText: The Eigen Authors
+// SPDX-License-Identifier: MPL-2.0
 
 #ifndef EIGEN_SVD_MODULE_H
 #define EIGEN_SVD_MODULE_H
 
 #include "QR"
-#include "Householder"
-#include "Jacobi"
 
 #include "src/Core/util/DisableStupidWarnings.h"
 
 /** \defgroup SVD_Module SVD module
- *
- *
  *
  * This module provides SVD decomposition for matrices (both real and complex).
  * Two decomposition algorithms are provided:
@@ -33,7 +31,6 @@
  */
 
 // IWYU pragma: begin_exports
-#include "src/misc/RealSvd2x2.h"
 #include "src/SVD/UpperBidiagonalization.h"
 #include "src/SVD/SVDBase.h"
 #include "src/SVD/JacobiSVD.h"
@@ -41,6 +38,8 @@
 #ifdef EIGEN_USE_LAPACKE
 #ifdef EIGEN_USE_MKL
 #include "mkl_lapacke.h"
+#elif defined(EIGEN_LAPACKE_SYSTEM)
+#include <lapacke.h>
 #else
 #include "src/misc/lapacke.h"
 #endif

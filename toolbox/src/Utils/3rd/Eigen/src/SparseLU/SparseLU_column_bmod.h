@@ -7,6 +7,7 @@
 // This Source Code Form is subject to the terms of the Mozilla
 // Public License v. 2.0. If a copy of the MPL was not distributed
 // with this file, You can obtain one at http://mozilla.org/MPL/2.0/.
+// SPDX-License-Identifier: MPL-2.0
 
 /*
 
@@ -45,7 +46,7 @@ namespace internal {
  * \param dense Store the full representation of the column
  * \param tempv working array
  * \param segrep segment representative ...
- * \param repfnz ??? First nonzero column in each row ???  ...
+ * \param repfnz first nonzero column in each row  ...
  * \param fpanelc First column in the current panel
  * \param glu Global LU data.
  * \return 0 - successful return
@@ -65,7 +66,7 @@ Index SparseLUImpl<Scalar, StorageIndex>::column_bmod(const Index jcol, const In
    * nsupr = number of rows in a supernode
    * luptr = location of supernodal LU-block in storage
    * kfnz = first nonz in the k-th supernodal segment
-   * no_zeros = no lf leading zeros in a supernodal U-segment
+   * no_zeros = no of leading zeros in a supernodal U-segment
    */
 
   jsupno = glu.supno(jcol);

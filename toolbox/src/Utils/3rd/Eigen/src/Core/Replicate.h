@@ -6,6 +6,7 @@
 // This Source Code Form is subject to the terms of the Mozilla
 // Public License v. 2.0. If a copy of the MPL was not distributed
 // with this file, You can obtain one at http://mozilla.org/MPL/2.0/.
+// SPDX-License-Identifier: MPL-2.0
 
 #ifndef EIGEN_REPLICATE_H
 #define EIGEN_REPLICATE_H
@@ -30,7 +31,7 @@ struct traits<Replicate<MatrixType, RowFactor, ColFactor> > : traits<MatrixType>
     ColsAtCompileTime = ColFactor == Dynamic || int(MatrixType::ColsAtCompileTime) == Dynamic
                             ? Dynamic
                             : ColFactor * MatrixType::ColsAtCompileTime,
-    // FIXME we don't propagate the max sizes !!!
+    // FIXME: propagate MaxRowsAtCompileTime and MaxColsAtCompileTime.
     MaxRowsAtCompileTime = RowsAtCompileTime,
     MaxColsAtCompileTime = ColsAtCompileTime,
     IsRowMajor = MaxRowsAtCompileTime == 1 && MaxColsAtCompileTime != 1   ? 1
@@ -38,7 +39,7 @@ struct traits<Replicate<MatrixType, RowFactor, ColFactor> > : traits<MatrixType>
                  : (MatrixType::Flags & RowMajorBit)                      ? 1
                                                                           : 0,
 
-    // FIXME enable DirectAccess with negative strides?
+    // FIXME: consider enabling DirectAccess with negative strides.
     Flags = IsRowMajor ? RowMajorBit : 0
   };
 };
@@ -71,24 +72,24 @@ class Replicate : public internal::dense_xpr_base<Replicate<MatrixType, RowFacto
   typedef internal::remove_all_t<MatrixType> NestedExpression;
 
   template <typename OriginalMatrixType>
-  EIGEN_DEVICE_FUNC inline explicit Replicate(const OriginalMatrixType& matrix)
+  EIGEN_DEVICE_FUNC constexpr inline explicit Replicate(const OriginalMatrixType& matrix)
       : m_matrix(matrix), m_rowFactor(RowFactor), m_colFactor(ColFactor) {
-    EIGEN_STATIC_ASSERT((internal::is_same<std::remove_const_t<MatrixType>, OriginalMatrixType>::value),
+    EIGEN_STATIC_ASSERT((std::is_same<std::remove_const_t<MatrixType>, OriginalMatrixType>::value),
                         THE_MATRIX_OR_EXPRESSION_THAT_YOU_PASSED_DOES_NOT_HAVE_THE_EXPECTED_TYPE)
     eigen_assert(RowFactor != Dynamic && ColFactor != Dynamic);
   }
 
   template <typename OriginalMatrixType>
-  EIGEN_DEVICE_FUNC inline Replicate(const OriginalMatrixType& matrix, Index rowFactor, Index colFactor)
+  EIGEN_DEVICE_FUNC constexpr inline Replicate(const OriginalMatrixType& matrix, Index rowFactor, Index colFactor)
       : m_matrix(matrix), m_rowFactor(rowFactor), m_colFactor(colFactor) {
-    EIGEN_STATIC_ASSERT((internal::is_same<std::remove_const_t<MatrixType>, OriginalMatrixType>::value),
+    EIGEN_STATIC_ASSERT((std::is_same<std::remove_const_t<MatrixType>, OriginalMatrixType>::value),
                         THE_MATRIX_OR_EXPRESSION_THAT_YOU_PASSED_DOES_NOT_HAVE_THE_EXPECTED_TYPE)
   }
 
   EIGEN_DEVICE_FUNC constexpr Index rows() const { return m_matrix.rows() * m_rowFactor.value(); }
   EIGEN_DEVICE_FUNC constexpr Index cols() const { return m_matrix.cols() * m_colFactor.value(); }
 
-  EIGEN_DEVICE_FUNC const MatrixTypeNested_& nestedExpression() const { return m_matrix; }
+  EIGEN_DEVICE_FUNC constexpr const MatrixTypeNested_& nestedExpression() const { return m_matrix; }
 
  protected:
   MatrixTypeNested m_matrix;

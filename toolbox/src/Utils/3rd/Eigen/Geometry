@@ -4,6 +4,8 @@
 // This Source Code Form is subject to the terms of the Mozilla
 // Public License v. 2.0. If a copy of the MPL was not distributed
 // with this file, You can obtain one at http://mozilla.org/MPL/2.0/.
+// SPDX-FileCopyrightText: The Eigen Authors
+// SPDX-License-Identifier: MPL-2.0
 
 #ifndef EIGEN_GEOMETRY_MODULE_H
 #define EIGEN_GEOMETRY_MODULE_H
@@ -12,7 +14,6 @@
 
 #include "SVD"
 #include "LU"
-#include <limits>
 
 #include "src/Core/util/DisableStupidWarnings.h"
 
@@ -24,7 +25,8 @@
  *  - \link Quaternion quaternions \endlink
  *  - cross products (\ref MatrixBase::cross(), \ref MatrixBase::cross3())
  *  - orthogonal vector generation (MatrixBase::unitOrthogonal)
- *  - some linear components: \link ParametrizedLine parametrized-lines \endlink and \link Hyperplane hyperplanes \endlink
+ *  - some linear components: \link ParametrizedLine parametrized-lines \endlink and \link Hyperplane hyperplanes
+ * \endlink
  *  - \link AlignedBox axis aligned bounding boxes \endlink
  *  - \link umeyama() least-square transformation fitting \endlink
  * \code
@@ -48,9 +50,12 @@
 #include "src/Geometry/AlignedBox.h"
 #include "src/Geometry/Umeyama.h"
 
+#ifndef EIGEN_VECTORIZE_GENERIC
+// TODO(rmlarsen): Make these work with generic vectorization if possible.
 // Use the SSE optimized version whenever possible.
 #if (defined EIGEN_VECTORIZE_SSE) || (defined EIGEN_VECTORIZE_NEON)
 #include "src/Geometry/arch/Geometry_SIMD.h"
+#endif
 #endif
 // IWYU pragma: end_exports
 

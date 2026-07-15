@@ -6,12 +6,13 @@
 // This Source Code Form is subject to the terms of the Mozilla
 // Public License v. 2.0. If a copy of the MPL was not distributed
 // with this file, You can obtain one at http://mozilla.org/MPL/2.0/.
+// SPDX-License-Identifier: MPL-2.0
 
 #ifndef EIGEN_UMFPACKSUPPORT_H
 #define EIGEN_UMFPACKSUPPORT_H
 
 // for compatibility with super old version of umfpack,
-// not sure this is really needed, but this is harmless.
+// This may not be strictly needed, but it is harmless.
 #ifndef SuiteSparse_long
 #ifdef UF_long
 #define SuiteSparse_long UF_long
@@ -287,7 +288,7 @@ inline SuiteSparse_long umfpack_get_determinant(std::complex<double> *Mx, double
  * \brief A sparse LU factorization and solver based on UmfPack
  *
  * This class allows to solve for A.X = B sparse linear problems via a LU factorization
- * using the UmfPack library. The sparse matrix A must be squared and full rank.
+ * using the UmfPack library. The sparse matrix A must be square and full rank.
  * The vectors or matrices X and B can be either dense or sparse.
  *
  * \warning The input matrix A should be in a \b compressed and \b column-major form.
@@ -341,7 +342,7 @@ class UmfPackLU : public SparseSolverBase<UmfPackLU<MatrixType_> > {
   /** \brief Reports whether previous computation was successful.
    *
    * \returns \c Success if computation was successful,
-   *          \c NumericalIssue if the matrix.appears to be negative.
+   *          \c NumericalIssue if the matrix appears to be negative.
    */
   ComputationInfo info() const {
     eigen_assert(m_isInitialized && "Decomposition is not initialized.");
@@ -368,7 +369,7 @@ class UmfPackLU : public SparseSolverBase<UmfPackLU<MatrixType_> > {
     return m_q;
   }
 
-  /** Computes the sparse Cholesky decomposition of \a matrix
+  /** Computes the sparse LU decomposition of \a matrix
    *  Note that the matrix should be column-major, and in compressed format for best performance.
    *  \sa SparseMatrix::makeCompressed().
    */
@@ -425,7 +426,7 @@ class UmfPackLU : public SparseSolverBase<UmfPackLU<MatrixType_> > {
 
   /** Performs a numeric decomposition of \a matrix
    *
-   * The given matrix must has the same sparsity than the matrix on which the pattern anylysis has been performed.
+   * The given matrix must have the same sparsity as the matrix on which the pattern analysis has been performed.
    *
    * \sa analyzePattern(), compute()
    */

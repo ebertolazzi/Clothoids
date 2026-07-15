@@ -7,6 +7,7 @@
 // This Source Code Form is subject to the terms of the Mozilla
 // Public License v. 2.0. If a copy of the MPL was not distributed
 // with this file, You can obtain one at http://mozilla.org/MPL/2.0/.
+// SPDX-License-Identifier: MPL-2.0
 
 #ifndef EIGEN_COMPLEX_NEON_H
 #define EIGEN_COMPLEX_NEON_H
@@ -17,6 +18,8 @@
 namespace Eigen {
 
 namespace internal {
+
+EIGEN_GCC_FAST_MATH_COMPLEX_VECTORIZE_WORKAROUND_PUSH
 
 inline uint32x4_t p4ui_CONJ_XOR() {
 // See bug 1325, clang fails to call vld1q_u64.
@@ -48,7 +51,7 @@ struct Packet2cf {
 };
 
 template <>
-struct packet_traits<std::complex<float> > : default_packet_traits {
+struct packet_traits<std::complex<float>> : default_packet_traits {
   typedef Packet2cf type;
   typedef Packet1cf half;
   enum {
@@ -280,13 +283,13 @@ EIGEN_STRONG_INLINE Packet2cf pandnot<Packet2cf>(const Packet2cf& a, const Packe
 
 template <>
 EIGEN_STRONG_INLINE Packet1cf pload<Packet1cf>(const std::complex<float>* from) {
-  EIGEN_ASSUME_ALIGNED(from, unpacket_traits<Packet1cf>::alignment);
-  EIGEN_DEBUG_ALIGNED_LOAD return Packet1cf(pload<Packet2f>((const float*)from));
+  EIGEN_DEBUG_ALIGNED_LOAD return Packet1cf(
+      pload<Packet2f>(assume_aligned<unpacket_traits<Packet1cf>::alignment>(reinterpret_cast<const float*>(from))));
 }
 template <>
 EIGEN_STRONG_INLINE Packet2cf pload<Packet2cf>(const std::complex<float>* from) {
-  EIGEN_ASSUME_ALIGNED(from, unpacket_traits<Packet2cf>::alignment);
-  EIGEN_DEBUG_ALIGNED_LOAD return Packet2cf(pload<Packet4f>(reinterpret_cast<const float*>(from)));
+  EIGEN_DEBUG_ALIGNED_LOAD return Packet2cf(
+      pload<Packet4f>(assume_aligned<unpacket_traits<Packet2cf>::alignment>(reinterpret_cast<const float*>(from))));
 }
 
 template <>
@@ -308,22 +311,22 @@ EIGEN_STRONG_INLINE Packet2cf ploaddup<Packet2cf>(const std::complex<float>* fro
 }
 
 template <>
-EIGEN_STRONG_INLINE void pstore<std::complex<float> >(std::complex<float>* to, const Packet1cf& from) {
-  EIGEN_ASSUME_ALIGNED(to, unpacket_traits<Packet1cf>::alignment);
-  EIGEN_DEBUG_ALIGNED_STORE pstore((float*)to, from.v);
+EIGEN_STRONG_INLINE void pstore<std::complex<float>>(std::complex<float>* to, const Packet1cf& from) {
+  EIGEN_DEBUG_ALIGNED_STORE pstore(assume_aligned<unpacket_traits<Packet1cf>::alignment>(reinterpret_cast<float*>(to)),
+                                   from.v);
 }
 template <>
-EIGEN_STRONG_INLINE void pstore<std::complex<float> >(std::complex<float>* to, const Packet2cf& from) {
-  EIGEN_ASSUME_ALIGNED(to, unpacket_traits<Packet2cf>::alignment);
-  EIGEN_DEBUG_ALIGNED_STORE pstore(reinterpret_cast<float*>(to), from.v);
+EIGEN_STRONG_INLINE void pstore<std::complex<float>>(std::complex<float>* to, const Packet2cf& from) {
+  EIGEN_DEBUG_ALIGNED_STORE pstore(assume_aligned<unpacket_traits<Packet2cf>::alignment>(reinterpret_cast<float*>(to)),
+                                   from.v);
 }
 
 template <>
-EIGEN_STRONG_INLINE void pstoreu<std::complex<float> >(std::complex<float>* to, const Packet1cf& from) {
+EIGEN_STRONG_INLINE void pstoreu<std::complex<float>>(std::complex<float>* to, const Packet1cf& from) {
   EIGEN_DEBUG_UNALIGNED_STORE pstoreu((float*)to, from.v);
 }
 template <>
-EIGEN_STRONG_INLINE void pstoreu<std::complex<float> >(std::complex<float>* to, const Packet2cf& from) {
+EIGEN_STRONG_INLINE void pstoreu<std::complex<float>>(std::complex<float>* to, const Packet2cf& from) {
   EIGEN_DEBUG_UNALIGNED_STORE pstoreu(reinterpret_cast<float*>(to), from.v);
 }
 
@@ -356,7 +359,7 @@ EIGEN_DEVICE_FUNC inline void pscatter<std::complex<float>, Packet2cf>(std::comp
 }
 
 template <>
-EIGEN_STRONG_INLINE void prefetch<std::complex<float> >(const std::complex<float>* addr) {
+EIGEN_STRONG_INLINE void prefetch<std::complex<float>>(const std::complex<float>* addr) {
   EIGEN_ARM_PREFETCH(reinterpret_cast<const float*>(addr));
 }
 
@@ -419,7 +422,7 @@ EIGEN_STRONG_INLINE std::complex<float> predux_mul<Packet2cf>(const Packet2cf& a
   a2 = vget_high_f32(a.v);
   // Get the real values of a | a1_re | a1_re | a2_re | a2_re |
   v1 = vdup_lane_f32(a1, 0);
-  // Get the real values of a | a1_im | a1_im | a2_im | a2_im |
+  // Get the imag values of a | a1_im | a1_im | a2_im | a2_im |
   v2 = vdup_lane_f32(a1, 1);
   // Multiply the real a with b
   v1 = vmul_f32(v1, a2);
@@ -456,38 +459,11 @@ EIGEN_DEVICE_FUNC inline void ptranspose(PacketBlock<Packet2cf, 2>& kernel) {
   kernel.packet[1].v = tmp;
 }
 
-template <>
-EIGEN_STRONG_INLINE Packet1cf psqrt<Packet1cf>(const Packet1cf& a) {
-  return psqrt_complex<Packet1cf>(a);
-}
-
-template <>
-EIGEN_STRONG_INLINE Packet2cf psqrt<Packet2cf>(const Packet2cf& a) {
-  return psqrt_complex<Packet2cf>(a);
-}
-
-template <>
-EIGEN_STRONG_INLINE Packet1cf plog<Packet1cf>(const Packet1cf& a) {
-  return plog_complex(a);
-}
-
-template <>
-EIGEN_STRONG_INLINE Packet2cf plog<Packet2cf>(const Packet2cf& a) {
-  return plog_complex(a);
-}
-
-template <>
-EIGEN_STRONG_INLINE Packet1cf pexp<Packet1cf>(const Packet1cf& a) {
-  return pexp_complex(a);
-}
-
-template <>
-EIGEN_STRONG_INLINE Packet2cf pexp<Packet2cf>(const Packet2cf& a) {
-  return pexp_complex(a);
-}
+EIGEN_INSTANTIATE_COMPLEX_MATH_FUNCS(Packet1cf)
+EIGEN_INSTANTIATE_COMPLEX_MATH_FUNCS(Packet2cf)
 
 //---------- double ----------
-#if EIGEN_ARCH_ARM64 && !EIGEN_APPLE_DOUBLE_NEON_BUG
+#if EIGEN_ARCH_ARM64
 
 inline uint64x2_t p2ul_CONJ_XOR() {
   static const uint64_t p2ul_conj_XOR_DATA[] = {0x0, 0x8000000000000000};
@@ -501,7 +477,7 @@ struct Packet1cd {
 };
 
 template <>
-struct packet_traits<std::complex<double> > : default_packet_traits {
+struct packet_traits<std::complex<double>> : default_packet_traits {
   typedef Packet1cd type;
   typedef Packet1cd half;
   enum {
@@ -516,6 +492,7 @@ struct packet_traits<std::complex<double> > : default_packet_traits {
     HasNegate = 1,
     HasSqrt = 1,
     HasLog = 1,
+    HasExp = 1,
     HasAbs = 0,
     HasAbs2 = 0,
     HasMin = 0,
@@ -531,8 +508,8 @@ struct unpacket_traits<Packet1cd> : neon_unpacket_default<Packet1cd, std::comple
 
 template <>
 EIGEN_STRONG_INLINE Packet1cd pload<Packet1cd>(const std::complex<double>* from) {
-  EIGEN_ASSUME_ALIGNED(from, unpacket_traits<Packet1cd>::alignment);
-  EIGEN_DEBUG_ALIGNED_LOAD return Packet1cd(pload<Packet2d>(reinterpret_cast<const double*>(from)));
+  EIGEN_DEBUG_ALIGNED_LOAD return Packet1cd(
+      pload<Packet2d>(assume_aligned<unpacket_traits<Packet1cd>::alignment>(reinterpret_cast<const double*>(from))));
 }
 
 template <>
@@ -644,18 +621,18 @@ EIGEN_STRONG_INLINE Packet1cd ploaddup<Packet1cd>(const std::complex<double>* fr
 }
 
 template <>
-EIGEN_STRONG_INLINE void pstore<std::complex<double> >(std::complex<double>* to, const Packet1cd& from) {
-  EIGEN_ASSUME_ALIGNED(to, unpacket_traits<Packet1cd>::alignment);
-  EIGEN_DEBUG_ALIGNED_STORE pstore(reinterpret_cast<double*>(to), from.v);
+EIGEN_STRONG_INLINE void pstore<std::complex<double>>(std::complex<double>* to, const Packet1cd& from) {
+  EIGEN_DEBUG_ALIGNED_STORE pstore(assume_aligned<unpacket_traits<Packet1cd>::alignment>(reinterpret_cast<double*>(to)),
+                                   from.v);
 }
 
 template <>
-EIGEN_STRONG_INLINE void pstoreu<std::complex<double> >(std::complex<double>* to, const Packet1cd& from) {
+EIGEN_STRONG_INLINE void pstoreu<std::complex<double>>(std::complex<double>* to, const Packet1cd& from) {
   EIGEN_DEBUG_UNALIGNED_STORE pstoreu(reinterpret_cast<double*>(to), from.v);
 }
 
 template <>
-EIGEN_STRONG_INLINE void prefetch<std::complex<double> >(const std::complex<double>* addr) {
+EIGEN_STRONG_INLINE void prefetch<std::complex<double>>(const std::complex<double>* addr) {
   EIGEN_ARM_PREFETCH(reinterpret_cast<const double*>(addr));
 }
 
@@ -677,7 +654,7 @@ EIGEN_DEVICE_FUNC inline void pscatter<std::complex<double>, Packet1cd>(std::com
 template <>
 EIGEN_STRONG_INLINE std::complex<double> pfirst<Packet1cd>(const Packet1cd& a) {
   EIGEN_ALIGN16 std::complex<double> res;
-  pstore<std::complex<double> >(&res, a);
+  pstore<std::complex<double>>(&res, a);
   return res;
 }
 
@@ -713,17 +690,11 @@ EIGEN_STRONG_INLINE void ptranspose(PacketBlock<Packet1cd, 2>& kernel) {
   kernel.packet[1].v = tmp;
 }
 
-template <>
-EIGEN_STRONG_INLINE Packet1cd psqrt<Packet1cd>(const Packet1cd& a) {
-  return psqrt_complex<Packet1cd>(a);
-}
-
-template <>
-EIGEN_STRONG_INLINE Packet1cd plog<Packet1cd>(const Packet1cd& a) {
-  return plog_complex(a);
-}
+EIGEN_INSTANTIATE_COMPLEX_MATH_FUNCS(Packet1cd)
 
 #endif  // EIGEN_ARCH_ARM64
+
+EIGEN_GCC_FAST_MATH_COMPLEX_VECTORIZE_WORKAROUND_POP
 
 }  // end namespace internal
 

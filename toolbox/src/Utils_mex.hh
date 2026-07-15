@@ -114,15 +114,6 @@
 #define arg_out_19 plhs[19]
 
 // ============================================================================
-// ASSERTION MACROS
-// ============================================================================
-
-#define UTILS_MEX_ASSERT0( COND, MSG ) \
-  if ( !( COND ) ) Utils::mex_error_message( MSG )
-
-#define UTILS_MEX_ASSERT( COND, FMT, ... ) UTILS_MEX_ASSERT0( COND, fmt::format( FMT, __VA_ARGS__ ) )
-
-// ============================================================================
 // LINUX OUTPUT REDIRECTION (cout and stdout)
 // ============================================================================
 
@@ -228,8 +219,25 @@ namespace Utils
   //!
   //! \param msg The error message to display.
   //!
-  inline void mex_error_message( string_view msg )
+  inline void mex_error_message( std::string_view const msg )
   { mexErrMsgTxt( msg.data() ); }
+
+  inline
+  void mex_assert( bool ok, std::string_view const msg ) {
+    if ( !ok ) mex_error_message( msg );
+  }
+
+  template<class... Args>
+  inline void
+  mex_assert(bool ok, std::string_view fmt, Args&&... args) {
+    if (!ok) {
+      std::string msg = std::vformat(
+        fmt,
+        std::make_format_args(args...)
+      );
+      mex_error_message(msg);
+    }
+  }
 
   // ==========================================================================
   // INPUT VALIDATION FUNCTIONS
@@ -245,7 +253,7 @@ namespace Utils
   inline bool mex_is_scalar( mxArray const * arg, string_view msg )
   {
     mwSize number_of_dimensions = mxGetNumberOfDimensions( arg );
-    UTILS_MEX_ASSERT0( number_of_dimensions == 2, msg );
+    mex_assert( number_of_dimensions == 2, msg );
     mwSize const * dims{ mxGetDimensions( arg ) };
     return dims[0] == 1 && dims[1] == 1;
   }
@@ -260,9 +268,9 @@ namespace Utils
   inline double mex_get_scalar_value( mxArray const * arg, string_view msg )
   {
     mwSize number_of_dimensions = mxGetNumberOfDimensions( arg );
-    UTILS_MEX_ASSERT0( number_of_dimensions == 2, msg );
+    mex_assert( number_of_dimensions == 2, msg );
     mwSize const * dims{ mxGetDimensions( arg ) };
-    UTILS_MEX_ASSERT( dims[0] == 1 && dims[1] == 1, "{}, found {} x {} matrix\n", msg, dims[0], dims[1] );
+    mex_assert( dims[0] == 1 && dims[1] == 1, "{}, found {} x {} matrix\n", msg, dims[0], dims[1] );
     return mxGetScalar( arg );
   }
 
@@ -275,7 +283,7 @@ namespace Utils
   //!
   inline bool mex_get_bool( mxArray const * arg, string_view msg )
   {
-    UTILS_MEX_ASSERT0( mxIsLogicalScalar( arg ), msg );
+    mex_assert( mxIsLogicalScalar( arg ), msg );
     return mxIsLogicalScalarTrue( arg );
   }
 
@@ -290,9 +298,9 @@ namespace Utils
   {
     using std::floor;
     mwSize number_of_dimensions = mxGetNumberOfDimensions( arg );
-    UTILS_MEX_ASSERT0( number_of_dimensions == 2, msg );
+    mex_assert( number_of_dimensions == 2, msg );
     mwSize const * dims = mxGetDimensions( arg );
-    UTILS_MEX_ASSERT( dims[0] == 1 && dims[1] == 1, "{}, found {} x {} matrix\n", msg, dims[0], dims[1] );
+    mex_assert( dims[0] == 1 && dims[1] == 1, "{}, found {} x {} matrix\n", msg, dims[0], dims[1] );
     mxClassID category = mxGetClassID( arg );
     int64_t   res      = 0;
     void *    ptr      = mxGetData( arg );
@@ -310,18 +318,18 @@ namespace Utils
       case mxDOUBLE_CLASS:
       {
         double tmp{ *static_cast<double *>( ptr ) };
-        UTILS_MEX_ASSERT( tmp == floor( tmp ), "{} expected int, found {}\n", msg, tmp );
+        mex_assert( tmp == floor( tmp ), "{} expected int, found {}\n", msg, tmp );
         res = static_cast<int64_t>( tmp );
         break;
       }
       case mxSINGLE_CLASS:
       {
         float tmp{ *static_cast<float *>( ptr ) };
-        UTILS_MEX_ASSERT( tmp == floor( tmp ), "{} expected int, found {}\n", msg, tmp );
+        mex_assert( tmp == floor( tmp ), "{} expected int, found {}\n", msg, tmp );
         res = static_cast<int64_t>( tmp );
         break;
       }
-      default: UTILS_MEX_ASSERT( false, "{} bad type scalar", msg ); break;
+      default: mex_assert( false, "{} bad type scalar", msg ); break;
     }
     return res;
   }
@@ -337,9 +345,9 @@ namespace Utils
   inline double const * mex_vector_pointer( mxArray const * arg, mwSize & sz, string_view msg )
   {
     mwSize number_of_dimensions = mxGetNumberOfDimensions( arg );
-    UTILS_MEX_ASSERT0( number_of_dimensions == 2, msg );
+    mex_assert( number_of_dimensions == 2, msg );
     mwSize const * dims{ mxGetDimensions( arg ) };
-    UTILS_MEX_ASSERT(
+    mex_assert(
       dims[0] == 1 || dims[1] == 1 || dims[0] * dims[1] == 0,
       "{}\nExpect (1 x n or n x 1 or empty) matrix, found {} x {}\n",
       msg,
@@ -361,7 +369,7 @@ namespace Utils
   inline double const * mex_matrix_pointer( mxArray const * arg, mwSize & nr, mwSize & nc, string_view msg )
   {
     mwSize number_of_dimensions = mxGetNumberOfDimensions( arg );
-    UTILS_MEX_ASSERT0( number_of_dimensions == 2, msg );
+    mex_assert( number_of_dimensions == 2, msg );
     mwSize const * dims{ mxGetDimensions( arg ) };
     nr = dims[0];
     nc = dims[1];

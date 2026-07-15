@@ -29,6 +29,7 @@
  *   General matrix-matrix product functionality based on ?GEMM.
  ********************************************************************************
 */
+// SPDX-License-Identifier: BSD-3-Clause
 
 #ifndef EIGEN_GENERAL_MATRIX_MATRIX_BLAS_H
 #define EIGEN_GENERAL_MATRIX_MATRIX_BLAS_H
@@ -49,7 +50,7 @@ namespace internal {
 
 // gemm specialization
 
-#define GEMM_SPECIALIZATION(EIGTYPE, EIGPREFIX, BLASTYPE, BLASFUNC)                                                 \
+#define EIGEN_BLAS_GEMM_SPECIALIZATION(EIGTYPE, EIGPREFIX, BLASTYPE, BLASFUNC)                                      \
   template <typename Index, int LhsStorageOrder, bool ConjugateLhs, int RhsStorageOrder, bool ConjugateRhs>         \
   struct general_matrix_matrix_product<Index, EIGTYPE, LhsStorageOrder, ConjugateLhs, EIGTYPE, RhsStorageOrder,     \
                                        ConjugateRhs, ColMajor, 1> {                                                 \
@@ -105,15 +106,15 @@ namespace internal {
   };
 
 #ifdef EIGEN_USE_MKL
-GEMM_SPECIALIZATION(double, d, double, dgemm)
-GEMM_SPECIALIZATION(float, f, float, sgemm)
-GEMM_SPECIALIZATION(dcomplex, cd, MKL_Complex16, zgemm)
-GEMM_SPECIALIZATION(scomplex, cf, MKL_Complex8, cgemm)
+EIGEN_BLAS_GEMM_SPECIALIZATION(double, d, double, dgemm)
+EIGEN_BLAS_GEMM_SPECIALIZATION(float, f, float, sgemm)
+EIGEN_BLAS_GEMM_SPECIALIZATION(dcomplex, cd, MKL_Complex16, zgemm)
+EIGEN_BLAS_GEMM_SPECIALIZATION(scomplex, cf, MKL_Complex8, cgemm)
 #else
-GEMM_SPECIALIZATION(double, d, double, dgemm_)
-GEMM_SPECIALIZATION(float, f, float, sgemm_)
-GEMM_SPECIALIZATION(dcomplex, cd, double, zgemm_)
-GEMM_SPECIALIZATION(scomplex, cf, float, cgemm_)
+EIGEN_BLAS_GEMM_SPECIALIZATION(double, d, double, dgemm_)
+EIGEN_BLAS_GEMM_SPECIALIZATION(float, f, float, sgemm_)
+EIGEN_BLAS_GEMM_SPECIALIZATION(dcomplex, cd, double, zgemm_)
+EIGEN_BLAS_GEMM_SPECIALIZATION(scomplex, cf, float, cgemm_)
 #endif
 
 // If OpenBLAS with BUILD_BFLOAT16=1 support is available,
@@ -196,8 +197,9 @@ struct general_matrix_matrix_product<Index, Eigen::bfloat16, LhsStorageOrder, Co
   }
 };
 
-#endif  // EIGEN_USE_OPENBLAS_SBGEMM
+#endif  // EIGEN_USE_OPENBLAS_BFLOAT16
 
+#undef EIGEN_BLAS_GEMM_SPECIALIZATION
 }  // namespace internal
 
 }  // end namespace Eigen

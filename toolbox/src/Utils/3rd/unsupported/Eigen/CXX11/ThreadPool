@@ -1,0 +1,10 @@
+// Forwarding header for backward compatibility.
+// SPDX-FileCopyrightText: The Eigen Authors
+// SPDX-License-Identifier: MPL-2.0
+
+#ifndef EIGEN_UNSUPPORTED_CXX11_THREADPOOL_FORWARD_H
+#define EIGEN_UNSUPPORTED_CXX11_THREADPOOL_FORWARD_H
+
+#include "../ThreadPool"  // IWYU pragma: export
+
+#endif  // EIGEN_UNSUPPORTED_CXX11_THREADPOOL_FORWARD_H

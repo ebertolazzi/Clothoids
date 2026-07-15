@@ -30,6 +30,7 @@
  *   MKL VML support for coefficient-wise unary Eigen expressions like a=b.sin()
  ********************************************************************************
 */
+// SPDX-License-Identifier: BSD-3-Clause
 
 #ifndef EIGEN_ASSIGN_VML_H
 #define EIGEN_ASSIGN_VML_H
@@ -48,19 +49,16 @@ class vml_assign_traits {
     DstHasDirectAccess = Dst::Flags & DirectAccessBit,
     SrcHasDirectAccess = Src::Flags & DirectAccessBit,
     StorageOrdersAgree = (int(Dst::IsRowMajor) == int(Src::IsRowMajor)),
-    InnerSize = int(Dst::IsVectorAtCompileTime) ? int(Dst::SizeAtCompileTime)
-                : int(Dst::Flags) & RowMajorBit ? int(Dst::ColsAtCompileTime)
-                                                : int(Dst::RowsAtCompileTime),
     InnerMaxSize = int(Dst::IsVectorAtCompileTime) ? int(Dst::MaxSizeAtCompileTime)
                    : int(Dst::Flags) & RowMajorBit ? int(Dst::MaxColsAtCompileTime)
                                                    : int(Dst::MaxRowsAtCompileTime),
     MaxSizeAtCompileTime = Dst::SizeAtCompileTime,
 
-    MightEnableVml = StorageOrdersAgree && DstHasDirectAccess && SrcHasDirectAccess &&
+    MightEnableVml = bool(StorageOrdersAgree) && bool(DstHasDirectAccess) && bool(SrcHasDirectAccess) &&
                      Src::InnerStrideAtCompileTime == 1 && Dst::InnerStrideAtCompileTime == 1,
-    MightLinearize = MightEnableVml && (int(Dst::Flags) & int(Src::Flags) & LinearAccessBit),
-    VmlSize = MightLinearize ? MaxSizeAtCompileTime : InnerMaxSize,
-    LargeEnough = VmlSize == Dynamic || VmlSize >= EIGEN_MKL_VML_THRESHOLD
+    MightLinearize = bool(MightEnableVml) && (int(Dst::Flags) & int(Src::Flags) & LinearAccessBit),
+    VmlSize = bool(MightLinearize) ? MaxSizeAtCompileTime : InnerMaxSize,
+    LargeEnough = (VmlSize == Dynamic) || VmlSize >= EIGEN_MKL_VML_THRESHOLD
   };
 
  public:

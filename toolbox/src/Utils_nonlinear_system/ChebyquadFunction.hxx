@@ -46,7 +46,7 @@ public:
         "}\n",
         dim )
   {
-    UTILS_ASSERT(
+    Utils::Assert(
       dim > 0 && dim < 10 && dim != 8,
       "ChebyquadFunction:: dimension n = {} must be on [1,2,3,4,5,6,7,9]",
       dim );

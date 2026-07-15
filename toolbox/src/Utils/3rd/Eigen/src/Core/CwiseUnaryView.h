@@ -6,6 +6,7 @@
 // This Source Code Form is subject to the terms of the Mozilla
 // Public License v. 2.0. If a copy of the MPL was not distributed
 // with this file, You can obtain one at http://mozilla.org/MPL/2.0/.
+// SPDX-License-Identifier: MPL-2.0
 
 #ifndef EIGEN_CWISE_UNARY_VIEW_H
 #define EIGEN_CWISE_UNARY_VIEW_H
@@ -20,7 +21,7 @@ template <typename ViewOp, typename MatrixType, typename StrideType>
 struct traits<CwiseUnaryView<ViewOp, MatrixType, StrideType> > : traits<MatrixType> {
   typedef typename result_of<ViewOp(typename traits<MatrixType>::Scalar&)>::type1 ScalarRef;
   static_assert(std::is_reference<ScalarRef>::value, "Views must return a reference type.");
-  typedef remove_all_t<ScalarRef> Scalar;
+  typedef remove_cvref_t<ScalarRef> Scalar;
   typedef typename MatrixType::Nested MatrixTypeNested;
   typedef remove_all_t<MatrixTypeNested> MatrixTypeNested_;
   enum {
@@ -28,7 +29,7 @@ struct traits<CwiseUnaryView<ViewOp, MatrixType, StrideType> > : traits<MatrixTy
     Flags =
         traits<MatrixTypeNested_>::Flags &
         (RowMajorBit | FlagsLvalueBit | DirectAccessBit),  // FIXME DirectAccessBit should not be handled by expressions
-    MatrixTypeInnerStride = inner_stride_at_compile_time<MatrixType>::ret,
+    MatrixTypeInnerStride = inner_stride_at_compile_time<MatrixType>::value,
     // need to cast the sizeof's from size_t to int explicitly, otherwise:
     // "error: no integral type can represent all of the enumerator values
     InnerStrideAtCompileTime =
@@ -39,9 +40,9 @@ struct traits<CwiseUnaryView<ViewOp, MatrixType, StrideType> > : traits<MatrixTy
             : int(StrideType::InnerStrideAtCompileTime),
 
     OuterStrideAtCompileTime = StrideType::OuterStrideAtCompileTime == 0
-                                   ? (outer_stride_at_compile_time<MatrixType>::ret == Dynamic
+                                   ? (outer_stride_at_compile_time<MatrixType>::value == Dynamic
                                           ? int(Dynamic)
-                                          : outer_stride_at_compile_time<MatrixType>::ret *
+                                          : outer_stride_at_compile_time<MatrixType>::value *
                                                 int(sizeof(typename traits<MatrixType>::Scalar) / sizeof(Scalar)))
                                    : int(StrideType::OuterStrideAtCompileTime)
   };
@@ -100,6 +101,7 @@ class CwiseUnaryViewImpl<ViewOp, MatrixType, StrideType, Dense, true>
   EIGEN_DENSE_PUBLIC_INTERFACE(Derived)
   EIGEN_INHERIT_ASSIGNMENT_OPERATORS(CwiseUnaryViewImpl)
 
+  using Base::coeffRef;
   using Base::data;
   EIGEN_DEVICE_FUNC inline Scalar* data() { return &(this->coeffRef(0)); }
 
@@ -140,22 +142,24 @@ class CwiseUnaryView : public internal::CwiseUnaryViewImpl<ViewOp, MatrixType, S
   typedef typename internal::ref_selector<MatrixType>::non_const_type MatrixTypeNested;
   typedef internal::remove_all_t<MatrixType> NestedExpression;
 
-  explicit EIGEN_DEVICE_FUNC inline CwiseUnaryView(MatrixType& mat, const ViewOp& func = ViewOp())
+  explicit EIGEN_DEVICE_FUNC constexpr inline CwiseUnaryView(MatrixType& mat, const ViewOp& func = ViewOp())
       : m_matrix(mat), m_functor(func) {}
 
   EIGEN_INHERIT_ASSIGNMENT_OPERATORS(CwiseUnaryView)
 
-  EIGEN_DEVICE_FUNC EIGEN_STRONG_INLINE constexpr Index rows() const noexcept { return m_matrix.rows(); }
-  EIGEN_DEVICE_FUNC EIGEN_STRONG_INLINE constexpr Index cols() const noexcept { return m_matrix.cols(); }
+  EIGEN_DEVICE_FUNC constexpr Index rows() const noexcept { return m_matrix.rows(); }
+  EIGEN_DEVICE_FUNC constexpr Index cols() const noexcept { return m_matrix.cols(); }
 
   /** \returns the functor representing unary operation */
-  EIGEN_DEVICE_FUNC const ViewOp& functor() const { return m_functor; }
+  EIGEN_DEVICE_FUNC constexpr const ViewOp& functor() const { return m_functor; }
 
   /** \returns the nested expression */
-  EIGEN_DEVICE_FUNC const internal::remove_all_t<MatrixTypeNested>& nestedExpression() const { return m_matrix; }
+  EIGEN_DEVICE_FUNC constexpr const internal::remove_all_t<MatrixTypeNested>& nestedExpression() const {
+    return m_matrix;
+  }
 
   /** \returns the nested expression */
-  EIGEN_DEVICE_FUNC std::remove_reference_t<MatrixTypeNested>& nestedExpression() { return m_matrix; }
+  EIGEN_DEVICE_FUNC constexpr std::remove_reference_t<MatrixTypeNested>& nestedExpression() { return m_matrix; }
 
  protected:
   MatrixTypeNested m_matrix;

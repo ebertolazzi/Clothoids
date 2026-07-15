@@ -29,6 +29,7 @@
  *     LU decomposition with partial pivoting based on LAPACKE_?getrf function.
  ********************************************************************************
 */
+// SPDX-License-Identifier: BSD-3-Clause
 
 #ifndef EIGEN_PARTIALLU_LAPACK_H
 #define EIGEN_PARTIALLU_LAPACK_H
@@ -42,7 +43,7 @@ namespace internal {
 
 namespace lapacke_helpers {
 // -------------------------------------------------------------------------------------------------------------------
-//        Generic lapacke partial lu implementation that converts arguments and dispatches to the function above
+//        Generic lapacke partial lu implementation that converts arguments and dispatches to getrf
 // -------------------------------------------------------------------------------------------------------------------
 
 template <typename Scalar, int StorageOrder>
@@ -50,7 +51,6 @@ struct lapacke_partial_lu {
   /** \internal performs the LU decomposition in-place of the matrix represented */
   static lapack_int blocked_lu(Index rows, Index cols, Scalar* lu_data, Index luStride, lapack_int* row_transpositions,
                                lapack_int& nb_transpositions, lapack_int maxBlockSize = 256) {
-    EIGEN_UNUSED_VARIABLE(maxBlockSize);
     // Set up parameters for getrf
     lapack_int matrix_order = StorageOrder == RowMajor ? LAPACK_ROW_MAJOR : LAPACK_COL_MAJOR;
     lapack_int lda = to_lapack(luStride);
@@ -61,6 +61,12 @@ struct lapacke_partial_lu {
     nb_transpositions = 0;
 
     lapack_int info = getrf(matrix_order, m, n, to_lapack(a), lda, ipiv);
+    if (info == -4) {
+      // High-level LAPACKE may reject NaN inputs before calling LAPACK. Eigen's native path preserves determinant
+      // propagation for these values.
+      return generic_partial_lu_impl<Scalar, StorageOrder, lapack_int, Dynamic>::blocked_lu(
+          rows, cols, lu_data, luStride, row_transpositions, nb_transpositions, maxBlockSize);
+    }
     eigen_assert(info >= 0);
 
     for (int i = 0; i < m; i++) {

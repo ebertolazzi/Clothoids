@@ -24,7 +24,7 @@ static BaseCurve * get_base_pointer( string const & kind, mxArray const * arg )
   else if ( kind == "dubins" )
     return Utils::mex_convert_mx_to_ptr<Dubins>( arg );
 
-  UTILS_MEX_ASSERT( false, "in get_base_pointer type '{}' unknown\n", kind );
+  Utils::mex_assert( false, "in get_base_pointer type '{}' unknown\n", kind );
   return nullptr;
 }
 
@@ -32,7 +32,7 @@ static BaseCurve * get_base_pointer( string const & kind, mxArray const * arg )
 
 static bool do_is_ISO( mxArray const * plhs, char const msg[] )
 {
-  UTILS_MEX_ASSERT0( mxIsChar( plhs ), msg );
+  Utils::mex_assert( mxIsChar( plhs ), msg );
   string cmd = mxArrayToString( plhs );
   return cmd == "ISO";
 }
@@ -44,8 +44,8 @@ static void do_length( int nlhs, mxArray * plhs[], int nrhs, mxArray const * prh
   G2LIB_CLASS * ptr = Utils::mex_convert_mx_to_ptr<G2LIB_CLASS>( arg_in_1 );
 
 #define CMD CMD_BASE "('length',OBJ[,offs,'ISO'/'SAE']): "
-  UTILS_MEX_ASSERT( nrhs == 2 || nrhs == 3 || nrhs == 4, CMD "expected 2, 3 or 4 inputs, nrhs = {}\n", nrhs );
-  UTILS_MEX_ASSERT( nlhs == 1, CMD "expected 1 output, nlhs = {}\n", nlhs );
+  Utils::mex_assert( nrhs == 2 || nrhs == 3 || nrhs == 4, CMD "expected 2, 3 or 4 inputs, nrhs = {}\n", nrhs );
+  Utils::mex_assert( nlhs == 1, CMD "expected 1 output, nlhs = {}\n", nlhs );
 
   if ( nrhs == 2 ) { Utils::mex_set_scalar_value( arg_out_0, ptr->length() ); }
   else
@@ -66,8 +66,8 @@ static void do_length( int nlhs, mxArray * plhs[], int nrhs, mxArray const * prh
 static void do_make_a_copy( int nlhs, mxArray * plhs[], int nrhs, mxArray const * prhs[] )
 {
 #define CMD CMD_BASE "('make_a_copy',OBJ): "
-  UTILS_MEX_ASSERT( nrhs == 2, CMD "expected 2 inputs, nrhs = {}\n", nrhs );
-  UTILS_MEX_ASSERT( nlhs == 1, CMD "expected 1 output, nlhs = {}\n", nlhs );
+  Utils::mex_assert( nrhs == 2, CMD "expected 2 inputs, nrhs = {}\n", nrhs );
+  Utils::mex_assert( nlhs == 1, CMD "expected 1 output, nlhs = {}\n", nlhs );
 
   G2LIB_CLASS const * ptr = Utils::mex_convert_mx_to_ptr<G2LIB_CLASS>( arg_in_1 );
   arg_out_0               = Utils::mex_convert_ptr_to_mx<G2LIB_CLASS>( new G2LIB_CLASS( *ptr ) );
@@ -79,10 +79,10 @@ static void do_make_a_copy( int nlhs, mxArray * plhs[], int nrhs, mxArray const 
 static void do_build2( int nlhs, mxArray *[], int nrhs, mxArray const * prhs[] )
 {
 #define CMD CMD_BASE "('build2',OBJ,OBJ1,type1): "
-  UTILS_MEX_ASSERT( nrhs == 4, CMD "expected 3 inputs, nrhs = {}\n", nrhs );
-  UTILS_MEX_ASSERT( nlhs == 0, CMD "expected NO output, nlhs = {}\n", nlhs );
+  Utils::mex_assert( nrhs == 4, CMD "expected 3 inputs, nrhs = {}\n", nrhs );
+  Utils::mex_assert( nlhs == 0, CMD "expected NO output, nlhs = {}\n", nlhs );
 
-  UTILS_MEX_ASSERT0( mxIsChar( arg_in_3 ), CMD "'type' argument must be a string" );
+  Utils::mex_assert( mxIsChar( arg_in_3 ), CMD "'type' argument must be a string" );
   string kind = mxArrayToString( arg_in_3 );
   Utils::to_lower( kind );
 
@@ -114,8 +114,8 @@ static void do_build2( int nlhs, mxArray *[], int nrhs, mxArray const * prhs[] )
 static void do_delete( int nlhs, mxArray *[], int nrhs, mxArray const * prhs[] )
 {
 #define CMD CMD_BASE "('delete',OBJ): "
-  UTILS_MEX_ASSERT( nrhs == 2, CMD "expected 2 inputs, nrhs = {}\n", nrhs );
-  UTILS_MEX_ASSERT( nlhs == 0, CMD "expected no output, nlhs = {}\n", nlhs );
+  Utils::mex_assert( nrhs == 2, CMD "expected 2 inputs, nrhs = {}\n", nrhs );
+  Utils::mex_assert( nlhs == 0, CMD "expected no output, nlhs = {}\n", nlhs );
   // Destroy the C++ object
   Utils::mex_destroy_object<G2LIB_CLASS>( arg_in_1 );
 #undef CMD
@@ -126,8 +126,8 @@ static void do_delete( int nlhs, mxArray *[], int nrhs, mxArray const * prhs[] )
 static void do_bbox( int nlhs, mxArray * plhs[], int nrhs, mxArray const * prhs[] )
 {
 #define CMD CMD_BASE "('bbox',OBJ[,offs,'ISO'/'SAE']): "
-  UTILS_MEX_ASSERT( nrhs >= 2 && nrhs <= 4, CMD "expected 2, 3 or 4 inputs, nrhs = {}\n", nrhs );
-  UTILS_MEX_ASSERT( nlhs == 4, CMD "expected 4 output, nlhs = {}\n", nlhs );
+  Utils::mex_assert( nrhs >= 2 && nrhs <= 4, CMD "expected 2, 3 or 4 inputs, nrhs = {}\n", nrhs );
+  Utils::mex_assert( nlhs == 4, CMD "expected 4 output, nlhs = {}\n", nlhs );
 
   G2LIB_CLASS * ptr = Utils::mex_convert_mx_to_ptr<G2LIB_CLASS>( arg_in_1 );
 
@@ -163,8 +163,8 @@ static void do_bbTriangles( int nlhs, mxArray * plhs[], int nrhs, mxArray const 
 
   G2LIB_CLASS * ptr = Utils::mex_convert_mx_to_ptr<G2LIB_CLASS>( arg_in_1 );
 
-  UTILS_MEX_ASSERT( nrhs >= 2 && nrhs <= 6, CMD "expected 2 up to 6 inputs, nrhs = {}\n", nrhs );
-  UTILS_MEX_ASSERT( nlhs == 3, CMD "expected 3 output, nlhs = {}\n", nlhs );
+  Utils::mex_assert( nrhs >= 2 && nrhs <= 6, CMD "expected 2 up to 6 inputs, nrhs = {}\n", nrhs );
+  Utils::mex_assert( nlhs == 3, CMD "expected 3 output, nlhs = {}\n", nlhs );
 
   real_type max_angle = Utils::m_pi / 18;
   real_type max_size  = 1e100;
@@ -217,8 +217,8 @@ static void do_change_origin( int nlhs, mxArray *[], int nrhs, mxArray const * p
   G2LIB_CLASS * ptr = Utils::mex_convert_mx_to_ptr<G2LIB_CLASS>( arg_in_1 );
 
 #define CMD CMD_BASE "('change_origin',OBJ,x0,y0): "
-  UTILS_MEX_ASSERT( nrhs == 4, CMD "expected 4 inputs, nrhs = {}\n", nrhs );
-  UTILS_MEX_ASSERT( nlhs == 0, CMD "expected no output, nlhs = {}\n", nlhs );
+  Utils::mex_assert( nrhs == 4, CMD "expected 4 inputs, nrhs = {}\n", nrhs );
+  Utils::mex_assert( nlhs == 0, CMD "expected no output, nlhs = {}\n", nlhs );
 
   real_type new_x0, new_y0;
   new_x0 = Utils::mex_get_scalar_value( arg_in_2, CMD "`x0` expected to be a real scalar" );
@@ -236,8 +236,8 @@ static void do_translate( int nlhs, mxArray *[], int nrhs, mxArray const * prhs[
   G2LIB_CLASS * ptr = Utils::mex_convert_mx_to_ptr<G2LIB_CLASS>( arg_in_1 );
 
 #define CMD CMD_BASE "('translate',OBJ,t0,t0): "
-  UTILS_MEX_ASSERT( nrhs == 4, CMD "expected 4 inputs, nrhs = {}\n", nrhs );
-  UTILS_MEX_ASSERT( nlhs == 0, CMD "expected no output, nlhs = {}\n", nlhs );
+  Utils::mex_assert( nrhs == 4, CMD "expected 4 inputs, nrhs = {}\n", nrhs );
+  Utils::mex_assert( nlhs == 0, CMD "expected no output, nlhs = {}\n", nlhs );
 
   real_type tx, ty;
   tx = Utils::mex_get_scalar_value( arg_in_2, CMD "`tx` expected to be a real scalar" );
@@ -254,8 +254,8 @@ static void do_rotate( int nlhs, mxArray *[], int nrhs, mxArray const * prhs[] )
   G2LIB_CLASS * ptr = Utils::mex_convert_mx_to_ptr<G2LIB_CLASS>( arg_in_1 );
 
 #define CMD CMD_BASE "('rotate',OBJ,angle,cx,cy): "
-  UTILS_MEX_ASSERT( nrhs == 5, CMD "expected 5 inputs, nrhs = {}\n", nrhs );
-  UTILS_MEX_ASSERT( nlhs == 0, CMD "expected no output, nlhs = {}\n", nlhs );
+  Utils::mex_assert( nrhs == 5, CMD "expected 5 inputs, nrhs = {}\n", nrhs );
+  Utils::mex_assert( nlhs == 0, CMD "expected no output, nlhs = {}\n", nlhs );
 
   real_type angle, cx, cy;
   angle = Utils::mex_get_scalar_value( arg_in_2, CMD "`angle` expected to be a real scalar" );
@@ -273,8 +273,8 @@ static void do_scale( int nlhs, mxArray *[], int nrhs, mxArray const * prhs[] )
   G2LIB_CLASS * ptr = Utils::mex_convert_mx_to_ptr<G2LIB_CLASS>( arg_in_1 );
 
 #define CMD CMD_BASE "('scale',OBJ,sc): "
-  UTILS_MEX_ASSERT( nrhs == 3, CMD "expected 3 inputs, nrhs = {}\n", nrhs );
-  UTILS_MEX_ASSERT( nlhs == 0, CMD "expected no output, nlhs = {}\n", nlhs );
+  Utils::mex_assert( nrhs == 3, CMD "expected 3 inputs, nrhs = {}\n", nrhs );
+  Utils::mex_assert( nlhs == 0, CMD "expected no output, nlhs = {}\n", nlhs );
   real_type sc = Utils::mex_get_scalar_value( arg_in_2, CMD "`sc` expected to be a real scalar" );
   ptr->scale( sc );
 #undef CMD
@@ -287,8 +287,8 @@ static void do_reverse( int nlhs, mxArray *[], int nrhs, mxArray const * prhs[] 
   G2LIB_CLASS * ptr = Utils::mex_convert_mx_to_ptr<G2LIB_CLASS>( arg_in_1 );
 
 #define CMD CMD_BASE "('reverse',OBJ): "
-  UTILS_MEX_ASSERT( nrhs == 2, CMD "expected 2 inputs, nrhs = {}\n", nrhs );
-  UTILS_MEX_ASSERT( nlhs == 0, CMD "expected no output, nlhs = {}\n", nlhs );
+  Utils::mex_assert( nrhs == 2, CMD "expected 2 inputs, nrhs = {}\n", nrhs );
+  Utils::mex_assert( nlhs == 0, CMD "expected no output, nlhs = {}\n", nlhs );
 
   ptr->reverse();
 #undef CMD
@@ -301,8 +301,8 @@ static void do_trim( int nlhs, mxArray *[], int nrhs, mxArray const * prhs[] )
   G2LIB_CLASS * ptr = Utils::mex_convert_mx_to_ptr<G2LIB_CLASS>( arg_in_1 );
 
 #define CMD CMD_BASE "('trim',OBJ,s_begin,s_end): "
-  UTILS_MEX_ASSERT( nrhs == 4, CMD "expected 4 inputs, nrhs = {}\n", nrhs );
-  UTILS_MEX_ASSERT( nlhs == 0, CMD "expected no output, nlhs = {}\n", nlhs );
+  Utils::mex_assert( nrhs == 4, CMD "expected 4 inputs, nrhs = {}\n", nrhs );
+  Utils::mex_assert( nlhs == 0, CMD "expected no output, nlhs = {}\n", nlhs );
 
   real_type s_begin, s_end;
   s_begin = Utils::mex_get_scalar_value( arg_in_2, CMD "`s_begin` expected to be a real scalar" );
@@ -320,8 +320,8 @@ static void do_closest_point( int nlhs, mxArray * plhs[], int nrhs, mxArray cons
 
 #define CMD CMD_BASE "('closest_point',OBJ,qx,qy[,offs,'ISO'/'SAE']): "
 
-  UTILS_MEX_ASSERT( nrhs >= 4 || nrhs <= 6, CMD "expected 4, 5 or 6 input, nrhs = {}\n", nrhs );
-  UTILS_MEX_ASSERT( nlhs == 1 || nlhs == 6, CMD "expected 1 pr 6 outputs, nlhs = {}\n", nlhs );
+  Utils::mex_assert( nrhs >= 4 || nrhs <= 6, CMD "expected 4, 5 or 6 input, nrhs = {}\n", nrhs );
+  Utils::mex_assert( nlhs == 1 || nlhs == 6, CMD "expected 1 pr 6 outputs, nlhs = {}\n", nlhs );
 
   mwSize            nrx, ncx, nry, ncy;
   real_type const * qx;
@@ -329,7 +329,7 @@ static void do_closest_point( int nlhs, mxArray * plhs[], int nrhs, mxArray cons
   qx = Utils::mex_matrix_pointer( arg_in_2, nrx, ncx, CMD "`qx` expected to be a real vector/matrix" );
   qy = Utils::mex_matrix_pointer( arg_in_3, nry, ncy, CMD "`qy` expected to be a real vector/matrix" );
 
-  UTILS_MEX_ASSERT(
+  Utils::mex_assert(
     nrx == nry && ncx == ncy,
     CMD
     "`qx` and `qy` expected to be of the same size, found\n"
@@ -416,8 +416,8 @@ static void do_distance( int nlhs, mxArray * plhs[], int nrhs, mxArray const * p
 
 #define CMD CMD_BASE "('distance',OBJ,qx,qy[,offs,'ISO'/'SAE']): "
 
-  UTILS_MEX_ASSERT( nrhs >= 4 || nrhs <= 6, CMD "expected 4, 5 or 6 input, nrhs = {}\n", nrhs );
-  UTILS_MEX_ASSERT( nlhs == 1, CMD "expected 1 output, nlhs = {}\n", nlhs );
+  Utils::mex_assert( nrhs >= 4 || nrhs <= 6, CMD "expected 4, 5 or 6 input, nrhs = {}\n", nrhs );
+  Utils::mex_assert( nlhs == 1, CMD "expected 1 output, nlhs = {}\n", nlhs );
 
   mwSize            nrx, ncx, nry, ncy;
   real_type const * qx;
@@ -425,7 +425,7 @@ static void do_distance( int nlhs, mxArray * plhs[], int nrhs, mxArray const * p
   qx = Utils::mex_matrix_pointer( arg_in_2, nrx, ncx, CMD "`qx` expected to be a real vector/matrix" );
   qy = Utils::mex_matrix_pointer( arg_in_3, nry, ncy, CMD "`qy` expected to be a real vector/matrix" );
 
-  UTILS_MEX_ASSERT(
+  Utils::mex_assert(
     nrx == nry && ncx == ncy,
     CMD
     "`qx` and `qy` expected to be of the same size, found\n"
@@ -463,10 +463,10 @@ static void do_distance( int nlhs, mxArray * plhs[], int nrhs, mxArray const * p
 static void do_collision( int nlhs, mxArray * plhs[], int nrhs, mxArray const * prhs[] )
 {
 #define CMD CMD_BASE "('collision',OBJ,OBJ1,type[,offs,offs1,'ISO'/'SAE']): "
-  UTILS_MEX_ASSERT( nrhs >= 4 || nrhs <= 7, CMD "expected 4 to 7 inputs, nrhs = {}\n", nrhs );
-  UTILS_MEX_ASSERT( nlhs == 1, CMD "expected 1 output, nlhs = {}\n", nlhs );
+  Utils::mex_assert( nrhs >= 4 || nrhs <= 7, CMD "expected 4 to 7 inputs, nrhs = {}\n", nrhs );
+  Utils::mex_assert( nlhs == 1, CMD "expected 1 output, nlhs = {}\n", nlhs );
 
-  UTILS_MEX_ASSERT0( mxIsChar( arg_in_3 ), CMD "'type' argument must be a string" );
+  Utils::mex_assert( mxIsChar( arg_in_3 ), CMD "'type' argument must be a string" );
   string kind = mxArrayToString( arg_in_3 );
   Utils::to_lower( kind );
 
@@ -498,10 +498,10 @@ static void do_collision( int nlhs, mxArray * plhs[], int nrhs, mxArray const * 
 static void do_intersect( int nlhs, mxArray * plhs[], int nrhs, mxArray const * prhs[] )
 {
 #define CMD CMD_BASE "( 'intersect', OBJ, OBJ1, type, [,offs, offs1, 'ISO'/'SAE'] ): "
-  UTILS_MEX_ASSERT( nrhs >= 4 || nrhs <= 7, CMD "expected 4 to 7 inputs, nrhs = {}\n", nrhs );
-  UTILS_MEX_ASSERT( nlhs == 2, CMD "expected 2 output, nlhs = {}\n", nlhs );
+  Utils::mex_assert( nrhs >= 4 || nrhs <= 7, CMD "expected 4 to 7 inputs, nrhs = {}\n", nrhs );
+  Utils::mex_assert( nlhs == 2, CMD "expected 2 output, nlhs = {}\n", nlhs );
 
-  UTILS_MEX_ASSERT0( mxIsChar( arg_in_3 ), CMD "'type' argument must be a string" );
+  Utils::mex_assert( mxIsChar( arg_in_3 ), CMD "'type' argument must be a string" );
   string kind = mxArrayToString( arg_in_3 );
   Utils::to_lower( kind );
 
@@ -544,14 +544,14 @@ static void do_findST( int nlhs, mxArray * plhs[], int nrhs, mxArray const * prh
   G2LIB_CLASS * ptr = Utils::mex_convert_mx_to_ptr<G2LIB_CLASS>( arg_in_1 );
 
 #define CMD CMD_BASE "('findST',OBJ,x,y[,'ISO'/'SAE']): "
-  UTILS_MEX_ASSERT( nrhs == 4 || nrhs == 5, CMD "expected 4 or 5 input, nrhs = {}\n", nrhs );
-  UTILS_MEX_ASSERT( nlhs == 2, CMD "expected 2 output, nlhs = {}\n", nlhs );
+  Utils::mex_assert( nrhs == 4 || nrhs == 5, CMD "expected 4 or 5 input, nrhs = {}\n", nrhs );
+  Utils::mex_assert( nlhs == 2, CMD "expected 2 output, nlhs = {}\n", nlhs );
   mwSize            nrx, ncx, nry, ncy;
   real_type const * x;
   real_type const * y;
   x = Utils::mex_matrix_pointer( arg_in_2, nrx, ncx, CMD "`x` expected to be a real vector/matrix" );
   y = Utils::mex_matrix_pointer( arg_in_3, nry, ncy, CMD "`y` expected to be a real vector/matrix" );
-  UTILS_MEX_ASSERT(
+  Utils::mex_assert(
     nrx == nry && ncx == ncy,
     CMD
     "`x` and `y` expected to be of the same size, found\n"
@@ -586,8 +586,8 @@ static void do_info( int nlhs, mxArray *[], int nrhs, mxArray const * prhs[] )
   G2LIB_CLASS * ptr = Utils::mex_convert_mx_to_ptr<G2LIB_CLASS>( arg_in_1 );
 
 #define CMD CMD_BASE "('info',OBJ): "
-  UTILS_MEX_ASSERT( nrhs == 2, CMD "expected 2 inputs, nrhs = {}\n", nrhs );
-  UTILS_MEX_ASSERT( nlhs == 0, CMD "expected NO outputs, nlhs = {}\n", nlhs );
+  Utils::mex_assert( nrhs == 2, CMD "expected 2 inputs, nrhs = {}\n", nrhs );
+  Utils::mex_assert( nlhs == 0, CMD "expected NO outputs, nlhs = {}\n", nlhs );
   ptr->info( std::cout );
 #undef CMD
 }
@@ -611,7 +611,7 @@ static void do_eval( int nlhs, mxArray * plhs[], int nrhs, mxArray const * prhs[
     bool ISO = true;
     if ( nrhs == 5 ) ISO = do_is_ISO( arg_in_4, CMD " last argument must be a string" );
 
-    UTILS_MEX_ASSERT(
+    Utils::mex_assert(
       size == sizet || size == 1 || sizet == 1,
       CMD " size(s) = {} must be equal to size(t) = {} or size(s|t) == 1\n",
       size,
@@ -645,7 +645,7 @@ static void do_eval( int nlhs, mxArray * plhs[], int nrhs, mxArray const * prhs[
     }
     else
     {
-      UTILS_MEX_ASSERT( nlhs == 0, CMD "expected 1 or 2 outputs, nlhs = {}\n", nlhs );
+      Utils::mex_assert( nlhs == 0, CMD "expected 1 or 2 outputs, nlhs = {}\n", nlhs );
     }
 #undef LOOPXY1
 #undef LOOPXY2
@@ -676,7 +676,7 @@ static void do_eval( int nlhs, mxArray * plhs[], int nrhs, mxArray const * prhs[
     }
     else
     {
-      UTILS_MEX_ASSERT( nlhs == 0, CMD "expected 1 or 2 outputs, nlhs = {}\n", nlhs );
+      Utils::mex_assert( nlhs == 0, CMD "expected 1 or 2 outputs, nlhs = {}\n", nlhs );
     }
 #undef LOOPXY1
 #undef LOOPXY2
@@ -704,7 +704,7 @@ static void do_eval_D( int nlhs, mxArray * plhs[], int nrhs, mxArray const * prh
     bool ISO = true;
     if ( nrhs == 5 ) ISO = do_is_ISO( arg_in_4, CMD " last argument must be a string" );
 
-    UTILS_MEX_ASSERT(
+    Utils::mex_assert(
       size == sizet || size == 1 || sizet == 1,
       CMD " size(s) = {} must be equal to size(t) = {} or size(s|t) == 1\n",
       size,
@@ -738,7 +738,7 @@ static void do_eval_D( int nlhs, mxArray * plhs[], int nrhs, mxArray const * prh
     }
     else
     {
-      UTILS_MEX_ASSERT( nlhs == 0, CMD "expected 1 or 2 outputs, nlhs = {}\n", nlhs );
+      Utils::mex_assert( nlhs == 0, CMD "expected 1 or 2 outputs, nlhs = {}\n", nlhs );
     }
 #undef LOOPXY1
 #undef LOOPXY2
@@ -769,7 +769,7 @@ static void do_eval_D( int nlhs, mxArray * plhs[], int nrhs, mxArray const * prh
     }
     else
     {
-      UTILS_MEX_ASSERT( nlhs == 0, CMD "expected 1 or 2 outputs, nlhs = {}\n", nlhs );
+      Utils::mex_assert( nlhs == 0, CMD "expected 1 or 2 outputs, nlhs = {}\n", nlhs );
     }
 #undef LOOPXY1
 #undef LOOPXY2
@@ -794,7 +794,7 @@ static void do_eval_DD( int nlhs, mxArray * plhs[], int nrhs, mxArray const * pr
     s = Utils::mex_vector_pointer( arg_in_2, size, CMD "`s` expected to be a real vector" );
     t = Utils::mex_vector_pointer( arg_in_3, sizet, CMD "`t` expected to be a real vector" );
 
-    UTILS_MEX_ASSERT(
+    Utils::mex_assert(
       size == sizet || size == 1 || sizet == 1,
       CMD " size(s) = {} must be equal to size(t) = {} or size(s|t) == 1\n",
       size,
@@ -831,7 +831,7 @@ static void do_eval_DD( int nlhs, mxArray * plhs[], int nrhs, mxArray const * pr
     }
     else
     {
-      UTILS_MEX_ASSERT( nlhs == 0, CMD "expected 1 or 2 outputs, nlhs = {}\n", nlhs );
+      Utils::mex_assert( nlhs == 0, CMD "expected 1 or 2 outputs, nlhs = {}\n", nlhs );
     }
 #undef LOOPXY1
 #undef LOOPXY2
@@ -862,7 +862,7 @@ static void do_eval_DD( int nlhs, mxArray * plhs[], int nrhs, mxArray const * pr
     }
     else
     {
-      UTILS_MEX_ASSERT( nlhs == 0, CMD "expected 1 or 2 outputs, nlhs = {}\n", nlhs );
+      Utils::mex_assert( nlhs == 0, CMD "expected 1 or 2 outputs, nlhs = {}\n", nlhs );
     }
 #undef LOOPXY1
 #undef LOOPXY2
@@ -887,7 +887,7 @@ static void do_eval_DDD( int nlhs, mxArray * plhs[], int nrhs, mxArray const * p
     s = Utils::mex_vector_pointer( arg_in_2, size, CMD "`s` expected to be a real vector" );
     t = Utils::mex_vector_pointer( arg_in_3, sizet, CMD "`t` expected to be a real vector" );
 
-    UTILS_MEX_ASSERT(
+    Utils::mex_assert(
       size == sizet || size == 1 || sizet == 1,
       CMD " size(s) = {} must be equal to size(t) = {} or size(s|t) == 1\n",
       size,
@@ -924,7 +924,7 @@ static void do_eval_DDD( int nlhs, mxArray * plhs[], int nrhs, mxArray const * p
     }
     else
     {
-      UTILS_MEX_ASSERT( nlhs == 0, CMD "expected 1 or 2 outputs, nlhs = {}\n", nlhs );
+      Utils::mex_assert( nlhs == 0, CMD "expected 1 or 2 outputs, nlhs = {}\n", nlhs );
     }
 #undef LOOPXY1
 #undef LOOPXY2
@@ -955,7 +955,7 @@ static void do_eval_DDD( int nlhs, mxArray * plhs[], int nrhs, mxArray const * p
     }
     else
     {
-      UTILS_MEX_ASSERT( nlhs == 0, CMD "expected 1 or 2 outputs, nlhs = {}\n", nlhs );
+      Utils::mex_assert( nlhs == 0, CMD "expected 1 or 2 outputs, nlhs = {}\n", nlhs );
     }
 #undef LOOPXY1
 #undef LOOPXY2
@@ -982,7 +982,7 @@ static void do_evaluate( int nlhs, mxArray * plhs[], int nrhs, mxArray const * p
     bool ISO = true;
     if ( nrhs == 5 ) ISO = do_is_ISO( arg_in_4, CMD " last argument must be a string" );
 
-    UTILS_MEX_ASSERT(
+    Utils::mex_assert(
       size == sizet || size == 1 || sizet == 1,
       CMD " size(s) = {} must be equal to size(t) = {} or size(s|t) == 1\n",
       size,
@@ -1018,7 +1018,7 @@ static void do_evaluate( int nlhs, mxArray * plhs[], int nrhs, mxArray const * p
     }
     else
     {
-      UTILS_MEX_ASSERT( nlhs == 0, CMD "expected 1 or 2 outputs, nlhs = {}\n", nlhs );
+      Utils::mex_assert( nlhs == 0, CMD "expected 1 or 2 outputs, nlhs = {}\n", nlhs );
     }
 #undef LOOPXY1
 #undef LOOPXY2
@@ -1047,7 +1047,7 @@ static void do_evaluate( int nlhs, mxArray * plhs[], int nrhs, mxArray const * p
     }
     else
     {
-      UTILS_MEX_ASSERT( nlhs == 0, CMD "expected 1 or 2 outputs, nlhs = {}\n", nlhs );
+      Utils::mex_assert( nlhs == 0, CMD "expected 1 or 2 outputs, nlhs = {}\n", nlhs );
     }
 
 #undef LOOPXY1
@@ -1063,8 +1063,8 @@ static void do_theta( int nlhs, mxArray * plhs[], int nrhs, mxArray const * prhs
   G2LIB_CLASS * ptr = Utils::mex_convert_mx_to_ptr<G2LIB_CLASS>( arg_in_1 );
 
 #define CMD CMD_BASE "('theta',OBJ,s): "
-  UTILS_MEX_ASSERT( nrhs == 3, CMD "expected 3 input, nrhs = {}\n", nrhs );
-  UTILS_MEX_ASSERT( nlhs == 1, CMD "expected 1 output, nlhs = {}\n", nlhs );
+  Utils::mex_assert( nrhs == 3, CMD "expected 3 input, nrhs = {}\n", nrhs );
+  Utils::mex_assert( nlhs == 1, CMD "expected 1 output, nlhs = {}\n", nlhs );
 
   mwSize            size;
   real_type const * s;
@@ -1084,8 +1084,8 @@ static void do_theta_D( int nlhs, mxArray * plhs[], int nrhs, mxArray const * pr
   G2LIB_CLASS * ptr = Utils::mex_convert_mx_to_ptr<G2LIB_CLASS>( arg_in_1 );
 
 #define CMD CMD_BASE "('theta_D',OBJ,s): "
-  UTILS_MEX_ASSERT( nrhs == 3, CMD "expected 3 input, nrhs = {}\n", nrhs );
-  UTILS_MEX_ASSERT( nlhs == 1, CMD "expected 1 output, nlhs = {}\n", nlhs );
+  Utils::mex_assert( nrhs == 3, CMD "expected 3 input, nrhs = {}\n", nrhs );
+  Utils::mex_assert( nlhs == 1, CMD "expected 1 output, nlhs = {}\n", nlhs );
 
   mwSize            size;
   real_type const * s;
@@ -1105,8 +1105,8 @@ static void do_theta_DD( int nlhs, mxArray * plhs[], int nrhs, mxArray const * p
   G2LIB_CLASS * ptr = Utils::mex_convert_mx_to_ptr<G2LIB_CLASS>( arg_in_1 );
 
 #define CMD CMD_BASE "('theta_DD',OBJ,s): "
-  UTILS_MEX_ASSERT( nrhs == 3, CMD "expected 3 input, nrhs = {}\n", nrhs );
-  UTILS_MEX_ASSERT( nlhs == 1, CMD "expected 1 output, nlhs = {}\n", nlhs );
+  Utils::mex_assert( nrhs == 3, CMD "expected 3 input, nrhs = {}\n", nrhs );
+  Utils::mex_assert( nlhs == 1, CMD "expected 1 output, nlhs = {}\n", nlhs );
 
   mwSize            size;
   real_type const * s;
@@ -1126,8 +1126,8 @@ static void do_theta_DDD( int nlhs, mxArray * plhs[], int nrhs, mxArray const * 
   G2LIB_CLASS * ptr = Utils::mex_convert_mx_to_ptr<G2LIB_CLASS>( arg_in_1 );
 
 #define CMD CMD_BASE "('theta_DDD',OBJ,s): "
-  UTILS_MEX_ASSERT( nrhs == 3, CMD "expected 3 input, nrhs = {}\n", nrhs );
-  UTILS_MEX_ASSERT( nlhs == 1, CMD "expected 1 output, nlhs = {}\n", nlhs );
+  Utils::mex_assert( nrhs == 3, CMD "expected 3 input, nrhs = {}\n", nrhs );
+  Utils::mex_assert( nlhs == 1, CMD "expected 1 output, nlhs = {}\n", nlhs );
 
   mwSize            size;
   real_type const * s;
@@ -1147,8 +1147,8 @@ static void do_kappa( int nlhs, mxArray * plhs[], int nrhs, mxArray const * prhs
   G2LIB_CLASS * ptr = Utils::mex_convert_mx_to_ptr<G2LIB_CLASS>( arg_in_1 );
 
 #define CMD CMD_BASE "('kappa',OBJ,s): "
-  UTILS_MEX_ASSERT( nrhs == 3, CMD "expected 3 input, nrhs = {}\n", nrhs );
-  UTILS_MEX_ASSERT( nlhs == 1, CMD "expected 1 output, nlhs = {}\n", nlhs );
+  Utils::mex_assert( nrhs == 3, CMD "expected 3 input, nrhs = {}\n", nrhs );
+  Utils::mex_assert( nlhs == 1, CMD "expected 1 output, nlhs = {}\n", nlhs );
 
   mwSize            size;
   real_type const * s;
@@ -1167,8 +1167,8 @@ static void do_kappa_D( int nlhs, mxArray * plhs[], int nrhs, mxArray const * pr
   G2LIB_CLASS * ptr = Utils::mex_convert_mx_to_ptr<G2LIB_CLASS>( arg_in_1 );
 
 #define CMD CMD_BASE "('kappa_D',OBJ,s): "
-  UTILS_MEX_ASSERT( nrhs == 3, CMD "expected 3 input, nrhs = {}\n", nrhs );
-  UTILS_MEX_ASSERT( nlhs == 1, CMD "expected 1 output, nlhs = {}\n", nlhs );
+  Utils::mex_assert( nrhs == 3, CMD "expected 3 input, nrhs = {}\n", nrhs );
+  Utils::mex_assert( nlhs == 1, CMD "expected 1 output, nlhs = {}\n", nlhs );
 
   mwSize            size;
   real_type const * s;
@@ -1188,8 +1188,8 @@ static void do_kappa_DD( int nlhs, mxArray * plhs[], int nrhs, mxArray const * p
   G2LIB_CLASS * ptr = Utils::mex_convert_mx_to_ptr<G2LIB_CLASS>( arg_in_1 );
 
 #define CMD CMD_BASE "('kappa_DD',OBJ,s): "
-  UTILS_MEX_ASSERT( nrhs == 3, CMD "expected 3 input, nrhs = {}\n", nrhs );
-  UTILS_MEX_ASSERT( nlhs == 1, CMD "expected 1 output, nlhs = {}\n", nlhs );
+  Utils::mex_assert( nrhs == 3, CMD "expected 3 input, nrhs = {}\n", nrhs );
+  Utils::mex_assert( nlhs == 1, CMD "expected 1 output, nlhs = {}\n", nlhs );
 
   mwSize            size;
   real_type const * s;
@@ -1209,8 +1209,8 @@ static void do_xy_begin( int nlhs, mxArray * plhs[], int nrhs, mxArray const * p
   G2LIB_CLASS * ptr = Utils::mex_convert_mx_to_ptr<G2LIB_CLASS>( arg_in_1 );
 
 #define CMD CMD_BASE "('xy_begin',OBJ): "
-  UTILS_MEX_ASSERT( nrhs == 2, CMD "expected 2 input, nrhs = {}\n", nrhs );
-  UTILS_MEX_ASSERT( nlhs == 2, CMD "expected 2 output, nlhs = {}\n", nlhs );
+  Utils::mex_assert( nrhs == 2, CMD "expected 2 input, nrhs = {}\n", nrhs );
+  Utils::mex_assert( nlhs == 2, CMD "expected 2 output, nlhs = {}\n", nlhs );
 
   Utils::mex_set_scalar_value( arg_out_0, ptr->x_begin() );
   Utils::mex_set_scalar_value( arg_out_1, ptr->y_begin() );
@@ -1225,8 +1225,8 @@ static void do_x_begin( int nlhs, mxArray * plhs[], int nrhs, mxArray const * pr
   G2LIB_CLASS * ptr = Utils::mex_convert_mx_to_ptr<G2LIB_CLASS>( arg_in_1 );
 
 #define CMD CMD_BASE "('x_begin',OBJ): "
-  UTILS_MEX_ASSERT( nrhs == 2, CMD "expected 2 input, nrhs = {}\n", nrhs );
-  UTILS_MEX_ASSERT( nlhs == 1, CMD "expected 1 output, nlhs = {}\n", nlhs );
+  Utils::mex_assert( nrhs == 2, CMD "expected 2 input, nrhs = {}\n", nrhs );
+  Utils::mex_assert( nlhs == 1, CMD "expected 1 output, nlhs = {}\n", nlhs );
 
   Utils::mex_set_scalar_value( arg_out_0, ptr->x_begin() );
 
@@ -1240,8 +1240,8 @@ static void do_y_begin( int nlhs, mxArray * plhs[], int nrhs, mxArray const * pr
   G2LIB_CLASS * ptr = Utils::mex_convert_mx_to_ptr<G2LIB_CLASS>( arg_in_1 );
 
 #define CMD CMD_BASE "('y_begin',OBJ): "
-  UTILS_MEX_ASSERT( nrhs == 2, CMD "expected 2 input, nrhs = {}\n", nrhs );
-  UTILS_MEX_ASSERT( nlhs == 1, CMD "expected 1 output, nlhs = {}\n", nlhs );
+  Utils::mex_assert( nrhs == 2, CMD "expected 2 input, nrhs = {}\n", nrhs );
+  Utils::mex_assert( nlhs == 1, CMD "expected 1 output, nlhs = {}\n", nlhs );
 
   Utils::mex_set_scalar_value( arg_out_0, ptr->y_begin() );
 
@@ -1255,8 +1255,8 @@ static void do_theta_begin( int nlhs, mxArray * plhs[], int nrhs, mxArray const 
   G2LIB_CLASS * ptr = Utils::mex_convert_mx_to_ptr<G2LIB_CLASS>( arg_in_1 );
 
 #define CMD CMD_BASE "('theta_begin',OBJ): "
-  UTILS_MEX_ASSERT( nrhs == 2, CMD "expected 2 input, nrhs = {}\n", nrhs );
-  UTILS_MEX_ASSERT( nlhs == 1, CMD "expected 1 output, nlhs = {}\n", nlhs );
+  Utils::mex_assert( nrhs == 2, CMD "expected 2 input, nrhs = {}\n", nrhs );
+  Utils::mex_assert( nlhs == 1, CMD "expected 1 output, nlhs = {}\n", nlhs );
 
   Utils::mex_set_scalar_value( arg_out_0, ptr->theta_begin() );
 
@@ -1270,8 +1270,8 @@ static void do_kappa_begin( int nlhs, mxArray * plhs[], int nrhs, mxArray const 
   G2LIB_CLASS * ptr = Utils::mex_convert_mx_to_ptr<G2LIB_CLASS>( arg_in_1 );
 
 #define CMD CMD_BASE "('kappa_begin',OBJ): "
-  UTILS_MEX_ASSERT( nrhs == 2, CMD "expected 2 input, nrhs = {}\n", nrhs );
-  UTILS_MEX_ASSERT( nlhs == 1, CMD "expected 1 output, nlhs = {}\n", nlhs );
+  Utils::mex_assert( nrhs == 2, CMD "expected 2 input, nrhs = {}\n", nrhs );
+  Utils::mex_assert( nlhs == 1, CMD "expected 1 output, nlhs = {}\n", nlhs );
 
   Utils::mex_set_scalar_value( arg_out_0, ptr->kappa_begin() );
 
@@ -1285,8 +1285,8 @@ static void do_xy_end( int nlhs, mxArray * plhs[], int nrhs, mxArray const * prh
   G2LIB_CLASS * ptr = Utils::mex_convert_mx_to_ptr<G2LIB_CLASS>( arg_in_1 );
 
 #define CMD CMD_BASE "('xy_end',OBJ): "
-  UTILS_MEX_ASSERT( nrhs == 2, CMD "expected 2 input, nrhs = {}\n", nrhs );
-  UTILS_MEX_ASSERT( nlhs == 2, CMD "expected 2 output, nlhs = {}\n", nlhs );
+  Utils::mex_assert( nrhs == 2, CMD "expected 2 input, nrhs = {}\n", nrhs );
+  Utils::mex_assert( nlhs == 2, CMD "expected 2 output, nlhs = {}\n", nlhs );
 
   Utils::mex_set_scalar_value( arg_out_0, ptr->x_end() );
   Utils::mex_set_scalar_value( arg_out_1, ptr->y_end() );
@@ -1301,8 +1301,8 @@ static void do_x_end( int nlhs, mxArray * plhs[], int nrhs, mxArray const * prhs
   G2LIB_CLASS * ptr = Utils::mex_convert_mx_to_ptr<G2LIB_CLASS>( arg_in_1 );
 
 #define CMD CMD_BASE "('x_end',OBJ): "
-  UTILS_MEX_ASSERT( nrhs == 2, CMD "expected 2 input, nrhs = {}\n", nrhs );
-  UTILS_MEX_ASSERT( nlhs == 1, CMD "expected 1 output, nlhs = {}\n", nlhs );
+  Utils::mex_assert( nrhs == 2, CMD "expected 2 input, nrhs = {}\n", nrhs );
+  Utils::mex_assert( nlhs == 1, CMD "expected 1 output, nlhs = {}\n", nlhs );
 
   Utils::mex_set_scalar_value( arg_out_0, ptr->x_end() );
 
@@ -1316,8 +1316,8 @@ static void do_y_end( int nlhs, mxArray * plhs[], int nrhs, mxArray const * prhs
   G2LIB_CLASS * ptr = Utils::mex_convert_mx_to_ptr<G2LIB_CLASS>( arg_in_1 );
 
 #define CMD CMD_BASE "('y_end',OBJ): "
-  UTILS_MEX_ASSERT( nrhs == 2, CMD "expected 2 input, nrhs = {}\n", nrhs );
-  UTILS_MEX_ASSERT( nlhs == 1, CMD "expected 1 output, nlhs = {}\n", nlhs );
+  Utils::mex_assert( nrhs == 2, CMD "expected 2 input, nrhs = {}\n", nrhs );
+  Utils::mex_assert( nlhs == 1, CMD "expected 1 output, nlhs = {}\n", nlhs );
 
   Utils::mex_set_scalar_value( arg_out_0, ptr->y_end() );
 
@@ -1331,8 +1331,8 @@ static void do_theta_end( int nlhs, mxArray * plhs[], int nrhs, mxArray const * 
   G2LIB_CLASS * ptr = Utils::mex_convert_mx_to_ptr<G2LIB_CLASS>( arg_in_1 );
 
 #define CMD CMD_BASE "('theta_end',OBJ): "
-  UTILS_MEX_ASSERT( nrhs == 2, CMD "expected 2 input, nrhs = {}\n", nrhs );
-  UTILS_MEX_ASSERT( nlhs == 1, CMD "expected 1 output, nlhs = {}\n", nlhs );
+  Utils::mex_assert( nrhs == 2, CMD "expected 2 input, nrhs = {}\n", nrhs );
+  Utils::mex_assert( nlhs == 1, CMD "expected 1 output, nlhs = {}\n", nlhs );
 
   Utils::mex_set_scalar_value( arg_out_0, ptr->theta_end() );
 
@@ -1346,8 +1346,8 @@ static void do_kappa_end( int nlhs, mxArray * plhs[], int nrhs, mxArray const * 
   G2LIB_CLASS * ptr = Utils::mex_convert_mx_to_ptr<G2LIB_CLASS>( arg_in_1 );
 
 #define CMD CMD_BASE "('kappa_end',OBJ): "
-  UTILS_MEX_ASSERT( nrhs == 2, CMD "expected 2 input, nrhs = {}\n", nrhs );
-  UTILS_MEX_ASSERT( nlhs == 1, CMD "expected 1 output, nlhs = {}\n", nlhs );
+  Utils::mex_assert( nrhs == 2, CMD "expected 2 input, nrhs = {}\n", nrhs );
+  Utils::mex_assert( nlhs == 1, CMD "expected 1 output, nlhs = {}\n", nlhs );
 
   Utils::mex_set_scalar_value( arg_out_0, ptr->kappa_end() );
 
@@ -1357,8 +1357,8 @@ static void do_kappa_end( int nlhs, mxArray * plhs[], int nrhs, mxArray const * 
 static void do_yesAABBtree( int nlhs, mxArray *[], int nrhs, mxArray const *[] )
 {
 #define CMD CMD_BASE "('yesAABBtree'): "
-  UTILS_MEX_ASSERT( nrhs == 1, CMD "expected 1 input, nrhs = {}\n", nrhs );
-  UTILS_MEX_ASSERT( nlhs == 0, CMD "expected NO output, nlhs = {}\n", nlhs );
+  Utils::mex_assert( nrhs == 1, CMD "expected 1 input, nrhs = {}\n", nrhs );
+  Utils::mex_assert( nlhs == 0, CMD "expected NO output, nlhs = {}\n", nlhs );
 
   G2lib::yesAABBtree();
 
@@ -1368,8 +1368,8 @@ static void do_yesAABBtree( int nlhs, mxArray *[], int nrhs, mxArray const *[] )
 static void do_noAABBtree( int nlhs, mxArray *[], int nrhs, mxArray const *[] )
 {
 #define CMD CMD_BASE "('noAABBtree'): "
-  UTILS_MEX_ASSERT( nrhs == 1, CMD "expected 1 input, nrhs = {}\n", nrhs );
-  UTILS_MEX_ASSERT( nlhs == 0, CMD "expected NO output, nlhs = {}\n", nlhs );
+  Utils::mex_assert( nrhs == 1, CMD "expected 1 input, nrhs = {}\n", nrhs );
+  Utils::mex_assert( nlhs == 0, CMD "expected NO output, nlhs = {}\n", nlhs );
 
   G2lib::noAABBtree();
 

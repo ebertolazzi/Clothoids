@@ -6,6 +6,7 @@
 // This Source Code Form is subject to the terms of the Mozilla
 // Public License v. 2.0. If a copy of the MPL was not distributed
 // with this file, You can obtain one at http://mozilla.org/MPL/2.0/.
+// SPDX-License-Identifier: MPL-2.0
 
 #ifndef EIGEN_LEAST_SQUARE_CONJUGATE_GRADIENT_H
 #define EIGEN_LEAST_SQUARE_CONJUGATE_GRADIENT_H
@@ -30,7 +31,6 @@ template <typename MatrixType, typename Rhs, typename Dest, typename Preconditio
 EIGEN_DONT_INLINE void least_square_conjugate_gradient(const MatrixType& mat, const Rhs& rhs, Dest& x,
                                                        const Preconditioner& precond, Index& iters,
                                                        typename Dest::RealScalar& tol_error) {
-  using std::abs;
   using std::sqrt;
   typedef typename Dest::RealScalar RealScalar;
   typedef typename Dest::Scalar Scalar;
@@ -43,21 +43,27 @@ EIGEN_DONT_INLINE void least_square_conjugate_gradient(const MatrixType& mat, co
 
   VectorType residual = rhs - mat * x;
   VectorType normal_residual = mat.adjoint() * residual;
+  VectorType normal_rhs = mat.adjoint() * rhs;
 
-  RealScalar rhsNorm2 = (mat.adjoint() * rhs).squaredNorm();
-  if (rhsNorm2 == 0) {
+  RealScalar rhsNorm = normal_rhs.stableNorm();
+  if (rhsNorm == 0) {
     x.setZero();
     iters = 0;
     tol_error = 0;
     return;
   }
-  RealScalar threshold = tol * tol * rhsNorm2;
-  RealScalar residualNorm2 = normal_residual.squaredNorm();
-  if (residualNorm2 < threshold) {
+  RealScalar threshold = tol * rhsNorm;
+  RealScalar residualNorm = normal_residual.stableNorm();
+  if (residualNorm == 0 || residualNorm < threshold) {
     iters = 0;
-    tol_error = sqrt(residualNorm2 / rhsNorm2);
+    tol_error = residualNorm / rhsNorm;
     return;
   }
+
+  // Keep the quadratic recurrence terms representable for very small or large residuals.
+  const RealScalar residualScale = internal::iterative_solver_scaling_factor(residualNorm);
+  normal_residual /= residualScale;
+  threshold /= residualScale;
 
   VectorType p(n);
   p = precond.solve(normal_residual);  // initial search direction
@@ -69,12 +75,13 @@ EIGEN_DONT_INLINE void least_square_conjugate_gradient(const MatrixType& mat, co
     tmp.noalias() = mat * p;
 
     Scalar alpha = absNew / tmp.squaredNorm();             // the amount we travel on dir
-    x += alpha * p;                                        // update solution
-    residual -= alpha * tmp;                               // update residual
+    x += (residualScale * alpha) * p;                      // update solution
+    residual -= (residualScale * alpha) * tmp;             // update residual
     normal_residual.noalias() = mat.adjoint() * residual;  // update residual of the normal equation
+    normal_residual /= residualScale;
 
-    residualNorm2 = normal_residual.squaredNorm();
-    if (residualNorm2 < threshold) break;
+    residualNorm = normal_residual.stableNorm();
+    if (residualNorm < threshold) break;
 
     z = precond.solve(normal_residual);  // approximately solve for "A'A z = normal_residual"
 
@@ -84,7 +91,7 @@ EIGEN_DONT_INLINE void least_square_conjugate_gradient(const MatrixType& mat, co
     p = z + beta * p;                   // update search direction
     i++;
   }
-  tol_error = sqrt(residualNorm2 / rhsNorm2);
+  tol_error = residualNorm / (rhsNorm / residualScale);
   iters = i;
 }
 
@@ -145,6 +152,7 @@ struct traits<LeastSquaresConjugateGradient<MatrixType_, Preconditioner_> > {
 template <typename MatrixType_, typename Preconditioner_>
 class LeastSquaresConjugateGradient
     : public IterativeSolverBase<LeastSquaresConjugateGradient<MatrixType_, Preconditioner_> > {
+ protected:
   typedef IterativeSolverBase<LeastSquaresConjugateGradient> Base;
   using Base::m_error;
   using Base::m_info;
@@ -174,8 +182,6 @@ class LeastSquaresConjugateGradient
    */
   template <typename MatrixDerived>
   explicit LeastSquaresConjugateGradient(const EigenBase<MatrixDerived>& A) : Base(A.derived()) {}
-
-  ~LeastSquaresConjugateGradient() {}
 
   /** \internal */
   template <typename Rhs, typename Dest>

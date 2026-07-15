@@ -1,0 +1,9 @@
+// SPDX-FileCopyrightText: The Eigen Authors
+// SPDX-License-Identifier: MPL-2.0
+
+#ifndef EIGEN_UNSUPPORTED_THREADPOOL_FORWARD_H
+#define EIGEN_UNSUPPORTED_THREADPOOL_FORWARD_H
+
+#include "../../Eigen/ThreadPool"  // IWYU pragma: export
+
+#endif  // EIGEN_UNSUPPORTED_THREADPOOL_FORWARD_H

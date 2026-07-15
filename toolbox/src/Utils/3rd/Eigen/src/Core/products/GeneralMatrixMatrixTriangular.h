@@ -6,6 +6,7 @@
 // This Source Code Form is subject to the terms of the Mozilla
 // Public License v. 2.0. If a copy of the MPL was not distributed
 // with this file, You can obtain one at http://mozilla.org/MPL/2.0/.
+// SPDX-License-Identifier: MPL-2.0
 
 #ifndef EIGEN_GENERAL_MATRIX_MATRIX_TRIANGULAR_H
 #define EIGEN_GENERAL_MATRIX_MATRIX_TRIANGULAR_H
@@ -87,7 +88,7 @@ struct general_matrix_matrix_triangular_product<Index, LhsScalar, LhsStorageOrde
 
     // !!! mc must be a multiple of nr
     if (mc > Traits::nr) {
-      using UnsignedIndex = typename make_unsigned<Index>::type;
+      using UnsignedIndex = std::make_unsigned_t<Index>;
       mc = (UnsignedIndex(mc) / Traits::nr) * Traits::nr;
     }
 
@@ -116,18 +117,19 @@ struct general_matrix_matrix_triangular_product<Index, LhsScalar, LhsStorageOrde
 
         pack_lhs(blockA, lhs.getSubMapper(i2, k2), actual_kc, actual_mc);
 
-        // the selected actual_mc * size panel of res is split into three different part:
+        // the selected actual_mc * size panel of res is split into three different parts:
         //  1 - before the diagonal => processed with gebp or skipped
         //  2 - the actual_mc x actual_mc symmetric block => processed with a special kernel
         //  3 - after the diagonal => processed with gebp or skipped
-        if (UpLo == Lower)
+        EIGEN_IF_CONSTEXPR (UpLo == Lower) {
           gebp(res.getSubMapper(i2, 0), blockA, blockB, actual_mc, actual_kc, (std::min)(size, i2), alpha, -1, -1, 0,
                0);
+        }
 
         sybb(res_ + resStride * i2 + resIncr * i2, resIncr, resStride, blockA, blockB + actual_kc * i2, actual_mc,
              actual_kc, alpha);
 
-        if (UpLo == Upper) {
+        EIGEN_IF_CONSTEXPR (UpLo == Upper) {
           Index j2 = i2 + actual_mc;
           gebp(res.getSubMapper(i2, j2), blockA, blockB + actual_kc * j2, actual_mc, actual_kc,
                (std::max)(Index(0), size - j2), alpha, -1, -1, 0, 0);
@@ -152,9 +154,9 @@ struct tribb_kernel {
   typedef gebp_traits<LhsScalar, RhsScalar, ConjLhs, ConjRhs> Traits;
   typedef typename Traits::ResScalar ResScalar;
 
-  enum { BlockSize = meta_least_common_multiple<plain_enum_max(mr, nr), plain_enum_min(mr, nr)>::ret };
+  enum { BlockSize = meta_least_common_multiple<plain_enum_max(mr, nr), plain_enum_min(mr, nr)>::value };
   void operator()(ResScalar* res_, Index resIncr, Index resStride, const LhsScalar* blockA, const RhsScalar* blockB,
-                  Index size, Index depth, const ResScalar& alpha) {
+                  Index size, Index depth, const ResScalar& alpha) const {
     typedef blas_data_mapper<ResScalar, Index, ColMajor, Unaligned, ResInnerStride> ResMapper;
     typedef blas_data_mapper<ResScalar, Index, ColMajor, Unaligned> BufferMapper;
     ResMapper res(res_, resStride, resIncr);
@@ -169,8 +171,9 @@ struct tribb_kernel {
       Index actualBlockSize = std::min<Index>(BlockSize, size - j);
       const RhsScalar* actual_b = blockB + j * depth;
 
-      if (UpLo == Upper)
+      EIGEN_IF_CONSTEXPR (UpLo == Upper) {
         gebp_kernel1(res.getSubMapper(0, j), blockA, actual_b, j, depth, actualBlockSize, alpha, -1, -1, 0, 0);
+      }
 
       // selfadjoint micro block
       {
@@ -188,7 +191,7 @@ struct tribb_kernel {
         }
       }
 
-      if (UpLo == Lower) {
+      EIGEN_IF_CONSTEXPR (UpLo == Lower) {
         Index i = j + actualBlockSize;
         gebp_kernel1(res.getSubMapper(i, j), blockA + depth * i, actual_b, size - i, depth, actualBlockSize, alpha, -1,
                      -1, 0, 0);
@@ -237,14 +240,18 @@ struct general_product_to_triangular_selector<MatrixType, ProductType, UpLo, tru
     ei_declare_aligned_stack_constructed_variable(
         Scalar, actualLhsPtr, actualLhs.size(),
         (UseLhsDirectly ? const_cast<Scalar*>(actualLhs.data()) : static_lhs.data()));
-    if (!UseLhsDirectly) Map<typename ActualLhs_::PlainObject>(actualLhsPtr, actualLhs.size()) = actualLhs;
+    EIGEN_IF_CONSTEXPR (!UseLhsDirectly) {
+      Map<typename ActualLhs_::PlainObject>(actualLhsPtr, actualLhs.size()) = actualLhs;
+    }
 
     internal::gemv_static_vector_if<Scalar, Rhs::SizeAtCompileTime, Rhs::MaxSizeAtCompileTime, !UseRhsDirectly>
         static_rhs;
     ei_declare_aligned_stack_constructed_variable(
         Scalar, actualRhsPtr, actualRhs.size(),
         (UseRhsDirectly ? const_cast<Scalar*>(actualRhs.data()) : static_rhs.data()));
-    if (!UseRhsDirectly) Map<typename ActualRhs_::PlainObject>(actualRhsPtr, actualRhs.size()) = actualRhs;
+    EIGEN_IF_CONSTEXPR (!UseRhsDirectly) {
+      Map<typename ActualRhs_::PlainObject>(actualRhsPtr, actualRhs.size()) = actualRhs;
+    }
 
     selfadjoint_rank1_update<
         Scalar, Index, StorageOrder, UpLo, LhsBlasTraits::NeedToConjugate && NumTraits<Scalar>::IsComplex,
@@ -284,6 +291,9 @@ struct general_product_to_triangular_selector<MatrixType, ProductType, UpLo, fal
     Index size = mat.cols();
     if (SkipDiag) size--;
     Index depth = actualLhs.cols();
+    eigen_assert(actualLhs.rows() == mat.rows() && actualRhs.cols() == mat.cols() &&
+                 actualLhs.cols() == actualRhs.rows());
+    if (size <= 0 || depth == 0) return;
 
     typedef internal::gemm_blocking_space<IsRowMajor ? RowMajor : ColMajor, typename Lhs::Scalar, typename Rhs::Scalar,
                                           MatrixType::MaxColsAtCompileTime, MatrixType::MaxColsAtCompileTime,

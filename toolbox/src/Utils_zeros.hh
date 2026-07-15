@@ -279,21 +279,21 @@ namespace Utils
     //! Set maximum number of iterations
     void set_max_iterations( Integer mit )
     {
-      UTILS_ASSERT( mit > 0, "Zeros::set_max_iterations({}) argument must be >0\n", mit );
+      Utils::Assert( mit > 0, "Zeros::set_max_iterations({}) argument must be >0\n", mit );
       m_max_iteration = mit;
     }
 
     //! Set maximum function evaluations
     void set_max_fun_evaluation( Integer mfev )
     {
-      UTILS_ASSERT( mfev > 0, "Zeros::set_max_fun_evaluation({}) argument must be >0\n", mfev );
+      Utils::Assert( mfev > 0, "Zeros::set_max_fun_evaluation({}) argument must be >0\n", mfev );
       m_max_fun_evaluation = mfev;
     }
 
     //! Set tolerance \f$ \epsilon \f$ (stop when \f$ |f(x)| < \epsilon \f$)
     void set_tolerance( Real tol )
     {
-      UTILS_ASSERT( tol > 0, "Zeros::set_tolerance({}) argument must be >0\n", tol );
+      Utils::Assert( tol > 0, "Zeros::set_tolerance({}) argument must be >0\n", tol );
       m_tolerance = tol;
     }
 

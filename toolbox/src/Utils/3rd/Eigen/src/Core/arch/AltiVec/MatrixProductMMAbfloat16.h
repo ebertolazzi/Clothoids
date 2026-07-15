@@ -1,3 +1,6 @@
+// SPDX-FileCopyrightText: The Eigen Authors
+// SPDX-License-Identifier: MPL-2.0
+
 #ifndef EIGEN_MATRIX_PRODUCT_MMA_BFLOAT16_ALTIVEC_H
 #define EIGEN_MATRIX_PRODUCT_MMA_BFLOAT16_ALTIVEC_H
 
@@ -331,7 +334,7 @@ void gemmMMAbfloat16(const DataMapper& res, const bfloat16* indexA, const bfloat
   if (strideA == -1) strideA = depth;
   if (strideB == -1) strideB = depth;
   // Packing is done in blocks.
-  // There's 4 possible sizes of blocks
+  // There are 4 possible sizes of blocks
   // Blocks of 8 columns with 16 elements (8x16)
   // Blocks of 8 columns with 8 elements (8x8). This happens when there's 16 > rows >= 8
   // Blocks of 8 columns with 4 elements (8x4). This happens when there's 8 > rows >= 4

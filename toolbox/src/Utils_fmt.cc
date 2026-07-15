@@ -52,7 +52,7 @@ namespace Utils
     unsigned const w{ ww / N };
     unsigned const r{ ww - w * N };
     unsigned const r2{ r / 2 };
-    UTILS_ASSERT( w > 3, "fmt_table_row( width={}, ... ) no space to print\n", width );
+    Utils::Assert( w > 3, "fmt_table_row( width={}, ... ) no space to print\n", width );
     string const FMT{ fmt::format( "{}{{:{}{}{}}}{}", F, F, align, w - 2, F ) };
     string       res{ L };
     unsigned     k{ 0 };
@@ -88,7 +88,7 @@ namespace Utils
     unsigned const w{ ww / N };
     unsigned const r{ ww - w * N };
     unsigned const r2{ r / 2 };
-    UTILS_ASSERT( w > 3, "fmt_table_row( width={}, ... ) no space to print\n", width );
+    Utils::Assert( w > 3, "fmt_table_row( width={}, ... ) no space to print\n", width );
 
     string str;
     for ( unsigned i{ 0 }; i < w; ++i ) str += F;

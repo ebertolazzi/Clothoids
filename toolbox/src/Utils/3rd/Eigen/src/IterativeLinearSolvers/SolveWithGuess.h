@@ -6,6 +6,7 @@
 // This Source Code Form is subject to the terms of the Mozilla
 // Public License v. 2.0. If a copy of the MPL was not distributed
 // with this file, You can obtain one at http://mozilla.org/MPL/2.0/.
+// SPDX-License-Identifier: MPL-2.0
 
 #ifndef EIGEN_SOLVEWITHGUESS_H
 #define EIGEN_SOLVEWITHGUESS_H
@@ -24,7 +25,8 @@ class SolveWithGuess;
  * \brief Pseudo expression representing a solving operation
  *
  * \tparam Decomposition the type of the matrix or decomposition object
- * \tparam Rhstype the type of the right-hand side
+ * \tparam RhsType the type of the right-hand side
+ * \tparam GuessType the type of the initial guess
  *
  * This class represents an expression of A.solve(B)
  * and most of the time this is the only way it is used.
@@ -100,7 +102,7 @@ struct Assignment<DstXprType, SolveWithGuess<DecType, RhsType, GuessType>, inter
     if ((dst.rows() != dstRows) || (dst.cols() != dstCols)) dst.resize(dstRows, dstCols);
 
     dst = src.guess();
-    src.dec()._solve_with_guess_impl(src.rhs(), dst /*, src.guess()*/);
+    src.dec()._solve_with_guess_impl(src.rhs(), dst);
   }
 };
 

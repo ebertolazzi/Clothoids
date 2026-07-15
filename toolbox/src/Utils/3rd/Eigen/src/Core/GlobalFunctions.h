@@ -7,6 +7,7 @@
 // This Source Code Form is subject to the terms of the Mozilla
 // Public License v. 2.0. If a copy of the MPL was not distributed
 // with this file, You can obtain one at http://mozilla.org/MPL/2.0/.
+// SPDX-License-Identifier: MPL-2.0
 
 #ifndef EIGEN_GLOBAL_FUNCTIONS_H
 #define EIGEN_GLOBAL_FUNCTIONS_H
@@ -61,7 +62,7 @@ EIGEN_ARRAY_DECLARE_GLOBAL_UNARY(cos, scalar_cos_op, cosine,\sa ArrayBase::cos)
 EIGEN_ARRAY_DECLARE_GLOBAL_UNARY(tan, scalar_tan_op, tangent,\sa ArrayBase::tan)
 EIGEN_ARRAY_DECLARE_GLOBAL_UNARY(atan, scalar_atan_op, arc - tangent,\sa ArrayBase::atan)
 EIGEN_ARRAY_DECLARE_GLOBAL_UNARY(asin, scalar_asin_op, arc - sine,\sa ArrayBase::asin)
-EIGEN_ARRAY_DECLARE_GLOBAL_UNARY(acos, scalar_acos_op, arc - consine,\sa ArrayBase::acos)
+EIGEN_ARRAY_DECLARE_GLOBAL_UNARY(acos, scalar_acos_op, arc - cosine,\sa ArrayBase::acos)
 EIGEN_ARRAY_DECLARE_GLOBAL_UNARY(sinh, scalar_sinh_op, hyperbolic sine,\sa ArrayBase::sinh)
 EIGEN_ARRAY_DECLARE_GLOBAL_UNARY(cosh, scalar_cosh_op, hyperbolic cosine,\sa ArrayBase::cosh)
 EIGEN_ARRAY_DECLARE_GLOBAL_UNARY(tanh, scalar_tanh_op, hyperbolic tangent,\sa ArrayBase::tanh)
@@ -130,12 +131,12 @@ using GlobalUnaryPowReturnType = std::enable_if_t<
  */
 #ifdef EIGEN_PARSED_BY_DOXYGEN
 template <typename Derived, typename ScalarExponent>
-EIGEN_DEVICE_FUNC inline const GlobalUnaryPowReturnType<Derived, ScalarExponent> pow(const Eigen::ArrayBase<Derived>& x,
-                                                                                     const ScalarExponent& exponent);
+EIGEN_DEVICE_FUNC constexpr inline const GlobalUnaryPowReturnType<Derived, ScalarExponent> pow(
+    const Eigen::ArrayBase<Derived>& x, const ScalarExponent& exponent);
 #else
 template <typename Derived, typename ScalarExponent>
-EIGEN_DEVICE_FUNC inline const GlobalUnaryPowReturnType<Derived, ScalarExponent> pow(const Eigen::ArrayBase<Derived>& x,
-                                                                                     const ScalarExponent& exponent) {
+EIGEN_DEVICE_FUNC constexpr inline const GlobalUnaryPowReturnType<Derived, ScalarExponent> pow(
+    const Eigen::ArrayBase<Derived>& x, const ScalarExponent& exponent) {
   return GlobalUnaryPowReturnType<Derived, ScalarExponent>(
       x.derived(), internal::scalar_unary_pow_op<typename Derived::Scalar, ScalarExponent>(exponent));
 }
@@ -179,7 +180,7 @@ pow(const Eigen::ArrayBase<Derived>& x, const Eigen::ArrayBase<ExponentDerived>&
 #ifdef EIGEN_PARSED_BY_DOXYGEN
 template <typename Scalar, typename Derived>
 inline const CwiseBinaryOp<internal::scalar_pow_op<Scalar, Derived::Scalar>, Constant<Scalar>, Derived> pow(
-    const Scalar& x, const Eigen::ArrayBase<Derived>& x);
+    const Scalar& x, const Eigen::ArrayBase<Derived>& exponents);
 #else
 template <typename Scalar, typename Derived>
 EIGEN_DEVICE_FUNC inline const EIGEN_SCALAR_BINARYOP_EXPR_RETURN_TYPE(

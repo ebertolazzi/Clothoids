@@ -26,9 +26,10 @@
 
  ********************************************************************************
  *   Content : Eigen bindings to BLAS F77
- *   Triangular matrix * matrix product functionality based on ?TRMM.
+ *   Triangular matrix-matrix solve functionality based on ?TRSM.
  ********************************************************************************
 */
+// SPDX-License-Identifier: BSD-3-Clause
 
 #ifndef EIGEN_TRIANGULAR_SOLVER_MATRIX_BLAS_H
 #define EIGEN_TRIANGULAR_SOLVER_MATRIX_BLAS_H
@@ -159,6 +160,8 @@ EIGEN_BLAS_TRSM_R(float, float, strsm_)
 EIGEN_BLAS_TRSM_R(scomplex, float, ctrsm_)
 #endif
 
+#undef EIGEN_BLAS_TRSM_R
+#undef EIGEN_BLAS_TRSM_L
 }  // end namespace internal
 
 }  // end namespace Eigen

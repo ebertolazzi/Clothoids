@@ -6,6 +6,7 @@
 // This Source Code Form is subject to the terms of the Mozilla
 // Public License v. 2.0. If a copy of the MPL was not distributed
 // with this file, You can obtain one at http://mozilla.org/MPL/2.0/.
+// SPDX-License-Identifier: MPL-2.0
 
 #ifndef EIGEN_CONSERVATIVESPARSESPARSEPRODUCT_H
 #define EIGEN_CONSERVATIVESPARSESPARSEPRODUCT_H
@@ -33,7 +34,7 @@ static void conservative_sparse_sparse_product_impl(const Lhs& lhs, const Rhs& r
   ei_declare_aligned_stack_constructed_variable(ResScalar, values, rows, 0);
   ei_declare_aligned_stack_constructed_variable(Index, indices, rows, 0);
 
-  std::memset(mask, 0, sizeof(bool) * rows);
+  std::fill_n(mask, rows, false);
 
   evaluator<Lhs> lhsEval(lhs);
   evaluator<Rhs> rhsEval(rhs);
@@ -79,8 +80,6 @@ static void conservative_sparse_sparse_product_impl(const Lhs& lhs, const Rhs& r
       const Index t200 = rows / 11;  // 11 == (log2(200)*1.39)
       const Index t = (rows * 100) / 139;
 
-      // FIXME reserve nnz non zeros
-      // FIXME implement faster sorting algorithms for very small nnz
       // if the result is sparse enough => use a quick sort
       // otherwise => loop through the entire vector
       // In order to avoid to perform an expensive log2 when the
@@ -106,10 +105,6 @@ static void conservative_sparse_sparse_product_impl(const Lhs& lhs, const Rhs& r
   res.finalize();
 }
 
-}  // end namespace internal
-
-namespace internal {
-
 // Helper template to generate new sparse matrix types
 template <class Source, int Order>
 using WithStorageOrder = SparseMatrix<typename Source::Scalar, Order, typename Source::StorageIndex>;
@@ -122,16 +117,14 @@ struct conservative_sparse_sparse_product_selector;
 
 template <typename Lhs, typename Rhs, typename ResultType>
 struct conservative_sparse_sparse_product_selector<Lhs, Rhs, ResultType, ColMajor, ColMajor, ColMajor> {
-  typedef remove_all_t<Lhs> LhsCleaned;
-  typedef typename LhsCleaned::Scalar Scalar;
-
   static void run(const Lhs& lhs, const Rhs& rhs, ResultType& res) {
     using RowMajorMatrix = WithStorageOrder<ResultType, RowMajor>;
     using ColMajorMatrixAux = WithStorageOrder<ResultType, ColMajor>;
 
     // If the result is tall and thin (in the extreme case a column vector)
     // then it is faster to sort the coefficients inplace instead of transposing twice.
-    // FIXME, the following heuristic is probably not very good.
+    // The dimension-only test here ignores nnz / per-column density; a proper
+    // cost model using estimated_nnz_prod would pick the right path more often.
     if (lhs.rows() > rhs.cols()) {
       using ColMajorMatrix = typename sparse_eval<ColMajorMatrixAux, ResultType::RowsAtCompileTime,
                                                   ResultType::ColsAtCompileTime, ColMajorMatrixAux::Flags>::type;
@@ -185,8 +178,6 @@ struct conservative_sparse_sparse_product_selector<Lhs, Rhs, ResultType, RowMajo
 
 template <typename Lhs, typename Rhs, typename ResultType>
 struct conservative_sparse_sparse_product_selector<Lhs, Rhs, ResultType, ColMajor, ColMajor, RowMajor> {
-  typedef typename traits<remove_all_t<Lhs>>::Scalar Scalar;
-
   static void run(const Lhs& lhs, const Rhs& rhs, ResultType& res) {
     using ColMajorRes = WithStorageOrder<ResultType, ColMajor>;
     ColMajorRes resCol(lhs.rows(), rhs.cols());
@@ -231,10 +222,6 @@ struct conservative_sparse_sparse_product_selector<Lhs, Rhs, ResultType, RowMajo
     res = resCol;
   }
 };
-
-}  // end namespace internal
-
-namespace internal {
 
 template <typename Lhs, typename Rhs, typename ResultType>
 static void sparse_sparse_to_dense_product_impl(const Lhs& lhs, const Rhs& rhs, ResultType& res) {

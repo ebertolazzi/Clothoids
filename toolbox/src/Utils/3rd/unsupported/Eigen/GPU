@@ -1,0 +1,76 @@
+// This file is part of Eigen, a lightweight C++ template library
+// for linear algebra.
+//
+// This Source Code Form is subject to the terms of the Mozilla
+// Public License v. 2.0. If a copy of the MPL was not distributed
+// with this file, You can obtain one at http://mozilla.org/MPL/2.0/.
+// SPDX-FileCopyrightText: The Eigen Authors
+// SPDX-License-Identifier: MPL-2.0
+
+#ifndef EIGEN_GPU_MODULE_H
+#define EIGEN_GPU_MODULE_H
+
+#include "../../Eigen/Core"
+#include "../../Eigen/SparseCore"
+
+#include "../../Eigen/src/Core/util/DisableStupidWarnings.h"
+
+/** \defgroup GPU_Module GPU module
+ *
+ * GPU-accelerated dense linear algebra using NVIDIA CUDA libraries
+ * (cuSOLVER and cuBLAS).
+ *
+ * This module provides explicit GPU solver classes that coexist with Eigen's
+ * CPU solvers. Unlike the LAPACKE dispatch (which replaces the CPU
+ * implementation globally), GPU classes are separate types the user
+ * instantiates by choice:
+ *
+ * \code
+ * #define EIGEN_USE_GPU
+ * #include <unsupported/Eigen/GPU>
+ *
+ * // CPU path (unchanged)
+ * Eigen::LLT<Eigen::MatrixXd> llt_cpu(A);
+ *
+ * // GPU path (explicit)
+ * Eigen::gpu::LLT<double> llt_gpu(A);   // L stays on device
+ * auto X = llt_gpu.solve(B);            // only B transferred per solve
+ * \endcode
+ *
+ * Requires CUDA 11.4+.
+ */
+
+#ifdef EIGEN_USE_GPU
+// IWYU pragma: begin_exports
+#include "src/GPU/DeviceScalar.h"
+#include "src/GPU/DeviceMatrix.h"
+#include "src/GPU/GpuContext.h"
+#include "src/GPU/DeviceExpr.h"
+#include "src/GPU/DeviceBlasExpr.h"
+#include "src/GPU/DeviceSolverExpr.h"
+#include "src/GPU/DeviceDispatch.h"
+#include "src/GPU/GpuSolverContext.h"
+#include "src/GPU/GpuLLT.h"
+#include "src/GPU/GpuLU.h"
+#include "src/GPU/GpuQR.h"
+#include "src/GPU/GpuSVD.h"
+#include "src/GPU/GpuEigenSolver.h"
+#include "src/GPU/CuFftSupport.h"
+#include "src/GPU/GpuFFT.h"
+#include "src/GPU/CuSparseSupport.h"
+#ifdef EIGEN_SPARSECORE_MODULE_H
+#include "src/GPU/GpuSparseContext.h"
+#endif
+#if defined(EIGEN_CUDSS) && defined(EIGEN_SPARSECORE_MODULE_H)
+#include "src/GPU/CuDssSupport.h"
+#include "src/GPU/GpuSparseSolverBase.h"
+#include "src/GPU/GpuSparseLLT.h"
+#include "src/GPU/GpuSparseLDLT.h"
+#include "src/GPU/GpuSparseLU.h"
+#endif
+// IWYU pragma: end_exports
+#endif
+
+#include "../../Eigen/src/Core/util/ReenableStupidWarnings.h"
+
+#endif  // EIGEN_GPU_MODULE_H

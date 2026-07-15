@@ -6,6 +6,7 @@
 // This Source Code Form is subject to the terms of the Mozilla
 // Public License v. 2.0. If a copy of the MPL was not distributed
 // with this file, You can obtain one at http://mozilla.org/MPL/2.0/.
+// SPDX-License-Identifier: MPL-2.0
 
 #ifndef EIGEN_ROTATION2D_H
 #define EIGEN_ROTATION2D_H
@@ -23,7 +24,7 @@ namespace Eigen {
  *
  * \tparam Scalar_ the scalar type, i.e., the type of the coefficients
  *
- * This class is equivalent to a single scalar representing a counter clock wise rotation
+ * This class is equivalent to a single scalar representing a counter-clockwise rotation
  * as a single angle in radian. It provides some additional features such as the automatic
  * conversion from/to a 2x2 rotation matrix. Moreover this class aims to provide a similar
  * interface to Quaternion in order to facilitate the writing of generic algorithms
@@ -57,7 +58,7 @@ class Rotation2D : public RotationBase<Rotation2D<Scalar_>, 2> {
   Scalar m_angle;
 
  public:
-  /** Construct a 2D counter clock wise rotation from the angle \a a in radian. */
+  /** Construct a 2D counter-clockwise rotation from the angle \a a in radian. */
   EIGEN_DEVICE_FUNC explicit inline Rotation2D(const Scalar& a) : m_angle(a) {}
 
   /** Default constructor without initialization. The represented rotation is undefined. */
@@ -116,7 +117,7 @@ class Rotation2D : public RotationBase<Rotation2D<Scalar_>, 2> {
   EIGEN_DEVICE_FUNC Matrix2 toRotationMatrix() const;
 
   /** Set \c *this from a 2x2 rotation matrix \a mat.
-   * In other words, this function extract the rotation angle from the rotation matrix.
+   * In other words, this function extracts the rotation angle from the rotation matrix.
    *
    * This method is an alias for fromRotationMatrix()
    *
@@ -172,7 +173,7 @@ typedef Rotation2D<float> Rotation2Df;
 typedef Rotation2D<double> Rotation2Dd;
 
 /** Set \c *this from a 2x2 rotation matrix \a mat.
- * In other words, this function extract the rotation angle
+ * In other words, this function extracts the rotation angle
  * from the rotation matrix.
  */
 template <typename Scalar>

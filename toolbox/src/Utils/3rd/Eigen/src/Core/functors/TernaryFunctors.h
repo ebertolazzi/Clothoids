@@ -6,6 +6,7 @@
 // This Source Code Form is subject to the terms of the Mozilla
 // Public License v. 2.0. If a copy of the MPL was not distributed
 // with this file, You can obtain one at http://mozilla.org/MPL/2.0/.
+// SPDX-License-Identifier: MPL-2.0
 
 #ifndef EIGEN_TERNARY_FUNCTORS_H
 #define EIGEN_TERNARY_FUNCTORS_H
@@ -21,12 +22,13 @@ namespace internal {
 
 template <typename ThenScalar, typename ElseScalar, typename ConditionScalar>
 struct scalar_boolean_select_op {
-  static constexpr bool ThenElseAreSame = is_same<ThenScalar, ElseScalar>::value;
+  static constexpr bool ThenElseAreSame =
+      std::is_same<std::remove_const_t<ThenScalar>, std::remove_const_t<ElseScalar>>::value;
   EIGEN_STATIC_ASSERT(ThenElseAreSame, THEN AND ELSE MUST BE SAME TYPE)
   using Scalar = ThenScalar;
   using result_type = Scalar;
-  EIGEN_DEVICE_FUNC EIGEN_STRONG_INLINE Scalar operator()(const ThenScalar& a, const ElseScalar& b,
-                                                          const ConditionScalar& cond) const {
+  EIGEN_DEVICE_FUNC constexpr EIGEN_STRONG_INLINE Scalar operator()(const ThenScalar& a, const ElseScalar& b,
+                                                                    const ConditionScalar& cond) const {
     return cond == ConditionScalar(0) ? b : a;
   }
   template <typename Packet>
@@ -40,7 +42,7 @@ struct functor_traits<scalar_boolean_select_op<ThenScalar, ElseScalar, Condition
   using Scalar = ThenScalar;
   enum {
     Cost = 1,
-    PacketAccess = is_same<ThenScalar, ElseScalar>::value && is_same<ConditionScalar, Scalar>::value &&
+    PacketAccess = std::is_same<ThenScalar, ElseScalar>::value && std::is_same<ConditionScalar, Scalar>::value &&
                    packet_traits<Scalar>::HasCmp
   };
 };

@@ -6,6 +6,7 @@
 // This Source Code Form is subject to the terms of the Mozilla
 // Public License v. 2.0. If a copy of the MPL was not distributed
 // with this file, You can obtain one at http://mozilla.org/MPL/2.0/.
+// SPDX-License-Identifier: MPL-2.0
 
 #ifndef EIGEN_ASSIGNMENT_FUNCTORS_H
 #define EIGEN_ASSIGNMENT_FUNCTORS_H
@@ -23,7 +24,7 @@ namespace internal {
  */
 template <typename DstScalar, typename SrcScalar>
 struct assign_op {
-  EIGEN_DEVICE_FUNC EIGEN_STRONG_INLINE constexpr void assignCoeff(DstScalar& a, const SrcScalar& b) const { a = b; }
+  EIGEN_DEVICE_FUNC constexpr void assignCoeff(DstScalar& a, const SrcScalar& b) const { a = b; }
 
   template <int Alignment, typename Packet>
   EIGEN_STRONG_INLINE void assignPacket(DstScalar* a, const Packet& b) const {
@@ -44,7 +45,7 @@ template <typename DstScalar, typename SrcScalar>
 struct functor_traits<assign_op<DstScalar, SrcScalar>> {
   enum {
     Cost = NumTraits<DstScalar>::ReadCost,
-    PacketAccess = is_same<DstScalar, SrcScalar>::value && packet_traits<DstScalar>::Vectorizable &&
+    PacketAccess = std::is_same<DstScalar, SrcScalar>::value && packet_traits<DstScalar>::Vectorizable &&
                    packet_traits<SrcScalar>::Vectorizable
   };
 };
@@ -56,7 +57,7 @@ struct functor_traits<assign_op<DstScalar, SrcScalar>> {
 template <typename DstScalar, typename SrcScalar, typename Func>
 struct compound_assign_op {
   using traits = functor_traits<compound_assign_op<DstScalar, SrcScalar, Func>>;
-  EIGEN_DEVICE_FUNC EIGEN_STRONG_INLINE constexpr void assignCoeff(DstScalar& a, const SrcScalar& b) const {
+  EIGEN_DEVICE_FUNC constexpr void assignCoeff(DstScalar& a, const SrcScalar& b) const {
     assign_op<DstScalar, DstScalar>().assignCoeff(a, Func().operator()(a, b));
   }
 
@@ -138,9 +139,9 @@ struct functor_traits<div_assign_op<DstScalar, SrcScalar>> : div_assign_op<DstSc
  */
 template <typename Scalar>
 struct swap_assign_op {
-  EIGEN_DEVICE_FUNC EIGEN_STRONG_INLINE void assignCoeff(Scalar& a, const Scalar& b) const {
+  EIGEN_DEVICE_FUNC constexpr EIGEN_STRONG_INLINE void assignCoeff(Scalar& a, const Scalar& b) const {
 #ifdef EIGEN_GPUCC
-    // FIXME is there some kind of cuda::swap?
+    // FIXME: check whether cuda::swap exists.
     Scalar t = b;
     const_cast<Scalar&>(b) = a;
     a = t;

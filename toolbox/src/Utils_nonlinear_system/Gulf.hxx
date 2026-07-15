@@ -155,12 +155,12 @@ public:
 
   virtual void check_if_admissible( Vector const & x ) const override
   {
-    UTILS_ASSERT( x( 0 ) > 0, "x0!!!!" );
-    UTILS_ASSERT( x( 1 ) > 0, "x0!!!!" );
+    Utils::Assert( x( 0 ) > 0, "x0!!!!" );
+    Utils::Assert( x( 1 ) > 0, "x0!!!!" );
     for ( integer i = 0; i < 99; ++i )
     {
       real_type t1 = rr[i] - x( 1 );
-      UTILS_ASSERT( t1 >= 0, "r < 0!!!! r = {}", t1 );
+      Utils::Assert( t1 >= 0, "r < 0!!!! r = {}", t1 );
     }
   }
 

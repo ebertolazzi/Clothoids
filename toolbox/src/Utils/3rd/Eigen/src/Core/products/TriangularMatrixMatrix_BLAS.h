@@ -29,6 +29,7 @@
  *   Triangular matrix * matrix product functionality based on ?TRMM.
  ********************************************************************************
 */
+// SPDX-License-Identifier: BSD-3-Clause
 
 #ifndef EIGEN_TRIANGULAR_MATRIX_MATRIX_BLAS_H
 #define EIGEN_TRIANGULAR_MATRIX_MATRIX_BLAS_H
@@ -318,6 +319,10 @@ EIGEN_BLAS_TRMM_R(dcomplex, double, cd, ztrmm_)
 EIGEN_BLAS_TRMM_R(float, float, f, strmm_)
 EIGEN_BLAS_TRMM_R(scomplex, float, cf, ctrmm_)
 #endif
+
+#undef EIGEN_BLAS_TRMM_SPECIALIZE
+#undef EIGEN_BLAS_TRMM_L
+#undef EIGEN_BLAS_TRMM_R
 }  // end namespace internal
 
 }  // end namespace Eigen

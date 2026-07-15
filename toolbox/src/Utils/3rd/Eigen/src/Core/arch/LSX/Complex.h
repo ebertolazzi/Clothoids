@@ -7,6 +7,8 @@
 // This Source Code Form is subject to the terms of the Mozilla
 // Public License v. 2.0. If a copy of the MPL was not distributed
 // with this file, You can obtain one at http://mozilla.org/MPL/2.0/.
+// SPDX-FileCopyrightText: The Eigen Authors
+// SPDX-License-Identifier: MPL-2.0
 
 #ifndef EIGEN_COMPLEX_LSX_H
 #define EIGEN_COMPLEX_LSX_H
@@ -17,6 +19,8 @@
 namespace Eigen {
 
 namespace internal {
+
+EIGEN_GCC_FAST_MATH_COMPLEX_VECTORIZE_WORKAROUND_PUSH
 
 //---------- float ----------
 struct Packet2cf {
@@ -227,11 +231,6 @@ EIGEN_STRONG_INLINE Packet2cf pdiv<Packet2cf>(const Packet2cf& a, const Packet2c
 }
 
 template <>
-EIGEN_STRONG_INLINE Packet2cf plog<Packet2cf>(const Packet2cf& a) {
-  return plog_complex(a);
-}
-
-template <>
 EIGEN_STRONG_INLINE Packet2cf pzero(const Packet2cf& /* a */) {
   __m128 v = {0.0f, 0.0f, 0.0f, 0.0f};
   return (Packet2cf)v;
@@ -249,11 +248,6 @@ EIGEN_STRONG_INLINE Packet2cf pmadd<Packet2cf>(const Packet2cf& a, const Packet2
   t2.v = (__m128)__lsx_vshuf4i_w((__m128i)b.v, 0xb1);
   result.v = __lsx_vfmadd_s(t1.v, t2.v, result.v);
   return result;
-}
-
-template <>
-EIGEN_STRONG_INLINE Packet2cf pexp<Packet2cf>(const Packet2cf& a) {
-  return pexp_complex(a);
 }
 
 //---------- double ----------
@@ -364,7 +358,6 @@ EIGEN_STRONG_INLINE Packet1cd pandnot<Packet1cd>(const Packet1cd& a, const Packe
   return res;
 }
 
-// FIXME force unaligned load, this is a temporary fix
 template <>
 EIGEN_STRONG_INLINE Packet1cd pload<Packet1cd>(const std::complex<double>* from) {
   EIGEN_DEBUG_ALIGNED_LOAD return Packet1cd(pload<Packet2d>((const double*)from));
@@ -384,7 +377,6 @@ EIGEN_STRONG_INLINE Packet1cd ploaddup<Packet1cd>(const std::complex<double>* fr
   return pset1<Packet1cd>(*from);
 }
 
-// FIXME force unaligned store, this is a temporary fix
 template <>
 EIGEN_STRONG_INLINE void pstore<std::complex<double> >(std::complex<double>* to, const Packet1cd& from) {
   EIGEN_DEBUG_ALIGNED_STORE pstore((double*)to, Packet2d(from.v));
@@ -458,20 +450,8 @@ EIGEN_DEVICE_FUNC inline Packet2cf pselect(const Packet2cf& mask, const Packet2c
   return res;
 }
 
-template <>
-EIGEN_STRONG_INLINE Packet1cd psqrt<Packet1cd>(const Packet1cd& a) {
-  return psqrt_complex<Packet1cd>(a);
-}
-
-template <>
-EIGEN_STRONG_INLINE Packet2cf psqrt<Packet2cf>(const Packet2cf& a) {
-  return psqrt_complex<Packet2cf>(a);
-}
-
-template <>
-EIGEN_STRONG_INLINE Packet1cd plog<Packet1cd>(const Packet1cd& a) {
-  return plog_complex(a);
-}
+EIGEN_INSTANTIATE_COMPLEX_MATH_FUNCS(Packet2cf)
+EIGEN_INSTANTIATE_COMPLEX_MATH_FUNCS_NO_EXP(Packet1cd)
 
 template <>
 EIGEN_STRONG_INLINE Packet1cd pzero<Packet1cd>(const Packet1cd& /* a */) {
@@ -513,6 +493,8 @@ EIGEN_STRONG_INLINE void ptranspose(PacketBlock<Packet1cd, 2>& kernel) {
   kernel.packet[1].v = (__m128d)__lsx_vilvh_d((__m128i)kernel.packet[1].v, (__m128i)kernel.packet[0].v);
   kernel.packet[0].v = tmp;
 }
+
+EIGEN_GCC_FAST_MATH_COMPLEX_VECTORIZE_WORKAROUND_POP
 
 }  // end namespace internal
 }  // end namespace Eigen

@@ -7,6 +7,7 @@
 // This Source Code Form is subject to the terms of the Mozilla
 // Public License v. 2.0. If a copy of the MPL was not distributed
 // with this file, You can obtain one at http://mozilla.org/MPL/2.0/.
+// SPDX-License-Identifier: MPL-2.0
 
 #ifndef EIGEN_COMPLEX32_ALTIVEC_H
 #define EIGEN_COMPLEX32_ALTIVEC_H
@@ -17,6 +18,8 @@
 namespace Eigen {
 
 namespace internal {
+
+EIGEN_GCC_FAST_MATH_COMPLEX_VECTORIZE_WORKAROUND_PUSH
 
 inline Packet4ui p4ui_CONJ_XOR() {
   return vec_mergeh((Packet4ui)p4i_ZERO, (Packet4ui)p4f_MZERO);  //{ 0x00000000, 0x80000000, 0x00000000, 0x80000000 };
@@ -109,9 +112,6 @@ struct packet_traits<std::complex<float> > : default_packet_traits {
     HasSqrt = 1,
     HasLog = 1,
     HasExp = 1,
-#ifdef EIGEN_VECTORIZE_VSX
-    HasBlend = 1,
-#endif
     HasSetLinear = 0
   };
 };
@@ -364,31 +364,7 @@ EIGEN_STRONG_INLINE Packet2cf pcmp_eq(const Packet2cf& a, const Packet2cf& b) {
   return Packet2cf(vec_and(eq, vec_perm(eq, eq, p16uc_COMPLEX32_REV)));
 }
 
-#ifdef EIGEN_VECTORIZE_VSX
-template <>
-EIGEN_STRONG_INLINE Packet2cf pblend(const Selector<2>& ifPacket, const Packet2cf& thenPacket,
-                                     const Packet2cf& elsePacket) {
-  Packet2cf result;
-  result.v = reinterpret_cast<Packet4f>(
-      pblend<Packet2d>(ifPacket, reinterpret_cast<Packet2d>(thenPacket.v), reinterpret_cast<Packet2d>(elsePacket.v)));
-  return result;
-}
-#endif
-
-template <>
-EIGEN_STRONG_INLINE Packet2cf psqrt<Packet2cf>(const Packet2cf& a) {
-  return psqrt_complex<Packet2cf>(a);
-}
-
-template <>
-EIGEN_STRONG_INLINE Packet2cf plog<Packet2cf>(const Packet2cf& a) {
-  return plog_complex<Packet2cf>(a);
-}
-
-template <>
-EIGEN_STRONG_INLINE Packet2cf pexp<Packet2cf>(const Packet2cf& a) {
-  return pexp_complex<Packet2cf>(a);
-}
+EIGEN_INSTANTIATE_COMPLEX_MATH_FUNCS(Packet2cf)
 
 //---------- double ----------
 #ifdef EIGEN_VECTORIZE_VSX
@@ -635,17 +611,11 @@ EIGEN_STRONG_INLINE Packet1cd pcmp_eq(const Packet1cd& a, const Packet1cd& b) {
   return Packet1cd(vec_and(eq, eq_swapped));
 }
 
-template <>
-EIGEN_STRONG_INLINE Packet1cd psqrt<Packet1cd>(const Packet1cd& a) {
-  return psqrt_complex<Packet1cd>(a);
-}
-
-template <>
-EIGEN_STRONG_INLINE Packet1cd plog<Packet1cd>(const Packet1cd& a) {
-  return plog_complex<Packet1cd>(a);
-}
+EIGEN_INSTANTIATE_COMPLEX_MATH_FUNCS_NO_EXP(Packet1cd)
 
 #endif  // __VSX__
+
+EIGEN_GCC_FAST_MATH_COMPLEX_VECTORIZE_WORKAROUND_POP
 }  // end namespace internal
 
 }  // end namespace Eigen

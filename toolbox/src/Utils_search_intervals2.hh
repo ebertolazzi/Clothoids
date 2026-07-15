@@ -321,7 +321,7 @@ namespace Utils
       real_type const * X = *p_X;
 
       // Validate minimum requirements
-      UTILS_ASSERT( n >= 2, "SearchInterval::reset({}), need at least 2 points!", *p_name );
+      Utils::Assert( n >= 2, "SearchInterval::reset({}), need at least 2 points!", *p_name );
 
       // Adaptive table sizing: balance between memory usage and search speed
       m_table_size = std::clamp<integer>( static_cast<integer>( std::log( n ) * std::sqrt( n ) ), 128, 2048 );
@@ -334,7 +334,7 @@ namespace Utils
 #ifndef NDEBUG
       for ( integer i = 1; i < n; ++i )
       {
-        UTILS_ASSERT(
+        Utils::Assert(
           X[i - 1] <= X[i],
           "SearchInterval::reset({}), X array not sorted at index {}: {} > {}",
           *p_name,
@@ -352,7 +352,7 @@ namespace Utils
       // Protection against degenerate or nearly-degenerate cases
       // If all points are essentially at the same location, use a minimal range
       real_type eps = eps_x( std::max( std::abs( m_x_min ), std::abs( m_x_max ) ) );
-      UTILS_ASSERT(
+      Utils::Assert(
         m_x_range > eps,
         "SearchInterval::reset({}), degenerate range [{:.4g},{:.4g}]",
         *p_name,
@@ -449,7 +449,7 @@ namespace Utils
 #ifndef NDEBUG
       if ( !validate_tables( n ) )
       {
-        UTILS_ASSERT( false, "SearchInterval::reset({}), table validation failed!", *p_name );
+        Utils::Assert( false, "SearchInterval::reset({}), table validation failed!", *p_name );
       }
 #endif
 
@@ -555,7 +555,7 @@ namespace Utils
       // Local references for cleaner code
       integer const n = *p_npts;
 
-      UTILS_ASSERT( n > 0, "SearchInterval::find({}), n°points == 0!", *p_name );
+      Utils::Assert( n > 0, "SearchInterval::find({}), n°points == 0!", *p_name );
 
       integer &   pos = res.first;   // Output: interval index
       real_type & x   = res.second;  // Input/Output: query point (may be wrapped)
@@ -655,7 +655,7 @@ namespace Utils
 
 }  // namespace Utils
 
-#endif  // UTILS_INTERVALS_HH
+#endif  // UTILS_SEARCH_INTERVALS2_HH
 
 //
 // eof: Utils_search_intervals2.hh

@@ -6,6 +6,7 @@
 // This Source Code Form is subject to the terms of the Mozilla
 // Public License v. 2.0. If a copy of the MPL was not distributed
 // with this file, You can obtain one at http://mozilla.org/MPL/2.0/.
+// SPDX-License-Identifier: MPL-2.0
 
 /*
 NOTE: this routine has been adapted from the CSparse library:
@@ -31,18 +32,6 @@ namespace internal {
 template <typename T>
 inline T amd_flip(const T& i) {
   return -i - 2;
-}
-template <typename T>
-inline T amd_unflip(const T& i) {
-  return i < 0 ? amd_flip(i) : i;
-}
-template <typename T0, typename T1>
-inline bool amd_marked(const T0* w, const T1& j) {
-  return w[j] < 0;
-}
-template <typename T0, typename T1>
-inline void amd_mark(const T0* w, const T1& j) {
-  return w[j] = amd_flip(w[j]);
 }
 
 /* clear w */
@@ -310,7 +299,7 @@ void minimum_degree_ordering(SparseMatrix<Scalar, ColMajor, StorageIndex>& C,
         degree[i] = std::min<StorageIndex>(degree[i], d); /* update degree(i) */
         Ci[pn] = Ci[p3];                                  /* move first node to end */
         Ci[p3] = Ci[p1];                                  /* move 1st el. to end of Ei */
-        Ci[p1] = k;                                       /* add k as 1st element in of Ei */
+        Ci[p1] = k;                                       /* add k as 1st element in Ei */
         len[i] = pn - p1 + 1;                             /* new len of adj. list of node i */
         h %= n;                                           /* finalize hash of i */
         next[i] = hhead[h];                               /* place i in hash bucket */

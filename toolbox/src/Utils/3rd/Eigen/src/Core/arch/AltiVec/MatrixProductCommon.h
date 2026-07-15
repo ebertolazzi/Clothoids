@@ -1,4 +1,10 @@
 // #define EIGEN_POWER_USE_PREFETCH  // Use prefetching in gemm routines
+// SPDX-FileCopyrightText: The Eigen Authors
+// SPDX-License-Identifier: MPL-2.0
+
+#ifndef EIGEN_MATRIX_PRODUCT_COMMON_ALTIVEC_H
+#define EIGEN_MATRIX_PRODUCT_COMMON_ALTIVEC_H
+
 #ifdef EIGEN_POWER_USE_PREFETCH
 #define EIGEN_POWER_PREFETCH(p) prefetch(p)
 #else
@@ -203,3 +209,5 @@ EIGEN_ALWAYS_INLINE void bcouple(PacketBlock<Packet, N>& taccReal, PacketBlock<P
 
 }  // end namespace internal
 }  // end namespace Eigen
+
+#endif  // EIGEN_MATRIX_PRODUCT_COMMON_ALTIVEC_H

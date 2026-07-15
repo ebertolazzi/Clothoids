@@ -6,6 +6,7 @@
 // This Source Code Form is subject to the terms of the Mozilla
 // Public License v. 2.0. If a copy of the MPL was not distributed
 // with this file, You can obtain one at http://mozilla.org/MPL/2.0/.
+// SPDX-License-Identifier: MPL-2.0
 
 #ifndef EIGEN_SPARSE_CWISE_BINARY_OP_H
 #define EIGEN_SPARSE_CWISE_BINARY_OP_H
@@ -32,7 +33,7 @@ namespace Eigen {
 //  4 - dense op dense     product      dense
 //                         generic      dense
 //
-// TODO to ease compiler job, we could specialize product/quotient with a scalar
+// TODO: to ease compiler job, we could specialize product/quotient with a scalar
 //      and fallback to cwise-unary evaluator using bind1st_op and bind2nd_op.
 
 template <typename BinaryOp, typename Lhs, typename Rhs>
@@ -41,8 +42,8 @@ class CwiseBinaryOpImpl<BinaryOp, Lhs, Rhs, Sparse> : public SparseMatrixBase<Cw
   typedef CwiseBinaryOp<BinaryOp, Lhs, Rhs> Derived;
   typedef SparseMatrixBase<Derived> Base;
   EIGEN_SPARSE_PUBLIC_INTERFACE(Derived)
-  EIGEN_STATIC_ASSERT(((!internal::is_same<typename internal::traits<Lhs>::StorageKind,
-                                           typename internal::traits<Rhs>::StorageKind>::value) ||
+  EIGEN_STATIC_ASSERT(((!std::is_same<typename internal::traits<Lhs>::StorageKind,
+                                      typename internal::traits<Rhs>::StorageKind>::value) ||
                        ((internal::evaluator<Lhs>::Flags & RowMajorBit) ==
                         (internal::evaluator<Rhs>::Flags & RowMajorBit))),
                       THE_STORAGE_ORDER_OF_BOTH_SIDES_MUST_MATCH)
@@ -58,9 +59,6 @@ namespace internal {
 //   if lhs(i,j) is null and rhs(i,j) is present, dst(i,j) = func(0, rhs(i,j))
 
 // Generic "sparse OP sparse"
-template <typename XprType>
-struct binary_sparse_evaluator;
-
 template <typename BinaryOp, typename Lhs, typename Rhs>
 struct binary_evaluator<CwiseBinaryOp<BinaryOp, Lhs, Rhs>, IteratorBased, IteratorBased>
     : evaluator_base<CwiseBinaryOp<BinaryOp, Lhs, Rhs> > {
@@ -416,7 +414,7 @@ struct sparse_conjunction_evaluator<XprType, IteratorBased, IteratorBased> : eva
     EIGEN_STRONG_INLINE Index row() const { return m_lhsIter.row(); }
     EIGEN_STRONG_INLINE Index col() const { return m_lhsIter.col(); }
 
-    EIGEN_STRONG_INLINE operator bool() const { return (m_lhsIter && m_rhsIter); }
+    EIGEN_STRONG_INLINE operator bool() const { return m_lhsIter && m_rhsIter; }
 
    protected:
     LhsIterator m_lhsIter;
@@ -519,7 +517,6 @@ struct sparse_conjunction_evaluator<XprType, IteratorBased, IndexBased> : evalua
   typedef typename XprType::Lhs LhsArg;
   typedef typename XprType::Rhs RhsArg;
   typedef typename evaluator<LhsArg>::InnerIterator LhsIterator;
-  typedef evaluator<RhsArg> RhsEvaluator;
   typedef typename XprType::StorageIndex StorageIndex;
   typedef typename traits<XprType>::Scalar Scalar;
 
@@ -675,7 +672,6 @@ struct sparse_disjunction_evaluator<XprType, IndexBased, IteratorBased> : evalua
   typedef typename XprType::Functor BinaryOp;
   typedef typename XprType::Lhs LhsArg;
   typedef typename XprType::Rhs RhsArg;
-  typedef evaluator<LhsArg> LhsEvaluator;
   typedef typename evaluator<RhsArg>::InnerIterator RhsIterator;
   typedef typename XprType::StorageIndex StorageIndex;
   typedef typename traits<XprType>::Scalar Scalar;
@@ -759,7 +755,6 @@ struct sparse_disjunction_evaluator<XprType, IteratorBased, IndexBased> : evalua
   typedef typename XprType::Lhs LhsArg;
   typedef typename XprType::Rhs RhsArg;
   typedef typename evaluator<LhsArg>::InnerIterator LhsIterator;
-  typedef evaluator<RhsArg> RhsEvaluator;
   typedef typename XprType::StorageIndex StorageIndex;
   typedef typename traits<XprType>::Scalar Scalar;
 
@@ -858,7 +853,7 @@ Derived& SparseMatrixBase<Derived>::operator+=(const EigenBase<OtherDerived>& ot
 template <typename Derived>
 template <typename OtherDerived>
 Derived& SparseMatrixBase<Derived>::operator-=(const EigenBase<OtherDerived>& other) {
-  call_assignment(derived(), other.derived(), internal::assign_op<Scalar, typename OtherDerived::Scalar>());
+  call_assignment(derived(), other.derived(), internal::sub_assign_op<Scalar, typename OtherDerived::Scalar>());
   return derived();
 }
 

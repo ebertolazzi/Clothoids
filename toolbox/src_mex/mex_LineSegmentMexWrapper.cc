@@ -84,8 +84,8 @@ namespace G2lib
   static void do_new( int nlhs, mxArray * plhs[], int nrhs, mxArray const * prhs[] )
   {
 #define CMD "LineSegmentMexWrapper('new',...): "
-    UTILS_MEX_ASSERT( nlhs == 1, CMD "expected 1 output, nlhs = {}\n", nlhs );
-    UTILS_MEX_ASSERT( nrhs == 1 || nrhs == 3 || nrhs == 5, CMD "expected 1, 3 or 5 inputs, nrhs = {}\n", nrhs );
+    Utils::mex_assert( nlhs == 1, CMD "expected 1 output, nlhs = {}\n", nlhs );
+    Utils::mex_assert( nrhs == 1 || nrhs == 3 || nrhs == 5, CMD "expected 1, 3 or 5 inputs, nrhs = {}\n", nrhs );
 #undef CMD
 
     LineSegment * ptr = new LineSegment( "line segment" );
@@ -114,7 +114,7 @@ namespace G2lib
       p0 = Utils::mex_vector_pointer( arg_in_1, size0, CMD "`p0` expected to be a real vector" );
       p1 = Utils::mex_vector_pointer( arg_in_2, size1, CMD "`p1` expected to be a real vector" );
 
-      UTILS_MEX_ASSERT( size0 == 2 && size1 == 2, CMD "bad dimension size(p0) = {}, size(p1) = {}\n", size0, size1 );
+      Utils::mex_assert( size0 == 2 && size1 == 2, CMD "bad dimension size(p0) = {}, size(p1) = {}\n", size0, size1 );
 #undef CMD
 
       ptr->build_2P( p0[0], p0[1], p1[0], p1[1] );
@@ -126,8 +126,8 @@ namespace G2lib
   static void do_build( int nlhs, mxArray *[], int nrhs, mxArray const * prhs[] )
   {
 #define CMD "LineSegmentMexWrapper('build',OBJ,...): "
-    UTILS_MEX_ASSERT( nlhs == 0, CMD "expected NO output, nlhs = {}\n", nlhs );
-    UTILS_MEX_ASSERT( nrhs == 4 || nrhs == 6, CMD "expected 4 or 6 inputs, nrhs = {}\n", nrhs );
+    Utils::mex_assert( nlhs == 0, CMD "expected NO output, nlhs = {}\n", nlhs );
+    Utils::mex_assert( nrhs == 4 || nrhs == 6, CMD "expected 4 or 6 inputs, nrhs = {}\n", nrhs );
 #undef CMD
 
     LineSegment * ptr = Utils::mex_convert_mx_to_ptr<LineSegment>( arg_in_1 );
@@ -157,7 +157,7 @@ namespace G2lib
       p0 = Utils::mex_vector_pointer( arg_in_2, size0, CMD "`p0` expected to be a real vector" );
       p1 = Utils::mex_vector_pointer( arg_in_3, size1, CMD "`p1` expected to be a real vector" );
 
-      UTILS_MEX_ASSERT( size0 == 2 && size1 == 2, CMD "bad dimension size(p0) = {}, size(p1) = {}\n", size0, size1 );
+      Utils::mex_assert( size0 == 2 && size1 == 2, CMD "bad dimension size(p0) = {}, size(p1) = {}\n", size0, size1 );
 #undef CMD
 
       ptr->build_2P( p0[0], p0[1], p1[0], p1[1] );
@@ -171,8 +171,8 @@ namespace G2lib
     LineSegment * ptr = Utils::mex_convert_mx_to_ptr<LineSegment>( arg_in_1 );
 
 #define CMD "LineSegmentMexWrapper('to_nurbs',OBJ): "
-    UTILS_MEX_ASSERT( nrhs == 2, CMD "expected 2 inputs, nrhs = {}\n", nrhs );
-    UTILS_MEX_ASSERT( nlhs == 1, CMD "expected 1 output, nlhs = {}\n", nlhs );
+    Utils::mex_assert( nrhs == 2, CMD "expected 2 inputs, nrhs = {}\n", nrhs );
+    Utils::mex_assert( nlhs == 1, CMD "expected 1 output, nlhs = {}\n", nlhs );
 
     integer npts, nknots;
     ptr->paramNURBS( nknots, npts );
@@ -215,8 +215,8 @@ namespace G2lib
     LineSegment * ptr = Utils::mex_convert_mx_to_ptr<LineSegment>( arg_in_1 );
 
 #define CMD "LineSegmentMexWrapper('points',OBJ): "
-    UTILS_MEX_ASSERT( nrhs == 2, CMD "expected 2 input, nrhs = {}\n", nrhs );
-    UTILS_MEX_ASSERT( nlhs == 2, CMD "expected 2 output, nlhs = {}\n", nlhs );
+    Utils::mex_assert( nrhs == 2, CMD "expected 2 input, nrhs = {}\n", nrhs );
+    Utils::mex_assert( nlhs == 2, CMD "expected 2 output, nlhs = {}\n", nlhs );
 
     real_type * p1 = Utils::mex_create_matrix_value( arg_out_0, 2, 1 );
     real_type * p2 = Utils::mex_create_matrix_value( arg_out_1, 2, 1 );
@@ -249,7 +249,7 @@ namespace G2lib
 
     try
     {
-      UTILS_MEX_ASSERT0( mxIsChar( arg_in_0 ), "First argument must be a string" );
+      Utils::mex_assert( mxIsChar( arg_in_0 ), "First argument must be a string" );
       mxGetString( arg_in_0, cmd, 256 );
       cmd_to_fun.at( cmd )( nlhs, plhs, nrhs, prhs );
     }

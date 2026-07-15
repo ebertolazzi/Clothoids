@@ -96,7 +96,7 @@ namespace G2lib
       else if ( nrhs == 4 )
       {
         integer nk = Utils::mex_get_int64( arg_in_0, "FresnelCS: argument `nk` expected to be and integer" );
-        UTILS_MEX_ASSERT( nk >= 1 && nk <= 3, "FresnelCS: argument `nk` = {} must be in [1,2,3]\n", nk );
+        Utils::mex_assert( nk >= 1 && nk <= 3, "FresnelCS: argument `nk` = {} must be in [1,2,3]\n", nk );
         mwSize         na, nb, nc;
         double const * a =
           Utils::mex_vector_pointer( arg_in_1, na, "FresnelCS: argument `a` expected to be a real scalar/vector" );
@@ -104,7 +104,7 @@ namespace G2lib
           Utils::mex_vector_pointer( arg_in_2, nb, "FresnelCS: argument `b` expected to be a real scalar/vector" );
         double const * c =
           Utils::mex_vector_pointer( arg_in_3, nc, "FresnelCS: argument `c` expected to be a real scalar/vector" );
-        UTILS_MEX_ASSERT(
+        Utils::mex_assert(
           na == nb && nb == nc,
           "FresnelCS: Second to last arguments must be vectors of the same length\n"
           "found length(a) = {}, length(b) = {}, length(c) = {}\n",
@@ -125,7 +125,7 @@ namespace G2lib
       }
       else
       {
-        UTILS_MEX_ASSERT0( false, "FresnelCS: expected 1 or 4 airguments" );
+        Utils::mex_assert( false, "FresnelCS: expected 1 or 4 airguments" );
       }
     }
     catch ( std::exception const & e )

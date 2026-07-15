@@ -42,7 +42,7 @@ public:
     , idx( idx_in )
     , SCALE( 1e7 )
   {
-    UTILS_ASSERT( idx == 0 || idx == 1, "SSTnonlinearityTerm, idx = {} must be 0 or 1", idx_in );
+    Utils::Assert( idx == 0 || idx == 1, "SSTnonlinearityTerm, idx = {} must be 0 or 1", idx_in );
     switch ( idx )
     {
       case 0: sst1 = 360; break;
@@ -114,7 +114,7 @@ public:
 
   virtual void check_if_admissible( Vector const & x ) const override
   {
-    for ( integer i = 0; i < n; ++i ) UTILS_ASSERT( x( i ) > 0, "Bad range" );
+    for ( integer i = 0; i < n; ++i ) Utils::Assert( x( i ) > 0, "Bad range" );
   }
 
   virtual void bounding_box( Vector & L, Vector & U ) const override

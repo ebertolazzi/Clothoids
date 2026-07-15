@@ -445,7 +445,7 @@ namespace Utils
      */
     Scalar safe_evaluate( Vector const & x )
     {
-      UTILS_ASSERT( m_callback != nullptr, "NelderMead_classic::safe_evaluate(x) Callback not set!" );
+      Utils::Assert( m_callback != nullptr, "NelderMead_classic::safe_evaluate(x) Callback not set!" );
 
       // EIGEN3: Use array operations for efficient bounds checking
       // .array() enables element-wise operations without temporary copies
@@ -1405,8 +1405,8 @@ namespace Utils
      */
     void set_bounds( Vector const & lower, Vector const & upper )
     {
-      UTILS_ASSERT( lower.size() == upper.size(), "Bounds size mismatch" );
-      UTILS_ASSERT( ( lower.array() <= upper.array() ).all(), "Lower <= Upper" );
+      Utils::Assert( lower.size() == upper.size(), "Bounds size mismatch" );
+      Utils::Assert( ( lower.array() <= upper.array() ).all(), "Lower <= Upper" );
       m_lower      = lower;
       m_upper      = upper;
       m_use_bounds = true;

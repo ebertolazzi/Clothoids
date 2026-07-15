@@ -18,7 +18,7 @@
 \*--------------------------------------------------------------------------*/
 
 //
-// file: ThreadPool0.hxx
+// file: ThreadPoolEigen.hxx
 //
 
 #pragma once
@@ -75,3 +75,7 @@ namespace Utils
   };
 
 }  // namespace Utils
+
+//
+// eof: ThreadPoolEigen.hxx
+//

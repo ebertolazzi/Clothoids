@@ -6,6 +6,7 @@
 // This Source Code Form is subject to the terms of the Mozilla
 // Public License v. 2.0. If a copy of the MPL was not distributed
 // with this file, You can obtain one at http://mozilla.org/MPL/2.0/.
+// SPDX-License-Identifier: MPL-2.0
 
 #ifndef EIGEN_SCALING_H
 #define EIGEN_SCALING_H
@@ -23,7 +24,7 @@ namespace Eigen {
  *
  * \tparam Scalar_ the scalar type, i.e., the type of the coefficients.
  *
- * This class represent a uniform scaling transformation. It is the return
+ * This class represents a uniform scaling transformation. It is the return
  * type of Scaling(Scalar), and most of the time this is the only way it
  * is used. In particular, this class is not aimed to be used to store a scaling transformation,
  * but rather to make easier the constructions and updates of Transform objects.
@@ -80,7 +81,7 @@ class UniformScaling {
   }
 
   /** Concatenates a uniform scaling and a linear transformation matrix */
-  // TODO returns an expression
+  // TODO: return an expression instead of a dense matrix.
   template <typename Derived>
   inline typename Eigen::internal::plain_matrix_type<Derived>::type operator*(const MatrixBase<Derived>& other) const {
     return other * m_factor;

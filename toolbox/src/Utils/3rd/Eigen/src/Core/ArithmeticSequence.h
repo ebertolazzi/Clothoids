@@ -6,6 +6,7 @@
 // This Source Code Form is subject to the terms of the Mozilla
 // Public License v. 2.0. If a copy of the MPL was not distributed
 // with this file, You can obtain one at http://mozilla.org/MPL/2.0/.
+// SPDX-License-Identifier: MPL-2.0
 
 #ifndef EIGEN_ARITHMETIC_SEQUENCE_H
 #define EIGEN_ARITHMETIC_SEQUENCE_H
@@ -178,11 +179,10 @@ auto seq(FirstType f, LastType l, IncrType incr)
 
 namespace placeholders {
 
-/** \cpp11
- * \returns a symbolic ArithmeticSequence representing the last \a size elements with increment \a incr.
+/** \returns a symbolic ArithmeticSequence representing the last \a size elements with increment \a incr.
  *
  * It is a shortcut for: \code seqN(last-(size-fix<1>)*incr, size, incr) \endcode
- *
+ * \anchor Eigen_placeholders_lastN
  * \sa lastN(SizeType), seqN(FirstType,SizeType), seq(FirstType,LastType,IncrType) */
 template <typename SizeType, typename IncrType>
 auto lastN(SizeType size, IncrType incr)
@@ -190,12 +190,11 @@ auto lastN(SizeType size, IncrType incr)
   return seqN(Eigen::placeholders::last - (size - fix<1>()) * incr, size, incr);
 }
 
-/** \cpp11
- * \returns a symbolic ArithmeticSequence representing the last \a size elements with a unit increment.
+/** \returns a symbolic ArithmeticSequence representing the last \a size elements with a unit increment.
  *
  *  It is a shortcut for: \code seq(last+fix<1>-size, last) \endcode
  *
- * \sa lastN(SizeType,IncrType, seqN(FirstType,SizeType), seq(FirstType,LastType) */
+ * \sa lastN(SizeType,IncrType), seqN(FirstType,SizeType), seq(FirstType,LastType) */
 template <typename SizeType>
 auto lastN(SizeType size) -> decltype(seqN(Eigen::placeholders::last + fix<1>() - size, size)) {
   return seqN(Eigen::placeholders::last + fix<1>() - size, size);
@@ -220,7 +219,7 @@ auto lastN(SizeType size) -> decltype(seqN(Eigen::placeholders::last + fix<1>() 
   using Eigen::seqN;
   using Eigen::placeholders::all;
   using Eigen::placeholders::last;
-  using Eigen::placeholders::lastN;  // c++11 only
+  using Eigen::placeholders::lastN;
   using Eigen::placeholders::lastp1;
   \endcode
   */

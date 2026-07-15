@@ -6,6 +6,7 @@
 // This Source Code Form is subject to the terms of the Mozilla
 // Public License v. 2.0. If a copy of the MPL was not distributed
 // with this file, You can obtain one at http://mozilla.org/MPL/2.0/.
+// SPDX-License-Identifier: MPL-2.0
 
 #ifndef EIGEN_SPARSEPRODUCT_H
 #define EIGEN_SPARSEPRODUCT_H
@@ -45,8 +46,9 @@ struct generic_product_impl<Lhs, Rhs, SparseShape, SparseShape, ProductType> {
 
   // dense += sparse * sparse
   template <typename Dest, typename ActualLhs>
-  static void addTo(Dest& dst, const ActualLhs& lhs, const Rhs& rhs,
-                    std::enable_if_t<is_same<typename evaluator_traits<Dest>::Shape, DenseShape>::value, int*>* = 0) {
+  static void addTo(
+      Dest& dst, const ActualLhs& lhs, const Rhs& rhs,
+      std::enable_if_t<std::is_same<typename evaluator_traits<Dest>::Shape, DenseShape>::value, int*>* = 0) {
     typedef typename nested_eval<ActualLhs, Dynamic>::type LhsNested;
     typedef typename nested_eval<Rhs, Dynamic>::type RhsNested;
     LhsNested lhsNested(lhs);
@@ -57,8 +59,9 @@ struct generic_product_impl<Lhs, Rhs, SparseShape, SparseShape, ProductType> {
 
   // dense -= sparse * sparse
   template <typename Dest>
-  static void subTo(Dest& dst, const Lhs& lhs, const Rhs& rhs,
-                    std::enable_if_t<is_same<typename evaluator_traits<Dest>::Shape, DenseShape>::value, int*>* = 0) {
+  static void subTo(
+      Dest& dst, const Lhs& lhs, const Rhs& rhs,
+      std::enable_if_t<std::is_same<typename evaluator_traits<Dest>::Shape, DenseShape>::value, int*>* = 0) {
     addTo(dst, -lhs, rhs);
   }
 
@@ -166,7 +169,6 @@ template <typename Scalar, int Options_, typename StorageIndex_>
 template <typename Lhs, typename Rhs>
 SparseMatrix<Scalar, Options_, StorageIndex_>& SparseMatrix<Scalar, Options_, StorageIndex_>::operator=(
     const Product<Lhs, Rhs, AliasFreeProduct>& src) {
-  // std::cout << "in Assignment : " << DstOptions << "\n";
   SparseMatrix dst(src.rows(), src.cols());
   internal::generic_product_impl<Lhs, Rhs>::evalTo(dst, src.lhs(), src.rhs());
   this->swap(dst);

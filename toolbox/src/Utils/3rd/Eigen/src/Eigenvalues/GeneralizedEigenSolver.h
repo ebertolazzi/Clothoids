@@ -8,6 +8,7 @@
 // This Source Code Form is subject to the terms of the Mozilla
 // Public License v. 2.0. If a copy of the MPL was not distributed
 // with this file, You can obtain one at http://mozilla.org/MPL/2.0/.
+// SPDX-License-Identifier: MPL-2.0
 
 #ifndef EIGEN_GENERALIZEDEIGENSOLVER_H
 #define EIGEN_GENERALIZEDEIGENSOLVER_H
@@ -184,7 +185,7 @@ class GeneralizedEigenSolver {
    * \returns An expression of the column vector containing the eigenvalues.
    *
    * It is a shortcut for \code this->alphas().cwiseQuotient(this->betas()); \endcode
-   * Not that betas might contain zeros. It is therefore not recommended to use this function,
+   * Note that betas might contain zeros. It is therefore not recommended to use this function,
    * but rather directly deal with the alphas and betas vectors.
    *
    * \pre Either the constructor
@@ -243,7 +244,7 @@ class GeneralizedEigenSolver {
    * The cost of the computation is dominated by the cost of the
    * generalized Schur decomposition.
    *
-   * This method reuses of the allocated data in the GeneralizedEigenSolver object.
+   * This method reuses the allocated data in the GeneralizedEigenSolver object.
    */
   GeneralizedEigenSolver& compute(const MatrixType& A, const MatrixType& B, bool computeEigenvectors = true);
 
@@ -361,7 +362,7 @@ GeneralizedEigenSolver<MatrixType>& GeneralizedEigenSolver<MatrixType>::compute(
           // Compute eigenvector in position (i+1) and then position (i) is just the conjugate
           cv.setZero();
           cv.coeffRef(i + 1) = Scalar(1.0);
-          // here, the "static_cast" workaround expression template issues.
+          // here, the "static_cast" works around expression template issues.
           cv.coeffRef(i) = -(static_cast<Scalar>(beta * mS.coeffRef(i, i + 1)) - alpha * mT.coeffRef(i, i + 1)) /
                            (static_cast<Scalar>(beta * mS.coeffRef(i, i)) - alpha * mT.coeffRef(i, i));
           for (Index j = i - 1; j >= 0; j--) {
@@ -384,7 +385,7 @@ GeneralizedEigenSolver<MatrixType>& GeneralizedEigenSolver<MatrixType>::compute(
                                (alpha * mT.coeffRef(j, j) - static_cast<Scalar>(beta * mS.coeffRef(j, j)));
             }
           }
-          m_eivec.col(i + 1).noalias() = (m_realQZ.matrixZ().transpose() * cv);
+          m_eivec.col(i + 1).noalias() = m_realQZ.matrixZ().transpose() * cv;
           m_eivec.col(i + 1).normalize();
           m_eivec.col(i) = m_eivec.col(i + 1).conjugate();
         }

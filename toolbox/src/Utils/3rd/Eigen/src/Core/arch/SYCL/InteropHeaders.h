@@ -9,6 +9,8 @@
 // This Source Code Form is subject to the terms of the Mozilla
 // Public License v. 2.0. If a copy of the MPL was not distributed
 // with this file, You can obtain one at http://mozilla.org/MPL/2.0/.
+// SPDX-FileCopyrightText: The Eigen Authors
+// SPDX-License-Identifier: MPL-2.0
 
 /*****************************************************************
  * InteropHeaders.h
@@ -30,7 +32,7 @@ namespace Eigen {
 
 namespace internal {
 
-template <int has_blend, int lengths>
+template <int lengths>
 struct sycl_packet_traits : default_packet_traits {
   enum {
     Vectorizable = 1,
@@ -60,7 +62,6 @@ struct sycl_packet_traits : default_packet_traits {
     HasIGamma = 0,
     HasIGammac = 0,
     HasBetaInc = 0,
-    HasBlend = has_blend,
     // This flag is used to indicate whether packet comparison is supported.
     // pcmp_eq, pcmp_lt and pcmp_le should be defined for it to be true.
     HasCmp = 1,
@@ -78,29 +79,27 @@ struct sycl_packet_traits : default_packet_traits {
 };
 
 #ifdef SYCL_DEVICE_ONLY
-#define SYCL_PACKET_TRAITS(packet_type, has_blend, unpacket_type, lengths)       \
-  template <>                                                                    \
-  struct packet_traits<unpacket_type> : sycl_packet_traits<has_blend, lengths> { \
-    typedef packet_type type;                                                    \
-    typedef packet_type half;                                                    \
+#define SYCL_PACKET_TRAITS(packet_type, unpacket_type, lengths)       \
+  template <>                                                         \
+  struct packet_traits<unpacket_type> : sycl_packet_traits<lengths> { \
+    typedef packet_type type;                                         \
+    typedef packet_type half;                                         \
   };
 
-SYCL_PACKET_TRAITS(cl::sycl::cl_half8, 1, Eigen::half, 8)
-SYCL_PACKET_TRAITS(cl::sycl::cl_half8, 1, const Eigen::half, 8)
-SYCL_PACKET_TRAITS(cl::sycl::cl_float4, 1, float, 4)
-SYCL_PACKET_TRAITS(cl::sycl::cl_float4, 1, const float, 4)
-SYCL_PACKET_TRAITS(cl::sycl::cl_double2, 0, double, 2)
-SYCL_PACKET_TRAITS(cl::sycl::cl_double2, 0, const double, 2)
+SYCL_PACKET_TRAITS(cl::sycl::cl_half8, Eigen::half, 8)
+SYCL_PACKET_TRAITS(cl::sycl::cl_half8, const Eigen::half, 8)
+SYCL_PACKET_TRAITS(cl::sycl::cl_float4, float, 4)
+SYCL_PACKET_TRAITS(cl::sycl::cl_float4, const float, 4)
+SYCL_PACKET_TRAITS(cl::sycl::cl_double2, double, 2)
+SYCL_PACKET_TRAITS(cl::sycl::cl_double2, const double, 2)
 #undef SYCL_PACKET_TRAITS
 
 // Make sure this is only available when targeting a GPU: we don't want to
 // introduce conflicts between these packet_traits definitions and the ones
 // we'll use on the host side (SSE, AVX, ...)
-#define SYCL_ARITHMETIC(packet_type)  \
-  template <>                         \
-  struct is_arithmetic<packet_type> { \
-    enum { value = true };            \
-  };
+#define SYCL_ARITHMETIC(packet_type) \
+  template <>                        \
+  struct is_arithmetic<packet_type> : std::true_type {};
 SYCL_ARITHMETIC(cl::sycl::cl_half8)
 SYCL_ARITHMETIC(cl::sycl::cl_float4)
 SYCL_ARITHMETIC(cl::sycl::cl_double2)
@@ -135,14 +134,14 @@ template <typename PacketReturnType, int PacketSize>
 struct PacketWrapper {
   typedef typename ::Eigen::internal::unpacket_traits<PacketReturnType>::type Scalar;
   template <typename Index>
-  EIGEN_DEVICE_FUNC static Scalar scalarize(Index, PacketReturnType &) {
+  EIGEN_DEVICE_FUNC static Scalar scalarize(Index, PacketReturnType&) {
     eigen_assert(false && "THERE IS NO PACKETIZE VERSION FOR  THE CHOSEN TYPE");
     abort();
   }
   EIGEN_DEVICE_FUNC static PacketReturnType convert_to_packet_type(Scalar in, Scalar) {
     return ::Eigen::internal::template plset<PacketReturnType>(in);
   }
-  EIGEN_DEVICE_FUNC static void set_packet(PacketReturnType, Scalar *) {
+  EIGEN_DEVICE_FUNC static void set_packet(PacketReturnType, Scalar*) {
     eigen_assert(false && "THERE IS NO PACKETIZE VERSION FOR  THE CHOSEN TYPE");
     abort();
   }
@@ -153,7 +152,7 @@ template <typename PacketReturnType>
 struct PacketWrapper<PacketReturnType, 4> {
   typedef typename ::Eigen::internal::unpacket_traits<PacketReturnType>::type Scalar;
   template <typename Index>
-  EIGEN_DEVICE_FUNC EIGEN_STRONG_INLINE static Scalar scalarize(Index index, PacketReturnType &in) {
+  EIGEN_DEVICE_FUNC EIGEN_STRONG_INLINE static Scalar scalarize(Index index, PacketReturnType& in) {
     switch (index) {
       case 0:
         return in.x();
@@ -164,7 +163,7 @@ struct PacketWrapper<PacketReturnType, 4> {
       case 3:
         return in.w();
       default:
-        // INDEX MUST BE BETWEEN 0 and 3.There is no abort function in SYCL kernel. so we cannot use abort here.
+        // INDEX MUST BE BETWEEN 0 and 3. There is no abort function in SYCL kernel. so we cannot use abort here.
         //  The code will never reach here
         __builtin_unreachable();
     }
@@ -174,7 +173,7 @@ struct PacketWrapper<PacketReturnType, 4> {
   EIGEN_DEVICE_FUNC EIGEN_STRONG_INLINE static PacketReturnType convert_to_packet_type(Scalar in, Scalar other) {
     return PacketReturnType(in, other, other, other);
   }
-  EIGEN_DEVICE_FUNC EIGEN_STRONG_INLINE static void set_packet(PacketReturnType &lhs, Scalar *rhs) {
+  EIGEN_DEVICE_FUNC EIGEN_STRONG_INLINE static void set_packet(PacketReturnType& lhs, Scalar* rhs) {
     lhs = PacketReturnType(rhs[0], rhs[1], rhs[2], rhs[3]);
   }
 };
@@ -183,27 +182,27 @@ template <typename PacketReturnType>
 struct PacketWrapper<PacketReturnType, 1> {
   typedef typename ::Eigen::internal::unpacket_traits<PacketReturnType>::type Scalar;
   template <typename Index>
-  EIGEN_DEVICE_FUNC EIGEN_STRONG_INLINE static Scalar scalarize(Index, PacketReturnType &in) {
+  EIGEN_DEVICE_FUNC EIGEN_STRONG_INLINE static Scalar scalarize(Index, PacketReturnType& in) {
     return in;
   }
   EIGEN_DEVICE_FUNC EIGEN_STRONG_INLINE static PacketReturnType convert_to_packet_type(Scalar in, Scalar) {
     return PacketReturnType(in);
   }
-  EIGEN_DEVICE_FUNC EIGEN_STRONG_INLINE static void set_packet(PacketReturnType &lhs, Scalar *rhs) { lhs = rhs[0]; }
+  EIGEN_DEVICE_FUNC EIGEN_STRONG_INLINE static void set_packet(PacketReturnType& lhs, Scalar* rhs) { lhs = rhs[0]; }
 };
 
 template <typename PacketReturnType>
 struct PacketWrapper<PacketReturnType, 2> {
   typedef typename ::Eigen::internal::unpacket_traits<PacketReturnType>::type Scalar;
   template <typename Index>
-  EIGEN_DEVICE_FUNC EIGEN_STRONG_INLINE static Scalar scalarize(Index index, PacketReturnType &in) {
+  EIGEN_DEVICE_FUNC EIGEN_STRONG_INLINE static Scalar scalarize(Index index, PacketReturnType& in) {
     switch (index) {
       case 0:
         return in.x();
       case 1:
         return in.y();
       default:
-        // INDEX MUST BE BETWEEN 0 and 1.There is no abort function in SYCL kernel. so we cannot use abort here.
+        // INDEX MUST BE BETWEEN 0 and 1. There is no abort function in SYCL kernel. so we cannot use abort here.
         // The code will never reach here
         __builtin_unreachable();
     }
@@ -213,7 +212,7 @@ struct PacketWrapper<PacketReturnType, 2> {
   EIGEN_DEVICE_FUNC EIGEN_STRONG_INLINE static PacketReturnType convert_to_packet_type(Scalar in, Scalar other) {
     return PacketReturnType(in, other);
   }
-  EIGEN_DEVICE_FUNC EIGEN_STRONG_INLINE static void set_packet(PacketReturnType &lhs, Scalar *rhs) {
+  EIGEN_DEVICE_FUNC EIGEN_STRONG_INLINE static void set_packet(PacketReturnType& lhs, Scalar* rhs) {
     lhs = PacketReturnType(rhs[0], rhs[1]);
   }
 };

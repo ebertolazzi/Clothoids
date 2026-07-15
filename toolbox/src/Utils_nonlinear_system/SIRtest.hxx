@@ -66,7 +66,7 @@ public:
 
   virtual void check_if_admissible( Vector const & x ) const override
   {
-    for ( integer i = 0; i < n; ++i ) UTILS_ASSERT( x( i ) > -5 && x( i ) < 5, "Bad range" );
+    for ( integer i = 0; i < n; ++i ) Utils::Assert( x( i ) > -5 && x( i ) < 5, "Bad range" );
   }
 
   virtual void bounding_box( Vector & L, Vector & U ) const override

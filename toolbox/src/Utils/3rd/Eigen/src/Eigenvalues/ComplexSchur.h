@@ -8,6 +8,7 @@
 // This Source Code Form is subject to the terms of the Mozilla
 // Public License v. 2.0. If a copy of the MPL was not distributed
 // with this file, You can obtain one at http://mozilla.org/MPL/2.0/.
+// SPDX-License-Identifier: MPL-2.0
 
 #ifndef EIGEN_COMPLEX_SCHUR_H
 #define EIGEN_COMPLEX_SCHUR_H
@@ -46,7 +47,7 @@ struct complex_schur_reduce_to_hessenberg;
  * ComplexSchur(const MatrixType&, bool) constructor which computes
  * the Schur decomposition at construction time. Once the
  * decomposition is computed, you can use the matrixU() and matrixT()
- * functions to retrieve the matrices U and V in the decomposition.
+ * functions to retrieve the matrices U and T in the decomposition.
  *
  * \note This code is inspired from Jampack
  *
@@ -180,7 +181,6 @@ class ComplexSchur {
     * to triangular form by performing QR iterations with a single
     * shift. The cost of computing the Schur decomposition depends
     * on the number of iterations; as a rough guide, it may be taken
-    * on the number of iterations; as a rough guide, it may be taken
     * to be \f$25n^3\f$ complex flops, or \f$10n^3\f$ complex flops
     * if \a computeU is false.
     *
@@ -195,7 +195,7 @@ class ComplexSchur {
   /** \brief Compute Schur decomposition from a given Hessenberg matrix
    *  \param[in] matrixH Matrix in Hessenberg form H
    *  \param[in] matrixQ orthogonal matrix Q that transform a matrix A to H : A = Q H Q^T
-   *  \param computeU Computes the matriX U of the Schur vectors
+   *  \param computeU Computes the matrix U of the Schur vectors
    * \return Reference to \c *this
    *
    *  This routine assumes that the matrix is already reduced in Hessenberg form matrixH
@@ -233,7 +233,7 @@ class ComplexSchur {
   }
 
   /** \brief Returns the maximum number of iterations. */
-  Index getMaxIterations() { return m_maxIters; }
+  Index getMaxIterations() const { return m_maxIters; }
 
   /** \brief Maximum number of iterations per row.
    *
@@ -277,14 +277,15 @@ typename ComplexSchur<MatrixType>::ComplexScalar ComplexSchur<MatrixType>::compu
   using std::abs;
   if ((iter == 10 || iter == 20) && iu > 1) {
     // exceptional shift, taken from http://www.netlib.org/eispack/comqr.f
-    return abs(numext::real(m_matT.coeff(iu, iu - 1))) + abs(numext::real(m_matT.coeff(iu - 1, iu - 2)));
+    return ComplexSchur<MatrixType>::ComplexScalar(abs(numext::real(m_matT.coeff(iu, iu - 1))) +
+                                                   abs(numext::real(m_matT.coeff(iu - 1, iu - 2))));
   }
 
   // compute the shift as one of the eigenvalues of t, the 2x2
   // diagonal block on the bottom of the active submatrix
   Matrix<ComplexScalar, 2, 2> t = m_matT.template block<2, 2>(iu - 1, iu - 1);
   RealScalar normt = t.cwiseAbs().sum();
-  t /= normt;  // the normalization by sf is to avoid under/overflow
+  t /= normt;  // the normalization by normt is to avoid under/overflow
 
   ComplexScalar b = t.coeff(0, 1) * t.coeff(1, 0);
   ComplexScalar c = t.coeff(0, 0) - t.coeff(1, 1);
@@ -362,7 +363,7 @@ struct complex_schur_reduce_to_hessenberg<MatrixType, false> {
     _this.m_hess.compute(matrix);
     _this.m_matT = _this.m_hess.matrixH().template cast<ComplexScalar>();
     if (computeU) {
-      // This may cause an allocation which seems to be avoidable
+      // TODO: this temporary allocation could potentially be avoided.
       MatrixType Q = _this.m_hess.matrixQ();
       _this.m_matU = Q.template cast<ComplexScalar>();
     }

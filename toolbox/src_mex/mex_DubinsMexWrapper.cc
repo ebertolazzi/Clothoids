@@ -85,8 +85,8 @@ namespace G2lib
   static void do_new( int nlhs, mxArray * plhs[], int nrhs, mxArray const *[] )
   {
 #define CMD CMD_BASE "('new'): "
-    UTILS_MEX_ASSERT( nrhs == 1, CMD "expected 1 inputs, nrhs = {}\n", nrhs );
-    UTILS_MEX_ASSERT( nlhs == 1, CMD "expected 1 output, nlhs = {}\n", nlhs );
+    Utils::mex_assert( nrhs == 1, CMD "expected 1 inputs, nrhs = {}\n", nrhs );
+    Utils::mex_assert( nlhs == 1, CMD "expected 1 output, nlhs = {}\n", nlhs );
 #undef CMD
 
     arg_out_0 = Utils::mex_convert_ptr_to_mx<Dubins>( new Dubins( "dubins" ) );
@@ -98,8 +98,8 @@ namespace G2lib
   {
 #define CMD "DubinsMexWrapper('build',OBJ,x0,y0,theta0,x1,y1,theta1,k_max): "
 
-    UTILS_MEX_ASSERT( nrhs == 9, CMD "expected 9 inputs, nrhs = {}\n", nrhs );
-    UTILS_MEX_ASSERT( nlhs == 1, CMD "expected 1 output, nlhs = {}\n", nlhs );
+    Utils::mex_assert( nrhs == 9, CMD "expected 9 inputs, nrhs = {}\n", nrhs );
+    Utils::mex_assert( nlhs == 1, CMD "expected 1 output, nlhs = {}\n", nlhs );
 
     Dubins * ptr{ Utils::mex_convert_mx_to_ptr<Dubins>( arg_in_1 ) };
 
@@ -124,8 +124,8 @@ namespace G2lib
   static void do_get_pars( int nlhs, mxArray * plhs[], int nrhs, mxArray const * prhs[] )
   {
 #define CMD "DubinsMexWrapper('get_pars',OBJ): "
-    UTILS_MEX_ASSERT( nrhs == 2, CMD "expected 2 inputs, nrhs = {}\n", nrhs );
-    UTILS_MEX_ASSERT( nlhs == 1, CMD "expected 1 output, nlhs = {}\n", nlhs );
+    Utils::mex_assert( nrhs == 2, CMD "expected 2 inputs, nrhs = {}\n", nrhs );
+    Utils::mex_assert( nlhs == 1, CMD "expected 1 output, nlhs = {}\n", nlhs );
 
     Dubins * ptr{ Utils::mex_convert_mx_to_ptr<Dubins>( arg_in_1 ) };
 
@@ -175,8 +175,8 @@ namespace G2lib
   static void do_get_length( int nlhs, mxArray * plhs[], int nrhs, mxArray const * prhs[] )
   {
 #define CMD "DubinsMexWrapper('get_length',OBJ): "
-    UTILS_MEX_ASSERT( nrhs == 2, CMD "expected 2 inputs, nrhs = {}\n", nrhs );
-    UTILS_MEX_ASSERT( nlhs == 1 || nlhs == 3, CMD "expected 1 or 3 output, nlhs = {}\n", nlhs );
+    Utils::mex_assert( nrhs == 2, CMD "expected 2 inputs, nrhs = {}\n", nrhs );
+    Utils::mex_assert( nlhs == 1 || nlhs == 3, CMD "expected 1 or 3 output, nlhs = {}\n", nlhs );
 
     Dubins * ptr{ Utils::mex_convert_mx_to_ptr<Dubins>( arg_in_1 ) };
 
@@ -197,8 +197,8 @@ namespace G2lib
   static void do_curve_type( int nlhs, mxArray * plhs[], int nrhs, mxArray const * prhs[] )
   {
 #define CMD "DubinsMexWrapper('curve_type',OBJ): "
-    UTILS_MEX_ASSERT( nrhs == 2, CMD "expected 2 inputs, nrhs = {}\n", nrhs );
-    UTILS_MEX_ASSERT( nlhs == 1, CMD "expected 1 output, nlhs = {}\n", nlhs );
+    Utils::mex_assert( nrhs == 2, CMD "expected 2 inputs, nrhs = {}\n", nrhs );
+    Utils::mex_assert( nlhs == 1, CMD "expected 1 output, nlhs = {}\n", nlhs );
 
     Dubins * ptr{ Utils::mex_convert_mx_to_ptr<Dubins>( arg_in_1 ) };
 
@@ -212,8 +212,8 @@ namespace G2lib
   static void do_curve_type_string( int nlhs, mxArray * plhs[], int nrhs, mxArray const * prhs[] )
   {
 #define CMD "DubinsMexWrapper('curve_type_string',OBJ): "
-    UTILS_MEX_ASSERT( nrhs == 2, CMD "expected 2 inputs, nrhs = {}\n", nrhs );
-    UTILS_MEX_ASSERT( nlhs == 2, CMD "expected 2 output, nlhs = {}\n", nlhs );
+    Utils::mex_assert( nrhs == 2, CMD "expected 2 inputs, nrhs = {}\n", nrhs );
+    Utils::mex_assert( nlhs == 2, CMD "expected 2 output, nlhs = {}\n", nlhs );
 
     Dubins * ptr{ Utils::mex_convert_mx_to_ptr<Dubins>( arg_in_1 ) };
 
@@ -232,8 +232,8 @@ namespace G2lib
   {
 #define CMD "DubinsMexWrapper('get_range_angles_begin',OBJ,x0,y0,x1,y1,theta1,k_max): "
 
-    UTILS_MEX_ASSERT( nrhs == 8, CMD "expected 8 inputs, nrhs = {}\n", nrhs );
-    UTILS_MEX_ASSERT( nlhs == 1, CMD "expected 1 output, nlhs = {}\n", nlhs );
+    Utils::mex_assert( nrhs == 8, CMD "expected 8 inputs, nrhs = {}\n", nrhs );
+    Utils::mex_assert( nlhs == 1, CMD "expected 1 output, nlhs = {}\n", nlhs );
 
     Dubins * ptr{ Utils::mex_convert_mx_to_ptr<Dubins>( arg_in_1 ) };
 
@@ -259,8 +259,8 @@ namespace G2lib
   {
 #define CMD "DubinsMexWrapper('get_range_angles_init',OBJ,x0,y0,theta0,x1,y1,k_max): "
 
-    UTILS_MEX_ASSERT( nrhs == 8, CMD "expected 8 inputs, nrhs = {}\n", nrhs );
-    UTILS_MEX_ASSERT( nlhs == 1, CMD "expected 1 output, nlhs = {}\n", nlhs );
+    Utils::mex_assert( nrhs == 8, CMD "expected 8 inputs, nrhs = {}\n", nrhs );
+    Utils::mex_assert( nlhs == 1, CMD "expected 1 output, nlhs = {}\n", nlhs );
 
     Dubins * ptr{ Utils::mex_convert_mx_to_ptr<Dubins>( arg_in_1 ) };
 
@@ -311,7 +311,7 @@ namespace G2lib
 
     try
     {
-      UTILS_MEX_ASSERT0( mxIsChar( arg_in_0 ), "First argument must be a string" );
+      Utils::mex_assert( mxIsChar( arg_in_0 ), "First argument must be a string" );
       mxGetString( arg_in_0, cmd, 256 );
       cmd_to_fun.at( cmd )( nlhs, plhs, nrhs, prhs );
     }

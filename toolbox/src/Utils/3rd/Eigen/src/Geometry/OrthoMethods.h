@@ -7,6 +7,7 @@
 // This Source Code Form is subject to the terms of the Mozilla
 // Public License v. 2.0. If a copy of the MPL was not distributed
 // with this file, You can obtain one at http://mozilla.org/MPL/2.0/.
+// SPDX-License-Identifier: MPL-2.0
 
 #ifndef EIGEN_ORTHOMETHODS_H
 #define EIGEN_ORTHOMETHODS_H
@@ -31,7 +32,7 @@ struct cross_impl {
     EIGEN_STATIC_ASSERT_VECTOR_SPECIFIC_SIZE(OtherDerived, 3)
 
     // Note that there is no need for an expression here since the compiler
-    // optimize such a small temporary very well (even within a complex expression)
+    // optimizes such a small temporary very well (even within a complex expression)
     typename internal::nested_eval<Derived, 2>::type lhs(first.derived());
     typename internal::nested_eval<OtherDerived, 2>::type rhs(second.derived());
     return return_type(numext::conj(lhs.coeff(1) * rhs.coeff(2) - lhs.coeff(2) * rhs.coeff(1)),
@@ -49,8 +50,8 @@ struct cross_impl<Derived, OtherDerived, 2> {
 
   static EIGEN_DEVICE_FUNC EIGEN_STRONG_INLINE return_type run(const MatrixBase<Derived>& first,
                                                                const MatrixBase<OtherDerived>& second) {
-    EIGEN_STATIC_ASSERT_VECTOR_SPECIFIC_SIZE(Derived, 2);
-    EIGEN_STATIC_ASSERT_VECTOR_SPECIFIC_SIZE(OtherDerived, 2);
+    EIGEN_STATIC_ASSERT_VECTOR_SPECIFIC_SIZE(Derived, 2)
+    EIGEN_STATIC_ASSERT_VECTOR_SPECIFIC_SIZE(OtherDerived, 2)
     typename internal::nested_eval<Derived, 2>::type lhs(first.derived());
     typename internal::nested_eval<OtherDerived, 2>::type rhs(second.derived());
     return numext::conj(lhs.coeff(0) * rhs.coeff(1) - lhs.coeff(1) * rhs.coeff(0));
@@ -140,7 +141,7 @@ EIGEN_DEVICE_FUNC inline typename MatrixBase<Derived>::PlainObject MatrixBase<De
  * of the referenced expression with the \a other vector.
  *
  * The referenced matrix must have one dimension equal to 3.
- * The result matrix has the same dimensions than the referenced one.
+ * The result matrix has the same dimensions as the referenced one.
  *
  * \sa MatrixBase::cross() */
 template <typename ExpressionType, int Direction>
@@ -149,14 +150,14 @@ EIGEN_DEVICE_FUNC const typename VectorwiseOp<ExpressionType, Direction>::CrossR
 VectorwiseOp<ExpressionType, Direction>::cross(const MatrixBase<OtherDerived>& other) const {
   EIGEN_STATIC_ASSERT_VECTOR_SPECIFIC_SIZE(OtherDerived, 3)
   EIGEN_STATIC_ASSERT(
-      (internal::is_same<Scalar, typename OtherDerived::Scalar>::value),
+      (std::is_same<Scalar, typename OtherDerived::Scalar>::value),
       YOU_MIXED_DIFFERENT_NUMERIC_TYPES__YOU_NEED_TO_USE_THE_CAST_METHOD_OF_MATRIXBASE_TO_CAST_NUMERIC_TYPES_EXPLICITLY)
 
   typename internal::nested_eval<ExpressionType, 2>::type mat(_expression());
   typename internal::nested_eval<OtherDerived, 2>::type vec(other.derived());
 
   CrossReturnType res(_expression().rows(), _expression().cols());
-  if (Direction == Vertical) {
+  EIGEN_IF_CONSTEXPR (Direction == Vertical) {
     eigen_assert(CrossReturnType::RowsAtCompileTime == 3 && "the matrix must have exactly 3 rows");
     res.row(0) = (mat.row(1) * vec.coeff(2) - mat.row(2) * vec.coeff(1)).conjugate();
     res.row(1) = (mat.row(2) * vec.coeff(0) - mat.row(0) * vec.coeff(2)).conjugate();
@@ -200,7 +201,7 @@ struct unitOrthogonal_selector<Derived, 3> {
   EIGEN_DEVICE_FUNC static inline VectorType run(const Derived& src) {
     VectorType perp;
     /* Let us compute the crossed product of *this with a vector
-     * that is not too close to being colinear to *this.
+     * that is not too close to being collinear to *this.
      */
 
     /* unless the x and y coords are both close to zero, we can
@@ -213,7 +214,7 @@ struct unitOrthogonal_selector<Derived, 3> {
       perp.coeffRef(2) = 0;
     }
     /* if both x and y are close to zero, then the vector is close
-     * to the z-axis, so it's far from colinear to the x-axis for instance.
+     * to the z-axis, so it's far from collinear to the x-axis for instance.
      * So we take the crossed product with (1,0,0) and normalize it.
      */
     else {
@@ -242,7 +243,7 @@ struct unitOrthogonal_selector<Derived, 2> {
  * \returns a unit vector which is orthogonal to \c *this
  *
  * The size of \c *this must be at least 2. If the size is exactly 2,
- * then the returned vector is a counter clock wise rotation of \c *this, i.e., (-y,x).normalized().
+ * then the returned vector is a counter-clockwise rotation of \c *this, i.e., (-y,x).normalized().
  *
  * \sa cross()
  */

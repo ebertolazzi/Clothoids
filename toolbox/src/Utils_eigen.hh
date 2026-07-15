@@ -95,8 +95,14 @@ namespace Utils
     // Calcola la differenza A - A^T
     MatrixType diff = A - MatrixType( A.transpose() );
 
-    // Controlla se la norma infinito della differenza è sotto la tolleranza
-    return diff.norm() <= tolerance;
+    typename MatrixType::Scalar max_abs = 0;
+    for ( int k = 0; k < diff.outerSize(); ++k ) {
+      for ( typename MatrixType::InnerIterator it( diff, k ); it; ++it ) {
+        typename MatrixType::Scalar const v_abs = Eigen::numext::abs( it.value() );
+        if ( v_abs > max_abs ) max_abs = v_abs;
+      }
+    }
+    return max_abs <= tolerance;
   }
 }  // namespace Utils
 

@@ -17,42 +17,33 @@
  |                                                                          |
 \*--------------------------------------------------------------------------*/
 
-#ifdef __GNUC__
-#pragma GCC diagnostic ignored "-Wunused-function"
-#endif
-#ifdef __clang__
-#pragma clang diagnostic ignored "-Wglobal-constructors"
-#pragma clang diagnostic ignored "-Wvla-extension"
-#pragma clang diagnostic ignored "-Wvla"
-#pragma clang diagnostic ignored "-Wunused-function"
-#pragma clang diagnostic ignored "-Wdocumentation-unknown-command"
-#endif
-
 #include "PolynomialRoots.hh"
-
-#include <cmath>
-#include <iostream>
-#include <algorithm>
-#include <limits>
-
-#ifndef DOXYGEN_SHOULD_SKIP_THIS
 
 #define MAX_ITER_SAFETY 50
 
-namespace PolynomialRoots {
+namespace PolynomialRoots
+{
 
   using std::abs;
-  static constexpr real_type machepsi { std::numeric_limits<real_type>::epsilon() };
-  static constexpr real_type third    { 1./3. };
-  static constexpr real_type one27th  { 1./27. };
-  static constexpr real_type two27th  { 2./27. };
+  using std::cbrt;
+  using std::sqrt;
 
-  integer
-  Cubic::get_real_roots( real_type r[] ) const {
-    integer nr{0};
-    if ( m_cplx ) {
+  template <typename T_real> inline T_real thirdT()
+  { return T_real( 1 ) / T_real( 3 ); }
+  template <typename T_real> inline T_real one27thT()
+  { return T_real( 1 ) / T_real( 27 ); }
+  template <typename T_real> inline T_real two27thT()
+  { return T_real( 2 ) / T_real( 27 ); }
+
+  template <typename T_real, typename T_complex> integer CubicT<T_real, T_complex>::get_real_roots( T_real r[] ) const
+  {
+    integer nr = 0;
+    if ( m_cplx )
+    {
       if ( m_nrts > 2 ) r[nr++] = m_r2;
-    } else {
+    }
+    else
+    {
       if ( m_nrts > 0 ) r[nr++] = m_r0;
       if ( m_nrts > 1 ) r[nr++] = m_r1;
       if ( m_nrts > 2 ) r[nr++] = m_r2;
@@ -60,12 +51,16 @@ namespace PolynomialRoots {
     return nr;
   }
 
-  integer
-  Cubic::get_positive_roots( real_type r[] ) const {
-    integer nr{0};
-    if ( m_cplx ) {
-      if ( m_nrts > 2 && m_r2 > 0  ) r[nr++] = m_r2;
-    } else {
+  template <typename T_real, typename T_complex>
+  integer CubicT<T_real, T_complex>::get_positive_roots( T_real r[] ) const
+  {
+    integer nr = 0;
+    if ( m_cplx )
+    {
+      if ( m_nrts > 2 && m_r2 > 0 ) r[nr++] = m_r2;
+    }
+    else
+    {
       if ( m_nrts > 0 && m_r0 > 0 ) r[nr++] = m_r0;
       if ( m_nrts > 1 && m_r1 > 0 ) r[nr++] = m_r1;
       if ( m_nrts > 2 && m_r2 > 0 ) r[nr++] = m_r2;
@@ -73,12 +68,16 @@ namespace PolynomialRoots {
     return nr;
   }
 
-  integer
-  Cubic::get_negative_roots( real_type r[] ) const {
-    integer nr{0};
-    if ( m_cplx ) {
-      if ( m_nrts > 2 && m_r2 < 0  ) r[nr++] = m_r2;
-    } else {
+  template <typename T_real, typename T_complex>
+  integer CubicT<T_real, T_complex>::get_negative_roots( T_real r[] ) const
+  {
+    integer nr = 0;
+    if ( m_cplx )
+    {
+      if ( m_nrts > 2 && m_r2 < 0 ) r[nr++] = m_r2;
+    }
+    else
+    {
       if ( m_nrts > 0 && m_r0 < 0 ) r[nr++] = m_r0;
       if ( m_nrts > 1 && m_r1 < 0 ) r[nr++] = m_r1;
       if ( m_nrts > 2 && m_r2 < 0 ) r[nr++] = m_r2;
@@ -86,12 +85,16 @@ namespace PolynomialRoots {
     return nr;
   }
 
-  integer
-  Cubic::get_roots_in_range( real_type const a, real_type const b, real_type r[] ) const {
-    integer nr{0};
-    if ( m_cplx ) {
+  template <typename T_real, typename T_complex>
+  integer CubicT<T_real, T_complex>::get_roots_in_range( T_real const & a, T_real const & b, T_real r[] ) const
+  {
+    integer nr = 0;
+    if ( m_cplx )
+    {
       if ( m_nrts > 2 && m_r2 >= a && m_r2 <= b ) r[nr++] = m_r2;
-    } else {
+    }
+    else
+    {
       if ( m_nrts > 0 && m_r0 >= a && m_r0 <= b ) r[nr++] = m_r0;
       if ( m_nrts > 1 && m_r1 >= a && m_r1 <= b ) r[nr++] = m_r1;
       if ( m_nrts > 2 && m_r2 >= a && m_r2 <= b ) r[nr++] = m_r2;
@@ -99,12 +102,16 @@ namespace PolynomialRoots {
     return nr;
   }
 
-  integer
-  Cubic::get_roots_in_open_range( real_type const a, real_type const b, real_type r[] ) const {
-    integer nr{0};
-    if ( m_cplx ) {
+  template <typename T_real, typename T_complex>
+  integer CubicT<T_real, T_complex>::get_roots_in_open_range( T_real const & a, T_real const & b, T_real r[] ) const
+  {
+    integer nr = 0;
+    if ( m_cplx )
+    {
       if ( m_nrts > 2 && m_r2 > a && m_r2 < b ) r[nr++] = m_r2;
-    } else {
+    }
+    else
+    {
       if ( m_nrts > 0 && m_r0 > a && m_r0 < b ) r[nr++] = m_r0;
       if ( m_nrts > 1 && m_r1 > a && m_r1 < b ) r[nr++] = m_r1;
       if ( m_nrts > 2 && m_r2 > a && m_r2 < b ) r[nr++] = m_r2;
@@ -112,128 +119,123 @@ namespace PolynomialRoots {
     return nr;
   }
 
-  // void
-  // Cubic::eval( real_type x, real_type & p, real_type & dp ) const {
-  //   real_type const & A = ABCD[0];
-  //   real_type const & B = ABCD[1];
-  //   real_type const & C = ABCD[2];
-  //   real_type const & D = ABCD[3];
-  //   if ( std::abs(x) > 1 ) {
-  //     real_type x2 = x*x;
-  //     real_type x3 = x2*x;
-  //     p  = (((D/x+C)/x+B)/x+A)*x3;
-  //     dp = ((C/x+2*B)/x+3*A)*x2;
-  //   } else {
-  //     p  = ((A*x+B)*x+C)*x+D;
-  //     dp = (3*A*x+2*B)*x+C;
-  //   }
-  // }
-
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  static
-  real_type
-  guess1( real_type const a[3] ) {
-    constexpr real_type p{  1.09574    };
-    constexpr real_type q{ -3.239E-1   };
-    constexpr real_type r{ -3.239E-1   };
-    constexpr real_type s{  9.57439E-2 };
-    return p+q*a[1]+r*a[2]+s*a[1]*a[2];
+  template <typename T_real> static T_real guess1( T_real const a[3] )
+  {
+    static T_real const p = 1.09574;
+    static T_real const q = -3.239E-1;
+    static T_real const r = -3.239E-1;
+    static T_real const s = 9.57439E-2;
+    return p + q * a[1] + r * a[2] + s * a[1] * a[2];
   }
 
-  static
-  real_type
-  guess2( real_type const a[3] ) {
-    constexpr real_type p{ -1.09574    };
-    constexpr real_type q{  3.239E-1   };
-    constexpr real_type r{ -3.239E-1   };
-    constexpr real_type s{  9.57439E-2 };
-    return p+q*a[1]+r*a[2]+s*a[1]*a[2];
+  template <typename T_real> static T_real guess2( T_real const a[3] )
+  {
+    static T_real const p = -1.09574;
+    static T_real const q = 3.239E-1;
+    static T_real const r = -3.239E-1;
+    static T_real const s = 9.57439E-2;
+    return p + q * a[1] + r * a[2] + s * a[1] * a[2];
   }
 
-  static
-  real_type
-  guess3( real_type const a[3] ) {
-    constexpr real_type p{  1.14413    };
-    constexpr real_type q{ -2.75509E-1 };
-    constexpr real_type r{ -4.45578E-1 };
-    constexpr real_type s{ -2.59342E-2 };
-    if ( real_type const t{a[2]/3}; a[0] < t*(2*t*t-1) ) return  p+q*a[0]+r*a[2]+s*a[0]*a[2];
-    return -p+q*a[0]+r*a[2]-s*a[0]*a[2];
+  template <typename T_real> static T_real guess3( T_real const a[3] )
+  {
+    static T_real const p = 1.14413;
+    static T_real const q = -2.75509E-1;
+    static T_real const r = -4.45578E-1;
+    static T_real const s = -2.59342E-2;
+    if ( T_real const t = a[2] / 3; a[0] < t * ( 2 * t * t - 1 ) ) return p + q * a[0] + r * a[2] + s * a[0] * a[2];
+    return -p + q * a[0] + r * a[2] - s * a[0] * a[2];
   }
 
-  static
-  real_type
-  guess4( real_type const a[3] ) {
-    constexpr real_type q{ -7.71845E-1 };
-    constexpr real_type s{ -2.28155E-1 };
-    if ( a[0] > 0 ) return (q+s*a[2])*a[0];
-    return (q-s*a[2])*a[0];
+  template <typename T_real> static T_real guess4( T_real const a[3] )
+  {
+    static T_real const q = -7.71845E-1;
+    static T_real const s = -2.28155E-1;
+    if ( a[0] > 0 ) return ( q + s * a[2] ) * a[0];
+    return ( q - s * a[2] ) * a[0];
   }
 
-  static
-  real_type
-  guess5( real_type const a[3] ) {
-    real_type p, q, r, s;
-    real_type const tmp{ two27th-a[1]/3 };
-    if ( a[1] <= third ) {
-      if ( a[0] < tmp ) {
-        p =  8.78558E-1;
+  template <typename T_real> static T_real guess5( T_real const a[3] )
+  {
+    T_real       p, q, r, s;
+    T_real const tmp = two27thT<T_real>() - a[1] / 3;
+    if ( a[1] <= thirdT<T_real>() )
+    {
+      if ( a[0] < tmp )
+      {
+        p = 8.78558E-1;
         q = -5.71888E-1;
         r = -7.11154E-1;
         s = -3.22313E-1;
-      } else {
+      }
+      else
+      {
         p = -1.92823E-1;
         q = -5.66324E-1;
         r = +5.05734E-1;
         s = -2.64881E-1;
       }
-    } else {
-      if ( a[0] < tmp ) {
+    }
+    else
+    {
+      if ( a[0] < tmp )
+      {
         p = 1.19748;
         q = -2.83772E-1;
         r = -8.37476E-1;
         s = -3.56228E-1;
-      } else {
+      }
+      else
+      {
         p = -3.45219E-1;
         q = -4.01231E-1;
-        r =  2.07216E-1;
+        r = 2.07216E-1;
         s = -4.45532E-3;
       }
     }
-    return p+q*a[0]+r*a[1]+s*a[0]*a[1];
+    return p + q * a[0] + r * a[1] + s * a[0] * a[1];
   }
 
-  static
-  real_type
-  guess6( real_type const a[3] ) {
-    real_type p, q, r, s;
-    real_type const tmp{ a[1]/3-two27th };
-    if ( a[1] <= third ) {
-      if ( a[0] > tmp ) {
+  template <typename T_real> static T_real guess6( T_real const a[3] )
+  {
+    T_real       p, q, r, s;
+    T_real const tmp = a[1] / 3 - two27thT<T_real>();
+    if ( a[1] <= thirdT<T_real>() )
+    {
+      if ( a[0] > tmp )
+      {
         p = -8.78558E-1;
         q = -5.71888E-1;
-        r =  7.11154E-1;
+        r = 7.11154E-1;
         s = -3.22313E-1;
-      } else {
-        p =  1.92823E-1;
+      }
+      else
+      {
+        p = 1.92823E-1;
         q = -5.66324E-1;
         r = -5.05734E-1;
         s = -2.64881E-1;
       }
-    } else {
-      if ( a[0] > tmp ) {
+    }
+    else
+    {
+      if ( a[0] > tmp )
+      {
         p = -1.19748;
         q = -2.83772E-1;
-        r =  8.37476E-1;
+        r = 8.37476E-1;
         s = -3.56228E-1;
-      } else {
-        p =  3.45219E-1;
+      }
+      else
+      {
+        p = 3.45219E-1;
         q = -4.01231E-1;
         r = -2.07216E-1;
         s = -4.45532E-3;
       }
     }
-    return p+q*a[0]+r*a[1]+s*a[0]*a[1];
+    return p + q * a[0] + r * a[1] + s * a[0] * a[1];
   }
 
   /*
@@ -245,52 +247,60 @@ namespace PolynomialRoots {
   */
 
   // x^3 + a * x^2 + b * x + c
-  static
-  integer
-  NewtonBisection(
-    real_type const a,
-    real_type const b,
-    real_type const c,
-    real_type &     x
-  ) {
-    real_type p, dp;
+  template <typename T_real>
+  static integer NewtonBisection( T_real const a, T_real const b, T_real const c, T_real & x )
+  {
+    T_real p, dp;
     evalMonicCubic( x, a, b, c, p, dp );
-    real_type t{p}; // save p(x) for sign comparison
-    x -= p/dp; // 1st improved root
+    T_real t = p;  // save p(x) for sign comparison
+    x -= p / dp;   // 1st improved root
 
-    integer iter       { 1     };
-    integer oscillate  { 0     };
-    integer nconverged { 0     };
-    bool    bisection  { false };
-    bool    converged  { false };
-    real_type s(0), u(0); // to mute warning
-    while ( ! ( nconverged > 1 || bisection ) && iter < MAX_ITER_SAFETY ) {
+    integer iter       = 1;
+    integer oscillate  = 0;
+    integer nconverged = 0;
+    bool    bisection  = false;
+    bool    converged  = false;
+    T_real  s          = 0;
+    T_real  u          = 0;  // to mute warning
+    while ( !( nconverged > 1 || bisection ) && iter < MAX_ITER_SAFETY )
+    {
       ++iter;
       evalMonicCubic( x, a, b, c, p, dp );
-      if ( p*t < 0 ) { // does Newton start oscillating ?
-        if ( p < 0 ) {
-          ++oscillate; // increment oscillation counter
-          s = x;       // save lower bisection bound
-        } else {
-          u = x; // save upper bisection bound
+      if ( p * t < 0 )
+      {  // does Newton start oscillating ?
+        if ( p < 0 )
+        {
+          ++oscillate;  // increment oscillation counter
+          s = x;        // save lower bisection bound
         }
-        t = p; // save current p(x)
+        else
+        {
+          u = x;  // save upper bisection bound
+        }
+        t = p;  // save current p(x)
       }
-      dp = p/dp; // Newton correction
-      x -= dp;   // new Newton root
-      bisection = oscillate > 2; // activate bisection
-      converged = std::abs(dp) <= (1+std::abs(x)) * machepsi; // Newton convergence indicator
-      if ( converged ) ++nconverged; else nconverged = 0;
+      dp = p / dp;                                                      // Newton correction
+      x -= dp;                                                          // new Newton root
+      bisection = oscillate > 2;                                        // activate bisection
+      converged = abs( dp ) <= ( 1 + abs( x ) ) * machepsiT<T_real>();  // Newton convergence indicator
+      if ( converged )
+        ++nconverged;
+      else
+        nconverged = 0;
     }
-    if ( bisection ) {
-      t = u - s; // initial bisection interval
-      while ( std::abs(t) > (1+std::abs(x)) * machepsi && iter < MAX_ITER_SAFETY ) { // bisection iterates
+    if ( bisection )
+    {
+      t = u - s;  // initial bisection interval
+      while ( abs( t ) > ( 1 + abs( x ) ) * machepsiT<T_real>() && iter < MAX_ITER_SAFETY )
+      {  // bisection iterates
         ++iter;
         p = evalMonicCubic( x, a, b, c );
-        if ( p < 0 ) s = x;
-        else         u = x; // keep bracket on root
-        t = (u-s)/2; // new bisection interval
-        x = s + t;   // new bisection root
+        if ( p < 0 )
+          s = x;
+        else
+          u = x;            // keep bracket on root
+        t = ( u - s ) / 2;  // new bisection interval
+        x = s + t;          // new bisection root
       }
     }
     return iter;
@@ -300,17 +310,18 @@ namespace PolynomialRoots {
    *  Calculate the zeros of the cubic a*z^3 + b*z^2 + c*z + d.
   \*/
 
-  void
-  Cubic::find_roots() {
-    real_type const & A{ m_ABCD[0] };
-    real_type const & B{ m_ABCD[1] };
-    real_type const & C{ m_ABCD[2] };
-    real_type const & D{ m_ABCD[3] };
+  template <typename T_real, typename T_complex> void CubicT<T_real, T_complex>::find_roots()
+  {
+    T_real const & A = m_ABCD[0];
+    T_real const & B = m_ABCD[1];
+    T_real const & C = m_ABCD[2];
+    T_real const & D = m_ABCD[3];
     m_nrts = m_iter = 0;
     m_cplx = m_dblx = m_trpx = false;
     // special cases
-    if ( isZero(A) ) {
-      Quadratic const qsolve( B, C, D );
+    if ( A == 0 )
+    {
+      QuadraticT<T_real, T_complex> const qsolve( B, C, D );
       m_nrts = qsolve.num_roots();
       m_cplx = qsolve.complex_root();
       m_dblx = qsolve.double_root();
@@ -318,14 +329,16 @@ namespace PolynomialRoots {
       m_r1   = qsolve.real_root1();
       return;
     }
-    if ( isZero(D) ) {
-      Quadratic const qsolve( A, B, C );
-      m_nrts = qsolve.num_roots()+1;
+    if ( D == 0 )
+    {
+      QuadraticT<T_real, T_complex> const qsolve( A, B, C );
+      m_nrts = qsolve.num_roots() + 1;
       m_cplx = qsolve.complex_root();
       m_r0   = qsolve.real_root0();
       m_r1   = qsolve.real_root1();
       m_r2   = 0;
-      if ( !m_cplx ) { // reorder
+      if ( !m_cplx )
+      {  // reorder
         if ( m_r2 < m_r1 ) std::swap( m_r1, m_r2 );
         if ( m_r1 < m_r0 ) std::swap( m_r0, m_r1 );
         if ( m_r2 < m_r1 ) std::swap( m_r1, m_r2 );
@@ -338,43 +351,48 @@ namespace PolynomialRoots {
     || /__/\__\__,_|_\___|
     */
     // x^3 + aa * x^2 + bb * x + cc
-    real_type const aa{ B/A };
-    real_type const bb{ C/A };
-    real_type const cc{ D/A };
+    T_real const aa = B / A;
+    T_real const bb = C / A;
+    T_real const cc = D / A;
     // scale Cubic Monic Polynomial
-    real_type const absa{ std::abs(aa)            };
-    real_type const absb{ std::sqrt(std::abs(bb)) };
-    real_type const absc{ std::cbrt(std::abs(cc)) };
+    T_real const absa = abs( aa );
+    T_real const absb = sqrt( abs( bb ) );
+    T_real const absc = cbrt( abs( cc ) );
 
-    integer i_case{ 0 }; // c MAX
-    if ( absa < absb ) {
-      if ( absc < absb ) i_case = 1; // |a| < |b| and |b| < |c| --> b MAX
+    integer i_case = 0;  // c MAX
+    if ( absa < absb )
+    {
+      if ( absc < absb ) i_case = 1;  // |a| < |b| and |b| < |c| --> b MAX
       // |a| < |b| <= |c| --> c MAX
-    } else {
-      if ( absc < absa ) i_case = 2; // |b| <= |a| and |c| < |a| --> a MAX
+    }
+    else
+    {
+      if ( absc < absa ) i_case = 2;  // |b| <= |a| and |c| < |a| --> a MAX
       // |b| <= |a| < |c| --> c MAX
     }
 
-    real_type scale(0), a[3];
-    switch ( i_case ) {
-    case 0:
-      scale = absc;
-      a[2]  = aa/absc;
-      a[1]  = (bb/absc)/absc;
-      a[0]  = cc > 0 ? 1 : -1;
-      break;
-    case 1:
-      scale = absb;
-      a[2]  = aa/absb;
-      a[1]  = bb > 0 ? 1 : -1;
-      a[0]  = ((cc/absb)/absb)/absb;
-      break;
-    case 2:
-      scale = absa;
-      a[2]  = aa > 0 ? 1 : -1;
-      a[1]  = (bb/absa)/absa;
-      a[0]  = ((cc/absa)/absa)/absa;
-      break;
+    T_real scale = 0;
+    T_real a[3];
+    switch ( i_case )
+    {
+      case 0:
+        scale = absc;
+        a[2]  = aa / absc;
+        a[1]  = ( bb / absc ) / absc;
+        a[0]  = cc > 0 ? 1 : -1;
+        break;
+      case 1:
+        scale = absb;
+        a[2]  = aa / absb;
+        a[1]  = bb > 0 ? 1 : -1;
+        a[0]  = ( ( cc / absb ) / absb ) / absb;
+        break;
+      case 2:
+        scale = absa;
+        a[2]  = aa > 0 ? 1 : -1;
+        a[1]  = ( bb / absa ) / absa;
+        a[0]  = ( ( cc / absa ) / absa ) / absa;
+        break;
     }
 
     /*
@@ -389,35 +407,47 @@ namespace PolynomialRoots {
     // Class4: a[1] = +1, −1 <= a[0],a[2] <= +1
     // Class5: a[2] = −1, −1 <= a[0],a[1] <= +1
     // Class6: a[2] = +1, −1 <= a[0],a[1] <= +1
-    integer iclass{-1};
-    switch ( i_case ) {
+    integer iclass = -1;
+    switch ( i_case )
+    {
       case 0: iclass = a[0] > 0 ? 2 : 1; break;
       case 1: iclass = a[1] > 0 ? 4 : 3; break;
       case 2: iclass = a[2] > 0 ? 6 : 5; break;
     }
-    bool use_shifted{false};
-    m_trpx = false;
-    switch ( iclass ) {
-    case 1: m_r2 = guess1(a); break;
-    case 2: m_r2 = guess2(a); break;
-    case 3: m_r2 = guess3(a); break;
-    case 4: m_r2 = guess4(a); break;
-    case 5:
-      m_r0   = a[1]-third;
-      m_r1   = a[0]+one27th;
-      m_trpx = std::abs(m_r0) <= machepsi && std::abs(m_r1) <= machepsi; // check for triple root
-      if ( m_trpx ) { m_r0 = m_r1 = m_r2 = third * scale; m_nrts = 3; return; }
-      use_shifted = std::abs(m_r0) <= 0.01 && std::abs(m_r1) <= 0.01;
-      m_r2 = guess5(a);
-      break;
-    case 6:
-      m_r0   = a[1]-third;
-      m_r1   = a[0]-one27th;
-      m_trpx = std::abs(m_r0) <= machepsi && std::abs(m_r1) <= machepsi; // check for triple root
-      if ( m_trpx ) { m_r0 = m_r1 = m_r2 = -third * scale; m_nrts = 3; return; }
-      use_shifted = std::abs(m_r0) <= 0.01 && std::abs(m_r1) <= 0.01;
-      m_r2 = guess6(a);
-      break;
+    bool use_shifted = false;
+    m_trpx           = false;
+    switch ( iclass )
+    {
+      case 1: m_r2 = guess1<T_real>( a ); break;
+      case 2: m_r2 = guess2<T_real>( a ); break;
+      case 3: m_r2 = guess3<T_real>( a ); break;
+      case 4: m_r2 = guess4<T_real>( a ); break;
+      case 5:
+        m_r0   = a[1] - thirdT<T_real>();
+        m_r1   = a[0] + one27thT<T_real>();
+        m_trpx = abs( m_r0 ) <= machepsiT<T_real>() && abs( m_r1 ) <= machepsiT<T_real>();  // check for triple root
+        if ( m_trpx )
+        {
+          m_r0 = m_r1 = m_r2 = thirdT<T_real>() * scale;
+          m_nrts             = 3;
+          return;
+        }
+        use_shifted = abs( m_r0 ) <= 0.01 && abs( m_r1 ) <= 0.01;
+        m_r2        = guess5( a );
+        break;
+      case 6:
+        m_r0   = a[1] - thirdT<T_real>();
+        m_r1   = a[0] - one27thT<T_real>();
+        m_trpx = abs( m_r0 ) <= machepsiT<T_real>() && abs( m_r1 ) <= machepsiT<T_real>();  // check for triple root
+        if ( m_trpx )
+        {
+          m_r0 = m_r1 = m_r2 = -thirdT<T_real>() * scale;
+          m_nrts             = 3;
+          return;
+        }
+        use_shifted = abs( m_r0 ) <= 0.01 && abs( m_r1 ) <= 0.01;
+        m_r2        = guess6( a );
+        break;
     }
 
     /*
@@ -427,24 +457,30 @@ namespace PolynomialRoots {
     || /__/\___/_|\_/\___|
     */
     m_iter = 0;
-    if ( use_shifted ) {
-      if ( iclass == 5 ) {
+    if ( use_shifted )
+    {
+      if ( iclass == 5 )
+      {
         // a[2] == -1
         // y^3 + (a[1]-1/3)* y + (a[0]+a[1]/3-2/27), x = y+1/3
-        m_r2 -= third; // shift guess
-        m_iter = NewtonBisection( 0, m_r0, a[0]+a[1]/3-two27th, m_r2 );
-        m_r2 += third; // unshift solution
-      } else {
+        m_r2 -= thirdT<T_real>();  // shift guess
+        m_iter = NewtonBisection<T_real>( 0, m_r0, a[0] + a[1] / 3 - two27thT<T_real>(), m_r2 );
+        m_r2 += thirdT<T_real>();  // unshift solution
+      }
+      else
+      {
         // a[2] == 1
         // y^3 + (a[1]-1/3)* y + (a[0]-a[1]/3+2/27), x = y+1/3
-        m_r2 += third; // shift guess
-        m_r1 -= a[1]/3-one27th;
-        //if ( std::abs(r3) < machepsi ) r3 = 0;
-        m_iter = NewtonBisection( 0, m_r0, a[0]-a[1]/3+two27th, m_r2 );
-        m_r2 -= third; // unshift solution
+        m_r2 += thirdT<T_real>();  // shift guess
+        m_r1 -= a[1] / 3 - one27thT<T_real>();
+        // if ( std::abs(r3) < machepsi ) r3 = 0;
+        m_iter = NewtonBisection<T_real>( 0, m_r0, a[0] - a[1] / 3 + two27thT<T_real>(), m_r2 );
+        m_r2 -= thirdT<T_real>();  // unshift solution
       }
-    } else {
-      m_iter = NewtonBisection( a[2], a[1], a[0], m_r2 );
+    }
+    else
+    {
+      m_iter = NewtonBisection<T_real>( a[2], a[1], a[0], m_r2 );
     }
 
     // scale root
@@ -480,96 +516,129 @@ namespace PolynomialRoots {
     //  |         |  |    | = |    |
     //  \ -r2  0  /  \ b1 /   \ cc /
     */
-    real_type const b0 { -cc/m_r2 };
-    real_type const b1 { std::abs(m_r2) < 1 ? aa+m_r2 : -(cc/m_r2+bb)/m_r2 };
+    T_real const b0 = -cc / m_r2;
+    T_real const b1 = abs( m_r2 ) < 1 ? aa + m_r2 : -( cc / m_r2 + bb ) / m_r2;
 
     // solve quadratic polynomial
-    Quadratic const qsolve( 1.0, b1, b0 );
-    m_nrts = qsolve.num_roots()+1;
+    QuadraticT<T_real, T_complex> const qsolve( 1.0, b1, b0 );
+    m_nrts = qsolve.num_roots() + 1;
     m_cplx = qsolve.complex_root();
     m_dblx = qsolve.double_root();
     m_r0   = qsolve.real_root0();
     m_r1   = qsolve.real_root1();
 
-    if ( !m_cplx ) { // if real roots sort it!
-      if ( m_r1 > m_r2 ) std::swap(m_r1,m_r2);
-      if ( m_r0 > m_r1 ) std::swap(m_r0,m_r1);
-      if ( m_r1 > m_r2 ) std::swap(m_r1,m_r2);
+    if ( !m_cplx )
+    {  // if real roots sort it!
+      if ( m_r1 > m_r2 ) std::swap( m_r1, m_r2 );
+      if ( m_r0 > m_r1 ) std::swap( m_r0, m_r1 );
+      if ( m_r1 > m_r2 ) std::swap( m_r1, m_r2 );
     }
-
   }
 
-  void
-  Cubic::info( ostream_type & s ) const {
-    real_type const & A{ m_ABCD[0] };
-    real_type const & B{ m_ABCD[1] };
-    real_type const & C{ m_ABCD[2] };
-    real_type const & D{ m_ABCD[3] };
-    s << "\npoly a=" << A << " b=" << B << " c=" << C << " d=" << D
-      << "\nn. roots = " << m_nrts
-      << "\ncomplex  = " << (m_cplx?"YES":"NO")
-      << "\ntriple   = " << (m_trpx?"YES":"NO")
-      << "\ndouble   = " << (m_dblx?"YES":"NO");
-    if ( m_cplx ) {
-      s << "\nx0 = (" << m_r0 << "," <<  m_r1 << ')'
-        << "\nx1 = (" << m_r0 << "," << -m_r1 << ')';
-      if ( m_nrts > 2 ) s << "\nx3 = " << m_r2;
-    } else {
-      if ( m_nrts > 0 ) s << "\nx0 = " << m_r0;
-      if ( m_nrts > 1 ) s << "\nx1 = " << m_r1;
-      if ( m_nrts > 2 ) s << "\nx2 = " << m_r2;
+  template <typename T_real, typename T_complex> void CubicT<T_real, T_complex>::info( ostream_type & s ) const
+  {
+    T_real const & A = m_ABCD[0];
+    T_real const & B = m_ABCD[1];
+    T_real const & C = m_ABCD[2];
+    T_real const & D = m_ABCD[3];
+    s << std::format(
+      "poly a={} b={} c={} d={}\n"
+      "n. roots = {}\n"
+      "complex  = {}\n"
+      "triple   = {}\n"
+      "double   = {}\n",
+      A,
+      B,
+      C,
+      D,
+      m_nrts,
+      ( m_cplx ? "YES" : "NO" ),
+      ( m_trpx ? "YES" : "NO" ),
+      ( m_dblx ? "YES" : "NO" ) );
+    if ( m_cplx )
+    {
+      s << std::format(
+        "x0 = ({},{})\n"
+        "x1 = ({},{})\n",
+        m_r0,
+        m_r1,
+        m_r0,
+        -m_r1 );
+      if ( m_nrts > 2 ) s << std::format( "x3 = {}\n", m_r2 );
+    }
+    else
+    {
+      if ( m_nrts > 0 ) s << std::format( "x0 = {}\n", m_r0 );
+      if ( m_nrts > 1 ) s << std::format( "x1 = {}\n", m_r1 );
+      if ( m_nrts > 2 ) s << std::format( "x2 = {}\n", m_r2 );
     }
     s << '\n';
   }
 
-  bool
-  Cubic::check( ostream_type & s ) const {
-    real_type const & A{ m_ABCD[0] };
-    real_type const & B{ m_ABCD[1] };
-    real_type const & C{ m_ABCD[2] };
-    real_type const & D{ m_ABCD[3] };
-    bool ok{ true };
-    real_type const epsi{ 10 * ( std::abs(A) +
-                                 std::abs(B) +
-                                 std::abs(C) +
-                                 std::abs(D) ) * machepsi };
-    if ( m_cplx ) {
-      real_type const z0{ std::abs(eval( root0() )) };
-      real_type const z1{ std::abs(eval( root1() )) };
-      real_type const z2{ std::abs(eval( root2() )) };
-      real_type const zr{ eval( real_root2() )      };
-      s << "|p(r0)| = " << z0
-        << "\n|p(r1)| = " << z1
-        << "\n|p(r2)| = " << z2
-        << "\np(real_part(r2)) = " << zr
-        << '\n';
+  template <typename T_real, typename T_complex> bool CubicT<T_real, T_complex>::check( ostream_type & s ) const
+  {
+    T_real const & A    = m_ABCD[0];
+    T_real const & B    = m_ABCD[1];
+    T_real const & C    = m_ABCD[2];
+    T_real const & D    = m_ABCD[3];
+    bool           ok   = true;
+    T_real const   epsi = ( abs( A ) + abs( B ) + abs( C ) + abs( D ) ) * toleranceT<T_real>();
+    if ( m_cplx )
+    {
+      T_real const z0 = abs( eval( root0() ) );
+      T_real const z1 = abs( eval( root1() ) );
+      T_real const z2 = abs( eval( root2() ) );
+      T_real const zr = eval( real_root2() );
+      s << std::format(
+        "|p(r0)| = {}\n"
+        "|p(r1)| = {}\n"
+        "|p(r2)| = {}\n"
+        "p(real_part(r2)) = {}\n",
+        z0,
+        z1,
+        z2,
+        zr );
       ok = z0 < epsi && z1 < epsi && z2 < epsi;
-    } else if ( m_nrts == 1 ) {
-      real_type const z0{ eval( real_root0() ) };
-      s << "p(r0) = " << z0  << '\n';
-      ok = std::abs(z0) < epsi;
-    } else if ( m_nrts == 2 ) {
-      real_type const z0{ std::abs(eval( root0() )) };
-      real_type const z1{ std::abs(eval( root1() )) };
-      s << "p(r0) = " << z0
-        << "\np(r1) = " << z1
-        << '\n';
-      ok = std::abs(z0) < epsi && std::abs(z1) < epsi;
-    } else if ( m_nrts == 3 ) {
-      real_type const z0{ eval( real_root0() ) };
-      real_type const z1{ eval( real_root1() ) };
-      real_type const z2{ eval( real_root2() ) };
-      s << "p(r0) = " << z0
-        << "\np(r1) = " << z1
-        << "\np(r2) = " << z2
-        << '\n';
-      ok = std::abs(z0) < epsi && std::abs(z1) < epsi && std::abs(z2) < epsi;
+    }
+    else if ( m_nrts == 1 )
+    {
+      T_real const z0 = eval( real_root0() );
+      s << std::format( "p(r0) = {}\n", z0 );
+      ok = abs( z0 ) < epsi;
+    }
+    else if ( m_nrts == 2 )
+    {
+      T_real const z0 = abs( eval( root0() ) );
+      T_real const z1 = abs( eval( root1() ) );
+      s << std::format(
+        "p(r0) = {}\n"
+        "p(r1) = {}\n",
+        z0,
+        z1 );
+      ok = abs( z0 ) < epsi && abs( z1 ) < epsi;
+    }
+    else if ( m_nrts == 3 )
+    {
+      T_real const z0 = eval( real_root0() );
+      T_real const z1 = eval( real_root1() );
+      T_real const z2 = eval( real_root2() );
+      s << std::format(
+        "p(r0) = {}\n"
+        "p(r1) = {}\n"
+        "p(r2) = {}\n",
+        z0,
+        z1,
+        z2 );
+      ok = abs( z0 ) < epsi && abs( z1 ) < epsi && abs( z2 ) < epsi;
     }
     return ok;
   }
 
-}
-
+  template class CubicT<real_type, real_complex>;
+#if POLYNOMIAL_ROOTS_HAS_MULTIPRECISION
+  template class CubicT<quad_real, quad_complex>;
 #endif
+
+}  // namespace PolynomialRoots
 
 // EOF: PolynomialRoots-2-Cubic.cc

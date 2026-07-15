@@ -6,6 +6,7 @@
 // This Source Code Form is subject to the terms of the Mozilla
 // Public License v. 2.0. If a copy of the MPL was not distributed
 // with this file, You can obtain one at http://mozilla.org/MPL/2.0/.
+// SPDX-License-Identifier: MPL-2.0
 
 #ifndef EIGEN_PASTIXSUPPORT_H
 #define EIGEN_PASTIXSUPPORT_H
@@ -127,7 +128,7 @@ inline void eigen_pastix(pastix_data_t **pastix_data, int pastix_comm, int n, in
            reinterpret_cast<PASTIX_DCOMPLEX *>(x), nbrhs, iparm, dparm);
 }
 
-// Convert the matrix  to Fortran-style Numbering
+// Convert the matrix to Fortran-style Numbering
 template <typename MatrixType>
 void c_to_fortran_numbering(MatrixType &mat) {
   if (!(mat.outerIndexPtr()[0])) {
@@ -136,21 +137,10 @@ void c_to_fortran_numbering(MatrixType &mat) {
     for (i = 0; i < mat.nonZeros(); ++i) ++mat.innerIndexPtr()[i];
   }
 }
-
-// Convert to C-style Numbering
-template <typename MatrixType>
-void fortran_to_c_numbering(MatrixType &mat) {
-  // Check the Numbering
-  if (mat.outerIndexPtr()[0] == 1) {  // Convert to C-style numbering
-    int i;
-    for (i = 0; i <= mat.rows(); ++i) --mat.outerIndexPtr()[i];
-    for (i = 0; i < mat.nonZeros(); ++i) --mat.innerIndexPtr()[i];
-  }
-}
 }  // namespace internal
 
 // This is the base class to interface with PaStiX functions.
-// Users should not used this class directly.
+// Users should not use this class directly.
 template <class Derived>
 class PastixBase : public SparseSolverBase<Derived> {
  protected:
@@ -328,7 +318,6 @@ void PastixBase<Derived>::analyzePattern(ColSpMatrix &mat) {
 
 template <class Derived>
 void PastixBase<Derived>::factorize(ColSpMatrix &mat) {
-  //   if(&m_cpyMat != &mat) m_cpyMat = mat;
   eigen_assert(m_analysisIsOk && "The analysis phase should be called before the factorization phase");
   m_iparm(IPARM_START_TASK) = API_TASK_NUMFACT;
   m_iparm(IPARM_END_TASK) = API_TASK_NUMFACT;
@@ -628,5 +617,8 @@ class PastixLDLT : public PastixBase<PastixLDLT<MatrixType_, UpLo_> > {
 };
 
 }  // end namespace Eigen
+
+#undef PASTIX_COMPLEX
+#undef PASTIX_DCOMPLEX
 
 #endif

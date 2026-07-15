@@ -7,6 +7,7 @@
 // This Source Code Form is subject to the terms of the Mozilla
 // Public License v. 2.0. If a copy of the MPL was not distributed
 // with this file, You can obtain one at http://mozilla.org/MPL/2.0/.
+// SPDX-License-Identifier: MPL-2.0
 
 #ifndef EIGEN_STATIC_ASSERT_H
 #define EIGEN_STATIC_ASSERT_H
@@ -64,8 +65,8 @@
       YOU_MIXED_VECTORS_OF_DIFFERENT_SIZES)
 
 #define EIGEN_PREDICATE_SAME_MATRIX_SIZE(TYPE0, TYPE1)                                                     \
-  ((int(Eigen::internal::size_of_xpr_at_compile_time<TYPE0>::ret) == 0 &&                                  \
-    int(Eigen::internal::size_of_xpr_at_compile_time<TYPE1>::ret) == 0) ||                                 \
+  ((int(Eigen::internal::size_of_xpr_at_compile_time<TYPE0>::value) == 0 &&                                \
+    int(Eigen::internal::size_of_xpr_at_compile_time<TYPE1>::value) == 0) ||                               \
    ((int(TYPE0::RowsAtCompileTime) == Eigen::Dynamic || int(TYPE1::RowsAtCompileTime) == Eigen::Dynamic || \
      int(TYPE0::RowsAtCompileTime) == int(TYPE1::RowsAtCompileTime)) &&                                    \
     (int(TYPE0::ColsAtCompileTime) == Eigen::Dynamic || int(TYPE1::ColsAtCompileTime) == Eigen::Dynamic || \
@@ -87,13 +88,13 @@
 #define EIGEN_STATIC_ASSERT_LVALUE(Derived) \
   EIGEN_STATIC_ASSERT(Eigen::internal::is_lvalue<Derived>::value, THIS_EXPRESSION_IS_NOT_A_LVALUE__IT_IS_READ_ONLY)
 
-#define EIGEN_STATIC_ASSERT_ARRAYXPR(Derived)                                                                          \
-  EIGEN_STATIC_ASSERT((Eigen::internal::is_same<typename Eigen::internal::traits<Derived>::XprKind, ArrayXpr>::value), \
+#define EIGEN_STATIC_ASSERT_ARRAYXPR(Derived)                                                              \
+  EIGEN_STATIC_ASSERT((std::is_same<typename Eigen::internal::traits<Derived>::XprKind, ArrayXpr>::value), \
                       THIS_METHOD_IS_ONLY_FOR_ARRAYS_NOT_MATRICES)
 
-#define EIGEN_STATIC_ASSERT_SAME_XPR_KIND(Derived1, Derived2)                                                 \
-  EIGEN_STATIC_ASSERT((Eigen::internal::is_same<typename Eigen::internal::traits<Derived1>::XprKind,          \
-                                                typename Eigen::internal::traits<Derived2>::XprKind>::value), \
+#define EIGEN_STATIC_ASSERT_SAME_XPR_KIND(Derived1, Derived2)                                     \
+  EIGEN_STATIC_ASSERT((std::is_same<typename Eigen::internal::traits<Derived1>::XprKind,          \
+                                    typename Eigen::internal::traits<Derived2>::XprKind>::value), \
                       YOU_CANNOT_MIX_ARRAYS_AND_MATRICES)
 
 // Check that a cost value is positive, and that is stay within a reasonable range

@@ -6,6 +6,7 @@
 // This Source Code Form is subject to the terms of the Mozilla
 // Public License v. 2.0. If a copy of the MPL was not distributed
 // with this file, You can obtain one at http://mozilla.org/MPL/2.0/.
+// SPDX-License-Identifier: MPL-2.0
 
 /*
 NOTE: these functions have been adapted from the LDL library:
@@ -89,7 +90,7 @@ struct simpl_chol_helper {
         m_set[u] = v;
         u = next;
       }
-    };
+    }
   };
 
   // Computes the higher adjacency pattern by transposing the input lower adjacency matrix.
@@ -240,7 +241,7 @@ struct simpl_chol_helper {
     }
   }
 
-  // Finalizes the non zero pattern of the L factor and allocates the memory for the factorization.
+  // Finalizes the non-zero pattern of the L factor and allocates the memory for the factorization.
   static void init_matrix(const StorageIndex size, const StorageIndex* nonZerosPerCol, CholMatrixType& L) {
     eigen_assert(L.outerIndexPtr()[0] == 0);
     std::partial_sum(nonZerosPerCol, nonZerosPerCol + size, L.outerIndexPtr() + 1);
@@ -274,9 +275,12 @@ struct simpl_chol_helper {
   }
 };
 
-// Symbol is ODR-used, so we need a definition.
+// Required pre-C++17 for ODR; redundant and deprecated since (C++17 makes
+// constexpr static data members implicitly inline).
+#if EIGEN_COMP_CXXVER < 17
 template <typename Scalar, typename StorageIndex>
 constexpr StorageIndex simpl_chol_helper<Scalar, StorageIndex>::kEmpty;
+#endif
 
 }  // namespace internal
 
@@ -371,7 +375,13 @@ void SimplicialCholeskyBase<Derived>::factorize_preordered(const CholMatrixType&
     } else {
       Index p = Lp[k] + nonZerosPerCol[k]++;
       Li[p] = k; /* store L(k,k) = sqrt (d) in column k */
-      if (NonHermitian ? d == RealScalar(0) : numext::real(d) <= RealScalar(0)) {
+      bool failed;
+      EIGEN_IF_CONSTEXPR (NonHermitian) {
+        failed = d == RealScalar(0);
+      } else {
+        failed = numext::real(d) <= RealScalar(0);
+      }
+      if (failed) {
         ok = false; /* failure, matrix is not positive definite */
         break;
       }

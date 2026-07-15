@@ -6,6 +6,7 @@
 // This Source Code Form is subject to the terms of the Mozilla
 // Public License v. 2.0. If a copy of the MPL was not distributed
 // with this file, You can obtain one at http://mozilla.org/MPL/2.0/.
+// SPDX-License-Identifier: MPL-2.0
 
 /*
 
@@ -135,13 +136,10 @@ void SparseLUImpl<Scalar, StorageIndex>::dfs_kernel(const StorageIndex jj, Index
         //    Place snode-rep krep in postorder DFS, if this
         //    segment is seen for the first time. (Note that
         //    "repfnz(krep)" may change later.)
-        //    Baktrack dfs to its parent
-        if (traits.update_segrep(krep, jj))
-        // if (marker1(krep) < jcol )
-        {
+        //    Backtrack dfs to its parent
+        if (traits.update_segrep(krep, jj)) {
           segrep(nseg) = krep;
           ++nseg;
-          // marker1(krep) = jj;
         }
 
         kpar = parent(krep);            // Pop recursion, mimic recursion

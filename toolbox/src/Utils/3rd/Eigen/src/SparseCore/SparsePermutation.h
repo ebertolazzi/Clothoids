@@ -6,6 +6,7 @@
 // This Source Code Form is subject to the terms of the Mozilla
 // Public License v. 2.0. If a copy of the MPL was not distributed
 // with this file, You can obtain one at http://mozilla.org/MPL/2.0/.
+// SPDX-License-Identifier: MPL-2.0
 
 #ifndef EIGEN_SPARSE_PERMUTATION_H
 #define EIGEN_SPARSE_PERMUTATION_H
@@ -20,7 +21,7 @@ namespace Eigen {
 namespace internal {
 
 template <typename ExpressionType, typename PlainObjectType,
-          bool NeedEval = !is_same<ExpressionType, PlainObjectType>::value>
+          bool NeedEval = !std::is_same<ExpressionType, PlainObjectType>::value>
 struct XprHelper {
   XprHelper(const ExpressionType& xpr) : m_xpr(xpr) {}
   inline const PlainObjectType& xpr() const { return m_xpr; }
@@ -171,7 +172,7 @@ struct product_promote_storage_type<PermutationStorage, Sparse, ProductTag> {
 };
 
 // TODO, the following two overloads are only needed to define the right temporary type through
-// typename traits<permutation_sparse_matrix_product<Rhs,Lhs,OnTheRight,false> >::ReturnType
+// typename traits<permutation_matrix_product<Rhs,Lhs,OnTheRight,false> >::ReturnType
 // whereas it should be correctly handled by traits<Product<> >::PlainObject
 
 template <typename Lhs, typename Rhs, int ProductTag>
@@ -246,4 +247,4 @@ inline const Product<Inverse<PermutationType>, SparseDerived, AliasFreeProduct> 
 
 }  // end namespace Eigen
 
-#endif  // EIGEN_SPARSE_SELFADJOINTVIEW_H
+#endif  // EIGEN_SPARSE_PERMUTATION_H

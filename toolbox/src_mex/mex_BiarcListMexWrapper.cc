@@ -93,8 +93,8 @@ namespace G2lib
   static void do_new( int nlhs, mxArray * plhs[], int nrhs, mxArray const *[] )
   {
 #define CMD "BiarcListMexWrapper('new'): "
-    UTILS_MEX_ASSERT( nlhs == 1, CMD "expected 1 output, nlhs = {}\n", nlhs );
-    UTILS_MEX_ASSERT( nrhs == 1, CMD "expected 1 input, nrhs = {}\n", nrhs );
+    Utils::mex_assert( nlhs == 1, CMD "expected 1 output, nlhs = {}\n", nlhs );
+    Utils::mex_assert( nrhs == 1, CMD "expected 1 input, nrhs = {}\n", nrhs );
 
     arg_out_0 = Utils::mex_convert_ptr_to_mx<BiarcList>( new BiarcList( "biarc list" ) );
 
@@ -107,7 +107,7 @@ namespace G2lib
   {
 #define CMD "BiarcListMexWrapper('push_back_G1',OBJ,[x0,y0,theta0,x1,y1,theta1]|[x1,y1,theta1]): "
 
-    UTILS_MEX_ASSERT( nlhs == 0, CMD "expected NO output, nlhs = {}\n", nlhs );
+    Utils::mex_assert( nlhs == 0, CMD "expected NO output, nlhs = {}\n", nlhs );
 
     BiarcList * ptr = Utils::mex_convert_mx_to_ptr<BiarcList>( arg_in_1 );
 
@@ -130,7 +130,7 @@ namespace G2lib
     }
     else
     {
-      UTILS_MEX_ASSERT( false, CMD "expected 5 or 8 inputs, nrhs = {|\n", nrhs );
+      Utils::mex_assert( false, CMD "expected 5 or 8 inputs, nrhs = {|\n", nrhs );
     }
 
 #undef CMD
@@ -142,8 +142,8 @@ namespace G2lib
   {
 #define CMD "BiarcListMexWrapper('reserve',OBJ,N): "
 
-    UTILS_MEX_ASSERT( nrhs == 3, CMD "expected 3 inputs, nrhs = {}\n", nrhs );
-    UTILS_MEX_ASSERT( nlhs == 0, CMD "expected no outputs, nlhs = {}\n", nlhs );
+    Utils::mex_assert( nrhs == 3, CMD "expected 3 inputs, nrhs = {}\n", nrhs );
+    Utils::mex_assert( nlhs == 0, CMD "expected no outputs, nlhs = {}\n", nlhs );
 
     BiarcList * ptr = Utils::mex_convert_mx_to_ptr<BiarcList>( arg_in_1 );
 
@@ -159,8 +159,8 @@ namespace G2lib
   {
 #define CMD "BiarcListMexWrapper('get_STK',OBJ): "
 
-    UTILS_MEX_ASSERT( nrhs == 2, CMD "expected 2 inputs, nrhs = {}\n", nrhs );
-    UTILS_MEX_ASSERT( nlhs == 3, CMD "expected 3 outputs, nlhs = {}\n", nlhs );
+    Utils::mex_assert( nrhs == 2, CMD "expected 2 inputs, nrhs = {}\n", nrhs );
+    Utils::mex_assert( nlhs == 3, CMD "expected 3 outputs, nlhs = {}\n", nlhs );
 
     BiarcList * ptr = Utils::mex_convert_mx_to_ptr<BiarcList>( arg_in_1 );
 
@@ -181,8 +181,8 @@ namespace G2lib
   {
 #define CMD "BiarcListMexWrapper('get_XY',OBJ): "
 
-    UTILS_MEX_ASSERT( nrhs == 2, CMD "expected 2 inputs, nrhs = {}\n", nrhs );
-    UTILS_MEX_ASSERT( nlhs == 2, CMD "expected 2 outputs, nlhs = {}\n", nlhs );
+    Utils::mex_assert( nrhs == 2, CMD "expected 2 inputs, nrhs = {}\n", nrhs );
+    Utils::mex_assert( nlhs == 2, CMD "expected 2 outputs, nlhs = {}\n", nlhs );
 
     BiarcList * ptr = Utils::mex_convert_mx_to_ptr<BiarcList>( arg_in_1 );
 
@@ -201,7 +201,7 @@ namespace G2lib
   {
 #define CMD "BiarcListMexWrapper('build_G1', OBJ, x, y [, theta]): "
 
-    UTILS_MEX_ASSERT( nlhs == 1, CMD "expected 1 output, nlhs = {}\n", nlhs );
+    Utils::mex_assert( nlhs == 1, CMD "expected 1 output, nlhs = {}\n", nlhs );
 
     BiarcList * ptr = Utils::mex_convert_mx_to_ptr<BiarcList>( arg_in_1 );
 
@@ -213,7 +213,7 @@ namespace G2lib
       real_type const * x = Utils::mex_vector_pointer( arg_in_2, nx, CMD "Error in reading x" );
       real_type const * y = Utils::mex_vector_pointer( arg_in_3, ny, CMD "Error in reading y" );
 
-      UTILS_MEX_ASSERT( nx == ny, CMD "length(x) = {} != length(y) = {}\n", nx, ny );
+      Utils::mex_assert( nx == ny, CMD "length(x) = {} != length(y) = {}\n", nx, ny );
 
       ok = ptr->build_G1( nx, x, y );
     }
@@ -224,14 +224,14 @@ namespace G2lib
       real_type const * y     = Utils::mex_vector_pointer( arg_in_3, ny, CMD "Error in reading y" );
       real_type const * theta = Utils::mex_vector_pointer( arg_in_4, nt, CMD "Error in reading theta" );
 
-      UTILS_MEX_ASSERT( nx == ny, CMD "length(x) = {} != length(y) = {}\n", nx, ny );
-      UTILS_MEX_ASSERT( nx == nt, CMD "length(theta) = {} != length(x) = length(y) = {}\n", nt, ny );
+      Utils::mex_assert( nx == ny, CMD "length(x) = {} != length(y) = {}\n", nx, ny );
+      Utils::mex_assert( nx == nt, CMD "length(theta) = {} != length(x) = length(y) = {}\n", nt, ny );
 
       ok = ptr->build_G1( nx, x, y, theta );
     }
     else
     {
-      UTILS_MEX_ASSERT( false, CMD "expected 4 or 5 input, nrhs = {}\n", nrhs );
+      Utils::mex_assert( false, CMD "expected 4 or 5 input, nrhs = {}\n", nrhs );
     }
 
     Utils::mex_set_scalar_bool( arg_out_0, ok );
@@ -244,14 +244,14 @@ namespace G2lib
   {
 #define CMD "BiarcListMexWrapper('build_theta',OBJ,x,y): "
 
-    UTILS_MEX_ASSERT( nlhs == 2, CMD "expected 2 output, nlhs = {}\n", nlhs );
-    UTILS_MEX_ASSERT( nrhs == 4, CMD "expected 4 input, nrhs = {}\n", nrhs );
+    Utils::mex_assert( nlhs == 2, CMD "expected 2 output, nlhs = {}\n", nlhs );
+    Utils::mex_assert( nrhs == 4, CMD "expected 4 input, nrhs = {}\n", nrhs );
 
     mwSize            nx, ny;
     real_type const * x = Utils::mex_vector_pointer( arg_in_2, nx, CMD "Error in reading x" );
     real_type const * y = Utils::mex_vector_pointer( arg_in_3, ny, CMD "Error in reading y" );
 
-    UTILS_MEX_ASSERT( nx == ny, CMD "length(x) = {} != length(y) = {}\n", nx, ny );
+    Utils::mex_assert( nx == ny, CMD "length(x) = {} != length(y) = {}\n", nx, ny );
 
     real_type * theta = Utils::mex_create_matrix_value( arg_out_0, nx, 1 );
 
@@ -268,14 +268,14 @@ namespace G2lib
   {
 #define CMD "BiarcListMexWrapper('get',OBJ,n): "
 
-    UTILS_MEX_ASSERT( nrhs == 3, CMD "expected 3 inputs, nrhs = {}\n", nrhs );
-    UTILS_MEX_ASSERT( nlhs == 6, CMD "expected 6 output, nlhs = {}\n", nlhs );
+    Utils::mex_assert( nrhs == 3, CMD "expected 3 inputs, nrhs = {}\n", nrhs );
+    Utils::mex_assert( nlhs == 6, CMD "expected 6 output, nlhs = {}\n", nlhs );
 
     BiarcList * ptr = Utils::mex_convert_mx_to_ptr<BiarcList>( arg_in_1 );
 
     int64_t n = Utils::mex_get_int64( arg_in_2, CMD "Error in reading n" );
 
-    UTILS_MEX_ASSERT(
+    Utils::mex_assert(
       n > 0 && n <= ptr->num_segments(),
       CMD "n = {} must be >= 1 and <= {}\n",
       n,
@@ -299,8 +299,8 @@ namespace G2lib
   {
 #define CMD "BiarcListMexWrapper('num_segments', OBJ): "
 
-    UTILS_MEX_ASSERT( nrhs == 2, CMD "expected 2 inputs, nrhs = {}\n", nrhs );
-    UTILS_MEX_ASSERT( nlhs == 1, CMD "expected 1 output, nlhs = {}\n", nlhs );
+    Utils::mex_assert( nrhs == 2, CMD "expected 2 inputs, nrhs = {}\n", nrhs );
+    Utils::mex_assert( nlhs == 1, CMD "expected 1 output, nlhs = {}\n", nlhs );
 
     BiarcList * ptr = Utils::mex_convert_mx_to_ptr<BiarcList>( arg_in_1 );
 
@@ -314,8 +314,8 @@ namespace G2lib
   static void do_findST1( int nlhs, mxArray * plhs[], int nrhs, mxArray const * prhs[] )
   {
 #define CMD "BiarcListMexWrapper('findST1',OBJ,x,y): "
-    UTILS_MEX_ASSERT( nrhs == 4, CMD "expected 4 inputs, nrhs = {}\n", nrhs );
-    UTILS_MEX_ASSERT( nlhs == 3, CMD "expected 3 output, nlhs = {}\n", nlhs );
+    Utils::mex_assert( nrhs == 4, CMD "expected 4 inputs, nrhs = {}\n", nrhs );
+    Utils::mex_assert( nlhs == 3, CMD "expected 3 output, nlhs = {}\n", nlhs );
 
     BiarcList * ptr = Utils::mex_convert_mx_to_ptr<BiarcList>( arg_in_1 );
 
@@ -327,7 +327,7 @@ namespace G2lib
 
     y = Utils::mex_matrix_pointer( arg_in_3, nry, ncy, CMD "`y` expected to be a real vector/matrix" );
 
-    UTILS_MEX_ASSERT(
+    Utils::mex_assert(
       nrx == nry && ncx == ncy,
       CMD
       "`x` and `y` expected to be of the same size, found\n"
@@ -378,7 +378,7 @@ namespace G2lib
 
     try
     {
-      UTILS_MEX_ASSERT0( mxIsChar( arg_in_0 ), "First argument must be a string" );
+      Utils::mex_assert( mxIsChar( arg_in_0 ), "First argument must be a string" );
       mxGetString( arg_in_0, cmd, 256 );
       cmd_to_fun.at( cmd )( nlhs, plhs, nrhs, prhs );
     }

@@ -97,7 +97,7 @@ namespace G2lib
 
   static void do_new( int nlhs, mxArray * plhs[], int nrhs, mxArray const * prhs[] )
   {
-    UTILS_MEX_ASSERT( nlhs == 1, "ClothoidCurveMexWrapper, expected 1 output, nlhs = {}\n", nlhs );
+    Utils::mex_assert( nlhs == 1, "ClothoidCurveMexWrapper, expected 1 output, nlhs = {}\n", nlhs );
 
     ClothoidCurve * ptr = new ClothoidCurve( "clothoid curve" );
     arg_out_0           = Utils::mex_convert_ptr_to_mx<ClothoidCurve>( ptr );
@@ -112,7 +112,7 @@ namespace G2lib
     {
 #define CMD "ClothoidCurveMexWrapper('new',struct): "
 
-      UTILS_MEX_ASSERT0( mxIsStruct( arg_in_1 ), CMD "Argument n.2 must be a struct" );
+      Utils::mex_assert( mxIsStruct( arg_in_1 ), CMD "Argument n.2 must be a struct" );
 
       mxArray * mx_x0     = mxGetField( arg_in_1, 0, "x0" );
       mxArray * mx_y0     = mxGetField( arg_in_1, 0, "y0" );
@@ -121,12 +121,12 @@ namespace G2lib
       mxArray * mx_dk     = mxGetField( arg_in_1, 0, "dk" );
       mxArray * mx_L      = mxGetField( arg_in_1, 0, "L" );
 
-      UTILS_MEX_ASSERT0( mx_x0 != nullptr, CMD "Field `x0` is missing" );
-      UTILS_MEX_ASSERT0( mx_y0 != nullptr, CMD "Field `y0` is missing" );
-      UTILS_MEX_ASSERT0( mx_theta0 != nullptr, CMD "Field `theta0` is missing" );
-      UTILS_MEX_ASSERT0( mx_k0 != nullptr, CMD "Field `k0` is missing" );
-      UTILS_MEX_ASSERT0( mx_dk != nullptr, CMD "Field `dk` is missing" );
-      UTILS_MEX_ASSERT0( mx_L != nullptr, CMD "Field `L` is missing" );
+      Utils::mex_assert( mx_x0 != nullptr, CMD "Field `x0` is missing" );
+      Utils::mex_assert( mx_y0 != nullptr, CMD "Field `y0` is missing" );
+      Utils::mex_assert( mx_theta0 != nullptr, CMD "Field `theta0` is missing" );
+      Utils::mex_assert( mx_k0 != nullptr, CMD "Field `k0` is missing" );
+      Utils::mex_assert( mx_dk != nullptr, CMD "Field `dk` is missing" );
+      Utils::mex_assert( mx_L != nullptr, CMD "Field `L` is missing" );
 
       x0     = Utils::mex_get_scalar_value( mx_x0, CMD "Field `x0` must be a real double scalar" );
       y0     = Utils::mex_get_scalar_value( mx_y0, CMD "Field `y0` must be a real double scalar" );
@@ -156,7 +156,7 @@ namespace G2lib
     }
     else
     {
-      UTILS_MEX_ASSERT( false, "ClothoidCurveMexWrapper('new',...): expected 1, 2, or 7 inputs, nrhs = {}\n", nrhs );
+      Utils::mex_assert( false, "ClothoidCurveMexWrapper('new',...): expected 1, 2, or 7 inputs, nrhs = {}\n", nrhs );
     }
   }
 
@@ -165,7 +165,7 @@ namespace G2lib
   static void do_build( int nlhs, mxArray *[], int nrhs, mxArray const * prhs[] )
   {
 #define CMD "ClothoidCurveMexWrapper('build',OBJ,...): "
-    UTILS_MEX_ASSERT( nlhs == 0, CMD "expected no output, nlhs = {}\n", nlhs );
+    Utils::mex_assert( nlhs == 0, CMD "expected no output, nlhs = {}\n", nlhs );
 #undef CMD
 
     ClothoidCurve * ptr = Utils::mex_convert_mx_to_ptr<ClothoidCurve>( arg_in_1 );
@@ -176,7 +176,7 @@ namespace G2lib
     {
 #define CMD "ClothoidCurveMexWrapper('build',OBJ,struct): "
 
-      UTILS_MEX_ASSERT0( mxIsStruct( arg_in_1 ), CMD "Argument n.3 must be a struct" );
+      Utils::mex_assert( mxIsStruct( arg_in_1 ), CMD "Argument n.3 must be a struct" );
 
       mxArray * mx_x0     = mxGetField( arg_in_2, 0, "x0" );
       mxArray * mx_y0     = mxGetField( arg_in_2, 0, "y0" );
@@ -185,12 +185,12 @@ namespace G2lib
       mxArray * mx_dk     = mxGetField( arg_in_2, 0, "dk" );
       mxArray * mx_L      = mxGetField( arg_in_2, 0, "L" );
 
-      UTILS_MEX_ASSERT0( mx_x0 != nullptr, CMD "Field `x0` is missing" );
-      UTILS_MEX_ASSERT0( mx_y0 != nullptr, CMD "Field `y0` is missing" );
-      UTILS_MEX_ASSERT0( mx_theta0 != nullptr, CMD "Field `theta0` is missing" );
-      UTILS_MEX_ASSERT0( mx_k0 != nullptr, CMD "Field `k0` is missing" );
-      UTILS_MEX_ASSERT0( mx_dk != nullptr, CMD "Field `dk` is missing" );
-      UTILS_MEX_ASSERT0( mx_L != nullptr, CMD "Field `L` is missing" );
+      Utils::mex_assert( mx_x0 != nullptr, CMD "Field `x0` is missing" );
+      Utils::mex_assert( mx_y0 != nullptr, CMD "Field `y0` is missing" );
+      Utils::mex_assert( mx_theta0 != nullptr, CMD "Field `theta0` is missing" );
+      Utils::mex_assert( mx_k0 != nullptr, CMD "Field `k0` is missing" );
+      Utils::mex_assert( mx_dk != nullptr, CMD "Field `dk` is missing" );
+      Utils::mex_assert( mx_L != nullptr, CMD "Field `L` is missing" );
 
       x0     = Utils::mex_get_scalar_value( mx_x0, CMD "Field `x0` must be a real double scalar" );
       y0     = Utils::mex_get_scalar_value( mx_y0, CMD "Field `y0` must be a real double scalar" );
@@ -220,7 +220,7 @@ namespace G2lib
     }
     else
     {
-      UTILS_MEX_ASSERT( false, "ClothoidCurveMexWrapper('build',OBJ,...): expected 3, or 8 inputs, nrhs = {}\n", nrhs );
+      Utils::mex_assert( false, "ClothoidCurveMexWrapper('build',OBJ,...): expected 3, or 8 inputs, nrhs = {}\n", nrhs );
     }
   }
 
@@ -229,8 +229,8 @@ namespace G2lib
   static void do_build_G1( int nlhs, mxArray * plhs[], int nrhs, mxArray const * prhs[] )
   {
 #define CMD "ClothoidCurveMexWrapper('build_G1',OBJ,x0,y0,theta0,x1,y1,theta1): "
-    UTILS_MEX_ASSERT( nlhs <= 1, CMD "expected 1 or no output, nlhs = {}\n", nlhs );
-    UTILS_MEX_ASSERT( nrhs == 8, CMD "expected 8 inputs, nrhs = {}\n", nrhs );
+    Utils::mex_assert( nlhs <= 1, CMD "expected 1 or no output, nlhs = {}\n", nlhs );
+    Utils::mex_assert( nrhs == 8, CMD "expected 8 inputs, nrhs = {}\n", nrhs );
 
     ClothoidCurve * ptr = Utils::mex_convert_mx_to_ptr<ClothoidCurve>( arg_in_1 );
 
@@ -254,8 +254,8 @@ namespace G2lib
   static void do_build_forward( int nlhs, mxArray * plhs[], int nrhs, mxArray const * prhs[] )
   {
 #define CMD "ClothoidCurveMexWrapper('build_forward',OBJ,x0,y0,theta0,kappa0,x1,y1): "
-    UTILS_MEX_ASSERT( nlhs == 1, CMD "expected 1 output, nlhs = {}\n", nlhs );
-    UTILS_MEX_ASSERT( nrhs == 8, CMD "expected 8 inputs, nrhs = {}\n", nrhs );
+    Utils::mex_assert( nlhs == 1, CMD "expected 1 output, nlhs = {}\n", nlhs );
+    Utils::mex_assert( nrhs == 8, CMD "expected 8 inputs, nrhs = {}\n", nrhs );
 
     ClothoidCurve * ptr = Utils::mex_convert_mx_to_ptr<ClothoidCurve>( arg_in_1 );
 
@@ -281,8 +281,8 @@ namespace G2lib
   static void do_change_curvilinear_origin( int nlhs, mxArray *[], int nrhs, mxArray const * prhs[] )
   {
 #define CMD "ClothoidCurveMexWrapper('change_curvilinear_origin',OBJ,s0,L): "
-    UTILS_MEX_ASSERT( nrhs == 4, CMD "expected 4 inputs, nrhs = {}\n", nrhs );
-    UTILS_MEX_ASSERT( nlhs == 0, CMD "expected NO outputs, nlhs = {}\n", nlhs );
+    Utils::mex_assert( nrhs == 4, CMD "expected 4 inputs, nrhs = {}\n", nrhs );
+    Utils::mex_assert( nlhs == 0, CMD "expected NO outputs, nlhs = {}\n", nlhs );
 
     ClothoidCurve * ptr = Utils::mex_convert_mx_to_ptr<ClothoidCurve>( arg_in_1 );
 
@@ -299,8 +299,8 @@ namespace G2lib
   {
 #define CMD "ClothoidCurveMexWrapper('infinity',OBJ): "
 
-    UTILS_MEX_ASSERT( nrhs == 2, CMD "expected 2 inputs, nrhs = {}\n", nrhs );
-    UTILS_MEX_ASSERT( nlhs == 4, CMD "expected 4 output, nlhs = {}\n", nlhs );
+    Utils::mex_assert( nrhs == 2, CMD "expected 2 inputs, nrhs = {}\n", nrhs );
+    Utils::mex_assert( nlhs == 4, CMD "expected 4 output, nlhs = {}\n", nlhs );
 
     ClothoidCurve * ptr = Utils::mex_convert_mx_to_ptr<ClothoidCurve>( arg_in_1 );
 
@@ -321,19 +321,19 @@ namespace G2lib
   static void do_distance_by_sample( int nlhs, mxArray * plhs[], int nrhs, mxArray const * prhs[] )
   {
 #define CMD "ClothoidCurveMexWrapper('distanceBySample',OBJ,x,y,ds): "
-    UTILS_MEX_ASSERT( nrhs == 5, CMD "expected 5 input, nrhs = {}\n", nrhs );
+    Utils::mex_assert( nrhs == 5, CMD "expected 5 input, nrhs = {}\n", nrhs );
 
     ClothoidCurve * ptr = Utils::mex_convert_mx_to_ptr<ClothoidCurve>( arg_in_1 );
 
     if ( nlhs > 0 )
     {
-      UTILS_MEX_ASSERT( nlhs <= 2, CMD "expected 1 or 2 output, nlhs = {}\n", nlhs );
+      Utils::mex_assert( nlhs <= 2, CMD "expected 1 or 2 output, nlhs = {}\n", nlhs );
       mwSize            nrx, ncx, nry, ncy;
       real_type const * x;
       real_type const * y;
       x = Utils::mex_matrix_pointer( arg_in_2, nrx, ncx, CMD "`x` expected to be a real vector/matrix" );
       y = Utils::mex_matrix_pointer( arg_in_3, nry, ncy, CMD "`y` expected to be a real vector/matrix" );
-      UTILS_MEX_ASSERT(
+      Utils::mex_assert(
         nrx == nry && ncx == ncy,
         CMD
         "`x` and `y` expected to be of the same size, found\n"
@@ -343,7 +343,7 @@ namespace G2lib
         nry,
         ncy );
       real_type ds = Utils::mex_get_scalar_value( arg_in_4, CMD "`ds` expected to be a real scalar" );
-      UTILS_MEX_ASSERT( ds > 0, CMD "`ds` = {} must be a positive number\n", ds );
+      Utils::mex_assert( ds > 0, CMD "`ds` = {} must be a positive number\n", ds );
 
       real_type * dst = Utils::mex_create_matrix_value( arg_out_0, nrx, ncx );
 
@@ -367,8 +367,8 @@ namespace G2lib
   static void do_closest_point_by_sample( int nlhs, mxArray * plhs[], int nrhs, mxArray const * prhs[] )
   {
 #define CMD "ClothoidCurveMexWrapper('closest_point_by_sample',OBJ,x,y,ds): "
-    UTILS_MEX_ASSERT( nrhs == 5, CMD "expected 5 input, nrhs = {}\n", nrhs );
-    UTILS_MEX_ASSERT( nlhs == 4, CMD "expected 4 outputs, nlhs = {}\n", nlhs );
+    Utils::mex_assert( nrhs == 5, CMD "expected 5 input, nrhs = {}\n", nrhs );
+    Utils::mex_assert( nlhs == 4, CMD "expected 4 outputs, nlhs = {}\n", nlhs );
 
     ClothoidCurve * ptr = Utils::mex_convert_mx_to_ptr<ClothoidCurve>( arg_in_1 );
 
@@ -377,7 +377,7 @@ namespace G2lib
     real_type const * y;
     x = Utils::mex_matrix_pointer( arg_in_2, nrx, ncx, CMD "`x` expected to be a real vector/matrix" );
     y = Utils::mex_matrix_pointer( arg_in_3, nry, ncy, CMD "`y` expected to be a real vector/matrix" );
-    UTILS_MEX_ASSERT(
+    Utils::mex_assert(
       nrx == nry && ncx == ncy,
       CMD
       "`x` and `y` expected to be of the same size, found\n"
@@ -388,7 +388,7 @@ namespace G2lib
       ncy );
 
     real_type ds = Utils::mex_get_scalar_value( arg_in_4, CMD "`ds` expected to be a real scalar" );
-    UTILS_MEX_ASSERT( ds > 0, CMD "`ds` = {} must be a positive number\n", ds );
+    Utils::mex_assert( ds > 0, CMD "`ds` = {} must be a positive number\n", ds );
 
     real_type * X   = Utils::mex_create_matrix_value( arg_out_0, nrx, ncx );
     real_type * Y   = Utils::mex_create_matrix_value( arg_out_1, nrx, ncx );
@@ -407,8 +407,8 @@ namespace G2lib
   {
 #define CMD "ClothoidCurveMexWrapper('optimized_sample',OBJ,npts,max_angle,offs[,'ISO'/'SAE']): "
 
-    UTILS_MEX_ASSERT( nrhs == 5 || nrhs == 6, CMD "expected 5 inputs, nrhs = {}\n", nrhs );
-    UTILS_MEX_ASSERT( nlhs == 1, CMD "expected 1 output, nlhs = {}\n", nlhs );
+    Utils::mex_assert( nrhs == 5 || nrhs == 6, CMD "expected 5 inputs, nrhs = {}\n", nrhs );
+    Utils::mex_assert( nlhs == 1, CMD "expected 1 output, nlhs = {}\n", nlhs );
 
     ClothoidCurve * ptr = Utils::mex_convert_mx_to_ptr<ClothoidCurve>( arg_in_1 );
 
@@ -440,8 +440,8 @@ namespace G2lib
   static void do_dkappa( int nlhs, mxArray * plhs[], int nrhs, mxArray const * prhs[] )
   {
 #define CMD "ClothoidCurveMexWrapper('dkappa',OBJ): "
-    UTILS_MEX_ASSERT( nrhs == 2, CMD "expected 2 input, nrhs = {}\n", nrhs );
-    UTILS_MEX_ASSERT( nlhs == 1, CMD "expected 1 output, nlhs = {}\n", nlhs );
+    Utils::mex_assert( nrhs == 2, CMD "expected 2 input, nrhs = {}\n", nrhs );
+    Utils::mex_assert( nlhs == 1, CMD "expected 1 output, nlhs = {}\n", nlhs );
 
     ClothoidCurve * ptr = Utils::mex_convert_mx_to_ptr<ClothoidCurve>( arg_in_1 );
     Utils::mex_set_scalar_value( arg_out_0, ptr->dkappa() );
@@ -476,7 +476,7 @@ namespace G2lib
 
     try
     {
-      UTILS_MEX_ASSERT0( mxIsChar( arg_in_0 ), "First argument must be a string" );
+      Utils::mex_assert( mxIsChar( arg_in_0 ), "First argument must be a string" );
       mxGetString( arg_in_0, cmd, 256 );
       cmd_to_fun.at( cmd )( nlhs, plhs, nrhs, prhs );
     }

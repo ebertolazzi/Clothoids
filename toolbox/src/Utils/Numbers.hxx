@@ -71,20 +71,6 @@ namespace Utils
   //! \return The square root of the machine epsilon of type T.
   template <typename T> T sqrt_machine_eps();
 
-  //! Returns the maximum representable value for the specified type.
-  //!
-  //! \tparam T The type for which to compute the maximum value. Supported types
-  //! include float and double.
-  //! \return The maximum representable value of type T.
-  template <typename T> T maximum_value();
-
-  //! Returns the minimum representable value for the specified type.
-  //!
-  //! \tparam T The type for which to compute the minimum value. Supported types
-  //! include float and double.
-  //! \return The minimum representable value of type T.
-  template <typename T> T minimum_value();
-
   template <> inline float NaN()
   {
     return numeric_limits<float>::quiet_NaN();
@@ -119,24 +105,6 @@ namespace Utils
   template <> inline double sqrt_machine_eps()
   {
     return sqrt( numeric_limits<double>::epsilon() );
-  }
-
-  template <> inline float maximum_value()
-  {
-    return sqrt( numeric_limits<float>::max() );
-  }
-  template <> inline double maximum_value()
-  {
-    return sqrt( numeric_limits<double>::max() );
-  }
-
-  template <> inline float minimum_value()
-  {
-    return sqrt( numeric_limits<float>::min() );
-  }
-  template <> inline double minimum_value()
-  {
-    return sqrt( numeric_limits<double>::min() );
   }
 
   //! Checks if a double value is zero.
@@ -314,22 +282,22 @@ namespace Utils
     {
       if ( is_infinite( pv[i] ) )
       {
-        UTILS_ERROR(
+        Utils::Error(
           "─────────────────────────────────────────────────────\n"
           "({}):{}) found Infinity at {}[{}]\n"
           "─────────────────────────────────────────────────────\n",
-          std::filesystem::path( file ).parent_path().string(),
+          std::filesystem::path( file ).filename().string(),
           line,
           v_name,
           i );
       }
       if ( is_NaN( pv[i] ) )
       {
-        UTILS_ERROR(
+        Utils::Error(
           "─────────────────────────────────────────────────────\n"
           "({}):{}) found NaN at {}[{}]\n"
           "─────────────────────────────────────────────────────\n",
-          std::filesystem::path( file ).parent_path().string(),
+          std::filesystem::path( file ).filename().string(),
           line,
           v_name,
           i );
@@ -348,22 +316,22 @@ namespace Utils
     {
       if ( is_infinite( pv[i] ) )
       {
-        UTILS_ERROR(
+        Utils::Error(
           "─────────────────────────────────────────────────────\n"
           "({}):{}) found Infinity at {}[{}]\n"
           "─────────────────────────────────────────────────────\n",
-          std::filesystem::path( file ).parent_path().string(),
+          std::filesystem::path( file ).filename().string(),
           line,
           v_name,
           i );
       }
       if ( is_NaN( pv[i] ) )
       {
-        UTILS_ERROR(
+        Utils::Error(
           "─────────────────────────────────────────────────────\n"
           "({}):{}) found NaN at {}[{}]\n"
           "─────────────────────────────────────────────────────\n",
-          std::filesystem::path( file ).parent_path().string(),
+          std::filesystem::path( file ).filename().string(),
           line,
           v_name,
           i );
@@ -374,37 +342,37 @@ namespace Utils
   //============================================================================
 
   //! The value of \f$ e \f$ (Euler's number).
-  static double const m_e = 2.718281828459045235360287471352662497757;
+  inline constexpr double m_e = 2.718281828459045235360287471352662497757;
 
   //! The value of \f$ \pi \f$ (Pi).
-  static double const m_pi = 3.141592653589793238462643383279502884197;
+  inline constexpr double m_pi = 3.141592653589793238462643383279502884197;
 
   //! The value of \f$ 2\pi \f$ (Two Pi).
-  static double const m_2pi = 6.283185307179586476925286766559005768394;
+  inline constexpr double m_2pi = 6.283185307179586476925286766559005768394;
 
   //! The value of \f$ \pi/2 \f$ (Pi divided by two).
-  static double const m_pi_2 = 1.570796326794896619231321691639751442098;
+  inline constexpr double m_pi_2 = 1.570796326794896619231321691639751442098;
 
   //! The value of \f$ \pi/4 \f$ (Pi divided by four).
-  static double const m_pi_4 = 0.7853981633974483096156608458198757210492;
+  inline constexpr double m_pi_4 = 0.7853981633974483096156608458198757210492;
 
   //! The value of \f$ 1/\pi \f$ (One divided by Pi).
-  static double const m_1_pi = 0.3183098861837906715377675267450287240689;
+  inline constexpr double m_1_pi = 0.3183098861837906715377675267450287240689;
 
   //! The value of \f$ 2/\pi \f$ (Two divided by Pi).
-  static double const m_2_pi = 0.6366197723675813430755350534900574481378;
+  inline constexpr double m_2_pi = 0.6366197723675813430755350534900574481378;
 
   //! The value of \f$ \sqrt{\pi} \f$ (Square root of Pi).
-  static double const m_sqrtpi = 1.772453850905516027298167483341145182798;
+  inline constexpr double m_sqrtpi = 1.772453850905516027298167483341145182798;
 
   //! The value of \f$ 2/\sqrt{\pi} \f$ (Two divided by the square root of Pi).
-  static double const m_2_sqrtpi = 1.128379167095512573896158903121545171688;
+  inline constexpr double m_2_sqrtpi = 1.128379167095512573896158903121545171688;
 
   //! The value of \f$ \sqrt{2} \f$ (Square root of Two).
-  static double const m_sqrt2 = 1.414213562373095048801688724209698078570;
+  inline constexpr double m_sqrt2 = 1.414213562373095048801688724209698078570;
 
   //! The value of \f$ 1/\sqrt{2} \f$ (One divided by the square root of Two).
-  static double const m_1_sqrt2 = 0.7071067811865475244008443621048490392850;
+  inline constexpr double m_1_sqrt2 = 0.7071067811865475244008443621048490392850;
 
 #ifdef UTILS_OLD_CAMELCASE
   //! Returns the machine epsilon using camel case style for the specified type.
@@ -428,30 +396,6 @@ namespace Utils
   template <typename T> inline T sqrtMachineEps()
   {
     return sqrt_machine_eps<T>();
-  }
-
-  //! Returns the maximum representable value using camel case style for the
-  //! specified type.
-  //!
-  //! \tparam T The type for which to compute the maximum value. Supported types
-  //! include float and double.
-  //! \return The maximum representable value of type T.
-  //! \deprecated
-  template <typename T> inline T maximumValue()
-  {
-    return maximum_value<T>();
-  }
-
-  //! Returns the minimum representable value using camel case style for the
-  //! specified type.
-  //!
-  //! \tparam T The type for which to compute the minimum value. Supported types
-  //! include float and double.
-  //! \return The minimum representable value of type T.
-  //! \deprecated
-  template <typename T> inline T minimumValue()
-  {
-    return minimum_value<T>();
   }
 
   //! Checks if a double value is zero using camel case style.

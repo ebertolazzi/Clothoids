@@ -7,6 +7,7 @@
 // This Source Code Form is subject to the terms of the Mozilla
 // Public License v. 2.0. If a copy of the MPL was not distributed
 // with this file, You can obtain one at http://mozilla.org/MPL/2.0/.
+// SPDX-License-Identifier: MPL-2.0
 
 #ifndef EIGEN_DIAGONALMATRIX_H
 #define EIGEN_DIAGONALMATRIX_H
@@ -53,25 +54,25 @@ class DiagonalBase : public EigenBase<Derived> {
   typedef DiagonalMatrix<Scalar, DiagonalVectorType::SizeAtCompileTime, DiagonalVectorType::MaxSizeAtCompileTime>
       PlainObject;
 
-  /** \returns a reference to the derived object. */
-  EIGEN_DEVICE_FUNC inline const Derived& derived() const { return *static_cast<const Derived*>(this); }
   /** \returns a const reference to the derived object. */
+  EIGEN_DEVICE_FUNC inline const Derived& derived() const { return *static_cast<const Derived*>(this); }
+  /** \returns a reference to the derived object. */
   EIGEN_DEVICE_FUNC inline Derived& derived() { return *static_cast<Derived*>(this); }
 
   /**
    * Constructs a dense matrix from \c *this. Note, this directly returns a dense matrix type,
    * not an expression.
-   * \returns A dense matrix, with its diagonal entries set from the the derived object. */
+   * \returns A dense matrix, with its diagonal entries set from the derived object. */
   EIGEN_DEVICE_FUNC DenseMatrixType toDenseMatrix() const { return derived(); }
 
-  /** \returns a reference to the derived object's vector of diagonal coefficients. */
-  EIGEN_DEVICE_FUNC inline const DiagonalVectorType& diagonal() const { return derived().diagonal(); }
   /** \returns a const reference to the derived object's vector of diagonal coefficients. */
+  EIGEN_DEVICE_FUNC inline const DiagonalVectorType& diagonal() const { return derived().diagonal(); }
+  /** \returns a reference to the derived object's vector of diagonal coefficients. */
   EIGEN_DEVICE_FUNC inline DiagonalVectorType& diagonal() { return derived().diagonal(); }
 
   /** \returns the value of the coefficient as if \c *this was a dense matrix. */
   EIGEN_DEVICE_FUNC inline Scalar coeff(Index row, Index col) const {
-    eigen_assert(row >= 0 && col >= 0 && row < rows() && col <= cols());
+    eigen_assert(row >= 0 && col >= 0 && row < rows() && col < cols());
     return row == col ? diagonal().coeff(row) : Scalar(0);
   }
 
@@ -101,7 +102,7 @@ class DiagonalBase : public EigenBase<Derived> {
   using DiagonalInverseReturnType =
       DiagonalWrapper<const CwiseUnaryOp<internal::scalar_inverse_op<Scalar>, const DiagonalVectorType>>;
 
-  /** \returns the inverse \c *this. Computed as the coefficient-wise inverse of the diagonal. */
+  /** \returns the inverse of \c *this. Computed as the coefficient-wise inverse of the diagonal. */
   EIGEN_DEVICE_FUNC inline const DiagonalInverseReturnType inverse() const {
     return diagonal().cwiseInverse().asDiagonal();
   }
@@ -184,21 +185,22 @@ class DiagonalMatrix : public DiagonalBase<DiagonalMatrix<Scalar_, SizeAtCompile
 
  public:
   /** const version of diagonal(). */
-  EIGEN_DEVICE_FUNC inline const DiagonalVectorType& diagonal() const { return m_diagonal; }
+  EIGEN_DEVICE_FUNC constexpr inline const DiagonalVectorType& diagonal() const { return m_diagonal; }
   /** \returns a reference to the stored vector of diagonal coefficients. */
-  EIGEN_DEVICE_FUNC inline DiagonalVectorType& diagonal() { return m_diagonal; }
+  EIGEN_DEVICE_FUNC constexpr inline DiagonalVectorType& diagonal() { return m_diagonal; }
 
   /** Default constructor without initialization */
-  EIGEN_DEVICE_FUNC inline DiagonalMatrix() {}
+  EIGEN_DEVICE_FUNC constexpr inline DiagonalMatrix() {}
 
   /** Constructs a diagonal matrix with given dimension  */
-  EIGEN_DEVICE_FUNC explicit inline DiagonalMatrix(Index dim) : m_diagonal(dim) {}
+  EIGEN_DEVICE_FUNC constexpr explicit inline DiagonalMatrix(Index dim) : m_diagonal(dim) {}
 
   /** 2D constructor. */
-  EIGEN_DEVICE_FUNC inline DiagonalMatrix(const Scalar& x, const Scalar& y) : m_diagonal(x, y) {}
+  EIGEN_DEVICE_FUNC constexpr inline DiagonalMatrix(const Scalar& x, const Scalar& y) : m_diagonal(x, y) {}
 
   /** 3D constructor. */
-  EIGEN_DEVICE_FUNC inline DiagonalMatrix(const Scalar& x, const Scalar& y, const Scalar& z) : m_diagonal(x, y, z) {}
+  EIGEN_DEVICE_FUNC constexpr inline DiagonalMatrix(const Scalar& x, const Scalar& y, const Scalar& z)
+      : m_diagonal(x, y, z) {}
 
   /** \brief Construct a diagonal matrix with fixed size from an arbitrary number of coefficients.
    *
@@ -209,23 +211,24 @@ class DiagonalMatrix : public DiagonalBase<DiagonalMatrix<Scalar_, SizeAtCompile
    * \sa DiagonalMatrix(const Scalar&, const Scalar&, const Scalar&)
    */
   template <typename... ArgTypes>
-  EIGEN_DEVICE_FUNC EIGEN_STRONG_INLINE DiagonalMatrix(const Scalar& a0, const Scalar& a1, const Scalar& a2,
-                                                       const ArgTypes&... args)
+  EIGEN_DEVICE_FUNC constexpr EIGEN_STRONG_INLINE DiagonalMatrix(const Scalar& a0, const Scalar& a1, const Scalar& a2,
+                                                                 const ArgTypes&... args)
       : m_diagonal(a0, a1, a2, args...) {}
 
   /** \brief Constructs a DiagonalMatrix and initializes it by elements given by an initializer list of initializer
-   * lists \cpp11
+   * lists
    */
   EIGEN_DEVICE_FUNC explicit EIGEN_STRONG_INLINE DiagonalMatrix(
       const std::initializer_list<std::initializer_list<Scalar>>& list)
       : m_diagonal(list) {}
 
   /** \brief Constructs a DiagonalMatrix from an r-value diagonal vector type */
-  EIGEN_DEVICE_FUNC explicit inline DiagonalMatrix(DiagonalVectorType&& diag) : m_diagonal(std::move(diag)) {}
+  EIGEN_DEVICE_FUNC constexpr explicit inline DiagonalMatrix(DiagonalVectorType&& diag) : m_diagonal(std::move(diag)) {}
 
   /** Copy constructor. */
   template <typename OtherDerived>
-  EIGEN_DEVICE_FUNC inline DiagonalMatrix(const DiagonalBase<OtherDerived>& other) : m_diagonal(other.diagonal()) {}
+  EIGEN_DEVICE_FUNC constexpr inline DiagonalMatrix(const DiagonalBase<OtherDerived>& other)
+      : m_diagonal(other.diagonal()) {}
 
 #ifndef EIGEN_PARSED_BY_DOXYGEN
   /** copy constructor. prevent a default copy constructor from hiding the other templated constructor */
@@ -234,7 +237,8 @@ class DiagonalMatrix : public DiagonalBase<DiagonalMatrix<Scalar_, SizeAtCompile
 
   /** generic constructor from expression of the diagonal coefficients */
   template <typename OtherDerived>
-  EIGEN_DEVICE_FUNC explicit inline DiagonalMatrix(const MatrixBase<OtherDerived>& other) : m_diagonal(other) {}
+  EIGEN_DEVICE_FUNC constexpr explicit inline DiagonalMatrix(const MatrixBase<OtherDerived>& other)
+      : m_diagonal(other) {}
 
   /** Copy operator. */
   template <typename OtherDerived>
@@ -265,9 +269,9 @@ class DiagonalMatrix : public DiagonalBase<DiagonalMatrix<Scalar_, SizeAtCompile
   EIGEN_DEVICE_FUNC static const ZeroInitializeReturnType Zero(Index size) {
     return DiagonalVectorType::Zero(size).asDiagonal();
   }
-  /** Initializes a identity matrix of size SizeAtCompileTime */
+  /** Initializes an identity matrix of size SizeAtCompileTime */
   EIGEN_DEVICE_FUNC static const InitializeReturnType Identity() { return DiagonalVectorType::Ones().asDiagonal(); }
-  /** Initializes a identity matrix of size dim */
+  /** Initializes an identity matrix of size dim */
   EIGEN_DEVICE_FUNC static const InitializeReturnType Identity(Index size) {
     return DiagonalVectorType::Ones(size).asDiagonal();
   }
@@ -325,10 +329,11 @@ class DiagonalWrapper : public DiagonalBase<DiagonalWrapper<DiagonalVectorType_>
 #endif
 
   /** Constructor from expression of diagonal coefficients to wrap. */
-  EIGEN_DEVICE_FUNC explicit inline DiagonalWrapper(DiagonalVectorType& a_diagonal) : m_diagonal(a_diagonal) {}
+  EIGEN_DEVICE_FUNC constexpr explicit inline DiagonalWrapper(DiagonalVectorType& a_diagonal)
+      : m_diagonal(a_diagonal) {}
 
   /** \returns a const reference to the wrapped expression of diagonal coefficients. */
-  EIGEN_DEVICE_FUNC const DiagonalVectorType& diagonal() const { return m_diagonal; }
+  EIGEN_DEVICE_FUNC constexpr const DiagonalVectorType& diagonal() const { return m_diagonal; }
 
  protected:
   typename DiagonalVectorType::Nested m_diagonal;
@@ -344,7 +349,7 @@ class DiagonalWrapper : public DiagonalBase<DiagonalWrapper<DiagonalVectorType_>
  * \sa class DiagonalWrapper, class DiagonalMatrix, diagonal(), isDiagonal()
  **/
 template <typename Derived>
-EIGEN_DEVICE_FUNC inline const DiagonalWrapper<const Derived> MatrixBase<Derived>::asDiagonal() const {
+EIGEN_DEVICE_FUNC constexpr const DiagonalWrapper<const Derived> MatrixBase<Derived>::asDiagonal() const {
   return DiagonalWrapper<const Derived>(derived());
 }
 
@@ -370,6 +375,55 @@ bool MatrixBase<Derived>::isDiagonal(const RealScalar& prec) const {
       if (!internal::isMuchSmallerThan(coeff(j, i), maxAbsOnDiagonal, prec)) return false;
     }
   return true;
+}
+
+/** \returns DiagonalWrapper.
+ *
+ * Example: \include MatrixBase_diagonalView.cpp
+ * Output: \verbinclude MatrixBase_diagonalView.out
+ *
+ * \sa diagonalView()
+ */
+
+/** This is the non-const version of diagonalView() with DiagIndex_ . */
+template <typename Derived>
+template <int DiagIndex_>
+EIGEN_DEVICE_FUNC constexpr DiagonalWrapper<Diagonal<Derived, DiagIndex_>> MatrixBase<Derived>::diagonalView() {
+  typedef Diagonal<Derived, DiagIndex_> DiagType;
+  typedef DiagonalWrapper<DiagType> ReturnType;
+  DiagType diag(this->derived());
+  return ReturnType(diag);
+}
+
+/** This is the const version of diagonalView() with DiagIndex_ . */
+template <typename Derived>
+template <int DiagIndex_>
+EIGEN_DEVICE_FUNC constexpr DiagonalWrapper<Diagonal<const Derived, DiagIndex_>> MatrixBase<Derived>::diagonalView()
+    const {
+  typedef Diagonal<const Derived, DiagIndex_> DiagType;
+  typedef DiagonalWrapper<DiagType> ReturnType;
+  DiagType diag(this->derived());
+  return ReturnType(diag);
+}
+
+/** This is the non-const version of diagonalView() with dynamic index. */
+template <typename Derived>
+EIGEN_DEVICE_FUNC constexpr DiagonalWrapper<Diagonal<Derived, DynamicIndex>> MatrixBase<Derived>::diagonalView(
+    Index index) {
+  typedef Diagonal<Derived, DynamicIndex> DiagType;
+  typedef DiagonalWrapper<DiagType> ReturnType;
+  DiagType diag(this->derived(), index);
+  return ReturnType(diag);
+}
+
+/** This is the const version of diagonalView() with dynamic index. */
+template <typename Derived>
+EIGEN_DEVICE_FUNC constexpr DiagonalWrapper<Diagonal<const Derived, DynamicIndex>> MatrixBase<Derived>::diagonalView(
+    Index index) const {
+  typedef Diagonal<const Derived, DynamicIndex> DiagType;
+  typedef DiagonalWrapper<DiagType> ReturnType;
+  DiagType diag(this->derived(), index);
+  return ReturnType(diag);
 }
 
 namespace internal {

@@ -40,36 +40,15 @@
 #warning "unsupported OS!"
 #endif
 
-// check if compiler is C++11
-#if ( defined( _MSC_VER ) && _MSC_VER >= 1800 ) || ( defined( __cplusplus ) && __cplusplus > 199711L )
+// require a C++20 compiler (MSVC reports __cplusplus honestly only with
+// /Zc:__cplusplus, so accept _MSVC_LANG as well)
+#if ( defined( _MSVC_LANG ) && _MSVC_LANG >= 202002L ) || ( defined( __cplusplus ) && __cplusplus >= 202002L )
 #else
-#error "Lapack Wrapper must be compiled using C++ >= C++11"
-#endif
-
-
-// check if compiler is C++11
-#if ( defined( _MSC_VER ) && _MSC_VER >= 1800 ) || ( defined( __cplusplus ) && __cplusplus >= 201103L )
-#else
-#error "must use a compiler >= c++11"
+#error "GenericContainer must be compiled as C++20 or later"
 #endif
 
 // Standard types
-#ifdef GENERIC_CONTAINER_ON_WINDOWS
-#ifdef GENERIC_CONTAINER_USE_WINDOWS_TYPES
-typedef __int8           int8_t;
-typedef __int16          int16_t;
-typedef __int32          int32_t;
-typedef __int64          int64_t;
-typedef unsigned __int8  uint8_t;
-typedef unsigned __int16 uint16_t;
-typedef unsigned __int32 uint32_t;
-typedef unsigned __int64 uint64_t;
-#else
 #include <cstdint>
-#endif
-#else
-#include <cstdint>
-#endif
 
 #endif
 

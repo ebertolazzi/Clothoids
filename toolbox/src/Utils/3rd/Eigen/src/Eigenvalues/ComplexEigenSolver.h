@@ -8,6 +8,7 @@
 // This Source Code Form is subject to the terms of the Mozilla
 // Public License v. 2.0. If a copy of the MPL was not distributed
 // with this file, You can obtain one at http://mozilla.org/MPL/2.0/.
+// SPDX-License-Identifier: MPL-2.0
 
 #ifndef EIGEN_COMPLEX_EIGEN_SOLVER_H
 #define EIGEN_COMPLEX_EIGEN_SOLVER_H
@@ -39,7 +40,7 @@ namespace Eigen {
  * \f$. This is called the eigendecomposition.
  *
  * The main function in this class is compute(), which computes the
- * eigenvalues and eigenvectors of a given function. The
+ * eigenvalues and eigenvectors of a given matrix. The
  * documentation for that function contains an example showing the
  * main features of the class.
  *
@@ -222,7 +223,7 @@ class ComplexEigenSolver {
   }
 
   /** \brief Returns the maximum number of iterations. */
-  Index getMaxIterations() { return m_schur.getMaxIterations(); }
+  Index getMaxIterations() const { return m_schur.getMaxIterations(); }
 
  protected:
   EIGEN_STATIC_ASSERT_NON_INTEGER(Scalar)
@@ -265,8 +266,6 @@ template <typename MatrixType>
 void ComplexEigenSolver<MatrixType>::doComputeEigenvectors(RealScalar matrixnorm) {
   const Index n = m_eivalues.size();
 
-  matrixnorm = numext::maxi(matrixnorm, (std::numeric_limits<RealScalar>::min)());
-
   // Compute X such that T = X D X^(-1), where D is the diagonal of T.
   // The matrix X is unit triangular.
   m_matX = EigenvectorType::Zero(n, n);
@@ -282,7 +281,8 @@ void ComplexEigenSolver<MatrixType>::doComputeEigenvectors(RealScalar matrixnorm
       if (z == ComplexScalar(0)) {
         // If the i-th and k-th eigenvalue are equal, then z equals 0.
         // Use a small value instead, to prevent division by zero.
-        numext::real_ref(z) = NumTraits<RealScalar>::epsilon() * matrixnorm;
+        numext::real_ref(z) = numext::maxi(std::numeric_limits<RealScalar>::epsilon() * matrixnorm,
+                                           (std::numeric_limits<RealScalar>::min)());
       }
       m_matX.coeffRef(i, k) = m_matX.coeff(i, k) / z;
     }

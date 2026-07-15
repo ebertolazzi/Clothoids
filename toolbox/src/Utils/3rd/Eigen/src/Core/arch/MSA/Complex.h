@@ -9,6 +9,7 @@
 // This Source Code Form is subject to the terms of the Mozilla
 // Public License v. 2.0. If a copy of the MPL was not distributed
 // with this file, You can obtain one at http://mozilla.org/MPL/2.0/.
+// SPDX-License-Identifier: MPL-2.0
 
 #ifndef EIGEN_COMPLEX_MSA_H
 #define EIGEN_COMPLEX_MSA_H
@@ -21,6 +22,8 @@
 namespace Eigen {
 
 namespace internal {
+
+EIGEN_GCC_FAST_MATH_COMPLEX_VECTORIZE_WORKAROUND_PUSH
 
 //---------- float ----------
 struct Packet2cf {
@@ -100,12 +103,14 @@ struct packet_traits<std::complex<float> > : default_packet_traits {
     HasMul = 1,
     HasDiv = 1,
     HasNegate = 1,
+    HasSqrt = 1,
+    HasLog = 1,
+    HasExp = 1,
     HasAbs = 0,
     HasAbs2 = 0,
     HasMin = 0,
     HasMax = 0,
     HasSetLinear = 0,
-    HasBlend = 1
   };
 };
 
@@ -314,12 +319,6 @@ EIGEN_DEVICE_FUNC inline void ptranspose(PacketBlock<Packet2cf, 2>& kernel) {
   kernel.packet[1].v = tmp;
 }
 
-template <>
-EIGEN_STRONG_INLINE Packet2cf pblend(const Selector<2>& ifPacket, const Packet2cf& thenPacket,
-                                     const Packet2cf& elsePacket) {
-  return (Packet2cf)(Packet4f)pblend<Packet2d>(ifPacket, (Packet2d)thenPacket.v, (Packet2d)elsePacket.v);
-}
-
 //---------- double ----------
 
 struct Packet1cd {
@@ -400,6 +399,8 @@ struct packet_traits<std::complex<double> > : default_packet_traits {
     HasMul = 1,
     HasDiv = 1,
     HasNegate = 1,
+    HasSqrt = 1,
+    HasLog = 1,
     HasAbs = 0,
     HasAbs2 = 0,
     HasMin = 0,
@@ -612,6 +613,11 @@ EIGEN_STRONG_INLINE void ptranspose(PacketBlock<Packet1cd, 2>& kernel) {
   kernel.packet[0].v = v1;
   kernel.packet[1].v = v2;
 }
+
+EIGEN_INSTANTIATE_COMPLEX_MATH_FUNCS(Packet2cf)
+EIGEN_INSTANTIATE_COMPLEX_MATH_FUNCS_NO_EXP(Packet1cd)
+
+EIGEN_GCC_FAST_MATH_COMPLEX_VECTORIZE_WORKAROUND_POP
 
 }  // end namespace internal
 

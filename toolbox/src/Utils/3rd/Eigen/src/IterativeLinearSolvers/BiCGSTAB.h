@@ -7,6 +7,7 @@
 // This Source Code Form is subject to the terms of the Mozilla
 // Public License v. 2.0. If a copy of the MPL was not distributed
 // with this file, You can obtain one at http://mozilla.org/MPL/2.0/.
+// SPDX-License-Identifier: MPL-2.0
 
 #ifndef EIGEN_BICGSTAB_H
 #define EIGEN_BICGSTAB_H
@@ -34,7 +35,6 @@ bool bicgstab(const MatrixType& mat, const Rhs& rhs, Dest& x, const Precondition
   typedef typename Dest::RealScalar RealScalar;
   typedef typename Dest::Scalar Scalar;
   typedef Matrix<Scalar, Dynamic, 1> VectorType;
-  RealScalar tol = tol_error;
   Index maxIters = iters;
 
   Index n = mat.cols();
@@ -48,13 +48,15 @@ bool bicgstab(const MatrixType& mat, const Rhs& rhs, Dest& x, const Precondition
     x.setZero();
     return true;
   }
+
+  RealScalar tol = tol_error * rhs_norm;
+
   Scalar rho(1);
   Scalar alpha(0);
   Scalar w(1);
 
   VectorType v = VectorType::Zero(n), p = VectorType::Zero(n);
   VectorType y(n), z(n);
-  VectorType kt(n), ks(n);
 
   VectorType s(n), t(n);
 
@@ -150,7 +152,7 @@ struct traits<BiCGSTAB<MatrixType_, Preconditioner_> > {
  *
  * The tolerance corresponds to the relative residual error: |Ax-b|/|b|
  *
- * \b Performance: when using sparse matrices, best performance is achied for a row-major sparse matrix format.
+ * \b Performance: when using sparse matrices, best performance is achieved for a row-major sparse matrix format.
  * Moreover, in this case multi-threading can be exploited if the user code is compiled with OpenMP enabled.
  * See \ref TopicMultiThreading for details.
  *
@@ -166,6 +168,7 @@ struct traits<BiCGSTAB<MatrixType_, Preconditioner_> > {
  */
 template <typename MatrixType_, typename Preconditioner_>
 class BiCGSTAB : public IterativeSolverBase<BiCGSTAB<MatrixType_, Preconditioner_> > {
+ protected:
   typedef IterativeSolverBase<BiCGSTAB> Base;
   using Base::m_error;
   using Base::m_info;
@@ -196,8 +199,6 @@ class BiCGSTAB : public IterativeSolverBase<BiCGSTAB<MatrixType_, Preconditioner
   template <typename MatrixDerived>
   explicit BiCGSTAB(const EigenBase<MatrixDerived>& A) : Base(A.derived()) {}
 
-  ~BiCGSTAB() {}
-
   /** \internal */
   template <typename Rhs, typename Dest>
   void _solve_vector_with_guess_impl(const Rhs& b, Dest& x) const {
@@ -208,8 +209,6 @@ class BiCGSTAB : public IterativeSolverBase<BiCGSTAB<MatrixType_, Preconditioner
 
     m_info = (!ret) ? NumericalIssue : m_error <= Base::m_tolerance ? Success : NoConvergence;
   }
-
- protected:
 };
 
 }  // end namespace Eigen

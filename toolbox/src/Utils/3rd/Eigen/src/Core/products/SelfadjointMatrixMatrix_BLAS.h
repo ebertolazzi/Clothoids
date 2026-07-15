@@ -23,12 +23,13 @@
  ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
  (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
  SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-//
+
  ********************************************************************************
  *   Content : Eigen bindings to BLAS F77
  *   Self adjoint matrix * matrix product functionality based on ?SYMM/?HEMM.
  ********************************************************************************
 */
+// SPDX-License-Identifier: BSD-3-Clause
 
 #ifndef EIGEN_SELFADJOINT_MATRIX_MATRIX_BLAS_H
 #define EIGEN_SELFADJOINT_MATRIX_MATRIX_BLAS_H
@@ -270,6 +271,11 @@ EIGEN_BLAS_SYMM_R(float, float, f, ssymm_)
 EIGEN_BLAS_HEMM_R(dcomplex, double, cd, zhemm_)
 EIGEN_BLAS_HEMM_R(scomplex, float, cf, chemm_)
 #endif
+
+#undef EIGEN_BLAS_SYMM_L
+#undef EIGEN_BLAS_SYMM_R
+#undef EIGEN_BLAS_HEMM_L
+#undef EIGEN_BLAS_HEMM_R
 }  // end namespace internal
 
 }  // end namespace Eigen

@@ -32,6 +32,16 @@
 
 #include "Utils.hh"
 
+#ifndef FMT_HEADER_ONLY
+  #define FMT_HEADER_ONLY
+#endif
+
+#include "Utils/3rd/fmt/color.h"
+#include "Utils/3rd/fmt/std.h"
+#include "Utils/3rd/fmt/chrono.h"
+#include "Utils/3rd/fmt/ostream.h"
+#include "Utils/3rd/fmt/printf.h"
+
 namespace Utils
 {
 
@@ -199,6 +209,11 @@ namespace Utils
   {
     std::string tmp{ "[" };
     size_t      v_size = v.size();
+
+    Utils::Assert( max_size >= 3, "format_index_vector: max_size={} must be >= 3\n", max_size );
+
+    if ( v_size == 0 ) { return "[]"; }
+
     if ( v_size <= max_size )
     {
       for ( size_t i = 0; i < v_size; ++i ) tmp += fmt::format( "{}, ", v[i] );
@@ -258,6 +273,8 @@ namespace Utils
   {
     std::string tmp{ "[" };
     size_t      v_size = v.size();
+
+    Utils::Assert( max_size >= 3, "format_reduced_vector: max_size={} must be >= 3\n", max_size );
 
     if ( v_size == 0 ) { return "[]"; }
 

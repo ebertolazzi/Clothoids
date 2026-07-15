@@ -106,6 +106,7 @@
 #include <cstdint>
 #include <cstdlib>
 #include <filesystem>
+#include <format>
 #include <fstream>
 #include <functional>
 #include <iomanip>
@@ -114,10 +115,10 @@
 #include <limits>
 #include <list>
 #include <map>
-#include <map>
 #include <memory>
 #include <numeric>
 #include <random>
+#include <source_location>
 #include <sstream>
 #include <stdexcept>
 #include <string_view>
@@ -126,8 +127,9 @@
 #include <utility>
 #include <vector>
 
+
 // disable mingw-std-threads for mingw on MATLAB
-#if defined( __MINGW32__ ) || defined( __MINGW64__ ) && !defined( MATLAB_MEX_FILE )
+#if ( defined( __MINGW32__ ) || defined( __MINGW64__ ) ) && !defined( MATLAB_MEX_FILE )
 #include <_mingw.h>
 #if defined( __MINGW64_VERSION_MAJOR )
 #if __MINGW64_VERSION_MAJOR < 8
@@ -135,7 +137,7 @@
 #endif
 #endif
 #if defined( __MINGW32_VERSION_MAJOR )
-#if __MINGW32_VERSION_MAJORs < 8
+#if __MINGW32_VERSION_MAJOR < 8
 #define UTILS_USE_MINGW_PORTABLE_THREADS
 #endif
 #endif
@@ -176,17 +178,6 @@ namespace Utils
   using string_view  = std::string_view;
   using ostream_type = std::basic_ostream<char>;
   using istream_type = std::basic_istream<char>;
-}  // namespace Utils
-
-#include "3rd/spdlog/spdlog.h"
-#include "3rd/spdlog/fmt/bundled/std.h"
-#include "3rd/spdlog/fmt/bundled/chrono.h"
-#include "3rd/spdlog/fmt/bundled/color.h"
-#include "3rd/spdlog/fmt/bundled/ostream.h"
-#include "3rd/spdlog/fmt/bundled/printf.h"
-
-namespace Utils
-{
   using std::runtime_error;
 
   //!
@@ -222,7 +213,7 @@ namespace Utils
     //! \param line The line number in the file where the error occurred.
     //!
     explicit Runtime_Error( string_view reason, string_view file, int line )
-      : std::runtime_error( fmt::format( "\n{}\nOn File:{}:{}\n", reason, file, line ) )
+      : std::runtime_error( std::format( "\n{}\nOn File:{}:{}\n", reason, file, line ) )
     {
     }
 
@@ -237,6 +228,55 @@ namespace Utils
     //!
     char const * what() const noexcept override { return runtime_error::what(); }
   };
+  
+  inline
+  void Error( std::string_view msg, std::source_location loc = std::source_location::current() ) {
+    throw Utils::Runtime_Error( std::string{msg}, loc.file_name(), loc.line() );
+  }
+
+  inline
+  void Assert( bool ok, std::string_view msg, std::source_location loc = std::source_location::current() ) {
+    if ( !ok )
+      throw Utils::Runtime_Error( std::string{msg}, loc.file_name(), loc.line() );
+  }
+
+  inline
+  void Warning( bool ok, std::string_view msg, std::source_location loc = std::source_location::current() ) {
+    if ( !ok )
+      std::cout << std::format( "{}\nfile: {}, line: {}\n", msg, loc.file_name(), loc.line() );
+  }
+
+  template<class... Args>
+  struct Format_With_Location {
+    std::format_string<Args...> fmt;
+    std::source_location loc;
+
+    template<class S>
+    consteval Format_With_Location( S&& s, std::source_location l = std::source_location::current() )
+    : fmt(std::forward<S>(s)), loc(l)
+    {}
+  };
+
+  template<class... Args>
+  inline
+  void Error( Format_With_Location<std::type_identity_t<Args>...> f, Args&&... args ) {
+    throw Utils::Runtime_Error( std::format(f.fmt, std::forward<Args>(args)...), f.loc.file_name(), f.loc.line() );
+  }
+
+  template<class... Args>
+  inline
+  void Assert( bool ok, Format_With_Location<std::type_identity_t<Args>...> f, Args&&... args ) {
+    if ( !ok )
+      throw Utils::Runtime_Error( std::format(f.fmt, std::forward<Args>(args)...), f.loc.file_name(), f.loc.line() );
+  }
+
+  template<class... Args>
+  inline
+  void Warning( bool ok, Format_With_Location<std::type_identity_t<Args>...> f, Args&&... args ) {
+    if ( !ok )
+      std::cout << std::format( "{}\nfile: {}, line: {}\n", std::format(f.fmt, std::forward<Args>(args)...), f.loc.file_name(), f.loc.line() );
+  }
+
 }  // namespace Utils
 
 #ifndef __FILENAME__
@@ -258,12 +298,12 @@ namespace Utils
 #endif
 
 #ifndef UTILS_ERROR
-#define UTILS_ERROR( ... ) throw Utils::Runtime_Error( fmt::format( __VA_ARGS__ ), __FILENAME__, __LINE__ )
+#define UTILS_ERROR( ... ) throw Utils::Runtime_Error( std::format( __VA_ARGS__ ), __FILENAME__, __LINE__ )
 #endif
 
 #ifndef UTILS_ASSERT
 #define UTILS_ASSERT( COND, ... ) \
-  if ( !( COND ) ) UTILS_ERROR( __VA_ARGS__ )
+  if ( !( COND ) ) Utils::Error( __VA_ARGS__ )
 #endif
 
 #ifndef UTILS_WARNING
@@ -283,12 +323,11 @@ namespace Utils
 #define UTILS_ASSERT0_DEBUG( COND, MSG ) UTILS_ASSERT0( COND, MSG )
 #endif
 #ifndef UTILS_ASSERT_DEBUG
-#define UTILS_ASSERT_DEBUG( COND, ... ) UTILS_ASSERT( COND, __VA_ARGS__ )
+#define UTILS_ASSERT_DEBUG( COND, ... ) Utils::Assert( COND, __VA_ARGS__ )
 #endif
 #endif
 
 #include "Malloc.hxx"
-#include "Console.hxx"
 #include "Numbers.hxx"
 
 // order must be preserved

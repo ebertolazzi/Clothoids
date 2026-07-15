@@ -1863,7 +1863,7 @@ namespace Utils
   //!
   template <typename Real> void divide( Poly<Real> const & p, Poly<Real> const & q, Poly<Real> & M, Poly<Real> & R )
   {
-    UTILS_ASSERT(
+    Utils::Assert(
       p.order() > 0 && q.order(),
       "Poly::divide( p, q, N, R ) ∂p = {}, ∂q = {} must be greather of 0",
       p.order(),

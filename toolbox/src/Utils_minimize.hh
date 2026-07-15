@@ -103,12 +103,12 @@ namespace Utils
     BoxConstraintHandler( Vector const & lower, Vector const & upper )
       : m_lower( lower ), m_upper( upper ), m_active( true ), m_epsi( std::numeric_limits<Scalar>::epsilon() )
     {
-      UTILS_ASSERT(
+      Utils::Assert(
         lower.size() == upper.size(),
         "Lower and upper bounds must have same size (#lower={},#upper={})",
         lower.size(),
         upper.size() );
-      UTILS_ASSERT( ( lower.array() <= upper.array() ).all(), "Lower bounds must be <= upper bounds" );
+      Utils::Assert( ( lower.array() <= upper.array() ).all(), "Lower bounds must be <= upper bounds" );
       update_tolerances();
       m_lambda_lower.resize( m_lower.size() );
       m_lambda_upper.resize( m_upper.size() );
@@ -133,12 +133,12 @@ namespace Utils
      */
     void set_bounds( Vector const & lower, Vector const & upper )
     {
-      UTILS_ASSERT(
+      Utils::Assert(
         lower.size() == upper.size(),
         "Lower and upper bounds must have same size (#lower={},#upper={})",
         lower.size(),
         upper.size() );
-      UTILS_ASSERT( ( lower.array() <= upper.array() ).all(), "Lower bounds must be <= upper bounds" );
+      Utils::Assert( ( lower.array() <= upper.array() ).all(), "Lower bounds must be <= upper bounds" );
 
       m_lower  = lower;
       m_upper  = upper;

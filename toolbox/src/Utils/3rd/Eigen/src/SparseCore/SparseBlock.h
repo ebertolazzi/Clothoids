@@ -6,6 +6,7 @@
 // This Source Code Form is subject to the terms of the Mozilla
 // Public License v. 2.0. If a copy of the MPL was not distributed
 // with this file, You can obtain one at http://mozilla.org/MPL/2.0/.
+// SPDX-License-Identifier: MPL-2.0
 
 #ifndef EIGEN_SPARSE_BLOCK_H
 #define EIGEN_SPARSE_BLOCK_H
@@ -18,8 +19,7 @@ namespace Eigen {
 // Subset of columns or rows
 template <typename XprType, int BlockRows, int BlockCols>
 class BlockImpl<XprType, BlockRows, BlockCols, true, Sparse>
-    : public SparseMatrixBase<Block<XprType, BlockRows, BlockCols, true> > {
-  typedef internal::remove_all_t<typename XprType::Nested> MatrixTypeNested_;
+    : public SparseCompressedBase<Block<XprType, BlockRows, BlockCols, true> > {
   typedef Block<XprType, BlockRows, BlockCols, true> BlockType;
 
  public:
@@ -27,7 +27,7 @@ class BlockImpl<XprType, BlockRows, BlockCols, true, Sparse>
 
  protected:
   enum { OuterSize = IsRowMajor ? BlockRows : BlockCols };
-  typedef SparseMatrixBase<BlockType> Base;
+  typedef SparseCompressedBase<BlockType> Base;
   using Base::convert_index;
 
  public:
@@ -68,6 +68,32 @@ class BlockImpl<XprType, BlockRows, BlockCols, true, Sparse>
   Index blockRows() const { return IsRowMajor ? m_outerSize.value() : m_matrix.rows(); }
   Index blockCols() const { return IsRowMajor ? m_matrix.cols() : m_outerSize.value(); }
 
+  inline const Scalar* valuePtr() const { return m_matrix.valuePtr(); }
+  inline Scalar* valuePtr() { return m_matrix.valuePtr(); }
+
+  inline const StorageIndex* innerIndexPtr() const { return m_matrix.innerIndexPtr(); }
+  inline StorageIndex* innerIndexPtr() { return m_matrix.innerIndexPtr(); }
+
+  inline const StorageIndex* outerIndexPtr() const {
+    const StorageIndex* p = m_matrix.outerIndexPtr();
+    return p ? p + m_outerStart : 0;
+  }
+  inline StorageIndex* outerIndexPtr() {
+    StorageIndex* p = m_matrix.outerIndexPtr();
+    return p ? p + m_outerStart : 0;
+  }
+
+  inline const StorageIndex* innerNonZeroPtr() const {
+    const StorageIndex* p = m_matrix.innerNonZeroPtr();
+    return p ? p + m_outerStart : 0;
+  }
+  inline StorageIndex* innerNonZeroPtr() {
+    StorageIndex* p = m_matrix.innerNonZeroPtr();
+    return p ? p + m_outerStart : 0;
+  }
+
+  bool isCompressed() const { return m_matrix.innerNonZeroPtr() == 0; }
+
  protected:
   typename internal::ref_selector<XprType>::non_const_type m_matrix;
   Index m_outerStart;
@@ -91,7 +117,6 @@ namespace internal {
 
 template <typename SparseMatrixType, int BlockRows, int BlockCols>
 class sparse_matrix_block_impl : public SparseCompressedBase<Block<SparseMatrixType, BlockRows, BlockCols, true> > {
-  typedef internal::remove_all_t<typename SparseMatrixType::Nested> MatrixTypeNested_;
   typedef Block<SparseMatrixType, BlockRows, BlockCols, true> BlockType;
   typedef SparseCompressedBase<Block<SparseMatrixType, BlockRows, BlockCols, true> > Base;
   using Base::convert_index;
@@ -100,7 +125,6 @@ class sparse_matrix_block_impl : public SparseCompressedBase<Block<SparseMatrixT
   enum { IsRowMajor = internal::traits<BlockType>::IsRowMajor };
   EIGEN_SPARSE_PUBLIC_INTERFACE(BlockType)
  protected:
-  typedef typename Base::IndexVector IndexVector;
   enum { OuterSize = IsRowMajor ? BlockRows : BlockCols };
 
  public:
@@ -177,7 +201,7 @@ class sparse_matrix_block_impl : public SparseCompressedBase<Block<SparseMatrixT
     }
 
     // update outer index pointers and innerNonZeros
-    if (IsVectorAtCompileTime) {
+    EIGEN_IF_CONSTEXPR (IsVectorAtCompileTime) {
       if (!m_matrix.isCompressed()) matrix.innerNonZeroPtr()[m_outerStart] = StorageIndex(nnz);
       matrix.outerIndexPtr()[m_outerStart] = StorageIndex(start);
     } else {
@@ -359,7 +383,6 @@ class BlockImpl<XprType, BlockRows, BlockCols, InnerPanel, Sparse>
   Index blockCols() const { return m_blockCols.value(); }
 
  protected:
-  //     friend class internal::GenericSparseBlockInnerIteratorImpl<XprType,BlockRows,BlockCols,InnerPanel>;
   friend struct internal::unary_evaluator<Block<XprType, BlockRows, BlockCols, InnerPanel>, internal::IteratorBased,
                                           Scalar>;
 

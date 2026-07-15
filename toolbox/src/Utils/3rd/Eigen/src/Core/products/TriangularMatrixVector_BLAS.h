@@ -29,6 +29,7 @@
  *   Triangular matrix-vector product functionality based on ?TRMV.
  ********************************************************************************
 */
+// SPDX-License-Identifier: BSD-3-Clause
 
 #ifndef EIGEN_TRIANGULAR_MATRIX_VECTOR_BLAS_H
 #define EIGEN_TRIANGULAR_MATRIX_VECTOR_BLAS_H
@@ -268,6 +269,9 @@ EIGEN_BLAS_TRMV_RM(float, float, f, s, _)
 EIGEN_BLAS_TRMV_RM(scomplex, float, cf, c, _)
 #endif
 
+#undef EIGEN_BLAS_TRMV_RM
+#undef EIGEN_BLAS_TRMV_SPECIALIZE
+#undef EIGEN_BLAS_TRMV_CM
 }  // namespace internal
 
 }  // end namespace Eigen

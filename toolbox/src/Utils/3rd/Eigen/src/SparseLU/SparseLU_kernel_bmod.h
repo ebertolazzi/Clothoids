@@ -7,6 +7,7 @@
 // This Source Code Form is subject to the terms of the Mozilla
 // Public License v. 2.0. If a copy of the MPL was not distributed
 // with this file, You can obtain one at http://mozilla.org/MPL/2.0/.
+// SPDX-License-Identifier: MPL-2.0
 
 #ifndef SPARSELU_KERNEL_BMOD_H
 #define SPARSELU_KERNEL_BMOD_H
@@ -22,7 +23,7 @@ struct LU_kernel_bmod {
   /** \internal
    * \brief Performs numeric block updates from a given supernode to a single column
    *
-   * \param segsize Size of the segment (and blocks ) to use for updates
+   * \param segsize Size of the segment (and blocks) to use for updates
    * \param[in,out] dense Packed values of the original matrix
    * \param tempv temporary vector to use for updates
    * \param lusup array containing the supernodes
@@ -47,7 +48,7 @@ EIGEN_DONT_INLINE void LU_kernel_bmod<SegSizeAtCompileTime>::run(const Index seg
   typedef typename ScalarVector::Scalar Scalar;
   // First, copy U[*,j] segment from dense(*) to tempv(*)
   // The result of triangular solve is in tempv[*];
-  // The result of matric-vector update is in dense[*]
+  // The result of matrix-vector update is in dense[*]
   Index isub = lptr + no_zeros;
   Index i;
   Index irow;

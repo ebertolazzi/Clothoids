@@ -6,6 +6,7 @@
 // This Source Code Form is subject to the terms of the Mozilla
 // Public License v. 2.0. If a copy of the MPL was not distributed
 // with this file, You can obtain one at http://mozilla.org/MPL/2.0/.
+// SPDX-License-Identifier: MPL-2.0
 #ifndef METIS_SUPPORT_H
 #define METIS_SUPPORT_H
 
@@ -38,7 +39,7 @@ class MetisOrdering {
     IndexVector visited(m);
     visited.setConstant(-1);
     for (StorageIndex j = 0; j < m; j++) {
-      // Compute the union structure of of A(j,:) and At(j,:)
+      // Compute the union structure of A(j,:) and At(j,:)
       visited(j) = j;  // Do not include the diagonal element
       // Get the nonzeros in row/column j of A
       for (typename MatrixType::InnerIterator it(A, j); it; ++it) {
@@ -117,7 +118,7 @@ class MetisOrdering {
   }
 
  protected:
-  IndexVector m_indexPtr;      // Pointer to the adjacenccy list of each row/column
+  IndexVector m_indexPtr;      // Pointer to the adjacency list of each row/column
   IndexVector m_innerIndices;  // Adjacency list
 };
 

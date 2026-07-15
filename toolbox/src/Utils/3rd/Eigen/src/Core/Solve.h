@@ -6,6 +6,7 @@
 // This Source Code Form is subject to the terms of the Mozilla
 // Public License v. 2.0. If a copy of the MPL was not distributed
 // with this file, You can obtain one at http://mozilla.org/MPL/2.0/.
+// SPDX-License-Identifier: MPL-2.0
 
 #ifndef EIGEN_SOLVE_H
 #define EIGEN_SOLVE_H
@@ -24,7 +25,7 @@ class SolveImpl;
  * \brief Pseudo expression representing a solving operation
  *
  * \tparam Decomposition the type of the matrix or decomposition object
- * \tparam Rhstype the type of the right-hand side
+ * \tparam RhsType the type of the right-hand side
  *
  * This class represents an expression of A.solve(B)
  * and most of the time this is the only way it is used.
@@ -69,8 +70,8 @@ class Solve : public SolveImpl<Decomposition, RhsType, typename internal::traits
   EIGEN_DEVICE_FUNC constexpr Index rows() const noexcept { return m_dec.cols(); }
   EIGEN_DEVICE_FUNC constexpr Index cols() const noexcept { return m_rhs.cols(); }
 
-  EIGEN_DEVICE_FUNC const Decomposition &dec() const { return m_dec; }
-  EIGEN_DEVICE_FUNC const RhsType &rhs() const { return m_rhs; }
+  EIGEN_DEVICE_FUNC constexpr const Decomposition &dec() const { return m_dec; }
+  EIGEN_DEVICE_FUNC constexpr const RhsType &rhs() const { return m_rhs; }
 
  protected:
   const Decomposition &m_dec;

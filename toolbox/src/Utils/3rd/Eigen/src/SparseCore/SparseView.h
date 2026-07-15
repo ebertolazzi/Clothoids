@@ -7,6 +7,7 @@
 // This Source Code Form is subject to the terms of the Mozilla
 // Public License v. 2.0. If a copy of the MPL was not distributed
 // with this file, You can obtain one at http://mozilla.org/MPL/2.0/.
+// SPDX-License-Identifier: MPL-2.0
 
 #ifndef EIGEN_SPARSEVIEW_H
 #define EIGEN_SPARSEVIEW_H
@@ -35,7 +36,7 @@ struct traits<SparseView<MatrixType> > : traits<MatrixType> {
  * \tparam MatrixType the type of the object of which we are removing the small entries
  *
  * This class represents an expression of a given dense or sparse matrix with
- * entries smaller than \c reference * \c epsilon are removed.
+ * entries smaller than \c reference * \c epsilon removed.
  * It is the return type of MatrixBase::sparseView() and SparseMatrixBase::pruned()
  * and most of the time this is the only way it is used.
  *
@@ -44,7 +45,6 @@ struct traits<SparseView<MatrixType> > : traits<MatrixType> {
 template <typename MatrixType>
 class SparseView : public SparseMatrixBase<SparseView<MatrixType> > {
   typedef typename MatrixType::Nested MatrixTypeNested;
-  typedef internal::remove_all_t<MatrixTypeNested> MatrixTypeNested_;
   typedef SparseMatrixBase<SparseView> Base;
 
  public:
@@ -75,7 +75,7 @@ class SparseView : public SparseMatrixBase<SparseView<MatrixType> > {
 
 namespace internal {
 
-// TODO find a way to unify the two following variants
+// TODO: find a way to unify the two following variants
 // This is tricky because implementing an inner iterator on top of an IndexBased evaluator is
 // not easy because the evaluators do not expose the sizes of the underlying expression.
 
@@ -109,7 +109,7 @@ struct unary_evaluator<SparseView<ArgType>, IteratorBased> : public evaluator_ba
 
    private:
     void incrementToNonZero() {
-      while ((bool(*this)) && internal::isMuchSmallerThan(value(), m_view.reference(), m_view.epsilon())) {
+      while (bool(*this) && internal::isMuchSmallerThan(value(), m_view.reference(), m_view.epsilon())) {
         EvalIterator::operator++();
       }
     }
@@ -166,7 +166,7 @@ struct unary_evaluator<SparseView<ArgType>, IndexBased> : public evaluator_base<
 
    private:
     void incrementToNonZero() {
-      while ((bool(*this)) && internal::isMuchSmallerThan(value(), m_sve.m_view.reference(), m_sve.m_view.epsilon())) {
+      while (bool(*this) && internal::isMuchSmallerThan(value(), m_sve.m_view.reference(), m_sve.m_view.epsilon())) {
         m_inner++;
       }
     }

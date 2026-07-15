@@ -7,6 +7,7 @@
 // This Source Code Form is subject to the terms of the Mozilla
 // Public License v. 2.0. If a copy of the MPL was not distributed
 // with this file, You can obtain one at http://mozilla.org/MPL/2.0/.
+// SPDX-License-Identifier: MPL-2.0
 
 #ifndef EIGEN_INCOMPLETE_LUT_H
 #define EIGEN_INCOMPLETE_LUT_H
@@ -142,7 +143,11 @@ class IncompleteLUT : public SparseSolverBase<IncompleteLUT<Scalar_, StorageInde
   /** \brief Reports whether previous computation was successful.
    *
    * \returns \c Success if computation was successful,
-   *          \c NumericalIssue if the matrix.appears to be negative.
+   *          \c NumericalIssue if a zero pivot was encountered during
+   *          factorization (the resulting preconditioner is unlikely to be
+   *          usable; the input matrix typically has zero diagonal entries
+   *          that cannot be moved by a static row permutation, e.g. it is
+   *          structurally singular).
    */
   ComputationInfo info() const {
     eigen_assert(m_isInitialized && "IncompleteLUT is not initialized.");
@@ -157,7 +162,11 @@ class IncompleteLUT : public SparseSolverBase<IncompleteLUT<Scalar_, StorageInde
 
   /**
    * Compute an incomplete LU factorization with dual threshold on the matrix mat
-   * No pivoting is done in this version
+   * No partial pivoting is done in this version. A static row permutation
+   * (maximum bipartite matching) is computed in \c analyzePattern so that
+   * the permuted matrix has a structurally nonzero diagonal whenever one
+   * exists; without it, the lack of pivoting makes ILUT silently produce
+   * a useless preconditioner on matrices with zero diagonal entries.
    *
    **/
   template <typename MatrixType>
@@ -172,7 +181,7 @@ class IncompleteLUT : public SparseSolverBase<IncompleteLUT<Scalar_, StorageInde
 
   template <typename Rhs, typename Dest>
   void _solve_impl(const Rhs& b, Dest& x) const {
-    x = m_Pinv * b;
+    x = m_PinvPr * b;
     x = m_lu.template triangularView<UnitLower>().solve(x);
     x = m_lu.template triangularView<Upper>().solve(x);
     x = m_P * x;
@@ -184,6 +193,9 @@ class IncompleteLUT : public SparseSolverBase<IncompleteLUT<Scalar_, StorageInde
     inline bool operator()(const Index& row, const Index& col, const Scalar&) const { return row != col; }
   };
 
+  template <typename MatrixType>
+  Index computeRowMatching(const MatrixType& amat);
+
  protected:
   FactorType m_lu;
   RealScalar m_droptol;
@@ -191,8 +203,10 @@ class IncompleteLUT : public SparseSolverBase<IncompleteLUT<Scalar_, StorageInde
   bool m_analysisIsOk;
   bool m_factorizationIsOk;
   ComputationInfo m_info;
-  PermutationMatrix<Dynamic, Dynamic, StorageIndex> m_P;     // Fill-reducing permutation
-  PermutationMatrix<Dynamic, Dynamic, StorageIndex> m_Pinv;  // Inverse permutation
+  PermutationMatrix<Dynamic, Dynamic, StorageIndex> m_P;       // Fill-reducing permutation
+  PermutationMatrix<Dynamic, Dynamic, StorageIndex> m_Pinv;    // Inverse permutation
+  PermutationMatrix<Dynamic, Dynamic, StorageIndex> m_Pr;      // Static row permutation (matching-based)
+  PermutationMatrix<Dynamic, Dynamic, StorageIndex> m_PinvPr;  // Cached composition m_Pinv * m_Pr for solve
 };
 
 /**
@@ -226,7 +240,7 @@ const typename IncompleteLUT<Scalar, StorageIndex>::FactorType IncompleteLUT<Sca
 
 /**
  * get U-Factor
- * \return L-Factor is a matrix containing the upper triangular part of the sparse matrix. All elements of the matrix
+ * \return U-Factor is a matrix containing the upper triangular part of the sparse matrix. All elements of the matrix
  * below the main diagonal are zero.
  **/
 template <typename Scalar, typename StorageIndex>
@@ -235,21 +249,177 @@ const typename IncompleteLUT<Scalar, StorageIndex>::FactorType IncompleteLUT<Sca
   return m_lu.template triangularView<Upper>();
 }
 
+// Compute a row permutation m_Pr such that (m_Pr * amat) has a structurally
+// nonzero diagonal wherever one exists. Returns the number of matched columns.
+// Uses a maximum bipartite cardinality matching on the sparsity pattern, with
+// a greedy initialization that prefers the natural diagonal so that matrices
+// already having a nonzero diagonal yield the identity permutation.
+template <typename Scalar, typename StorageIndex>
+template <typename MatrixType_>
+Index IncompleteLUT<Scalar, StorageIndex>::computeRowMatching(const MatrixType_& amat) {
+  using internal::convert_index;
+  const Index n = amat.rows();
+  // We only need amat's column-major sparsity pattern; never read scalar
+  // values. The pattern view aliases amat's index storage when amat is
+  // already a column-major SparseMatrix, and otherwise materializes a CSC
+  // pattern into the scratch buffers.
+  Matrix<StorageIndex, Dynamic, 1> outer_buf;
+  Matrix<StorageIndex, Dynamic, 1> inner_buf;
+  internal::SparsityPatternRef<StorageIndex> pat = internal::make_col_major_pattern_ref(amat, outer_buf, inner_buf);
+  const StorageIndex* outer = pat.outer;
+  const StorageIndex* inner = pat.inner;
+
+  const StorageIndex kUnmatched = StorageIndex(-1);
+  // match_row[j] = original row matched to column j; match_col[i] = column matched to row i.
+  std::vector<StorageIndex> match_row(n, kUnmatched);
+  std::vector<StorageIndex> match_col(n, kUnmatched);
+
+  // The matching uses the stored sparsity pattern only and is independent of
+  // numerical values. This preserves the analyzePattern/factorize contract:
+  // the same analysis is reusable for any matrix sharing this stored pattern.
+  // Phase 1: greedy diagonal preference.
+  for (Index j = 0; j < n; ++j) {
+    const Index col_end = outer[j] + pat.nonZeros(j);
+    for (Index k = outer[j]; k < col_end; ++k) {
+      if (Index(inner[k]) == j) {
+        match_row[j] = convert_index<StorageIndex>(j);
+        match_col[j] = convert_index<StorageIndex>(j);
+        break;
+      }
+    }
+  }
+  // Phase 2: greedy off-diagonal pickup of any free row.
+  for (Index j = 0; j < n; ++j) {
+    if (match_row[j] != kUnmatched) continue;
+    const Index col_end = outer[j] + pat.nonZeros(j);
+    for (Index k = outer[j]; k < col_end; ++k) {
+      Index i = inner[k];
+      if (match_col[i] == kUnmatched) {
+        match_row[j] = convert_index<StorageIndex>(i);
+        match_col[i] = convert_index<StorageIndex>(j);
+        break;
+      }
+    }
+  }
+  // Phase 3: augmenting paths for any column still unmatched.
+  std::vector<StorageIndex> visited(n, kUnmatched);
+  // Iterative DFS: the stack frames are (column, edge index, chosen row).
+  // chosen_row[k] is the row that frame k will commit to if a path is found.
+  std::vector<Index> stack_col;
+  std::vector<Index> stack_pos;
+  std::vector<Index> stack_chosen_row;
+  stack_col.reserve(n);
+  stack_pos.reserve(n);
+  stack_chosen_row.reserve(n);
+
+  for (Index start = 0; start < n; ++start) {
+    if (match_row[start] != kUnmatched) continue;
+    StorageIndex epoch = convert_index<StorageIndex>(start);
+    stack_col.clear();
+    stack_pos.clear();
+    stack_chosen_row.clear();
+    stack_col.push_back(start);
+    stack_pos.push_back(outer[start]);
+    stack_chosen_row.push_back(-1);
+
+    while (!stack_col.empty()) {
+      Index j = stack_col.back();
+      Index pos = stack_pos.back();
+      Index col_end = outer[j] + pat.nonZeros(j);
+      bool advanced = false;
+
+      while (pos < col_end) {
+        Index i = inner[pos];
+        ++pos;
+        if (visited[i] == epoch) continue;
+        visited[i] = epoch;
+
+        if (match_col[i] == kUnmatched) {
+          // Found an augmenting path: commit it.
+          stack_chosen_row.back() = i;
+          stack_pos.back() = pos;
+          for (size_t k = 0; k < stack_col.size(); ++k) {
+            Index col = stack_col[k];
+            Index row = stack_chosen_row[k];
+            match_row[col] = convert_index<StorageIndex>(row);
+            match_col[row] = convert_index<StorageIndex>(col);
+          }
+          stack_col.clear();
+          break;
+        } else {
+          // Descend into the column currently matched to row i.
+          stack_chosen_row.back() = i;
+          stack_pos.back() = pos;
+          Index next_col = match_col[i];
+          stack_col.push_back(next_col);
+          stack_pos.push_back(outer[next_col]);
+          stack_chosen_row.push_back(-1);
+          advanced = true;
+          break;
+        }
+      }
+
+      if (!advanced && !stack_col.empty()) {
+        stack_col.pop_back();
+        stack_pos.pop_back();
+        stack_chosen_row.pop_back();
+      }
+    }
+  }
+
+  // Build the row permutation. Matched columns get their matching row;
+  // any leftover columns are filled in identity-fashion with the leftover rows.
+  m_Pr.resize(n);
+  std::vector<bool> col_used(n, false), row_used(n, false);
+  Index matched = 0;
+  for (Index j = 0; j < n; ++j) {
+    if (match_row[j] != kUnmatched) {
+      m_Pr.indices()(match_row[j]) = convert_index<StorageIndex>(j);
+      col_used[j] = true;
+      row_used[match_row[j]] = true;
+      ++matched;
+    }
+  }
+  Index next_col = 0;
+  for (Index i = 0; i < n; ++i) {
+    if (row_used[i]) continue;
+    while (next_col < n && col_used[next_col]) ++next_col;
+    m_Pr.indices()(i) = convert_index<StorageIndex>(next_col);
+    ++next_col;
+  }
+  return matched;
+}
+
 template <typename Scalar, typename StorageIndex>
 template <typename MatrixType_>
 void IncompleteLUT<Scalar, StorageIndex>::analyzePattern(const MatrixType_& amat) {
-  // Compute the Fill-reducing permutation
-  // Since ILUT does not perform any numerical pivoting,
-  // it is highly preferable to keep the diagonal through symmetric permutations.
-  // To this end, let's symmetrize the pattern and perform AMD on it.
-  SparseMatrix<Scalar, ColMajor, StorageIndex> mat1 = amat;
-  SparseMatrix<Scalar, ColMajor, StorageIndex> mat2 = amat.transpose();
-  // FIXME for a matrix with nearly symmetric pattern, mat2+mat1 is the appropriate choice.
-  //       on the other hand for a really non-symmetric pattern, mat2*mat1 should be preferred...
-  SparseMatrix<Scalar, ColMajor, StorageIndex> AtA = mat2 + mat1;
+  eigen_assert((amat.rows() == amat.cols()) && "The factorization should be done on a square matrix");
+  // 1. Compute a static row permutation that makes the diagonal structurally
+  //    nonzero. This is a workaround for the lack of partial pivoting in ILUT.
+  //    For matrices that already have a nonzero diagonal, this returns the
+  //    identity permutation and is essentially free.
+  computeRowMatching(amat);
+
+  // 2. Compute the Fill-reducing permutation on the row-permuted matrix.
+  // Since ILUT does not perform any numerical pivoting, it is highly
+  // preferable to keep the diagonal through symmetric permutations. AMD
+  // computes a fill-reducing ordering for a symmetric matrix and only reads
+  // the sparsity pattern; build a value-free, row-permuted representation
+  // (1-byte placeholder Scalar, indices remapped through m_Pr) and feed that
+  // to AMDOrdering, avoiding the previous mat1/mat2/AtA value copies.
+  SparseMatrix<signed char, ColMajor, StorageIndex> permuted_pattern;
+  {
+    Matrix<StorageIndex, Dynamic, 1> outer_buf;
+    Matrix<StorageIndex, Dynamic, 1> inner_buf;
+    internal::SparsityPatternRef<StorageIndex> pat = internal::make_col_major_pattern_ref(amat, outer_buf, inner_buf);
+    internal::materialize_col_major_pattern(pat, m_Pr.indices().data(), permuted_pattern);
+  }
   AMDOrdering<StorageIndex> ordering;
-  ordering(AtA, m_P);
+  ordering(permuted_pattern, m_P);
   m_Pinv = m_P.inverse();  // cache the inverse permutation
+  // Cache the composition m_Pinv * m_Pr so _solve_impl applies a single
+  // permutation to the RHS instead of two.
+  m_PinvPr = m_Pinv * m_Pr;
   m_analysisIsOk = true;
   m_factorizationIsOk = false;
   m_isInitialized = true;
@@ -271,10 +441,13 @@ void IncompleteLUT<Scalar, StorageIndex>::factorize(const MatrixType_& amat) {
   VectorI ju(n);  // column position of the values in u -- maximum size  is n
   VectorI jr(n);  // Indicate the position of the nonzero elements in the vector u -- A zero location is indicated by -1
 
-  // Apply the fill-reducing permutation
+  // Apply the static row permutation (from analyzePattern), then the
+  // fill-reducing symmetric permutation.
   eigen_assert(m_analysisIsOk && "You must first call analyzePattern()");
+  SparseMatrix<Scalar, RowMajor, StorageIndex> row_permuted_mat = m_Pr * amat;
   SparseMatrix<Scalar, RowMajor, StorageIndex> mat;
-  mat = amat.twistedBy(m_Pinv);
+  mat = row_permuted_mat.twistedBy(m_Pinv);
+  Index zero_pivots = 0;
 
   // Initialization
   jr.fill(-1);
@@ -415,7 +588,10 @@ void IncompleteLUT<Scalar, StorageIndex>::factorize(const MatrixType_& amat) {
 
     // store the diagonal element
     // apply a shifting rule to avoid zero pivots (we are doing an incomplete factorization)
-    if (u(ii) == Scalar(0)) u(ii) = sqrt(m_droptol) * rownorm;
+    if (u(ii) == Scalar(0)) {
+      u(ii) = sqrt(m_droptol) * rownorm;
+      ++zero_pivots;
+    }
     m_lu.insertBackByOuterInnerUnordered(ii, ii) = u(ii);
 
     // sort the U-part of the row
@@ -441,7 +617,11 @@ void IncompleteLUT<Scalar, StorageIndex>::factorize(const MatrixType_& amat) {
   m_lu.makeCompressed();
 
   m_factorizationIsOk = true;
-  m_info = Success;
+  // If we had to shift any zero pivot, the factorization is not faithful to
+  // the input matrix and the resulting preconditioner may be useless.
+  // Report this to the caller via NumericalIssue rather than silently
+  // returning Success.
+  m_info = (zero_pivots == 0) ? Success : NumericalIssue;
 }
 
 }  // end namespace Eigen

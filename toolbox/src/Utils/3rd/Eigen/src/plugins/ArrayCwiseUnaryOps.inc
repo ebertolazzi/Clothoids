@@ -1,3 +1,6 @@
+// SPDX-FileCopyrightText: The Eigen Authors
+// SPDX-License-Identifier: MPL-2.0
+
 typedef CwiseUnaryOp<internal::scalar_abs_op<Scalar>, const Derived> AbsReturnType;
 typedef CwiseUnaryOp<internal::scalar_arg_op<Scalar>, const Derived> ArgReturnType;
 typedef CwiseUnaryOp<internal::scalar_carg_op<Scalar>, const Derived> CArgReturnType;
@@ -49,7 +52,7 @@ typedef CwiseUnaryOp<internal::scalar_isfinite_op<Scalar, true>, const Derived> 
  *
  * \sa <a href="group__CoeffwiseMathFunctions.html#cwisetable_abs">Math functions</a>, abs2()
  */
-EIGEN_DEVICE_FUNC EIGEN_STRONG_INLINE const AbsReturnType abs() const { return AbsReturnType(derived()); }
+EIGEN_DEVICE_FUNC constexpr EIGEN_STRONG_INLINE const AbsReturnType abs() const { return AbsReturnType(derived()); }
 
 /** \returns an expression of the coefficient-wise phase angle of \c *this
  *
@@ -58,9 +61,9 @@ EIGEN_DEVICE_FUNC EIGEN_STRONG_INLINE const AbsReturnType abs() const { return A
  *
  * \sa abs()
  */
-EIGEN_DEVICE_FUNC EIGEN_STRONG_INLINE const ArgReturnType arg() const { return ArgReturnType(derived()); }
+EIGEN_DEVICE_FUNC constexpr EIGEN_STRONG_INLINE const ArgReturnType arg() const { return ArgReturnType(derived()); }
 
-EIGEN_DEVICE_FUNC EIGEN_STRONG_INLINE const CArgReturnType carg() const { return CArgReturnType(derived()); }
+EIGEN_DEVICE_FUNC constexpr EIGEN_STRONG_INLINE const CArgReturnType carg() const { return CArgReturnType(derived()); }
 
 /** \returns an expression of the coefficient-wise squared absolute value of \c *this
  *
@@ -69,7 +72,7 @@ EIGEN_DEVICE_FUNC EIGEN_STRONG_INLINE const CArgReturnType carg() const { return
  *
  * \sa <a href="group__CoeffwiseMathFunctions.html#cwisetable_abs2">Math functions</a>, abs(), square()
  */
-EIGEN_DEVICE_FUNC EIGEN_STRONG_INLINE const Abs2ReturnType abs2() const { return Abs2ReturnType(derived()); }
+EIGEN_DEVICE_FUNC constexpr EIGEN_STRONG_INLINE const Abs2ReturnType abs2() const { return Abs2ReturnType(derived()); }
 
 /** \returns an expression of the coefficient-wise exponential of *this.
  *
@@ -82,7 +85,7 @@ EIGEN_DEVICE_FUNC EIGEN_STRONG_INLINE const Abs2ReturnType abs2() const { return
  * \sa <a href="group__CoeffwiseMathFunctions.html#cwisetable_exp">Math functions</a>, exp2(), pow(), log(), sin(),
  * cos()
  */
-EIGEN_DEVICE_FUNC inline const ExpReturnType exp() const { return ExpReturnType(derived()); }
+EIGEN_DEVICE_FUNC constexpr inline const ExpReturnType exp() const { return ExpReturnType(derived()); }
 
 /** \returns an expression of the coefficient-wise exponential of *this.
  *
@@ -91,7 +94,7 @@ EIGEN_DEVICE_FUNC inline const ExpReturnType exp() const { return ExpReturnType(
  * \sa <a href="group__CoeffwiseMathFunctions.html#cwisetable_exp">Math functions</a>, exp(), pow(), log(), sin(),
  * cos()
  */
-EIGEN_DEVICE_FUNC inline const Exp2ReturnType exp2() const { return Exp2ReturnType(derived()); }
+EIGEN_DEVICE_FUNC constexpr inline const Exp2ReturnType exp2() const { return Exp2ReturnType(derived()); }
 
 /** \returns an expression of the coefficient-wise exponential of *this minus 1.
  *
@@ -100,7 +103,7 @@ EIGEN_DEVICE_FUNC inline const Exp2ReturnType exp2() const { return Exp2ReturnTy
  *
  * \sa <a href="group__CoeffwiseMathFunctions.html#cwisetable_expm1">Math functions</a>, exp()
  */
-EIGEN_DEVICE_FUNC inline const Expm1ReturnType expm1() const { return Expm1ReturnType(derived()); }
+EIGEN_DEVICE_FUNC constexpr inline const Expm1ReturnType expm1() const { return Expm1ReturnType(derived()); }
 
 /** \returns an expression of the coefficient-wise logarithm of *this.
  *
@@ -112,16 +115,16 @@ EIGEN_DEVICE_FUNC inline const Expm1ReturnType expm1() const { return Expm1Retur
  *
  * \sa <a href="group__CoeffwiseMathFunctions.html#cwisetable_log">Math functions</a>, log()
  */
-EIGEN_DEVICE_FUNC inline const LogReturnType log() const { return LogReturnType(derived()); }
+EIGEN_DEVICE_FUNC constexpr inline const LogReturnType log() const { return LogReturnType(derived()); }
 
 /** \returns an expression of the coefficient-wise logarithm of 1 plus \c *this.
  *
- * In exact arithmetic, \c x.log() is equivalent to \c (x+1).log(),
+ * In exact arithmetic, \c x.log1p() is equivalent to \c (x+1).log(),
  * however, with finite precision, this function is much more accurate when \c x is close to zero.
  *
  * \sa <a href="group__CoeffwiseMathFunctions.html#cwisetable_log1p">Math functions</a>, log()
  */
-EIGEN_DEVICE_FUNC inline const Log1pReturnType log1p() const { return Log1pReturnType(derived()); }
+EIGEN_DEVICE_FUNC constexpr inline const Log1pReturnType log1p() const { return Log1pReturnType(derived()); }
 
 /** \returns an expression of the coefficient-wise base-10 logarithm of *this.
  *
@@ -132,14 +135,14 @@ EIGEN_DEVICE_FUNC inline const Log1pReturnType log1p() const { return Log1pRetur
  *
  * \sa <a href="group__CoeffwiseMathFunctions.html#cwisetable_log10">Math functions</a>, log()
  */
-EIGEN_DEVICE_FUNC inline const Log10ReturnType log10() const { return Log10ReturnType(derived()); }
+EIGEN_DEVICE_FUNC constexpr inline const Log10ReturnType log10() const { return Log10ReturnType(derived()); }
 
 /** \returns an expression of the coefficient-wise base-2 logarithm of *this.
  *
  * This function computes the coefficient-wise base-2 logarithm.
  *
  */
-EIGEN_DEVICE_FUNC inline const Log2ReturnType log2() const { return Log2ReturnType(derived()); }
+EIGEN_DEVICE_FUNC constexpr inline const Log2ReturnType log2() const { return Log2ReturnType(derived()); }
 
 /** \returns an expression of the coefficient-wise square root of *this.
  *
@@ -151,7 +154,7 @@ EIGEN_DEVICE_FUNC inline const Log2ReturnType log2() const { return Log2ReturnTy
  *
  * \sa <a href="group__CoeffwiseMathFunctions.html#cwisetable_sqrt">Math functions</a>, pow(), square(), cbrt()
  */
-EIGEN_DEVICE_FUNC inline const SqrtReturnType sqrt() const { return SqrtReturnType(derived()); }
+EIGEN_DEVICE_FUNC constexpr inline const SqrtReturnType sqrt() const { return SqrtReturnType(derived()); }
 
 /** \returns an expression of the coefficient-wise cube root of *this.
  *
@@ -162,7 +165,7 @@ EIGEN_DEVICE_FUNC inline const SqrtReturnType sqrt() const { return SqrtReturnTy
  *
  * \sa <a href="group__CoeffwiseMathFunctions.html#cwisetable_cbrt">Math functions</a>, sqrt(), pow(), square()
  */
-EIGEN_DEVICE_FUNC inline const CbrtReturnType cbrt() const { return CbrtReturnType(derived()); }
+EIGEN_DEVICE_FUNC constexpr inline const CbrtReturnType cbrt() const { return CbrtReturnType(derived()); }
 
 /** \returns an expression of the coefficient-wise inverse square root of *this.
  *
@@ -173,7 +176,7 @@ EIGEN_DEVICE_FUNC inline const CbrtReturnType cbrt() const { return CbrtReturnTy
  *
  * \sa pow(), square()
  */
-EIGEN_DEVICE_FUNC inline const RsqrtReturnType rsqrt() const { return RsqrtReturnType(derived()); }
+EIGEN_DEVICE_FUNC constexpr inline const RsqrtReturnType rsqrt() const { return RsqrtReturnType(derived()); }
 
 /** \returns an expression of the coefficient-wise signum of *this.
  *
@@ -184,7 +187,7 @@ EIGEN_DEVICE_FUNC inline const RsqrtReturnType rsqrt() const { return RsqrtRetur
  *
  * \sa pow(), square()
  */
-EIGEN_DEVICE_FUNC inline const SignReturnType sign() const { return SignReturnType(derived()); }
+EIGEN_DEVICE_FUNC constexpr inline const SignReturnType sign() const { return SignReturnType(derived()); }
 
 /** \returns an expression of the coefficient-wise cosine of *this.
  *
@@ -196,7 +199,7 @@ EIGEN_DEVICE_FUNC inline const SignReturnType sign() const { return SignReturnTy
  *
  * \sa <a href="group__CoeffwiseMathFunctions.html#cwisetable_cos">Math functions</a>, sin(), acos()
  */
-EIGEN_DEVICE_FUNC inline const CosReturnType cos() const { return CosReturnType(derived()); }
+EIGEN_DEVICE_FUNC constexpr inline const CosReturnType cos() const { return CosReturnType(derived()); }
 
 /** \returns an expression of the coefficient-wise sine of *this.
  *
@@ -208,7 +211,7 @@ EIGEN_DEVICE_FUNC inline const CosReturnType cos() const { return CosReturnType(
  *
  * \sa <a href="group__CoeffwiseMathFunctions.html#cwisetable_sin">Math functions</a>, cos(), asin()
  */
-EIGEN_DEVICE_FUNC inline const SinReturnType sin() const { return SinReturnType(derived()); }
+EIGEN_DEVICE_FUNC constexpr inline const SinReturnType sin() const { return SinReturnType(derived()); }
 
 /** \returns an expression of the coefficient-wise tan of *this.
  *
@@ -217,7 +220,7 @@ EIGEN_DEVICE_FUNC inline const SinReturnType sin() const { return SinReturnType(
  *
  * \sa <a href="group__CoeffwiseMathFunctions.html#cwisetable_tan">Math functions</a>, cos(), sin()
  */
-EIGEN_DEVICE_FUNC inline const TanReturnType tan() const { return TanReturnType(derived()); }
+EIGEN_DEVICE_FUNC constexpr inline const TanReturnType tan() const { return TanReturnType(derived()); }
 
 /** \returns an expression of the coefficient-wise arc tan of *this.
  *
@@ -226,7 +229,7 @@ EIGEN_DEVICE_FUNC inline const TanReturnType tan() const { return TanReturnType(
  *
  * \sa <a href="group__CoeffwiseMathFunctions.html#cwisetable_atan">Math functions</a>, tan(), asin(), acos()
  */
-EIGEN_DEVICE_FUNC inline const AtanReturnType atan() const { return AtanReturnType(derived()); }
+EIGEN_DEVICE_FUNC constexpr inline const AtanReturnType atan() const { return AtanReturnType(derived()); }
 
 /** \returns an expression of the coefficient-wise arc cosine of *this.
  *
@@ -235,7 +238,7 @@ EIGEN_DEVICE_FUNC inline const AtanReturnType atan() const { return AtanReturnTy
  *
  * \sa <a href="group__CoeffwiseMathFunctions.html#cwisetable_acos">Math functions</a>, cos(), asin()
  */
-EIGEN_DEVICE_FUNC inline const AcosReturnType acos() const { return AcosReturnType(derived()); }
+EIGEN_DEVICE_FUNC constexpr inline const AcosReturnType acos() const { return AcosReturnType(derived()); }
 
 /** \returns an expression of the coefficient-wise arc sine of *this.
  *
@@ -244,7 +247,7 @@ EIGEN_DEVICE_FUNC inline const AcosReturnType acos() const { return AcosReturnTy
  *
  * \sa <a href="group__CoeffwiseMathFunctions.html#cwisetable_asin">Math functions</a>, sin(), acos()
  */
-EIGEN_DEVICE_FUNC inline const AsinReturnType asin() const { return AsinReturnType(derived()); }
+EIGEN_DEVICE_FUNC constexpr inline const AsinReturnType asin() const { return AsinReturnType(derived()); }
 
 /** \returns an expression of the coefficient-wise hyperbolic tan of *this.
  *
@@ -253,7 +256,7 @@ EIGEN_DEVICE_FUNC inline const AsinReturnType asin() const { return AsinReturnTy
  *
  * \sa <a href="group__CoeffwiseMathFunctions.html#cwisetable_tanh">Math functions</a>, tan(), sinh(), cosh()
  */
-EIGEN_DEVICE_FUNC inline const TanhReturnType tanh() const { return TanhReturnType(derived()); }
+EIGEN_DEVICE_FUNC constexpr inline const TanhReturnType tanh() const { return TanhReturnType(derived()); }
 
 /** \returns an expression of the coefficient-wise hyperbolic sin of *this.
  *
@@ -262,7 +265,7 @@ EIGEN_DEVICE_FUNC inline const TanhReturnType tanh() const { return TanhReturnTy
  *
  * \sa <a href="group__CoeffwiseMathFunctions.html#cwisetable_sinh">Math functions</a>, sin(), tanh(), cosh()
  */
-EIGEN_DEVICE_FUNC inline const SinhReturnType sinh() const { return SinhReturnType(derived()); }
+EIGEN_DEVICE_FUNC constexpr inline const SinhReturnType sinh() const { return SinhReturnType(derived()); }
 
 /** \returns an expression of the coefficient-wise hyperbolic cos of *this.
  *
@@ -271,29 +274,29 @@ EIGEN_DEVICE_FUNC inline const SinhReturnType sinh() const { return SinhReturnTy
  *
  * \sa <a href="group__CoeffwiseMathFunctions.html#cwisetable_cosh">Math functions</a>, tanh(), sinh(), cosh()
  */
-EIGEN_DEVICE_FUNC inline const CoshReturnType cosh() const { return CoshReturnType(derived()); }
+EIGEN_DEVICE_FUNC constexpr inline const CoshReturnType cosh() const { return CoshReturnType(derived()); }
 
 /** \returns an expression of the coefficient-wise inverse hyperbolic tan of *this.
  *
  * \sa <a href="group__CoeffwiseMathFunctions.html#cwisetable_atanh">Math functions</a>, atanh(), asinh(), acosh()
  */
-EIGEN_DEVICE_FUNC inline const AtanhReturnType atanh() const { return AtanhReturnType(derived()); }
+EIGEN_DEVICE_FUNC constexpr inline const AtanhReturnType atanh() const { return AtanhReturnType(derived()); }
 
 /** \returns an expression of the coefficient-wise inverse hyperbolic sin of *this.
  *
  * \sa <a href="group__CoeffwiseMathFunctions.html#cwisetable_asinh">Math functions</a>, atanh(), asinh(), acosh()
  */
-EIGEN_DEVICE_FUNC inline const AsinhReturnType asinh() const { return AsinhReturnType(derived()); }
+EIGEN_DEVICE_FUNC constexpr inline const AsinhReturnType asinh() const { return AsinhReturnType(derived()); }
 
 /** \returns an expression of the coefficient-wise inverse hyperbolic cos of *this.
  *
  * \sa <a href="group__CoeffwiseMathFunctions.html#cwisetable_acosh">Math functions</a>, atanh(), asinh(), acosh()
  */
-EIGEN_DEVICE_FUNC inline const AcoshReturnType acosh() const { return AcoshReturnType(derived()); }
+EIGEN_DEVICE_FUNC constexpr inline const AcoshReturnType acosh() const { return AcoshReturnType(derived()); }
 
 /** \returns an expression of the coefficient-wise logistic of *this.
  */
-EIGEN_DEVICE_FUNC inline const LogisticReturnType logistic() const { return LogisticReturnType(derived()); }
+EIGEN_DEVICE_FUNC constexpr inline const LogisticReturnType logistic() const { return LogisticReturnType(derived()); }
 
 /** \returns an expression of the coefficient-wise inverse of *this.
  *
@@ -302,7 +305,7 @@ EIGEN_DEVICE_FUNC inline const LogisticReturnType logistic() const { return Logi
  *
  * \sa operator/(), operator*()
  */
-EIGEN_DEVICE_FUNC inline const InverseReturnType inverse() const { return InverseReturnType(derived()); }
+EIGEN_DEVICE_FUNC constexpr inline const InverseReturnType inverse() const { return InverseReturnType(derived()); }
 
 /** \returns an expression of the coefficient-wise square of *this.
  *
@@ -311,7 +314,7 @@ EIGEN_DEVICE_FUNC inline const InverseReturnType inverse() const { return Invers
  *
  * \sa <a href="group__CoeffwiseMathFunctions.html#cwisetable_squareE">Math functions</a>, abs2(), cube(), pow()
  */
-EIGEN_DEVICE_FUNC inline const SquareReturnType square() const { return SquareReturnType(derived()); }
+EIGEN_DEVICE_FUNC constexpr inline const SquareReturnType square() const { return SquareReturnType(derived()); }
 
 /** \returns an expression of the coefficient-wise cube of *this.
  *
@@ -320,7 +323,7 @@ EIGEN_DEVICE_FUNC inline const SquareReturnType square() const { return SquareRe
  *
  * \sa <a href="group__CoeffwiseMathFunctions.html#cwisetable_cube">Math functions</a>, square(), pow()
  */
-EIGEN_DEVICE_FUNC inline const CubeReturnType cube() const { return CubeReturnType(derived()); }
+EIGEN_DEVICE_FUNC constexpr inline const CubeReturnType cube() const { return CubeReturnType(derived()); }
 
 /** \returns an expression of the coefficient-wise rint of *this.
  *
@@ -329,7 +332,7 @@ EIGEN_DEVICE_FUNC inline const CubeReturnType cube() const { return CubeReturnTy
  *
  * \sa <a href="group__CoeffwiseMathFunctions.html#cwisetable_rint">Math functions</a>, ceil(), floor()
  */
-EIGEN_DEVICE_FUNC inline const RintReturnType rint() const { return RintReturnType(derived()); }
+EIGEN_DEVICE_FUNC constexpr inline const RintReturnType rint() const { return RintReturnType(derived()); }
 
 /** \returns an expression of the coefficient-wise round of *this.
  *
@@ -338,7 +341,7 @@ EIGEN_DEVICE_FUNC inline const RintReturnType rint() const { return RintReturnTy
  *
  * \sa <a href="group__CoeffwiseMathFunctions.html#cwisetable_round">Math functions</a>, ceil(), floor()
  */
-EIGEN_DEVICE_FUNC inline const RoundReturnType round() const { return RoundReturnType(derived()); }
+EIGEN_DEVICE_FUNC constexpr inline const RoundReturnType round() const { return RoundReturnType(derived()); }
 
 /** \returns an expression of the coefficient-wise floor of *this.
  *
@@ -347,7 +350,7 @@ EIGEN_DEVICE_FUNC inline const RoundReturnType round() const { return RoundRetur
  *
  * \sa <a href="group__CoeffwiseMathFunctions.html#cwisetable_floor">Math functions</a>, ceil(), round()
  */
-EIGEN_DEVICE_FUNC inline const FloorReturnType floor() const { return FloorReturnType(derived()); }
+EIGEN_DEVICE_FUNC constexpr inline const FloorReturnType floor() const { return FloorReturnType(derived()); }
 
 /** \returns an expression of the coefficient-wise ceil of *this.
  *
@@ -356,7 +359,7 @@ EIGEN_DEVICE_FUNC inline const FloorReturnType floor() const { return FloorRetur
  *
  * \sa <a href="group__CoeffwiseMathFunctions.html#cwisetable_ceil">Math functions</a>, floor(), round()
  */
-EIGEN_DEVICE_FUNC inline const CeilReturnType ceil() const { return CeilReturnType(derived()); }
+EIGEN_DEVICE_FUNC constexpr inline const CeilReturnType ceil() const { return CeilReturnType(derived()); }
 
 /** \returns an expression of the coefficient-wise truncation of *this.
  *
@@ -365,7 +368,7 @@ EIGEN_DEVICE_FUNC inline const CeilReturnType ceil() const { return CeilReturnTy
  *
  * \sa <a href="group__CoeffwiseMathFunctions.html#cwisetable_trunc">Math functions</a>, floor(), round()
  */
-EIGEN_DEVICE_FUNC inline const TruncReturnType trunc() const { return TruncReturnType(derived()); }
+EIGEN_DEVICE_FUNC constexpr inline const TruncReturnType trunc() const { return TruncReturnType(derived()); }
 
 template <int N>
 struct ShiftRightXpr {
@@ -380,7 +383,7 @@ struct ShiftRightXpr {
  * \sa shiftLeft()
  */
 template <int N>
-EIGEN_DEVICE_FUNC typename ShiftRightXpr<N>::Type shiftRight() const {
+EIGEN_DEVICE_FUNC constexpr typename ShiftRightXpr<N>::Type shiftRight() const {
   return typename ShiftRightXpr<N>::Type(derived());
 }
 
@@ -397,7 +400,7 @@ struct ShiftLeftXpr {
  * \sa shiftRight()
  */
 template <int N>
-EIGEN_DEVICE_FUNC typename ShiftLeftXpr<N>::Type shiftLeft() const {
+EIGEN_DEVICE_FUNC constexpr typename ShiftLeftXpr<N>::Type shiftLeft() const {
   return typename ShiftLeftXpr<N>::Type(derived());
 }
 
@@ -408,7 +411,7 @@ EIGEN_DEVICE_FUNC typename ShiftLeftXpr<N>::Type shiftLeft() const {
  *
  * \sa isfinite(), isinf()
  */
-EIGEN_DEVICE_FUNC inline const IsNaNReturnType isNaN() const { return IsNaNReturnType(derived()); }
+EIGEN_DEVICE_FUNC constexpr inline const IsNaNReturnType isNaN() const { return IsNaNReturnType(derived()); }
 
 /** \returns an expression of the coefficient-wise isinf of *this.
  *
@@ -417,7 +420,7 @@ EIGEN_DEVICE_FUNC inline const IsNaNReturnType isNaN() const { return IsNaNRetur
  *
  * \sa isnan(), isfinite()
  */
-EIGEN_DEVICE_FUNC inline const IsInfReturnType isInf() const { return IsInfReturnType(derived()); }
+EIGEN_DEVICE_FUNC constexpr inline const IsInfReturnType isInf() const { return IsInfReturnType(derived()); }
 
 /** \returns an expression of the coefficient-wise isfinite of *this.
  *
@@ -426,8 +429,8 @@ EIGEN_DEVICE_FUNC inline const IsInfReturnType isInf() const { return IsInfRetur
  *
  * \sa isnan(), isinf()
  */
-EIGEN_DEVICE_FUNC inline const IsFiniteReturnType isFinite() const { return IsFiniteReturnType(derived()); }
-EIGEN_DEVICE_FUNC inline const IsFiniteTypedReturnType isFiniteTyped() const {
+EIGEN_DEVICE_FUNC constexpr inline const IsFiniteReturnType isFinite() const { return IsFiniteReturnType(derived()); }
+EIGEN_DEVICE_FUNC constexpr inline const IsFiniteTypedReturnType isFiniteTyped() const {
   return IsFiniteTypedReturnType(derived());
 }
 
@@ -438,11 +441,15 @@ EIGEN_DEVICE_FUNC inline const IsFiniteTypedReturnType isFiniteTyped() const {
  *
  * \sa operator!=()
  */
-EIGEN_DEVICE_FUNC inline const BooleanNotReturnType operator!() const { return BooleanNotReturnType(derived()); }
+EIGEN_DEVICE_FUNC constexpr inline const BooleanNotReturnType operator!() const {
+  return BooleanNotReturnType(derived());
+}
 
 /** \returns an expression of the bitwise ~ operator of *this
  */
-EIGEN_DEVICE_FUNC inline const BitwiseNotReturnType operator~() const { return BitwiseNotReturnType(derived()); }
+EIGEN_DEVICE_FUNC constexpr inline const BitwiseNotReturnType operator~() const {
+  return BitwiseNotReturnType(derived());
+}
 
 // --- SpecialFunctions module ---
 
@@ -452,17 +459,16 @@ typedef CwiseUnaryOp<internal::scalar_erf_op<Scalar>, const Derived> ErfReturnTy
 typedef CwiseUnaryOp<internal::scalar_erfc_op<Scalar>, const Derived> ErfcReturnType;
 typedef CwiseUnaryOp<internal::scalar_ndtri_op<Scalar>, const Derived> NdtriReturnType;
 
-/** \cpp11 \returns an expression of the coefficient-wise ln(|gamma(*this)|).
+/** \returns an expression of the coefficient-wise ln(|gamma(*this)|).
  *
  * \specialfunctions_module
  *
- * \note This function supports only float and double scalar types in c++11 mode. To support other scalar types,
- * or float/double in non c++11 mode, the user has to provide implementations of lgamma(T) for any scalar
- * type T to be supported.
+ * \note This function supports only float and double scalar types. To support other scalar types,
+ * the user has to provide implementations of lgamma(T) for any scalar type T to be supported.
  *
  * \sa <a href="group__CoeffwiseMathFunctions.html#cwisetable_lgamma">Math functions</a>, digamma()
  */
-EIGEN_DEVICE_FUNC inline const LgammaReturnType lgamma() const { return LgammaReturnType(derived()); }
+EIGEN_DEVICE_FUNC constexpr inline const LgammaReturnType lgamma() const { return LgammaReturnType(derived()); }
 
 /** \returns an expression of the coefficient-wise digamma (psi, derivative of lgamma).
  *
@@ -475,35 +481,33 @@ EIGEN_DEVICE_FUNC inline const LgammaReturnType lgamma() const { return LgammaRe
  * \sa <a href="group__CoeffwiseMathFunctions.html#cwisetable_digamma">Math functions</a>, Eigen::digamma(),
  * Eigen::polygamma(), lgamma()
  */
-EIGEN_DEVICE_FUNC inline const DigammaReturnType digamma() const { return DigammaReturnType(derived()); }
+EIGEN_DEVICE_FUNC constexpr inline const DigammaReturnType digamma() const { return DigammaReturnType(derived()); }
 
-/** \cpp11 \returns an expression of the coefficient-wise Gauss error
+/** \returns an expression of the coefficient-wise Gauss error
  * function of *this.
  *
  * \specialfunctions_module
  *
- * \note This function supports only float and double scalar types in c++11 mode. To support other scalar types,
- * or float/double in non c++11 mode, the user has to provide implementations of erf(T) for any scalar
- * type T to be supported.
+ * \note This function supports only float and double scalar types. To support other scalar types,
+ * the user has to provide implementations of erf(T) for any scalar type T to be supported.
  *
  * \sa <a href="group__CoeffwiseMathFunctions.html#cwisetable_erf">Math functions</a>, erfc()
  */
-EIGEN_DEVICE_FUNC inline const ErfReturnType erf() const { return ErfReturnType(derived()); }
+EIGEN_DEVICE_FUNC constexpr inline const ErfReturnType erf() const { return ErfReturnType(derived()); }
 
-/** \cpp11 \returns an expression of the coefficient-wise Complementary error
+/** \returns an expression of the coefficient-wise Complementary error
  * function of *this.
  *
  * \specialfunctions_module
  *
- * \note This function supports only float and double scalar types in c++11 mode. To support other scalar types,
- * or float/double in non c++11 mode, the user has to provide implementations of erfc(T) for any scalar
- * type T to be supported.
+ * \note This function supports only float and double scalar types. To support other scalar types,
+ * the user has to provide implementations of erfc(T) for any scalar type T to be supported.
  *
  * \sa <a href="group__CoeffwiseMathFunctions.html#cwisetable_erfc">Math functions</a>, erf()
  */
-EIGEN_DEVICE_FUNC inline const ErfcReturnType erfc() const { return ErfcReturnType(derived()); }
+EIGEN_DEVICE_FUNC constexpr inline const ErfcReturnType erfc() const { return ErfcReturnType(derived()); }
 
-/** \returns an expression of the coefficient-wise inverse of the CDF of the Normal distribution function
+/** \returns an expression of the coefficient-wise inverse of the CDF of the Normal distribution
  * function of *this.
  *
  * \specialfunctions_module
@@ -516,7 +520,7 @@ EIGEN_DEVICE_FUNC inline const ErfcReturnType erfc() const { return ErfcReturnTy
  *
  * \sa <a href="group__CoeffwiseMathFunctions.html#cwisetable_ndtri">Math functions</a>
  */
-EIGEN_DEVICE_FUNC inline const NdtriReturnType ndtri() const { return NdtriReturnType(derived()); }
+EIGEN_DEVICE_FUNC constexpr inline const NdtriReturnType ndtri() const { return NdtriReturnType(derived()); }
 
 template <typename ScalarExponent>
 using UnaryPowReturnType =
@@ -538,7 +542,7 @@ using UnaryPowReturnType =
  * \sa ArrayBase::pow(ArrayBase), square(), cube(), exp(), log()
  */
 template <typename ScalarExponent>
-EIGEN_DEVICE_FUNC EIGEN_STRONG_INLINE const UnaryPowReturnType<ScalarExponent> pow(
+EIGEN_DEVICE_FUNC constexpr EIGEN_STRONG_INLINE const UnaryPowReturnType<ScalarExponent> pow(
     const ScalarExponent& exponent) const {
   return UnaryPowReturnType<ScalarExponent>(derived(), internal::scalar_unary_pow_op<Scalar, ScalarExponent>(exponent));
 }
