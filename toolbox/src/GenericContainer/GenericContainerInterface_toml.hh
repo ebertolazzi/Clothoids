@@ -117,9 +117,7 @@ namespace GC_namespace
   //! \param[out] stream Output stream to write the TOML data.
   //!
   inline void GC_to_TOML( GenericContainer const & gc, ostream_type & stream )
-  {
-    gc.to_toml( stream );
-  }
+  { gc.to_toml( stream ); }
 
   //!
   //! @}

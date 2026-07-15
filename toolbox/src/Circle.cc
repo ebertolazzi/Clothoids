@@ -74,33 +74,19 @@ namespace G2lib
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   void CircleArc::build( Biarc const & )
-  {
-    Utils::Error( "cannot convert from Biarc to CircleArc\n" );
-  }
+  { Utils::Error( "cannot convert from Biarc to CircleArc\n" ); }
   void CircleArc::build( ClothoidCurve const & )
-  {
-    Utils::Error( "cannot convert from ClothoidCurve to CircleArc\n" );
-  }
+  { Utils::Error( "cannot convert from ClothoidCurve to CircleArc\n" ); }
   void CircleArc::build( PolyLine const & )
-  {
-    Utils::Error( "cannot convert from PolyLine to CircleArc\n" );
-  }
+  { Utils::Error( "cannot convert from PolyLine to CircleArc\n" ); }
   void CircleArc::build( BiarcList const & )
-  {
-    Utils::Error( "cannot convert from BiarcList to CircleArc\n" );
-  }
+  { Utils::Error( "cannot convert from BiarcList to CircleArc\n" ); }
   void CircleArc::build( ClothoidList const & )
-  {
-    Utils::Error( "cannot convert from ClothoidList to CircleArc\n" );
-  }
+  { Utils::Error( "cannot convert from ClothoidList to CircleArc\n" ); }
   void CircleArc::build( Dubins const & )
-  {
-    Utils::Error( "cannot convert from Dubins to CircleArc\n" );
-  }
+  { Utils::Error( "cannot convert from Dubins to CircleArc\n" ); }
   void CircleArc::build( Dubins3p const & )
-  {
-    Utils::Error( "cannot convert from Dubins3p to CircleArc\n" );
-  }
+  { Utils::Error( "cannot convert from Dubins3p to CircleArc\n" ); }
 
   /*\
    |    ____ _          _         _
@@ -212,19 +198,13 @@ namespace G2lib
   }
 
   real_type CircleArc::X_D( real_type const s ) const
-  {
-    return cos( m_theta0 + s * m_k );
-  }
+  { return cos( m_theta0 + s * m_k ); }
 
   real_type CircleArc::X_DD( real_type const s ) const
-  {
-    return -m_k * sin( m_theta0 + s * m_k );
-  }
+  { return -m_k * sin( m_theta0 + s * m_k ); }
 
   real_type CircleArc::X_DDD( real_type const s ) const
-  {
-    return -( m_k * m_k ) * cos( m_theta0 + s * m_k );
-  }
+  { return -( m_k * m_k ) * cos( m_theta0 + s * m_k ); }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
@@ -235,19 +215,13 @@ namespace G2lib
   }
 
   real_type CircleArc::Y_D( real_type const s ) const
-  {
-    return sin( m_theta0 + s * m_k );
-  }
+  { return sin( m_theta0 + s * m_k ); }
 
   real_type CircleArc::Y_DD( real_type const s ) const
-  {
-    return m_k * cos( m_theta0 + s * m_k );
-  }
+  { return m_k * cos( m_theta0 + s * m_k ); }
 
   real_type CircleArc::Y_DDD( real_type const s ) const
-  {
-    return -( m_k * m_k ) * sin( m_theta0 + s * m_k );
-  }
+  { return -( m_k * m_k ) * sin( m_theta0 + s * m_k ); }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
@@ -957,9 +931,7 @@ namespace G2lib
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   string CircleArc::info() const
-  {
-    return fmt::format( "CircleArc\n{}\n", *this );
-  }
+  { return fmt::format( "CircleArc\n{}\n", *this ); }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   //!

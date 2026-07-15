@@ -46,14 +46,10 @@ namespace G2lib
 #ifdef CLOTHOIDS_BACK_COMPATIBILITY
 
   static inline void lib_use_ISO()
-  {
-    use_ISO = true;
-  }
+  { use_ISO = true; }
 
   static inline void lib_use_SAE()
-  {
-    use_ISO = false;
-  }
+  { use_ISO = false; }
 
 #endif
 
@@ -61,17 +57,13 @@ namespace G2lib
   //! Disable AABB tree in computation
   //!
   static inline void noAABBtree()
-  {
-    intersect_with_AABBtree = false;
-  }
+  { intersect_with_AABBtree = false; }
 
   //!
   //! Enable AABB tree in computation
   //!
   static inline void yesAABBtree()
-  {
-    intersect_with_AABBtree = true;
-  }
+  { intersect_with_AABBtree = true; }
 
 
   struct G2derivative

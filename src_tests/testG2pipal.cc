@@ -11,6 +11,17 @@ int main()
 {
   G2lib::ClothoidSplineG2 g2spline;
 
+  // Create temporary test file
+  ofstream test_file( "G2_test.txt" );
+  if ( test_file )
+  {
+    test_file << "CLOTHOID_LIST\n";
+    test_file << "2\n";            // Number of clothoids
+    test_file << "0 0 0 0 0 1\n";  // First clothoid
+    test_file << "1 0 0 0 1 1\n";  // Second clothoid
+    test_file.close();
+  }
+
   G2lib::ClothoidList S{ "S" };
   ifstream            file( "G2_test.txt" );
   S.load( file );

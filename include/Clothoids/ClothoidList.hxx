@@ -719,9 +719,7 @@ namespace G2lib
     //! Return the length of the `nseg`-th clothoid of the list with offset
     //!
     real_type segment_length_SAE( integer const nseg, real_type const offs ) const
-    {
-      return segment_length_ISO( nseg, -offs );
-    }
+    { return segment_length_ISO( nseg, -offs ); }
 
     /*\
      |  _    _   _____    _                _
@@ -750,9 +748,7 @@ namespace G2lib
       real_type const      max_angle = Utils::m_pi / 6,  // 30 degree
       real_type const      max_size  = 1e100,
       integer const        icurve    = 0 ) const override
-    {
-      this->bb_triangles_ISO( -offs, tvec, max_angle, max_size, icurve );
-    }
+    { this->bb_triangles_ISO( -offs, tvec, max_angle, max_size, icurve ); }
 
 #ifndef DOXYGEN_SHOULD_SKIP_THIS
     void build_AABBtree_ISO(
@@ -770,9 +766,7 @@ namespace G2lib
     \*/
 
     void bbox( real_type & xmin, real_type & ymin, real_type & xmax, real_type & ymax ) const override
-    {
-      bbox_ISO( 0, xmin, ymin, xmax, ymax );
-    }
+    { bbox_ISO( 0, xmin, ymin, xmax, ymax ); }
 
     void bbox_ISO( real_type const offs, real_type & xmin, real_type & ymin, real_type & xmax, real_type & ymax )
       const override;
@@ -1317,9 +1311,9 @@ namespace G2lib
     //!       ...
     //!       xn yn thetan kappan
     //!
-    void load( istream_type & stream, real_type const epsi = 1e-8 );
+    void load( istream_type & stream, real_type const epsi = 1e-8, bool has_header = false );
 
-    #ifdef AUTODIFF_SUPPORT
+#ifdef AUTODIFF_SUPPORT
     [[nodiscard]] autodiff::dual1st theta( autodiff::dual1st const & s ) const;
     [[nodiscard]] autodiff::dual1st tx( autodiff::dual1st const & s ) const;
     [[nodiscard]] autodiff::dual1st ty( autodiff::dual1st const & s ) const;
@@ -1335,11 +1329,11 @@ namespace G2lib
     [[nodiscard]] autodiff::dual2nd Y( autodiff::dual2nd const & s ) const;
     [[nodiscard]] autodiff::dual2nd X_ISO( autodiff::dual2nd const & s, real_type const offs ) const;
     [[nodiscard]] autodiff::dual2nd Y_ISO( autodiff::dual2nd const & s, real_type const offs ) const;
-    #endif
+#endif
 
-    #ifdef CLOTHOIDS_BACK_COMPATIBILITY
-    #include "ClothoidList_compatibility.hxx"
-    #endif
+#ifdef CLOTHOIDS_BACK_COMPATIBILITY
+#include "ClothoidList_compatibility.hxx"
+#endif
   };
 
 }  // namespace G2lib

@@ -260,9 +260,7 @@ namespace G2lib
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   integer ClothoidSplineG2::numTheta() const
-  {
-    return m_npts;
-  }
+  { return m_npts; }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
@@ -420,9 +418,9 @@ namespace G2lib
           auto const   t6{ dk * dk };
           auto const   t17{ kappa * kappa };
           real_type    g0 = 2.0 / 3.0 * dk * t2 * dk__L + t1 * ( t6 * L__L + dk * k__L + dk__L * kappa ) +
-                         2.0 * kappa * ( dk * L__L + k__L ) * L + t17 * L__L;
-          real_type g1 = 2.0 / 3.0 * dk * t2 * dk__R + t1 * ( t6 * L__R + dk * k__R + dk__R * kappa ) +
-                         2.0 * kappa * ( dk * L__R + k__R ) * L + t17 * L__R;
+                            2.0 * kappa * ( dk * L__L + k__L ) * L + t17 * L__L;
+          real_type    g1 = 2.0 / 3.0 * dk * t2 * dk__R + t1 * ( t6 * L__R + dk * k__R + dk__R * kappa ) +
+                            2.0 * kappa * ( dk * L__R + k__R ) * L + t17 * L__R;
           g( j ) += g0;
           g( j + 1 ) += g1;
         }
@@ -626,11 +624,11 @@ namespace G2lib
           auto const      t95  = 2.0 * L__R * k__R;
           auto const      t96  = kappa * L__RR;
           auto const      t102 = k__R * k__R;
-          real_type       LL   = 2.0 / 3.0 * t5 * ( dk__LL * dk + t2 ) +
-                         t4 * ( L__LL * t8 + dk * ( 4.0 * t10 + k__LL ) + 2.0 * k__L * dk__L + kappa * dk__LL ) +
-                         2.0 * L * ( t19 * t8 + dk * ( t22 + t23 ) + kappa * ( 2.0 * t10 + k__LL ) + t29 ) +
-                         2.0 * kappa * ( t19 * dk + t22 + t23 / 2.0 );
-          real_type LR =
+          real_type       LL = 2.0 / 3.0 * t5 * ( dk__LL * dk + t2 ) +
+                               t4 * ( L__LL * t8 + dk * ( 4.0 * t10 + k__LL ) + 2.0 * k__L * dk__L + kappa * dk__LL ) +
+                               2.0 * L * ( t19 * t8 + dk * ( t22 + t23 ) + kappa * ( 2.0 * t10 + k__LL ) + t29 ) +
+                               2.0 * kappa * ( t19 * dk + t22 + t23 / 2.0 );
+          real_type       LR =
             2.0 / 3.0 * t5 * ( dk__LR * dk + dk__L * dk__R ) +
             t4 *
               ( L__LR * t8 + dk * ( 2.0 * t45 + 2.0 * t47 + k__LR ) + kappa * dk__LR + k__L * dk__R + k__R * dk__L ) +
@@ -669,8 +667,8 @@ namespace G2lib
           real_type const t24 = dk__R * dk__R;
           real_type const LL  = 4.0 * L__L * dk * dk__L + 2.0 * t4 * L + t10 * L__LL + 2.0 * dk__LL * t1;
           real_type const LR  = t10 * L__LR + ( 2.0 * L * dk__LR + 2.0 * L__L * dk__R + 2.0 * L__R * dk__L ) * dk +
-                               2.0 * L * dk__R * dk__L;
-          real_type const RR = 4.0 * L__R * dk * dk__R + 2.0 * t24 * L + t10 * L__RR + 2.0 * dk__RR * t1;
+                                2.0 * L * dk__R * dk__L;
+          real_type const RR  = 4.0 * L__R * dk * dk__R + 2.0 * t24 * L + t10 * L__RR + 2.0 * dk__RR * t1;
 
           triplets.emplace_back( j, j, LL );
           triplets.emplace_back( j, j + 1, LR );
@@ -772,7 +770,7 @@ namespace G2lib
           real_type const t236 = t45 * dk__RR;
           real_type const t247 = 2.0 * t206;
           real_type const t277 = t75 * L__R;
-          real_type const RR   = 4.0 / 5.0 * t10 * ( dk__RR * t2 + 3.0 * t199 * t1 ) +
+          real_type const RR = 4.0 / 5.0 * t10 * ( dk__RR * t2 + 3.0 * t199 * t1 ) +
                                t9 * dk *
                                  ( L__RR * t2 + t1 * ( 8.0 * t206 + k__RR ) + 3.0 * dk * ( dk__RR * k0 + 2.0 * t210 ) +
                                    6.0 * t199 * k0 ) +

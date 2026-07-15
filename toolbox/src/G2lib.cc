@@ -62,13 +62,9 @@ namespace G2lib
   }
 
   static real_type power2( real_type const a )
-  {
-    return a * a;
-  }
+  { return a * a; }
   static real_type power3( real_type const a )
-  {
-    return a * a * a;
-  }
+  { return a * a * a; }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
@@ -655,8 +651,8 @@ namespace G2lib
       // L^+ Pb
       real_type tmp = ( b[i[0]] + LU[1][0] * b[i[1]] ) /
                       ( ( 1 + power2( LU[1][0] ) ) * ( power2( LU[0][0] ) + power2( LU[0][1] ) ) );
-      x[j[0]] = tmp * LU[0][0];
-      x[j[1]] = tmp * LU[0][1];
+      x[j[0]]       = tmp * LU[0][0];
+      x[j[1]]       = tmp * LU[0][1];
       // check consistency
       tmp = ( LU[0][0] * x[j[0]] + LU[0][1] * x[j[1]] );
       return hypot( b[i[0]] - tmp, b[i[1]] + tmp * LU[1][0] ) < hypot( b[0], b[1] ) * epsi;
@@ -808,14 +804,10 @@ namespace G2lib
   \*/
 
   real_type BaseCurve::tx( real_type const s ) const
-  {
-    return cos( theta( s ) );
-  }
+  { return cos( theta( s ) ); }
 
   real_type BaseCurve::tx_D( real_type const s ) const
-  {
-    return -sin( theta( s ) ) * theta_D( s );
-  }
+  { return -sin( theta( s ) ) * theta_D( s ); }
 
   real_type BaseCurve::tx_DD( real_type const s ) const
   {
@@ -841,14 +833,10 @@ namespace G2lib
   // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 
   real_type BaseCurve::ty( real_type const s ) const
-  {
-    return sin( theta( s ) );
-  }
+  { return sin( theta( s ) ); }
 
   real_type BaseCurve::ty_D( real_type const s ) const
-  {
-    return cos( theta( s ) ) * theta_D( s );
-  }
+  { return cos( theta( s ) ) * theta_D( s ); }
 
   real_type BaseCurve::ty_DD( real_type const s ) const
   {
@@ -880,44 +868,28 @@ namespace G2lib
   \*/
 
   real_type BaseCurve::X_ISO( real_type const s, real_type const offs ) const
-  {
-    return X( s ) + offs * nx_ISO( s );
-  }
+  { return X( s ) + offs * nx_ISO( s ); }
 
   real_type BaseCurve::Y_ISO( real_type const s, real_type const offs ) const
-  {
-    return Y( s ) + offs * ny_ISO( s );
-  }
+  { return Y( s ) + offs * ny_ISO( s ); }
 
   real_type BaseCurve::X_ISO_D( real_type const s, real_type const offs ) const
-  {
-    return X_D( s ) + offs * nx_ISO_D( s );
-  }
+  { return X_D( s ) + offs * nx_ISO_D( s ); }
 
   real_type BaseCurve::Y_ISO_D( real_type const s, real_type const offs ) const
-  {
-    return Y_D( s ) + offs * ny_ISO_D( s );
-  }
+  { return Y_D( s ) + offs * ny_ISO_D( s ); }
 
   real_type BaseCurve::X_ISO_DD( real_type const s, real_type const offs ) const
-  {
-    return X_DD( s ) + offs * nx_ISO_DD( s );
-  }
+  { return X_DD( s ) + offs * nx_ISO_DD( s ); }
 
   real_type BaseCurve::Y_ISO_DD( real_type const s, real_type const offs ) const
-  {
-    return Y_DD( s ) + offs * ny_ISO_DD( s );
-  }
+  { return Y_DD( s ) + offs * ny_ISO_DD( s ); }
 
   real_type BaseCurve::X_ISO_DDD( real_type const s, real_type const offs ) const
-  {
-    return X_DDD( s ) + offs * nx_ISO_DDD( s );
-  }
+  { return X_DDD( s ) + offs * nx_ISO_DDD( s ); }
 
   real_type BaseCurve::Y_ISO_DDD( real_type const s, real_type const offs ) const
-  {
-    return Y_DDD( s ) + offs * ny_ISO_DDD( s );
-  }
+  { return Y_DDD( s ) + offs * ny_ISO_DDD( s ); }
 
   // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 

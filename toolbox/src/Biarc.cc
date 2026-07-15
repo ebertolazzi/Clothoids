@@ -85,29 +85,17 @@ namespace G2lib
   }
 
   void Biarc::build( ClothoidCurve const & )
-  {
-    Utils::Error( "cannot convert from ClothoidCurve to Biarc\n" );
-  }
+  { Utils::Error( "cannot convert from ClothoidCurve to Biarc\n" ); }
   void Biarc::build( PolyLine const & )
-  {
-    Utils::Error( "cannot convert from PolyLine to Biarc\n" );
-  }
+  { Utils::Error( "cannot convert from PolyLine to Biarc\n" ); }
   void Biarc::build( BiarcList const & )
-  {
-    Utils::Error( "cannot convert from BiarcList to Biarc\n" );
-  }
+  { Utils::Error( "cannot convert from BiarcList to Biarc\n" ); }
   void Biarc::build( ClothoidList const & )
-  {
-    Utils::Error( "cannot convert from ClothoidList to Biarc\n" );
-  }
+  { Utils::Error( "cannot convert from ClothoidList to Biarc\n" ); }
   void Biarc::build( Dubins const & )
-  {
-    Utils::Error( "cannot convert from Dubins to CircleArc\n" );
-  }
+  { Utils::Error( "cannot convert from Dubins to CircleArc\n" ); }
   void Biarc::build( Dubins3p const & )
-  {
-    Utils::Error( "cannot convert from Dubins3p to CircleArc\n" );
-  }
+  { Utils::Error( "cannot convert from Dubins3p to CircleArc\n" ); }
 
   /*\
    |   ____  _
@@ -953,9 +941,7 @@ namespace G2lib
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   string Biarc::info() const
-  {
-    return fmt::format( "BiArc\n{}\n", *this );
-  }
+  { return fmt::format( "BiArc\n{}\n", *this ); }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   //!

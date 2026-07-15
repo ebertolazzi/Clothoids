@@ -123,37 +123,21 @@ namespace G2lib
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   void Dubins::build( LineSegment const & )
-  {
-    Utils::Error( "cannot convert from LineSegment to Dubins\n" );
-  }
+  { Utils::Error( "cannot convert from LineSegment to Dubins\n" ); }
   void Dubins::build( CircleArc const & )
-  {
-    Utils::Error( "cannot convert from CircleArc to Dubins\n" );
-  }
+  { Utils::Error( "cannot convert from CircleArc to Dubins\n" ); }
   void Dubins::build( Biarc const & )
-  {
-    Utils::Error( "cannot convert from Biarc to Dubins\n" );
-  }
+  { Utils::Error( "cannot convert from Biarc to Dubins\n" ); }
   void Dubins::build( ClothoidCurve const & )
-  {
-    Utils::Error( "cannot convert from ClothoidCurve to Dubins\n" );
-  }
+  { Utils::Error( "cannot convert from ClothoidCurve to Dubins\n" ); }
   void Dubins::build( PolyLine const & )
-  {
-    Utils::Error( "cannot convert from PolyLine to Dubins\n" );
-  }
+  { Utils::Error( "cannot convert from PolyLine to Dubins\n" ); }
   void Dubins::build( BiarcList const & )
-  {
-    Utils::Error( "cannot convert from BiarcList to Dubins\n" );
-  }
+  { Utils::Error( "cannot convert from BiarcList to Dubins\n" ); }
   void Dubins::build( ClothoidList const & )
-  {
-    Utils::Error( "cannot convert from ClothoidList to Dubins\n" );
-  }
+  { Utils::Error( "cannot convert from ClothoidList to Dubins\n" ); }
   void Dubins::build( Dubins3p const & )
-  {
-    Utils::Error( "cannot convert from Dubins3p to Dubins\n" );
-  }
+  { Utils::Error( "cannot convert from Dubins3p to Dubins\n" ); }
 
   void Dubins::build( Dubins const & DB )
   {
@@ -491,9 +475,7 @@ namespace G2lib
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   real_type Dubins::length_ISO( real_type const offs ) const
-  {
-    return m_C0.length_ISO( offs ) + m_C1.length_ISO( offs ) + m_C2.length_ISO( offs );
-  }
+  { return m_C0.length_ISO( offs ) + m_C1.length_ISO( offs ) + m_C2.length_ISO( offs ); }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
@@ -505,45 +487,25 @@ namespace G2lib
   return m_C2.FUN( s )
 
   real_type Dubins::theta( real_type s ) const
-  {
-    DUBINS_SELECT( theta );
-  }
+  { DUBINS_SELECT( theta ); }
   real_type Dubins::theta_D( real_type s ) const
-  {
-    DUBINS_SELECT( theta_D );
-  }
+  { DUBINS_SELECT( theta_D ); }
   real_type Dubins::X( real_type s ) const
-  {
-    DUBINS_SELECT( X );
-  }
+  { DUBINS_SELECT( X ); }
   real_type Dubins::X_D( real_type s ) const
-  {
-    DUBINS_SELECT( X_D );
-  }
+  { DUBINS_SELECT( X_D ); }
   real_type Dubins::X_DD( real_type s ) const
-  {
-    DUBINS_SELECT( X_DD );
-  }
+  { DUBINS_SELECT( X_DD ); }
   real_type Dubins::X_DDD( real_type s ) const
-  {
-    DUBINS_SELECT( X_DDD );
-  }
+  { DUBINS_SELECT( X_DDD ); }
   real_type Dubins::Y( real_type s ) const
-  {
-    DUBINS_SELECT( Y );
-  }
+  { DUBINS_SELECT( Y ); }
   real_type Dubins::Y_D( real_type s ) const
-  {
-    DUBINS_SELECT( Y_D );
-  }
+  { DUBINS_SELECT( Y_D ); }
   real_type Dubins::Y_DD( real_type s ) const
-  {
-    DUBINS_SELECT( Y_DD );
-  }
+  { DUBINS_SELECT( Y_DD ); }
   real_type Dubins::Y_DDD( real_type s ) const
-  {
-    DUBINS_SELECT( Y_DDD );
-  }
+  { DUBINS_SELECT( Y_DDD ); }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
@@ -561,66 +523,48 @@ namespace G2lib
   }
 
   void Dubins::eval( real_type s, real_type & theta, real_type & kappa, real_type & x, real_type & y ) const
-  {
-    DUBINS_SELECT_EVAL( evaluate, theta, kappa, x, y );
-  }
+  { DUBINS_SELECT_EVAL( evaluate, theta, kappa, x, y ); }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   void Dubins::eval( real_type s, real_type & x, real_type & y ) const
-  {
-    DUBINS_SELECT_EVAL( eval, x, y );
-  }
+  { DUBINS_SELECT_EVAL( eval, x, y ); }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   void Dubins::eval_D( real_type s, real_type & x_D, real_type & y_D ) const
-  {
-    DUBINS_SELECT_EVAL( eval_D, x_D, y_D );
-  }
+  { DUBINS_SELECT_EVAL( eval_D, x_D, y_D ); }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   void Dubins::eval_DD( real_type s, real_type & x_DD, real_type & y_DD ) const
-  {
-    DUBINS_SELECT_EVAL( eval_DD, x_DD, y_DD );
-  }
+  { DUBINS_SELECT_EVAL( eval_DD, x_DD, y_DD ); }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   void Dubins::eval_DDD( real_type s, real_type & x_DDD, real_type & y_DDD ) const
-  {
-    DUBINS_SELECT_EVAL( eval_DDD, x_DDD, y_DDD );
-  }
+  { DUBINS_SELECT_EVAL( eval_DDD, x_DDD, y_DDD ); }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   // offset curve
   void Dubins::eval_ISO( real_type s, real_type const offs, real_type & x, real_type & y ) const
-  {
-    DUBINS_SELECT_EVAL( eval_ISO, offs, x, y );
-  }
+  { DUBINS_SELECT_EVAL( eval_ISO, offs, x, y ); }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   void Dubins::eval_ISO_D( real_type s, real_type const offs, real_type & x_D, real_type & y_D ) const
-  {
-    DUBINS_SELECT_EVAL( eval_ISO_D, offs, x_D, y_D );
-  }
+  { DUBINS_SELECT_EVAL( eval_ISO_D, offs, x_D, y_D ); }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   void Dubins::eval_ISO_DD( real_type s, real_type const offs, real_type & x_DD, real_type & y_DD ) const
-  {
-    DUBINS_SELECT_EVAL( eval_ISO_DD, offs, x_DD, y_DD );
-  }
+  { DUBINS_SELECT_EVAL( eval_ISO_DD, offs, x_DD, y_DD ); }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   void Dubins::eval_ISO_DDD( real_type s, real_type const offs, real_type & x_DDD, real_type & y_DDD ) const
-  {
-    DUBINS_SELECT_EVAL( eval_ISO_DDD, offs, x_DDD, y_DDD );
-  }
+  { DUBINS_SELECT_EVAL( eval_ISO_DDD, offs, x_DDD, y_DDD ); }
 
   void Dubins::reverse()
   {
@@ -651,9 +595,7 @@ namespace G2lib
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   void Dubins::trim( real_type, real_type )
-  {
-    Utils::Error( "Dubins::trim not defined, convert to ClothoidList to trim the curve!" );
-  }
+  { Utils::Error( "Dubins::trim not defined, convert to ClothoidList to trim the curve!" ); }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
@@ -1022,16 +964,12 @@ namespace G2lib
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   string Dubins::info() const
-  {
-    return fmt::format( "Dubins\n{}\n", *this );
-  }
+  { return fmt::format( "Dubins\n{}\n", *this ); }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   string_view Dubins::solution_type_string() const
-  {
-    return to_string( m_solution_type );
-  }
+  { return to_string( m_solution_type ); }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 

@@ -195,15 +195,11 @@ namespace G2lib
 
     [[nodiscard]]
     real_type length() const override
-    {
-      return m_C0.length() + m_C1.length();
-    }
+    { return m_C0.length() + m_C1.length(); }
 
     [[nodiscard]]
     real_type length_ISO( real_type const offs ) const override
-    {
-      return m_C0.length_ISO( offs ) + m_C1.length_ISO( offs );
-    }
+    { return m_C0.length_ISO( offs ) + m_C1.length_ISO( offs ); }
 
     [[nodiscard]] real_type theta_begin() const override { return m_C0.theta_begin(); }
     [[nodiscard]] real_type theta_end() const override { return m_C1.theta_end(); }

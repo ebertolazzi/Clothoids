@@ -39,13 +39,9 @@ namespace G2lib
       void buildP2( ClothoidList & result );
 #else
       void buildP1( real_type theta_0, real_type theta_1, ClothoidList & result )
-      {
-        throw std::runtime_error( "Not supported. Recompile with libeigen3-dev library installed!" );
-      }
+      { throw std::runtime_error( "Not supported. Recompile with libeigen3-dev library installed!" ); }
       void buildP2( ClothoidList & result )
-      {
-        throw std::runtime_error( "Not supported. Recompile with libeigen3-dev library installed!" );
-      }
+      { throw std::runtime_error( "Not supported. Recompile with libeigen3-dev library installed!" ); }
 #endif
       // void buildP3(real_type theta_0, real_type kappa_0, ClothoidList & result);
 #ifdef IPOPT_CLOTHOID_SPLINE
@@ -57,29 +53,17 @@ namespace G2lib
       void buildP9( ClothoidList & result );
 #else
       void buildP4( ClothoidList & result )
-      {
-        throw std::runtime_error( "Not supported. Recompile with lipipopt-dev library installed!" );
-      }
+      { throw std::runtime_error( "Not supported. Recompile with lipipopt-dev library installed!" ); }
       void buildP5( ClothoidList & result )
-      {
-        throw std::runtime_error( "Not supported. Recompile with lipipopt-dev library installed!" );
-      }
+      { throw std::runtime_error( "Not supported. Recompile with lipipopt-dev library installed!" ); }
       void buildP6( ClothoidList & result )
-      {
-        throw std::runtime_error( "Not supported. Recompile with lipipopt-dev library installed!" );
-      }
+      { throw std::runtime_error( "Not supported. Recompile with lipipopt-dev library installed!" ); }
       void buildP7( ClothoidList & result )
-      {
-        throw std::runtime_error( "Not supported. Recompile with lipipopt-dev library installed!" );
-      }
+      { throw std::runtime_error( "Not supported. Recompile with lipipopt-dev library installed!" ); }
       void buildP8( ClothoidList & result )
-      {
-        throw std::runtime_error( "Not supported. Recompile with lipipopt-dev library installed!" );
-      }
+      { throw std::runtime_error( "Not supported. Recompile with lipipopt-dev library installed!" ); }
       void buildP9( ClothoidList & result )
-      {
-        throw std::runtime_error( "Not supported. Recompile with lipipopt-dev library installed!" );
-      }
+      { throw std::runtime_error( "Not supported. Recompile with lipipopt-dev library installed!" ); }
 #endif
 
       const std::vector<real_type> & xs() { return m_xs; }
@@ -93,18 +77,14 @@ namespace G2lib
       void build_using_lm_solver( ClothoidList & result );
 #else
       void build_using_lm_solver( ClothoidList & result )
-      {
-        throw std::runtime_error( "Not supported. Recompile with libeigen3-dev library installed!" );
-      }
+      { throw std::runtime_error( "Not supported. Recompile with libeigen3-dev library installed!" ); }
 #endif
 
 #ifdef IPOPT_CLOTHOID_SPLINE
       void build_using_ipopt_solver( ClothoidList & result );
 #else
       void build_using_ipopt_solver( ClothoidList & result )
-      {
-        throw std::runtime_error( "Not supported. Recompile with lipipopt-dev library installed!" );
-      }
+      { throw std::runtime_error( "Not supported. Recompile with lipipopt-dev library installed!" ); }
 #endif
 
       void build_clothoid_list( const std::vector<real_type> & theta, ClothoidList & result );

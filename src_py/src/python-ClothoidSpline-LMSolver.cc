@@ -24,9 +24,7 @@ namespace G2lib
       , m_jacobian_rows( std::vector<integer>( solver.jacobian_pattern_size(), 0 ) )
       , m_jacobian_cols( std::vector<integer>( solver.jacobian_pattern_size(), 0 ) )
       , m_jacobian_result( std::vector<real_type>( solver.jacobian_pattern_size(), 0.0 ) )
-    {
-      m_solver.spline().jacobian_pattern( &m_jacobian_rows.front(), &m_jacobian_cols.front() );
-    }
+    { m_solver.spline().jacobian_pattern( &m_jacobian_rows.front(), &m_jacobian_cols.front() ); }
 
     int LMSolver::ClothoidSplineProblem::operator()(
       const SparseFunctor::InputType & theta,

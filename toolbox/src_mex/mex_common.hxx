@@ -1389,8 +1389,6 @@ static void do_noAABBtree( int nlhs, mxArray *[], int nrhs, mxArray const *[] )
     { "theta_begin", do_theta_begin }, { "kappa_begin", do_kappa_begin }, { "xy_end", do_xy_end },                \
     { "x_end", do_x_end }, { "y_end", do_y_end }, { "theta_end", do_theta_end }, { "kappa_end", do_kappa_end },   \
     { "yesAABBtree", do_yesAABBtree },                                                                            \
-  {                                                                                                               \
-    "noAABBtree", do_noAABBtree                                                                                   \
-  }
+  { "noAABBtree", do_noAABBtree }
 
 // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .

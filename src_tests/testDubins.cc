@@ -1229,8 +1229,12 @@ void test_performance_benchmark()
   fmt::print( fg( fmt::color::cyan ), "📈 Dubins Construction Benchmark:\n" );
   fmt::print( "├─ Iterations: {}\n", NUM_ITERATIONS );
   fmt::print( "├─ Total time: {:.3f} ms\n", static_cast<double>( duration.count() ) / 1000.0 );
-  fmt::print( "├─ Average time: {:.3f} µs\n", static_cast<double>( duration.count() ) / static_cast<double>( NUM_ITERATIONS ) );
-  fmt::print( "└─ Operations/sec: {:.0f}\n", static_cast<double>( NUM_ITERATIONS ) / ( static_cast<double>( duration.count() ) / 1e6 ) );
+  fmt::print(
+    "├─ Average time: {:.3f} µs\n",
+    static_cast<double>( duration.count() ) / static_cast<double>( NUM_ITERATIONS ) );
+  fmt::print(
+    "└─ Operations/sec: {:.0f}\n",
+    static_cast<double>( NUM_ITERATIONS ) / ( static_cast<double>( duration.count() ) / 1e6 ) );
 
   // Benchmark Dubins3P with different methods
   vector<pair<G2lib::Dubins3pBuildType, string>> methods = { { G2lib::Dubins3pBuildType::SAMPLE_ONE_DEGREE, "Sample" },

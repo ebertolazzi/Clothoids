@@ -80,15 +80,15 @@ namespace Pipal
     Integer secondOrderCorrection();
     void    evalXOriginal( Vector<Real> & x );
     void    setDirection(
-         Vector<Real> const & dx,
-         Vector<Real> const & dr1,
-         Vector<Real> const & dr2,
-         Vector<Real> const & ds1,
-         Vector<Real> const & ds2,
-         Vector<Real> const & dlE,
-         Vector<Real> const & dlI,
-         Real const           dx_norm,
-         Real const           dl_norm );
+      Vector<Real> const & dx,
+      Vector<Real> const & dr1,
+      Vector<Real> const & dr2,
+      Vector<Real> const & ds1,
+      Vector<Real> const & ds2,
+      Vector<Real> const & dlE,
+      Vector<Real> const & dlI,
+      Real const           dx_norm,
+      Real const           dl_norm );
     void evalTrialSteps( Direction<Real> & d1, Direction<Real> & d2, Direction<Real> & d3 );
     void evalTrialStepCut();
     void evalLinearCombination(
@@ -188,9 +188,7 @@ namespace Pipal
      * \brief Reset all internal counters to zero.
      */
     void resetCounter()
-    {
-      this->m_counter.f = this->m_counter.g = this->m_counter.H = this->m_counter.k = this->m_counter.M = 0;
-    }
+    { this->m_counter.f = this->m_counter.g = this->m_counter.H = this->m_counter.k = this->m_counter.M = 0; }
 
     /**
      * \brief Increment the matrix factorization counter.

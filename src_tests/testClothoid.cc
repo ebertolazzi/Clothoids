@@ -32,15 +32,11 @@ const real_type EPS_LEN = 1e-6;
 
 // Function to compare two values with tolerance
 bool approx_equal( real_type a, real_type b, real_type eps = EPS )
-{
-  return std::abs( a - b ) < eps;
-}
+{ return std::abs( a - b ) < eps; }
 
 // Function to compare points
 bool points_equal( real_type x1, real_type y1, real_type x2, real_type y2, real_type eps = EPS )
-{
-  return approx_equal( x1, x2, eps ) && approx_equal( y1, y2, eps );
-}
+{ return approx_equal( x1, x2, eps ) && approx_equal( y1, y2, eps ); }
 
 // Function to print test result
 void print_test_result( const string & test_name, bool passed )

@@ -62,9 +62,7 @@ namespace G2lib
   using std::swap;
 
   static real_type orient_2d( real_type const a[2], real_type const b[2], real_type const c[2] )
-  {
-    return ( a[0] - c[0] ) * ( b[1] - c[1] ) - ( a[1] - c[1] ) * ( b[0] - c[0] );
-  }
+  { return ( a[0] - c[0] ) * ( b[1] - c[1] ) - ( a[1] - c[1] ) * ( b[0] - c[0] ); }
 
   static bool intersection_test_vertex(
     real_type const P1[2],
@@ -191,9 +189,7 @@ namespace G2lib
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   bool Triangle2D::overlap( Triangle2D const & t2 ) const
-  {
-    return tri_tri_overlap_test_2d( m_p1, m_p2, m_p3, t2.m_p1, t2.m_p2, t2.m_p3 );
-  }
+  { return tri_tri_overlap_test_2d( m_p1, m_p2, m_p3, t2.m_p1, t2.m_p2, t2.m_p3 ); }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 

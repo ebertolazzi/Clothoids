@@ -55,17 +55,17 @@
 //!
 
 #if POLYNOMIAL_ROOTS_HAS_MULTIPRECISION
-  #include <boost/multiprecision/cpp_bin_float.hpp>
-  #include <boost/math/special_functions/cbrt.hpp>
+#include <boost/multiprecision/cpp_bin_float.hpp>
+#include <boost/math/special_functions/cbrt.hpp>
 #endif
 
 namespace PolynomialRoots
 {
 
   //! Scalar type used by the standard-precision API.
-  using real_type    = double;
+  using real_type = double;
   //! Integer type used for degrees, counts and indices.
-  using integer      = int;
+  using integer = int;
   //! Output stream type used by diagnostic methods.
   using ostream_type = std::basic_ostream<char>;
   //! Input stream type reserved for formatted input helpers.
@@ -286,8 +286,9 @@ namespace PolynomialRoots
       root_assert(
         isfinite( a ) && isfinite( b ) && isfinite( c ),
         "QuadraticT( a={}, b={}, c={} ) arguments must be finite!",
-        a, b, c
-      );
+        a,
+        b,
+        c );
       find_roots();
     }
 
@@ -549,7 +550,7 @@ namespace PolynomialRoots
     [[nodiscard]] bool check( ostream_type & s ) const;
   };
 
-  using Quadratic   = QuadraticT<real_type, real_complex>;
+  using Quadratic = QuadraticT<real_type, real_complex>;
 #if POLYNOMIAL_ROOTS_HAS_MULTIPRECISION
   using QuadraticHQ = QuadraticT<quad_real, quad_complex>;
 #endif
@@ -681,8 +682,10 @@ namespace PolynomialRoots
       root_assert(
         isfinite( a ) && isfinite( b ) && isfinite( c ) && isfinite( d ),
         "CubicT( a={}, b={}, c={}, d={} ) arguments must be finite!",
-        a, b, c, d
-      );
+        a,
+        b,
+        c,
+        d );
       find_roots();
     }
 
@@ -709,8 +712,10 @@ namespace PolynomialRoots
       root_assert(
         isfinite( a ) && isfinite( b ) && isfinite( c ) && isfinite( d ),
         "CubicT::setup( a={}, b={}, c={}, d={} ) arguments must be finite!",
-        a, b, c, d
-      );
+        a,
+        b,
+        c,
+        d );
       find_roots();
     }
 
@@ -977,7 +982,7 @@ namespace PolynomialRoots
     [[nodiscard]] bool check( ostream_type & s ) const;
   };
 
-  using Cubic   = CubicT<real_type, real_complex>;
+  using Cubic = CubicT<real_type, real_complex>;
 #if POLYNOMIAL_ROOTS_HAS_MULTIPRECISION
   using CubicHQ = CubicT<quad_real, quad_complex>;
 #endif
@@ -1113,8 +1118,11 @@ namespace PolynomialRoots
       root_assert(
         isfinite( a ) && isfinite( b ) && isfinite( c ) && isfinite( d ) && isfinite( e ),
         "QuarticT( a={}, b={}, c={}, d={}, e={} ) arguments must be finite!",
-        a, b, c, d, e
-      );
+        a,
+        b,
+        c,
+        d,
+        e );
       find_roots();
     }
 
@@ -1142,8 +1150,11 @@ namespace PolynomialRoots
       root_assert(
         isfinite( a ) && isfinite( b ) && isfinite( c ) && isfinite( d ) && isfinite( e ),
         "QuarticT::setup( a={}, b={}, c={}, d={}, e={} ) arguments must be finite!",
-        a, b, c, d, e
-      );
+        a,
+        b,
+        c,
+        d,
+        e );
       find_roots();
     }
 
@@ -1478,7 +1489,7 @@ namespace PolynomialRoots
     [[nodiscard]] bool check( ostream_type & s ) const;
   };
 
-  using Quartic   = QuarticT<real_type, real_complex>;
+  using Quartic = QuarticT<real_type, real_complex>;
 #if POLYNOMIAL_ROOTS_HAS_MULTIPRECISION
   using QuarticHQ = QuarticT<quad_real, quad_complex>;
 #endif

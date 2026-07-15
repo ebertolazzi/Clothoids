@@ -215,25 +215,19 @@ namespace G2lib
     //! \return get the total angle variation of the 3 arc \f$ G^2 \f$ fitting
     //!
     real_type theta_total_variation() const
-    {
-      return m_S0.theta_total_variation() + m_S1.theta_total_variation() + m_SM.theta_total_variation();
-    }
+    { return m_S0.theta_total_variation() + m_S1.theta_total_variation() + m_SM.theta_total_variation(); }
 
     //!
     //! \return get the total curvature variation of the 3 arc \f$ G^2 \f$ fitting
     //!
     real_type curvature_total_variation() const
-    {
-      return m_S0.curvature_total_variation() + m_S1.curvature_total_variation() + m_SM.curvature_total_variation();
-    }
+    { return m_S0.curvature_total_variation() + m_S1.curvature_total_variation() + m_SM.curvature_total_variation(); }
 
     //!
     //! \return get the integral of the curvature squared of the 3 arc \f$ G^2 \f$ fitting
     //!
     real_type integral_curvature2() const
-    {
-      return m_S0.integral_curvature2() + m_S1.integral_curvature2() + m_SM.integral_curvature2();
-    }
+    { return m_S0.integral_curvature2() + m_S1.integral_curvature2() + m_SM.integral_curvature2(); }
 
     //!
     //! \return get the integral of the jerk squared of the 3 arc \f$ G^2 \f$ fitting

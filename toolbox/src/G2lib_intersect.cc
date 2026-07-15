@@ -113,9 +113,7 @@ namespace G2lib
   };
 
   CurveType curve_promote( CurveType A, CurveType B )
-  {
-    return promote_map.at( Ppair( A, B ) );
-  }
+  { return promote_map.at( Ppair( A, B ) ); }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 

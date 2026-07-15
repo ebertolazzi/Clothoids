@@ -56,14 +56,12 @@ namespace nlohmann
   //!
   //! @{
 
-  template <>
-  struct adl_serializer<GC_namespace::GenericContainer>
+  template <> struct adl_serializer<GC_namespace::GenericContainer>
   {
     using GenericContainer = GC_namespace::GenericContainer;
     using GC_type          = GC_namespace::GC_type;
 
-    static void
-    to_json( json & j, GenericContainer const & gc )
+    static void to_json( json & j, GenericContainer const & gc )
     {
       switch ( gc.get_type() )
       {
@@ -123,8 +121,8 @@ namespace nlohmann
         case GC_type::MAT_REAL: j = matrix_to_json( gc.get_mat_real() ); break;
         case GC_type::MAT_COMPLEX:
         {
-          auto const & M{ gc.get_mat_complex() };
-          json         arr = json::array();
+          auto const &      M{ gc.get_mat_complex() };
+          json              arr = json::array();
           std::size_t const NR{ M.num_rows() };
           std::size_t const NC{ M.num_cols() };
           for ( std::size_t jc{ 0 }; jc < NC; ++jc )
@@ -139,8 +137,7 @@ namespace nlohmann
       }
     }
 
-    static void
-    from_json( json const & j, GenericContainer & gc )
+    static void from_json( json const & j, GenericContainer & gc )
     {
       gc.clear();
       from_json_value( j, gc );
@@ -155,11 +152,9 @@ namespace nlohmann
     }
 
   private:
-    template <typename Mat>
-    static json
-    matrix_to_json( Mat const & M )
+    template <typename Mat> static json matrix_to_json( Mat const & M )
     {
-      json           arr = json::array();
+      json              arr = json::array();
       std::size_t const NR{ M.num_rows() };
       std::size_t const NC{ M.num_cols() };
       for ( std::size_t jc{ 0 }; jc < NC; ++jc )
@@ -171,16 +166,14 @@ namespace nlohmann
       return arr;
     }
 
-    static std::string
-    pointer_to_hex( void const * p )
+    static std::string pointer_to_hex( void const * p )
     {
       std::ostringstream ss;
       ss << std::hex << std::showbase << reinterpret_cast<std::uintptr_t>( p );
       return ss.str();
     }
 
-    static void
-    from_json_value( json const & j, GenericContainer & gc )
+    static void from_json_value( json const & j, GenericContainer & gc )
     {
       if ( j.is_null() ) { gc.clear(); }
       else if ( j.is_boolean() ) { gc = j.get<bool>(); }
@@ -197,8 +190,9 @@ namespace nlohmann
         else
         {
           auto const v{ j.get<std::int64_t>() };
-          if ( v >= std::numeric_limits<GenericContainer::int_type>::min() &&
-               v <= std::numeric_limits<GenericContainer::int_type>::max() )
+          if (
+            v >= std::numeric_limits<GenericContainer::int_type>::min() &&
+            v <= std::numeric_limits<GenericContainer::int_type>::max() )
             gc = static_cast<GenericContainer::int_type>( v );
           else
             gc = static_cast<GenericContainer::long_type>( v );

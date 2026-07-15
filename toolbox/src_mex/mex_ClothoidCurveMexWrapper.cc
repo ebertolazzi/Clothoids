@@ -220,7 +220,10 @@ namespace G2lib
     }
     else
     {
-      Utils::mex_assert( false, "ClothoidCurveMexWrapper('build',OBJ,...): expected 3, or 8 inputs, nrhs = {}\n", nrhs );
+      Utils::mex_assert(
+        false,
+        "ClothoidCurveMexWrapper('build',OBJ,...): expected 3, or 8 inputs, nrhs = {}\n",
+        nrhs );
     }
   }
 

@@ -178,9 +178,7 @@ namespace G2lib
       Dubins3pBuildType method,
       string_view       name )
       : BaseCurve( name )
-    {
-      this->build( xi, yi, thetai, xm, ym, xf, yf, thetaf, k_max, method );
-    }
+    { this->build( xi, yi, thetai, xm, ym, xf, yf, thetaf, k_max, method ); }
 
     //!
     //! Make a copy of an existing Dubins solution.

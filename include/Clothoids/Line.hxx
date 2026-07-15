@@ -145,9 +145,7 @@ namespace G2lib
       real_type const      max_size,   // = 1e100,
       integer const        icurve      // = 0
     ) const override
-    {
-      this->bb_triangles_ISO( -offs, tvec, max_angle, max_size, icurve );
-    }
+    { this->bb_triangles_ISO( -offs, tvec, max_angle, max_size, icurve ); }
 
     /*\
      |   ____             _          _______           _
@@ -290,13 +288,9 @@ namespace G2lib
     \*/
 
     [[nodiscard]] real_type X_ISO( real_type const s, real_type const offs ) const override
-    {
-      return m_x0 + s * m_c0 + offs * nx_begin_ISO();
-    }
+    { return m_x0 + s * m_c0 + offs * nx_begin_ISO(); }
     [[nodiscard]] real_type Y_ISO( real_type const s, real_type const offs ) const override
-    {
-      return m_y0 + s * m_s0 + offs * ny_begin_ISO();
-    }
+    { return m_y0 + s * m_s0 + offs * ny_begin_ISO(); }
     [[nodiscard]] real_type X_ISO_D( real_type const, real_type const ) const override { return m_c0; }
     [[nodiscard]] real_type Y_ISO_D( real_type const, real_type const ) const override { return m_s0; }
     [[nodiscard]] real_type X_ISO_DD( real_type const, real_type const ) const override { return 0; }
@@ -306,24 +300,16 @@ namespace G2lib
 
 #ifdef AUTODIFF_SUPPORT
     [[nodiscard]] autodiff::dual1st X_ISO( autodiff::dual1st const & s, real_type const offs ) const
-    {
-      return m_x0 + s * m_c0 + offs * nx_begin_ISO();
-    }
+    { return m_x0 + s * m_c0 + offs * nx_begin_ISO(); }
 
     [[nodiscard]] autodiff::dual1st Y_ISO( autodiff::dual1st const & s, real_type const offs ) const
-    {
-      return m_y0 + s * m_s0 + offs * ny_begin_ISO();
-    }
+    { return m_y0 + s * m_s0 + offs * ny_begin_ISO(); }
 
     [[nodiscard]] autodiff::dual2nd X_ISO( autodiff::dual2nd const & s, real_type const offs ) const
-    {
-      return m_x0 + s * m_c0 + offs * nx_begin_ISO();
-    }
+    { return m_x0 + s * m_c0 + offs * nx_begin_ISO(); }
 
     [[nodiscard]] autodiff::dual2nd Y_ISO( autodiff::dual2nd const & s, real_type const offs ) const
-    {
-      return m_y0 + s * m_s0 + offs * ny_begin_ISO();
-    }
+    { return m_y0 + s * m_s0 + offs * ny_begin_ISO(); }
 #endif
 
     // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
@@ -341,14 +327,10 @@ namespace G2lib
     }
 
     void eval_ISO_DD( real_type const, real_type const, real_type & x_DD, real_type & y_DD ) const override
-    {
-      x_DD = y_DD = 0;
-    }
+    { x_DD = y_DD = 0; }
 
     void eval_ISO_DDD( real_type const, real_type const, real_type & x_DDD, real_type & y_DDD ) const override
-    {
-      x_DDD = y_DDD = 0;
-    }
+    { x_DDD = y_DDD = 0; }
 
     /*\
      |  _                        __

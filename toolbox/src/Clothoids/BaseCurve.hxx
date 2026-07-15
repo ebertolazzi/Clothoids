@@ -83,9 +83,7 @@ namespace G2lib
     real_type const   offs_C1,
     BaseCurve const * pC2,
     real_type const   offs_C2 )
-  {
-    return collision_ISO( pC1, -offs_C1, pC2, -offs_C2 );
-  }
+  { return collision_ISO( pC1, -offs_C1, pC2, -offs_C2 ); }
 
   //!
   //! Compute curve intersections
@@ -127,9 +125,7 @@ namespace G2lib
     BaseCurve const * pC2,
     real_type const   offs_C2,
     IntersectList &   ilist )
-  {
-    G2lib::intersect_ISO( pC1, -offs_C1, pC2, -offs_C2, ilist );
-  }
+  { G2lib::intersect_ISO( pC1, -offs_C1, pC2, -offs_C2, ilist ); }
 
 #ifdef CLOTHOIDS_BACK_COMPATIBILITY
 
@@ -227,9 +223,7 @@ namespace G2lib
     //!
     [[nodiscard]]
     real_type length_SAE( real_type const offs ) const
-    {
-      return this->length_ISO( -offs );
-    }
+    { return this->length_ISO( -offs ); }
 
     /*\
      |   _     _
@@ -275,9 +269,7 @@ namespace G2lib
     //! \param[out] ymax right top
     //!
     void bbox_SAE( real_type const offs, real_type & xmin, real_type & ymin, real_type & xmax, real_type & ymax ) const
-    {
-      this->bbox_ISO( -offs, xmin, ymin, xmax, ymax );
-    }
+    { this->bbox_ISO( -offs, xmin, ymin, xmax, ymax ); }
 
     /*\
      |   _    _   _____    _                _
@@ -294,9 +286,7 @@ namespace G2lib
       real_type & /* y1 */,
       real_type & /* x2 */,
       real_type & /* y2 */ ) const
-    {
-      return false;
-    }
+    { return false; }
 
     virtual bool bbTriangle_ISO(
       real_type const /* offs */,
@@ -306,9 +296,7 @@ namespace G2lib
       real_type & /* y1 */,
       real_type & /* x2 */,
       real_type & /* y2 */ ) const
-    {
-      return false;
-    }
+    { return false; }
 
     //!
     //! Build a cover with triangles of the curve.
@@ -992,49 +980,37 @@ namespace G2lib
     //! \f$x\f$-coordinate derivative at curvilinear coordinate \f$s\f$ with offset `offs` (SAE).
     //!
     [[nodiscard]] real_type X_SAE_D( real_type const s, real_type const offs ) const
-    {
-      return this->X_ISO_D( s, -offs );
-    }
+    { return this->X_ISO_D( s, -offs ); }
 
     //!
     //! \f$y\f$-coordinate derivative at curvilinear coordinate \f$s\f$ with offset `offs` (SAE).
     //!
     [[nodiscard]] real_type Y_SAE_D( real_type const s, real_type const offs ) const
-    {
-      return this->Y_ISO_D( s, -offs );
-    }
+    { return this->Y_ISO_D( s, -offs ); }
 
     //!
     //! \f$x\f$-coordinate second derivative at curvilinear coordinate \f$s\f$ with offset `offs` (SAE).
     //!
     [[nodiscard]] real_type X_SAE_DD( real_type const s, real_type const offs ) const
-    {
-      return this->X_ISO_DD( s, -offs );
-    }
+    { return this->X_ISO_DD( s, -offs ); }
 
     //!
     //! \f$y\f$-coordinate second derivative at curvilinear coordinate \f$s\f$ with offset `offs` (SAE).
     //!
     [[nodiscard]] real_type Y_SAE_DD( real_type const s, real_type const offs ) const
-    {
-      return this->Y_ISO_DD( s, -offs );
-    }
+    { return this->Y_ISO_DD( s, -offs ); }
 
     //!
     //! \f$x\f$-coordinate third derivative at curvilinear coordinate \f$s\f$ with offset `offs` (SAE).
     //!
     [[nodiscard]] real_type X_SAE_DDD( real_type const s, real_type const offs ) const
-    {
-      return this->X_ISO_DDD( s, -offs );
-    }
+    { return this->X_ISO_DDD( s, -offs ); }
 
     //!
     //! \f$y\f$-coordinate third derivative at curvilinear coordinate \f$s\f$ with offset `offs` (SAE).
     //!
     [[nodiscard]] real_type Y_SAE_DDD( real_type const s, real_type const offs ) const
-    {
-      return this->Y_ISO_DDD( s, -offs );
-    }
+    { return this->Y_ISO_DDD( s, -offs ); }
 
     // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 
@@ -1057,9 +1033,7 @@ namespace G2lib
     //! \param[out] y     coordinate
     //!
     void eval_SAE( real_type const s, real_type const offs, real_type & x, real_type & y ) const
-    {
-      this->eval_ISO( s, -offs, x, y );
-    }
+    { this->eval_ISO( s, -offs, x, y ); }
 
     //!
     //! Compute derivative curve at position `s` with offset `offs` (ISO).
@@ -1080,9 +1054,7 @@ namespace G2lib
     //! \param[out] y_D   \f$y\f$-coordinate first derivative
     //!
     void eval_SAE_D( real_type const s, real_type const offs, real_type & x_D, real_type & y_D ) const
-    {
-      this->eval_ISO_D( s, -offs, x_D, y_D );
-    }
+    { this->eval_ISO_D( s, -offs, x_D, y_D ); }
 
     //!
     //! Compute second derivative curve at position `s` with offset `offs` (ISO).
@@ -1103,9 +1075,7 @@ namespace G2lib
     //! \param[out] y_DD  \f$y\f$-coordinate second derivative
     //!
     void eval_SAE_DD( real_type const s, real_type const offs, real_type & x_DD, real_type & y_DD ) const
-    {
-      this->eval_ISO_DD( s, -offs, x_DD, y_DD );
-    }
+    { this->eval_ISO_DD( s, -offs, x_DD, y_DD ); }
 
     //!
     //! Compute third derivative curve at position `s` with offset `offs` (ISO).
@@ -1126,9 +1096,7 @@ namespace G2lib
     //! \param[out] y_DDD \f$y\f$-coordinate third derivative
     //!
     void eval_SAE_DDD( real_type const s, real_type const offs, real_type & x_DDD, real_type & y_DDD ) const
-    {
-      this->eval_ISO_DDD( s, -offs, x_DDD, y_DDD );
-    }
+    { this->eval_ISO_DDD( s, -offs, x_DDD, y_DDD ); }
 
     /*\
      |  _                        __
@@ -1202,9 +1170,7 @@ namespace G2lib
     //! \return true if collision is detected
     //!
     bool collision_SAE( real_type const offs, BaseCurve const * pC, real_type const offs_C ) const
-    {
-      return this->collision_ISO( -offs, pC, -offs_C );
-    }
+    { return this->collision_ISO( -offs, pC, -offs_C ); }
 
     //!
     //! Intersect the curve with another curve.
@@ -1238,9 +1204,7 @@ namespace G2lib
     //!
     void intersect_SAE( real_type const offs, BaseCurve const * pC, real_type const offs_C, IntersectList & ilist )
       const
-    {
-      this->intersect_ISO( -offs, pC, -offs_C, ilist );
-    }
+    { this->intersect_ISO( -offs, pC, -offs_C, ilist ); }
 
     /*\
      |      _ _     _

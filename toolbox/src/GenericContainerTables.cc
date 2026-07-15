@@ -86,7 +86,7 @@ namespace GC_namespace
 
     // calcolo lunghezza massima stringhe headers
     std::size_t ml{ 0 };
-    auto     is{ headers.begin() };
+    auto        is{ headers.begin() };
     for ( ; is != headers.end(); ++is )
       if ( ml < is->length() ) ml = static_cast<std::size_t>( is->length() );
     // taglio a lunghezza min/max
@@ -121,7 +121,7 @@ namespace GC_namespace
 
     // calcolo lunghezza massima stringhe headers
     std::size_t ml{ 0 };
-    auto     is{ headers.begin() };
+    auto        is{ headers.begin() };
     for ( ; is != headers.end(); ++is )
       if ( ml < is->length() ) ml = static_cast<std::size_t>( is->length() );
     // taglio a lunghezza min/max

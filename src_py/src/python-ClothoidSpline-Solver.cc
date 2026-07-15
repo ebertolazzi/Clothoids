@@ -28,8 +28,6 @@ namespace G2lib
     }
 
     void Solver::guess()
-    {
-      m_spline.guess( &m_theta_solution.front(), &m_theta_min.front(), &m_theta_max.front() );
-    }
+    { m_spline.guess( &m_theta_solution.front(), &m_theta_min.front(), &m_theta_max.front() ); }
   } /* namespace Interpolation */
 } /* namespace G2lib */

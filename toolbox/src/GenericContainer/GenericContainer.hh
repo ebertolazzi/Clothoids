@@ -61,18 +61,22 @@
 namespace GC_namespace
 {
 
-  template <typename... Args> inline void print( std::format_string<Args...> fmt, Args &&... args ) { std::cout << std::format( fmt, std::forward<Args>( args )... ); }
+  template <typename... Args> inline void print( std::format_string<Args...> fmt, Args &&... args )
+  { std::cout << std::format( fmt, std::forward<Args>( args )... ); }
 
-  template <typename... Args> inline void eprint( std::format_string<Args...> fmt, Args &&... args ) { std::cerr << std::format( fmt, std::forward<Args>( args )... ); }
+  template <typename... Args> inline void eprint( std::format_string<Args...> fmt, Args &&... args )
+  { std::cerr << std::format( fmt, std::forward<Args>( args )... ); }
 
-  template <typename... Args> [[noreturn]] inline void throw_runtime_error( std::format_string<Args...> fmt, Args &&... args )
+  template <typename... Args>
+  [[noreturn]] inline void throw_runtime_error( std::format_string<Args...> fmt, Args &&... args )
   { throw std::runtime_error( std::format( fmt, std::forward<Args>( args )... ) ); }
 
-  [[noreturn]] inline void throw_runtime_error( std::string const & last_error ) { throw std::runtime_error( last_error ); }
+  [[noreturn]] inline void throw_runtime_error( std::string const & last_error )
+  { throw std::runtime_error( last_error ); }
 
   template <typename... Args> inline void GC_assert( bool cond, char const last_error[] )
   {
-    if ( !cond ) throw_runtime_error( std::string(last_error) );
+    if ( !cond ) throw_runtime_error( std::string( last_error ) );
   }
 
   template <typename... Args> inline void GC_assert( bool cond, std::string const & last_error )
@@ -186,8 +190,8 @@ namespace GC_namespace
 
     public:
       Box() : m_ptr( std::make_unique<T>() ) {}
-      template <typename... Args>
-      explicit Box( std::in_place_t, Args &&... args ) : m_ptr( std::make_unique<T>( std::forward<Args>( args )... ) )
+      template <typename... Args> explicit Box( std::in_place_t, Args &&... args )
+        : m_ptr( std::make_unique<T>( std::forward<Args>( args )... ) )
       {
       }
       Box( Box const & o ) : m_ptr( std::make_unique<T>( *o.m_ptr ) ) {}
@@ -198,7 +202,7 @@ namespace GC_namespace
         return *this;
       }
       Box & operator=( Box && ) noexcept = default;
-      ~Box() = default;
+      ~Box()                             = default;
 
       T &       operator*() noexcept { return *m_ptr; }
       T const & operator*() const noexcept { return *m_ptr; }
@@ -233,9 +237,7 @@ namespace GC_namespace
 
     //! True when `x` holds an integral value (NaN and infinities fail).
     [[nodiscard]] inline bool is_integral_value( real_type const x )
-    {
-      return is_zero0( x - std::round( x ) );
-    }
+    { return is_zero0( x - std::round( x ) ); }
 
     //!
     //! True when the real `x` holds an integral value exactly representable
@@ -280,11 +282,8 @@ namespace GC_namespace
     mat_type() : Base(), m_num_rows( 0 ), m_num_cols( 0 ) {}
 
     //! `nr` x `nc` matrix with all elements zero-initialized.
-    mat_type( std::size_t const nr, std::size_t const nc )
-      : Base( nr * nc ), m_num_rows( nr ), m_num_cols( nc )
-    {
-      std::fill( Base::begin(), Base::end(), TYPE{} );
-    }
+    mat_type( std::size_t const nr, std::size_t const nc ) : Base( nr * nc ), m_num_rows( nr ), m_num_cols( nc )
+    { std::fill( Base::begin(), Base::end(), TYPE{} ); }
 
     //! Resize to `nr` x `nc`, zero-filling all elements (destructive, as before).
     void resize( std::size_t const nr, std::size_t const nc )
@@ -306,9 +305,7 @@ namespace GC_namespace
     [[nodiscard]] bool empty() const noexcept { return Base::empty(); }
 
     template <std::integral T1, std::integral T2> void resize( T1 const nr, T2 const nc )
-    {
-      resize( static_cast<std::size_t>( nr ), static_cast<std::size_t>( nc ) );
-    }
+    { resize( static_cast<std::size_t>( nr ), static_cast<std::size_t>( nc ) ); }
 
     //! Number of rows.
     [[nodiscard]] std::size_t num_rows() const { return m_num_rows; }
@@ -321,8 +318,10 @@ namespace GC_namespace
       GC_assert(
         i < num_rows() && j < num_cols(),
         "mat_type::operator() ({},{}) out of range [0,{}) x [0,{})",
-        i, j, num_rows(), num_cols()
-      );
+        i,
+        j,
+        num_rows(),
+        num_cols() );
       return Base::operator[]( i + j * m_num_rows );
     }
 
@@ -332,55 +331,41 @@ namespace GC_namespace
       GC_assert(
         i < num_rows() && j < num_cols(),
         "mat_type::operator() ({},{}) out of range [0,{}) x [0,{})",
-        i, j, num_rows(), num_cols()
-      );
+        i,
+        j,
+        num_rows(),
+        num_cols() );
       return Base::operator[]( i + j * m_num_rows );
     }
 
     //! Copy column `nc` into vector `C`.
     void get_column( std::size_t const nc, vector<TYPE> & C ) const
     {
-      GC_assert(
-        nc < num_cols(), 
-        "mat_type::get_column({},C) column index out of range max = {}",
-        nc, num_cols() - 1
-      );
+      GC_assert( nc < num_cols(), "mat_type::get_column({},C) column index out of range max = {}", nc, num_cols() - 1 );
       C.resize( num_rows() );
       for ( std::size_t i{ 0 }; i < num_rows(); ++i ) C[i] = Base::operator[]( i + nc * m_num_rows );
     }
 
     template <std::integral T> void get_column( T const nc, vector<TYPE> & C ) const
-    {
-      get_column( static_cast<std::size_t>( nc ), C );
-    }
+    { get_column( static_cast<std::size_t>( nc ), C ); }
 
 
     //! Copy row `nr` into vector `R`.
     void get_row( std::size_t const nr, vector<TYPE> & R ) const
     {
-      GC_assert(
-        nr < num_rows(),
-        "mat_type::get_row({},R) row index out of range max = {}",
-        nr, num_rows() - 1
-      );
+      GC_assert( nr < num_rows(), "mat_type::get_row({},R) row index out of range max = {}", nr, num_rows() - 1 );
       R.resize( num_cols() );
       for ( std::size_t j{ 0 }; j < num_cols(); ++j ) R[j] = Base::operator[]( nr + j * m_num_rows );
     }
 
     template <std::integral T> void get_row( T const nr, vector<TYPE> & R ) const
-    {
-      get_row( static_cast<std::size_t>( nr ), R );
-    }
+    { get_row( static_cast<std::size_t>( nr ), R ); }
 
 
     //! Copy column `nc` into buffer `C` (must hold `num_rows()` elements).
     void get_column( std::size_t const nc, TYPE * C ) const
     {
-      GC_assert(
-        nc < num_cols(), 
-        "mat_type::get_column({},C) column index out of range max = {}",
-        nc, num_cols() - 1
-      );
+      GC_assert( nc < num_cols(), "mat_type::get_column({},C) column index out of range max = {}", nc, num_cols() - 1 );
       for ( std::size_t i{ 0 }; i < num_rows(); ++i ) C[i] = Base::operator[]( i + nc * m_num_rows );
     }
 
@@ -388,20 +373,14 @@ namespace GC_namespace
     //! Copy row `nr` into buffer `R` (must hold `num_cols()` elements).
     void get_row( std::size_t const nr, TYPE * R ) const
     {
-      GC_assert(
-        nr < num_rows(),
-        "mat_type::get_row({},R) row index out of range max = {}",
-        nr, num_rows() - 1
-      );
+      GC_assert( nr < num_rows(), "mat_type::get_row({},R) row index out of range max = {}", nr, num_rows() - 1 );
       for ( std::size_t j{ 0 }; j < num_cols(); ++j ) R[j] = Base::operator[]( nr + j * m_num_rows );
     }
 
 
     //! Print a short description of the matrix to `stream`.
     void info( ostream_type & stream ) const
-    {
-      stream << "Matrix of floating point number of size " << num_rows() << " x " << num_cols() << '\n';
-    }
+    { stream << "Matrix of floating point number of size " << num_rows() << " x " << num_cols() << '\n'; }
 
     //! Return a short description of the matrix as a string.
     [[nodiscard]] string_type info() const
@@ -469,7 +448,8 @@ namespace GC_namespace
   //! TypeAllowed type = TypeAllowed::INTEGER;  // Defines an integer type for GenericContainer
   //! \endcode
   //!
-  enum class GC_type : int_type {
+  enum class GC_type : int_type
+  {
     NOTYPE,   //!< No type assigned
     POINTER,  //!< Pointer type
     BOOL,     //!< Boolean type
@@ -639,33 +619,32 @@ namespace GC_namespace
     //! recursive `vector_type`/`map_type` alternatives legal.
     //!
     using Data = std::variant<
-      std::monostate,          // NOTYPE
-      pointer_type,            // POINTER
-      bool_type,               // BOOL
-      int_type,                // INTEGER
-      long_type,               // LONG
-      real_type,               // REAL
-      Box<complex_type>,       // COMPLEX
-      Box<string_type>,        // STRING
-      Box<vec_pointer_type>,   // VEC_POINTER
-      Box<vec_bool_type>,      // VEC_BOOL
-      Box<vec_int_type>,       // VEC_INTEGER
-      Box<vec_long_type>,      // VEC_LONG
-      Box<vec_real_type>,      // VEC_REAL
-      Box<vec_complex_type>,   // VEC_COMPLEX
-      Box<vec_string_type>,    // VEC_STRING
-      Box<mat_int_type>,       // MAT_INTEGER
-      Box<mat_long_type>,      // MAT_LONG
-      Box<mat_real_type>,      // MAT_REAL
-      Box<mat_complex_type>,   // MAT_COMPLEX
-      Box<vector_type>,        // VECTOR
-      Box<map_type>            // MAP
-    >;
+      std::monostate,         // NOTYPE
+      pointer_type,           // POINTER
+      bool_type,              // BOOL
+      int_type,               // INTEGER
+      long_type,              // LONG
+      real_type,              // REAL
+      Box<complex_type>,      // COMPLEX
+      Box<string_type>,       // STRING
+      Box<vec_pointer_type>,  // VEC_POINTER
+      Box<vec_bool_type>,     // VEC_BOOL
+      Box<vec_int_type>,      // VEC_INTEGER
+      Box<vec_long_type>,     // VEC_LONG
+      Box<vec_real_type>,     // VEC_REAL
+      Box<vec_complex_type>,  // VEC_COMPLEX
+      Box<vec_string_type>,   // VEC_STRING
+      Box<mat_int_type>,      // MAT_INTEGER
+      Box<mat_long_type>,     // MAT_LONG
+      Box<mat_real_type>,     // MAT_REAL
+      Box<mat_complex_type>,  // MAT_COMPLEX
+      Box<vector_type>,       // VECTOR
+      Box<map_type>           // MAP
+      >;
 
     Data m_data{};  //!< The stored value; the active alternative is the type tag.
 
-    template <GC_type TP>
-    using alt_t = std::variant_alternative_t<static_cast<std::size_t>( TP ), Data>;
+    template <GC_type TP> using alt_t = std::variant_alternative_t<static_cast<std::size_t>( TP ), Data>;
 
     static_assert( std::variant_size_v<Data> == 21 );
     static_assert( std::is_same_v<alt_t<GC_type::NOTYPE>, std::monostate> );
@@ -1218,9 +1197,7 @@ namespace GC_namespace
     vec_pointer_type & set_vec_pointer( std::size_t sz = 0 );
 
     template <std::integral T> vec_pointer_type & set_vec_pointer( T sz )
-    {
-      return set_vec_pointer( static_cast<std::size_t>( sz ) );
-    }
+    { return set_vec_pointer( static_cast<std::size_t>( sz ) ); }
 
     //! \brief Set the data to `vec_pointer_type` by copying from another vector.
     //!
@@ -1255,9 +1232,7 @@ namespace GC_namespace
     vec_bool_type & set_vec_bool( std::size_t sz = 0 );
 
     template <std::integral T> vec_bool_type & set_vec_bool( T sz )
-    {
-      return set_vec_bool( static_cast<std::size_t>( sz ) );
-    }
+    { return set_vec_bool( static_cast<std::size_t>( sz ) ); }
 
     //! \brief Set the data to `vec_bool_type` by copying from another vector.
     //!
@@ -1292,9 +1267,7 @@ namespace GC_namespace
     vec_int_type & set_vec_int( std::size_t sz = 0 );
 
     template <std::integral T> vec_int_type & set_vec_int( T sz )
-    {
-      return set_vec_int( static_cast<std::size_t>( sz ) );
-    }
+    { return set_vec_int( static_cast<std::size_t>( sz ) ); }
 
     //! \brief Set the data to `vec_int_type` by copying from another vector.
     //!
@@ -1329,9 +1302,7 @@ namespace GC_namespace
     vec_long_type & set_vec_long( std::size_t sz = 0 );
 
     template <std::integral T> vec_long_type & set_vec_long( T sz )
-    {
-      return set_vec_long( static_cast<std::size_t>( sz ) );
-    }
+    { return set_vec_long( static_cast<std::size_t>( sz ) ); }
 
     //! \brief Set the data to `vec_long_type` by copying from another vector.
     //!
@@ -1366,9 +1337,7 @@ namespace GC_namespace
     vec_real_type & set_vec_real( std::size_t sz = 0 );
 
     template <std::integral T> vec_real_type & set_vec_real( T sz )
-    {
-      return set_vec_real( static_cast<std::size_t>( sz ) );
-    }
+    { return set_vec_real( static_cast<std::size_t>( sz ) ); }
 
     //! \brief Set the data to `vec_real_type` by copying from another vector.
     //!
@@ -1403,9 +1372,7 @@ namespace GC_namespace
     vec_complex_type & set_vec_complex( std::size_t sz = 0 );
 
     template <std::integral T> vec_complex_type & set_vec_complex( T sz )
-    {
-      return set_vec_complex( static_cast<std::size_t>( sz ) );
-    }
+    { return set_vec_complex( static_cast<std::size_t>( sz ) ); }
 
     //! \brief Set the data to `vec_complex_type` by copying from another vector.
     //!
@@ -1440,9 +1407,7 @@ namespace GC_namespace
     vec_string_type & set_vec_string( std::size_t sz = 0 );
 
     template <std::integral T> vec_string_type & set_vec_string( T sz )
-    {
-      return set_vec_string( static_cast<std::size_t>( sz ) );
-    }
+    { return set_vec_string( static_cast<std::size_t>( sz ) ); }
 
     //! \brief Set the data to `vec_string_type` by copying from another vector.
     //!
@@ -1784,7 +1749,7 @@ namespace GC_namespace
     //! \return The number of columns in the matrix.
     //!
     [[nodiscard]] std::size_t num_cols() const;
-    
+
     //! \brief Checks whether the stored value represents a numeric type.
     //!
     //!  Determines if the current container holds a value that can be considered
@@ -1908,11 +1873,11 @@ namespace GC_namespace
     //!
     template <typename T> void get_value( T & v, string_view const where = "" ) const;
 
-//!
-//! \brief Get the stored value as a pointer.
-//!
-//! This function retrieves the stored pointer value.
-//!
+    //!
+    //! \brief Get the stored value as a pointer.
+    //!
+    //! This function retrieves the stored pointer value.
+    //!
     template <typename T>
       requires std::is_object_v<T>
     T & get_pointer()
@@ -2938,10 +2903,7 @@ namespace GC_namespace
     //!
     bool_type get_bool_at( std::size_t i );
 
-    template <std::integral T> bool_type get_bool_at( T i )
-    {
-      return get_bool_at( static_cast<std::size_t>( i ) );
-    }
+    template <std::integral T> bool_type get_bool_at( T i ) { return get_bool_at( static_cast<std::size_t>( i ) ); }
 
     //!
     //! Get the `i`-th boolean of the stored data.
@@ -2972,10 +2934,7 @@ namespace GC_namespace
     //!
     int_type & get_int_at( std::size_t i );
 
-    template <std::integral T> int_type & get_int_at( T i )
-    {
-      return get_int_at( static_cast<std::size_t>( i ) );
-    }
+    template <std::integral T> int_type & get_int_at( T i ) { return get_int_at( static_cast<std::size_t>( i ) ); }
 
     //!
     //! Get the `i`-th const integer of the stored data.
@@ -3006,10 +2965,7 @@ namespace GC_namespace
     //!
     long_type & get_long_at( std::size_t i );
 
-    template <std::integral T> long_type & get_long_at( T i )
-    {
-      return get_long_at( static_cast<std::size_t>( i ) );
-    }
+    template <std::integral T> long_type & get_long_at( T i ) { return get_long_at( static_cast<std::size_t>( i ) ); }
 
     //!
     //! Get the `i`-th const long integer of the stored data.
@@ -3040,10 +2996,7 @@ namespace GC_namespace
     //!
     real_type & get_real_at( std::size_t i );
 
-    template <std::integral T> real_type & get_real_at( T i )
-    {
-      return get_real_at( static_cast<std::size_t>( i ) );
-    }
+    template <std::integral T> real_type & get_real_at( T i ) { return get_real_at( static_cast<std::size_t>( i ) ); }
 
     //!
     //! Get the `i`-th const `real_type` of the stored data.
@@ -3075,9 +3028,7 @@ namespace GC_namespace
     complex_type & get_complex_at( std::size_t i );
 
     template <std::integral T> complex_type & get_complex_at( T i )
-    {
-      return get_complex_at( static_cast<std::size_t>( i ) );
-    }
+    { return get_complex_at( static_cast<std::size_t>( i ) ); }
 
     //!
     //! Get the `i`-th const `complex_type` of the stored data.
@@ -3233,9 +3184,7 @@ namespace GC_namespace
     string_type & get_string_at( std::size_t i );
 
     template <std::integral T> string_type & get_string_at( T i )
-    {
-      return get_string_at( static_cast<std::size_t>( i ) );
-    }
+    { return get_string_at( static_cast<std::size_t>( i ) ); }
 
     //!
     //! Get the `i`-th const string of the stored data.
@@ -3267,9 +3216,7 @@ namespace GC_namespace
     GenericContainer & get_gc_at( std::size_t i );
 
     template <std::integral T> GenericContainer & get_gc_at( T i )
-    {
-      return get_gc_at( static_cast<std::size_t>( i ) );
-    }
+    { return get_gc_at( static_cast<std::size_t>( i ) ); }
 
     //!
     //! Get the `i`-th const `GenericContainer` of the stored data.
@@ -4317,9 +4264,7 @@ namespace GC_namespace
     //! \endverbatim
     //!
     void print( ostream_type & stream, string_view prefix = "", string_view indent = "    " ) const
-    {
-      this->dump( stream, prefix, indent );
-    }
+    { this->dump( stream, prefix, indent ); }
 
     //!
     //! \brief Returns a human-readable string representation of the `GenericContainer`.
@@ -4916,9 +4861,7 @@ namespace GC_namespace
     //! \return the number of bytes written
     //!
     int32_t serialize( std::span<uint8_t> const buffer ) const
-    {
-      return this->serialize( static_cast<int32_t>( buffer.size() ), buffer.data() );
-    }
+    { return this->serialize( static_cast<int32_t>( buffer.size() ), buffer.data() ); }
 
     //!
     //! \brief Rebuild the container from serialized bytes.
@@ -4927,9 +4870,7 @@ namespace GC_namespace
     //! \return the number of bytes consumed
     //!
     int32_t de_serialize( std::span<uint8_t const> const buffer )
-    {
-      return this->de_serialize( static_cast<int32_t>( buffer.size() ), buffer.data() );
-    }
+    { return this->de_serialize( static_cast<int32_t>( buffer.size() ), buffer.data() ); }
 
     [[nodiscard]] std::vector<uint8_t> serialize() const
     {
@@ -5014,9 +4955,7 @@ namespace GC_namespace
     vector_type const &     data,
     ostream_type &          stream,
     char                    delimiter = '\t' )
-  {
-    write_table( headers, data, stream, delimiter );
-  }
+  { write_table( headers, data, stream, delimiter ); }
 
   //!
   //! Write data as a table
@@ -5040,9 +4979,7 @@ namespace GC_namespace
     mat_real_type const &   data,
     ostream_type &          stream,
     char                    delimiter = '\t' )
-  {
-    write_table( headers, data, stream, delimiter );
-  }
+  { write_table( headers, data, stream, delimiter ); }
 
   //!
   //! Write data as a table
@@ -5057,9 +4994,7 @@ namespace GC_namespace
   //! \deprecated use `write_table_formatted`
   //!
   inline void writeTableFormatted( vec_string_type const & headers, vector_type const & data, ostream_type & stream )
-  {
-    write_table_formatted( headers, data, stream );
-  }
+  { write_table_formatted( headers, data, stream ); }
 
   //!
   //! Write data as a table
@@ -5074,9 +5009,7 @@ namespace GC_namespace
   //! \deprecated use `write_table_formatted`
   //!
   inline void writeTableFormatted( vec_string_type const & headers, mat_real_type const & data, ostream_type & stream )
-  {
-    write_table_formatted( headers, data, stream );
-  }
+  { write_table_formatted( headers, data, stream ); }
 
   //!
   //! Utrility to write sctring escaping non printable

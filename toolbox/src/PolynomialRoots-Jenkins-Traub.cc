@@ -519,7 +519,7 @@ namespace PolynomialRoots
           // flow explicitly: on the first pass only, if the real sequence is
           // the better convergence candidate, skip the quadratic attempt and
           // go directly to RealIT below.
-          bool first_iteration{ true };
+          bool    first_iteration{ true };
           integer stry{ 0 };
           integer vtry{ 0 };
           for ( ;; )

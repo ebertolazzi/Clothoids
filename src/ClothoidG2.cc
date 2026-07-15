@@ -43,14 +43,10 @@ namespace G2lib
   using std::vector;
 
   inline real_type power2( real_type const a )
-  {
-    return a * a;
-  }
+  { return a * a; }
 
   inline real_type power3( real_type const a )
-  {
-    return a * a * a;
-  }
+  { return a * a * a; }
 
   inline real_type power4( real_type const a )
   {

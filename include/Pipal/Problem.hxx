@@ -261,9 +261,7 @@ namespace Pipal
      * \param[in] objective_gradient The gradient of the objective function to set.
      */
     void objective_gradient( ObjectiveGradientFunc const & objective_gradient )
-    {
-      this->m_objective_gradient = objective_gradient;
-    }
+    { this->m_objective_gradient = objective_gradient; }
 
     /**
      * \brief Get the constraints function.
@@ -288,9 +286,7 @@ namespace Pipal
      * \param[in] constraints_jacobian The Jacobian of the constraints function to set.
      */
     void constraints_jacobian( ConstraintsJacobianFunc const & constraints_jacobian )
-    {
-      this->m_constraints_jacobian = constraints_jacobian;
-    }
+    { this->m_constraints_jacobian = constraints_jacobian; }
 
     /**
      * \brief Get the lower bounds on the primal variables function.
@@ -303,9 +299,7 @@ namespace Pipal
      * \param[in] primal_lower_bounds The lower bounds on the primal variables function to set.
      */
     void primal_lower_bounds( BoundsFunc const & primal_lower_bounds )
-    {
-      this->m_primal_lower_bounds = primal_lower_bounds;
-    }
+    { this->m_primal_lower_bounds = primal_lower_bounds; }
 
     /**
      * \brief Get the upper bounds on the primal variables function.
@@ -318,9 +312,7 @@ namespace Pipal
      * \param[in] primal_upper_bounds The upper bounds on the primal variables function to set.
      */
     void primal_upper_bounds( BoundsFunc const & primal_upper_bounds )
-    {
-      this->m_primal_upper_bounds = primal_upper_bounds;
-    }
+    { this->m_primal_upper_bounds = primal_upper_bounds; }
 
     /**
      * \brief Get the lower bounds on the constraints function.
@@ -333,9 +325,7 @@ namespace Pipal
      * \param[in] constraints_lower_bounds The lower bounds on the constraints function to set.
      */
     void constraints_lower_bounds( BoundsFunc const & constraints_lower_bounds )
-    {
-      this->m_constraints_lower_bounds = constraints_lower_bounds;
-    }
+    { this->m_constraints_lower_bounds = constraints_lower_bounds; }
 
     /**
      * \brief Get the upper bounds on the constraints function.
@@ -348,9 +338,7 @@ namespace Pipal
      * \param[in] constraints_upper_bounds The upper bounds on the constraints function to set.
      */
     void constraints_upper_bounds( BoundsFunc const & constraints_upper_bounds )
-    {
-      this->m_constraints_upper_bounds = constraints_upper_bounds;
-    }
+    { this->m_constraints_upper_bounds = constraints_upper_bounds; }
 
     /**
      * \brief Get the Hessian of the Lagrangian function.
@@ -363,9 +351,7 @@ namespace Pipal
      * \param[in] lagrangian_hessian The Hessian of the Lagrangian function to set.
      */
     void lagrangian_hessian( LagrangianHessianFunc const & lagrangian_hessian )
-    {
-      this->m_lagrangian_hessian = lagrangian_hessian;
-    }
+    { this->m_lagrangian_hessian = lagrangian_hessian; }
 
     /**
      * \brief Evaluate the objective function.
@@ -382,9 +368,7 @@ namespace Pipal
      * \return True if the evaluation was successful, false otherwise.
      */
     bool objective_gradient( Vector<Real> const & x, Vector<Real> & out ) const override
-    {
-      return this->m_objective_gradient( x, out );
-    }
+    { return this->m_objective_gradient( x, out ); }
 
     /**
      * \brief Evaluate the constraints function.
@@ -393,9 +377,7 @@ namespace Pipal
      * \return True if the evaluation was successful, false otherwise.
      */
     bool constraints( Vector<Real> const & x, Vector<Real> & out ) const override
-    {
-      return this->m_constraints( x, out );
-    }
+    { return this->m_constraints( x, out ); }
 
     /**
      * \brief Evaluate the Jacobian of the constraints function.
@@ -404,9 +386,7 @@ namespace Pipal
      * \return True if the evaluation was successful, false otherwise.
      */
     bool constraints_jacobian( Vector<Real> const & x, SparseMatrix<Real> & out ) const override
-    {
-      return this->m_constraints_jacobian( x, out );
-    }
+    { return this->m_constraints_jacobian( x, out ); }
 
     /**
      * \brief Evaluate the Hessian of the Lagrangian function.
@@ -416,9 +396,7 @@ namespace Pipal
      * \return True if the evaluation was successful, false otherwise.
      */
     bool lagrangian_hessian( Vector<Real> const & x, Vector<Real> const & l, SparseMatrix<Real> & out ) const override
-    {
-      return this->m_lagrangian_hessian( x, l, out );
-    }
+    { return this->m_lagrangian_hessian( x, l, out ); }
 
     /**
      * \brief Lower bounds on the primal variables.
@@ -440,9 +418,7 @@ namespace Pipal
      * \return True if the evaluation was successful, false otherwise.
      */
     bool constraints_lower_bounds( Vector<Real> & out ) const override
-    {
-      return this->m_constraints_lower_bounds( out );
-    }
+    { return this->m_constraints_lower_bounds( out ); }
 
     /**
      * \brief Upper bounds on the constraints.
@@ -450,9 +426,7 @@ namespace Pipal
      * \return True if the evaluation was successful, false otherwise.
      */
     bool constraints_upper_bounds( Vector<Real> & out ) const override
-    {
-      return this->m_constraints_upper_bounds( out );
-    }
+    { return this->m_constraints_upper_bounds( out ); }
 
   };  // class ProblemWrapper
 

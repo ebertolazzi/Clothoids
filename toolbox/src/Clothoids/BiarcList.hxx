@@ -341,9 +341,7 @@ namespace G2lib
       real_type const offs,
       real_type const max_angle = Utils::m_pi / 6,  // 30 degree
       real_type const max_size  = 1e100 ) const
-    {
-      build_AABBtree_ISO( -offs, max_angle, max_size );
-    }
+    { build_AABBtree_ISO( -offs, max_angle, max_size ); }
 #endif
 
     /*\
@@ -355,9 +353,7 @@ namespace G2lib
     \*/
 
     void bbox( real_type & xmin, real_type & ymin, real_type & xmax, real_type & ymax ) const override
-    {
-      bbox_ISO( 0, xmin, ymin, xmax, ymax );
-    }
+    { bbox_ISO( 0, xmin, ymin, xmax, ymax ); }
 
     void bbox_ISO( real_type const offs, real_type & xmin, real_type & ymin, real_type & xmax, real_type & ymax )
       const override;

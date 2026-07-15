@@ -87,9 +87,7 @@ namespace G2lib
   // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 
   ClothoidCurve::ClothoidCurve( ClothoidCurve const & s ) : BaseCurve( s.name() )
-  {
-    this->copy( s );
-  }
+  { this->copy( s ); }
 
   // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 
@@ -120,9 +118,7 @@ namespace G2lib
     real_type const theta1,
     string const &  name )
     : BaseCurve( name )
-  {
-    build_G1( P0[0], P0[1], theta0, P1[0], P1[1], theta1 );
-  }
+  { build_G1( P0[0], P0[1], theta0, P1[0], P1[1], theta1 ); }
 
   // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 
@@ -165,29 +161,17 @@ namespace G2lib
   // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 
   void ClothoidCurve::build( Biarc const & )
-  {
-    Utils::Error( "cannot convert from Biarc to ClothoidCurve\n" );
-  }
+  { Utils::Error( "cannot convert from Biarc to ClothoidCurve\n" ); }
   void ClothoidCurve::build( PolyLine const & )
-  {
-    Utils::Error( "cannot convert from PolyLine to ClothoidCurve\n" );
-  }
+  { Utils::Error( "cannot convert from PolyLine to ClothoidCurve\n" ); }
   void ClothoidCurve::build( BiarcList const & )
-  {
-    Utils::Error( "cannot convert from BiarcList to ClothoidCurve\n" );
-  }
+  { Utils::Error( "cannot convert from BiarcList to ClothoidCurve\n" ); }
   void ClothoidCurve::build( ClothoidList const & )
-  {
-    Utils::Error( "cannot convert from ClothoidList to ClothoidCurve\n" );
-  }
+  { Utils::Error( "cannot convert from ClothoidList to ClothoidCurve\n" ); }
   void ClothoidCurve::build( Dubins const & )
-  {
-    Utils::Error( "cannot convert from Dubins to ClothoidCurve\n" );
-  }
+  { Utils::Error( "cannot convert from Dubins to ClothoidCurve\n" ); }
   void ClothoidCurve::build( Dubins3p const & )
-  {
-    Utils::Error( "cannot convert from Dubins3p to ClothoidCurve\n" );
-  }
+  { Utils::Error( "cannot convert from Dubins3p to ClothoidCurve\n" ); }
 
   // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 
@@ -1299,9 +1283,7 @@ namespace G2lib
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   real_type ClothoidCurve::integral_curvature2() const
-  {
-    return m_L * ( m_CD.m_kappa0 * ( m_CD.m_kappa0 + m_L * m_CD.m_dk ) + ( m_L * m_L ) * m_CD.m_dk * m_CD.m_dk / 3 );
-  }
+  { return m_L * ( m_CD.m_kappa0 * ( m_CD.m_kappa0 + m_L * m_CD.m_dk ) + ( m_L * m_L ) * m_CD.m_dk * m_CD.m_dk / 3 ); }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
@@ -1350,9 +1332,7 @@ namespace G2lib
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   string ClothoidCurve::info() const
-  {
-    return fmt::format( "Clothoid\n{}\n", *this );
-  }
+  { return fmt::format( "Clothoid\n{}\n", *this ); }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   //!

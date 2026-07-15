@@ -72,8 +72,7 @@ namespace GC_namespace
       GC_assert(
         false,
         "GenericContainer::from_file: yaml/toml support is not linked into this library; "
-        "link GenericContainer::Yaml or GenericContainer::Toml and call from_yaml()/from_toml() directly"
-      );
+        "link GenericContainer::Yaml or GenericContainer::Toml and call from_yaml()/from_toml() directly" );
     }
     file.close();
     return false;
@@ -145,7 +144,7 @@ namespace GC_namespace
     GenericContainer * ptr_pars )
   {
     std::size_t nl      = 0;
-    bool     comment = true;
+    bool        comment = true;
     while ( comment )
     {
       if ( stream.fail() ) return 0;
@@ -215,14 +214,14 @@ namespace GC_namespace
 
     // reading header line
     std::size_t nline{ get_line_and_skip_comments( stream, line, commentChars ) };  // read  line
-    tokenizeString( line, headers, delimiters );                                 // tokenize line
+    tokenizeString( line, headers, delimiters );                                    // tokenize line
     std::size_t const ncol{ static_cast<std::size_t>( headers.size() ) };
 
     vector_type & data{ ( *this )["data"].set_vector( ncol ) };
     for ( std::size_t icol{ 0 }; icol < ncol; ++icol ) data[icol].set_vec_real();
 
     // read data by line
-    std::size_t        nread;
+    std::size_t     nread;
     vec_string_type tokens;
     while ( ( nread = get_line_and_skip_comments( stream, line, commentChars ) ) > 0 )
     {
@@ -235,11 +234,13 @@ namespace GC_namespace
       GC_assert(
         static_cast<std::size_t>( tokens.size() ) == ncol,
         "read_formatted_data, in reading line: {} expected {} found: {}",
-        nline, ncol, tokens.size()
-      );
+        nline,
+        ncol,
+        tokens.size() );
 
       // store data in row vector
-      for ( std::size_t icol = 0; icol < ncol; ++icol ) data[icol].get_vec_real().push_back( atof( tokens[icol].data() ) );
+      for ( std::size_t icol = 0; icol < ncol; ++icol )
+        data[icol].get_vec_real().push_back( atof( tokens[icol].data() ) );
     }
     return *this;
   }
@@ -275,7 +276,7 @@ namespace GC_namespace
     }
 
     // read data by line
-    std::size_t        nread;
+    std::size_t     nread;
     vec_string_type tokens;
     while ( ( nread = get_line_and_skip_comments2( stream, line, commentChars, ptr_pars ) ) > 0 )
     {
@@ -288,8 +289,9 @@ namespace GC_namespace
       GC_assert(
         static_cast<std::size_t>( tokens.size() ) == ncol,
         "read_formatted_data2, in reading line: {} expected {} found: {}",
-        nline, ncol, tokens.size()
-      );
+        nline,
+        ncol,
+        tokens.size() );
 
       // store data in row vector
       for ( std::size_t icol = 0; icol < ncol; ++icol ) pcolumns[icol]->push_back( atof( tokens[icol].data() ) );

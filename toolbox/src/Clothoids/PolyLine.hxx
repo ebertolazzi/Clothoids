@@ -186,9 +186,7 @@ namespace G2lib
       real_type const      max_size,   // = 1e100,
       integer const        icurve      // = 0
     ) const override
-    {
-      this->bb_triangles_ISO( -offs, tvec, max_angle, max_size, icurve );
-    }
+    { this->bb_triangles_ISO( -offs, tvec, max_angle, max_size, icurve ); }
 
     real_type length() const override { return m_s0.back(); }
     real_type length_ISO( real_type const ) const override;
@@ -270,14 +268,10 @@ namespace G2lib
     }
 
     void eval_ISO_DD( real_type const, real_type const, real_type & x_DD, real_type & y_DD ) const override
-    {
-      x_DD = y_DD = 0;
-    }
+    { x_DD = y_DD = 0; }
 
     void eval_ISO_DDD( real_type const, real_type const, real_type & x_DDD, real_type & y_DDD ) const override
-    {
-      x_DDD = y_DDD = 0;
-    }
+    { x_DDD = y_DDD = 0; }
 
     /*\
      |  _                        __

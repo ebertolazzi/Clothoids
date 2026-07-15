@@ -432,9 +432,7 @@ namespace G2lib
       integer const       npts,
       real_type const     max_angle,
       vector<real_type> & s ) const
-    {
-      optimized_sample_ISO( -offs, npts, max_angle, s );
-    }
+    { optimized_sample_ISO( -offs, npts, max_angle, s ); }
 
     /*\
      |     _ _    _
@@ -511,9 +509,7 @@ namespace G2lib
       real_type & yy1,
       real_type & xx2,
       real_type & yy2 ) const override
-    {
-      return m_CD.bbTriangle( m_L, xx0, yy0, xx1, yy1, xx2, yy2 );
-    }
+    { return m_CD.bbTriangle( m_L, xx0, yy0, xx1, yy1, xx2, yy2 ); }
 
     //!
     //! Get the triangle bounding box
@@ -527,9 +523,7 @@ namespace G2lib
       real_type &     yy1,
       real_type &     xx2,
       real_type &     yy2 ) const override
-    {
-      return m_CD.bbTriangle_ISO( m_L, offs, xx0, yy0, xx1, yy1, xx2, yy2 );
-    }
+    { return m_CD.bbTriangle_ISO( m_L, offs, xx0, yy0, xx1, yy1, xx2, yy2 ); }
 
     //!
     //! Get the triangle bounding box
@@ -543,9 +537,7 @@ namespace G2lib
       real_type &     yy1,
       real_type &     xx2,
       real_type &     yy2 ) const
-    {
-      return m_CD.bbTriangle_SAE( m_L, offs, xx0, yy0, xx1, yy1, xx2, yy2 );
-    }
+    { return m_CD.bbTriangle_SAE( m_L, offs, xx0, yy0, xx1, yy1, xx2, yy2 ); }
 
     bool bbTriangle( Triangle2D & t, integer const icurve = 0 ) const
     {
@@ -586,9 +578,7 @@ namespace G2lib
       real_type const      max_size,   // = 1e100,
       integer const        icurve      // = 0
     ) const override
-    {
-      this->bb_triangles_ISO( -offs, tvec, max_angle, max_size, icurve );
-    }
+    { this->bb_triangles_ISO( -offs, tvec, max_angle, max_size, icurve ); }
 
     void bb_triangles(
       vector<Triangle2D> & tvec,
@@ -596,16 +586,12 @@ namespace G2lib
       real_type const      max_size,   // = 1e100,
       integer const        icurve      // = 0
     ) const override
-    {
-      this->bb_triangles_ISO( 0, tvec, max_angle, max_size, icurve );
-    }
+    { this->bb_triangles_ISO( 0, tvec, max_angle, max_size, icurve ); }
 
     // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 
     void bbox( real_type & xmin, real_type & ymin, real_type & xmax, real_type & ymax ) const override
-    {
-      bbox_ISO( 0, xmin, ymin, xmax, ymax );
-    }
+    { bbox_ISO( 0, xmin, ymin, xmax, ymax ); }
 
     void bbox_ISO( real_type const offs, real_type & xmin, real_type & ymin, real_type & xmax, real_type & ymax )
       const override;
@@ -653,14 +639,10 @@ namespace G2lib
     void tg_D( real_type const s, real_type & tx_D, real_type & ty_D ) const override { m_CD.tg_D( s, tx_D, ty_D ); }
 
     void tg_DD( real_type const s, real_type & tx_DD, real_type & ty_DD ) const override
-    {
-      m_CD.tg_DD( s, tx_DD, ty_DD );
-    }
+    { m_CD.tg_DD( s, tx_DD, ty_DD ); }
 
     void tg_DDD( real_type const s, real_type & tx_DDD, real_type & ty_DDD ) const override
-    {
-      m_CD.tg_DDD( s, tx_DDD, ty_DDD );
-    }
+    { m_CD.tg_DDD( s, tx_DDD, ty_DDD ); }
 
     // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 
@@ -766,34 +748,22 @@ namespace G2lib
     void eval_D( real_type const s, real_type & x_D, real_type & y_D ) const override { m_CD.eval_D( s, x_D, y_D ); }
 
     void eval_DD( real_type const s, real_type & x_DD, real_type & y_DD ) const override
-    {
-      m_CD.eval_DD( s, x_DD, y_DD );
-    }
+    { m_CD.eval_DD( s, x_DD, y_DD ); }
 
     void eval_DDD( real_type const s, real_type & x_DDD, real_type & y_DDD ) const override
-    {
-      m_CD.eval_DDD( s, x_DDD, y_DDD );
-    }
+    { m_CD.eval_DDD( s, x_DDD, y_DDD ); }
 
     void eval_ISO( real_type const s, real_type const offs, real_type & x, real_type & y ) const override
-    {
-      m_CD.eval_ISO( s, offs, x, y );
-    }
+    { m_CD.eval_ISO( s, offs, x, y ); }
 
     void eval_ISO_D( real_type const s, real_type const offs, real_type & x_D, real_type & y_D ) const override
-    {
-      m_CD.eval_ISO_D( s, offs, x_D, y_D );
-    }
+    { m_CD.eval_ISO_D( s, offs, x_D, y_D ); }
 
     void eval_ISO_DD( real_type const s, real_type const offs, real_type & x_DD, real_type & y_DD ) const override
-    {
-      m_CD.eval_ISO_DD( s, offs, x_DD, y_DD );
-    }
+    { m_CD.eval_ISO_DD( s, offs, x_DD, y_DD ); }
 
     void eval_ISO_DDD( real_type const s, real_type const offs, real_type & x_DDD, real_type & y_DDD ) const override
-    {
-      m_CD.eval_ISO_DDD( s, offs, x_DDD, y_DDD );
-    }
+    { m_CD.eval_ISO_DDD( s, offs, x_DDD, y_DDD ); }
 
     /*\
      |  _                        __
@@ -810,9 +780,7 @@ namespace G2lib
     }
 
     void rotate( real_type const angle, real_type const cx, real_type const cy ) override
-    {
-      m_CD.rotate( angle, cx, cy );
-    }
+    { m_CD.rotate( angle, cx, cy ); }
 
     void scale( real_type const s ) override
     {
@@ -950,7 +918,7 @@ namespace G2lib
 
     friend ostream_type & operator<<( ostream_type & stream, ClothoidCurve const & c );
 
-    #ifdef AUTODIFF_SUPPORT
+#ifdef AUTODIFF_SUPPORT
     [[nodiscard]] autodiff::dual1st tx( autodiff::dual1st const & s ) const { return m_CD.tg_x( s ); }
     [[nodiscard]] autodiff::dual2nd tx( autodiff::dual2nd const & s ) const { return m_CD.tg_x( s ); }
 
@@ -966,35 +934,51 @@ namespace G2lib
     [[nodiscard]] autodiff::dual1st Y( autodiff::dual1st const & s ) const { return m_CD.Y( s ); }
     [[nodiscard]] autodiff::dual2nd Y( autodiff::dual2nd const & s ) const { return m_CD.Y( s ); }
 
-    [[nodiscard]] autodiff::dual1st X_ISO( autodiff::dual1st const & s, real_type const offs ) const { return m_CD.X_ISO( s, offs ); }
-    [[nodiscard]] autodiff::dual2nd X_ISO( autodiff::dual2nd const & s, real_type const offs ) const { return m_CD.X_ISO( s, offs ); }
+    [[nodiscard]] autodiff::dual1st X_ISO( autodiff::dual1st const & s, real_type const offs ) const
+    { return m_CD.X_ISO( s, offs ); }
+    [[nodiscard]] autodiff::dual2nd X_ISO( autodiff::dual2nd const & s, real_type const offs ) const
+    { return m_CD.X_ISO( s, offs ); }
 
-    [[nodiscard]] autodiff::dual1st X_ISO( autodiff::dual1st const & s, autodiff::dual1st const & offs ) const { return m_CD.X_ISO( s, offs ); }
-    [[nodiscard]] autodiff::dual2nd X_ISO( autodiff::dual2nd const & s, autodiff::dual2nd const & offs ) const { return m_CD.X_ISO( s, offs ); }
+    [[nodiscard]] autodiff::dual1st X_ISO( autodiff::dual1st const & s, autodiff::dual1st const & offs ) const
+    { return m_CD.X_ISO( s, offs ); }
+    [[nodiscard]] autodiff::dual2nd X_ISO( autodiff::dual2nd const & s, autodiff::dual2nd const & offs ) const
+    { return m_CD.X_ISO( s, offs ); }
 
-    [[nodiscard]] autodiff::dual1st Y_ISO( autodiff::dual1st const & s, real_type const offs ) const { return m_CD.Y_ISO( s, offs ); }
-    [[nodiscard]] autodiff::dual2nd Y_ISO( autodiff::dual2nd const & s, real_type const offs ) const { return m_CD.Y_ISO( s, offs ); }
+    [[nodiscard]] autodiff::dual1st Y_ISO( autodiff::dual1st const & s, real_type const offs ) const
+    { return m_CD.Y_ISO( s, offs ); }
+    [[nodiscard]] autodiff::dual2nd Y_ISO( autodiff::dual2nd const & s, real_type const offs ) const
+    { return m_CD.Y_ISO( s, offs ); }
 
-    [[nodiscard]] autodiff::dual1st Y_ISO( autodiff::dual1st const & s, autodiff::dual1st const & offs ) const { return m_CD.Y_ISO( s, offs ); }
-    [[nodiscard]] autodiff::dual2nd Y_ISO( autodiff::dual2nd const & s, autodiff::dual2nd const & offs ) const { return m_CD.Y_ISO( s, offs ); }
+    [[nodiscard]] autodiff::dual1st Y_ISO( autodiff::dual1st const & s, autodiff::dual1st const & offs ) const
+    { return m_CD.Y_ISO( s, offs ); }
+    [[nodiscard]] autodiff::dual2nd Y_ISO( autodiff::dual2nd const & s, autodiff::dual2nd const & offs ) const
+    { return m_CD.Y_ISO( s, offs ); }
 
-    [[nodiscard]] autodiff::dual1st X_SAE( autodiff::dual1st const & s, real_type const offs ) const { return m_CD.X_SAE( s, offs ); }
-    [[nodiscard]] autodiff::dual2nd X_SAE( autodiff::dual2nd const & s, real_type const offs ) const { return m_CD.X_SAE( s, offs ); }
+    [[nodiscard]] autodiff::dual1st X_SAE( autodiff::dual1st const & s, real_type const offs ) const
+    { return m_CD.X_SAE( s, offs ); }
+    [[nodiscard]] autodiff::dual2nd X_SAE( autodiff::dual2nd const & s, real_type const offs ) const
+    { return m_CD.X_SAE( s, offs ); }
 
-    [[nodiscard]] autodiff::dual1st X_SAE( autodiff::dual1st const & s, autodiff::dual1st const & offs ) const { return m_CD.X_SAE( s, offs ); }
-    [[nodiscard]] autodiff::dual2nd X_SAE( autodiff::dual2nd const & s, autodiff::dual2nd const & offs ) const { return m_CD.X_SAE( s, offs ); }
+    [[nodiscard]] autodiff::dual1st X_SAE( autodiff::dual1st const & s, autodiff::dual1st const & offs ) const
+    { return m_CD.X_SAE( s, offs ); }
+    [[nodiscard]] autodiff::dual2nd X_SAE( autodiff::dual2nd const & s, autodiff::dual2nd const & offs ) const
+    { return m_CD.X_SAE( s, offs ); }
 
-    [[nodiscard]] autodiff::dual1st Y_SAE( autodiff::dual1st const & s, real_type const offs ) const { return m_CD.Y_SAE( s, offs ); }
-    [[nodiscard]] autodiff::dual2nd Y_SAE( autodiff::dual2nd const & s, real_type const offs ) const { return m_CD.Y_SAE( s, offs ); }
+    [[nodiscard]] autodiff::dual1st Y_SAE( autodiff::dual1st const & s, real_type const offs ) const
+    { return m_CD.Y_SAE( s, offs ); }
+    [[nodiscard]] autodiff::dual2nd Y_SAE( autodiff::dual2nd const & s, real_type const offs ) const
+    { return m_CD.Y_SAE( s, offs ); }
 
-    [[nodiscard]] autodiff::dual1st Y_SAE( autodiff::dual1st const & s, autodiff::dual1st const & offs ) const { return m_CD.Y_SAE( s, offs ); }
-    [[nodiscard]] autodiff::dual2nd Y_SAE( autodiff::dual2nd const & s, autodiff::dual2nd const & offs ) const { return m_CD.Y_SAE( s, offs ); }
+    [[nodiscard]] autodiff::dual1st Y_SAE( autodiff::dual1st const & s, autodiff::dual1st const & offs ) const
+    { return m_CD.Y_SAE( s, offs ); }
+    [[nodiscard]] autodiff::dual2nd Y_SAE( autodiff::dual2nd const & s, autodiff::dual2nd const & offs ) const
+    { return m_CD.Y_SAE( s, offs ); }
 
-    #endif
+#endif
 
-    #ifdef CLOTHOIDS_BACK_COMPATIBILITY
-    #include "Clothoid_compatibility.hxx"
-    #endif
+#ifdef CLOTHOIDS_BACK_COMPATIBILITY
+#include "Clothoid_compatibility.hxx"
+#endif
   };
 
 }  // namespace G2lib

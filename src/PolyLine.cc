@@ -63,33 +63,19 @@ namespace G2lib
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   void PolyLine::build( CircleArc const & )
-  {
-    Utils::Error( "cannot convert from CircleArc to PolyLine\n" );
-  }
+  { Utils::Error( "cannot convert from CircleArc to PolyLine\n" ); }
   void PolyLine::build( ClothoidCurve const & )
-  {
-    Utils::Error( "cannot convert from Clothoid to PolyLine\n" );
-  }
+  { Utils::Error( "cannot convert from Clothoid to PolyLine\n" ); }
   void PolyLine::build( Biarc const & )
-  {
-    Utils::Error( "cannot convert from Biarc to PolyLine\n" );
-  }
+  { Utils::Error( "cannot convert from Biarc to PolyLine\n" ); }
   void PolyLine::build( BiarcList const & )
-  {
-    Utils::Error( "cannot convert from BiarcList to PolyLine\n" );
-  }
+  { Utils::Error( "cannot convert from BiarcList to PolyLine\n" ); }
   void PolyLine::build( ClothoidList const & )
-  {
-    Utils::Error( "cannot convert from ClothoidList to PolyLine\n" );
-  }
+  { Utils::Error( "cannot convert from ClothoidList to PolyLine\n" ); }
   void PolyLine::build( Dubins const & )
-  {
-    Utils::Error( "cannot convert from Dubins to PolyLine\n" );
-  }
+  { Utils::Error( "cannot convert from Dubins to PolyLine\n" ); }
   void PolyLine::build( Dubins3p const & )
-  {
-    Utils::Error( "cannot convert from Dubins3p to PolyLine\n" );
-  }
+  { Utils::Error( "cannot convert from Dubins3p to PolyLine\n" ); }
 
   /*\
    |  ____       _       _     _
@@ -169,7 +155,7 @@ namespace G2lib
   real_type PolyLine::length_ISO( real_type ) const
   {
     Utils::Error( "PolyLine::length( offs ) not available!\n" );
-    return 0; // to mute compiler warning
+    return 0;  // to mute compiler warning
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -310,9 +296,7 @@ namespace G2lib
     real_type & /* xmax */,
     real_type & /* ymax */
   ) const
-  {
-    Utils::Error( "PolyLine::bbox( offs ... ) not available!\n" );
-  }
+  { Utils::Error( "PolyLine::bbox( offs ... ) not available!\n" ); }
 
   /*\
    |  _    _   _____    _                _
@@ -358,23 +342,17 @@ namespace G2lib
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   real_type PolyLine::theta_D( real_type ) const
-  {
-    return 0;
-  }
+  { return 0; }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   real_type PolyLine::theta_DD( real_type ) const
-  {
-    return 0;
-  }
+  { return 0; }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   real_type PolyLine::theta_DDD( real_type ) const
-  {
-    return 0;
-  }
+  { return 0; }
 
   /*\
    |  _                        __
@@ -881,7 +859,7 @@ namespace G2lib
   ) const
   {
     Utils::Error( "PolyLine::closest_point_ISO( ... offs ... ) not available!\n" );
-    return 0; // to mute compiler warning
+    return 0;  // to mute compiler warning
   }
 
   /*\
@@ -1021,9 +999,7 @@ namespace G2lib
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   string PolyLine::info() const
-  {
-    return fmt::format( "PolyLine\n{}\n", *this );
-  }
+  { return fmt::format( "PolyLine\n{}\n", *this ); }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   //!

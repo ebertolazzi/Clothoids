@@ -94,14 +94,10 @@ namespace TestRandom
   static std::uniform_real_distribution<real_type> dist( 0.0, 1.0 );
 
   inline real_type rand()
-  {
-    return dist( rng );
-  }
+  { return dist( rng ); }
 
   inline void rand_seed( unsigned int seed )
-  {
-    rng.seed( seed );
-  }
+  { rng.seed( seed ); }
 }  // namespace TestRandom
 
 

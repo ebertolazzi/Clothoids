@@ -194,42 +194,24 @@ namespace G2lib
   \*/
 
   ClothoidList::ClothoidList( LineSegment const & LS ) : BaseCurve( LS.name() )
-  {
-    this->build( LS );
-  }
+  { this->build( LS ); }
   ClothoidList::ClothoidList( CircleArc const & C ) : BaseCurve( C.name() )
-  {
-    this->build( C );
-  }
+  { this->build( C ); }
   ClothoidList::ClothoidList( Biarc const & B ) : BaseCurve( B.name() )
-  {
-    this->build( B );
-  }
+  { this->build( B ); }
   ClothoidList::ClothoidList( BiarcList const & BL ) : BaseCurve( BL.name() )
-  {
-    this->build( BL );
-  }
+  { this->build( BL ); }
   ClothoidList::ClothoidList( ClothoidCurve const & CL ) : BaseCurve( CL.name() )
-  {
-    this->build( CL );
-  }
+  { this->build( CL ); }
   ClothoidList::ClothoidList( PolyLine const & PL ) : BaseCurve( PL.name() )
-  {
-    this->build( PL );
-  }
+  { this->build( PL ); }
 
   ClothoidList::ClothoidList( G2solve2arc const & C, string_view const name ) : BaseCurve( name )
-  {
-    this->build( C );
-  }
+  { this->build( C ); }
   ClothoidList::ClothoidList( G2solve3arc const & C, string_view const name ) : BaseCurve( name )
-  {
-    this->build( C );
-  }
+  { this->build( C ); }
   ClothoidList::ClothoidList( G2solveCLC const & C, string_view const name ) : BaseCurve( name )
-  {
-    this->build( C );
-  }
+  { this->build( C ); }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
@@ -2102,9 +2084,7 @@ namespace G2lib
     real_type &     s,
     real_type &     t,
     real_type &     dst ) const
-  {
-    return closest_point_ISO( qx, qy, 0, x, y, s, t, dst );
-  }
+  { return closest_point_ISO( qx, qy, 0, x, y, s, t, dst ); }
 
   /*\
    |      _ _     _
@@ -2626,40 +2606,6 @@ namespace G2lib
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-  static bool load_segment( istream_type & stream, ClothoidCurve & c, real_type const epsi )
-  {
-    string line1, line2;
-    while ( stream.good() )
-    {
-      if ( !getline( stream, line1 ) ) return false;
-      if ( line1[0] != '#' ) break;
-    }
-    if ( !stream.good() ) return false;
-    while ( stream.good() )
-    {
-      if ( !getline( stream, line2 ) ) return false;
-      if ( line2[0] != '#' ) break;
-    }
-    if ( !stream.good() ) return false;
-    std::istringstream iss1( line1 );
-    std::istringstream iss2( line2 );
-    real_type          x0, y0, x1, y1, theta0, theta1, kappa0, kappa1;
-    iss1 >> x0 >> y0 >> theta0 >> kappa0;
-    iss2 >> x1 >> y1 >> theta1 >> kappa1;
-    c.build_G1( x0, y0, theta0, x1, y1, theta1 );
-    // check segment
-    real_type err1 = std::abs( kappa0 - c.kappa_begin() ) * c.length();
-    real_type err2 = std::abs( kappa1 - c.kappa_end() ) * c.length();
-    Utils::Check(
-      err1 < epsi && err2 < epsi,
-      "load_segment, failed tolerance on curvature\n"
-      "begin error = {}, end error = {}\n",
-      err1,
-      err2 );
-    return true;
-  }
-
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   void ClothoidList::save( ostream_type & stream ) const
@@ -2674,26 +2620,165 @@ namespace G2lib
     stream << "# EOF\n";
   }
 
+  static std::optional<std::string> read_data_line( istream_type & stream )
+  {
+    for ( std::string line; std::getline( stream, line ); )
+    {
+      auto const first = line.find_first_not_of( " \t\r\n" );
+      if ( first == std::string::npos ) continue;
+
+      if ( line[first] == '#' ) continue;
+
+      auto const last = line.find_last_not_of( " \t\r\n" );
+
+      return line.substr( first, last - first + 1 );
+    }
+
+    return std::nullopt;
+  }
+
+  static std::optional<std::array<real_type, 4>> parse_clothoid_params( std::string_view line )
+  {
+    std::istringstream iss{ std::string{ line } };
+
+    std::array<real_type, 4> v{};
+
+    if ( !( iss >> v[0] >> v[1] >> v[2] >> v[3] ) ) return std::nullopt;
+
+    iss >> std::ws;
+
+    if ( !iss.eof() ) return std::nullopt;
+
+    return v;
+  }
+
+  static std::optional<std::size_t> parse_segment_count( std::string_view line )
+  {
+    std::size_t count{};
+
+    auto const * first = line.data();
+    auto const * last  = first + line.size();
+
+    auto const [ptr, ec] = std::from_chars( first, last, count );
+
+    if ( ec != std::errc{} || ptr != last ) return std::nullopt;
+
+    return count;
+  }
+
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  void ClothoidList::load( istream_type & stream, real_type const epsi )
+  static bool load_segment( istream_type & stream, ClothoidCurve & c, real_type const epsi )
+  {
+    auto const line0 = read_data_line( stream );
+    auto const line1 = read_data_line( stream );
+
+    if ( !line0 || !line1 ) return false;
+
+    auto const p0 = parse_clothoid_params( *line0 );
+    auto const p1 = parse_clothoid_params( *line1 );
+
+    if ( !p0 || !p1 ) return false;
+
+    auto const [x0, y0, theta0, kappa0] = *p0;
+    auto const [x1, y1, theta1, kappa1] = *p1;
+
+    c.build_G1( x0, y0, theta0, x1, y1, theta1 );
+
+    real_type const err_begin = std::abs( kappa0 - c.kappa_begin() );
+    real_type const err_end   = std::abs( kappa1 - c.kappa_end() );
+    real_type const max_err   = std::max( err_begin, err_end ) * c.length();
+
+    Utils::Check(
+      max_err < epsi,
+      "load_segment: curvature tolerance exceeded\n"
+      "  tolerance: {}\n"
+      "  max error: {}\n"
+      "  start: expected {}, got {} (diff: {})\n"
+      "  end:   expected {}, got {} (diff: {})",
+      epsi,
+      max_err,
+      kappa0,
+      c.kappa_begin(),
+      err_begin,
+      kappa1,
+      c.kappa_end(),
+      err_end );
+
+    return true;
+  }
+
+  // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+  void ClothoidList::load( istream_type & stream, real_type const epsi, bool has_header )
   {
     this->init();
-    while ( stream.good() )
+
+    Utils::Check( stream.good(), "ClothoidList::load: input stream is not valid" );
+
+    std::size_t expected_segment_count = 0;
+
+    if ( has_header )
+    {
+      auto const type_line = read_data_line( stream );
+
+      Utils::Check( type_line.has_value(), "ClothoidList::load: unexpected end of file while reading file type" );
+
+      std::string_view constexpr expected_type = "CLOTHOID_LIST";
+
+      Utils::Check(
+        *type_line == expected_type,
+        "ClothoidList::load: invalid file type\n"
+        "  expected: '{}'\n"
+        "  found:    '{}'",
+        expected_type,
+        *type_line );
+
+      auto const count_line = read_data_line( stream );
+
+      Utils::Check( count_line.has_value(), "ClothoidList::load: unexpected end of file while reading segment count" );
+
+      auto const count = parse_segment_count( *count_line );
+
+      Utils::Check(
+        count.has_value() && *count > 0,
+        "ClothoidList::load: invalid segment count\n"
+        "  line: '{}'\n"
+        "  expected: positive integer",
+        *count_line );
+
+      expected_segment_count = *count;
+    }
+
+    std::size_t loaded_segment_count = 0;
+
+    while ( !has_header || loaded_segment_count < expected_segment_count )
     {
       ClothoidCurve c{ "ClothoidList::load temporary c" };
-      bool const    ok = load_segment( stream, c, epsi );
-      if ( !ok ) break;
+
+      if ( !load_segment( stream, c, epsi ) ) break;
+
       this->push_back( c );
+      ++loaded_segment_count;
+    }
+
+    if ( has_header )
+    {
+      Utils::Check(
+        loaded_segment_count == expected_segment_count,
+        "ClothoidList::load: segment count mismatch\n"
+        "  expected: {}\n"
+        "  loaded:   {}\n"
+        "  check file integrity",
+        expected_segment_count,
+        loaded_segment_count );
     }
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   string ClothoidList::info() const
-  {
-    return fmt::format( "ClothoidList\n{}\n", *this );
-  }
+  { return fmt::format( "ClothoidList\n{}\n", *this ); }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
@@ -2720,9 +2805,7 @@ namespace G2lib
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   string ClothoidSplineG2::info() const
-  {
-    return fmt::format( "ClothoidSplineG2\n{}\n", *this );
-  }
+  { return fmt::format( "ClothoidSplineG2\n{}\n", *this ); }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 

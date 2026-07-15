@@ -83,9 +83,7 @@ namespace G2lib
     void build( real_type const xvec[], real_type const yvec[], integer const npts );
 
     void build( integer const npts, real_type const xvec[], real_type const yvec[], real_type theta[] )
-    {
-      build_PN( npts, xvec, yvec, theta, TargetType::P4 );
-    }
+    { build_PN( npts, xvec, yvec, theta, TargetType::P4 ); }
 
     bool build_P1(
       integer const   npts,

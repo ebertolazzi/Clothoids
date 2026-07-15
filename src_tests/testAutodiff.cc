@@ -355,26 +355,31 @@ void test_PolyLine()
 void test_Dubins()
 {
   std::cout << "Testing Dubins..." << std::endl;
-  
+
   // Crea una curva Dubins semplice
   Dubins dubins( "test_dubins" );
-  bool built = dubins.build( 
-    0.0, 0.0, 0.0,    // x0, y0, theta0
-    2.0, 1.0, M_PI/2, // x1, y1, theta1
-    0.5                // k_max
+  bool   built = dubins.build(
+    0.0,
+    0.0,
+    0.0,  // x0, y0, theta0
+    2.0,
+    1.0,
+    M_PI / 2,  // x1, y1, theta1
+    0.5        // k_max
   );
 
-  if (!built) {
+  if ( !built )
+  {
     std::cout << "  Dubins build FAILED!" << std::endl;
     return;
   }
 
 #ifdef AUTODIFF_SUPPORT
   // Test con dual1st
-  dual1st s1 = 0.5;
+  dual1st s1     = 0.5;
   dual1st theta1 = dubins.theta( s1 );
-  dual1st X1 = dubins.X( s1 );
-  dual1st Y1 = dubins.Y( s1 );
+  dual1st X1     = dubins.X( s1 );
+  dual1st Y1     = dubins.Y( s1 );
 
   // Suppress unused variable warnings
   (void) theta1;
@@ -382,10 +387,10 @@ void test_Dubins()
   (void) Y1;
 
   // Test con dual2nd
-  dual2nd s2 = 1.0;
+  dual2nd s2     = 1.0;
   dual2nd theta2 = dubins.theta( s2 );
-  dual2nd X2 = dubins.X( s2 );
-  dual2nd Y2 = dubins.Y( s2 );
+  dual2nd X2     = dubins.X( s2 );
+  dual2nd Y2     = dubins.Y( s2 );
 
   // Suppress unused variable warnings
   (void) theta2;
@@ -402,28 +407,34 @@ void test_Dubins()
 void test_Dubins3p()
 {
   std::cout << "Testing Dubins3p..." << std::endl;
-  
+
   // Crea una curva Dubins3p con punto intermedio
   Dubins3p dubins3p( "test_dubins3p" );
-  bool built = dubins3p.build(
-    0.0, 0.0, 0.0,      // xi, yi, thetai
-    1.0, 0.5,           // xm, ym (punto intermedio)
-    2.0, 1.0, M_PI/2,   // xf, yf, thetaf
-    0.5,                // k_max
+  bool     built = dubins3p.build(
+    0.0,
+    0.0,
+    0.0,  // xi, yi, thetai
+    1.0,
+    0.5,  // xm, ym (punto intermedio)
+    2.0,
+    1.0,
+    M_PI / 2,                          // xf, yf, thetaf
+    0.5,                               // k_max
     Dubins3pBuildType::PATTERN_SEARCH  // metodo di costruzione
   );
 
-  if (!built) {
+  if ( !built )
+  {
     std::cout << "  Dubins3p build FAILED!" << std::endl;
     return;
   }
 
 #ifdef AUTODIFF_SUPPORT
   // Test con dual1st
-  dual1st s1 = 0.5;
+  dual1st s1     = 0.5;
   dual1st theta1 = dubins3p.theta( s1 );
-  dual1st X1 = dubins3p.X( s1 );
-  dual1st Y1 = dubins3p.Y( s1 );
+  dual1st X1     = dubins3p.X( s1 );
+  dual1st Y1     = dubins3p.Y( s1 );
 
   // Suppress unused variable warnings
   (void) theta1;
@@ -431,10 +442,10 @@ void test_Dubins3p()
   (void) Y1;
 
   // Test con dual2nd
-  dual2nd s2 = 1.0;
+  dual2nd s2     = 1.0;
   dual2nd theta2 = dubins3p.theta( s2 );
-  dual2nd X2 = dubins3p.X( s2 );
-  dual2nd Y2 = dubins3p.Y( s2 );
+  dual2nd X2     = dubins3p.X( s2 );
+  dual2nd Y2     = dubins3p.Y( s2 );
 
   // Suppress unused variable warnings
   (void) theta2;
@@ -464,4 +475,3 @@ int main()
   std::cout << "\n=== ALL TESTS PASSED SUCCESSFULLY ===" << std::endl;
   return 0;
 }
-

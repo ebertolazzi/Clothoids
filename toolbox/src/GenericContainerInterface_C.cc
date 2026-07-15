@@ -218,8 +218,7 @@ extern "C"
   {
     // ckeck if exists
     auto pos = gc_explorer.find( id );
-    if ( pos == gc_explorer.end() )
-      pos = gc_explorer.emplace( id, std::make_unique<GenericContainerExplorer>() ).first;
+    if ( pos == gc_explorer.end() ) pos = gc_explorer.emplace( id, std::make_unique<GenericContainerExplorer>() ).first;
     gc_active = pos->second.get();
     return GENERIC_CONTAINER_OK;
   }
@@ -228,8 +227,7 @@ extern "C"
   {
     // ckeck if exists
     auto pos{ gc_explorer.find( id ) };
-    if ( pos == gc_explorer.end() )
-      pos = gc_explorer.emplace( id, std::make_unique<GenericContainerExplorer>() ).first;
+    if ( pos == gc_explorer.end() ) pos = gc_explorer.emplace( id, std::make_unique<GenericContainerExplorer>() ).first;
     gc_active = pos->second.get();
     return GENERIC_CONTAINER_OK;
   }

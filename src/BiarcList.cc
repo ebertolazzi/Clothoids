@@ -103,25 +103,15 @@ namespace G2lib
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   void BiarcList::build( ClothoidCurve const & )
-  {
-    Utils::Error( "cannot convert from ClothoidCurve to BiarcList\n" );
-  }
+  { Utils::Error( "cannot convert from ClothoidCurve to BiarcList\n" ); }
   void BiarcList::build( PolyLine const & )
-  {
-    Utils::Error( "cannot convert from PolyLine to BiarcList\n" );
-  }
+  { Utils::Error( "cannot convert from PolyLine to BiarcList\n" ); }
   void BiarcList::build( ClothoidList const & )
-  {
-    Utils::Error( "cannot convert from ClothoidList to BiarcList\n" );
-  }
+  { Utils::Error( "cannot convert from ClothoidList to BiarcList\n" ); }
   void BiarcList::build( Dubins const & )
-  {
-    Utils::Error( "cannot convert from Dubins to BiarcList\n" );
-  }
+  { Utils::Error( "cannot convert from Dubins to BiarcList\n" ); }
   void BiarcList::build( Dubins3p const & )
-  {
-    Utils::Error( "cannot convert from Dubins3p to BiarcList\n" );
-  }
+  { Utils::Error( "cannot convert from Dubins3p to BiarcList\n" ); }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
@@ -135,21 +125,13 @@ namespace G2lib
   \*/
 
   BiarcList::BiarcList( LineSegment const & LS ) : BaseCurve( LS.name() )
-  {
-    this->build( LS );
-  }
+  { this->build( LS ); }
   BiarcList::BiarcList( CircleArc const & C ) : BaseCurve( C.name() )
-  {
-    this->build( C );
-  }
+  { this->build( C ); }
   BiarcList::BiarcList( Biarc const & C ) : BaseCurve( C.name() )
-  {
-    this->build( C );
-  }
+  { this->build( C ); }
   BiarcList::BiarcList( PolyLine const & pl ) : BaseCurve( pl.name() )
-  {
-    this->build( pl );
-  }
+  { this->build( pl ); }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
@@ -386,15 +368,13 @@ namespace G2lib
     {
       Utils::Error( "BiarcList::get( {} ): unknown error\n", idx );
     }
-    return m_biarc_list.front(); // to stop warning
+    return m_biarc_list.front();  // to stop warning
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   Biarc const & BiarcList::get_at_s( real_type s ) const
-  {
-    return this->get( find_at_s( s ) );
-  }
+  { return this->get( find_at_s( s ) ); }
 
   /*\
    |   _                  _   _
@@ -406,9 +386,7 @@ namespace G2lib
   \*/
 
   real_type BiarcList::length() const
-  {
-    return m_s0.back() - m_s0.front();
-  }
+  { return m_s0.back() - m_s0.front(); }
 
   real_type BiarcList::length_ISO( real_type const offs ) const
   {
@@ -1391,9 +1369,7 @@ namespace G2lib
     real_type &     s,
     real_type &     t,
     real_type &     dst ) const
-  {
-    return closest_point_ISO( qx, qy, 0, x, y, s, t, dst );
-  }
+  { return closest_point_ISO( qx, qy, 0, x, y, s, t, dst ); }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -1515,9 +1491,7 @@ namespace G2lib
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   string BiarcList::info() const
-  {
-    return fmt::format( "BiarcList\n{}\n", *this );
-  }
+  { return fmt::format( "BiarcList\n{}\n", *this ); }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   //!

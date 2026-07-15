@@ -117,9 +117,7 @@ namespace GC_namespace
   //! \param[out] stream Output stream to write the YAML data.
   //!
   inline void GC_to_YAML( GenericContainer const & gc, ostream_type & stream )
-  {
-    gc.to_yaml( stream );
-  }
+  { gc.to_yaml( stream ); }
 
   //!
   //! @}

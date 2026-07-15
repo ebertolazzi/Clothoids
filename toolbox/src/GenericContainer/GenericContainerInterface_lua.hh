@@ -117,9 +117,7 @@ namespace GC_namespace
     //! \param[in] global_var Name of the Lua global variable.
     //!
     void GC_to_global( GenericContainer const & gc, char const global_var[] )
-    {
-      Lua_GC_to_global( void_L, gc, global_var );
-    }
+    { Lua_GC_to_global( void_L, gc, global_var ); }
 
     //!
     //! \brief Convert a Lua global variable into a `GenericContainer`.

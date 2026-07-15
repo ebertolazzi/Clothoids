@@ -268,9 +268,7 @@ namespace G2lib
       real_type &     y1,
       real_type &     x2,
       real_type &     y2 ) const
-    {
-      return this->bbTriangle_ISO( -offs, x0, y0, x1, y1, x2, y2 );
-    }
+    { return this->bbTriangle_ISO( -offs, x0, y0, x1, y1, x2, y2 ); }
 
     //!
     //! Get the bounding box triangle of the circle
@@ -282,9 +280,7 @@ namespace G2lib
     //! \return true if success
     //!
     bool bbTriangle( real_type p0[], real_type p1[], real_type p2[] ) const
-    {
-      return bbTriangle( p0[0], p0[1], p1[0], p1[1], p2[0], p2[1] );
-    }
+    { return bbTriangle( p0[0], p0[1], p1[0], p1[1], p2[0], p2[1] ); }
 
     //!
     //! Get the bounding box triangle of the circle arc with offset
@@ -297,9 +293,7 @@ namespace G2lib
     //! \return true if success
     //!
     bool bbTriangle_ISO( real_type const offs, real_type p0[], real_type p1[], real_type p2[] ) const
-    {
-      return bbTriangle_ISO( offs, p0[0], p0[1], p1[0], p1[1], p2[0], p2[1] );
-    }
+    { return bbTriangle_ISO( offs, p0[0], p0[1], p1[0], p1[1], p2[0], p2[1] ); }
 
     //!
     //! Get the bounding box triangle of the circle arc with offset
@@ -312,9 +306,7 @@ namespace G2lib
     //! \return true if success
     //!
     bool bbTriangle_SAE( real_type const offs, real_type p0[], real_type p1[], real_type p2[] ) const
-    {
-      return bbTriangle_SAE( offs, p0[0], p0[1], p1[0], p1[1], p2[0], p2[1] );
-    }
+    { return bbTriangle_SAE( offs, p0[0], p0[1], p1[0], p1[1], p2[0], p2[1] ); }
 
     //!
     //! Get the bounding box triangle list of the circle arc.
@@ -374,9 +366,7 @@ namespace G2lib
       real_type const ss0    = 0,
       real_type const ss1    = 0,
       integer const   icurve = 0 ) const
-    {
-      return this->bbTriangle_ISO( -offs, t, ss0, ss1, icurve );
-    }
+    { return this->bbTriangle_ISO( -offs, t, ss0, ss1, icurve ); }
 
     //!
     //! Get the bounding box triangle list of the circle arc with offset.
@@ -426,9 +416,7 @@ namespace G2lib
       real_type const      max_size,   // = 1e100,
       integer const        icurve      // = 0
     ) const override
-    {
-      this->bb_triangles_ISO( -offs, tvec, max_angle, max_size, icurve );
-    }
+    { this->bb_triangles_ISO( -offs, tvec, max_angle, max_size, icurve ); }
 
     // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 

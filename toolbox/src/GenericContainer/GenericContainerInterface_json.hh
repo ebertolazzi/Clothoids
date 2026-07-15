@@ -59,19 +59,13 @@ namespace GC_namespace
   }
 
   inline void GC_to_JSON( GenericContainer const & gc, std::string & res )
-  {
-    res = gc.to_json();
-  }
+  { res = gc.to_json(); }
 
   inline void GC_to_JSON( GenericContainer const & gc, ostream_type & stream )
-  {
-    gc.to_json( stream );
-  }
+  { gc.to_json( stream ); }
 
   inline void GC_to_JSON( GenericContainer const & gc, vec_string_type & chunks )
-  {
-    chunks.assign( 1, gc.to_json() );
-  }
+  { chunks.assign( 1, gc.to_json() ); }
 
 }  // namespace GC_namespace
 

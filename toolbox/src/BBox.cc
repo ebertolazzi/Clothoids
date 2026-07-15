@@ -127,9 +127,7 @@ namespace G2lib
   // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 
   void BBox::print( ostream_type & stream ) const
-  {
-    fmt::print( stream, "BBOX (xmin,ymin,xmax,ymax) = ( {}, {}, {}, {} )\n", x_min(), y_min(), x_max(), y_max() );
-  }
+  { fmt::print( stream, "BBOX (xmin,ymin,xmax,ymax) = ( {}, {}, {}, {} )\n", x_min(), y_min(), x_max(), y_max() ); }
 }  // namespace G2lib
 
 ///

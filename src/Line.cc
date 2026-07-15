@@ -111,37 +111,21 @@ namespace G2lib
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   void LineSegment::build( CircleArc const & )
-  {
-    Utils::Error( "cannot convert from CircleArc to LineSegment\n" );
-  }
+  { Utils::Error( "cannot convert from CircleArc to LineSegment\n" ); }
   void LineSegment::build( Biarc const & )
-  {
-    Utils::Error( "cannot convert from Biarc to LineSegment\n" );
-  }
+  { Utils::Error( "cannot convert from Biarc to LineSegment\n" ); }
   void LineSegment::build( ClothoidCurve const & )
-  {
-    Utils::Error( "cannot convert from ClothoidCurve to LineSegment\n" );
-  }
+  { Utils::Error( "cannot convert from ClothoidCurve to LineSegment\n" ); }
   void LineSegment::build( PolyLine const & )
-  {
-    Utils::Error( "cannot convert from PolyLine to LineSegment\n" );
-  }
+  { Utils::Error( "cannot convert from PolyLine to LineSegment\n" ); }
   void LineSegment::build( BiarcList const & )
-  {
-    Utils::Error( "cannot convert from BiarcList to LineSegment\n" );
-  }
+  { Utils::Error( "cannot convert from BiarcList to LineSegment\n" ); }
   void LineSegment::build( ClothoidList const & )
-  {
-    Utils::Error( "cannot convert from ClothoidList to LineSegment\n" );
-  }
+  { Utils::Error( "cannot convert from ClothoidList to LineSegment\n" ); }
   void LineSegment::build( Dubins const & )
-  {
-    Utils::Error( "cannot convert from Dubins to LineSegment\n" );
-  }
+  { Utils::Error( "cannot convert from Dubins to LineSegment\n" ); }
   void LineSegment::build( Dubins3p const & )
-  {
-    Utils::Error( "cannot convert from Dubins3p to LineSegment\n" );
-  }
+  { Utils::Error( "cannot convert from Dubins3p to LineSegment\n" ); }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
@@ -779,9 +763,7 @@ namespace G2lib
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   string LineSegment::info() const
-  {
-    return fmt::format( "LineSegment\n{}\n", *this );
-  }
+  { return fmt::format( "LineSegment\n{}\n", *this ); }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   //!

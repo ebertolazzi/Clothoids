@@ -39,9 +39,7 @@ using namespace std;
 
 // Test utility functions
 void print_test_header( const string & test_name )
-{
-  fmt::print( fg( fmt::color::cyan ) | fmt::emphasis::bold, "\n{:=^80}\n", " 📋 " + test_name + " " );
-}
+{ fmt::print( fg( fmt::color::cyan ) | fmt::emphasis::bold, "\n{:=^80}\n", " 📋 " + test_name + " " ); }
 
 void print_test_result( bool passed, const string & test_desc )
 {
@@ -81,19 +79,13 @@ void print_section_summary()
 
 // Test data generation
 vector<real_type> generate_test_points_x()
-{
-  return { 0.0, 2.0, 4.0, 6.0, 8.0, 10.0 };
-}
+{ return { 0.0, 2.0, 4.0, 6.0, 8.0, 10.0 }; }
 
 vector<real_type> generate_test_points_y()
-{
-  return { 0.0, 1.0, 0.5, 2.0, 1.5, 0.0 };
-}
+{ return { 0.0, 1.0, 0.5, 2.0, 1.5, 0.0 }; }
 
 vector<real_type> generate_test_angles()
-{
-  return { 0.0, m_pi / 4, m_pi / 6, m_pi / 3, m_pi / 2, 0.0 };
-}
+{ return { 0.0, m_pi / 4, m_pi / 6, m_pi / 3, m_pi / 2, 0.0 }; }
 
 // Test Section 1: Constructors and Basic Operations
 void test_constructors_and_basic_ops()

@@ -22,13 +22,17 @@
 namespace PolynomialRoots
 {
 
-  template <> real_type machepsiT() { return std::numeric_limits<real_type>::epsilon(); }
+  template <> real_type machepsiT()
+  { return std::numeric_limits<real_type>::epsilon(); }
 #if POLYNOMIAL_ROOTS_HAS_MULTIPRECISION
-  template <> quad_real machepsiT() { return std::numeric_limits<quad_real>::epsilon(); }
+  template <> quad_real machepsiT()
+  { return std::numeric_limits<quad_real>::epsilon(); }
 #endif
-  template <> real_type toleranceT() { return 1e-12; }
+  template <> real_type toleranceT()
+  { return 1e-12; }
 #if POLYNOMIAL_ROOTS_HAS_MULTIPRECISION
-  template <> quad_real toleranceT() { return 1e-20; }
+  template <> quad_real toleranceT()
+  { return 1e-20; }
 #endif
 
   using std::abs;
@@ -65,7 +69,7 @@ namespace PolynomialRoots
     return res;
   }
 
-  template double    eval_poly( double const op[], integer const Degree, double const & x );
+  template double eval_poly( double const op[], integer const Degree, double const & x );
 #if POLYNOMIAL_ROOTS_HAS_MULTIPRECISION
   template quad_real eval_poly( quad_real const op[], integer const Degree, quad_real const & x );
 #endif

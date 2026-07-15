@@ -41,9 +41,7 @@ namespace GC_namespace
     "GenericContainer::serialize, memory exausted use method mem_size() to estimate memory requirement"
   };
 
-  static constexpr char deserialize_msg[]{
-    "GenericContainer::de_serialize, buffer exhausted or corrupted input"
-  };
+  static constexpr char deserialize_msg[]{ "GenericContainer::de_serialize, buffer exhausted or corrupted input" };
 
   static int32_t int8_to_buffer( int8_t in, uint8_t * buffer, int32_t const available )
   {
@@ -231,8 +229,7 @@ namespace GC_namespace
     GC_assert(
       res <= uint64_t( std::numeric_limits<int32_t>::max() ),
       "GenericContainer::mem_size() serialized size {} exceeds the int32 wire-format limit",
-      res
-    );
+      res );
     return static_cast<int32_t>( res );
   }
 
@@ -496,8 +493,7 @@ namespace GC_namespace
     GC_assert(
       i32 >= 0 && i32 <= static_cast<int32_t>( GC_type::MAP ),
       "GenericContainer::de_serialize, invalid type tag {}",
-      i32
-    );
+      i32 );
     switch ( static_cast<TypeAllowed>( i32 ) )
     {
       case GC_type::NOTYPE: m_data.emplace<std::monostate>(); break;
@@ -721,7 +717,8 @@ namespace GC_namespace
         buffer += nb;
         nbyte += nb;
         GC_assert(
-          nr >= 0 && nc >= 0 && uint64_t( nr ) * uint64_t( nc ) * sizeof( complex_type ) <= uint64_t( buffer_dim - nbyte ),
+          nr >= 0 && nc >= 0 &&
+            uint64_t( nr ) * uint64_t( nc ) * sizeof( complex_type ) <= uint64_t( buffer_dim - nbyte ),
           "GenericContainer::de_serialize, invalid or oversized matrix dimensions" );
         allocate_mat_complex( static_cast<std::size_t>( nr ), static_cast<std::size_t>( nc ) );
         for ( auto & c : _m_c() )
