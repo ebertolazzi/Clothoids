@@ -59,7 +59,7 @@ namespace Utils
 
     // Validazione iniziale
     T_int n{ npts - 1 };
-    Utils::Assert(
+    Utils::Check(
       npts > 1 && last_interval >= 0 && last_interval < n,
       "In search_interval( npts={}, X, x={}, last_interval={}, "
       "closed={}, can_extend={})\n"
@@ -106,7 +106,7 @@ namespace Utils
     }
     else
     {
-      Utils::Assert(
+      Utils::Check(
         can_extend || ( x >= xl && x <= xr ),
         "In search_interval( npts={}, X, x={}, last_interval={}, "
         "closed={}, can_extend={})\n"
@@ -180,7 +180,7 @@ namespace Utils
     }
 
     // Validazione finale
-    Utils::Assert(
+    Utils::Check(
       last_interval >= 0 && last_interval < n,
       "In search_interval( npts={}, X, x={}, last_interval={}, "
       "closed={}, can_extend={})\n"
@@ -203,9 +203,7 @@ namespace Utils
     T_int &      last_interval,
     bool         closed,
     bool         can_extend )
-  {
-    search_interval( npts, X, x, last_interval, closed, can_extend );
-  }
+  { search_interval( npts, X, x, last_interval, closed, can_extend ); }
 
 }  // namespace Utils
 

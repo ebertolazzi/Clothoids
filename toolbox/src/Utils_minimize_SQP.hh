@@ -205,9 +205,7 @@ namespace Utils
      * Delegated to BoxConstraintHandler::solve_qp_subproblem
      */
     bool solve_qp_subproblem( Vector const & x, Vector const & g, SparseMatrix const & H, Vector & p )
-    {
-      return m_box_handler.solve_qp_subproblem( x, g, H, m_lambda, p, m_multipliers, m_opts.verbosity );
-    }
+    { return m_box_handler.solve_qp_subproblem( x, g, H, m_lambda, p, m_multipliers, m_opts.verbosity ); }
 
     /**
      * @struct LineSearchResult

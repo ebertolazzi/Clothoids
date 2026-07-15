@@ -55,7 +55,7 @@ namespace G2lib
     real_type const x1     = gc.get_map_number( "x1", where );
     real_type const y1     = gc.get_map_number( "y1", where );
     bool const      ok     = this->build_G1( x0, y0, theta0, x1, y1 );
-    UTILS_ASSERT( ok, "CircleArc[{}]::setup( gc ) failed\n", this->name() );
+    Utils::Check( ok, "CircleArc[{}]::setup( gc ) failed\n", this->name() );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -75,31 +75,31 @@ namespace G2lib
 
   void CircleArc::build( Biarc const & )
   {
-    UTILS_ERROR( "cannot convert from Biarc to CircleArc\n" );
+    Utils::Error( "cannot convert from Biarc to CircleArc\n" );
   }
   void CircleArc::build( ClothoidCurve const & )
   {
-    UTILS_ERROR( "cannot convert from ClothoidCurve to CircleArc\n" );
+    Utils::Error( "cannot convert from ClothoidCurve to CircleArc\n" );
   }
   void CircleArc::build( PolyLine const & )
   {
-    UTILS_ERROR( "cannot convert from PolyLine to CircleArc\n" );
+    Utils::Error( "cannot convert from PolyLine to CircleArc\n" );
   }
   void CircleArc::build( BiarcList const & )
   {
-    UTILS_ERROR( "cannot convert from BiarcList to CircleArc\n" );
+    Utils::Error( "cannot convert from BiarcList to CircleArc\n" );
   }
   void CircleArc::build( ClothoidList const & )
   {
-    UTILS_ERROR( "cannot convert from ClothoidList to CircleArc\n" );
+    Utils::Error( "cannot convert from ClothoidList to CircleArc\n" );
   }
   void CircleArc::build( Dubins const & )
   {
-    UTILS_ERROR( "cannot convert from Dubins to CircleArc\n" );
+    Utils::Error( "cannot convert from Dubins to CircleArc\n" );
   }
   void CircleArc::build( Dubins3p const & )
   {
-    UTILS_ERROR( "cannot convert from Dubins3p to CircleArc\n" );
+    Utils::Error( "cannot convert from Dubins3p to CircleArc\n" );
   }
 
   /*\
@@ -124,7 +124,7 @@ namespace G2lib
         G2LIB_DEBUG_MESSAGE( "to -> CircleArc\n" );
         *this = *dynamic_cast<CircleArc const *>( pC );
         break;
-      default: UTILS_ERROR( "CircleArc constructor cannot convert from: {}\n", pC->type_name() );
+      default: Utils::Error( "CircleArc constructor cannot convert from: {}\n", pC->type_name() );
     }
   }
 
@@ -332,7 +332,7 @@ namespace G2lib
 
   void CircleArc::trim( real_type const s_begin, real_type const s_end )
   {
-    UTILS_ASSERT( s_end > s_begin, "CircleArc::trim( begin={}, s_end={} ) s_end must be > s_begin\n", s_begin, s_end );
+    Utils::Check( s_end > s_begin, "CircleArc::trim( begin={}, s_end={} ) s_end must be > s_begin\n", s_begin, s_end );
     real_type x, y;
     eval( s_begin, x, y );
     m_theta0 += s_begin * m_k;

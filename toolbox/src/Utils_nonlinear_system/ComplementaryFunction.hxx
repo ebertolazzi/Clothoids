@@ -45,9 +45,7 @@ public:
         "  doi       = {10.1080/10556780310001610493},\n"
         "}\n",
         neq )
-  {
-    check_even( n, 2 );
-  }
+  { check_even( n, 2 ); }
 
   virtual void evaluate( Vector const & x, Vector & f ) const override
   {

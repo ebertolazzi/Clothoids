@@ -586,15 +586,16 @@ namespace Utils
         bool   converged           = false;
         string convergence_message = "Maximum iterations reached";
 
-        if ( check_convergence(
-               f,
-               previous_f,
-               gnorm,
-               total_consecutive_grad,
-               total_consecutive_func,
-               no_improvement_count,
-               converged,
-               convergence_message ) )
+        if (
+          check_convergence(
+            f,
+            previous_f,
+            gnorm,
+            total_consecutive_grad,
+            total_consecutive_func,
+            no_improvement_count,
+            converged,
+            convergence_message ) )
         {
           // Store results
           m_final_f      = best_f;

@@ -376,14 +376,10 @@ namespace rang
     }
 
     inline void setWinSGR( rang::bgB col, SGR & state ) noexcept
-    {
-      state.bgColor = ( BACKGROUND_INTENSITY >> 4 ) | ansi2attr( static_cast<BYTE>( col ) - 100 );
-    }
+    { state.bgColor = ( BACKGROUND_INTENSITY >> 4 ) | ansi2attr( static_cast<BYTE>( col ) - 100 ); }
 
     inline void setWinSGR( rang::fgB col, SGR & state ) noexcept
-    {
-      state.fgColor = FOREGROUND_INTENSITY | ansi2attr( static_cast<BYTE>( col ) - 90 );
-    }
+    { state.fgColor = FOREGROUND_INTENSITY | ansi2attr( static_cast<BYTE>( col ) - 90 ); }
 
     inline void setWinSGR( rang::style style, SGR & state ) noexcept
     {
@@ -448,9 +444,7 @@ namespace rang
 
 #define DO_INSTANTIATION( A )                            \
   inline void setWinColorNative( ostream & os, A value ) \
-  {                                                      \
-    setWinColorNative_tmpl<A>( os, value );              \
-  }
+  { setWinColorNative_tmpl<A>( os, value ); }
 
     DO_INSTANTIATION( enum rang::style );
     DO_INSTANTIATION( enum rang::bg );
@@ -464,9 +458,7 @@ namespace rang
 
 #ifdef _WIN32
     template <typename T> inline void setWinColorAnsi( ostream & os, T const value )
-    {
-      os << "\033[" << static_cast<int>( value ) << "m";
-    }
+    { os << "\033[" << static_cast<int>( value ) << "m"; }
 
     template <typename T> inline enableStd<T> setColor( ostream & os, T const value )
     {
@@ -487,9 +479,7 @@ namespace rang
     }
 #else
     template <typename T> inline enableStd<T> setColor( ostream & os, T const value )
-    {
-      return os << "\033[" << static_cast<int>( value ) << "m";
-    }
+    { return os << "\033[" << static_cast<int>( value ) << "m"; }
 #endif
 
   }  // namespace rang_implementation
@@ -509,14 +499,10 @@ namespace rang
   }
 
   inline void setWinTermMode( rang::winTerm const value ) noexcept
-  {
-    rang_implementation::winTermMode() = value;
-  }
+  { rang_implementation::winTermMode() = value; }
 
   inline void setControlMode( control const value ) noexcept
-  {
-    rang_implementation::controlMode() = value;
-  }
+  { rang_implementation::controlMode() = value; }
 #endif
 
 }  // namespace rang

@@ -271,7 +271,7 @@ namespace Utils
     Real evaluate( Real x )
     {
       ++m_fun_evaluation_count;
-      Utils::Assert( m_function != nullptr, "AlgoBracket::evaluate() - function pointer is null\n" );
+      Utils::Check( m_function != nullptr, "AlgoBracket::evaluate() - function pointer is null\n" );
       return m_function->eval( x );
     }
 
@@ -332,7 +332,7 @@ namespace Utils
       Real P1{ P0 + D01 * O1 };
       Real P2{ P1 + D012 * O2 };
 
-      Utils::Assert(
+      Utils::Check(
         is_finite( P2 ),
         "AlgoBracket<Real>::invp_zero2(), computed NaN or Inf at\n"
         "a={} f(a)={}\n"
@@ -386,7 +386,7 @@ namespace Utils
       Real P2{ P1 + D012 * O2 };
       Real P3{ P2 + D0123 * O3 };
 
-      Utils::Assert(
+      Utils::Check(
         is_finite( P3 ),
         "AlgoBracket<Real>::invp_zero3(), computed NaN or Inf at\n"
         "a={} f(a)={}\n"
@@ -524,7 +524,7 @@ namespace Utils
      */
     void set_max_iterations( Integer mit )
     {
-      Utils::Assert( mit > 0, "AlgoBracket::set_max_iterations({}) argument must be >0\n", mit );
+      Utils::Check( mit > 0, "AlgoBracket::set_max_iterations({}) argument must be >0\n", mit );
       m_max_iteration = mit;
     }
 
@@ -535,7 +535,7 @@ namespace Utils
      */
     void set_max_fun_evaluation( Integer mfev )
     {
-      Utils::Assert( mfev > 0, "AlgoBracket::set_max_fun_evaluation({}) argument must be >0\n", mfev );
+      Utils::Check( mfev > 0, "AlgoBracket::set_max_fun_evaluation({}) argument must be >0\n", mfev );
       m_max_fun_evaluation = mfev;
     }
 
@@ -644,7 +644,7 @@ namespace Utils
      */
     void set_tolerance_x( Real tol_x )
     {
-      Utils::Assert( tol_x > 0, "AlgoBracket::set_tolerance_x({}) must be >0\n", tol_x );
+      Utils::Check( tol_x > 0, "AlgoBracket::set_tolerance_x({}) must be >0\n", tol_x );
       m_tolerance_x = tol_x;
     }
 
@@ -654,7 +654,7 @@ namespace Utils
      */
     void set_tolerance_f( Real tol_f )
     {
-      Utils::Assert( tol_f > 0, "AlgoBracket::set_tolerance_f({}) must be >0\n", tol_f );
+      Utils::Check( tol_f > 0, "AlgoBracket::set_tolerance_f({}) must be >0\n", tol_f );
       m_tolerance_f = tol_f;
     }
 
@@ -663,9 +663,7 @@ namespace Utils
      * \return Vector of algorithm names
      */
     static std::vector<std::string> available_algorithms()
-    {
-      return { "bisection", "illinois", "Chandrupatla", "Brent", "Ridder", "modified_AB", "algo748" };
-    }
+    { return { "bisection", "illinois", "Chandrupatla", "Brent", "Ridder", "modified_AB", "algo748" }; }
 
     /*!
      * \brief Reset the solver state
@@ -733,7 +731,7 @@ namespace Utils
   {
     auto check = [this]( Real c, Real fc ) -> void
     {
-      Utils::Assert(
+      Utils::Check(
         is_finite( fc ),
         "AlgoBracket::eval() found Inf or NaN\n"
         "a={} fa={}\n"
@@ -753,7 +751,7 @@ namespace Utils
       Real & fa{ m_fa };
       Real & fb{ m_fb };
 
-      Utils::Assert(
+      Utils::Check(
         !is_NaN( fa ) && !is_NaN( fb ),
         "AlgoBracket::eval() bad initial interval\n"
         "a = {}, fa = {}\n"
@@ -775,7 +773,7 @@ namespace Utils
       bool ffa{ false }, ffb{ false };
       while ( ( ffa = !is_finite( fa ) ) || ( ffb = !is_finite( fb ) ) )
       {
-        Utils::Assert(
+        Utils::Check(
           ++m_iteration_count <= m_max_iteration,
           "AlgoBracket::eval() too many iteration\n"
           "a={} fa={}\n"
@@ -796,7 +794,7 @@ namespace Utils
 
         Real fc{ this->evaluate( c ) };
 
-        Utils::Assert( !is_NaN( fc ), "AlgoBracket::eval()\nc = {}, fc = {}\n", c, fc );
+        Utils::Check( !is_NaN( fc ), "AlgoBracket::eval()\nc = {}, fc = {}\n", c, fc );
 
         m_converged = fc == 0;
         if ( m_converged )
@@ -1428,7 +1426,7 @@ namespace Utils
         Real tol{ Real( 0.7 ) * m_tolerance_x };
         if ( c <= a + tol || c >= b - tol ) c = ( a + b ) / 2;
 
-        Utils::Assert(
+        Utils::Check(
           is_finite( c ),
           "AlgoBracket[748]::pzero(), compute NaN or Inf at\n"
           "a={} f(a)={}\n"
@@ -1460,7 +1458,7 @@ namespace Utils
         Real & b{ m_b };
         Real & fb{ m_fb };
 
-        Utils::Assert(
+        Utils::Check(
           a < b && a != d && b != d,
           "AlgoBracket[748]::newton_quadratic() bad data\n"
           "a={} f(a)={}\n"
@@ -1477,7 +1475,7 @@ namespace Utils
         Real A1{ ( fb - fa ) / ( b - a ) };
         Real A2{ ( ( fd - fb ) / ( d - b ) - A1 ) / ( d - a ) };
 
-        Utils::Assert(
+        Utils::Check(
           is_finite( A0 ) && is_finite( A1 ) && is_finite( A2 ),
           "AlgoBracket[748]::newton_quadratic(), compute NaN or Inf at\n"
           "a={} f(a)={}\n"
@@ -1538,7 +1536,7 @@ namespace Utils
             c = m_b - tol;
         }
 
-        Utils::Assert(
+        Utils::Check(
           is_finite( c ),
           "AlgoBracket[748]::bracketing(), unexpected\n"
           "c={} at [a,b] = [{},{}]\n",

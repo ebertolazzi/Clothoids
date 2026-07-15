@@ -33,7 +33,7 @@
 #include "Utils.hh"
 
 #ifndef FMT_HEADER_ONLY
-  #define FMT_HEADER_ONLY
+#define FMT_HEADER_ONLY
 #endif
 
 #include "Utils/3rd/fmt/color.h"
@@ -46,65 +46,37 @@ namespace Utils
 {
 
   inline string fmt_table_left_top()
-  {
-    return "┌";
-  };
+  { return "┌"; };
   inline string fmt_table_left_middle()
-  {
-    return "├";
-  };
+  { return "├"; };
   inline string fmt_table_left_bottom()
-  {
-    return "└";
-  };
+  { return "└"; };
 
   inline string fmt_table_middle_top()
-  {
-    return "┬";
-  };
+  { return "┬"; };
   inline string fmt_table_middle_middle()
-  {
-    return "┼";
-  };
+  { return "┼"; };
   inline string fmt_table_middle_bottom()
-  {
-    return "┴";
-  };
+  { return "┴"; };
 
   inline string fmt_table_right_top()
-  {
-    return "┐";
-  };
+  { return "┐"; };
   inline string fmt_table_right_middle()
-  {
-    return "┤";
-  };
+  { return "┤"; };
   inline string fmt_table_right_bottom()
-  {
-    return "┘";
-  };
+  { return "┘"; };
 
   inline string fmt_table_cross()
-  {
-    return "┼";
-  };
+  { return "┼"; };
 
   inline string fmt_table_bar()
-  {
-    return "─";
-  }
+  { return "─"; }
   inline string fmt_table_vbar()
-  {
-    return "│";
-  }
+  { return "│"; }
   inline string fmt_table_dot()
-  {
-    return "•";
-  }
+  { return "•"; }
   inline string fmt_table_vdots()
-  {
-    return "⋮";
-  }
+  { return "⋮"; }
 
   using std::string_view;
 
@@ -126,83 +98,59 @@ namespace Utils
   string fmt_table_row( unsigned width, string_view L, string_view C, string_view R, string_view F, unsigned N );
 
   inline string fmt_table_row( unsigned width, string_view title = "", string_view align = "^", string_view fill = " " )
-  {
-    return fmt_table_row( width, "│", "│\n", fill, title, align );
-  }
+  { return fmt_table_row( width, "│", "│\n", fill, title, align ); }
   inline string fmt_table_top_row(
     unsigned    width,
     string_view title = "",
     string_view align = "^",
     string_view fill  = "─" )
-  {
-    return fmt_table_row( width, "┌", "┐\n", fill, title, align );
-  }
+  { return fmt_table_row( width, "┌", "┐\n", fill, title, align ); }
   inline string fmt_table_middle_row(
     unsigned    width,
     string_view title = "",
     string_view align = "^",
     string_view fill  = "─" )
-  {
-    return fmt_table_row( width, "├", "┤\n", fill, title, align );
-  }
+  { return fmt_table_row( width, "├", "┤\n", fill, title, align ); }
   inline string fmt_table_bottom_row(
     unsigned    width,
     string_view title = "",
     string_view align = "^",
     string_view fill  = "─" )
-  {
-    return fmt_table_row( width, "└", "┘\n", fill, title, align );
-  }
+  { return fmt_table_row( width, "└", "┘\n", fill, title, align ); }
 
   inline string fmt_table_row(
     unsigned                           width,
     std::initializer_list<string_view> names,
     string_view                        align = "<",
     string_view                        fill  = " " )
-  {
-    return fmt_table_row( width, "│", "│", "│\n", fill, names, align );
-  }
+  { return fmt_table_row( width, "│", "│", "│\n", fill, names, align ); }
   inline string fmt_table_top_row(
     unsigned                           width,
     std::initializer_list<string_view> names,
     string_view                        align = "<",
     string_view                        fill  = "─" )
-  {
-    return fmt_table_row( width, "┌", "─", "┐\n", fill, names, align );
-  }
+  { return fmt_table_row( width, "┌", "─", "┐\n", fill, names, align ); }
   inline string fmt_table_middle_row(
     unsigned                           width,
     std::initializer_list<string_view> names,
     string_view                        align = "<",
     string_view                        fill  = "─" )
-  {
-    return fmt_table_row( width, "├", "┼", "┤\n", fill, names, align );
-  }
+  { return fmt_table_row( width, "├", "┼", "┤\n", fill, names, align ); }
   inline string fmt_table_bottom_row(
     unsigned                           width,
     std::initializer_list<string_view> names,
     string_view                        align = "<",
     string_view                        fill  = "─" )
-  {
-    return fmt_table_row( width, "└", "─", "┘\n", fill, names, align );
-  }
+  { return fmt_table_row( width, "└", "─", "┘\n", fill, names, align ); }
 
   inline string fmt_table_row( unsigned width, unsigned N, string_view fill = " " )
-  {
-    return fmt_table_row( width, "│", "│", "│\n", fill, N );
-  }
+  { return fmt_table_row( width, "│", "│", "│\n", fill, N ); }
   inline string fmt_table_top_row( unsigned width, unsigned N, string_view fill = "─" )
-  {
-    return fmt_table_row( width, "┌", "┬", "┐\n", fill, N );
-  }
+  { return fmt_table_row( width, "┌", "┬", "┐\n", fill, N ); }
   inline string fmt_table_middle_row( unsigned width, unsigned N, string_view fill = "─" )
-  {
-    return fmt_table_row( width, "├", "┼", "┤\n", fill, N );
-  }
+  { return fmt_table_row( width, "├", "┼", "┤\n", fill, N ); }
   inline string fmt_table_bottom_row( unsigned width, unsigned N, string_view fill = "─" )
-  {
-    return fmt_table_row( width, "└", "┴", "┘\n", fill, N );
-  }
+  { return fmt_table_row( width, "└", "┴", "┘\n", fill, N ); }
 
   // Helper for vector formatting
   template <typename Scalar> inline string format_index_vector( std::vector<Scalar> const & v, size_t max_size = 20 )
@@ -210,7 +158,7 @@ namespace Utils
     std::string tmp{ "[" };
     size_t      v_size = v.size();
 
-    Utils::Assert( max_size >= 3, "format_index_vector: max_size={} must be >= 3\n", max_size );
+    Utils::Check( max_size >= 3, "format_index_vector: max_size={} must be >= 3\n", max_size );
 
     if ( v_size == 0 ) { return "[]"; }
 
@@ -274,7 +222,7 @@ namespace Utils
     std::string tmp{ "[" };
     size_t      v_size = v.size();
 
-    Utils::Assert( max_size >= 3, "format_reduced_vector: max_size={} must be >= 3\n", max_size );
+    Utils::Check( max_size >= 3, "format_reduced_vector: max_size={} must be >= 3\n", max_size );
 
     if ( v_size == 0 ) { return "[]"; }
 

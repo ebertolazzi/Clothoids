@@ -47,7 +47,7 @@ namespace Utils
         FALSE,  // mutex not owned
         NULL    // object name
       );
-      Utils::Assert( m_mutex != NULL, "WinMutex(): error: {}.\n", GetLastError() );
+      Utils::Check( m_mutex != NULL, "WinMutex(): error: {}.\n", GetLastError() );
     }
 
     ~WinMutex()
@@ -101,9 +101,7 @@ namespace Utils
 
   public:
     WinSemaphore() : m_is_red( false ), m_waiting_green( 0 ), m_waiting_red( 0 )
-    {
-      InitializeConditionVariable( &m_condition );
-    }
+    { InitializeConditionVariable( &m_condition ); }
 
     ~WinSemaphore() {}
 
@@ -399,7 +397,7 @@ namespace Utils
 
     void worker_loop()
     {
-      for (;;)
+      for ( ;; )
       {
         std::unique_lock lk( m_mutex );
         m_cv.wait( lk, [this] { return this->m_do_job || !this->m_active; } );
@@ -419,9 +417,7 @@ namespace Utils
     WorkerLoop & operator=( WorkerLoop && )      = delete;
 
     WorkerLoop() : m_active( true ), m_running( false ), m_do_job( false ), m_job( []() -> void {} )
-    {
-      m_running_thread = std::thread( &WorkerLoop::worker_loop, this );
-    }
+    { m_running_thread = std::thread( &WorkerLoop::worker_loop, this ); }
 
     ~WorkerLoop()
     {
@@ -632,9 +628,7 @@ namespace Utils
 
     at_scope_exit_impl( at_scope_exit_impl && x ) noexcept
       : m_destructor( std::move( x.m_destructor ) ), m_active( x.m_active )
-    {
-      x.m_active = false;
-    }
+    { x.m_active = false; }
 
     at_scope_exit_impl & operator=( at_scope_exit_impl && x )
     {
@@ -651,14 +645,10 @@ namespace Utils
   };
 
   template <class Function> auto at_scope_exit( Function && fun ) -> at_scope_exit_impl<Function>
-  {
-    return at_scope_exit_impl<Function>( std::forward<Function>( fun ) );
-  }
+  { return at_scope_exit_impl<Function>( std::forward<Function>( fun ) ); }
 
   template <class Function> auto at_scope_exit( Function const & fun ) -> at_scope_exit_impl<Function const &>
-  {
-    return at_scope_exit_impl<Function const &>( fun );
-  }
+  { return at_scope_exit_impl<Function const &>( fun ); }
 
   /*! @} */
 

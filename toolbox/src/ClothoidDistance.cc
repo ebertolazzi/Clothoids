@@ -404,7 +404,7 @@ namespace G2lib
     // transform to standard clothoid
     real_type sflex{ -CD.m_kappa0 / CD.m_dk };
 
-    UTILS_ASSERT( sflex <= 0, " bad sflex = {}\n", sflex );
+    Utils::Check( sflex <= 0, " bad sflex = {}\n", sflex );
 
     real_type const thflex{ CD.m_theta0 + 0.5 * CD.m_kappa0 * sflex };
     real_type const ssf{ sin( thflex ) };
@@ -474,7 +474,7 @@ namespace G2lib
       converged = abs( ds ) < epsi;
     }
 
-    UTILS_ASSERT0( converged, "closest_point_standard not converged\n" );
+    Utils::Check( converged, "closest_point_standard not converged\n" );
 
     real_type const Lp{ min( b - ss, 4 / ( ss + sqrt( ss * ss + 4 ) ) ) };
     real_type const Lm{ min( ss - a, 4 / ( ss + sqrt( ss * ss - 4 ) ) ) };
@@ -517,7 +517,7 @@ namespace G2lib
 
     real_type ell{ ( DK - abs( CD.m_kappa0 ) ) / abs( CD.m_dk ) };
 
-    UTILS_ASSERT( ell > 0 && ell < L, "bad ell = {} L = {}\n", ell, L );
+    Utils::Check( ell > 0 && ell < L, "bad ell = {} L = {}\n", ell, L );
 
     ClothoidData CDS;
     CD.eval( ell, CDS );

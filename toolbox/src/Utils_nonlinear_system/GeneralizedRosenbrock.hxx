@@ -45,9 +45,7 @@ public:
         "}\n",
         neq )
     , N( 100 )
-  {
-    check_even( n, 2 );
-  }
+  { check_even( n, 2 ); }
 
   virtual void evaluate( Vector const & x, Vector & f ) const override
   {

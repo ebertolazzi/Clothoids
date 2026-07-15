@@ -143,7 +143,7 @@ public:
   {
     for ( integer i = 0; i < 10; ++i )
     {
-      Utils::Assert( x( i ) > 2 && x( i ) < 10, "x[{}] = {} must be in (2,10)", i, x( i ) );
+      Utils::Check( x( i ) > 2 && x( i ) < 10, "x[{}] = {} must be in (2,10)", i, x( i ) );
     }
   }
 

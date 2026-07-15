@@ -114,7 +114,7 @@ namespace G2lib
 
   void G2solve2arc::set_tolerance( real_type const tol )
   {
-    UTILS_ASSERT( tol > 0 && tol <= 0.1, "G2solve2arc::set_tolerance, tolerance = {} must be in (0,0.1]\n", tol );
+    Utils::Check( tol > 0 && tol <= 0.1, "G2solve2arc::set_tolerance, tolerance = {} must be in (0,0.1]\n", tol );
     m_tolerance = tol;
   }
 
@@ -122,7 +122,7 @@ namespace G2lib
 
   void G2solve2arc::set_max_iter( int const miter )
   {
-    UTILS_ASSERT( miter > 0 && miter <= 1000, "G2solve2arc::set_max_iter( miter = {} ) must be in [1,1000]\n", miter );
+    Utils::Check( miter > 0 && miter <= 1000, "G2solve2arc::set_max_iter( miter = {} ) must be in [1,1000]\n", miter );
     m_max_iter = miter;
   }
 
@@ -358,7 +358,7 @@ namespace G2lib
 
   void G2solveCLC::set_tolerance( real_type const tol )
   {
-    UTILS_ASSERT( tol > 0 && tol <= 0.1, "G2solveCLC::set_tolerance, tolerance = {} must be in (0,0.1]\n", tol );
+    Utils::Check( tol > 0 && tol <= 0.1, "G2solveCLC::set_tolerance, tolerance = {} must be in (0,0.1]\n", tol );
     m_tolerance = tol;
   }
 
@@ -366,7 +366,7 @@ namespace G2lib
 
   void G2solveCLC::set_max_iter( int const miter )
   {
-    UTILS_ASSERT( miter > 0 && miter <= 1000, "G2solveCLC::set_max_iter ( miter = {} ) must be in [1,1000]\n", miter );
+    Utils::Check( miter > 0 && miter <= 1000, "G2solveCLC::set_max_iter ( miter = {} ) must be in [1,1000]\n", miter );
     m_max_iter = miter;
   }
 
@@ -458,7 +458,7 @@ namespace G2lib
 
   void G2solve3arc::set_tolerance( real_type const tol )
   {
-    UTILS_ASSERT( tol > 0 && tol <= 0.1, "G2solve3arc::set_tolerance, tolerance = {} must be in (0,0.1]\n", tol );
+    Utils::Check( tol > 0 && tol <= 0.1, "G2solve3arc::set_tolerance, tolerance = {} must be in (0,0.1]\n", tol );
     m_tolerance = tol;
   }
 
@@ -466,7 +466,7 @@ namespace G2lib
 
   void G2solve3arc::set_max_iter( int const miter )
   {
-    UTILS_ASSERT( miter > 0 && miter <= 1000, "G2solve3arc::set_max_iter ( miter = {} ) must be in [1,1000]\n", miter );
+    Utils::Check( miter > 0 && miter <= 1000, "G2solve3arc::set_max_iter ( miter = {} ) must be in [1,1000]\n", miter );
     m_max_iter = miter;
   }
 

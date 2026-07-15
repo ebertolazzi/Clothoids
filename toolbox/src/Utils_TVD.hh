@@ -120,10 +120,10 @@ namespace Utils
     static void denoise( Integer N, Real const y[], Integer incy, Real lambda, Real x[], Integer incx )
     {
       // Input validation (in release mode, these are no-ops if NDEBUG is defined)
-      Utils::Assert( N >= 1, "TVD::denoise: N must be positive, got {}", N );
-      Utils::Assert( lambda >= 0, "TVD::denoise: lambda must be non-negative, got {}", lambda );
-      Utils::Assert( incy != 0, "TVD::denoise: incy cannot be zero" );
-      Utils::Assert( incx != 0, "TVD::denoise: incx cannot be zero" );
+      Utils::Check( N >= 1, "TVD::denoise: N must be positive, got {}", N );
+      Utils::Check( lambda >= 0, "TVD::denoise: lambda must be non-negative, got {}", lambda );
+      Utils::Check( incy != 0, "TVD::denoise: incy cannot be zero" );
+      Utils::Check( incx != 0, "TVD::denoise: incx cannot be zero" );
 
       // Initialize output to zero
       for ( Integer j = 0; j < N; ++j ) x[j * incx] = 0;

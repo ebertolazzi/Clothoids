@@ -42,9 +42,7 @@ class StrictlyConvexFunction1 : public NonlinearSystem
 public:
   StrictlyConvexFunction1( integer neq )
     : NonlinearSystem( "Strictly Convex Function 1", STRICT_CONVEX_FUNCTION_BIBTEX, neq )
-  {
-    check_min_equations( n, 1 );
-  }
+  { check_min_equations( n, 1 ); }
 
   virtual void evaluate( Vector const & x, Vector & f ) const override
   {
@@ -77,9 +75,7 @@ class StrictlyConvexFunction2 : public NonlinearSystem
 public:
   StrictlyConvexFunction2( integer neq )
     : NonlinearSystem( "Strictly Convex Function 2", STRICT_CONVEX_FUNCTION_BIBTEX, neq )
-  {
-    check_min_equations( n, 1 );
-  }
+  { check_min_equations( n, 1 ); }
 
   virtual void evaluate( Vector const & x, Vector & f ) const override
   {
@@ -90,7 +86,8 @@ public:
   {
     J.resize( n, n );
     J.setZero();
-    for ( integer i = 0; i < n; ++i ) J.insert( i, i ) = ( ( static_cast<real_type>( i ) + 1.0 ) / 10.0 ) * exp( x( i ) );
+    for ( integer i = 0; i < n; ++i )
+      J.insert( i, i ) = ( ( static_cast<real_type>( i ) + 1.0 ) / 10.0 ) * exp( x( i ) );
     J.makeCompressed();
   }
 

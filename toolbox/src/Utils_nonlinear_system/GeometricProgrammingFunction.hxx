@@ -30,9 +30,7 @@ public:
         "  year   = {2004}\n"
         "}\n",
         neq )
-  {
-    check_min_equations( n, 2 );
-  }
+  { check_min_equations( n, 2 ); }
 
   // ============================================================
   // f(x)
@@ -183,6 +181,6 @@ public:
 
   virtual void check_if_admissible( Vector const & x ) const override
   {
-    for ( integer i = 0; i < n - 1; ++i ) Utils::Assert( x( i ) > 0, "x[{}] = {} must be > 0", i, x( i ) );
+    for ( integer i = 0; i < n - 1; ++i ) Utils::Check( x( i ) > 0, "x[{}] = {} must be > 0", i, x( i ) );
   }
 };

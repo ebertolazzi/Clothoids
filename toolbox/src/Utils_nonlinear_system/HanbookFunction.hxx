@@ -43,9 +43,7 @@ public:
         "  doi       = {10.1080/10556780310001610493},\n"
         "}\n",
         neq )
-  {
-    check_min_equations( n, 2 );
-  }
+  { check_min_equations( n, 2 ); }
 
   void sum( Vector const & x ) const
   {

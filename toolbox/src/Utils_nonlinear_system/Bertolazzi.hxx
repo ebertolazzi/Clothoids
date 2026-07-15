@@ -21,9 +21,7 @@ class BertolazziRootPlusSquare : public NonlinearSystem
 public:
   BertolazziRootPlusSquare()
     : NonlinearSystem( "Bertolazzi: root+square.", "no doc", 2 ), epsilon( 1E-6 ), delta( 1E-8 )
-  {
-    xmin = epsilon * ( 1.0 / exp( 1.0 ) - 1.0 );
-  }
+  { xmin = epsilon * ( 1.0 / exp( 1.0 ) - 1.0 ); }
 
   virtual void evaluate( Vector const & x_in, Vector & f ) const override
   {
@@ -61,9 +59,7 @@ public:
   }
 
   virtual void check_if_admissible( Vector const & x ) const override
-  {
-    Utils::Assert( x( 0 ) >= xmin, "BertolazziRootPlusSquare: x = {} must be >= {}", x( 0 ), xmin );
-  }
+  { Utils::Check( x( 0 ) >= xmin, "BertolazziRootPlusSquare: x = {} must be >= {}", x( 0 ), xmin ); }
 
   virtual void bounding_box( Vector & L, Vector & U ) const override
   {
@@ -129,7 +125,7 @@ public:
   virtual void check_if_admissible( Vector const & x ) const override
   {
     for ( integer i = 0; i < n; ++i )
-      Utils::Assert( std::abs( x( i ) ) < 10, "x[{}] = {} out of range [-10,10]", i, x( i ) );
+      Utils::Check( std::abs( x( i ) ) < 10, "x[{}] = {} out of range [-10,10]", i, x( i ) );
   }
 
   virtual void bounding_box( Vector & L, Vector & U ) const override

@@ -59,7 +59,7 @@ namespace G2lib
     auto const & x     = gc.get_map_vec_real( "x", where );
     auto const & y     = gc.get_map_vec_real( "y", where );
     auto const   n     = static_cast<integer>( x.size() );
-    UTILS_ASSERT(
+    Utils::Check(
       n == static_cast<integer>( y.size() ),
       "ClothoidList[{}]::setup( gc ) (size(x)={}) != (size(y)={})\n",
       this->name(),
@@ -69,7 +69,7 @@ namespace G2lib
     if ( gc.exists( "theta" ) )
     {
       GenericContainer::vec_real_type const & theta = gc.get_map_vec_real( "theta", where );
-      UTILS_ASSERT(
+      Utils::Check(
         n == static_cast<integer>( theta.size() ),
         "ClothoidList[{}]::setup( gc ) (size(x)={}) != (size(theta)={})\n",
         this->name(),
@@ -81,7 +81,7 @@ namespace G2lib
     {
       ok = this->build_G1( n, x.data(), y.data() );
     }
-    UTILS_ASSERT( ok, "ClothoidList[{}]::setup( gc ) failed\n", this->name() );
+    Utils::Check( ok, "ClothoidList[{}]::setup( gc ) failed\n", this->name() );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -271,7 +271,7 @@ namespace G2lib
         this->push_back( *dynamic_cast<Dubins3p const *>( pC ) );
         break;
         // default:
-        //   UTILS_ERROR(
+        //   Utils::Error(
         //     "ClothoidList::ClothoidList, missing conversion for type {}",
         //     pC->type_name()
         //   );
@@ -576,7 +576,7 @@ namespace G2lib
 
   void ClothoidList::push_back( real_type const kappa0, real_type const dkappa, real_type const L )
   {
-    UTILS_ASSERT0( !m_clothoid_list.empty(), "ClothoidList::push_back_G1(...) empty list!\n" );
+    Utils::Check( !m_clothoid_list.empty(), "ClothoidList::push_back_G1(...) empty list!\n" );
     ClothoidCurve   c{ "ClothoidList::push_back temporary c" };
     real_type const x0     = m_clothoid_list.back().x_end();
     real_type const y0     = m_clothoid_list.back().y_end();
@@ -603,7 +603,7 @@ namespace G2lib
 
   void ClothoidList::push_back_G1( real_type const x1, real_type const y1, real_type const theta1 )
   {
-    UTILS_ASSERT0( !m_clothoid_list.empty(), "ClothoidList::push_back_G1(...) empty list!\n" );
+    Utils::Check( !m_clothoid_list.empty(), "ClothoidList::push_back_G1(...) empty list!\n" );
     ClothoidCurve   c{ "ClothoidList::push_back_G1 temporary c" };
     real_type const x0     = m_clothoid_list.back().x_end();
     real_type const y0     = m_clothoid_list.back().y_end();
@@ -631,7 +631,7 @@ namespace G2lib
 
   bool ClothoidList::build_G1( integer const n, real_type const x[], real_type const y[] )
   {
-    UTILS_ASSERT0( n > 1, "ClothoidList::build_G1, at least 2 points are necessary\n" );
+    Utils::Check( n > 1, "ClothoidList::build_G1, at least 2 points are necessary\n" );
 
     ClothoidCurve c{ "ClothoidList::build_G1 temporary c" };
 
@@ -652,11 +652,11 @@ namespace G2lib
       if ( ciclic )
       {
         bool const ok = b.build_3P( x[n - 2], y[n - 2], x[0], y[0], x[1], y[1] );
-        UTILS_ASSERT0( ok, "ClothoidList::build_G1, failed\n" );
+        Utils::Check( ok, "ClothoidList::build_G1, failed\n" );
         thetaC = b.theta_middle();
       }
       bool ok = b.build_3P( x[0], y[0], x[1], y[1], x[2], y[2] );
-      UTILS_ASSERT0( ok, "ClothoidList::build_G1, failed\n" );
+      Utils::Check( ok, "ClothoidList::build_G1, failed\n" );
       real_type theta0 = ciclic ? thetaC : b.theta_begin();
       real_type theta1 = b.theta_middle();
       c.build_G1( x[0], y[0], theta0, x[1], y[1], theta1 );
@@ -665,7 +665,7 @@ namespace G2lib
       {
         theta0 = theta1;
         ok     = b.build_3P( x[k - 1], y[k - 1], x[k], y[k], x[k + 1], y[k + 1] );
-        UTILS_ASSERT0( ok, "ClothoidList::build_G1, failed\n" );
+        Utils::Check( ok, "ClothoidList::build_G1, failed\n" );
         theta1 = b.theta_middle();
         c.build_G1( x[k - 1], y[k - 1], theta0, x[k], y[k], theta1 );
         this->push_back( c );
@@ -683,7 +683,7 @@ namespace G2lib
 
   bool ClothoidList::build_G1( integer const n, real_type const x[], real_type const y[], real_type const theta[] )
   {
-    UTILS_ASSERT0( n > 1, "ClothoidList::build_G1, at least 2 points are necessary\n" );
+    Utils::Check( n > 1, "ClothoidList::build_G1, at least 2 points are necessary\n" );
 
     ClothoidCurve c{ "ClothoidList::build_G1 temporary c" };
 
@@ -714,7 +714,7 @@ namespace G2lib
   {
     using Vector = Eigen::Matrix<real_type, Eigen::Dynamic, 1>;
 
-    UTILS_ASSERT0( n > 1, "ClothoidList::build_G2, at least 2 points are necessary\n" );
+    Utils::Check( n > 1, "ClothoidList::build_G2, at least 2 points are necessary\n" );
 
     integer iter, nm1 = n - 1;
 
@@ -773,7 +773,7 @@ namespace G2lib
   {
     using Vector = Eigen::Matrix<real_type, Eigen::Dynamic, 1>;
 
-    UTILS_ASSERT0( n > 1, "ClothoidList::build_G2, at least 2 points are necessary\n" );
+    Utils::Check( n > 1, "ClothoidList::build_G2, at least 2 points are necessary\n" );
 
     // fit G2 without curvature continuty
     ClothoidSplineG2 G2_list;
@@ -804,7 +804,7 @@ namespace G2lib
   {
     using Vector = Eigen::Matrix<real_type, Eigen::Dynamic, 1>;
 
-    UTILS_ASSERT0( n > 1, "ClothoidList::build_G2_cyclic, at least 2 points are necessary\n" );
+    Utils::Check( n > 1, "ClothoidList::build_G2_cyclic, at least 2 points are necessary\n" );
 
     // fit G2 without curvature continuty
     ClothoidSplineG2 G2_list;
@@ -906,7 +906,7 @@ namespace G2lib
     real_type k  = kappa[0];
     real_type L  = s[1] - s[0];
     real_type dk = ( kappa[1] - k ) / L;
-    UTILS_ASSERT(
+    Utils::Check(
       Utils::is_finite( k ) && Utils::is_finite( L ) && Utils::is_finite( dk ),
       "ClothoidList::build, failed first segment found\n"
       "L = {} k = {} dk = {}\n",
@@ -924,7 +924,7 @@ namespace G2lib
         continue;  // skip too small segment
       }
       dk = ( kappa[i] - k ) / L;
-      UTILS_ASSERT(
+      Utils::Check(
         Utils::is_finite( k ) && Utils::is_finite( L ) && Utils::is_finite( dk ),
         "ClothoidList::build, failed at segment N.{} found\n"
         "L = {} k = {} dk = {}\n",
@@ -969,19 +969,20 @@ namespace G2lib
 
   ClothoidCurve const & ClothoidList::get( integer idx ) const
   {
-    UTILS_ASSERT( !m_clothoid_list.empty(), "ClothoidList::get( {} ) empty list\n", idx );
+    Utils::Check( !m_clothoid_list.empty(), "ClothoidList::get( {} ) empty list\n", idx );
     try
     {
       return m_clothoid_list.at( idx );
     }
     catch ( std::exception & exc )
     {
-      UTILS_ERROR( "ClothoidList::get( {} ): {}\n", idx, exc.what() );
+      Utils::Error( "ClothoidList::get( {} ): {}\n", idx, exc.what() );
     }
     catch ( ... )
     {
-      UTILS_ERROR( "ClothoidList::get( {} ): unknown error\n", idx );
+      Utils::Error( "ClothoidList::get( {} ): unknown error\n", idx );
     }
+    return m_clothoid_list.front();
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -1592,7 +1593,7 @@ namespace G2lib
     this->copy( newCL );
 
 #if 0
-    UTILS_ASSERT(
+    Utils::Check(
       s_begin >= m_s0.front() && s_end <= m_s0.back() && s_end > s_begin,
       "ClothoidList::trim( s_begin={}, s_end={} ) bad range, must be in [{},{}]\n",
       s_begin, s_end, m_s0.front(), m_s0.back()
@@ -1783,7 +1784,7 @@ namespace G2lib
     for ( const auto & [fst, snd] : intersectList )
     {
       integer i = fst;
-      UTILS_ASSERT_DEBUG(
+      Utils::Debug(
         i >= 0 && i < static_cast<integer>( m_aabb_triangles.size() ),
         "ClothoidList::collision_ISO( offs={}, C, offs_CL={} ) i={} out of range [0,{})\n",
         offs,
@@ -1794,7 +1795,7 @@ namespace G2lib
       ClothoidCurve const & C1 = m_clothoid_list.at( T1.Icurve() );
       for ( integer j : snd )
       {
-        UTILS_ASSERT_DEBUG(
+        Utils::Debug(
           j >= 0 && j < static_cast<integer>( CL.m_aabb_triangles.size() ),
           "ClothoidList::collision_ISO( offs={}, CL, offs_CL={} ) j={} out of range [0,{})\n",
           offs,
@@ -1859,7 +1860,7 @@ namespace G2lib
       for ( const auto & [fst, snd] : intersectList )
       {
         integer i = fst;
-        UTILS_ASSERT_DEBUG(
+        Utils::Debug(
           i >= 0 && i < static_cast<integer>( m_aabb_triangles.size() ),
           "ClothoidList::intersect_ISO( offs={}, CL, offs_CL={}, ilist ) i={} out of range [0,{})\n",
           offs,
@@ -1871,7 +1872,7 @@ namespace G2lib
 
         for ( integer j : snd )
         {
-          UTILS_ASSERT_DEBUG(
+          Utils::Debug(
             j >= 0 && j < static_cast<integer>( CL.m_aabb_triangles.size() ),
             "ClothoidList::intersect_ISO( offs={}, CL, offs_CL={}, ilist ) j={} out of range [0,{})\n",
             offs,
@@ -2001,7 +2002,7 @@ namespace G2lib
         tictoc.elapsed_ms(),
         candidateList.size() );
 
-      UTILS_ASSERT0( !candidateList.empty(), "ClothoidList::closest_point_internal no candidate\n" );
+      Utils::Check( !candidateList.empty(), "ClothoidList::closest_point_internal no candidate\n" );
 
       G2LIB_DEBUG_TIC;
       for ( integer const ipos : candidateList )
@@ -2067,7 +2068,7 @@ namespace G2lib
     real_type &     DST ) const
   {
     integer icurve = this->closest_point_internal( qx, qy, offs, x, y, s, DST );
-    UTILS_ASSERT(
+    Utils::Check(
       icurve >= 0 && icurve < static_cast<integer>( m_clothoid_list.size() ),
       "ClothoidList::closest_point_ISO\n"
       "call to closest_point_internal return icurve = {}\n"
@@ -2139,7 +2140,7 @@ namespace G2lib
         tictoc.elapsed_ms(),
         candidateList.size() );
 
-      UTILS_ASSERT0( !candidateList.empty(), "ClothoidList::closest_segment no candidate\n" );
+      Utils::Check( !candidateList.empty(), "ClothoidList::closest_segment no candidate\n" );
 
       G2LIB_DEBUG_TIC;
       for ( integer const ipos : candidateList )
@@ -2199,7 +2200,7 @@ namespace G2lib
     real_type &     dst,
     integer &       icurve ) const
   {
-    UTILS_ASSERT0( !m_clothoid_list.empty(), "ClothoidList::closest_point_in_range_ISO, empty list\n" );
+    Utils::Check( !m_clothoid_list.empty(), "ClothoidList::closest_point_in_range_ISO, empty list\n" );
     integer const nsegs = this->num_segments();
     if ( nsegs == 1 )
     {  // only 1 segment to check
@@ -2213,7 +2214,7 @@ namespace G2lib
     integer ie = icurve_end % nsegs;    // to avoid infinite loop in case of bad input
     if ( ib < 0 ) ib += nsegs;
     if ( ie < 0 ) ie += nsegs;
-    UTILS_ASSERT( ib >= 0 && ie >= 0, "ClothoidList::closest_point_in_range_ISO, ib = {} ie = {}\n", ib, ie );
+    Utils::Check( ib >= 0 && ie >= 0, "ClothoidList::closest_point_in_range_ISO, ib = {} ie = {}\n", ib, ie );
 
     icurve      = ib;
     integer res = m_clothoid_list.at( icurve ).closest_point_ISO( qx, qy, x, y, s, t, dst );
@@ -2268,7 +2269,7 @@ namespace G2lib
     real_type &     dst,
     integer &       icurve ) const
   {
-    UTILS_ASSERT0( !m_clothoid_list.empty(), "ClothoidList::closest_point_in_s_range_ISO, empty list\n" );
+    Utils::Check( !m_clothoid_list.empty(), "ClothoidList::closest_point_in_s_range_ISO, empty list\n" );
     // put in range
     while ( s_begin < 0 ) s_begin += this->length();
     while ( s_begin > this->length() ) s_begin -= this->length();
@@ -2486,7 +2487,7 @@ namespace G2lib
 
   integer ClothoidList::findST1( real_type const x, real_type const y, real_type & s, real_type & t ) const
   {
-    UTILS_ASSERT0( !m_clothoid_list.empty(), "ClothoidList::findST, empty list\n" );
+    Utils::Check( !m_clothoid_list.empty(), "ClothoidList::findST, empty list\n" );
     auto ic = m_clothoid_list.begin();
     auto is = m_s0.begin();
 
@@ -2528,8 +2529,8 @@ namespace G2lib
     real_type &     s,
     real_type &     t ) const
   {
-    UTILS_ASSERT0( !m_clothoid_list.empty(), "ClothoidList::findST, empty list\n" );
-    UTILS_ASSERT(
+    Utils::Check( !m_clothoid_list.empty(), "ClothoidList::findST, empty list\n" );
+    Utils::Check(
       ibegin >= 0 && ibegin <= iend && iend < static_cast<integer>( m_clothoid_list.size() ),
       "ClothoidList::findST( ibegin={}, iend={}, x, y, s, t ) bad range not in [0,{}]\n",
       ibegin,
@@ -2650,7 +2651,7 @@ namespace G2lib
     // check segment
     real_type err1 = std::abs( kappa0 - c.kappa_begin() ) * c.length();
     real_type err2 = std::abs( kappa1 - c.kappa_end() ) * c.length();
-    UTILS_ASSERT(
+    Utils::Check(
       err1 < epsi && err2 < epsi,
       "load_segment, failed tolerance on curvature\n"
       "begin error = {}, end error = {}\n",

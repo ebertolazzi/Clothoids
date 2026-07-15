@@ -315,7 +315,7 @@ namespace Utils
      */
     void setup( integer dim, Function & fun, Console const * console = nullptr )
     {
-      Utils::Assert( dim > 0, "HJPatternSearch::setup: dimension {} must be > 0", dim );
+      Utils::Check( dim > 0, "HJPatternSearch::setup: dimension {} must be > 0", dim );
 
       m_dim     = dim;
       m_fun     = fun;
@@ -369,7 +369,7 @@ namespace Utils
      */
     void set_tolerance( Real tol )
     {
-      Utils::Assert( tol > 0, "HJPatternSearch::set_tolerance: tolerance {} must be > 0", tol );
+      Utils::Check( tol > 0, "HJPatternSearch::set_tolerance: tolerance {} must be > 0", tol );
       m_tolerance = tol;
     }
 
@@ -380,7 +380,7 @@ namespace Utils
      */
     void set_max_iterations( integer max_iter )
     {
-      Utils::Assert( max_iter > 0, "HJPatternSearch::set_max_iterations: max_iter {} must be > 0", max_iter );
+      Utils::Check( max_iter > 0, "HJPatternSearch::set_max_iterations: max_iter {} must be > 0", max_iter );
       m_max_iterations = max_iter;
     }
 
@@ -391,7 +391,7 @@ namespace Utils
      */
     void set_max_fun_evaluations( integer max_fev )
     {
-      Utils::Assert( max_fev > 0, "HJPatternSearch::set_max_fun_evaluations: max_fev {} must be > 0", max_fev );
+      Utils::Check( max_fev > 0, "HJPatternSearch::set_max_fun_evaluations: max_fev {} must be > 0", max_fev );
       m_max_fun_evaluations = max_fev;
     }
 
@@ -402,7 +402,7 @@ namespace Utils
      */
     void set_max_stagnations( integer max_stag )
     {
-      Utils::Assert( max_stag > 0, "HJPatternSearch::set_max_stagnations: max_stag {} must be > 0", max_stag );
+      Utils::Check( max_stag > 0, "HJPatternSearch::set_max_stagnations: max_stag {} must be > 0", max_stag );
       m_max_stagnations = max_stag;
     }
 
@@ -413,7 +413,7 @@ namespace Utils
      */
     void set_rho( Real rho )
     {
-      Utils::Assert( rho > 0 && rho < 1, "HJPatternSearch::set_rho: rho {} must be in (0,1)", rho );
+      Utils::Check( rho > 0 && rho < 1, "HJPatternSearch::set_rho: rho {} must be in (0,1)", rho );
       m_rho = rho;
     }
 

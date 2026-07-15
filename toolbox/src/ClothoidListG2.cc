@@ -250,7 +250,7 @@ namespace G2lib
     solver->tolerance( SOLVER_TOLERANCE );
     solver->max_iterations( MAX_ITERATIONS );
     bool ok{ solver->optimize( theta_guess, theta_sol ) };
-    UTILS_ASSERT( ok, "ClothoidSplineG2::build( n={}, x, y ) failed PIPAL solver", m_npts );
+    Utils::Check( ok, "ClothoidSplineG2::build( n={}, x, y ) failed PIPAL solver", m_npts );
 
     std::copy_n( theta_sol.data(), n, theta );
 
@@ -287,7 +287,7 @@ namespace G2lib
       case TargetType::P1:
       case TargetType::P2:
       case TargetType::P3:
-        UTILS_ERROR( "target not supported" );
+        Utils::Error( "target not supported" );
         // forward target
         break;
       case TargetType::P4:
@@ -364,7 +364,7 @@ namespace G2lib
     {
       case TargetType::P1:
       case TargetType::P2:
-      case TargetType::P3: UTILS_ERROR( "target not supported" ); break;
+      case TargetType::P3: Utils::Error( "target not supported" ); break;
       case TargetType::P4:
         // f = G0.dk^2+GE.dk^2;
         {
@@ -464,7 +464,7 @@ namespace G2lib
         break;
     }
     bool ok{ g.allFinite() };
-    UTILS_ASSERT( ok, "ClothoidSplineG2::gradient(...) failed" );
+    Utils::Check( ok, "ClothoidSplineG2::gradient(...) failed" );
     return ok;
   }
 
@@ -483,7 +483,7 @@ namespace G2lib
       c( j ) = G.k1 - G1.k0;
     }
     bool ok{ c.allFinite() };
-    UTILS_ASSERT( ok, "ClothoidSplineG2::constraints(...) failed" );
+    Utils::Check( ok, "ClothoidSplineG2::constraints(...) failed" );
     return ok;
   }
 
@@ -514,7 +514,7 @@ namespace G2lib
 
     Eigen::Map<Pipal::Vector<real_type>> vals( J.valuePtr(), J.nonZeros() );
     bool                                 ok{ vals.allFinite() };
-    UTILS_ASSERT( ok, "ClothoidSplineG2::constraints(...) failed" );
+    Utils::Check( ok, "ClothoidSplineG2::constraints(...) failed" );
     return ok;
   }
 
@@ -538,7 +538,7 @@ namespace G2lib
     {
       case TargetType::P1:
       case TargetType::P2:
-      case TargetType::P3: UTILS_ERROR( "target not supported" ); break;
+      case TargetType::P3: Utils::Error( "target not supported" ); break;
       case TargetType::P4:
         // 2 * G0.dk * G0.dk__L;
         {
@@ -830,7 +830,7 @@ namespace G2lib
 
     Eigen::Map<Pipal::Vector<real_type>> vals( H.valuePtr(), H.nonZeros() );
     bool                                 ok{ vals.allFinite() };
-    UTILS_ASSERT( ok, "ClothoidSplineG2::lagrangian_hessian(...) failed" );
+    Utils::Check( ok, "ClothoidSplineG2::lagrangian_hessian(...) failed" );
     return ok;
   }
 

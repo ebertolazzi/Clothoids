@@ -43,9 +43,7 @@ class CountercurrentReactorsProblem1 : public NonlinearSystem
 public:
   CountercurrentReactorsProblem1( integer neq )
     : NonlinearSystem( "Countercurrent Reactors Problem N.1", COUNTERCURRENT_BIBTEX, neq ), alpha( 0.5 ), theta( 4.0 )
-  {
-    check_min_equations( neq, 4 );
-  }
+  { check_min_equations( neq, 4 ); }
 
   virtual void evaluate( Vector const & x, Vector & f ) const
   {
@@ -146,9 +144,7 @@ public:
     , A1( 0.414214 )
     , B0( 0 )
     , theta( 4 )
-  {
-    check_min_equations( neq, 6 );
-  }
+  { check_min_equations( neq, 6 ); }
 
   virtual void evaluate( Vector const & x, Vector & f ) const override
   {

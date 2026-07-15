@@ -35,9 +35,7 @@ public:
     for ( integer i = 0; i < n; ++i )
     {
       f( i ) = 0;
-      for ( integer j = 0; j < n; ++j ) {
-        f( i ) += ( 2.0 * x( j ) ) / ( static_cast<real_type>( i + j ) + 1 );
-      }
+      for ( integer j = 0; j < n; ++j ) { f( i ) += ( 2.0 * x( j ) ) / ( static_cast<real_type>( i + j ) + 1 ); }
     }
   }
 

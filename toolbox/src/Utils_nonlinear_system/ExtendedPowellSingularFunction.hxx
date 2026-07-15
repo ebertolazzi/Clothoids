@@ -46,9 +46,7 @@ public:
         4 )
     , sqrt5( sqrt( 5.0 ) )
     , sqrt10( sqrt( 10.0 ) )
-  {
-    check_four( n, 4 );
-  }
+  { check_four( n, 4 ); }
 
   virtual void evaluate( Vector const & x, Vector & f ) const override
   {

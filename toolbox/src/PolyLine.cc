@@ -51,7 +51,7 @@ namespace G2lib
     auto const & x     = gc.get_map_vec_real( "x", where );
     auto const & y     = gc.get_map_vec_real( "y", where );
     auto const   n     = static_cast<integer>( x.size() );
-    UTILS_ASSERT(
+    Utils::Check(
       n == static_cast<integer>( y.size() ),
       "PolyLine[{}]::setup( gc ) (size(x)={}) != (size(y)={})\n",
       this->name(),
@@ -64,31 +64,31 @@ namespace G2lib
 
   void PolyLine::build( CircleArc const & )
   {
-    UTILS_ERROR( "cannot convert from CircleArc to PolyLine\n" );
+    Utils::Error( "cannot convert from CircleArc to PolyLine\n" );
   }
   void PolyLine::build( ClothoidCurve const & )
   {
-    UTILS_ERROR( "cannot convert from Clothoid to PolyLine\n" );
+    Utils::Error( "cannot convert from Clothoid to PolyLine\n" );
   }
   void PolyLine::build( Biarc const & )
   {
-    UTILS_ERROR( "cannot convert from Biarc to PolyLine\n" );
+    Utils::Error( "cannot convert from Biarc to PolyLine\n" );
   }
   void PolyLine::build( BiarcList const & )
   {
-    UTILS_ERROR( "cannot convert from BiarcList to PolyLine\n" );
+    Utils::Error( "cannot convert from BiarcList to PolyLine\n" );
   }
   void PolyLine::build( ClothoidList const & )
   {
-    UTILS_ERROR( "cannot convert from ClothoidList to PolyLine\n" );
+    Utils::Error( "cannot convert from ClothoidList to PolyLine\n" );
   }
   void PolyLine::build( Dubins const & )
   {
-    UTILS_ERROR( "cannot convert from Dubins to PolyLine\n" );
+    Utils::Error( "cannot convert from Dubins to PolyLine\n" );
   }
   void PolyLine::build( Dubins3p const & )
   {
-    UTILS_ERROR( "cannot convert from Dubins3p to PolyLine\n" );
+    Utils::Error( "cannot convert from Dubins3p to PolyLine\n" );
   }
 
   /*\
@@ -117,7 +117,7 @@ namespace G2lib
         G2LIB_DEBUG_MESSAGE( "to -> PolyLine\n" );
         this->copy( *dynamic_cast<PolyLine const *>( pC ) );
         break;
-      default: UTILS_ERROR( "PolyLine constructor cannot convert from: {}\n", pC->type_name() );
+      default: Utils::Error( "PolyLine constructor cannot convert from: {}\n", pC->type_name() );
     }
   }
 
@@ -168,8 +168,8 @@ namespace G2lib
 
   real_type PolyLine::length_ISO( real_type ) const
   {
-    UTILS_ERROR0( "PolyLine::length( offs ) not available!\n" );
-    // return 0;
+    Utils::Error( "PolyLine::length( offs ) not available!\n" );
+    return 0; // to mute compiler warning
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -225,8 +225,8 @@ namespace G2lib
 
   LineSegment const & PolyLine::getSegment( integer const n ) const
   {
-    UTILS_ASSERT0( !m_polyline_list.empty(), "PolyLine::getSegment(...) empty PolyLine\n" );
-    UTILS_ASSERT(
+    Utils::Check( !m_polyline_list.empty(), "PolyLine::getSegment(...) empty PolyLine\n" );
+    Utils::Check(
       n >= 0 && n < static_cast<integer>( m_polyline_list.size() ),
       "PolyLine::getSegment( {} ) out of range [0,{}]\n",
       n,
@@ -260,7 +260,7 @@ namespace G2lib
 
   void PolyLine::bbox( real_type & xmin, real_type & ymin, real_type & xmax, real_type & ymax ) const
   {
-    UTILS_ASSERT0( !m_polyline_list.empty(), "PolyLine::bbox, empty list\n" );
+    Utils::Check( !m_polyline_list.empty(), "PolyLine::bbox, empty list\n" );
 
     if ( m_aabb_done )
     {
@@ -311,7 +311,7 @@ namespace G2lib
     real_type & /* ymax */
   ) const
   {
-    UTILS_ERROR0( "PolyLine::bbox( offs ... ) not available!\n" );
+    Utils::Error( "PolyLine::bbox( offs ... ) not available!\n" );
   }
 
   /*\
@@ -440,7 +440,7 @@ namespace G2lib
 
   void PolyLine::trim( real_type s_begin, real_type s_end )
   {
-    UTILS_ASSERT(
+    Utils::Check(
       s_begin >= m_s0.front() && s_end <= m_s0.back() && s_end > s_begin,
       "void::trim( s_begin={}, s_end={} ) bad range, must be in [{},{}]\n",
       s_begin,
@@ -812,7 +812,7 @@ namespace G2lib
     real_type &     T,
     real_type &     DST ) const
   {
-    UTILS_ASSERT0( !m_polyline_list.empty(), "PolyLine::closest_point_ISO, empty list\n" );
+    Utils::Check( !m_polyline_list.empty(), "PolyLine::closest_point_ISO, empty list\n" );
     integer   ipos = 0;
     real_type X1, Y1, S1, T1, DST1;
 
@@ -824,7 +824,7 @@ namespace G2lib
       AABB_SET        candidateList;
       real_type const xy[2]{ x, y };
       m_aabb_tree.min_distance_candidates( xy, candidateList );
-      UTILS_ASSERT(
+      Utils::Check(
         !candidateList.empty(),
         "PolyLine::closest_point_ISO, empty candidate list, #{}\n{}\n",
         candidateList.size(),
@@ -880,7 +880,8 @@ namespace G2lib
     real_type & /* DST  */
   ) const
   {
-    UTILS_ERROR( "PolyLine::closest_point_ISO( ... offs ... ) not available!\n" );
+    Utils::Error( "PolyLine::closest_point_ISO( ... offs ... ) not available!\n" );
+    return 0; // to mute compiler warning
   }
 
   /*\
@@ -901,7 +902,7 @@ namespace G2lib
     for ( const auto & [fst, snd] : intersectList )
     {
       integer i{ fst };
-      UTILS_ASSERT_DEBUG(
+      Utils::Debug(
         i >= 0 && i < static_cast<integer>( m_polyline_list.size() ),
         "PolyLine::collision( PL ) i={} out of range [0,{})\n",
         i,
@@ -909,7 +910,7 @@ namespace G2lib
       LineSegment const & LS1{ m_polyline_list[i] };
       for ( auto const & j : snd )
       {
-        UTILS_ASSERT_DEBUG(
+        Utils::Debug(
           j >= 0 && j < static_cast<integer>( PL.m_polyline_list.size() ),
           "PolyLine::collision( PL ) j={} out of range [0,{})\n",
           j,
@@ -924,7 +925,7 @@ namespace G2lib
 
   bool PolyLine::collision_ISO( real_type const offs, PolyLine const & CL, real_type const offs_CL ) const
   {
-    UTILS_ASSERT0(
+    Utils::Check(
       Utils::is_zero( offs ) && Utils::is_zero( offs_CL ),
       "PolyLine::collision( offs ... ) not available!\n" );
     return this->collision( CL );
@@ -940,8 +941,8 @@ namespace G2lib
 
   void PolyLine::intersect( PolyLine const & PL, vector<real_type> & ss0, vector<real_type> & ss1 ) const
   {
-    UTILS_ASSERT0( !m_polyline_list.empty(), "PolyLine::intersect, empty list\n" );
-    UTILS_ASSERT0( !PL.m_polyline_list.empty(), "PolyLine::intersect, empty secondary list\n" );
+    Utils::Check( !m_polyline_list.empty(), "PolyLine::intersect, empty list\n" );
+    Utils::Check( !PL.m_polyline_list.empty(), "PolyLine::intersect, empty secondary list\n" );
     if ( intersect_with_AABBtree )
     {
       build_AABBtree();
@@ -951,14 +952,14 @@ namespace G2lib
       for ( const auto & [fst, snd] : intersectList )
       {
         integer ipos0{ fst };
-        UTILS_ASSERT_DEBUG(
+        Utils::Debug(
           ipos0 < static_cast<integer>( m_polyline_list.size() ),
           "PolyLine::intersect, bad ipos0 = {}\n",
           ipos0 );
         LineSegment const & LS0 = m_polyline_list[ipos0];
         for ( auto const & ipos1 : snd )
         {
-          UTILS_ASSERT_DEBUG(
+          Utils::Debug(
             ipos1 < static_cast<integer>( PL.m_polyline_list.size() ),
             "PolyLine::intersect, bad ipos1 = {}\n",
             ipos1 );
@@ -1011,7 +1012,7 @@ namespace G2lib
     real_type const  offs_pl,
     IntersectList &  ilist ) const
   {
-    UTILS_ASSERT0(
+    Utils::Check(
       Utils::is_zero( offs ) && Utils::is_zero( offs_pl ),
       "PolyLine::intersect( offs ... ) not available!\n" );
     this->intersect( pl, ilist );

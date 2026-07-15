@@ -73,9 +73,7 @@ namespace Utils
    * \return true if all characters are lowercase, false otherwise
    */
   inline bool is_lower( string_view s )
-  {
-    return std::all_of( s.begin(), s.end(), islower );
-  }
+  { return std::all_of( s.begin(), s.end(), islower ); }
 
   /**
    * \brief Checks if all characters in a string are uppercase
@@ -83,9 +81,7 @@ namespace Utils
    * \return true if all characters are uppercase, false otherwise
    */
   inline bool is_upper( string_view s )
-  {
-    return std::all_of( s.begin(), s.end(), isupper );
-  }
+  { return std::all_of( s.begin(), s.end(), isupper ); }
 
   /**
    * \brief Checks if all characters in a string are alphabetic
@@ -93,9 +89,7 @@ namespace Utils
    * \return true if all characters are alphabetic, false otherwise
    */
   inline bool is_alpha( string_view s )
-  {
-    return std::all_of( s.begin(), s.end(), isalpha );
-  }
+  { return std::all_of( s.begin(), s.end(), isalpha ); }
 
   /**
    * \brief Checks if all characters in a string are alphanumeric
@@ -103,9 +97,7 @@ namespace Utils
    * \return true if all characters are alphanumeric, false otherwise
    */
   inline bool is_alphanum( string_view s )
-  {
-    return std::all_of( s.begin(), s.end(), isalnum );
-  }
+  { return std::all_of( s.begin(), s.end(), isalnum ); }
 
   /**
    * \brief Checks if all characters in a string are decimal digits
@@ -113,9 +105,7 @@ namespace Utils
    * \return true if all characters are digits, false otherwise
    */
   inline bool is_digits( string_view s )
-  {
-    return std::all_of( s.begin(), s.end(), isdigit );
-  }
+  { return std::all_of( s.begin(), s.end(), isdigit ); }
 
   /**
    * \brief Checks if all characters in a string are hexadecimal digits
@@ -123,9 +113,7 @@ namespace Utils
    * \return true if all characters are hexadecimal digits, false otherwise
    */
   inline bool is_xdigits( string_view s )
-  {
-    return std::all_of( s.begin(), s.end(), isxdigit );
-  }
+  { return std::all_of( s.begin(), s.end(), isxdigit ); }
 
   // ============================================================================
   // UTF-8 LOW LEVEL HELPERS
@@ -151,9 +139,7 @@ namespace Utils
    * \return true if byte is a continuation byte (binary pattern 10xxxxxx)
    */
   inline bool utf8_is_continuation( unsigned char c )
-  {
-    return ( c & 0xC0 ) == 0x80;
-  }
+  { return ( c & 0xC0 ) == 0x80; }
 
   /**
    * \brief Decodes the next UTF-8 codepoint from a string

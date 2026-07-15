@@ -194,9 +194,7 @@ namespace Utils
 
   public:
     explicit NelderMead_BlockCoordinate( Options const & opts = Options() ) : m_options( opts )
-    {
-      m_solver.set_options( m_options.sub_options );
-    }
+    { m_solver.set_options( m_options.sub_options ); }
 
     void set_sub_options( typename NelderMead_classic<Scalar>::Options const & sopts )
     {

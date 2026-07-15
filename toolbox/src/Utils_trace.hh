@@ -124,9 +124,7 @@ namespace Utils
   //! \param stream The output stream
   //!
   inline void printTrace( int line, string_view file, string_view reason, ostream_type & stream )
-  {
-    print_trace( line, file, reason, stream );
-  }
+  { print_trace( line, file, reason, stream ); }
 
   //!
   //! \class Runtime_TraceError
@@ -269,9 +267,7 @@ namespace Utils
    * \return Formatted error message string
    */
   inline string Runtime_TraceError::grab_backtrace( string_view const reason, string_view const file, int const line )
-  {
-    return fmt::format( "\n{}\nOn File:{}:{}\n", reason, file, line );
-  }
+  { return fmt::format( "\n{}\nOn File:{}:{}\n", reason, file, line ); }
 
 #else
 

@@ -102,7 +102,7 @@ namespace G2lib
     bool      ok{ m_Dubins0.build( xi, yi, thetai, xm, ym, thetam, k_max ) };
     if ( ok ) ok = m_Dubins1.build( xm, ym, thetam, xf, yf, thetaf, k_max );
 
-    UTILS_ASSERT(
+    Utils::Check(
       ok,
       "Dubins3p::build_sample(\n"
       "  xi             = {}\n"
@@ -134,7 +134,7 @@ namespace G2lib
     {
       bool ok{ D0.build( xi, yi, thetai, xm, ym, thetam, k_max ) };
       if ( ok ) ok = D1.build( xm, ym, thetam, xf, yf, thetaf, k_max );
-      UTILS_ASSERT(
+      Utils::Check(
         ok,
         "Dubins3p::build_sample(\n"
         "  xi             = {}\n"
@@ -187,14 +187,14 @@ namespace G2lib
 
     Dubins3pBuildType const method{ string_to_Dubins3pBuildType( method_str ) };
     bool const              ok = this->build( x0, y0, theta0, xm, ym, x1, y1, theta1, kmax, method );
-    UTILS_ASSERT( ok, "Dubins[{}]::setup( gc ) failed\n", this->name() );
+    Utils::Check( ok, "Dubins[{}]::setup( gc ) failed\n", this->name() );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   void Dubins3p::set_tolerance( real_type const tol )
   {
-    UTILS_ASSERT( tol > 0 && tol < 1, "Dubins3p::set_tolerance( tol={} ) tol must be > 0 and less than 1\n", tol );
+    Utils::Check( tol > 0 && tol < 1, "Dubins3p::set_tolerance( tol={} ) tol must be > 0 and less than 1\n", tol );
     m_tolerance = tol;
   }
 
@@ -202,7 +202,7 @@ namespace G2lib
 
   void Dubins3p::set_sample_angle( real_type ang )
   {
-    UTILS_ASSERT(
+    Utils::Check(
       180 * ang > Utils::m_pi && 3 * ang <= Utils::m_2pi,
       "Dubins3p::set_sample_angle( ang={} ) ang must be > pi/180 and less than (2/3)*pi\n",
       ang );
@@ -213,7 +213,7 @@ namespace G2lib
 
   void Dubins3p::set_sample_points( integer const npts )
   {
-    UTILS_ASSERT(
+    Utils::Check(
       npts >= 4 && npts <= 36000000,
       "Dubins3p::set_sample_points( npts={} ) npts must be >= 4 and less 36000000\n",
       npts );
@@ -224,7 +224,7 @@ namespace G2lib
 
   void Dubins3p::set_max_evaluation( integer const max_eval )
   {
-    UTILS_ASSERT(
+    Utils::Check(
       max_eval > 0 && max_eval < 1000000,
       "Dubins3p::set_max_evaluation( max_eval={} ) max_eval must be > 0 and less than 1000000\n",
       max_eval );
@@ -235,35 +235,35 @@ namespace G2lib
 
   void Dubins3p::build( LineSegment const & )
   {
-    UTILS_ERROR( "cannot convert from LineSegment to Dubins3p\n" );
+    Utils::Error( "cannot convert from LineSegment to Dubins3p\n" );
   }
   void Dubins3p::build( CircleArc const & )
   {
-    UTILS_ERROR( "cannot convert from CircleArc to Dubins3p\n" );
+    Utils::Error( "cannot convert from CircleArc to Dubins3p\n" );
   }
   void Dubins3p::build( Biarc const & )
   {
-    UTILS_ERROR( "cannot convert from Biarc to Dubins3p\n" );
+    Utils::Error( "cannot convert from Biarc to Dubins3p\n" );
   }
   void Dubins3p::build( ClothoidCurve const & )
   {
-    UTILS_ERROR( "cannot convert from ClothoidCurve to Dubins3p\n" );
+    Utils::Error( "cannot convert from ClothoidCurve to Dubins3p\n" );
   }
   void Dubins3p::build( PolyLine const & )
   {
-    UTILS_ERROR( "cannot convert from PolyLine to Dubins3p\n" );
+    Utils::Error( "cannot convert from PolyLine to Dubins3p\n" );
   }
   void Dubins3p::build( BiarcList const & )
   {
-    UTILS_ERROR( "cannot convert from BiarcList to Dubins3p\n" );
+    Utils::Error( "cannot convert from BiarcList to Dubins3p\n" );
   }
   void Dubins3p::build( ClothoidList const & )
   {
-    UTILS_ERROR( "cannot convert from ClothoidList to Dubins3p\n" );
+    Utils::Error( "cannot convert from ClothoidList to Dubins3p\n" );
   }
   void Dubins3p::build( Dubins const & )
   {
-    UTILS_ERROR( "cannot convert from Dubins to Dubins3p\n" );
+    Utils::Error( "cannot convert from Dubins to Dubins3p\n" );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -424,7 +424,7 @@ namespace G2lib
 
   void Dubins3p::trim( real_type, real_type )
   {
-    UTILS_ERROR0( "Dubins::trim not defined, convert to ClothoidList to trim the curve!" );
+    Utils::Error( "Dubins::trim not defined, convert to ClothoidList to trim the curve!" );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

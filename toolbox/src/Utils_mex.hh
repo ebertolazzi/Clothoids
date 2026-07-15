@@ -222,20 +222,17 @@ namespace Utils
   inline void mex_error_message( std::string_view const msg )
   { mexErrMsgTxt( msg.data() ); }
 
-  inline
-  void mex_assert( bool ok, std::string_view const msg ) {
+  inline void mex_assert( bool ok, std::string_view const msg )
+  {
     if ( !ok ) mex_error_message( msg );
   }
 
-  template<class... Args>
-  inline void
-  mex_assert(bool ok, std::string_view fmt, Args&&... args) {
-    if (!ok) {
-      std::string msg = std::vformat(
-        fmt,
-        std::make_format_args(args...)
-      );
-      mex_error_message(msg);
+  template <class... Args> inline void mex_assert( bool ok, std::string_view fmt, Args &&... args )
+  {
+    if ( !ok )
+    {
+      std::string msg = std::vformat( fmt, std::make_format_args( args... ) );
+      mex_error_message( msg );
     }
   }
 

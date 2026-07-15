@@ -76,7 +76,7 @@ int main()
     }
     else
     {
-      UTILS_ASSERT0( false, "target must be in 'length', 'curvature', 'jerk'" );
+      Utils::Error( "target must be in 'length', 'curvature', 'jerk'" );
     }
   }
 

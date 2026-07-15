@@ -74,9 +74,7 @@ namespace Utils
     virtual void exec( FUN && ) = 0;
 
     template <typename Func, typename... Args> void run( Func && func, Args &&... args )
-    {
-      this->exec( std::bind( std::forward<Func>( func ), std::forward<Args>( args )... ) );
-    }
+    { this->exec( std::bind( std::forward<Func>( func ), std::forward<Args>( args )... ) ); }
 
     virtual void         wait()               = 0;
     virtual unsigned     thread_count() const = 0;

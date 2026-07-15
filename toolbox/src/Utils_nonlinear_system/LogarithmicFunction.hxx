@@ -31,9 +31,7 @@ public:
         "  doi       = {10.1080/10556780310001610493},\n"
         "}\n",
         neq )
-  {
-    check_min_equations( n, 1 );
-  }
+  { check_min_equations( n, 1 ); }
 
   virtual void evaluate( Vector const & x, Vector & f ) const override
   {

@@ -69,10 +69,12 @@ public:
     for ( integer i = 0; i < n; ++i )
     {
       real_type t = h * static_cast<real_type>( i );
-      for ( integer j = 1; j <= i; ++j ) {
+      for ( integer j = 1; j <= i; ++j )
+      {
         J_full( i, j ) += 1.5 * ( 1 - t ) * power2( x( j ) + h * static_cast<real_type>( j ) + 1 );
       }
-      for ( integer j = i + 1; j < n - 1; ++j ) {
+      for ( integer j = i + 1; j < n - 1; ++j )
+      {
         J_full( i, j ) += ( 1 - t ) * t * ( x( j ) + h * static_cast<real_type>( j ) + 1 );
       }
     }

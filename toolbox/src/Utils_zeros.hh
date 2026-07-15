@@ -260,9 +260,7 @@ namespace Utils
 
     // Check iteration limits
     bool check_limits() const
-    {
-      return m_iteration_count > m_max_iteration || m_fun_evaluation_count > m_max_fun_evaluation;
-    }
+    { return m_iteration_count > m_max_iteration || m_fun_evaluation_count > m_max_fun_evaluation; }
 
     // Safe division with check
     bool safe_divide( Real & result, Real a, Real b ) const
@@ -279,21 +277,21 @@ namespace Utils
     //! Set maximum number of iterations
     void set_max_iterations( Integer mit )
     {
-      Utils::Assert( mit > 0, "Zeros::set_max_iterations({}) argument must be >0\n", mit );
+      Utils::Check( mit > 0, "Zeros::set_max_iterations({}) argument must be >0\n", mit );
       m_max_iteration = mit;
     }
 
     //! Set maximum function evaluations
     void set_max_fun_evaluation( Integer mfev )
     {
-      Utils::Assert( mfev > 0, "Zeros::set_max_fun_evaluation({}) argument must be >0\n", mfev );
+      Utils::Check( mfev > 0, "Zeros::set_max_fun_evaluation({}) argument must be >0\n", mfev );
       m_max_fun_evaluation = mfev;
     }
 
     //! Set tolerance \f$ \epsilon \f$ (stop when \f$ |f(x)| < \epsilon \f$)
     void set_tolerance( Real tol )
     {
-      Utils::Assert( tol > 0, "Zeros::set_tolerance({}) argument must be >0\n", tol );
+      Utils::Check( tol > 0, "Zeros::set_tolerance({}) argument must be >0\n", tol );
       m_tolerance = tol;
     }
 

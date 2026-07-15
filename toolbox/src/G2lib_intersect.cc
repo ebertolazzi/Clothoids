@@ -206,19 +206,19 @@ namespace G2lib
         }
         break;
           // default:
-          //   UTILS_ERROR0( "G2lib::collision, missing curve type" );
+          //   Utils::Error( "G2lib::collision, missing curve type" );
           //   break;
       }
     }
     catch ( std::exception const & e )
     {
       G2LIB_DEBUG_MESSAGE( "G2lib::collision error: {}\n", e.what() );
-      UTILS_ERROR( "G2lib::collision error: {}\n", e.what() );
+      Utils::Error( "G2lib::collision error: {}\n", e.what() );
     }
     catch ( ... )
     {
       G2LIB_DEBUG_MESSAGE( "G2lib::collision unknown error!\n" );
-      UTILS_ERROR( "G2lib::collision unknown error\n" );
+      Utils::Error( "G2lib::collision unknown error\n" );
     }
 
     G2LIB_DEBUG_MESSAGE(
@@ -321,19 +321,19 @@ namespace G2lib
         }
         break;
           // default:
-          //   UTILS_ERROR0( "G2lib::collision_ISO, missing curve type" );
+          //   Utils::Error( "G2lib::collision_ISO, missing curve type" );
           //   break;
       }
     }
     catch ( std::exception const & e )
     {
       G2LIB_DEBUG_MESSAGE( "G2lib::collision_ISO error: {}\n", e.what() );
-      UTILS_ERROR( "G2lib::collision_ISO error: {}\n", e.what() );
+      Utils::Error( "G2lib::collision_ISO error: {}\n", e.what() );
     }
     catch ( ... )
     {
       G2LIB_DEBUG_MESSAGE( "G2lib::collision_ISO unknown error!\n" );
-      UTILS_ERROR( "G2lib::collision_ISO unknown error\n" );
+      Utils::Error( "G2lib::collision_ISO unknown error\n" );
     }
 
     G2LIB_DEBUG_MESSAGE(
@@ -434,19 +434,19 @@ namespace G2lib
         }
         break;
           // default:
-          //   UTILS_ERROR0( "G2lib::intersect, missing curve type" );
+          //   Utils::Error( "G2lib::intersect, missing curve type" );
           //   break;
       }
     }
     catch ( std::exception const & e )
     {
       G2LIB_DEBUG_MESSAGE( "G2lib::intersect error: {}\n", e.what() );
-      UTILS_ERROR( "G2lib::intersect error: {}\n", e.what() );
+      Utils::Error( "G2lib::intersect error: {}\n", e.what() );
     }
     catch ( ... )
     {
       G2LIB_DEBUG_MESSAGE( "G2lib::intersect unknown error!\n" );
-      UTILS_ERROR( "G2lib::intersect unknown error\n" );
+      Utils::Error( "G2lib::intersect unknown error\n" );
     }
 
     G2LIB_DEBUG_MESSAGE(
@@ -549,19 +549,19 @@ namespace G2lib
         }
         break;
           // default:
-          //   UTILS_ERROR0( "G2lib::intersect_ISO, missing curve type" );
+          //   Utils::Error( "G2lib::intersect_ISO, missing curve type" );
           //   break;
       }
     }
     catch ( std::exception const & e )
     {
       G2LIB_DEBUG_MESSAGE( "G2lib::intersect_ISO error: {}\n", e.what() );
-      UTILS_ERROR( "G2lib::intersect_ISO error: {}\n", e.what() );
+      Utils::Error( "G2lib::intersect_ISO error: {}\n", e.what() );
     }
     catch ( ... )
     {
       G2LIB_DEBUG_MESSAGE( "G2lib::intersect_ISO unknown error!\n" );
-      UTILS_ERROR( "G2lib::intersect_ISO unknown error\n" );
+      Utils::Error( "G2lib::intersect_ISO unknown error\n" );
     }
 
     G2LIB_DEBUG_MESSAGE(

@@ -878,9 +878,7 @@ namespace Utils
    * @param overwrite Unused on Windows (always overwrites).
    */
   inline void set_environment( std::string_view ename, std::string_view newval, bool /* overwrite */ )
-  {
-    SetEnvironmentVariableA( ename.data(), newval.data() );
-  }
+  { SetEnvironmentVariableA( ename.data(), newval.data() ); }
 
   /**
    * @brief Gets the hostname of the system (Windows).
@@ -1152,7 +1150,7 @@ namespace Utils
   {
     char           buf[8192] = { 0 };
     struct ifconf  ifc{};
-    struct ifreq * ifr       = nullptr;
+    struct ifreq * ifr = nullptr;
 
     int sck = socket( PF_INET, SOCK_DGRAM, 0 );
     if ( sck < 0 ) return;
@@ -1672,8 +1670,8 @@ namespace Utils
       info.total_physical     = sysInfo.totalram * sysInfo.mem_unit;
       info.available_physical = sysInfo.freeram * sysInfo.mem_unit;
       info.used_physical      = info.total_physical - info.available_physical;
-      info.usage_percentage =
-        ( static_cast<double>( info.used_physical ) * 100.0 ) / static_cast<double>( info.total_physical );
+      info.usage_percentage   = ( static_cast<double>( info.used_physical ) * 100.0 ) /
+                                static_cast<double>( info.total_physical );
 
       info.total_virtual     = ( sysInfo.totalram + sysInfo.totalswap ) * sysInfo.mem_unit;
       info.available_virtual = ( sysInfo.freeram + sysInfo.freeswap ) * sysInfo.mem_unit;
@@ -1702,8 +1700,8 @@ namespace Utils
         // More accurate available memory calculation for Linux
         info.available_physical = ( mem_free + buffers + cached ) * 1024;
         info.used_physical      = info.total_physical - info.available_physical;
-        info.usage_percentage =
-          ( static_cast<double>( info.used_physical ) * 100.0 ) / static_cast<double>( info.total_physical );
+        info.usage_percentage   = ( static_cast<double>( info.used_physical ) * 100.0 ) /
+                                  static_cast<double>( info.total_physical );
       }
     }
 
@@ -1734,9 +1732,10 @@ namespace Utils
         info.available_physical = free_memory + inactive_memory;
         info.used_physical      = info.total_physical - info.available_physical;
 
-        if ( info.total_physical > 0 ) {
-          info.usage_percentage =
-            static_cast<double>( info.used_physical ) * 100.0 / static_cast<double>( info.total_physical );
+        if ( info.total_physical > 0 )
+        {
+          info.usage_percentage = static_cast<double>( info.used_physical ) * 100.0 /
+                                  static_cast<double>( info.total_physical );
         }
       }
     }
@@ -1767,9 +1766,10 @@ namespace Utils
       info.free_bytes  = totalNumberOfFreeBytes.QuadPart;
       info.used_bytes  = info.total_bytes - info.free_bytes;
 
-      if ( info.total_bytes > 0 ) {
-        info.usage_percentage =
-          static_cast<double>( info.used_bytes ) * 100.0 / static_cast<double>( info.total_bytes );
+      if ( info.total_bytes > 0 )
+      {
+        info.usage_percentage = static_cast<double>( info.used_bytes ) * 100.0 /
+                                static_cast<double>( info.total_bytes );
       }
     }
 
@@ -1783,9 +1783,10 @@ namespace Utils
       info.free_bytes  = stat.f_bfree * stat.f_frsize;
       info.used_bytes  = info.total_bytes - info.free_bytes;
 
-      if ( info.total_bytes > 0 ) {
-        info.usage_percentage =
-          static_cast<double>( info.used_bytes ) * 100.0 / static_cast<double>( info.total_bytes );
+      if ( info.total_bytes > 0 )
+      {
+        info.usage_percentage = static_cast<double>( info.used_bytes ) * 100.0 /
+                                static_cast<double>( info.total_bytes );
       }
     }
 
@@ -1799,9 +1800,10 @@ namespace Utils
       info.free_bytes  = stat.f_bfree * stat.f_frsize;
       info.used_bytes  = info.total_bytes - info.free_bytes;
 
-      if ( info.total_bytes > 0 ) {
-        info.usage_percentage =
-          static_cast<double>( info.used_bytes ) * 100.0 / static_cast<double>( info.total_bytes );
+      if ( info.total_bytes > 0 )
+      {
+        info.usage_percentage = static_cast<double>( info.used_bytes ) * 100.0 /
+                                static_cast<double>( info.total_bytes );
       }
     }
 #endif
@@ -2034,75 +2036,74 @@ namespace Utils
    * @return Formatted string with architecture, CPU, memory, load, uptime,
    *         disk space, host information, and current date/time.
    */
-  inline std::string
-  get_system_summary()
+  inline std::string get_system_summary()
   {
     std::string res;
     res.reserve( 1024 );
-  
+
     // Architecture info
     res += "Architecture: ";
     res += Architecture::get_architecture_string();
     res += '\n';
-  
+
     res += "CPU: ";
     res += Architecture::get_cpu_model();
     res += " (";
     res += std::to_string( Architecture::get_cpu_count() );
     res += " cores)\n";
-  
+
     res += "CPU Vendor: ";
     res += Architecture::get_cpu_vendor();
     res += '\n';
-  
+
     // Memory info
     MemoryInfo const mem = get_memory_info();
     res += "Memory: ";
     res += mem.to_string();
     res += '\n';
-  
+
     // System load
     SystemLoadInfo const load = get_system_load();
     res += "System Load: ";
     res += load.to_string();
     res += '\n';
-  
+
     // Uptime
     std::uint64_t const uptime = get_system_uptime();
     res += "Uptime: ";
     res += format_uptime( uptime );
     res += '\n';
-  
+
     // Disk space (root filesystem)
-  #if defined( _WIN32 ) || defined( _WIN64 )
+#if defined( _WIN32 ) || defined( _WIN64 )
     constexpr char const * root_path = "C:\\";
-  #else
+#else
     constexpr char const * root_path = "/";
-  #endif
-  
+#endif
+
     DiskSpaceInfo const disk = get_disk_space( root_path );
     res += "Root Filesystem: ";
     res += disk.to_string();
     res += '\n';
-  
+
     // Host information
     res += "Hostname: ";
     res += get_host_name();
     res += '\n';
-  
+
     res += "Username: ";
     res += get_user_name();
     res += '\n';
-  
+
     res += "Home Directory: ";
     res += get_home_directory();
     res += '\n';
-  
+
     // Date and time
     res += "Current Date/Time: ";
     res += get_day_time_and_date();
     res += '\n';
-  
+
     return res;
   }
 

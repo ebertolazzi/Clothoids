@@ -30,23 +30,17 @@ public:
         "  doi     = {10.1007/BF02684472},\n"
         "}\n",
         neq )
-  {
-    check_min_equations( n, 2 );
-  }
+  { check_min_equations( n, 2 ); }
 
   real_type phi1( real_type s, real_type t ) const { return 3 * s * s + 2 * t - 5 + sin( s - t ) * sin( s + t ); }
 
   real_type phi2( real_type s, real_type t ) const { return 4 * t - 3 + s * exp( s - t ); }
 
   real_type phi1_1( real_type s, real_type t ) const
-  {
-    return 6 * s + cos( s - t ) * sin( s + t ) + sin( s - t ) * cos( s + t );
-  }
+  { return 6 * s + cos( s - t ) * sin( s + t ) + sin( s - t ) * cos( s + t ); }
 
   real_type phi1_2( real_type s, real_type t ) const
-  {
-    return 2 - cos( s - t ) * sin( s + t ) + sin( s - t ) * cos( s + t );
-  }
+  { return 2 - cos( s - t ) * sin( s + t ) + sin( s - t ) * cos( s + t ); }
 
   real_type phi2_1( real_type s, real_type t ) const { return ( 1 + s ) * exp( s - t ); }
 

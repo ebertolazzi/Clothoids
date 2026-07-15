@@ -32,9 +32,7 @@ public:
         neq )
     , rho( 10 )
     , h( 1.0 / ( static_cast<real_type>( neq ) + 1 ) )
-  {
-    check_min_equations( n, 1 );
-  }
+  { check_min_equations( n, 1 ); }
 
   virtual void evaluate( Vector const & x, Vector & f ) const override
   {

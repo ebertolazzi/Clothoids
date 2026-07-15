@@ -96,8 +96,10 @@ namespace Utils
     MatrixType diff = A - MatrixType( A.transpose() );
 
     typename MatrixType::Scalar max_abs = 0;
-    for ( int k = 0; k < diff.outerSize(); ++k ) {
-      for ( typename MatrixType::InnerIterator it( diff, k ); it; ++it ) {
+    for ( int k = 0; k < diff.outerSize(); ++k )
+    {
+      for ( typename MatrixType::InnerIterator it( diff, k ); it; ++it )
+      {
         typename MatrixType::Scalar const v_abs = Eigen::numext::abs( it.value() );
         if ( v_abs > max_abs ) max_abs = v_abs;
       }

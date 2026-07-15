@@ -2280,8 +2280,8 @@ namespace Utils
           // In Fortran: IP = PTSID(K), IQ = (PTSID(K)-IP) * (N+1)
 
           integer ip      = static_cast<integer>( m_ptsid( k ) );
-          Scalar  iq_real =
-            static_cast<Scalar>( np ) * m_ptsid( k ) - static_cast<Scalar>( ip ) * static_cast<Scalar>( np );
+          Scalar  iq_real = static_cast<Scalar>( np ) * m_ptsid( k ) -
+                            static_cast<Scalar>( ip ) * static_cast<Scalar>( np );
           integer iq      = static_cast<integer>( iq_real );  // troncamento
 
           if ( ip > 0 ) { sum += w_vec( m_npt + ip - 1 ) * m_ptsaux( 0, ip - 1 ); }
@@ -2390,8 +2390,8 @@ namespace Utils
 
       // Decodifica PTSID
       integer ip      = static_cast<integer>( m_ptsid( kpt ) );
-      Scalar  iq_real =
-        static_cast<Scalar>( np ) * m_ptsid( kpt ) - static_cast<Scalar>( ip ) * static_cast<Scalar>( np );
+      Scalar  iq_real = static_cast<Scalar>( np ) * m_ptsid( kpt ) -
+                        static_cast<Scalar>( ip ) * static_cast<Scalar>( np );
       integer iq      = static_cast<integer>( iq_real );  // troncamento
 
       Scalar xp = 0, xq = 0;
@@ -2473,7 +2473,7 @@ namespace Utils
           // Punto artificiale: aggiorna HQ
           integer ipk      = static_cast<integer>( m_ptsid( k ) );
           Scalar  iq_realk = static_cast<Scalar>( np ) * m_ptsid( k ) -
-                            static_cast<Scalar>( ipk ) * static_cast<Scalar>( np );  // CORRETTO!
+                             static_cast<Scalar>( ipk ) * static_cast<Scalar>( np );  // CORRETTO!
           integer iqk      = static_cast<integer>( iq_realk );
 
           Scalar sum_z = m_Z.row( k ).dot( m_Z.row( kpt ) );

@@ -40,13 +40,12 @@ public:
   }
 
   real_type zfun( integer i, integer j, Vector const & x ) const
-  {
-    return sqrt( x( j ) * x( j ) + ( static_cast<real_type>( i ) + 1.0 ) / ( static_cast<real_type>( j ) + 1.0 ) );
-  }
+  { return sqrt( x( j ) * x( j ) + ( static_cast<real_type>( i ) + 1.0 ) / ( static_cast<real_type>( j ) + 1.0 ) ); }
 
   real_type zfun_1( integer i, integer j, Vector const & x ) const
   {
-    return x( j ) / sqrt( x( j ) * x( j ) + ( static_cast<real_type>( i ) + 1.0 ) / ( static_cast<real_type>( j ) + 1.0 ) );
+    return x( j ) /
+           sqrt( x( j ) * x( j ) + ( static_cast<real_type>( i ) + 1.0 ) / ( static_cast<real_type>( j ) + 1.0 ) );
   }
 
   virtual void evaluate( Vector const & x, Vector & f ) const override

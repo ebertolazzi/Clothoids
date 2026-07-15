@@ -47,9 +47,7 @@ public:
         _neq )
     , alpha( _alpha )
     , beta( _beta )
-  {
-    check_min_equations( n, 1 );
-  }
+  { check_min_equations( n, 1 ); }
 
   virtual void evaluate( Vector const & x, Vector & f ) const override
   {

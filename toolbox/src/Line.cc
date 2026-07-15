@@ -53,7 +53,7 @@ namespace G2lib
     if ( xmax > xmin || ymax > ymin ) { tvec.emplace_back( xmin, ymin, xmax, ymax, xc + nx, yc + ny, 0, 0, icurve ); }
     else
     {
-      UTILS_ERROR(
+      Utils::Error(
         "LineSegment bb_triangles found a degenerate line\n"
         "bbox = [ xmin={}, ymin={}, xmax={}, ymax={} ] max_angle={} max_size={}\n",
         xmin,
@@ -83,7 +83,7 @@ namespace G2lib
     if ( xmax > xmin || ymax > ymin ) { tvec.emplace_back( xmin, ymin, xmax, ymax, xc + nx, yc + ny, 0, 0, icurve ); }
     else
     {
-      UTILS_ERROR(
+      Utils::Error(
         "LineSegment bb_triangles found a degenerate line\n"
         "bbox = [ xmin={}, ymin={}, xmax={}, ymax={} ]\n"
         "offs={} max_angle={} max_size={}\n",
@@ -112,35 +112,35 @@ namespace G2lib
 
   void LineSegment::build( CircleArc const & )
   {
-    UTILS_ERROR( "cannot convert from CircleArc to LineSegment\n" );
+    Utils::Error( "cannot convert from CircleArc to LineSegment\n" );
   }
   void LineSegment::build( Biarc const & )
   {
-    UTILS_ERROR( "cannot convert from Biarc to LineSegment\n" );
+    Utils::Error( "cannot convert from Biarc to LineSegment\n" );
   }
   void LineSegment::build( ClothoidCurve const & )
   {
-    UTILS_ERROR( "cannot convert from ClothoidCurve to LineSegment\n" );
+    Utils::Error( "cannot convert from ClothoidCurve to LineSegment\n" );
   }
   void LineSegment::build( PolyLine const & )
   {
-    UTILS_ERROR( "cannot convert from PolyLine to LineSegment\n" );
+    Utils::Error( "cannot convert from PolyLine to LineSegment\n" );
   }
   void LineSegment::build( BiarcList const & )
   {
-    UTILS_ERROR( "cannot convert from BiarcList to LineSegment\n" );
+    Utils::Error( "cannot convert from BiarcList to LineSegment\n" );
   }
   void LineSegment::build( ClothoidList const & )
   {
-    UTILS_ERROR( "cannot convert from ClothoidList to LineSegment\n" );
+    Utils::Error( "cannot convert from ClothoidList to LineSegment\n" );
   }
   void LineSegment::build( Dubins const & )
   {
-    UTILS_ERROR( "cannot convert from Dubins to LineSegment\n" );
+    Utils::Error( "cannot convert from Dubins to LineSegment\n" );
   }
   void LineSegment::build( Dubins3p const & )
   {
-    UTILS_ERROR( "cannot convert from Dubins3p to LineSegment\n" );
+    Utils::Error( "cannot convert from Dubins3p to LineSegment\n" );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -155,7 +155,7 @@ namespace G2lib
         G2LIB_DEBUG_MESSAGE( "to -> LineSegment\n" );
         *this = *dynamic_cast<LineSegment const *>( pC );
         break;
-      default: UTILS_ERROR( "LineSegment constructor cannot convert from: {}\n", pC->type_name() );
+      default: Utils::Error( "LineSegment constructor cannot convert from: {}\n", pC->type_name() );
     }
   }
 

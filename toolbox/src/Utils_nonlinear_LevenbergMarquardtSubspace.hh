@@ -151,61 +151,61 @@ namespace Utils
 
     void set_tolerance( real_type tol )
     {
-      Utils::Assert( tol > 0, "Tolerance must be positive" );
+      Utils::Check( tol > 0, "Tolerance must be positive" );
       m_tolerance = tol;
     }
 
     void set_relative_tolerance( real_type tol )
     {
-      Utils::Assert( tol > 0, "Relative tolerance must be positive" );
+      Utils::Check( tol > 0, "Relative tolerance must be positive" );
       m_relative_tolerance = tol;
     }
 
     void set_max_iterations( integer max_iter )
     {
-      Utils::Assert( max_iter > 0, "Max iterations must be positive" );
+      Utils::Check( max_iter > 0, "Max iterations must be positive" );
       m_max_iterations = max_iter;
     }
 
     void set_max_function_evals( integer max_feval )
     {
-      Utils::Assert( max_feval > 0, "Max function evaluations must be positive" );
+      Utils::Check( max_feval > 0, "Max function evaluations must be positive" );
       m_max_function_evals = max_feval;
     }
 
     void set_lambda( real_type lambda )
     {
-      Utils::Assert( lambda >= 0, "Lambda must be non-negative" );
+      Utils::Check( lambda >= 0, "Lambda must be non-negative" );
       m_lambda = lambda;
     }
 
     void set_lambda_factor( real_type factor )
     {
-      Utils::Assert( factor > 1, "Lambda factor must be > 1" );
+      Utils::Check( factor > 1, "Lambda factor must be > 1" );
       m_lambda_factor = factor;
     }
 
     void set_lambda_min( real_type min_val )
     {
-      Utils::Assert( min_val >= 0, "Lambda min must be non-negative" );
+      Utils::Check( min_val >= 0, "Lambda min must be non-negative" );
       m_lambda_min = min_val;
     }
 
     void set_lambda_max( real_type max_val )
     {
-      Utils::Assert( max_val > 0, "Lambda max must be positive" );
+      Utils::Check( max_val > 0, "Lambda max must be positive" );
       m_lambda_max = max_val;
     }
 
     void set_good_reduction( real_type good )
     {
-      Utils::Assert( good > 0 && good < 1, "Good reduction must be in (0,1)" );
+      Utils::Check( good > 0 && good < 1, "Good reduction must be in (0,1)" );
       m_good_reduction = good;
     }
 
     void set_bad_reduction( real_type bad )
     {
-      Utils::Assert( bad > 0 && bad < 1, "Bad reduction must be in (0,1)" );
+      Utils::Check( bad > 0 && bad < 1, "Bad reduction must be in (0,1)" );
       m_bad_reduction = bad;
     }
 
@@ -213,7 +213,7 @@ namespace Utils
 
     void set_block_size( integer size )
     {
-      Utils::Assert( size > 0, "Block size must be positive" );
+      Utils::Check( size > 0, "Block size must be positive" );
       m_block_size = size;
     }
 
@@ -223,13 +223,13 @@ namespace Utils
 
     void set_line_search_beta( real_type beta )
     {
-      Utils::Assert( beta > 0 && beta < 1, "Beta must be in (0,1)" );
+      Utils::Check( beta > 0 && beta < 1, "Beta must be in (0,1)" );
       m_line_search_beta = beta;
     }
 
     void set_line_search_c1( real_type c1 )
     {
-      Utils::Assert( c1 > 0 && c1 < 0.5, "c1 must be in (0,0.5)" );
+      Utils::Check( c1 > 0 && c1 < 0.5, "c1 must be in (0,0.5)" );
       m_line_search_c1 = c1;
     }
 
@@ -237,13 +237,13 @@ namespace Utils
 
     void set_verbose_level( integer level )
     {
-      Utils::Assert( level >= 0 && level <= 3, "Verbose level must be 0, 1, 2, or 3" );
+      Utils::Check( level >= 0 && level <= 3, "Verbose level must be 0, 1, 2, or 3" );
       m_verbose_level = level;
     }
 
     void set_print_frequency( integer freq )
     {
-      Utils::Assert( freq > 0, "Print frequency must be positive" );
+      Utils::Check( freq > 0, "Print frequency must be positive" );
       m_print_frequency = freq;
     }
 

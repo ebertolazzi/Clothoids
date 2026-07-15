@@ -45,9 +45,7 @@ namespace Utils
    * @return Approximation of f'(x0)
    */
   template <typename Real> inline Real first_derivative_2p( Real x0, Real y0, Real x1, Real y1 )
-  {
-    return ( y1 - y0 ) / ( x1 - x0 );
-  }
+  { return ( y1 - y0 ) / ( x1 - x0 ); }
 
   /**
    * @brief First derivative using a 3-point non-uniform stencil.

@@ -31,16 +31,15 @@ public:
         "  doi       = {10.1080/10556780310001610493},\n"
         "}\n",
         neq )
-  {
-    check_min_equations( n, 2 );
-  }
+  { check_min_equations( n, 2 ); }
 
   virtual void evaluate( Vector const & x, Vector & f ) const override
   {
     f( 0 )     = power3( x( 0 ) ) / 3 + power2( x( 1 ) ) / 2;
     f( n - 1 ) = power2( x( n - 1 ) ) * ( ( static_cast<real_type>( n ) / 3.0 ) * x( n - 1 ) - 0.5 );
     for ( integer i = 1; i < n - 1; ++i )
-      f( i ) = power2( x( i ) ) * ( ( ( static_cast<real_type>( i ) + 1 ) / 3.0 ) * x( i ) - 0.5 ) + 0.5 * power2( x( i + 1 ) );
+      f( i ) = power2( x( i ) ) * ( ( ( static_cast<real_type>( i ) + 1 ) / 3.0 ) * x( i ) - 0.5 ) +
+               0.5 * power2( x( i + 1 ) );
   }
 
   virtual void jacobian( Vector const & x, SparseMatrix & J ) const override

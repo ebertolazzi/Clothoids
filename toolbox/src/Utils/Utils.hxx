@@ -59,19 +59,19 @@
 #define UTILS_ARCH32 1
 #endif
 #endif
-  // Windows headers: include order matters.
-  // winsock2.h must come before windows.h.
-  #ifndef WIN32_LEAN_AND_MEAN
-  #define WIN32_LEAN_AND_MEAN
-  #endif
-  #ifndef NOMINMAX
-  #define NOMINMAX
-  #endif
-  #include <Winsock2.h>
-  #include <Ws2tcpip.h>
-  #include <Windows.h>
-  #include <Iphlpapi.h>
-  #include <iptypes.h>
+// Windows headers: include order matters.
+// winsock2.h must come before windows.h.
+#ifndef WIN32_LEAN_AND_MEAN
+#define WIN32_LEAN_AND_MEAN
+#endif
+#ifndef NOMINMAX
+#define NOMINMAX
+#endif
+#include <Winsock2.h>
+#include <Ws2tcpip.h>
+#include <Windows.h>
+#include <Iphlpapi.h>
+#include <iptypes.h>
 // --------------------
 #include <stdio.h>
 #include <tchar.h>
@@ -228,56 +228,300 @@ namespace Utils
     //!
     char const * what() const noexcept override { return runtime_error::what(); }
   };
-  
-  inline
-  void Error( std::string_view msg, std::source_location loc = std::source_location::current() ) {
-    throw Utils::Runtime_Error( std::string{msg}, loc.file_name(), loc.line() );
+
+  /**
+   * @brief Error handling utilities with source location and formatted messages.
+   *
+   * This module provides a set of utilities for error handling, assertions,
+   * warnings, and debug checks with automatic source location tracking and
+   * C++20 format string support.
+   *
+   * @note Requires C++20 for std::source_location and std::format.
+   * @see Utils::Runtime_Error
+   */
+
+  /**
+   * @brief Throws a runtime error with the given message and source location.
+   *
+   * This function constructs a Utils::Runtime_Error exception using the provided
+   * error message and captures the source location where the error was triggered.
+   *
+   * @param msg The error message to be included in the exception.
+   * @param loc The source location (file name, line number) where the error occurred.
+   *            Defaults to the caller's location via std::source_location::current().
+   *
+   * @throws Utils::Runtime_Error Always throws with the provided message and location.
+   *
+   * @example
+   * @code
+   * if (data.empty()) {
+   *   Error("Data container is empty");
+   * }
+   * @endcode
+   */
+  inline void Error( std::string_view msg, std::source_location loc = std::source_location::current() )
+  { throw Utils::Runtime_Error( std::string{ msg }, loc.file_name(), loc.line() ); }
+
+  /**
+   * @brief Asserts a condition and throws an exception if it evaluates to false.
+   *
+   * This function checks the provided condition and throws a Utils::Runtime_Error
+   * with the specified error message and source location if the condition is false.
+   *
+   * @param ok The condition to check. If false, an exception is thrown.
+   * @param msg The error message to include in the exception.
+   * @param loc The source location where the assertion was triggered.
+   *            Defaults to the caller's location.
+   *
+   * @throws Utils::Runtime_Error If the condition is false.
+   *
+   * @example
+   * @code
+   * Assert(ptr != nullptr, "Pointer must not be null");
+   * Assert(value > 0, "Value must be positive");
+   * @endcode
+   */
+  inline void Assert( bool ok, std::string_view msg, std::source_location loc = std::source_location::current() )
+  {
+    if ( !ok ) throw Utils::Runtime_Error( std::string{ msg }, loc.file_name(), loc.line() );
   }
 
-  inline
-  void Assert( bool ok, std::string_view msg, std::source_location loc = std::source_location::current() ) {
-    if ( !ok )
-      throw Utils::Runtime_Error( std::string{msg}, loc.file_name(), loc.line() );
+  /**
+   * @brief Displays a warning message if the condition is false.
+   *
+   * This function checks the provided condition and outputs a warning to std::cout
+   * with the error message and source location if the condition is false.
+   * Unlike Assert, this function does not throw an exception.
+   *
+   * @param ok The condition to check. If false, a warning is displayed.
+   * @param msg The warning message to display.
+   * @param loc The source location where the warning was triggered.
+   *            Defaults to the caller's location.
+   *
+   * @example
+   * @code
+   * Warning(config.is_valid(), "Configuration has invalid parameters");
+   * Warning(file_exists, "File not found, continuing anyway");
+   * @endcode
+   */
+  inline void Warning( bool ok, std::string_view msg, std::source_location loc = std::source_location::current() )
+  {
+    if ( !ok ) std::cout << std::format( "{}\nfile: {}, line: {}\n", msg, loc.file_name(), loc.line() );
   }
 
-  inline
-  void Warning( bool ok, std::string_view msg, std::source_location loc = std::source_location::current() ) {
-    if ( !ok )
-      std::cout << std::format( "{}\nfile: {}, line: {}\n", msg, loc.file_name(), loc.line() );
-  }
+  /**
+   * @brief Helper struct for format strings with source location.
+   *
+   * This struct combines a C++20 format string with its source location,
+   * enabling formatted error messages that automatically capture the call site.
+   *
+   * @tparam Args The types of the arguments to be formatted.
+   *
+   * @note This struct is designed to be used with the format-enabled versions
+   *       of Error, Check, Assert, Warning, and Debug.
+   *
+   * @see Format_With_Location::Format_With_Location
+   */
+  template <class... Args> struct Format_With_Location
+  {
+    std::format_string<Args...> fmt;  ///< The format string with placeholders for arguments.
+    std::source_location        loc;  ///< The source location where the format string was defined.
 
-  template<class... Args>
-  struct Format_With_Location {
-    std::format_string<Args...> fmt;
-    std::source_location loc;
-
-    template<class S>
-    consteval Format_With_Location( S&& s, std::source_location l = std::source_location::current() )
-    : fmt(std::forward<S>(s)), loc(l)
-    {}
+    /**
+     * @brief Constructs a Format_With_Location object with compile-time format validation.
+     *
+     * This constructor is consteval (compile-time evaluated) to ensure that
+     * the format string is valid at compile time.
+     *
+     * @tparam S The type of the format string (deduced).
+     * @param s The format string containing placeholders for arguments.
+     * @param l The source location of the caller. Defaults to current location.
+     *
+     * @note The format string is validated at compile time, preventing runtime
+     *       format errors.
+     */
+    template <class S>
+    consteval Format_With_Location( S && s, std::source_location l = std::source_location::current() )
+      : fmt( std::forward<S>( s ) ), loc( l )
+    {
+    }
   };
 
-  template<class... Args>
-  inline
-  void Error( Format_With_Location<std::type_identity_t<Args>...> f, Args&&... args ) {
-    throw Utils::Runtime_Error( std::format(f.fmt, std::forward<Args>(args)...), f.loc.file_name(), f.loc.line() );
+  /**
+   * @brief Throws a runtime error with a formatted message and source location.
+   *
+   * This function uses C++20 formatting to construct the error message and
+   * captures the source location where the error was triggered.
+   *
+   * @tparam Args The types of the arguments to format (deduced).
+   * @param f The format string with source location.
+   * @param args The arguments to format into the message.
+   *
+   * @throws Utils::Runtime_Error Always throws with the formatted message and location.
+   *
+   * @example
+   * @code
+   * int id = 42;
+   * std::string name = "item";
+   * Error("Cannot process {} with ID {}", name, id);
+   * @endcode
+   */
+  template <class... Args> inline void Error( Format_With_Location<std::type_identity_t<Args>...> f, Args &&... args )
+  {
+    throw Utils::Runtime_Error( std::format( f.fmt, std::forward<Args>( args )... ), f.loc.file_name(), f.loc.line() );
   }
 
-  template<class... Args>
-  inline
-  void Assert( bool ok, Format_With_Location<std::type_identity_t<Args>...> f, Args&&... args ) {
+  /**
+   * @brief Checks a condition and throws if false, with a formatted error message.
+   *
+   * This function evaluates a condition and throws a formatted error message
+   * if the condition evaluates to false. The error message is constructed using
+   * C++20 format string syntax.
+   *
+   * @tparam Args The types of the arguments to format (deduced).
+   * @param ok The condition to check. If false, an exception is thrown.
+   * @param f The format string with source location.
+   * @param args The arguments to format into the error message.
+   *
+   * @throws Utils::Runtime_Error If the condition is false.
+   *
+   * @example
+   * @code
+   * Check(value > 0, "Value {} must be positive", value);
+   * Check(index < size, "Index {} out of bounds (size={})", index, size);
+   * @endcode
+   */
+  template <class... Args>
+  inline void Check( bool ok, Format_With_Location<std::type_identity_t<Args>...> f, Args &&... args )
+  {
     if ( !ok )
-      throw Utils::Runtime_Error( std::format(f.fmt, std::forward<Args>(args)...), f.loc.file_name(), f.loc.line() );
+      throw Utils::Runtime_Error(
+        std::format( f.fmt, std::forward<Args>( args )... ),
+        f.loc.file_name(),
+        f.loc.line() );
   }
 
-  template<class... Args>
-  inline
-  void Warning( bool ok, Format_With_Location<std::type_identity_t<Args>...> f, Args&&... args ) {
+  /**
+   * @brief Alias of Check for compatibility with standard assertion naming.
+   *
+   * This function is functionally identical to Check() and is provided as
+   * a convenience alias to maintain compatibility with code that expects
+   * an Assert() function with formatted messages.
+   *
+   * @tparam Args The types of the arguments to format (deduced).
+   * @param ok The condition to check. If false, an exception is thrown.
+   * @param f The format string with source location.
+   * @param args The arguments to format into the error message.
+   *
+   * @throws Utils::Runtime_Error If the condition is false.
+   *
+   * @see Check
+   *
+   * @example
+   * @code
+   * Assert(ptr != nullptr, "Pointer {} is null", ptr_name);
+   * Assert(value > 0, "Invalid value: {}", value);
+   * @endcode
+   */
+  template <class... Args>
+  inline void Assert( bool ok, Format_With_Location<std::type_identity_t<Args>...> f, Args &&... args )
+  {
     if ( !ok )
-      std::cout << std::format( "{}\nfile: {}, line: {}\n", std::format(f.fmt, std::forward<Args>(args)...), f.loc.file_name(), f.loc.line() );
+      throw Utils::Runtime_Error(
+        std::format( f.fmt, std::forward<Args>( args )... ),
+        f.loc.file_name(),
+        f.loc.line() );
   }
 
+  /**
+   * @brief Displays a formatted warning message if the condition is false.
+   *
+   * This function checks the provided condition and outputs a formatted warning
+   * to std::cout if the condition is false. Unlike Assert/Check, this function
+   * does not throw an exception.
+   *
+   * @tparam Args The types of the arguments to format (deduced).
+   * @param ok The condition to check. If false, a warning is displayed.
+   * @param f The format string with source location.
+   * @param args The arguments to format into the warning message.
+   *
+   * @example
+   * @code
+   * Warning(retry_count == 0, "Retry attempt {} of {}", retry_count, max_retries);
+   * Warning(config.is_valid(), "Invalid configuration: {}", config.error_message());
+   * @endcode
+   */
+  template <class... Args>
+  inline void Warning( bool ok, Format_With_Location<std::type_identity_t<Args>...> f, Args &&... args )
+  {
+    if ( !ok )
+      std::cout << std::format(
+        "{}\nfile: {}, line: {}\n",
+        std::format( f.fmt, std::forward<Args>( args )... ),
+        f.loc.file_name(),
+        f.loc.line() );
+  }
+
+/**
+ * @brief Debug assertion that can be conditionally compiled out.
+ *
+ * This function behaves like Assert() when NDEBUG is not defined,
+ * and becomes a no-op when NDEBUG is defined. This allows debug
+ * assertions to be removed from release builds for performance reasons.
+ *
+ * @note When NDEBUG is defined, this function does nothing and the
+ *       condition and arguments are not evaluated (due to template
+ *       instantiation behavior).
+ *
+ * @tparam Args The types of the arguments to format (deduced).
+ * @param ok The condition to check in debug builds.
+ * @param f The format string with source location.
+ * @param args The arguments to format into the debug assertion message.
+ *
+ * @see Assert
+ * @see NDEBUG
+ *
+ * @example
+ * @code
+ * // This will only be checked in debug builds
+ * Debug(vector.size() > 0, "Vector is empty after operation");
+ *
+ * // More complex debug check with formatting
+ * Debug(value > 0, "Invalid value {} at iteration {}", value, iter);
+ * @endcode
+ */
+#ifdef NDEBUG
+  // When NDEBUG is defined, Debug() becomes a no-op
+  template <class... Args>
+  inline void Debug( bool /*ok*/, Format_With_Location<std::type_identity_t<Args>...> /*f*/, Args &&... /*args*/ )
+  {
+    // Empty implementation - all debug checks are removed in release builds
+  }
+  inline void Debug( bool ok, std::string_view msg, std::source_location loc = std::source_location::current() )
+  {
+    if ( !ok ) throw Utils::Runtime_Error( std::string{ msg }, loc.file_name(), loc.line() );
+  }
+
+#else
+  // When NDEBUG is NOT defined, Debug() behaves like Assert()
+  template <class... Args>
+  inline void Debug( bool ok, Format_With_Location<std::type_identity_t<Args>...> f, Args &&... args )
+  {
+    if ( !ok )
+      throw Utils::Runtime_Error(
+        std::format( f.fmt, std::forward<Args>( args )... ),
+        f.loc.file_name(),
+        f.loc.line() );
+  }
+  inline void Debug( bool ok, std::string_view msg, std::source_location loc = std::source_location::current() )
+  {
+    if ( !ok ) throw Utils::Runtime_Error( std::string{ msg }, loc.file_name(), loc.line() );
+  }
+#endif
 }  // namespace Utils
+
+
+// OBSOLETE MASCROS WILL BE REMOVED IN FUTURE RELEASE --- BEGIN
 
 #ifndef __FILENAME__
 #define __FILENAME__ ( strrchr( __FILE__, '/' ) ? strrchr( "/" __FILE__, '/' ) + 1 : __FILE__ )
@@ -323,9 +567,11 @@ namespace Utils
 #define UTILS_ASSERT0_DEBUG( COND, MSG ) UTILS_ASSERT0( COND, MSG )
 #endif
 #ifndef UTILS_ASSERT_DEBUG
-#define UTILS_ASSERT_DEBUG( COND, ... ) Utils::Assert( COND, __VA_ARGS__ )
+#define UTILS_ASSERT_DEBUG( COND, ... ) Utils::Check( COND, __VA_ARGS__ )
 #endif
 #endif
+
+// OBSOLETE MASCROS WILL BE REMOVED IN FUTURE RELEASE --- END
 
 #include "Malloc.hxx"
 #include "Numbers.hxx"

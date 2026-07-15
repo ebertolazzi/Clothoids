@@ -390,9 +390,7 @@ namespace Utils
     //! \return The norm of the quaternion.
     //!
     real_type norm() const
-    {
-      return std::sqrt( m_Q[0] * m_Q[0] + m_Q[1] * m_Q[1] + m_Q[2] * m_Q[2] + m_Q[3] * m_Q[3] );
-    }
+    { return std::sqrt( m_Q[0] * m_Q[0] + m_Q[1] * m_Q[1] + m_Q[2] * m_Q[2] + m_Q[3] * m_Q[3] ); }
 
     //!
     //! \brief Computes the squared norm of the quaternion.
@@ -460,9 +458,7 @@ namespace Utils
     //! \return The dot product.
     //!
     real_type dot( const Quaternion & other ) const
-    {
-      return m_Q[0] * other.m_Q[0] + m_Q[1] * other.m_Q[1] + m_Q[2] * other.m_Q[2] + m_Q[3] * other.m_Q[3];
-    }
+    { return m_Q[0] * other.m_Q[0] + m_Q[1] * other.m_Q[1] + m_Q[2] * other.m_Q[2] + m_Q[3] * other.m_Q[3]; }
 
     // ========================================================================
     // ROTATION OPERATIONS
@@ -742,17 +738,13 @@ namespace Utils
     //! \brief Quaternion addition.
     //!
     Quaternion operator+( const Quaternion & other ) const
-    {
-      return Quaternion( m_Q[0] + other.m_Q[0], m_Q[1] + other.m_Q[1], m_Q[2] + other.m_Q[2], m_Q[3] + other.m_Q[3] );
-    }
+    { return Quaternion( m_Q[0] + other.m_Q[0], m_Q[1] + other.m_Q[1], m_Q[2] + other.m_Q[2], m_Q[3] + other.m_Q[3] ); }
 
     //!
     //! \brief Quaternion subtraction.
     //!
     Quaternion operator-( const Quaternion & other ) const
-    {
-      return Quaternion( m_Q[0] - other.m_Q[0], m_Q[1] - other.m_Q[1], m_Q[2] - other.m_Q[2], m_Q[3] - other.m_Q[3] );
-    }
+    { return Quaternion( m_Q[0] - other.m_Q[0], m_Q[1] - other.m_Q[1], m_Q[2] - other.m_Q[2], m_Q[3] - other.m_Q[3] ); }
 
     //!
     //! \brief Quaternion negation.
@@ -785,9 +777,7 @@ namespace Utils
     //! \brief Scalar multiplication.
     //!
     Quaternion operator*( real_type scalar ) const
-    {
-      return Quaternion( m_Q[0] * scalar, m_Q[1] * scalar, m_Q[2] * scalar, m_Q[3] * scalar );
-    }
+    { return Quaternion( m_Q[0] * scalar, m_Q[1] * scalar, m_Q[2] * scalar, m_Q[3] * scalar ); }
 
     //!
     //! \brief Scalar division.
@@ -877,9 +867,7 @@ namespace Utils
     //! \brief Equality operator.
     //!
     bool operator==( const Quaternion & other ) const
-    {
-      return m_Q[0] == other.m_Q[0] && m_Q[1] == other.m_Q[1] && m_Q[2] == other.m_Q[2] && m_Q[3] == other.m_Q[3];
-    }
+    { return m_Q[0] == other.m_Q[0] && m_Q[1] == other.m_Q[1] && m_Q[2] == other.m_Q[2] && m_Q[3] == other.m_Q[3]; }
 
     //!
     //! \brief Inequality operator.
@@ -896,9 +884,7 @@ namespace Utils
     //! \param os The output stream.
     //!
     void print( ostream_type & os ) const
-    {
-      os << "[ " << m_Q[0] << ", " << m_Q[1] << "i, " << m_Q[2] << "j, " << m_Q[3] << "k ]";
-    }
+    { os << "[ " << m_Q[0] << ", " << m_Q[1] << "i, " << m_Q[2] << "j, " << m_Q[3] << "k ]"; }
 
     //!
     //! \brief Converts the quaternion to a string representation.
@@ -921,9 +907,7 @@ namespace Utils
   //! \brief Scalar multiplication (scalar * quaternion).
   //!
   template <typename T> inline Quaternion<T> operator*( T scalar, const Quaternion<T> & q )
-  {
-    return q * scalar;
-  }
+  { return q * scalar; }
 
   //!
   //! \brief Output stream operator for quaternions.

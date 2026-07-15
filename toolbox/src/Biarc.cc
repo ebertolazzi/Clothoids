@@ -42,7 +42,7 @@ namespace G2lib
     : BaseCurve( name )
   {
     bool const ok = build( x0, y0, theta0, x1, y1, theta1 );
-    UTILS_ASSERT(
+    Utils::Check(
       ok,
       "Biarc( x₀={}, y₀={}, θ₀={}, x₁={}, y₁={}, θ₁={}) cannot be computed\n",
       x0,
@@ -65,7 +65,7 @@ namespace G2lib
     real_type const y1     = gc.get_map_number( "y1", where );
     real_type const theta1 = gc.get_map_number( "theta1", where );
     bool const      ok     = this->build( x0, y0, theta0, x1, y1, theta1 );
-    UTILS_ASSERT( ok, "Biarc[{}]::setup( gc ) failed\n", this->name() );
+    Utils::Check( ok, "Biarc[{}]::setup( gc ) failed\n", this->name() );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -86,27 +86,27 @@ namespace G2lib
 
   void Biarc::build( ClothoidCurve const & )
   {
-    UTILS_ERROR( "cannot convert from ClothoidCurve to Biarc\n" );
+    Utils::Error( "cannot convert from ClothoidCurve to Biarc\n" );
   }
   void Biarc::build( PolyLine const & )
   {
-    UTILS_ERROR( "cannot convert from PolyLine to Biarc\n" );
+    Utils::Error( "cannot convert from PolyLine to Biarc\n" );
   }
   void Biarc::build( BiarcList const & )
   {
-    UTILS_ERROR( "cannot convert from BiarcList to Biarc\n" );
+    Utils::Error( "cannot convert from BiarcList to Biarc\n" );
   }
   void Biarc::build( ClothoidList const & )
   {
-    UTILS_ERROR( "cannot convert from ClothoidList to Biarc\n" );
+    Utils::Error( "cannot convert from ClothoidList to Biarc\n" );
   }
   void Biarc::build( Dubins const & )
   {
-    UTILS_ERROR( "cannot convert from Dubins to CircleArc\n" );
+    Utils::Error( "cannot convert from Dubins to CircleArc\n" );
   }
   void Biarc::build( Dubins3p const & )
   {
-    UTILS_ERROR( "cannot convert from Dubins3p to CircleArc\n" );
+    Utils::Error( "cannot convert from Dubins3p to CircleArc\n" );
   }
 
   /*\
@@ -135,7 +135,7 @@ namespace G2lib
         G2LIB_DEBUG_MESSAGE( "to -> Biarc\n" );
         *this = *dynamic_cast<Biarc const *>( pC );
         break;
-      default: UTILS_ERROR( "Biarc constructor cannot convert from: {}\n", pC->type_name() );
+      default: Utils::Error( "Biarc constructor cannot convert from: {}\n", pC->type_name() );
     }
   }
 
@@ -312,7 +312,7 @@ namespace G2lib
 
   void Biarc::trim( real_type const s_begin, real_type const s_end )
   {
-    UTILS_ASSERT( s_end > s_begin, "Biarc::trim( begin={}, s_end={} ) s_end must be > s_begin\n", s_begin, s_end );
+    Utils::Check( s_end > s_begin, "Biarc::trim( begin={}, s_end={} ) s_end must be > s_begin\n", s_begin, s_end );
     real_type const L0{ m_C0.length() };
     if ( s_end <= L0 )
     {
@@ -926,7 +926,7 @@ namespace G2lib
 
   bool build_guess_theta( integer const n, real_type const x[], real_type const y[], real_type theta[] )
   {
-    UTILS_ASSERT0( n > 1, "build_guess_theta, at least 2 points are necessary\n" );
+    Utils::Check( n > 1, "build_guess_theta, at least 2 points are necessary\n" );
     Biarc b( "build_guess_theta temporary b" );
     if ( n == 2 ) { theta[0] = theta[1] = atan2( y[1] - y[0], x[1] - x[0] ); }
     else
@@ -935,13 +935,13 @@ namespace G2lib
       if ( ciclic )
       {
         bool const ok{ b.build_3P( x[n - 2], y[n - 2], x[0], y[0], x[1], y[1] ) };
-        UTILS_ASSERT0( ok, "build_guess_theta, failed\n" );
+        Utils::Check( ok, "build_guess_theta, failed\n" );
         theta[0] = theta[n - 1] = b.theta_middle();
       }
       for ( integer k{ 1 }; k < n - 1; ++k )
       {
         bool const ok{ b.build_3P( x[k - 1], y[k - 1], x[k], y[k], x[k + 1], y[k + 1] ) };
-        UTILS_ASSERT0( ok, "build_guess_theta, failed\n" );
+        Utils::Check( ok, "build_guess_theta, failed\n" );
         theta[k] = b.theta_middle();
         if ( k == 1 && !ciclic ) theta[0] = b.theta_begin();
         if ( k == n - 2 && !ciclic ) theta[n - 1] = b.theta_end();

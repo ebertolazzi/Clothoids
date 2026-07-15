@@ -52,7 +52,8 @@ public:
   {
     real_type sum1 = 0;
     for ( integer j = 0; j < n; ++j ) sum1 += ( static_cast<real_type>( j ) + 1 ) * ( x( j ) - 1 );
-    for ( integer j = 0; j < n; ++j ) {
+    for ( integer j = 0; j < n; ++j )
+    {
       f( j ) = x( j ) - 1 + ( static_cast<real_type>( j ) + 1 ) * sum1 * ( 1 + 2 * power2( sum1 ) );
     }
   }
@@ -68,7 +69,8 @@ public:
     {
       for ( integer j = 0; j < n; ++j )
       {
-        real_type tmp = ( static_cast<real_type>( k ) + 1 ) * ( 1 + 6 * power2( sum1 ) ) * ( static_cast<real_type>( j ) + 1 );
+        real_type tmp = ( static_cast<real_type>( k ) + 1 ) * ( 1 + 6 * power2( sum1 ) ) *
+                        ( static_cast<real_type>( j ) + 1 );
         if ( j == k ) tmp += 1;
         J.insert( k, j ) = tmp;
       }

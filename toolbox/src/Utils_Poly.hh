@@ -65,9 +65,7 @@ namespace Utils
    * @return T Machine epsilon
    */
   template <typename T> inline T machine_eps()
-  {
-    return std::numeric_limits<T>::epsilon();
-  }
+  { return std::numeric_limits<T>::epsilon(); }
 
   //!
   //! \class Poly
@@ -1863,7 +1861,7 @@ namespace Utils
   //!
   template <typename Real> void divide( Poly<Real> const & p, Poly<Real> const & q, Poly<Real> & M, Poly<Real> & R )
   {
-    Utils::Assert(
+    Utils::Check(
       p.order() > 0 && q.order(),
       "Poly::divide( p, q, N, R ) ∂p = {}, ∂q = {} must be greather of 0",
       p.order(),

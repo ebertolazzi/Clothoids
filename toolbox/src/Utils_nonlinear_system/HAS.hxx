@@ -26,9 +26,7 @@
   "}\n"
 
 static inline string ini_msg_HAS64( real_type tau )
-{
-  return fmt::format( "HAS 64, tau = {}", tau );
-}
+{ return fmt::format( "HAS 64, tau = {}", tau ); }
 
 class HAS64 : public NonlinearSystem
 {
@@ -248,9 +246,9 @@ public:
 
   virtual void check_if_admissible( Vector const & x ) const override
   {
-    Utils::Assert( x( 0 ) > 0, "check_if_admissible x(0) = {} must be > 0", x( 0 ) );
-    Utils::Assert( x( 1 ) > 0, "check_if_admissible x(1) = {} must be > 0", x( 1 ) );
-    Utils::Assert( x( 2 ) > 0, "check_if_admissible x(2) = {} must be > 0", x( 2 ) );
+    Utils::Check( x( 0 ) > 0, "check_if_admissible x(0) = {} must be > 0", x( 0 ) );
+    Utils::Check( x( 1 ) > 0, "check_if_admissible x(1) = {} must be > 0", x( 1 ) );
+    Utils::Check( x( 2 ) > 0, "check_if_admissible x(2) = {} must be > 0", x( 2 ) );
   }
 
   virtual void bounding_box( Vector & L, Vector & U ) const override
@@ -266,9 +264,7 @@ public:
 \*/
 
 static inline string ini_msg_HAS93( real_type tau )
-{
-  return fmt::format( "HAS 93, tau = {}", tau );
-}
+{ return fmt::format( "HAS 93, tau = {}", tau ); }
 
 class HAS93 : public NonlinearSystem
 {
@@ -300,16 +296,16 @@ public:
       real_type t55 = t41 * x( 1 );
       real_type t80 = x( 2 ) * x( 3 );
       f( 0 )        = 0.2E-2 * t8 * x( 1 ) * x( 2 ) * t4 + 2.0 * t27 * ( -0.62E-3 * x( 3 ) * t14 * t15 - t32 - t34 ) +
-               2.0 * x( 0 ) - 2.0 * x( 8 );
-      f( 1 ) = 0.2E-2 * t41 * x( 2 ) * t4 + 2.0 * t27 * ( -t32 - 0.58E-3 * x( 2 ) * t20 * t22 - 0.9106E-3 * t33 ) +
-               2.0 * x( 1 ) - 2.0 * x( 9 );
-      f( 2 ) = 0.2E-2 * t55 * t4 + 2.0 * t27 * ( -t32 - 0.58E-3 * x( 1 ) * t20 * t22 ) + 2.0 * x( 2 ) - 2.0 * x( 10 );
-      f( 3 ) = 0.2E-2 * t55 * x( 2 ) * x( 4 ) * x( 5 ) + 2.0 * t27 * ( -0.62E-3 * x( 0 ) * t14 * t15 - t34 ) +
-               2.0 * x( 3 ) - 2.0 * x( 11 );
-      f( 4 ) = 0.2E-2 * t55 * t80 * x( 5 ) - 0.248E-2 * t27 * x( 0 ) * x( 3 ) * t15 * x( 4 ) + 2.0 * x( 4 ) -
-               2.0 * x( 12 );
-      f( 5 ) = 0.2E-2 * t55 * t80 * x( 4 ) - 0.232E-2 * t27 * x( 1 ) * x( 2 ) * t22 * x( 5 ) + 2.0 * x( 5 ) -
-               2.0 * x( 13 );
+                      2.0 * x( 0 ) - 2.0 * x( 8 );
+      f( 1 )  = 0.2E-2 * t41 * x( 2 ) * t4 + 2.0 * t27 * ( -t32 - 0.58E-3 * x( 2 ) * t20 * t22 - 0.9106E-3 * t33 ) +
+                2.0 * x( 1 ) - 2.0 * x( 9 );
+      f( 2 )  = 0.2E-2 * t55 * t4 + 2.0 * t27 * ( -t32 - 0.58E-3 * x( 1 ) * t20 * t22 ) + 2.0 * x( 2 ) - 2.0 * x( 10 );
+      f( 3 )  = 0.2E-2 * t55 * x( 2 ) * x( 4 ) * x( 5 ) + 2.0 * t27 * ( -0.62E-3 * x( 0 ) * t14 * t15 - t34 ) +
+                2.0 * x( 3 ) - 2.0 * x( 11 );
+      f( 4 )  = 0.2E-2 * t55 * t80 * x( 5 ) - 0.248E-2 * t27 * x( 0 ) * x( 3 ) * t15 * x( 4 ) + 2.0 * x( 4 ) -
+                2.0 * x( 12 );
+      f( 5 )  = 0.2E-2 * t55 * t80 * x( 4 ) - 0.232E-2 * t27 * x( 1 ) * x( 2 ) * t22 * x( 5 ) + 2.0 * x( 5 ) -
+                2.0 * x( 13 );
       f( 6 )  = -4.0 * t8 * x( 6 );
       f( 7 )  = -4.0 * t27 * x( 7 );
       f( 8 )  = -2.0 * x( 0 ) + 2.0 * x( 8 );
@@ -351,46 +347,46 @@ public:
     Matrix J_full( n, n );
     J_full.setZero();
     {
-      real_type t1  = x( 1 ) * x( 1 );
-      real_type t2  = x( 2 ) * x( 2 );
-      real_type t3  = t1 * t2;
-      real_type t4  = x( 3 ) * x( 3 );
-      real_type t5  = x( 4 ) * x( 4 );
-      real_type t6  = t4 * t5;
-      real_type t7  = x( 5 ) * x( 5 );
-      real_type t8  = t6 * t7;
-      real_type t11 = x( 3 ) * t5;
-      real_type t12 = x( 0 ) + x( 1 ) + x( 2 );
-      real_type t15 = x( 0 ) * x( 3 );
-      real_type t17 = 0.62E-3 * t15 * t5;
-      real_type t18 = x( 1 ) * x( 2 );
-      real_type t19 = t18 * t7;
-      real_type t20 = 0.58E-3 * t19;
-      real_type t21 = -0.62E-3 * t11 * t12 - t17 - t20;
-      real_type t22 = t21 * t21;
-      real_type t24 = t5 * t5;
-      real_type t27 = x( 2 ) * t7;
-      real_type t28 = t27 * t5;
-      real_type t32 = x( 0 ) * x( 0 );
-      real_type t40 = t7 * x( 0 );
-      real_type t46 = x( 7 ) * x( 7 );
-      real_type t54 = t5 * t7;
-      real_type t60 = x( 3 ) * x( 4 );
-      real_type t61 = t60 * x( 5 );
-      real_type t62 = x( 0 ) * x( 1 ) * x( 2 ) * t61;
-      real_type t64 = x( 6 ) * x( 6 );
-      real_type t65 = 0.1E-2 * t62 - 0.207E1 - t64;
-      real_type t70 = x( 0 ) + 0.157E1 * x( 1 ) + x( 3 );
-      real_type t74 = -t17 - 0.58E-3 * t27 * t70 - 0.9106E-3 * t19;
-      real_type t77 = t5 * t12;
-      real_type t78 = t15 * t77;
-      real_type t80 = t7 * t70;
-      real_type t81 = t18 * t80;
-      real_type t83 = 1.0 - 0.62E-3 * t78 - 0.58E-3 * t81 - t46;
-      real_type t84 = 0.62E-3 * t11;
-      real_type t85 = 0.58E-3 * t27;
-      real_type t89 = 0.2E-5 * x( 0 ) * t2 * t4 * t54 * x( 1 ) + 0.2E-2 * t65 * x( 2 ) * t61 + 2.0 * t74 * t21 +
-                      2.0 * t83 * ( -t84 - t85 );
+      real_type t1   = x( 1 ) * x( 1 );
+      real_type t2   = x( 2 ) * x( 2 );
+      real_type t3   = t1 * t2;
+      real_type t4   = x( 3 ) * x( 3 );
+      real_type t5   = x( 4 ) * x( 4 );
+      real_type t6   = t4 * t5;
+      real_type t7   = x( 5 ) * x( 5 );
+      real_type t8   = t6 * t7;
+      real_type t11  = x( 3 ) * t5;
+      real_type t12  = x( 0 ) + x( 1 ) + x( 2 );
+      real_type t15  = x( 0 ) * x( 3 );
+      real_type t17  = 0.62E-3 * t15 * t5;
+      real_type t18  = x( 1 ) * x( 2 );
+      real_type t19  = t18 * t7;
+      real_type t20  = 0.58E-3 * t19;
+      real_type t21  = -0.62E-3 * t11 * t12 - t17 - t20;
+      real_type t22  = t21 * t21;
+      real_type t24  = t5 * t5;
+      real_type t27  = x( 2 ) * t7;
+      real_type t28  = t27 * t5;
+      real_type t32  = x( 0 ) * x( 0 );
+      real_type t40  = t7 * x( 0 );
+      real_type t46  = x( 7 ) * x( 7 );
+      real_type t54  = t5 * t7;
+      real_type t60  = x( 3 ) * x( 4 );
+      real_type t61  = t60 * x( 5 );
+      real_type t62  = x( 0 ) * x( 1 ) * x( 2 ) * t61;
+      real_type t64  = x( 6 ) * x( 6 );
+      real_type t65  = 0.1E-2 * t62 - 0.207E1 - t64;
+      real_type t70  = x( 0 ) + 0.157E1 * x( 1 ) + x( 3 );
+      real_type t74  = -t17 - 0.58E-3 * t27 * t70 - 0.9106E-3 * t19;
+      real_type t77  = t5 * t12;
+      real_type t78  = t15 * t77;
+      real_type t80  = t7 * t70;
+      real_type t81  = t18 * t80;
+      real_type t83  = 1.0 - 0.62E-3 * t78 - 0.58E-3 * t81 - t46;
+      real_type t84  = 0.62E-3 * t11;
+      real_type t85  = 0.58E-3 * t27;
+      real_type t89  = 0.2E-5 * x( 0 ) * t2 * t4 * t54 * x( 1 ) + 0.2E-2 * t65 * x( 2 ) * t61 + 2.0 * t74 * t21 +
+                       2.0 * t83 * ( -t84 - t85 );
       real_type t90  = x( 0 ) * t1;
       real_type t94  = t65 * x( 1 );
       real_type t97  = t7 * x( 1 );
@@ -527,12 +523,12 @@ public:
       J_full( 3, 7 )  = -t351;
       J_full( 3, 11 ) = -2.0;
 
-      J_full( 4, 0 ) = t131 + t135 - t139 - 0.248E-2 * t83 * x( 3 ) * t136 - t241;
-      J_full( 4, 1 ) = t242;
-      J_full( 4, 2 ) = t301;
-      J_full( 4, 3 ) = t337;
-      J_full( 4, 4 ) = 0.2E-5 * t273 * t356 * t7 + 0.30752E-5 * t32 * t4 * t361 * t5 - 0.248E-2 * t239 * x( 3 ) * t12 +
-                       2.0;
+      J_full( 4, 0 )  = t131 + t135 - t139 - 0.248E-2 * t83 * x( 3 ) * t136 - t241;
+      J_full( 4, 1 )  = t242;
+      J_full( 4, 2 )  = t301;
+      J_full( 4, 3 )  = t337;
+      J_full( 4, 4 )  = 0.2E-5 * t273 * t356 * t7 + 0.30752E-5 * t32 * t4 * t361 * t5 - 0.248E-2 * t239 * x( 3 ) * t12 +
+                        2.0;
       J_full( 4, 5 )  = t380;
       J_full( 4, 6 )  = -t382;
       J_full( 4, 7 )  = t385;

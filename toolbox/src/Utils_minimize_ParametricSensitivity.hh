@@ -673,9 +673,7 @@ namespace Utils
      * @return Predicted new optimum
      */
     Vector predict_new_optimum( Vector const & x_opt, Vector const & delta_p ) const
-    {
-      return x_opt + m_sensitivity * delta_p;
-    }
+    { return x_opt + m_sensitivity * delta_p; }
   };
 
   // ===========================================================================
@@ -816,9 +814,7 @@ namespace Utils
      * @brief Get active set information
      */
     typename ParametricSensitivity<Scalar>::ActiveSet const & active_set() const
-    {
-      return m_sens_analyzer.active_set();
-    }
+    { return m_sens_analyzer.active_set(); }
 
     /**
      * @brief Get condition number of reduced Hessian

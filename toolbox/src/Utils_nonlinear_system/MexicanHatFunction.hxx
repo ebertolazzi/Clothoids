@@ -13,9 +13,7 @@
 \*/
 
 static inline string ini_msg_MexicanHatFunction( real_type tau )
-{
-  return fmt::format( "Mexican Hat Function, tau = {}", tau );
-}
+{ return fmt::format( "Mexican Hat Function, tau = {}", tau ); }
 
 class MexicanHatFunction : public NonlinearSystem
 {

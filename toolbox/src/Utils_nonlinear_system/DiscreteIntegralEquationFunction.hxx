@@ -30,9 +30,7 @@ public:
         "  doi     = {10.1145/355934.355936},\n"
         "}\n",
         neq )
-  {
-    check_min_equations( n, 2 );
-  }
+  { check_min_equations( n, 2 ); }
 
   virtual void evaluate( Vector const & x, Vector & f ) const override
   {
@@ -114,7 +112,8 @@ public:
     x_vec.resize( 1 );
     auto & x0{ x_vec[0] };
     x0.resize( n );
-    for ( integer k{ 0 }; k < n; ++k ) {
+    for ( integer k{ 0 }; k < n; ++k )
+    {
       x0( k ) = real_type( ( k + 1 ) * ( k - n ) ) / power2( static_cast<real_type>( n ) + 1.0 );
     }
   }

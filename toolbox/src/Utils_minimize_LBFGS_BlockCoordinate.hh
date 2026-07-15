@@ -668,12 +668,12 @@ namespace Utils
 
     void set_bounds( Vector const & lower, Vector const & upper )
     {
-      Utils::Assert(
+      Utils::Check(
         lower.size() == upper.size(),
         "BlockLBFGS::set_bounds: lower and upper bounds must have "
         "same dimension" );
 
-      Utils::Assert(
+      Utils::Check(
         ( lower.array() <= upper.array() ).all(),
         "BlockLBFGS::set_bounds: lower bounds must be <= upper bounds "
         "for all coordinates" );
@@ -754,7 +754,7 @@ namespace Utils
         m_final_function_value   = minimizer.final_function_value();
         m_initial_function_value = minimizer.initial_function_value();
         m_status                 = ( minimizer.status() == LBFGS_minimizer<Scalar>::Status::CONVERGED ||
-                     minimizer.status() == LBFGS_minimizer<Scalar>::Status::GRADIENT_TOO_SMALL )
+                                     minimizer.status() == LBFGS_minimizer<Scalar>::Status::GRADIENT_TOO_SMALL )
                                      ? Status::CONVERGED
                                      : Status::FAILED;
         m_outer_iterations       = 1;
@@ -865,7 +865,7 @@ namespace Utils
           typename LBFGS_minimizer<Scalar>::Options inner_opts;
           inner_opts.max_iter        = m_options.max_inner_iterations;
           inner_opts.g_tol           = std::max( m_options.lbfgs_g_tol,
-                                       global_gnorm * Scalar( 0.1 ) );  // m_options.lbfgs_g_tol;
+                                                 global_gnorm * Scalar( 0.1 ) );  // m_options.lbfgs_g_tol;
           inner_opts.f_tol           = m_options.lbfgs_f_tol;
           inner_opts.m               = m_options.lbfgs_m;
           inner_opts.verbosity_level = max( m_options.verbosity_level, static_cast<integer>( 1 ) );

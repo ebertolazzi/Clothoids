@@ -247,7 +247,7 @@ namespace Utils
       Vector const & c      = Vector() )
       : m_A( A ), m_m( A.rows() ), m_n( A.cols() ), m_lambda( lambda ), m_D( D ), m_c( c )
     {
-      Utils::Assert( lambda >= 0, "TikhonovSolver( λ={} ) λ must be >= 0", lambda );
+      Utils::Check( lambda >= 0, "TikhonovSolver( λ={} ) λ must be >= 0", lambda );
 
       // Check if lambda is numerically significant
       m_has_reg = lambda > epsilon();
@@ -258,15 +258,15 @@ namespace Utils
       // Process diagonal regularization matrix D
       if ( D.size() > 0 )
       {
-        Utils::Assert( D.size() == m_n, "TikhonovSolver: D size {} must match A cols {}", D.size(), m_n );
-        Utils::Assert( D.minCoeff() >= 0, "TikhonovSolver: D elements must be >= 0" );
+        Utils::Check( D.size() == m_n, "TikhonovSolver: D size {} must match A cols {}", D.size(), m_n );
+        Utils::Check( D.minCoeff() >= 0, "TikhonovSolver: D elements must be >= 0" );
         m_use_diag = true;
       }
 
       // Process center vector c
       if ( c.size() > 0 )
       {
-        Utils::Assert( c.size() == m_n, "TikhonovSolver: c size {} must match A cols {}", c.size(), m_n );
+        Utils::Check( c.size() == m_n, "TikhonovSolver: c size {} must match A cols {}", c.size(), m_n );
         m_has_c = true;
       }
 
@@ -313,7 +313,7 @@ namespace Utils
      */
     Vector solve( Vector const & b ) const
     {
-      Utils::Assert( b.size() == m_m, "TikhonovSolver::solve: b size {} must match A rows {}", b.size(), m_m );
+      Utils::Check( b.size() == m_m, "TikhonovSolver::solve: b size {} must match A rows {}", b.size(), m_m );
 
       if ( m_has_reg )
       {
@@ -523,7 +523,7 @@ namespace Utils
 
       // Factorize with partial pivoting LU
       m_LU.compute( m_KKT );
-      Utils::Assert( m_LU.info() == Eigen::Success, "TikhonovSolver2: KKT factorization failed" );
+      Utils::Check( m_LU.info() == Eigen::Success, "TikhonovSolver2: KKT factorization failed" );
     }
 
   public:
@@ -545,14 +545,14 @@ namespace Utils
       Vector const & c      = Vector() )
       : m_A( A ), m_m( A.rows() ), m_n( A.cols() ), m_lambda( lambda ), m_D2( D ), m_c( c )
     {
-      Utils::Assert( lambda >= 0, "TikhonovSolver2( λ={} ) λ must be >= 0", lambda );
+      Utils::Check( lambda >= 0, "TikhonovSolver2( λ={} ) λ must be >= 0", lambda );
 
       m_has_reg = lambda > epsilon();
 
       if ( D.size() > 0 )
       {
-        Utils::Assert( D.size() == m_n, "TikhonovSolver2: D size {} must match A cols {}", D.size(), m_n );
-        Utils::Assert( D.minCoeff() >= 0, "TikhonovSolver2: D elements must be >= 0" );
+        Utils::Check( D.size() == m_n, "TikhonovSolver2: D size {} must match A cols {}", D.size(), m_n );
+        Utils::Check( D.minCoeff() >= 0, "TikhonovSolver2: D elements must be >= 0" );
         m_use_diag = true;
 
         // Cache squared diagonal entries: \f$ D_i^2 \f$
@@ -561,7 +561,7 @@ namespace Utils
 
       if ( c.size() > 0 )
       {
-        Utils::Assert( c.size() == m_n, "TikhonovSolver2: c size {} must match A cols {}", c.size(), m_n );
+        Utils::Check( c.size() == m_n, "TikhonovSolver2: c size {} must match A cols {}", c.size(), m_n );
         m_has_c = true;
       }
 
@@ -595,7 +595,7 @@ namespace Utils
      */
     Vector solve( Vector const & b ) const
     {
-      Utils::Assert( b.size() == m_m, "TikhonovSolver2::solve: b size {} must match A rows {}", b.size(), m_m );
+      Utils::Check( b.size() == m_m, "TikhonovSolver2::solve: b size {} must match A rows {}", b.size(), m_m );
 
       // Right-hand side for KKT system
       Vector rhsKKT( m_m + m_n );
@@ -621,7 +621,7 @@ namespace Utils
 
       // Solve KKT system
       Vector sol = m_LU.solve( rhsKKT );
-      Utils::Assert( m_LU.info() == Eigen::Success, "TikhonovSolver2::solve: solve failed" );
+      Utils::Check( m_LU.info() == Eigen::Success, "TikhonovSolver2::solve: solve failed" );
 
       // Extract x from [y; x] solution vector
       return sol.segment( m_m, m_n );
@@ -777,7 +777,7 @@ namespace Utils
       A_aug.makeCompressed();  // Convert to compressed column storage
 
       m_QR.compute( A_aug );
-      Utils::Assert( m_QR.info() == Eigen::Success, "SP_TikhonovSolver: QR decomposition failed" );
+      Utils::Check( m_QR.info() == Eigen::Success, "SP_TikhonovSolver: QR decomposition failed" );
     }
 
   public:
@@ -798,21 +798,21 @@ namespace Utils
       Vector const &       c      = Vector() )
       : m_A( A ), m_m( A.rows() ), m_n( A.cols() ), m_lambda( lambda ), m_D( D ), m_c( c )
     {
-      Utils::Assert( lambda >= 0, "SP_TikhonovSolver( λ={} ) λ must be >= 0", lambda );
+      Utils::Check( lambda >= 0, "SP_TikhonovSolver( λ={} ) λ must be >= 0", lambda );
 
       m_has_reg     = ( lambda > epsilon() );
       m_sqrt_lambda = m_has_reg ? std::sqrt( lambda ) : Scalar( 0 );
 
       if ( D.size() > 0 )
       {
-        Utils::Assert( D.size() == m_n, "SP_TikhonovSolver: D size {} must match A cols {}", D.size(), m_n );
-        Utils::Assert( D.minCoeff() >= 0, "SP_TikhonovSolver: D elements must be >= 0" );
+        Utils::Check( D.size() == m_n, "SP_TikhonovSolver: D size {} must match A cols {}", D.size(), m_n );
+        Utils::Check( D.minCoeff() >= 0, "SP_TikhonovSolver: D elements must be >= 0" );
         m_use_diag = true;
       }
 
       if ( c.size() > 0 )
       {
-        Utils::Assert( c.size() == m_n, "SP_TikhonovSolver: c size {} must match A cols {}", c.size(), m_n );
+        Utils::Check( c.size() == m_n, "SP_TikhonovSolver: c size {} must match A cols {}", c.size(), m_n );
         m_has_c = true;
       }
 
@@ -830,7 +830,7 @@ namespace Utils
      */
     Vector solve( Vector const & b ) const
     {
-      Utils::Assert( b.size() == m_m, "SP_TikhonovSolver::solve: b size {} must match A rows {}", b.size(), m_m );
+      Utils::Check( b.size() == m_m, "SP_TikhonovSolver::solve: b size {} must match A rows {}", b.size(), m_m );
 
       if ( m_has_reg )
       {
@@ -1005,7 +1005,7 @@ namespace Utils
       {
         m_LU.analyzePattern( m_KKT );
         m_LU.factorize( m_KKT );
-        Utils::Assert( m_LU.info() == Eigen::Success, "SP_TikhonovSolver2: Both LDLT and LU factorizations failed" );
+        Utils::Check( m_LU.info() == Eigen::Success, "SP_TikhonovSolver2: Both LDLT and LU factorizations failed" );
       }
     }
 
@@ -1025,21 +1025,21 @@ namespace Utils
       Vector const &       c      = Vector() )
       : m_A( A ), m_m( A.rows() ), m_n( A.cols() ), m_lambda( lambda ), m_D2( D ), m_c( c )
     {
-      Utils::Assert( lambda >= 0, "SP_TikhonovSolver2( λ={} ) λ must be >= 0", lambda );
+      Utils::Check( lambda >= 0, "SP_TikhonovSolver2( λ={} ) λ must be >= 0", lambda );
 
       m_has_reg = lambda > epsilon();
 
       if ( D.size() > 0 )
       {
-        Utils::Assert( D.size() == m_n, "SP_TikhonovSolver2: D size {} must match A cols {}", D.size(), m_n );
-        Utils::Assert( D.minCoeff() >= 0, "SP_TikhonovSolver2: D elements must be >= 0" );
+        Utils::Check( D.size() == m_n, "SP_TikhonovSolver2: D size {} must match A cols {}", D.size(), m_n );
+        Utils::Check( D.minCoeff() >= 0, "SP_TikhonovSolver2: D elements must be >= 0" );
         m_use_diag = true;
         m_D2.array() *= m_D2.array();
       }
 
       if ( c.size() > 0 )
       {
-        Utils::Assert( c.size() == m_n, "SP_TikhonovSolver2: c size {} must match A cols {}", c.size(), m_n );
+        Utils::Check( c.size() == m_n, "SP_TikhonovSolver2: c size {} must match A cols {}", c.size(), m_n );
         m_has_c = true;
       }
 
@@ -1057,7 +1057,7 @@ namespace Utils
      */
     Vector solve( Vector const & b ) const
     {
-      Utils::Assert( b.size() == m_m, "SP_TikhonovSolver2::solve: b size {} must match A rows {}", b.size(), m_m );
+      Utils::Check( b.size() == m_m, "SP_TikhonovSolver2::solve: b size {} must match A rows {}", b.size(), m_m );
 
       Vector rhs( m_m + m_n );
       rhs.head( m_m ) = b;
@@ -1078,12 +1078,12 @@ namespace Utils
       if ( m_use_LDLT )
       {
         sol = m_LDLT.solve( rhs );
-        Utils::Assert( m_LDLT.info() == Eigen::Success, "SP_TikhonovSolver2::solve (LDLT): solve failed" );
+        Utils::Check( m_LDLT.info() == Eigen::Success, "SP_TikhonovSolver2::solve (LDLT): solve failed" );
       }
       else
       {
         sol = m_LU.solve( rhs );
-        Utils::Assert( m_LU.info() == Eigen::Success, "SP_TikhonovSolver2::solve (LU): solve failed" );
+        Utils::Check( m_LU.info() == Eigen::Success, "SP_TikhonovSolver2::solve (LU): solve failed" );
       }
 
       return sol.segment( m_m, m_n );

@@ -97,14 +97,10 @@ namespace Utils
     OVERLAP_FUN m_check_overlap_with_point{ nullptr };
 
     static bool overlap1( Real const bbox1[], Real const bbox2[], integer )
-    {
-      return bbox1[0] <= bbox2[1] && bbox1[1] >= bbox2[0];
-    }
+    { return bbox1[0] <= bbox2[1] && bbox1[1] >= bbox2[0]; }
 
     static bool overlap2( Real const bbox1[], Real const bbox2[], integer )
-    {
-      return bbox1[0] <= bbox2[2] && bbox1[2] >= bbox2[0] && bbox1[1] <= bbox2[3] && bbox1[3] >= bbox2[1];
-    }
+    { return bbox1[0] <= bbox2[2] && bbox1[2] >= bbox2[0] && bbox1[1] <= bbox2[3] && bbox1[3] >= bbox2[1]; }
 
     static bool overlap3( Real const bbox1[], Real const bbox2[], integer )
     {
@@ -149,14 +145,10 @@ namespace Utils
     }
 
     static bool pnt_overlap1( Real const pnt[], Real const bb2[], integer )
-    {
-      return pnt[0] <= bb2[1] && pnt[0] >= bb2[0];
-    }
+    { return pnt[0] <= bb2[1] && pnt[0] >= bb2[0]; }
 
     static bool pnt_overlap2( Real const pnt[], Real const bb2[], integer )
-    {
-      return pnt[0] <= bb2[2] && pnt[0] >= bb2[0] && pnt[1] <= bb2[3] && pnt[1] >= bb2[1];
-    }
+    { return pnt[0] <= bb2[2] && pnt[0] >= bb2[0] && pnt[1] <= bb2[3] && pnt[1] >= bb2[1]; }
 
     static bool pnt_overlap3( Real const pnt[], Real const bbox2[], integer )
     {
@@ -316,7 +308,7 @@ namespace Utils
     //!
     void set_max_num_objects_per_node( integer n )
     {
-      Utils::Assert(
+      Utils::Check(
         n > 0 && n <= 4096,
         "AABBtree::set_max_num_objects_per_node( nobj = {} )\n"
         "nobj must be > 0 and <= 4096\n",
@@ -331,7 +323,7 @@ namespace Utils
     //!
     void set_bbox_long_edge_ratio( Real ratio )
     {
-      Utils::Assert(
+      Utils::Check(
         ratio > 0 && ratio < 1,
         "AABBtree::set_bbox_long_edge_ratio( ratio = {} )\n"
         "tol must be > 0 and < 1\n",
@@ -346,7 +338,7 @@ namespace Utils
     //!
     void set_bbox_overlap_tolerance( Real tol )
     {
-      Utils::Assert(
+      Utils::Check(
         tol > 0 && tol < 1,
         "AABBtree::set_bbox_overlap_tolerance( tol = {} )\n"
         "tol must be > 0 and < 1\n",
@@ -361,7 +353,7 @@ namespace Utils
     //!
     void set_bbox_min_size_tolerance( Real tol )
     {
-      Utils::Assert(
+      Utils::Check(
         tol >= 0,
         "AABBtree::set_bbox_min_size_tolerance( tol = {} )\n"
         "tol must be >= 0\n",
@@ -464,7 +456,7 @@ namespace Utils
     //!
     void add_bboxes( Real const bbox_min[], integer ldim0, Real const bbox_max[], integer ldim1 )
     {
-      Utils::Assert(
+      Utils::Check(
         ldim0 >= m_dim && ldim1 >= m_dim,
         "AABBtree::add_bboxes( bb_min, ldim0={}, bb_max, ldim1={} )\n"
         "must be ldim0, ldim1 >= dim = {}\n",
@@ -477,7 +469,7 @@ namespace Utils
       {
         for ( integer j = 0; j < m_dim; ++j )
         {
-          Utils::Assert( bbox_min[j] <= bbox_max[j], "AABBtree::add_bboxes, bad bbox N.{} max < min", i );
+          Utils::Check( bbox_min[j] <= bbox_max[j], "AABBtree::add_bboxes, bad bbox N.{} max < min", i );
         }
         std::copy_n( bbox_min, m_dim, bb );
         bb += m_dim;
@@ -497,7 +489,7 @@ namespace Utils
     //!
     void replace_bbox( Real const bbox_min[], Real const bbox_max[], integer ipos )
     {
-      Utils::Assert(
+      Utils::Check(
         ipos >= 0 && ipos < m_num_objects,
         "AABBtree::replace_bbox( bb_min, bb_max, ipos = {})"
         " ipos must be in [0,{})\n",
@@ -506,7 +498,7 @@ namespace Utils
       Real * bb = m_bbox_objs + ipos * m_2dim;
       for ( integer j = 0; j < m_dim; ++j )
       {
-        Utils::Assert( bbox_min[j] <= bbox_max[j], "AABBtree::replace_bbox, bad bbox N.{} max < min", ipos );
+        Utils::Check( bbox_min[j] <= bbox_max[j], "AABBtree::replace_bbox, bad bbox N.{} max < min", ipos );
       }
       std::copy_n( bbox_min, m_dim, bb );
       std::copy_n( bbox_max, m_dim, bb + m_dim );
@@ -533,7 +525,7 @@ namespace Utils
         {
           pmin += m_2dim;
           pmax += m_2dim;
-          Utils::Assert( *pmax >= *pmin, "AABBtree::build, bad bbox N.{} max < min ({} < {})\n", i, *pmax, *pmin );
+          Utils::Check( *pmax >= *pmin, "AABBtree::build, bad bbox N.{} max < min ({} < {})\n", i, *pmax, *pmin );
           if ( minj > *pmin ) minj = *pmin;
           if ( maxj < *pmax ) maxj = *pmax;
         }
@@ -550,7 +542,7 @@ namespace Utils
         // pop node from stack
         integer id_father = m_stack.back();
         m_stack.pop_back();
-        Utils::Assert(
+        Utils::Check(
           id_father < m_nmax,
           "AABBtree::build, id_father = {} must be less than m_nmax ={}\n",
           id_father,
@@ -596,7 +588,7 @@ namespace Utils
         while ( n_long + n_short < num )
         {
           integer id = ptr[n_long];
-          Utils::Assert(
+          Utils::Check(
             id < m_num_objects,
             "AABBtree::build, id = {} must be less than m_num_objects ={}\n",
             id,
@@ -653,7 +645,7 @@ namespace Utils
         integer id_left{ m_num_tree_nodes + 0 };
         integer id_right{ m_num_tree_nodes + 1 };
 
-        Utils::Assert(
+        Utils::Check(
           id_right < m_nmax,
           "AABBtree::build, id_right = {} must be less than m_nmax ={}\n",
           id_right,
@@ -665,7 +657,7 @@ namespace Utils
         for ( integer i{ 0 }; i < n_left; ++i )
         {
           integer id{ ptr[n_long + i] };
-          Utils::Assert(
+          Utils::Check(
             id < m_num_objects,
             "AABBtree::build, id = {} must be less than m_num_objects ={}\n",
             id,
@@ -688,7 +680,7 @@ namespace Utils
         for ( integer i = 0; i < n_right; ++i )
         {
           integer id = ptr[n_long + n_left + i];
-          Utils::Assert(
+          Utils::Check(
             id < m_num_objects,
             "AABBtree::build, id = {} must be less than m_num_objects ={}\n",
             id,
@@ -860,8 +852,8 @@ namespace Utils
     //!
     void intersect( AABBtree const & aabb, AABB_MAP & bb_index ) const
     {
-      Utils::Assert( this->m_bbox_tree != nullptr, "AABBtree::intersect: this tree not built" );
-      Utils::Assert( aabb.m_bbox_tree != nullptr, "AABBtree::intersect: aabb tree not built" );
+      Utils::Check( this->m_bbox_tree != nullptr, "AABBtree::intersect: this tree not built" );
+      Utils::Check( aabb.m_bbox_tree != nullptr, "AABBtree::intersect: aabb tree not built" );
 
       m_num_check = 0;
 
@@ -962,8 +954,8 @@ namespace Utils
     //!
     void intersect_with_one_point_and_refine( Real const pnt[], AABB_SET & bb_index ) const
     {
-      Utils::Assert( pnt != nullptr, "AABBtree::intersect_with_one_point: pnt is null" );
-      Utils::Assert( m_bbox_tree != nullptr, "AABBtree::intersect_with_one_point: tree not built" );
+      Utils::Check( pnt != nullptr, "AABBtree::intersect_with_one_point: pnt is null" );
+      Utils::Check( m_bbox_tree != nullptr, "AABBtree::intersect_with_one_point: tree not built" );
 
       m_num_check = 0;
 
@@ -1017,8 +1009,8 @@ namespace Utils
     //!
     void intersect_with_one_bbox_and_refine( Real const bbox[], AABB_SET & bb_index ) const
     {
-      Utils::Assert( bbox != nullptr, "AABBtree::intersect_with_one_bbox: bbox is null" );
-      Utils::Assert( m_bbox_tree != nullptr, "AABBtree::intersect_with_one_bbox: tree not built" );
+      Utils::Check( bbox != nullptr, "AABBtree::intersect_with_one_bbox: bbox is null" );
+      Utils::Check( m_bbox_tree != nullptr, "AABBtree::intersect_with_one_bbox: tree not built" );
 
       m_num_check = 0;
 
@@ -1073,8 +1065,8 @@ namespace Utils
     //!
     void intersect_and_refine( AABBtree const & aabb, AABB_MAP & bb_index ) const
     {
-      Utils::Assert( this->m_bbox_tree != nullptr, "AABBtree::intersect_and_refine: this tree not built" );
-      Utils::Assert( aabb.m_bbox_tree != nullptr, "AABBtree::intersect_and_refine: aabb tree not built" );
+      Utils::Check( this->m_bbox_tree != nullptr, "AABBtree::intersect_and_refine: this tree not built" );
+      Utils::Check( aabb.m_bbox_tree != nullptr, "AABBtree::intersect_and_refine: aabb tree not built" );
 
       m_num_check = 0;
 
@@ -1340,7 +1332,7 @@ namespace Utils
     //!
     void get_bboxes_of_the_tree( Real bbox_min[], integer ldim0, Real bbox_max[], integer ldim1, integer nmin ) const
     {
-      Utils::Assert(
+      Utils::Check(
         ldim0 >= m_dim && ldim1 >= m_dim,
         "AABBtree::get_bboxes_of_the_tree(\n"
         "  bbox_min, ldim0={},\n"
@@ -1374,7 +1366,7 @@ namespace Utils
     //!
     void get_bbox_indexes_of_a_node( integer i_pos, AABB_SET & bb_index ) const
     {
-      Utils::Assert(
+      Utils::Check(
         i_pos >= 0 && i_pos < m_num_tree_nodes,
         "AABBtree::get_bbox_indexes_of_a_node( i_pos={}, bb_index ) "
         "i_pos must be >= 0 and < {}\n",

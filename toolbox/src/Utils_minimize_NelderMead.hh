@@ -445,7 +445,7 @@ namespace Utils
      */
     Scalar safe_evaluate( Vector const & x )
     {
-      Utils::Assert( m_callback != nullptr, "NelderMead_classic::safe_evaluate(x) Callback not set!" );
+      Utils::Check( m_callback != nullptr, "NelderMead_classic::safe_evaluate(x) Callback not set!" );
 
       // EIGEN3: Use array operations for efficient bounds checking
       // .array() enables element-wise operations without temporary copies
@@ -907,8 +907,8 @@ namespace Utils
       }
 
       // 2. Restart for insufficient progress relative to resources used
-      Scalar progress_per_eval =
-        relative_improvement / ( 1.0 + static_cast<Scalar>( current_result.function_evaluations ) );
+      Scalar progress_per_eval = relative_improvement /
+                                 ( 1.0 + static_cast<Scalar>( current_result.function_evaluations ) );
       if ( progress_per_eval < m_options.restart_progress_per_eval_threshold && current_result.iterations > 100 )
       {
         return true;
@@ -1405,8 +1405,8 @@ namespace Utils
      */
     void set_bounds( Vector const & lower, Vector const & upper )
     {
-      Utils::Assert( lower.size() == upper.size(), "Bounds size mismatch" );
-      Utils::Assert( ( lower.array() <= upper.array() ).all(), "Lower <= Upper" );
+      Utils::Check( lower.size() == upper.size(), "Bounds size mismatch" );
+      Utils::Check( ( lower.array() <= upper.array() ).all(), "Lower <= Upper" );
       m_lower      = lower;
       m_upper      = upper;
       m_use_bounds = true;
@@ -1478,8 +1478,8 @@ namespace Utils
             best_result.final_function_value );
         }
 
-        Scalar perturbation_scale =
-          m_options.restart_perturbation_ratio * ( 1.0 + static_cast<Scalar>( m_restarts_performed ) * 0.1 );
+        Scalar perturbation_scale = m_options.restart_perturbation_ratio *
+                                    ( 1.0 + static_cast<Scalar>( m_restarts_performed ) * 0.1 );
 
         Vector restart_x0;
         Vector scale_vec = Vector::Ones( x0.size() );

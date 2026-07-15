@@ -253,7 +253,7 @@ namespace G2lib
         term *= numterm * ( numterm - 2.0 ) * t;
         sum += term;
         absterm = abs( term );
-        UTILS_ASSERT(
+        Utils::Check(
           oldterm >= absterm,
           "In FresnelCS f not converged to eps, x = {} oldterm = {} absterm = {}\n",
           x,
@@ -276,7 +276,7 @@ namespace G2lib
         term *= numterm * ( numterm + 2.0 ) * t;
         sum += term;
         absterm = abs( term );
-        UTILS_ASSERT(
+        Utils::Check(
           oldterm >= absterm,
           "In FresnelCS g not converged to eps, x = {} oldterm = {} absterm = {}\n",
           x,
@@ -358,7 +358,7 @@ namespace G2lib
 
   static void evalXYaLarge( integer const nk, real_type const a, real_type const b, real_type X[], real_type Y[] )
   {
-    UTILS_ASSERT( nk <= 5 && nk > 0, "In evalXYaLarge first argument nk must be in 1..5, nk {}\n", nk );
+    Utils::Check( nk <= 5 && nk > 0, "In evalXYaLarge first argument nk must be in 1..5, nk {}\n", nk );
 
     real_type const s    = static_cast<real_type>( a > 0 ? +1 : -1 );
     real_type const absa = abs( a );
@@ -490,7 +490,7 @@ namespace G2lib
 
   static void evalXYaSmall( real_type const a, real_type const b, integer const p, real_type & X, real_type & Y )
   {
-    UTILS_ASSERT( p < 11 && p > 0, "In evalXYaSmall p = {} must be in 1..10\n", p );
+    Utils::Check( p < 11 && p > 0, "In evalXYaSmall p = {} must be in 1..10\n", p );
 
     real_type X0[43], Y0[43];
 
@@ -525,7 +525,7 @@ namespace G2lib
     integer   nkk = nk + 4 * p + 2;  // max 45
     real_type X0[48], Y0[48];
 
-    UTILS_ASSERT(
+    Utils::Check(
       nkk <= 47,
       "In evalXYaSmall (nk,p) = ({},{})\n"
       "nk + 4*p + 2 = {} must be less than 47\n",
@@ -590,7 +590,7 @@ namespace G2lib
     real_type       intC[],
     real_type       intS[] )
   {
-    UTILS_ASSERT( nk > 0 && nk <= 5, "nk = {} must be in 1..5\n", nk );
+    Utils::Check( nk > 0 && nk <= 5, "nk = {} must be in 1..5\n", nk );
 
     if ( abs( a ) < A_THRESOLD )
       evalXYaSmall( nk, a, b, A_SERIE_SIZE, intC, intS );
@@ -1123,11 +1123,11 @@ namespace G2lib
       A -= g / dg;
     } while ( ++niter <= 10 && abs( g ) > tol );
 
-    UTILS_ASSERT( abs( g ) <= tol, "Newton do not converge, g = {} niter = {}\n", g, niter );
+    Utils::Check( abs( g ) <= tol, "Newton do not converge, g = {} niter = {}\n", g, niter );
     GeneralizedFresnelCS( 2 * A, delta - A, phi0, intC[0], intS[0] );
     L = r / intC[0];
 
-    UTILS_ASSERT( L > 0, "Negative length L = {}\n", L );
+    Utils::Check( L > 0, "Negative length L = {}\n", L );
     m_kappa0 = ( delta - A ) / L;
     m_dk     = 2 * A / L / L;
 

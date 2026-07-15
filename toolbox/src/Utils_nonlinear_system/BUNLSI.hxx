@@ -385,14 +385,14 @@ public:
     real_type x10 = x( 9 );
     real_type x22 = x( 21 );
     real_type x28 = x( 27 );
-    Utils::Assert( x1 > 0, "x1" );
-    Utils::Assert( x4 > 0, "x4" );
-    Utils::Assert( x5 > 0, "x5" );
-    Utils::Assert( x6 > 0, "x6" );
-    Utils::Assert( x8 > 0, "x8" );
-    Utils::Assert( x10 > 0, "x10" );
-    Utils::Assert( x22 > 0, "x22" );
-    Utils::Assert( x28 > 0, "x28" );
+    Utils::Check( x1 > 0, "x1" );
+    Utils::Check( x4 > 0, "x4" );
+    Utils::Check( x5 > 0, "x5" );
+    Utils::Check( x6 > 0, "x6" );
+    Utils::Check( x8 > 0, "x8" );
+    Utils::Check( x10 > 0, "x10" );
+    Utils::Check( x22 > 0, "x22" );
+    Utils::Check( x28 > 0, "x28" );
   }
 
   virtual void bounding_box( Vector & L, Vector & U ) const override

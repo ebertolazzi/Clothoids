@@ -197,9 +197,7 @@ namespace Utils
   //! \param s The number of seconds to sleep.
   //!
   inline void sleep_for_seconds( unsigned s )
-  {
-    Sleep( DWORD( s ) * 1000 );
-  }
+  { Sleep( DWORD( s ) * 1000 ); }
 
   //!
   //! \brief Sleep for a specified number of milliseconds.
@@ -210,9 +208,7 @@ namespace Utils
   //! \param ms The number of milliseconds to sleep.
   //!
   inline void sleep_for_milliseconds( unsigned ms )
-  {
-    Sleep( DWORD( ms ) );
-  }
+  { Sleep( DWORD( ms ) ); }
 
   //!
   //! \brief Sleep for a specified number of microseconds.
@@ -223,9 +219,7 @@ namespace Utils
   //! \param mus The number of microseconds to sleep.
   //!
   inline void sleep_for_microseconds( unsigned mus )
-  {
-    nanosleep( LONGLONG( mus * 10 ) );
-  }
+  { nanosleep( LONGLONG( mus * 10 ) ); }
 
   //!
   //! \brief Sleep for a specified number of nanoseconds.
@@ -236,9 +230,7 @@ namespace Utils
   //! \param ns The number of nanoseconds to sleep.
   //!
   inline void sleep_for_nanoseconds( unsigned ns )
-  {
-    nanosleep( LONGLONG( ns / 100 ) );
-  }
+  { nanosleep( LONGLONG( ns / 100 ) ); }
 
 #else
 
@@ -332,9 +324,7 @@ namespace Utils
   //! \param s The number of seconds to sleep.
   //!
   inline void sleep_for_seconds( unsigned s )
-  {
-    std::this_thread::sleep_for( std::chrono::seconds( s ) );
-  }
+  { std::this_thread::sleep_for( std::chrono::seconds( s ) ); }
 
   //!
   //! \brief Sleep for a specified number of milliseconds.
@@ -345,9 +335,7 @@ namespace Utils
   //! \param ms The number of milliseconds to sleep.
   //!
   inline void sleep_for_milliseconds( unsigned ms )
-  {
-    std::this_thread::sleep_for( std::chrono::milliseconds( ms ) );
-  }
+  { std::this_thread::sleep_for( std::chrono::milliseconds( ms ) ); }
 
   //!
   //! \brief Sleep for a specified number of microseconds.
@@ -358,9 +346,7 @@ namespace Utils
   //! \param mus The number of microseconds to sleep.
   //!
   inline void sleep_for_microseconds( unsigned mus )
-  {
-    std::this_thread::sleep_for( std::chrono::microseconds( mus ) );
-  }
+  { std::this_thread::sleep_for( std::chrono::microseconds( mus ) ); }
 
   //!
   //! \brief Sleep for a specified number of nanoseconds.
@@ -371,9 +357,7 @@ namespace Utils
   //! \param ns The number of nanoseconds to sleep.
   //!
   inline void sleep_for_nanoseconds( unsigned ns )
-  {
-    std::this_thread::sleep_for( std::chrono::nanoseconds( ns ) );
-  }
+  { std::this_thread::sleep_for( std::chrono::nanoseconds( ns ) ); }
 
 #endif  // UTILS_OS_WINDOWS
 

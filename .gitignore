@@ -51,6 +51,5 @@ toolbox/CMakeFiles
 Xcode
 *.csv
 .DS_Store
-include
 .cache
 toolbox/lib/lib

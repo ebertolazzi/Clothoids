@@ -38,9 +38,7 @@ class PenaltyIfunction : public NonlinearSystem
 {
 public:
   PenaltyIfunction( integer neq ) : NonlinearSystem( "Penalty I", PENALTY_FUNCTION_BIBTEX, neq )
-  {
-    check_min_equations( n, 2 );
-  }
+  { check_min_equations( n, 2 ); }
 
   virtual void evaluate( Vector const & x, Vector & f ) const override
   {
@@ -90,9 +88,7 @@ public:
         "}\n",
         neq )
     , epsilon( 0.00001 )
-  {
-    check_min_equations( n, 2 );
-  }
+  { check_min_equations( n, 2 ); }
 
   real_type sum( Vector const & x ) const
   {
@@ -159,9 +155,7 @@ public:
         "}\n",
         neq )
     , epsilon( 0.00001 )
-  {
-    check_min_equations( n, 2 );
-  }
+  { check_min_equations( n, 2 ); }
 
   virtual void evaluate( Vector const & x, Vector & f ) const override
   {
@@ -215,7 +209,8 @@ public:
         real_type s3 = s1 + s2 - d2 * ( d1 + 1.0 );
         J_full( j, j ) += ap * s1 * ( s3 + s1 - 1.0 / d1 + 2.0 * s1 ) / 50.0;
         J_full( j - 1, j - 1 ) += ap * s2 * ( s2 + s3 ) / 50.0;
-        for ( integer k = 0; k < j; ++k ) {
+        for ( integer k = 0; k < j; ++k )
+        {
           J_full( j, k ) = 8.0 * static_cast<real_type>( n - j ) * static_cast<real_type>( n - k ) * x( j ) * x( k );
         }
         J_full( j, j - 1 ) += ap * s1 * s2 / 50.0;

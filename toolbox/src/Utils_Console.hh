@@ -69,15 +69,15 @@ namespace Utils
     public:
       fmt::text_style ts;
     };
-    
+
     using integer = int;
 
   private:
     mutable std::mutex m_message_mutex;  //!< Mutex protecting m_stream/m_level and all output operations
 
-    ostream_type * m_stream        = &std::cout; //!< Output stream pointer
-    integer        m_level         = 4;          //!< Message level threshold
-    bool           m_color_enabled = true;       //!< If false, styling is stripped and plain text is written instead
+    ostream_type * m_stream        = &std::cout;  //!< Output stream pointer
+    integer        m_level         = 4;           //!< Message level threshold
+    bool           m_color_enabled = true;        //!< If false, styling is stripped and plain text is written instead
 
     //! Text style used for a given message category.
     fmt::text_style m_message_style;  //!< Message style
@@ -93,8 +93,8 @@ namespace Utils
 
     [[nodiscard]] static integer validate_level( integer level )
     {
-      Utils::Assert( level >= -1 && level <= 4, "Utils::Console: level={} must be in the range [-1,4]", level );
-      return level;
+      Utils::Warning( level >= -1 && level <= 4, "Utils::Console: level={} must be in the range [-1,4]", level );
+      return std::min<integer>( 4, std::max<integer>( -1, level ) );
     }
 
     //! Writes styled text while ensuring that ANSI reset codes precede every
@@ -111,9 +111,9 @@ namespace Utils
       size_t line_begin = 0;
       while ( line_begin < msg.size() )
       {
-        size_t const newline = msg.find( '\n', line_begin );
-        size_t const line_end = newline == string_view::npos ? msg.size() : newline;
-        string_view const line = msg.substr( line_begin, line_end - line_begin );
+        size_t const      newline  = msg.find( '\n', line_begin );
+        size_t const      line_end = newline == string_view::npos ? msg.size() : newline;
+        string_view const line     = msg.substr( line_begin, line_end - line_begin );
 
         // fmt appends ESC[0m after the styled fragment. By excluding '\n'
         // from the fragment, the reset is emitted before moving to next line.
@@ -131,19 +131,14 @@ namespace Utils
     void print_styled( fmt::text_style const & ts, string_view const msg, integer const msg_level ) const
     {
       std::lock_guard lock_access( m_message_mutex );
-      if ( m_level >= 0 && msg_level <= m_level )
-      {
-        write_styled_unlocked( ts, msg );
-      }
+      if ( m_level >= 0 && msg_level <= m_level ) { write_styled_unlocked( ts, msg ); }
     }
 
-    template <typename... Args>
-    void print_styled(
-      fmt::text_style const &       ts,
-      integer const                 msg_level,
-      fmt::format_string<Args...>   fmt_msg,
-      Args &&...                    args
-    ) const
+    template <typename... Args> void print_styled(
+      fmt::text_style const &     ts,
+      integer const               msg_level,
+      fmt::format_string<Args...> fmt_msg,
+      Args &&... args ) const
     {
       std::lock_guard lock_access( m_message_mutex );
       if ( m_level >= 0 && msg_level <= m_level )
@@ -158,18 +153,11 @@ namespace Utils
     void print_always( fmt::text_style const & ts, string_view const msg ) const
     {
       std::lock_guard lock_access( m_message_mutex );
-      if ( m_level > -1 )
-      {
-        write_styled_unlocked( ts, msg );
-      }
+      if ( m_level > -1 ) { write_styled_unlocked( ts, msg ); }
     }
 
     template <typename... Args>
-    void print_always(
-      fmt::text_style const &       ts,
-      fmt::format_string<Args...>   fmt_msg,
-      Args &&...                    args
-    ) const
+    void print_always( fmt::text_style const & ts, fmt::format_string<Args...> fmt_msg, Args &&... args ) const
     {
       std::lock_guard lock_access( m_message_mutex );
       if ( m_level >= 0 )
@@ -187,9 +175,9 @@ namespace Utils
     // so copy/move are made explicitly unavailable instead of relying on the
     // implicit deletion caused by the mutex member.
     Console( Console const & )             = delete;  //!< Deleted copy constructor.
-    Console & operator=( Console const & ) = delete;   //!< Deleted copy assignment.
-    Console( Console && )                  = delete;   //!< Deleted move constructor.
-    Console & operator=( Console && )      = delete;   //!< Deleted move assignment.
+    Console & operator=( Console const & ) = delete;  //!< Deleted copy assignment.
+    Console( Console && )                  = delete;  //!< Deleted move constructor.
+    Console & operator=( Console && )      = delete;  //!< Deleted move assignment.
 
     //! Constructor with stream and level parameters.
     /*!
@@ -200,8 +188,7 @@ namespace Utils
      * \throws std::out_of_range if `level` is outside [-1,4].
      */
     explicit Console( ostream_type * stream = &std::cout, integer level = 4 )
-    : m_stream( validate_stream( stream ) )
-    , m_level( validate_level( level ) )
+      : m_stream( validate_stream( stream ) ), m_level( validate_level( level ) )
     {
       // Initialize default styles using fmt
       m_message_style = fmt::text_style();
@@ -243,7 +230,7 @@ namespace Utils
      */
     void change_stream( ostream_type * new_stream )
     {
-      ostream_type * checked_stream = validate_stream( new_stream );
+      ostream_type *  checked_stream = validate_stream( new_stream );
       std::lock_guard lock_access( m_message_mutex );
       m_stream = checked_stream;
     }
@@ -301,7 +288,8 @@ namespace Utils
      * \param msg_level The \ref console_level "level of the message" (default
      * is 4).
      */
-    void message( string_view const msg, integer const msg_level = 4 ) const { print_styled( m_message_style, msg, msg_level ); }
+    void message( string_view const msg, integer const msg_level = 4 ) const
+    { print_styled( m_message_style, msg, msg_level ); }
 
     //! Output a formatted message at a specified \ref console_level "level".
     /*!
@@ -311,9 +299,7 @@ namespace Utils
      */
     template <typename... Args>
     void message( integer const msg_level, fmt::format_string<Args...> fmt_msg, Args &&... args ) const
-    {
-      print_styled( m_message_style, msg_level, fmt_msg, std::forward<Args>( args )... );
-    }
+    { print_styled( m_message_style, msg_level, fmt_msg, std::forward<Args>( args )... ); }
 
     //! Output a semaphore message.
     /*!
@@ -336,7 +322,8 @@ namespace Utils
      * \param args      Arguments passed to `fmt::format`.
      */
     template <typename... Args>
-    void semaphore( integer const msg_level, integer const ryg, fmt::format_string<Args...> fmt_msg, Args &&... args ) const
+    void semaphore( integer const msg_level, integer const ryg, fmt::format_string<Args...> fmt_msg, Args &&... args )
+      const
     {
       static constexpr fmt::color ryg_color[3]{ fmt::color::red, fmt::color::yellow, fmt::color::green };
       print_styled( fmt::fg( ryg_color[ryg % 3] ), msg_level, fmt_msg, std::forward<Args>( args )... );
@@ -351,9 +338,11 @@ namespace Utils
      */
     void colors( integer const c, string_view const msg, integer const msg_level = 0 ) const
     {
-      static constexpr fmt::color rvg_color[5]{
-        fmt::color::red, fmt::color::magenta, fmt::color::yellow, fmt::color::cyan, fmt::color::green
-      };
+      static constexpr fmt::color rvg_color[5]{ fmt::color::red,
+                                                fmt::color::magenta,
+                                                fmt::color::yellow,
+                                                fmt::color::cyan,
+                                                fmt::color::green };
       print_styled( fmt::fg( rvg_color[c % 5] ), msg, msg_level );
     }
 
@@ -367,9 +356,11 @@ namespace Utils
     template <typename... Args>
     void colors( integer const msg_level, integer const c, fmt::format_string<Args...> fmt_msg, Args &&... args ) const
     {
-      static constexpr fmt::color rvg_color[5]{
-        fmt::color::red, fmt::color::magenta, fmt::color::yellow, fmt::color::cyan, fmt::color::green
-      };
+      static constexpr fmt::color rvg_color[5]{ fmt::color::red,
+                                                fmt::color::magenta,
+                                                fmt::color::yellow,
+                                                fmt::color::cyan,
+                                                fmt::color::green };
       print_styled( fmt::fg( rvg_color[c % 5] ), msg_level, fmt_msg, std::forward<Args>( args )... );
     }
 
@@ -384,11 +375,8 @@ namespace Utils
      * \param fmt_msg The fmt format string.
      * \param args    Arguments passed to `fmt::format`.
      */
-    template <typename... Args>
-    void warning( fmt::format_string<Args...> fmt_msg, Args &&... args ) const
-    {
-      print_styled( m_warning_style, 2, fmt_msg, std::forward<Args>( args )... );
-    }
+    template <typename... Args> void warning( fmt::format_string<Args...> fmt_msg, Args &&... args ) const
+    { print_styled( m_warning_style, 2, fmt_msg, std::forward<Args>( args )... ); }
 
     //! Output an error message. Printed whenever `m_level >= 1`.
     /*!
@@ -401,11 +389,8 @@ namespace Utils
      * \param fmt_msg The fmt format string.
      * \param args    Arguments passed to `fmt::format`.
      */
-    template <typename... Args>
-    void error( fmt::format_string<Args...> fmt_msg, Args &&... args ) const
-    {
-      print_styled( m_error_style, 1, fmt_msg, std::forward<Args>( args )... );
-    }
+    template <typename... Args> void error( fmt::format_string<Args...> fmt_msg, Args &&... args ) const
+    { print_styled( m_error_style, 1, fmt_msg, std::forward<Args>( args )... ); }
 
     //! Output a fatal message. Always printed, unless `m_level == -1`.
     /*!
@@ -418,11 +403,8 @@ namespace Utils
      * \param fmt_msg The fmt format string.
      * \param args    Arguments passed to `fmt::format`.
      */
-    template <typename... Args>
-    void fatal( fmt::format_string<Args...> fmt_msg, Args &&... args ) const
-    {
-      print_always( m_fatal_style, fmt_msg, std::forward<Args>( args )... );
-    }
+    template <typename... Args> void fatal( fmt::format_string<Args...> fmt_msg, Args &&... args ) const
+    { print_always( m_fatal_style, fmt_msg, std::forward<Args>( args )... ); }
 
     // ------------------------------------------------------------------
     // Named-color helpers.
@@ -435,194 +417,178 @@ namespace Utils
 
     //! Output a message in black color.
     void black( string_view const msg, integer const msg_level = 0 ) const
-    {
-      print_styled( fmt::fg( fmt::color::black ), msg, msg_level );
-    }
+    { print_styled( fmt::fg( fmt::color::black ), msg, msg_level ); }
     //! Output a formatted message in black color at a specified \ref console_level "level".
     template <typename... Args>
     void black( integer const msg_level, fmt::format_string<Args...> fmt_msg, Args &&... args ) const
-    {
-      print_styled( fmt::fg( fmt::color::black ), msg_level, fmt_msg, std::forward<Args>( args )... );
-    }
+    { print_styled( fmt::fg( fmt::color::black ), msg_level, fmt_msg, std::forward<Args>( args )... ); }
 
     //! Output a message in black reversed color.
     void black_reversed( string_view const msg, integer const msg_level = 0 ) const
-    {
-      print_styled( fmt::fg( fmt::color::black ) | fmt::emphasis::reverse, msg, msg_level );
-    }
+    { print_styled( fmt::fg( fmt::color::black ) | fmt::emphasis::reverse, msg, msg_level ); }
     //! Output a formatted message in black reversed color at a specified \ref console_level "level".
     template <typename... Args>
     void black_reversed( integer const msg_level, fmt::format_string<Args...> fmt_msg, Args &&... args ) const
     {
-      print_styled( fmt::fg( fmt::color::black ) | fmt::emphasis::reverse, msg_level, fmt_msg, std::forward<Args>( args )... );
+      print_styled(
+        fmt::fg( fmt::color::black ) | fmt::emphasis::reverse,
+        msg_level,
+        fmt_msg,
+        std::forward<Args>( args )... );
     }
 
     //! Output a message in red color.
     void red( string_view const msg, integer const msg_level = 0 ) const
-    {
-      print_styled( fmt::fg( fmt::color::red ), msg, msg_level );
-    }
+    { print_styled( fmt::fg( fmt::color::red ), msg, msg_level ); }
     //! Output a formatted message in red color at a specified \ref console_level "level".
     template <typename... Args>
     void red( integer const msg_level, fmt::format_string<Args...> fmt_msg, Args &&... args ) const
-    {
-      print_styled( fmt::fg( fmt::color::red ), msg_level, fmt_msg, std::forward<Args>( args )... );
-    }
+    { print_styled( fmt::fg( fmt::color::red ), msg_level, fmt_msg, std::forward<Args>( args )... ); }
 
     //! Output a message in red reversed color.
     void red_reversed( string_view const msg, integer const msg_level = 0 ) const
-    {
-      print_styled( fmt::fg( fmt::color::red ) | fmt::emphasis::reverse, msg, msg_level );
-    }
+    { print_styled( fmt::fg( fmt::color::red ) | fmt::emphasis::reverse, msg, msg_level ); }
     //! Output a formatted message in red reversed color at a specified \ref console_level "level".
     template <typename... Args>
     void red_reversed( integer const msg_level, fmt::format_string<Args...> fmt_msg, Args &&... args ) const
     {
-      print_styled( fmt::fg( fmt::color::red ) | fmt::emphasis::reverse, msg_level, fmt_msg, std::forward<Args>( args )... );
+      print_styled(
+        fmt::fg( fmt::color::red ) | fmt::emphasis::reverse,
+        msg_level,
+        fmt_msg,
+        std::forward<Args>( args )... );
     }
 
     //! Output a message in green color.
     void green( string_view const msg, integer const msg_level = 0 ) const
-    {
-      print_styled( fmt::fg( fmt::color::green ), msg, msg_level );
-    }
+    { print_styled( fmt::fg( fmt::color::green ), msg, msg_level ); }
     //! Output a formatted message in green color at a specified \ref console_level "level".
     template <typename... Args>
     void green( integer const msg_level, fmt::format_string<Args...> fmt_msg, Args &&... args ) const
-    {
-      print_styled( fmt::fg( fmt::color::green ), msg_level, fmt_msg, std::forward<Args>( args )... );
-    }
+    { print_styled( fmt::fg( fmt::color::green ), msg_level, fmt_msg, std::forward<Args>( args )... ); }
 
     //! Output a message in green reversed color.
     void green_reversed( string_view const msg, integer const msg_level = 0 ) const
-    {
-      print_styled( fmt::fg( fmt::color::green ) | fmt::emphasis::reverse, msg, msg_level );
-    }
+    { print_styled( fmt::fg( fmt::color::green ) | fmt::emphasis::reverse, msg, msg_level ); }
     //! Output a formatted message in green reversed color at a specified \ref console_level "level".
     template <typename... Args>
     void green_reversed( integer const msg_level, fmt::format_string<Args...> fmt_msg, Args &&... args ) const
     {
-      print_styled( fmt::fg( fmt::color::green ) | fmt::emphasis::reverse, msg_level, fmt_msg, std::forward<Args>( args )... );
+      print_styled(
+        fmt::fg( fmt::color::green ) | fmt::emphasis::reverse,
+        msg_level,
+        fmt_msg,
+        std::forward<Args>( args )... );
     }
 
     //! Output a message in yellow color.
     void yellow( string_view const msg, integer const msg_level = 0 ) const
-    {
-      print_styled( fmt::fg( fmt::color::yellow ), msg, msg_level );
-    }
+    { print_styled( fmt::fg( fmt::color::yellow ), msg, msg_level ); }
     //! Output a formatted message in yellow color at a specified \ref console_level "level".
     template <typename... Args>
     void yellow( integer const msg_level, fmt::format_string<Args...> fmt_msg, Args &&... args ) const
-    {
-      print_styled( fmt::fg( fmt::color::yellow ), msg_level, fmt_msg, std::forward<Args>( args )... );
-    }
+    { print_styled( fmt::fg( fmt::color::yellow ), msg_level, fmt_msg, std::forward<Args>( args )... ); }
 
     //! Output a message in yellow reversed color.
     void yellow_reversed( string_view const msg, integer const msg_level = 0 ) const
-    {
-      print_styled( fmt::fg( fmt::color::yellow ) | fmt::emphasis::reverse, msg, msg_level );
-    }
+    { print_styled( fmt::fg( fmt::color::yellow ) | fmt::emphasis::reverse, msg, msg_level ); }
     //! Output a formatted message in yellow reversed color at a specified \ref console_level "level".
     template <typename... Args>
     void yellow_reversed( integer const msg_level, fmt::format_string<Args...> fmt_msg, Args &&... args ) const
     {
-      print_styled( fmt::fg( fmt::color::yellow ) | fmt::emphasis::reverse, msg_level, fmt_msg, std::forward<Args>( args )... );
+      print_styled(
+        fmt::fg( fmt::color::yellow ) | fmt::emphasis::reverse,
+        msg_level,
+        fmt_msg,
+        std::forward<Args>( args )... );
     }
 
     //! Output a message in blue color.
     void blue( string_view const msg, integer const msg_level = 0 ) const
-    {
-      print_styled( fmt::fg( fmt::color::blue ), msg, msg_level );
-    }
+    { print_styled( fmt::fg( fmt::color::blue ), msg, msg_level ); }
     //! Output a formatted message in blue color at a specified \ref console_level "level".
     template <typename... Args>
     void blue( integer const msg_level, fmt::format_string<Args...> fmt_msg, Args &&... args ) const
-    {
-      print_styled( fmt::fg( fmt::color::blue ), msg_level, fmt_msg, std::forward<Args>( args )... );
-    }
+    { print_styled( fmt::fg( fmt::color::blue ), msg_level, fmt_msg, std::forward<Args>( args )... ); }
 
     //! Output a message in blue reversed color.
     void blue_reversed( string_view const msg, integer const msg_level = 0 ) const
-    {
-      print_styled( fmt::fg( fmt::color::blue ) | fmt::emphasis::reverse, msg, msg_level );
-    }
+    { print_styled( fmt::fg( fmt::color::blue ) | fmt::emphasis::reverse, msg, msg_level ); }
     //! Output a formatted message in blue reversed color at a specified \ref console_level "level".
     template <typename... Args>
     void blue_reversed( integer const msg_level, fmt::format_string<Args...> fmt_msg, Args &&... args ) const
     {
-      print_styled( fmt::fg( fmt::color::blue ) | fmt::emphasis::reverse, msg_level, fmt_msg, std::forward<Args>( args )... );
+      print_styled(
+        fmt::fg( fmt::color::blue ) | fmt::emphasis::reverse,
+        msg_level,
+        fmt_msg,
+        std::forward<Args>( args )... );
     }
 
     //! Output a message in magenta color.
     void magenta( string_view const msg, integer const msg_level = 0 ) const
-    {
-      print_styled( fmt::fg( fmt::color::magenta ), msg, msg_level );
-    }
+    { print_styled( fmt::fg( fmt::color::magenta ), msg, msg_level ); }
     //! Output a formatted message in magenta color at a specified \ref console_level "level".
     template <typename... Args>
     void magenta( integer const msg_level, fmt::format_string<Args...> fmt_msg, Args &&... args ) const
-    {
-      print_styled( fmt::fg( fmt::color::magenta ), msg_level, fmt_msg, std::forward<Args>( args )... );
-    }
+    { print_styled( fmt::fg( fmt::color::magenta ), msg_level, fmt_msg, std::forward<Args>( args )... ); }
 
     //! Output a message in magenta reversed color.
     void magenta_reversed( string_view const msg, integer const msg_level = 0 ) const
-    {
-      print_styled( fmt::fg( fmt::color::magenta ) | fmt::emphasis::reverse, msg, msg_level );
-    }
+    { print_styled( fmt::fg( fmt::color::magenta ) | fmt::emphasis::reverse, msg, msg_level ); }
     //! Output a formatted message in magenta reversed color at a specified \ref console_level "level".
     template <typename... Args>
     void magenta_reversed( integer const msg_level, fmt::format_string<Args...> fmt_msg, Args &&... args ) const
     {
-      print_styled( fmt::fg( fmt::color::magenta ) | fmt::emphasis::reverse, msg_level, fmt_msg, std::forward<Args>( args )... );
+      print_styled(
+        fmt::fg( fmt::color::magenta ) | fmt::emphasis::reverse,
+        msg_level,
+        fmt_msg,
+        std::forward<Args>( args )... );
     }
 
     //! Output a message in cyan color.
     void cyan( string_view const msg, integer const msg_level = 0 ) const
-    {
-      print_styled( fmt::fg( fmt::color::cyan ), msg, msg_level );
-    }
+    { print_styled( fmt::fg( fmt::color::cyan ), msg, msg_level ); }
     //! Output a formatted message in cyan color at a specified \ref console_level "level".
     template <typename... Args>
     void cyan( integer const msg_level, fmt::format_string<Args...> fmt_msg, Args &&... args ) const
-    {
-      print_styled( fmt::fg( fmt::color::cyan ), msg_level, fmt_msg, std::forward<Args>( args )... );
-    }
+    { print_styled( fmt::fg( fmt::color::cyan ), msg_level, fmt_msg, std::forward<Args>( args )... ); }
 
     //! Output a message in cyan reversed color.
     void cyan_reversed( string_view const msg, integer const msg_level = 0 ) const
-    {
-      print_styled( fmt::fg( fmt::color::cyan ) | fmt::emphasis::reverse, msg, msg_level );
-    }
+    { print_styled( fmt::fg( fmt::color::cyan ) | fmt::emphasis::reverse, msg, msg_level ); }
     //! Output a formatted message in cyan reversed color at a specified \ref console_level "level".
     template <typename... Args>
     void cyan_reversed( integer const msg_level, fmt::format_string<Args...> fmt_msg, Args &&... args ) const
     {
-      print_styled( fmt::fg( fmt::color::cyan ) | fmt::emphasis::reverse, msg_level, fmt_msg, std::forward<Args>( args )... );
+      print_styled(
+        fmt::fg( fmt::color::cyan ) | fmt::emphasis::reverse,
+        msg_level,
+        fmt_msg,
+        std::forward<Args>( args )... );
     }
 
     //! Output a message in gray color.
     void gray( string_view const msg, integer const msg_level = 0 ) const
-    {
-      print_styled( fmt::fg( fmt::color::gray ), msg, msg_level );
-    }
+    { print_styled( fmt::fg( fmt::color::gray ), msg, msg_level ); }
     //! Output a formatted message in gray color at a specified \ref console_level "level".
     template <typename... Args>
     void gray( integer const msg_level, fmt::format_string<Args...> fmt_msg, Args &&... args ) const
-    {
-      print_styled( fmt::fg( fmt::color::gray ), msg_level, fmt_msg, std::forward<Args>( args )... );
-    }
+    { print_styled( fmt::fg( fmt::color::gray ), msg_level, fmt_msg, std::forward<Args>( args )... ); }
 
     //! Output a message in gray reversed color.
     void gray_reversed( string_view const msg, integer const msg_level = 0 ) const
-    {
-      print_styled( fmt::fg( fmt::color::gray ) | fmt::emphasis::reverse, msg, msg_level );
-    }
+    { print_styled( fmt::fg( fmt::color::gray ) | fmt::emphasis::reverse, msg, msg_level ); }
     //! Output a formatted message in gray reversed color at a specified \ref console_level "level".
     template <typename... Args>
     void gray_reversed( integer const msg_level, fmt::format_string<Args...> fmt_msg, Args &&... args ) const
     {
-      print_styled( fmt::fg( fmt::color::gray ) | fmt::emphasis::reverse, msg_level, fmt_msg, std::forward<Args>( args )... );
+      print_styled(
+        fmt::fg( fmt::color::gray ) | fmt::emphasis::reverse,
+        msg_level,
+        fmt_msg,
+        std::forward<Args>( args )... );
     }
 
     // ------------------------------------------------------------------
@@ -700,10 +666,7 @@ namespace Utils
      * stripped by `print_styled`/`print_always` regardless of what the
      * terminal could actually display.
      */
-    void set_off()
-    {
-      this->set_color_enabled( false );
-    }
+    void set_off() { this->set_color_enabled( false ); }
 
     //! Disables coloring unconditionally.
     //! \deprecated use `set_off`
@@ -718,10 +681,7 @@ namespace Utils
      * later redirected to a file/pipe, ANSI codes will still be written to
      * it; use `set_off()` explicitly when writing to a non-terminal sink.
      */
-    void set_auto()
-    {
-      this->set_color_enabled( true );
-    }
+    void set_auto() { this->set_color_enabled( true ); }
 
     //! Restores coloring (the default state set by the constructor).
     //! \deprecated use `set_auto`

@@ -30,9 +30,7 @@ public:
         "  doi     = {10.1007/BF00939410}\n"
         "}\n",
         neq )
-  {
-    check_min_equations( n, 2 );
-  }
+  { check_min_equations( n, 2 ); }
 
   virtual void evaluate( Vector const & x, Vector & f ) const override
   {
@@ -51,13 +49,12 @@ public:
     for ( integer i = 1; i < n - 1; ++i )
     {
       J.insert( i, i - 1 ) = -8 * ( static_cast<real_type>( i ) + 1 );
-      J.insert( i, i )     = 32 * ( static_cast<real_type>( i ) + 1 ) * x( i ) + 2 * ( static_cast<real_type>( i ) + 2 );
+      J.insert( i, i ) = 32 * ( static_cast<real_type>( i ) + 1 ) * x( i ) + 2 * ( static_cast<real_type>( i ) + 2 );
       J.insert( i, i + 1 ) = -8 * ( static_cast<real_type>( i ) + 2 ) * x( i + 1 );
     }
     J.insert( n - 1, n - 2 ) = -8 * static_cast<real_type>( n ) * x( n - 1 );
-    J.insert( n - 1, n - 1 ) =
-      32 * static_cast<real_type>( n ) * x( n - 1 ) * x( n - 1 ) +
-      8 * static_cast<real_type>( n ) * ( 2 * x( n - 1 ) * x( n - 1 ) - x( n - 2 ) );
+    J.insert( n - 1, n - 1 ) = 32 * static_cast<real_type>( n ) * x( n - 1 ) * x( n - 1 ) +
+                               8 * static_cast<real_type>( n ) * ( 2 * x( n - 1 ) * x( n - 1 ) - x( n - 2 ) );
     J.makeCompressed();
   }
 

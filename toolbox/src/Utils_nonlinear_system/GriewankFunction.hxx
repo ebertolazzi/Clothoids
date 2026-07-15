@@ -29,9 +29,7 @@ public:
         "  doi     = {10.1007/BF00933356}\n"
         "}\n",
         n )
-  {
-    Utils::Assert( n >= 2 && n <= 20, "GriewankFunction(n={}) must be in range [2..20]", n );
-  }
+  { Utils::Check( n >= 2 && n <= 20, "GriewankFunction(n={}) must be in range [2..20]", n ); }
 
   real_type grad( Vector const & x, integer k ) const
   {
@@ -112,7 +110,7 @@ public:
 
   virtual void check_if_admissible( Vector const & x ) const override
   {
-    for ( integer i = 0; i < n; ++i ) Utils::Assert( std::abs( x( i ) ) < 1000, "Bad range" );
+    for ( integer i = 0; i < n; ++i ) Utils::Check( std::abs( x( i ) ) < 1000, "Bad range" );
   }
 
   virtual void bounding_box( Vector & L, Vector & U ) const override

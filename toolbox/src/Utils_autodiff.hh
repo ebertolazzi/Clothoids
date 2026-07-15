@@ -102,9 +102,7 @@ namespace fmt
   } FUN##Op;                                                                                                        \
   template <typename R, Requires<isExpr<R>> = true> [[nodiscard]] AUTODIFF_DEVICE_FUNC constexpr auto FUN( R && r ) \
     -> UnaryExpr<FUN##Op_tag, R>                                                                                    \
-  {                                                                                                                 \
-    return { r };                                                                                                   \
-  }                                                                                                                 \
+  { return { r }; }                                                                                                 \
   template <typename T, typename G>                                                                                 \
   AUTODIFF_DEVICE_FUNC constexpr void apply( Dual<T, G> & self, [[maybe_unused]] FUN##Op_tag )
 
@@ -143,9 +141,7 @@ namespace autodiff::detail
    * \return Corresponding Dual type with the same order as T
    */
   template <typename T> [[nodiscard]] constexpr auto to_dual( T const & x )
-  {
-    return GetDual_t<T>( x );
-  }
+  { return GetDual_t<T>( x ); }
 
   // ==========================================================================
   // OPTIMIZED: DualOrder using fold expressions (C++17)
@@ -156,12 +152,12 @@ namespace autodiff::detail
    *
    * \tparam Ts Parameter pack of types
    */
-  template <typename... Ts>
-  struct DualOrder
+  template <typename... Ts> struct DualOrder
   {
-    static constexpr size_t value = []() {
+    static constexpr size_t value = []()
+    {
       size_t max_order = 0;
-      ((max_order = (NumberTraits<Ts>::Order > max_order) ? NumberTraits<Ts>::Order : max_order), ...);
+      ( ( max_order = ( NumberTraits<Ts>::Order > max_order ) ? NumberTraits<Ts>::Order : max_order ), ... );
       return max_order;
     }();
   };
@@ -190,9 +186,7 @@ namespace autodiff::detail
    */
   template <typename R, Requires<isExpr<R>> = true> [[nodiscard]] AUTODIFF_DEVICE_FUNC constexpr auto cbrt( R && r )
     -> CbrtExpr<R>
-  {
-    return { r };
-  }
+  { return { r }; }
 
   /**
    * \brief Apply cube root operation to a Dual number.
@@ -249,9 +243,7 @@ namespace autodiff::detail
    */
   template <typename R, Requires<isExpr<R>> = true> [[nodiscard]] AUTODIFF_DEVICE_FUNC constexpr auto erfc( R && r )
     -> ErfcExpr<R>
-  {
-    return { r };
-  }
+  { return { r }; }
 
   /**
    * \brief Apply complementary error function to a Dual number.
@@ -319,9 +311,7 @@ namespace autodiff::detail
    */
   template <typename T>
   constexpr typename std::enable_if<std::is_floating_point<T>::value, T>::type round( T const & x )
-  {
-    return round( Real<0, T>{ x } )[0];
-  }
+  { return round( Real<0, T>{ x } )[0]; }
 
   /*
   //    __ _
@@ -367,9 +357,7 @@ namespace autodiff::detail
    */
   template <typename T>
   constexpr typename std::enable_if<std::is_floating_point<T>::value, T>::type floor( T const & x )
-  {
-    return floor( Real<0, T>{ x } )[0];
-  }
+  { return floor( Real<0, T>{ x } )[0]; }
 
   /*
   //            _ _
@@ -415,9 +403,7 @@ namespace autodiff::detail
    * \return Ceil value
    */
   template <typename T> constexpr typename std::enable_if<std::is_floating_point<T>::value, T>::type ceil( T const & x )
-  {
-    return ceil( Real<0, T>{ x } )[0];
-  }
+  { return ceil( Real<0, T>{ x } )[0]; }
 
   /*
   //   _             _
@@ -477,9 +463,7 @@ namespace autodiff::detail
    */
   template <typename T>
   constexpr typename std::enable_if<std::is_floating_point<T>::value, T>::type log1p( T const & x )
-  {
-    return log1p( Real<0, T>{ x } )[0];
-  }
+  { return log1p( Real<0, T>{ x } )[0]; }
 
   /*
   //         _              _
@@ -537,14 +521,10 @@ namespace autodiff::detail
 
   /// \brief Compute x²
   template <typename T> inline auto power2( T const & a )
-  {
-    return a * a;
-  }
+  { return a * a; }
   /// \brief Compute x³
   template <typename T> inline auto power3( T const & a )
-  {
-    return a * a * a;
-  }
+  { return a * a * a; }
   /// \brief Compute x⁴
   template <typename T> inline auto power4( T const & a )
   {
@@ -579,14 +559,10 @@ namespace autodiff::detail
 
   /// \brief Compute 1/x²
   template <typename T> inline auto rpower2( T const & a )
-  {
-    return 1 / ( a * a );
-  }
+  { return 1 / ( a * a ); }
   /// \brief Compute 1/x³
   template <typename T> inline auto rpower3( T const & a )
-  {
-    return 1 / ( a * a * a );
-  }
+  { return 1 / ( a * a * a ); }
   /// \brief Compute 1/x⁴
   template <typename T> inline auto rpower4( T const & a )
   {
@@ -1513,7 +1489,7 @@ namespace Utils
  * \param PREFIX Function name prefix
  * \param CONST Const qualifier
  */
-#define UTILS_AUTODIFF_FUN_1_VARS_DECL( PREFIX, CONST )                       \
+#define UTILS_AUTODIFF_FUN_1_VARS_DECL( PREFIX, CONST )                     \
   UTILS_AUTODIFF_DECLARE_DERIV( PREFIX, D, UTILS_AUTODIFF_PARAMS_1, CONST ) \
   UTILS_AUTODIFF_DECLARE_DERIV( PREFIX, DD, UTILS_AUTODIFF_PARAMS_1, CONST )
 

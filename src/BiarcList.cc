@@ -48,7 +48,7 @@ namespace G2lib
     GenericContainer::vec_real_type const & x = gc.get_map_vec_real( "x", where );
     GenericContainer::vec_real_type const & y = gc.get_map_vec_real( "y", where );
     integer const                           n{ static_cast<integer>( x.size() ) };
-    UTILS_ASSERT(
+    Utils::Check(
       n == static_cast<integer>( y.size() ),
       "BiarcList[{}]::setup( gc ) (size(x)={}) != (size(y)={})\n",
       this->name(),
@@ -58,7 +58,7 @@ namespace G2lib
     if ( gc.exists( "theta" ) )
     {
       GenericContainer::vec_real_type const & theta = gc.get_map_vec_real( "theta", where );
-      UTILS_ASSERT(
+      Utils::Check(
         n == static_cast<integer>( theta.size() ),
         "BiarcList[{}]::setup( gc ) (size(x)={}) != (size(θ)={})\n",
         this->name(),
@@ -70,7 +70,7 @@ namespace G2lib
     {
       ok = this->build_G1( n, x.data(), y.data() );
     }
-    UTILS_ASSERT( ok, "BiarcList[{}]::setup( gc ) failed\n", this->name() );
+    Utils::Check( ok, "BiarcList[{}]::setup( gc ) failed\n", this->name() );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -104,23 +104,23 @@ namespace G2lib
 
   void BiarcList::build( ClothoidCurve const & )
   {
-    UTILS_ERROR( "cannot convert from ClothoidCurve to BiarcList\n" );
+    Utils::Error( "cannot convert from ClothoidCurve to BiarcList\n" );
   }
   void BiarcList::build( PolyLine const & )
   {
-    UTILS_ERROR( "cannot convert from PolyLine to BiarcList\n" );
+    Utils::Error( "cannot convert from PolyLine to BiarcList\n" );
   }
   void BiarcList::build( ClothoidList const & )
   {
-    UTILS_ERROR( "cannot convert from ClothoidList to BiarcList\n" );
+    Utils::Error( "cannot convert from ClothoidList to BiarcList\n" );
   }
   void BiarcList::build( Dubins const & )
   {
-    UTILS_ERROR( "cannot convert from Dubins to BiarcList\n" );
+    Utils::Error( "cannot convert from Dubins to BiarcList\n" );
   }
   void BiarcList::build( Dubins3p const & )
   {
-    UTILS_ERROR( "cannot convert from Dubins3p to BiarcList\n" );
+    Utils::Error( "cannot convert from Dubins3p to BiarcList\n" );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -180,7 +180,7 @@ namespace G2lib
         G2LIB_DEBUG_MESSAGE( "to -> BiarcList\n" );
         this->copy( *dynamic_cast<BiarcList const *>( pC ) );
         break;
-      default: UTILS_ERROR( "BiarcList constructor cannot convert from: {}\n", pC->type_name() );
+      default: Utils::Error( "BiarcList constructor cannot convert from: {}\n", pC->type_name() );
     }
   }
 
@@ -313,7 +313,7 @@ namespace G2lib
 
   void BiarcList::push_back_G1( real_type const x1, real_type const y1, real_type const theta1 )
   {
-    UTILS_ASSERT0( !m_biarc_list.empty(), "BiarcList::push_back_G1(...) empty list!\n" );
+    Utils::Check( !m_biarc_list.empty(), "BiarcList::push_back_G1(...) empty list!\n" );
     Biarc           c{ "BiarcList::push_back_G1 temporary c" };
     real_type const x0{ m_biarc_list.back().x_end() };
     real_type const y0{ m_biarc_list.back().y_end() };
@@ -341,7 +341,7 @@ namespace G2lib
 
   bool BiarcList::build_G1( integer const n, real_type const x[], real_type const y[], real_type const theta[] )
   {
-    UTILS_ASSERT0( n > 1, "BiarcList::build_G1, at least 2 points are necessary\n" );
+    Utils::Check( n > 1, "BiarcList::build_G1, at least 2 points are necessary\n" );
     init();
     reserve( n - 1 );
     Biarc c{ "BiarcList::build_G1 temporary c" };
@@ -373,19 +373,20 @@ namespace G2lib
 
   Biarc const & BiarcList::get( integer const idx ) const
   {
-    UTILS_ASSERT( !m_biarc_list.empty(), "BiarcList::get( {} ) empty list\n", idx );
+    Utils::Check( !m_biarc_list.empty(), "BiarcList::get( {} ) empty list\n", idx );
     try
     {
       return m_biarc_list.at( idx );
     }
     catch ( std::exception & exc )
     {
-      UTILS_ERROR( "BiarcList::get( {} ): {}\n", idx, exc.what() );
+      Utils::Error( "BiarcList::get( {} ): {}\n", idx, exc.what() );
     }
     catch ( ... )
     {
-      UTILS_ERROR( "BiarcList::get( {} ): unknown error\n", idx );
+      Utils::Error( "BiarcList::get( {} ): unknown error\n", idx );
     }
+    return m_biarc_list.front(); // to stop warning
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -999,7 +1000,7 @@ namespace G2lib
 
   void BiarcList::trim( real_type s_begin, real_type s_end )
   {
-    UTILS_ASSERT(
+    Utils::Check(
       s_begin >= m_s0.front() && s_end <= m_s0.back() && s_end > s_begin,
       "BiarcList::trim( s_begin={}, s_end={} ) bad range, must be in [ {}, {} ]\n",
       s_begin,
@@ -1121,7 +1122,7 @@ namespace G2lib
     for ( const auto & [fst, snd] : intersectList )
     {
       integer i{ fst };
-      UTILS_ASSERT_DEBUG(
+      Utils::Debug(
         i >= 0 && i < static_cast<integer>( m_aabb_triangles.size() ),
         "BiarcList::collision_ISO( offs={}, BL, offs_BL={} ) i={} out of range [0,{})\n",
         offs,
@@ -1132,7 +1133,7 @@ namespace G2lib
       Biarc const &      BA1{ m_biarc_list.at( T1.Icurve() ) };
       for ( auto const & j : snd )
       {
-        UTILS_ASSERT_DEBUG(
+        Utils::Debug(
           j >= 0 && j < static_cast<integer>( BL.m_aabb_triangles.size() ),
           "BiarcList::collision_ISO( offs={}, BL, offs_BL={} ) j={} out of range [0,{})\n",
           offs,
@@ -1171,7 +1172,7 @@ namespace G2lib
       for ( const auto & [fst, snd] : intersectList )
       {
         integer i{ fst };
-        UTILS_ASSERT_DEBUG(
+        Utils::Debug(
           i >= 0 && i < static_cast<integer>( m_aabb_triangles.size() ),
           "BiarcList::intersect_ISO( offs={}, BL, offs_BL={}, ilist ) i={} out of range [0,{})\n",
           offs,
@@ -1183,7 +1184,7 @@ namespace G2lib
 
         for ( integer j : snd )
         {
-          UTILS_ASSERT_DEBUG(
+          Utils::Debug(
             j >= 0 && j < static_cast<integer>( BL.m_aabb_triangles.size() ),
             "BiarcList::intersect_ISO( offs={}, BL, offs_BL={}, ilist ) j={} out of range [0,{})\n",
             offs,
@@ -1307,7 +1308,7 @@ namespace G2lib
       AABB_SET        candidateList;
       real_type const xy[2]{ qx, qy };
       m_aabb_tree.min_distance_candidates( xy, candidateList );
-      UTILS_ASSERT0( !candidateList.empty(), "BiarcList::closest_point_internal no candidate\n" );
+      Utils::Check( !candidateList.empty(), "BiarcList::closest_point_internal no candidate\n" );
       for ( integer const ipos : candidateList )
       {
         Triangle2D const & T{ m_aabb_triangles.at( ipos ) };
@@ -1441,7 +1442,7 @@ namespace G2lib
 
   integer BiarcList::findST1( real_type const x, real_type const y, real_type & s, real_type & t ) const
   {
-    UTILS_ASSERT0( !m_biarc_list.empty(), "BiarcList::findST, empty list\n" );
+    Utils::Check( !m_biarc_list.empty(), "BiarcList::findST, empty list\n" );
     auto ic{ m_biarc_list.begin() };
     auto is{ m_s0.begin() };
 
@@ -1483,8 +1484,8 @@ namespace G2lib
     real_type &     s,
     real_type &     t ) const
   {
-    UTILS_ASSERT0( !m_biarc_list.empty(), "BiarcList::findST, empty list\n" );
-    UTILS_ASSERT(
+    Utils::Check( !m_biarc_list.empty(), "BiarcList::findST, empty list\n" );
+    Utils::Check(
       ibegin >= 0 && ibegin <= iend && iend < static_cast<integer>( m_biarc_list.size() ),
       "BiarcList::findST( ibegin={}, iend={}, x, y, s, t )\n"
       "bad range not in [0,{}]\n",

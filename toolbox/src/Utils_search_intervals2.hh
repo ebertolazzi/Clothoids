@@ -145,9 +145,7 @@ namespace Utils
      * @note Inlined for zero function call overhead
      */
     inline real_type eps_x( real_type x ) const noexcept
-    {
-      return m_epsilon * std::max( real_type( 1 ), std::abs( x ) );
-    }
+    { return m_epsilon * std::max( real_type( 1 ), std::abs( x ) ); }
 
 #ifndef NDEBUG
     /**
@@ -321,7 +319,7 @@ namespace Utils
       real_type const * X = *p_X;
 
       // Validate minimum requirements
-      Utils::Assert( n >= 2, "SearchInterval::reset({}), need at least 2 points!", *p_name );
+      Utils::Check( n >= 2, "SearchInterval::reset({}), need at least 2 points!", *p_name );
 
       // Adaptive table sizing: balance between memory usage and search speed
       m_table_size = std::clamp<integer>( static_cast<integer>( std::log( n ) * std::sqrt( n ) ), 128, 2048 );
@@ -334,7 +332,7 @@ namespace Utils
 #ifndef NDEBUG
       for ( integer i = 1; i < n; ++i )
       {
-        Utils::Assert(
+        Utils::Check(
           X[i - 1] <= X[i],
           "SearchInterval::reset({}), X array not sorted at index {}: {} > {}",
           *p_name,
@@ -352,7 +350,7 @@ namespace Utils
       // Protection against degenerate or nearly-degenerate cases
       // If all points are essentially at the same location, use a minimal range
       real_type eps = eps_x( std::max( std::abs( m_x_min ), std::abs( m_x_max ) ) );
-      Utils::Assert(
+      Utils::Check(
         m_x_range > eps,
         "SearchInterval::reset({}), degenerate range [{:.4g},{:.4g}]",
         *p_name,
@@ -449,7 +447,7 @@ namespace Utils
 #ifndef NDEBUG
       if ( !validate_tables( n ) )
       {
-        Utils::Assert( false, "SearchInterval::reset({}), table validation failed!", *p_name );
+        Utils::Check( false, "SearchInterval::reset({}), table validation failed!", *p_name );
       }
 #endif
 
@@ -555,7 +553,7 @@ namespace Utils
       // Local references for cleaner code
       integer const n = *p_npts;
 
-      Utils::Assert( n > 0, "SearchInterval::find({}), n°points == 0!", *p_name );
+      Utils::Check( n > 0, "SearchInterval::find({}), n°points == 0!", *p_name );
 
       integer &   pos = res.first;   // Output: interval index
       real_type & x   = res.second;  // Input/Output: query point (may be wrapped)

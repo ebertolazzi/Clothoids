@@ -1050,8 +1050,7 @@ namespace Utils
 
         switch ( m_fallback_strategy )
         {
-          case NO_FALLBACK:
-            return false;
+          case NO_FALLBACK: return false;
 
           case INCREASE_BLOCK:
             block_size = std::min( block_size * 2, n );

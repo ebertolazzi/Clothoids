@@ -273,7 +273,7 @@ namespace Utils
      */
     void set_max_iterations( Integer mit )
     {
-      Utils::Assert( mit > 0, "AlgoHNewton::set_max_iterations({}) argument must be >0\n", mit );
+      Utils::Check( mit > 0, "AlgoHNewton::set_max_iterations({}) argument must be >0\n", mit );
       m_max_iteration = mit;
     }
 
@@ -514,7 +514,7 @@ namespace Utils
     Real P2{ P1 + D012 * O2 };  // Quadratic term
 
     // Safety check
-    Utils::Assert(
+    Utils::Check(
       is_finite( P2 ),
       "AlgoHNewton::invp_zero2(): computed NaN or Inf\n"
       "a={} f(a)={}\n"

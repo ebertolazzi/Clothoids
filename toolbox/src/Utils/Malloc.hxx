@@ -110,11 +110,11 @@ namespace Utils
     using valueType = T;
 
   private:
-    string      m_name;                         //!< Name identifier for the allocated memory.
-    size_t      m_num_total_values   = 0;       //!< Total number of objects allocated.
-    size_t      m_num_total_reserved = 0;       //!< Total reserved space.
-    size_t      m_num_allocated      = 0;       //!< Number of currently allocated objects.
-    valueType * m_p_memory           = nullptr; //!< Pointer to the allocated memory.
+    string      m_name;                          //!< Name identifier for the allocated memory.
+    size_t      m_num_total_values   = 0;        //!< Total number of objects allocated.
+    size_t      m_num_total_reserved = 0;        //!< Total reserved space.
+    size_t      m_num_allocated      = 0;        //!< Number of currently allocated objects.
+    valueType * m_p_memory           = nullptr;  //!< Pointer to the allocated memory.
 
     //! Internal method to allocate memory for a specified number of objects.
     void allocate_internal( size_t n )
@@ -202,7 +202,10 @@ namespace Utils
     {
       if ( m_num_allocated != 0 )
       {
-        std::cerr << std::format( "Malloc[{}]::allocate( {} ), try to allocate already allocated memory!\n", m_name, n );
+        std::cerr << std::format(
+          "Malloc[{}]::allocate( {} ), try to allocate already allocated memory!\n",
+          m_name,
+          n );
         exit( 0 );
       }
       if ( n > m_num_total_reserved ) allocate_internal( n );
@@ -418,9 +421,9 @@ namespace Utils
     using valueType = T;
 
   private:
-    string    m_name;                //!< Name identifier for the allocated memory.
+    string    m_name;               //!< Name identifier for the allocated memory.
     size_t    m_num_allocated = 0;  //!< Number of currently allocated objects.
-    valueType m_data[mem_size];      //!< Array to store objects of type `T`.
+    valueType m_data[mem_size];     //!< Array to store objects of type `T`.
 
     //! Handle memory exhaustion errors for fixed allocator.
     void memory_exausted( size_t sz )

@@ -82,7 +82,7 @@ namespace G2lib
     : BaseCurve( name )
   {
     bool const ok{ this->build( x0, y0, theta0, x1, y1, theta1, k_max ) };
-    UTILS_ASSERT(
+    Utils::Check(
       ok,
       "Dubins::Dubins(\n"
       "  x0     = {},\n"
@@ -117,42 +117,42 @@ namespace G2lib
     real_type const theta1{ gc.get_map_number( "theta1", where ) };
     real_type const kmax{ gc.get_map_number( "kmax", where ) };
     bool const      ok{ this->build( x0, y0, theta0, x1, y1, theta1, kmax ) };
-    UTILS_ASSERT( ok, "Dubins[{}]::setup( gc ) failed\n", this->name() );
+    Utils::Check( ok, "Dubins[{}]::setup( gc ) failed\n", this->name() );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   void Dubins::build( LineSegment const & )
   {
-    UTILS_ERROR( "cannot convert from LineSegment to Dubins\n" );
+    Utils::Error( "cannot convert from LineSegment to Dubins\n" );
   }
   void Dubins::build( CircleArc const & )
   {
-    UTILS_ERROR( "cannot convert from CircleArc to Dubins\n" );
+    Utils::Error( "cannot convert from CircleArc to Dubins\n" );
   }
   void Dubins::build( Biarc const & )
   {
-    UTILS_ERROR( "cannot convert from Biarc to Dubins\n" );
+    Utils::Error( "cannot convert from Biarc to Dubins\n" );
   }
   void Dubins::build( ClothoidCurve const & )
   {
-    UTILS_ERROR( "cannot convert from ClothoidCurve to Dubins\n" );
+    Utils::Error( "cannot convert from ClothoidCurve to Dubins\n" );
   }
   void Dubins::build( PolyLine const & )
   {
-    UTILS_ERROR( "cannot convert from PolyLine to Dubins\n" );
+    Utils::Error( "cannot convert from PolyLine to Dubins\n" );
   }
   void Dubins::build( BiarcList const & )
   {
-    UTILS_ERROR( "cannot convert from BiarcList to Dubins\n" );
+    Utils::Error( "cannot convert from BiarcList to Dubins\n" );
   }
   void Dubins::build( ClothoidList const & )
   {
-    UTILS_ERROR( "cannot convert from ClothoidList to Dubins\n" );
+    Utils::Error( "cannot convert from ClothoidList to Dubins\n" );
   }
   void Dubins::build( Dubins3p const & )
   {
-    UTILS_ERROR( "cannot convert from Dubins3p to Dubins\n" );
+    Utils::Error( "cannot convert from Dubins3p to Dubins\n" );
   }
 
   void Dubins::build( Dubins const & DB )
@@ -652,7 +652,7 @@ namespace G2lib
 
   void Dubins::trim( real_type, real_type )
   {
-    UTILS_ERROR0( "Dubins::trim not defined, convert to ClothoidList to trim the curve!" );
+    Utils::Error( "Dubins::trim not defined, convert to ClothoidList to trim the curve!" );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

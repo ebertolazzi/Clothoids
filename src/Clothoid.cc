@@ -69,7 +69,7 @@ namespace G2lib
     real_type const y1{ gc.get_map_number( "y1", where ) };
     real_type const theta1{ gc.get_map_number( "theta1", where ) };
     bool const      ok = this->build_G1( x0, y0, theta0, x1, y1, theta1 );
-    UTILS_ASSERT( ok, "ClothoidCurve[{}]::setup( gc ) failed\n", this->name() );
+    Utils::Check( ok, "ClothoidCurve[{}]::setup( gc ) failed\n", this->name() );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -166,34 +166,34 @@ namespace G2lib
 
   void ClothoidCurve::build( Biarc const & )
   {
-    UTILS_ERROR( "cannot convert from Biarc to ClothoidCurve\n" );
+    Utils::Error( "cannot convert from Biarc to ClothoidCurve\n" );
   }
   void ClothoidCurve::build( PolyLine const & )
   {
-    UTILS_ERROR( "cannot convert from PolyLine to ClothoidCurve\n" );
+    Utils::Error( "cannot convert from PolyLine to ClothoidCurve\n" );
   }
   void ClothoidCurve::build( BiarcList const & )
   {
-    UTILS_ERROR( "cannot convert from BiarcList to ClothoidCurve\n" );
+    Utils::Error( "cannot convert from BiarcList to ClothoidCurve\n" );
   }
   void ClothoidCurve::build( ClothoidList const & )
   {
-    UTILS_ERROR( "cannot convert from ClothoidList to ClothoidCurve\n" );
+    Utils::Error( "cannot convert from ClothoidList to ClothoidCurve\n" );
   }
   void ClothoidCurve::build( Dubins const & )
   {
-    UTILS_ERROR( "cannot convert from Dubins to ClothoidCurve\n" );
+    Utils::Error( "cannot convert from Dubins to ClothoidCurve\n" );
   }
   void ClothoidCurve::build( Dubins3p const & )
   {
-    UTILS_ERROR( "cannot convert from Dubins3p to ClothoidCurve\n" );
+    Utils::Error( "cannot convert from Dubins3p to ClothoidCurve\n" );
   }
 
   // . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 
   void ClothoidCurve::build( real_type x0, real_type y0, real_type theta0, real_type k, real_type dk, real_type L )
   {
-    UTILS_ASSERT(
+    Utils::Check(
       L > 0,
       "ClothoidCurve::build( x₀={}, y₀={}, θ₀={}, k={}, Δk={}, L={} )\n"
       "L must be positive!\n",
@@ -331,7 +331,7 @@ namespace G2lib
         G2LIB_DEBUG_MESSAGE( "ClothoidCurve -> ClothoidCurve\n" );
         this->copy( *dynamic_cast<ClothoidCurve const *>( pC ) );
         break;
-      default: UTILS_ERROR( "ClothoidList constructor cannot convert from: {}\n", pC->type_name() );
+      default: Utils::Error( "ClothoidList constructor cannot convert from: {}\n", pC->type_name() );
     }
   }
 
@@ -376,7 +376,7 @@ namespace G2lib
     real_type thh = theta( s_begin );
     for ( integer npts = 0; ss < s_end; ++npts )
     {
-      UTILS_ASSERT0(
+      Utils::Check(
         npts < 100000000,
         "ClothoidCurve::optimized_sample_internal "
         "is generating too much points (>100000000)\n"
@@ -465,7 +465,7 @@ namespace G2lib
     real_type const MX  = min( m_L, max_size );
     for ( integer npts = 0; ss < s_end; ++npts )
     {
-      UTILS_ASSERT0(
+      Utils::Check(
         npts < 100000000,
         "ClothoidCurve::bb_triangles_internal "
         "is generating too much triangles (>100000000)\n"
@@ -668,7 +668,7 @@ namespace G2lib
     for ( const auto & [fst, snd] : intersectList )
     {
       integer i{ fst };
-      UTILS_ASSERT_DEBUG(
+      Utils::Debug(
         i >= 0 && i < static_cast<integer>( m_aabb_triangles.size() ),
         "ClothoidCurve::collision_ISO( offs={}, C, offs_C={} ) i={} out of range [0,{})\n",
         offs,
@@ -678,7 +678,7 @@ namespace G2lib
       Triangle2D const & T1 = m_aabb_triangles.at( i );
       for ( integer j : snd )
       {
-        UTILS_ASSERT_DEBUG(
+        Utils::Debug(
           j >= 0 && j < static_cast<integer>( C.m_aabb_triangles.size() ),
           "ClothoidCurve::collision_ISO( offs={}, C, offs_C={} ) j={} out of range [0,{})\n",
           offs,
@@ -726,7 +726,7 @@ namespace G2lib
     for ( const auto & [fst, snd] : intersectList )
     {
       integer i{ fst };
-      UTILS_ASSERT_DEBUG(
+      Utils::Debug(
         i >= 0 && i < static_cast<integer>( m_aabb_triangles.size() ),
         "ClothoidCurve::collision_ISO( offs={}, C, offs_C={} ) i={} out of range [0,{})\n",
         offs,
@@ -736,7 +736,7 @@ namespace G2lib
       Triangle2D const & T1 = m_aabb_triangles.at( i );
       for ( integer j : snd )
       {
-        UTILS_ASSERT_DEBUG(
+        Utils::Debug(
           j >= 0 && j < static_cast<integer>( C.m_aabb_triangles.size() ),
           "ClothoidCurve::collision_ISO( offs={}, C, offs_C={} ) j={} out of range [0,{})\n",
           offs,
@@ -930,7 +930,7 @@ namespace G2lib
       for ( const auto & [fst, snd] : intersectList )
       {
         integer i = fst;
-        UTILS_ASSERT_DEBUG(
+        Utils::Debug(
           i >= 0 && i < static_cast<integer>( m_aabb_triangles.size() ),
           "ClothoidCurve::intersect_ISO( offs={}, C, offs_C={}, ilist ) i={} out of range [0,{})\n",
           offs,
@@ -940,7 +940,7 @@ namespace G2lib
         Triangle2D const & T1 = m_aabb_triangles.at( i );
         for ( integer j : snd )
         {
-          UTILS_ASSERT_DEBUG(
+          Utils::Debug(
             j >= 0 && j < static_cast<integer>( C.m_aabb_triangles.size() ),
             "ClothoidCurve::intersect_ISO( offs={}, C, offs_C={}, ilist ) j={} out of range [0,{})\n",
             offs,
@@ -1128,12 +1128,12 @@ namespace G2lib
         tictoc.elapsed_ms(),
         candidateList.size() );
 
-      UTILS_ASSERT0( !candidateList.empty(), "ClothoidCurve::closest_point_internal no candidate\n" );
+      Utils::Check( !candidateList.empty(), "ClothoidCurve::closest_point_internal no candidate\n" );
 
       G2LIB_DEBUG_TIC;
       for ( integer ipos : candidateList )
       {
-        UTILS_ASSERT_DEBUG(
+        Utils::Debug(
           ipos >= 0 && ipos < static_cast<integer>( m_aabb_triangles.size() ),
           "ClothoidCurve::closest_point_internal( qx={}, qy={}, offs={}, x, y, s, DST ) ipos={} out of range [0,{})\n",
           qx,

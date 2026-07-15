@@ -28,7 +28,7 @@ int main()
     string   fname = "circuit-Fiorano_GoogleEarth_edges_no_kerbs_rebuilt.txt";
     ifstream file( fname.c_str() );
 
-    UTILS_ASSERT( file.good(), "Cant find file: {}\n", fname );
+    Utils::Check( file.good(), "Cant find file: {}\n", fname );
 
     bool skipped_header = false;
 

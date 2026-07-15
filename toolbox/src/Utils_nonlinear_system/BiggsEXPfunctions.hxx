@@ -74,9 +74,7 @@ public:
   }
 
   void map( Vector const & x, Vector & eq ) const
-  {
-    eq = exp( -x( 0 ) * z.array() ) - 5 * exp( -x( 1 ) * z.array() ) - y.array();
-  }
+  { eq = exp( -x( 0 ) * z.array() ) - 5 * exp( -x( 1 ) * z.array() ) - y.array(); }
 
   void Grad_map( Vector const & x, integer k, Vector & G ) const
   {
@@ -165,9 +163,7 @@ public:
   }
 
   void map( Vector const & x, Vector & eq ) const
-  {
-    eq = exp( -x( 0 ) * z.array() ) - x( 2 ) * exp( -x( 1 ) * z.array() ) - y.array();
-  }
+  { eq = exp( -x( 0 ) * z.array() ) - x( 2 ) * exp( -x( 1 ) * z.array() ) - y.array(); }
 
   void Grad_map( Vector const & x, integer k, Vector & G ) const
   {
@@ -265,9 +261,7 @@ public:
   }
 
   void map( Vector const & x, Vector & eq ) const
-  {
-    eq = x( 2 ) * exp( -x( 0 ) * z.array() ) - x( 3 ) * exp( -x( 1 ) * z.array() ) - y.array();
-  }
+  { eq = x( 2 ) * exp( -x( 0 ) * z.array() ) - x( 3 ) * exp( -x( 1 ) * z.array() ) - y.array(); }
 
   void Grad_map( Vector const & x, integer k, Vector & G ) const
   {
@@ -556,7 +550,7 @@ public:
 
   virtual void check_if_admissible( Vector const & x ) const override
   {
-    Utils::Assert(
+    Utils::Check(
       x( 0 ) > xmin && x( 0 ) < xmax && x( 1 ) > xmin && x( 1 ) < xmax && x( 2 ) > xmin && x( 2 ) < xmax &&
         x( 3 ) > xmin && x( 3 ) < xmax && x( 4 ) > xmin && x( 4 ) < xmax && x( 5 ) > xmin && x( 5 ) < xmax,
       "Bad Range" );

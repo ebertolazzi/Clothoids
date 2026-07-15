@@ -34,9 +34,7 @@ class TrigonometricExponentialSystem1 : public NonlinearSystem
 public:
   TrigonometricExponentialSystem1( integer neq )
     : NonlinearSystem( "Trigonometric Exponential System prob 1", TRIGONOMETRIC_EXPONENTIAL_BIBTEX, neq )
-  {
-    check_even( n, 2 );
-  }
+  { check_even( n, 2 ); }
 
   virtual void evaluate( Vector const & x, Vector & f ) const override
   {
@@ -72,7 +70,7 @@ public:
 
   virtual void check_if_admissible( Vector const & x ) const override
   {
-    for ( integer i = 0; i < n; ++i ) Utils::Assert( std::abs( x( i ) ) < 100, "Bad range" );
+    for ( integer i = 0; i < n; ++i ) Utils::Check( std::abs( x( i ) ) < 100, "Bad range" );
   }
 
   virtual void bounding_box( Vector & L, Vector & U ) const override
@@ -91,9 +89,7 @@ class TrigonometricExponentialSystem2 : public NonlinearSystem
 public:
   TrigonometricExponentialSystem2( integer neq )
     : NonlinearSystem( "Trigonometric Exponential System prob 2", TRIGONOMETRIC_EXPONENTIAL_BIBTEX, neq )
-  {
-    check_odd( n, 6 );
-  }
+  { check_odd( n, 6 ); }
 
   virtual void evaluate( Vector const & x, Vector & f ) const override
   {
@@ -156,7 +152,7 @@ public:
 
   virtual void check_if_admissible( Vector const & x ) const override
   {
-    for ( integer i = 0; i < n; ++i ) Utils::Assert( std::abs( x( i ) ) < 100, "Bad range" );
+    for ( integer i = 0; i < n; ++i ) Utils::Check( std::abs( x( i ) ) < 100, "Bad range" );
   }
 
   virtual void bounding_box( Vector & L, Vector & U ) const override
@@ -190,9 +186,7 @@ public:
         "  doi     = {10.1137/0913025},\n"
         "}\n",
         neq )
-  {
-    check_min_equations( n, 3 );
-  }
+  { check_min_equations( n, 3 ); }
 
   virtual void evaluate( Vector const & x, Vector & f ) const override
   {
@@ -208,18 +202,18 @@ public:
     J.resize( n, n );
     J.setZero();
 
-    J.insert( 0, 0 ) = 6 * x( 0 ) + cos( x( 0 ) - x( 1 ) ) * sin( x( 0 ) + x( 1 ) ) +
-                       sin( x( 0 ) - x( 1 ) ) * cos( x( 0 ) + x( 1 ) );
-    J.insert( 0, 1 ) = 2 - cos( x( 0 ) - x( 1 ) ) * sin( x( 0 ) + x( 1 ) ) +
-                       sin( x( 0 ) - x( 1 ) ) * cos( x( 0 ) + x( 1 ) );
+    J.insert( 0, 0 )         = 6 * x( 0 ) + cos( x( 0 ) - x( 1 ) ) * sin( x( 0 ) + x( 1 ) ) +
+                               sin( x( 0 ) - x( 1 ) ) * cos( x( 0 ) + x( 1 ) );
+    J.insert( 0, 1 )         = 2 - cos( x( 0 ) - x( 1 ) ) * sin( x( 0 ) + x( 1 ) ) +
+                               sin( x( 0 ) - x( 1 ) ) * cos( x( 0 ) + x( 1 ) );
     J.insert( n - 1, n - 1 ) = 4 - x( n - 2 ) * exp( x( n - 1 ) - x( n - 2 ) );
     J.insert( n - 1, n - 2 ) = ( x( n - 2 ) - 1 ) * exp( x( n - 1 ) - x( n - 2 ) );
     for ( integer i = 1; i < n - 1; ++i )
     {
       J.insert( i, i - 1 ) = -( 1 + x( i - 1 ) ) * exp( x( i - 1 ) - x( i ) );
       J.insert( i, i )     = x( i - 1 ) * exp( x( i - 1 ) - x( i ) ) + 9 * x( i ) * x( i ) + 4 +
-                         cos( x( i ) - x( i + 1 ) ) * sin( x( i ) + x( i + 1 ) ) +
-                         sin( x( i ) - x( i + 1 ) ) * cos( x( i ) + x( i + 1 ) );
+                             cos( x( i ) - x( i + 1 ) ) * sin( x( i ) + x( i + 1 ) ) +
+                             sin( x( i ) - x( i + 1 ) ) * cos( x( i ) + x( i + 1 ) );
       J.insert( i, i + 1 ) = 2 - cos( x( i ) - x( i + 1 ) ) * sin( x( i ) + x( i + 1 ) ) +
                              sin( x( i ) - x( i + 1 ) ) * cos( x( i ) + x( i + 1 ) );
     }
@@ -242,7 +236,7 @@ public:
 
   virtual void check_if_admissible( Vector const & x ) const override
   {
-    for ( integer i = 0; i < n; ++i ) Utils::Assert( std::abs( x( i ) ) < 1000, "Bad range" );
+    for ( integer i = 0; i < n; ++i ) Utils::Check( std::abs( x( i ) ) < 1000, "Bad range" );
   }
 
   virtual void bounding_box( Vector & L, Vector & U ) const override

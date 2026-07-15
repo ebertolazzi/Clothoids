@@ -120,9 +120,7 @@ class RooseKullaLombMeressoo201 : public NonlinearSystem
 {
 public:
   RooseKullaLombMeressoo201( integer neq ) : NonlinearSystem( "Roose Kulla Lomb Meressoo N.201", RKM_BIBTEX, neq )
-  {
-    check_min_equations( n, 1 );
-  }
+  { check_min_equations( n, 1 ); }
 
   virtual void evaluate( Vector const & x, Vector & f ) const override
   {
@@ -171,9 +169,7 @@ class RooseKullaLombMeressoo202 : public NonlinearSystem
 {
 public:
   RooseKullaLombMeressoo202( integer neq ) : NonlinearSystem( "Roose Kulla Lomb Meressoo N.202", RKM_BIBTEX, neq )
-  {
-    check_min_equations( n, 1 );
-  }
+  { check_min_equations( n, 1 ); }
 
   virtual void evaluate( Vector const & x, Vector & f ) const override
   {
@@ -225,9 +221,7 @@ class RooseKullaLombMeressoo203 : public NonlinearSystem
 
 public:
   RooseKullaLombMeressoo203( integer neq ) : NonlinearSystem( "Roose Kulla Lomb Meressoo N.203", RKM_BIBTEX, neq )
-  {
-    check_min_equations( n, 2 );
-  }
+  { check_min_equations( n, 2 ); }
 
   virtual void evaluate( Vector const & x, Vector & f ) const override
   {
@@ -306,9 +300,7 @@ class RooseKullaLombMeressoo204 : public NonlinearSystem
 {
 public:
   RooseKullaLombMeressoo204( integer neq ) : NonlinearSystem( "Roose Kulla Lomb Meressoo N.204", RKM_BIBTEX, neq )
-  {
-    check_even( n, 1 );
-  }
+  { check_even( n, 1 ); }
 
   virtual void evaluate( Vector const & x, Vector & f ) const override
   {
@@ -355,9 +347,7 @@ class RooseKullaLombMeressoo205 : public NonlinearSystem
 {
 public:
   RooseKullaLombMeressoo205( integer neq ) : NonlinearSystem( "Roose Kulla Lomb Meressoo N.205", RKM_BIBTEX, neq )
-  {
-    check_min_equations( n, 1 );
-  }
+  { check_min_equations( n, 1 ); }
 
   virtual void evaluate( Vector const & x, Vector & f ) const override
   {
@@ -631,9 +621,7 @@ class RooseKullaLombMeressoo207 : public NonlinearSystem
 public:
   RooseKullaLombMeressoo207( integer neq )
     : NonlinearSystem( "Roose Kulla Lomb Meressoo N.207", RKM_BIBTEX, neq ), gamma( 0.1 )
-  {
-    check_min_equations( n, 1 );
-  }
+  { check_min_equations( n, 1 ); }
 
   virtual void evaluate( Vector const & x, Vector & f ) const override
   {
@@ -753,7 +741,7 @@ public:
 
   virtual void check_if_admissible( Vector const & x ) const override
   {
-    for ( integer i = 3; i < n; ++i ) Utils::Assert( x( i ) < 0, "Bad range" );
+    for ( integer i = 3; i < n; ++i ) Utils::Check( x( i ) < 0, "Bad range" );
   }
 
   virtual void bounding_box( Vector & L, Vector & U ) const override
@@ -787,9 +775,7 @@ class RooseKullaLombMeressoo208 : public NonlinearSystem
 public:
   RooseKullaLombMeressoo208( integer neq )
     : NonlinearSystem( "Roose Kulla Lomb Meressoo N.208", RKM_BIBTEX, neq ), K1( 1 ), K2( 1 ), K3( 1 ), R1( 3 ), R2( 3 )
-  {
-    check_min_equations( n, 1 );
-  }
+  { check_min_equations( n, 1 ); }
 
   virtual void evaluate( Vector const & x, Vector & f ) const override
   {
@@ -899,14 +885,12 @@ class RooseKullaLombMeressoo209 : public NonlinearSystem
 {
 public:
   RooseKullaLombMeressoo209( integer neq ) : NonlinearSystem( "Roose Kulla Lomb Meressoo N.209", RKM_BIBTEX, neq )
-  {
-    check_min_equations( n, 1 );
-  }
+  { check_min_equations( n, 1 ); }
 
   void checkx( Vector const & x ) const
   {
     for ( integer i = 0; i < n; ++i )
-      Utils::Assert( x( i ) > 0, "RooseKullaLombMeressoo209, found x[{}] = {} <= 0", i, x( i ) );
+      Utils::Check( x( i ) > 0, "RooseKullaLombMeressoo209, found x[{}] = {} <= 0", i, x( i ) );
   }
 
   virtual void evaluate( Vector const & x, Vector & f ) const override
@@ -948,8 +932,8 @@ public:
   {
     for ( integer i = 1; i < n; ++i )
     {
-      Utils::Assert( x( i ) > 0, "Bad range" );
-      Utils::Assert( std::abs( x( i ) ) < 1000, "Bad range" );
+      Utils::Check( x( i ) > 0, "Bad range" );
+      Utils::Check( std::abs( x( i ) ) < 1000, "Bad range" );
     }
   }
 
@@ -969,9 +953,7 @@ class RooseKullaLombMeressoo210 : public NonlinearSystem
 {
 public:
   RooseKullaLombMeressoo210( integer neq ) : NonlinearSystem( "Roose Kulla Lomb Meressoo N.210", RKM_BIBTEX, neq )
-  {
-    check_min_equations( n, 1 );
-  }
+  { check_min_equations( n, 1 ); }
 
   virtual void evaluate( Vector const & x, Vector & f ) const override
   {
@@ -1017,15 +999,14 @@ class RooseKullaLombMeressoo211 : public NonlinearSystem
 {
 public:
   RooseKullaLombMeressoo211( integer neq ) : NonlinearSystem( "Roose Kulla Lomb Meressoo N.211", RKM_BIBTEX, neq )
-  {
-    check_min_equations( n, 1 );
-  }
+  { check_min_equations( n, 1 ); }
 
   virtual void evaluate( Vector const & x, Vector & f ) const override
   {
     real_type acc = 0;
     for ( integer j = 0; j < n; ++j ) acc += power3( x( j ) );
-    for ( integer j = 0; j < n; ++j ) f( j ) = ( acc + static_cast<real_type>( j + 1 ) ) / static_cast<real_type>( 2 * n );
+    for ( integer j = 0; j < n; ++j )
+      f( j ) = ( acc + static_cast<real_type>( j + 1 ) ) / static_cast<real_type>( 2 * n );
   }
 
   virtual void jacobian( Vector const & x, SparseMatrix & J ) const override
@@ -1057,9 +1038,7 @@ class RooseKullaLombMeressoo212 : public NonlinearSystem
 {
 public:
   RooseKullaLombMeressoo212( integer neq ) : NonlinearSystem( "Roose Kulla Lomb Meressoo N.212", RKM_BIBTEX, neq )
-  {
-    check_min_equations( n, 1 );
-  }
+  { check_min_equations( n, 1 ); }
 
   virtual void evaluate( Vector const & x, Vector & f ) const override
   {
@@ -1213,9 +1192,7 @@ class RooseKullaLombMeressoo214 : public NonlinearSystem
 {
 public:
   RooseKullaLombMeressoo214( integer neq ) : NonlinearSystem( "Roose Kulla Lomb Meressoo N.214", RKM_BIBTEX, neq )
-  {
-    check_min_equations( n, 1 );
-  }
+  { check_min_equations( n, 1 ); }
 
   virtual void evaluate( Vector const & x, Vector & f ) const override
   {
@@ -1501,7 +1478,7 @@ class RooseKullaLombMeressoo216 : public NonlinearSystem
 public:
   RooseKullaLombMeressoo216( integer neq ) : NonlinearSystem( "Roose Kulla Lomb Meressoo N.216", RKM_BIBTEX, neq )
   {
-    Utils::Assert( n > 0 && n != 8 && n < 10, "RooseKullaLombMeressoo216, neq={} must be [1..7] or 9", n );
+    Utils::Check( n > 0 && n != 8 && n < 10, "RooseKullaLombMeressoo216, neq={} must be [1..7] or 9", n );
     m_y.resize( n );
     m_y_D.resize( n );
     for ( integer i = 0; i < n; ++i )
@@ -1639,7 +1616,7 @@ public:
 
   virtual void check_if_admissible( Vector const & x ) const override
   {
-    for ( integer i = 0; i < n; ++i ) Utils::Assert( x( i ) > 0, "Bad range" );
+    for ( integer i = 0; i < n; ++i ) Utils::Check( x( i ) > 0, "Bad range" );
   }
 
   string note() const { return "Each permutation of x is a solution"; }
@@ -1653,9 +1630,7 @@ class RooseKullaLombMeressoo217 : public NonlinearSystem
 {
 public:
   RooseKullaLombMeressoo217( integer neq ) : NonlinearSystem( "Roose Kulla Lomb Meressoo N.217", RKM_BIBTEX, neq )
-  {
-    check_min_equations( n, 2 );
-  }
+  { check_min_equations( n, 2 ); }
 
   virtual void evaluate( Vector const & x, Vector & f ) const override
   {

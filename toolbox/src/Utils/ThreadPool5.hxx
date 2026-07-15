@@ -152,9 +152,9 @@ namespace Utils
 
     // Vector of workers managed by the thread pool.
     std::vector<std::unique_ptr<Worker>> m_workers;
-    std::list<unsigned>     m_queue;
-    std::mutex              m_queue_mutex;  //!< Mutex for accessing the worker queue.
-    std::condition_variable m_queue_cond;   //!< Condition variable for worker availability.
+    std::list<unsigned>                  m_queue;
+    std::mutex                           m_queue_mutex;  //!< Mutex for accessing the worker queue.
+    std::condition_variable              m_queue_cond;   //!< Condition variable for worker availability.
 
     //!
     //! \brief Pushes a worker ID back onto the queue of available workers.
@@ -195,10 +195,7 @@ namespace Utils
     {
       m_queue.clear();
       m_workers.reserve( size_t( nthread ) );
-      for ( unsigned id{ 0 }; id < nthread; ++id )
-      {
-        m_workers.emplace_back( std::make_unique<Worker>( this, id ) );
-      }
+      for ( unsigned id{ 0 }; id < nthread; ++id ) { m_workers.emplace_back( std::make_unique<Worker>( this, id ) ); }
       // Workers add themselves to the queue once they are ready.
       // No need to push them here: worker_loop() calls push_worker().
     }

@@ -146,9 +146,7 @@ namespace Utils
 
     //! Check if point is approximately equal to another point
     bool isApprox( Point2D<Real> const & other, Real prec = machine_eps<Real>() ) const noexcept
-    {
-      return std::abs( this->x() - other.x() ) <= prec && std::abs( this->y() - other.y() ) <= prec;
-    }
+    { return std::abs( this->x() - other.x() ) <= prec && std::abs( this->y() - other.y() ) <= prec; }
 
     //! Stream output operator
     friend std::ostream & operator<<( std::ostream & os, Point2D<Real> const & p )
@@ -235,9 +233,7 @@ namespace Utils
 
     //! Get center of box
     Point2D<Real> center() const noexcept
-    {
-      return Point2D<Real>( ( m_Pmin.x() + m_Pmax.x() ) * Real( 0.5 ), ( m_Pmin.y() + m_Pmax.y() ) * Real( 0.5 ) );
-    }
+    { return Point2D<Real>( ( m_Pmin.x() + m_Pmax.x() ) * Real( 0.5 ), ( m_Pmin.y() + m_Pmax.y() ) * Real( 0.5 ) ); }
 
     //! Get size as a point (width, height)
     Point2D<Real> size() const noexcept { return Point2D<Real>( width(), height() ); }
@@ -250,21 +246,15 @@ namespace Utils
 
     //! Check if point is inside box (inclusive boundaries)
     bool contains( Point2D<Real> const & P ) const noexcept
-    {
-      return P.x() >= m_Pmin.x() && P.x() <= m_Pmax.x() && P.y() >= m_Pmin.y() && P.y() <= m_Pmax.y();
-    }
+    { return P.x() >= m_Pmin.x() && P.x() <= m_Pmax.x() && P.y() >= m_Pmin.y() && P.y() <= m_Pmax.y(); }
 
     //! Check if point is strictly inside box (exclusive boundaries)
     bool contains_strict( Point2D<Real> const & P ) const noexcept
-    {
-      return P.x() > m_Pmin.x() && P.x() < m_Pmax.x() && P.y() > m_Pmin.y() && P.y() < m_Pmax.y();
-    }
+    { return P.x() > m_Pmin.x() && P.x() < m_Pmax.x() && P.y() > m_Pmin.y() && P.y() < m_Pmax.y(); }
 
     //! Check if another box is fully inside this box
     bool contains( Box2D<Real> const & other ) const noexcept
-    {
-      return contains( other.m_Pmin ) && contains( other.m_Pmax );
-    }
+    { return contains( other.m_Pmin ) && contains( other.m_Pmax ); }
 
     //! Check if boxes intersect
     bool intersects( Box2D<Real> const & other ) const noexcept
@@ -374,15 +364,11 @@ namespace Utils
 
     //! Get corner points of the box
     std::array<Point2D<Real>, 4> corners() const noexcept
-    {
-      return { { m_Pmin, Point2D<Real>( m_Pmax.x(), m_Pmin.y() ), m_Pmax, Point2D<Real>( m_Pmin.x(), m_Pmax.y() ) } };
-    }
+    { return { { m_Pmin, Point2D<Real>( m_Pmax.x(), m_Pmin.y() ), m_Pmax, Point2D<Real>( m_Pmin.x(), m_Pmax.y() ) } }; }
 
     //! Check if box is approximately equal to another box
     bool isApprox( Box2D<Real> const & other, Real prec = machine_eps<Real>() ) const noexcept
-    {
-      return m_Pmin.isApprox( other.m_Pmin, prec ) && m_Pmax.isApprox( other.m_Pmax, prec );
-    }
+    { return m_Pmin.isApprox( other.m_Pmin, prec ) && m_Pmax.isApprox( other.m_Pmax, prec ); }
 
     //! Stream output operator
     friend std::ostream & operator<<( std::ostream & os, Box2D<Real> const & box )
@@ -949,9 +935,7 @@ namespace Utils
 
     //! Get all edges
     std::array<Segment2D<Real>, 3> edges() const noexcept
-    {
-      return { { Segment2D<Real>( m_Pa, m_Pb ), Segment2D<Real>( m_Pb, m_Pc ), Segment2D<Real>( m_Pc, m_Pa ) } };
-    }
+    { return { { Segment2D<Real>( m_Pa, m_Pb ), Segment2D<Real>( m_Pb, m_Pc ), Segment2D<Real>( m_Pc, m_Pa ) } }; }
 
     //! Get vertex by index
     Point2D<Real> vertex( int i ) const

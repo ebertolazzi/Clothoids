@@ -43,9 +43,7 @@ public:
         "}\n",
         neq )
     , h( 1 / real_type( n + 1 ) )
-  {
-    check_min_equations( n, 1 );
-  }
+  { check_min_equations( n, 1 ); }
 
   virtual void evaluate( Vector const & x, Vector & f ) const override
   {
@@ -61,7 +59,8 @@ public:
   {
     J.resize( n, n );
     J.setZero();
-    for ( integer i = 0; i < n; ++i ) {
+    for ( integer i = 0; i < n; ++i )
+    {
       J.insert( i, i ) = 2 + 1.5 * h * h * power2( x( i ) + h * ( static_cast<real_type>( i ) + 1 ) + 1 );
     }
 
@@ -97,7 +96,8 @@ public:
     x_vec.resize( 1 );
     auto & x0{ x_vec[0] };
     x0.resize( n );
-    for ( integer k = 0; k < n; ++k ) {
+    for ( integer k = 0; k < n; ++k )
+    {
       x0( k ) = real_type( ( k + 1 ) * ( k - n ) ) / power2( static_cast<real_type>( n ) + 1.0 );
     }
   }

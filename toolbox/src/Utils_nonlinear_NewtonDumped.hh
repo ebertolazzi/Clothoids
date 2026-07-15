@@ -2663,17 +2663,13 @@ namespace Utils
      * @param strategy Current strategy name
      */
     void print_iteration_info( integer iter, real_type norm_f, const std::string & strategy )
-    {
-      fmt::print( fmt::fg( fmt::color::light_blue ), "[{:3}][{}] ‖f‖ = {:.2e}", iter, strategy, norm_f );
-    }
+    { fmt::print( fmt::fg( fmt::color::light_blue ), "[{:3}][{}] ‖f‖ = {:.2e}", iter, strategy, norm_f ); }
 
     /**
      * @brief Print convergence success message
      */
     void print_convergence_success()
-    {
-      fmt::print( fmt::fg( fmt::color::green ), "  ✓ Converged below tolerance ({:.2e})\n", m_tolerance );
-    }
+    { fmt::print( fmt::fg( fmt::color::green ), "  ✓ Converged below tolerance ({:.2e})\n", m_tolerance ); }
 
     /**
      * @brief Print Jacobian factorization failure
@@ -2748,26 +2744,20 @@ namespace Utils
      * @brief Print damping failure message
      */
     void print_damping_failure()
-    {
-      fmt::print( fmt::fg( fmt::color::red ), "    ✗ Damping failed (lambda too small)\n" );
-    }
+    { fmt::print( fmt::fg( fmt::color::red ), "    ✗ Damping failed (lambda too small)\n" ); }
 
     /**
      * @brief Print L2 damping failure message
      * @param mu Current mu value
      */
     void print_l2_damping_failure( real_type mu )
-    {
-      fmt::print( fmt::fg( fmt::color::red ), "    ✗ L2 damping failed (mu={:.2e} too large)\n", mu );
-    }
+    { fmt::print( fmt::fg( fmt::color::red ), "    ✗ L2 damping failed (mu={:.2e} too large)\n", mu ); }
 
     /**
      * @brief Print trust region failure message
      */
     void print_trust_region_failure()
-    {
-      fmt::print( fmt::fg( fmt::color::red ), "    ✗ Trust region failed (radius too small, mu too large)\n" );
-    }
+    { fmt::print( fmt::fg( fmt::color::red ), "    ✗ Trust region failed (radius too small, mu too large)\n" ); }
 
     /**
      * @brief Print no acceptable step message
@@ -2779,18 +2769,14 @@ namespace Utils
      * @param lambda Current lambda value
      */
     void print_invalid_step( real_type lambda )
-    {
-      fmt::print( fmt::fg( fmt::color::yellow ), "  λ invalid → reduce to {:.2e}\n", lambda );
-    }
+    { fmt::print( fmt::fg( fmt::color::yellow ), "  λ invalid → reduce to {:.2e}\n", lambda ); }
 
     /**
      * @brief Print invalid step message for L2
      * @param mu Current mu value
      */
     void print_invalid_step_l2( real_type mu )
-    {
-      fmt::print( fmt::fg( fmt::color::yellow ), "  step invalid → increase μ to {:.2e}\n", mu );
-    }
+    { fmt::print( fmt::fg( fmt::color::yellow ), "  step invalid → increase μ to {:.2e}\n", mu ); }
 
     /**
      * @brief Print invalid step message for trust region
@@ -2798,35 +2784,27 @@ namespace Utils
      * @param radius Current trust region radius
      */
     void print_invalid_step_trust( real_type mu, real_type radius )
-    {
-      fmt::print( fmt::fg( fmt::color::yellow ), "  step invalid → μ={:.2e}, Δ={:.2e}\n", mu, radius );
-    }
+    { fmt::print( fmt::fg( fmt::color::yellow ), "  step invalid → μ={:.2e}, Δ={:.2e}\n", mu, radius ); }
 
     /**
      * @brief Print strategy switch message
      * @param message Switch message
      */
     void print_strategy_switch( const std::string & message )
-    {
-      fmt::print( fmt::fg( fmt::color::cyan ), "  ↳ {} \n", message );
-    }
+    { fmt::print( fmt::fg( fmt::color::cyan ), "  ↳ {} \n", message ); }
 
     /**
      * @brief Print filter method failure
      */
     void print_filter_failure()
-    {
-      fmt::print( fmt::fg( fmt::color::red ), "    ✗ Filter method failed (no acceptable step)\n" );
-    }
+    { fmt::print( fmt::fg( fmt::color::red ), "    ✗ Filter method failed (no acceptable step)\n" ); }
 
     /**
      * @brief Print invalid step message for filter
      * @param alpha Current step size
      */
     void print_invalid_step_filter( real_type alpha )
-    {
-      fmt::print( fmt::fg( fmt::color::yellow ), "  step invalid → reduce α to {:.2e}\n", alpha );
-    }
+    { fmt::print( fmt::fg( fmt::color::yellow ), "  step invalid → reduce α to {:.2e}\n", alpha ); }
 
     /**
      * @brief Print cubic trust region failure
@@ -2845,77 +2823,59 @@ namespace Utils
      * @param sigma Current sigma value
      */
     void print_invalid_step_ctr( real_type delta, real_type sigma )
-    {
-      fmt::print( fmt::fg( fmt::color::yellow ), "  step invalid → Δ={:.2e}, σ={:.2e}\n", delta, sigma );
-    }
+    { fmt::print( fmt::fg( fmt::color::yellow ), "  step invalid → Δ={:.2e}, σ={:.2e}\n", delta, sigma ); }
 
     /**
      * @brief Print dogleg failure message
      */
     void print_dogleg_failure()
-    {
-      fmt::print( fmt::fg( fmt::color::red ), "    ✗ Dogleg method failed (trust region too small)\n" );
-    }
+    { fmt::print( fmt::fg( fmt::color::red ), "    ✗ Dogleg method failed (trust region too small)\n" ); }
 
     /**
      * @brief Print invalid step message for dogleg
      * @param delta Current trust region radius
      */
     void print_invalid_step_dogleg( real_type delta )
-    {
-      fmt::print( fmt::fg( fmt::color::yellow ), "  step invalid → reduce Δ to {:.2e}\n", delta );
-    }
+    { fmt::print( fmt::fg( fmt::color::yellow ), "  step invalid → reduce Δ to {:.2e}\n", delta ); }
 
     /**
      * @brief Print Wolfe line search failure
      */
     void print_wolfe_failure()
-    {
-      fmt::print( fmt::fg( fmt::color::red ), "    ✗ Wolfe line search failed (step size too small)\n" );
-    }
+    { fmt::print( fmt::fg( fmt::color::red ), "    ✗ Wolfe line search failed (step size too small)\n" ); }
 
     /**
      * @brief Print invalid step message for Wolfe
      * @param alpha Current step size
      */
     void print_invalid_step_wolfe( real_type alpha )
-    {
-      fmt::print( fmt::fg( fmt::color::yellow ), "  step invalid → reduce α to {:.2e}\n", alpha );
-    }
+    { fmt::print( fmt::fg( fmt::color::yellow ), "  step invalid → reduce α to {:.2e}\n", alpha ); }
 
     /**
      * @brief Print cubic regularization failure
      */
     void print_cubic_failure()
-    {
-      fmt::print( fmt::fg( fmt::color::red ), "    ✗ Cubic regularization failed (sigma too large)\n" );
-    }
+    { fmt::print( fmt::fg( fmt::color::red ), "    ✗ Cubic regularization failed (sigma too large)\n" ); }
 
     /**
      * @brief Print invalid step message for cubic
      * @param sigma Current sigma value
      */
     void print_invalid_step_cubic( real_type sigma )
-    {
-      fmt::print( fmt::fg( fmt::color::yellow ), "  step invalid → increase σ to {:.2e}\n", sigma );
-    }
+    { fmt::print( fmt::fg( fmt::color::yellow ), "  step invalid → increase σ to {:.2e}\n", sigma ); }
 
     /**
      * @brief Print quadratic backtracking failure
      */
     void print_quadratic_backtracking_failure()
-    {
-      fmt::print( fmt::fg( fmt::color::red ), "    ✗ Quadratic backtracking failed (step size too small)\n" );
-    }
+    { fmt::print( fmt::fg( fmt::color::red ), "    ✗ Quadratic backtracking failed (step size too small)\n" ); }
 
     /**
      * @brief Print invalid step message for quadratic backtracking
      * @param alpha Current step size
      */
     void print_invalid_step_quad( real_type alpha )
-    {
-      fmt::print( fmt::fg( fmt::color::yellow ), "  step invalid → reduce α to {:.2e}\n", alpha );
-    }
+    { fmt::print( fmt::fg( fmt::color::yellow ), "  step invalid → reduce α to {:.2e}\n", alpha ); }
 
   public:
     // -------------------------------------------------------------------------

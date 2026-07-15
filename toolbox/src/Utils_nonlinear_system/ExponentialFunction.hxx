@@ -30,9 +30,7 @@ class ExponentialFunction1 : public NonlinearSystem
 {
 public:
   ExponentialFunction1( integer neq ) : NonlinearSystem( "Exponential Function N.1", EXPONENTIAL_FUNCTION_BIBTEX, neq )
-  {
-    check_min_equations( n, 1 );
-  }
+  { check_min_equations( n, 1 ); }
 
   virtual void evaluate( Vector const & x, Vector & f ) const override
   {
@@ -45,7 +43,8 @@ public:
     J.resize( n, n );
     J.setZero();
     J.insert( 0, 0 ) = exp( x( 0 ) - 1 );
-    for ( integer i = 1; i < n; ++i ) J.insert( i, i ) = ( static_cast<real_type>( i ) + 1 ) * ( exp( x( i ) - 1 ) - 1 );
+    for ( integer i = 1; i < n; ++i )
+      J.insert( i, i ) = ( static_cast<real_type>( i ) + 1 ) * ( exp( x( i ) - 1 ) - 1 );
     J.makeCompressed();
   }
 
@@ -66,14 +65,13 @@ class ExponentialFunction2 : public NonlinearSystem
 {
 public:
   ExponentialFunction2( integer neq ) : NonlinearSystem( "Exponential Function N.2", EXPONENTIAL_FUNCTION_BIBTEX, neq )
-  {
-    check_min_equations( n, 1 );
-  }
+  { check_min_equations( n, 1 ); }
 
   virtual void evaluate( Vector const & x, Vector & f ) const override
   {
     f( 0 ) = exp( x( 0 ) ) - 1;
-    for ( integer i = 1; i < n; ++i ) {
+    for ( integer i = 1; i < n; ++i )
+    {
       f( i ) = ( ( static_cast<real_type>( i ) + 1 ) / 10.0 ) * ( exp( x( i ) ) + x( i - 1 ) - 1 );
     }
   }
@@ -108,9 +106,7 @@ class ExponentialFunction3 : public NonlinearSystem
 {
 public:
   ExponentialFunction3( integer neq ) : NonlinearSystem( "Exponential Function N.3", EXPONENTIAL_FUNCTION_BIBTEX, neq )
-  {
-    check_min_equations( n, 1 );
-  }
+  { check_min_equations( n, 1 ); }
 
   virtual void evaluate( Vector const & x, Vector & f ) const override
   {
@@ -123,7 +119,8 @@ public:
   {
     J.resize( n, n );
     J.setZero();
-    for ( integer i = 0; i < n - 1; ++i ) {
+    for ( integer i = 0; i < n - 1; ++i )
+    {
       J.insert( i, i ) = 0.2 * ( static_cast<real_type>( i ) + 1 ) * x( i ) * ( exp( -x( i ) * x( i ) ) - 1 );
     }
     J.insert( n - 1, n - 1 ) = 0.2 * static_cast<real_type>( n ) * x( n - 1 ) * exp( -x( n - 1 ) * x( n - 1 ) );

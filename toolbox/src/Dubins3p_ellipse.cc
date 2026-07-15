@@ -71,7 +71,7 @@ namespace G2lib
     {
       bool ok{ D3P.D0.build( xi, yi, thetai, xm, ym, D3P.thetam, k_max ) };
       if ( ok ) ok = D3P.D1.build( xm, ym, D3P.thetam, xf, yf, thetaf, k_max );
-      UTILS_ASSERT(
+      Utils::Check(
         ok,
         "Dubins3p::build_ellipse(\n"
         "  xi     = {},\n"

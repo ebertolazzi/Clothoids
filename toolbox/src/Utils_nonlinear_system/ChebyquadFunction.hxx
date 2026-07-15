@@ -46,7 +46,7 @@ public:
         "}\n",
         dim )
   {
-    Utils::Assert(
+    Utils::Check(
       dim > 0 && dim < 10 && dim != 8,
       "ChebyquadFunction:: dimension n = {} must be on [1,2,3,4,5,6,7,9]",
       dim );
@@ -198,7 +198,8 @@ public:
         break;
       default:
         // Per n=8 non esiste soluzione standard - usa punti equispaziati
-        for ( integer i = 0; i < n; ++i ) {
+        for ( integer i = 0; i < n; ++i )
+        {
           x( i ) = ( static_cast<real_type>( i ) + 1.0 ) / ( static_cast<real_type>( n ) + 1.0 );
         }
         break;
@@ -210,7 +211,8 @@ public:
     x_vec.resize( 1 );
     auto & x0{ x_vec[0] };
     x0.resize( n );
-    for ( integer i = 0; i < n; ++i ) {
+    for ( integer i = 0; i < n; ++i )
+    {
       x0( i ) = ( static_cast<real_type>( i ) + 1.0 ) / ( static_cast<real_type>( n ) + 1.0 );
     }
   }

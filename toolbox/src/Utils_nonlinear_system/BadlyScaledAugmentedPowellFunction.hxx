@@ -50,9 +50,7 @@ public:
         "  Doi       = {10.1080/10556780008805776},\n"
         "}\n",
         neq )
-  {
-    check_three( n, 3 );
-  }
+  { check_three( n, 3 ); }
 
   virtual void evaluate( Vector const & X, Vector & F ) const override
   {

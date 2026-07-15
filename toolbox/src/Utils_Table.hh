@@ -377,9 +377,7 @@ namespace Utils
       //! \param rows A 2D vector of strings representing the table's content.
       //!
       explicit Table( Style const & style, vecvecstr const & rows = vecvecstr() ) : m_Style( style )
-      {
-        this->rows( rows );
-      }
+      { this->rows( rows ); }
 
       void setup( Style const & style, vecvecstr const & rows = vecvecstr() )
       {
@@ -432,9 +430,7 @@ namespace Utils
 
     inline Cell::Cell( Table * table, string_view val, integer col_span )
       : m_Table( table ), m_Value( val ), m_col_span( col_span )
-    {
-      m_Width = utf8_display_width( string( val ) );
-    }
+    { m_Width = utf8_display_width( string( val ) ); }
 
     inline integer Cell::width( integer col ) const
     {
@@ -447,9 +443,7 @@ namespace Utils
     }
 
     inline integer Cell::height() const
-    {
-      return static_cast<integer>( std::count( m_Value.begin(), m_Value.end(), '\n' ) + 1 );
-    }
+    { return static_cast<integer>( std::count( m_Value.begin(), m_Value.end(), '\n' ) + 1 ); }
 
     inline integer Cell::maximum_line_width() const
     {
@@ -557,9 +551,7 @@ namespace Utils
     }
 
     inline void Row::cell( string_view value )
-    {
-      m_Cells.emplace_back( m_Table, value );
-    }
+    { m_Cells.emplace_back( m_Table, value ); }
 
     inline integer Row::height() const
     {
@@ -628,19 +620,13 @@ namespace Utils
     }
 
     inline void Table::add_row( vecstr const & row )
-    {
-      m_Rows.emplace_back( this, row );
-    }
+    { m_Rows.emplace_back( this, row ); }
 
     inline integer Table::cell_spacing() const
-    {
-      return this->cell_padding() + 1;
-    }
+    { return this->cell_padding() + 1; }
 
     inline integer Table::cell_padding() const
-    {
-      return m_Style.padding_left() + m_Style.padding_right();
-    }
+    { return m_Style.padding_left() + m_Style.padding_right(); }
 
     inline Table::vecCell Table::column( integer n ) const
     {
@@ -717,9 +703,7 @@ namespace Utils
     }
 
     inline void Table::headings( vecstr const & headings )
-    {
-      m_Headings = Row( this, headings );
-    }
+    { m_Headings = Row( this, headings ); }
 
     inline Row & Table::row( integer n )
     {
@@ -867,17 +851,13 @@ namespace Utils
 //! stream.
 //!
 inline Utils::ostream_type & operator<<( Utils::ostream_type & stream, Utils::Table::Row const & row )
-{
-  return stream << row.render();
-}
+{ return stream << row.render(); }
 
 //!
 //! \brief Stream insertion operator for rendering a table to an output stream.
 //!
 inline Utils::ostream_type & operator<<( Utils::ostream_type & stream, Utils::Table::Table const & table )
-{
-  return stream << table.render();
-}
+{ return stream << table.render(); }
 
 #endif
 

@@ -195,7 +195,7 @@ namespace G2lib
       D3P.thetam = thetam;
       bool ok{ D3P.D0.build( xi, yi, thetai, xm, ym, thetam, k_max ) };
       if ( ok ) ok = D3P.D1.build( xm, ym, thetam, xf, yf, thetaf, k_max );
-      UTILS_ASSERT(
+      Utils::Assert(
         ok,
         "Dubins3p::build_pattern_search(\n"
         "  xi             = {}\n"
@@ -236,7 +236,7 @@ namespace G2lib
       Dubins D1{ "temporary Dubins B" };
       bool   ok{ D0.build( xi, yi, thetai, xm, ym, theta, k_max ) };
       if ( ok ) ok = D1.build( xm, ym, theta, xf, yf, thetaf, k_max );
-      UTILS_ASSERT(
+      Utils::Assert(
         ok,
         "Dubins3p::build_pattern_search(\n"
         "  xi             = {}\n"
