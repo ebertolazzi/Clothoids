@@ -41,9 +41,7 @@ namespace G2lib
   using std::min;
   using std::vector;
 
-#ifndef DOXYGEN_SHOULD_SKIP_THIS
   using LS_dist_type = vector<LineSegment>::difference_type;
-#endif
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 

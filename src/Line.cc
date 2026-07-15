@@ -159,8 +159,6 @@ namespace G2lib
     }
   }
 
-#ifndef DOXYGEN_SHOULD_SKIP_THIS
-
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
   //!
   //! Structure for line intersection
@@ -334,8 +332,6 @@ namespace G2lib
 
     return false;  // Doesn't fall in any of the above cases
   }
-
-#endif
 
   /*\
    |   _     _

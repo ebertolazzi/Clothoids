@@ -1034,7 +1034,6 @@ namespace G2lib
    | /_/   \_\/_/   \_\____/|____/ \__|_|  \___|\___|
   \*/
 
-#ifndef DOXYGEN_SHOULD_SKIP_THIS
   void BiarcList::build_AABBtree_ISO( real_type const offs, real_type const max_angle, real_type const max_size ) const
   {
 #ifdef CLOTHOIDS_USE_THREADS
@@ -1066,7 +1065,6 @@ namespace G2lib
     m_aabb_max_angle = max_angle;
     m_aabb_max_size  = max_size;
   }
-#endif
 
   /*\
    |   _       _                          _

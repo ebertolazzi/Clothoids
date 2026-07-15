@@ -41,7 +41,6 @@ namespace G2lib
   using std::sqrt;
   using std::tan;
 
-#ifndef DOXYGEN_SHOULD_SKIP_THIS
   real_type const m_1_sqrt_pi{ 0.564189583547756286948079451561 };  // 1/sqrt(pi)
   real_type const machepsi{ Utils::machine_eps<real_type>() };
   real_type const machepsi10{ 10 * machepsi };
@@ -53,8 +52,7 @@ namespace G2lib
   integer const   G2LIB_AABB_MIN_NODES{ 3 };
 
   // for CLOTHOIDS_BACK_COMPATIBILITY
-  bool use_ISO{ true };
-#endif
+  bool use_ISO = true;
 
   void rangeSymm( real_type & ang )
   {
@@ -63,7 +61,6 @@ namespace G2lib
     while ( ang > Utils::m_pi ) ang -= Utils::m_2pi;
   }
 
-#ifndef DOXYGEN_SHOULD_SKIP_THIS
   static real_type power2( real_type const a )
   {
     return a * a;
@@ -72,7 +69,6 @@ namespace G2lib
   {
     return a * a * a;
   }
-#endif
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
@@ -205,7 +201,6 @@ namespace G2lib
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-#ifndef DOXYGEN_SHOULD_SKIP_THIS
   static real_type maxabs3( real_type const A, real_type const B, real_type const C )
   {
     real_type res{ abs( A ) };
@@ -215,7 +210,6 @@ namespace G2lib
     if ( res < absC ) res = absC;
     return res;
   }
-#endif
 
   //!
   //! Solve the nonlinear system
@@ -335,8 +329,6 @@ namespace G2lib
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-#ifndef DOXYGEN_SHOULD_SKIP_THIS
-
   static integer solveNLsysCircleCircle(
     real_type const kA,
     real_type const T,
@@ -394,8 +386,6 @@ namespace G2lib
     } while ( abs( ds ) > machepsi100 && ++iter < 5 );
     return s;
   }
-
-#endif
 
   //!
   //! Intersect the parametric arc

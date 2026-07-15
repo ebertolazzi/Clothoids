@@ -1967,9 +1967,7 @@ PYBIND11_NAMESPACE_END(detail)
 template <return_value_policy Policy = return_value_policy::reference_internal,
           typename Iterator,
           typename Sentinel,
-#ifndef DOXYGEN_SHOULD_SKIP_THIS  // Issue in breathe 4.26.1
           typename ValueType = decltype(*std::declval<Iterator>()),
-#endif
           typename... Extra>
 iterator make_iterator(Iterator first, Sentinel last, Extra &&... extra) {
     using state = detail::iterator_state<Iterator, Sentinel, false, Policy>;
@@ -1999,9 +1997,7 @@ iterator make_iterator(Iterator first, Sentinel last, Extra &&... extra) {
 template <return_value_policy Policy = return_value_policy::reference_internal,
           typename Iterator,
           typename Sentinel,
-#ifndef DOXYGEN_SHOULD_SKIP_THIS  // Issue in breathe 4.26.1
           typename KeyType = decltype((*std::declval<Iterator>()).first),
-#endif
           typename... Extra>
 iterator make_key_iterator(Iterator first, Sentinel last, Extra &&...extra) {
     using state = detail::iterator_state<Iterator, Sentinel, true, Policy>;

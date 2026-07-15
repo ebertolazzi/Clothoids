@@ -1685,7 +1685,6 @@ namespace G2lib
    | /_/   \_\/_/   \_\____/|____/ \__|_|  \___|\___|
   \*/
 
-#ifndef DOXYGEN_SHOULD_SKIP_THIS
   void ClothoidList::build_AABBtree_ISO( real_type const offs, real_type const max_angle, real_type const max_size )
     const
   {
@@ -1718,7 +1717,6 @@ namespace G2lib
     m_aabb_max_angle = max_angle;
     m_aabb_max_size  = max_size;
   }
-#endif
 
   /*\
    |   _       _                          _
@@ -2608,7 +2606,6 @@ namespace G2lib
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-#ifndef DOXYGEN_SHOULD_SKIP_THIS
   static void save_segment( ostream_type & stream, ClothoidCurve const & c )
   {
     fmt::print(
@@ -2626,11 +2623,9 @@ namespace G2lib
       fmt::format( "{:.20}", c.theta_end() ),
       fmt::format( "{:.20}", c.kappa_end() ) );
   }
-#endif
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-#ifndef DOXYGEN_SHOULD_SKIP_THIS
   static bool load_segment( istream_type & stream, ClothoidCurve & c, real_type const epsi )
   {
     string line1, line2;
@@ -2663,7 +2658,6 @@ namespace G2lib
       err2 );
     return true;
   }
-#endif
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 

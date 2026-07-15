@@ -22,10 +22,8 @@
 
 #include "PolynomialRoots.hh"
 
-#ifndef DOXYGEN_SHOULD_SKIP_THIS
 #define A_THRESOLD 0.01
 #define A_SERIE_SIZE 10
-#endif
 
 #ifdef __GNUC__
 #pragma GCC diagnostic push
@@ -56,8 +54,6 @@ namespace G2lib
   using std::abs;
   using std::max;
   using std::min;
-
-#ifndef DOXYGEN_SHOULD_SKIP_THIS
 
   /*
   // This function calculates the fresnel cosine and sine integrals.
@@ -112,8 +108,6 @@ namespace G2lib
                                       0.011573247407207865977,
                                       0.0044099273693067311209,
                                       -0.00009070958410429993314 };
-
-#endif
 
   /*
   //  #######
@@ -338,7 +332,6 @@ namespace G2lib
   // -------------------------------------------------------------------------
   // -------------------------------------------------------------------------
 
-#ifndef DOXYGEN_SHOULD_SKIP_THIS
   static void evalXYaLarge( real_type const a, real_type const b, real_type & X, real_type & Y )
   {
     real_type const s    = a > 0 ? +1 : -1;
@@ -562,7 +555,6 @@ namespace G2lib
       }
     }
   }
-#endif
 
   // -------------------------------------------------------------------------
   // -------------------------------------------------------------------------
@@ -616,8 +608,6 @@ namespace G2lib
       intS[k]            = xx * sinc + yy * cosc;
     }
   }
-
-#ifndef DOXYGEN_SHOULD_SKIP_THIS
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
@@ -1433,11 +1423,8 @@ namespace G2lib
     return niter;
   }
 
-#endif
-
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-#ifndef DOXYGEN_SHOULD_SKIP_THIS
   static real_type kappa_fun( real_type const theta0, real_type const theta )
   {
     real_type const x = theta0 * theta0;
@@ -1449,11 +1436,9 @@ namespace G2lib
     real_type const t = d * theta0 + e * theta;
     return a * theta0 + b * theta + c * ( t * t * t );
   }
-#endif
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-#ifndef DOXYGEN_SHOULD_SKIP_THIS
   static real_type theta_guess( real_type const theta0, real_type const k0, bool & ok )
   {
     real_type const x   = theta0 * theta0;
@@ -1499,11 +1484,9 @@ namespace G2lib
     ok = abs( theta - theta0 ) < Utils::m_pi;
     return theta;
   }
-#endif
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-#ifndef DOXYGEN_SHOULD_SKIP_THIS
   bool ClothoidData::build_forward(
     real_type const x0,
     real_type const y0,
@@ -1576,7 +1559,6 @@ namespace G2lib
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-#endif
 }  // namespace G2lib
 
 // EOF: Fresnel.cc

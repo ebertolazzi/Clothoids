@@ -61,8 +61,6 @@ namespace G2lib
   using std::min;
   using std::swap;
 
-#ifndef DOXYGEN_SHOULD_SKIP_THIS
-
   static real_type orient_2d( real_type const a[2], real_type const b[2], real_type const c[2] )
   {
     return ( a[0] - c[0] ) * ( b[1] - c[1] ) - ( a[1] - c[1] ) * ( b[0] - c[0] );
@@ -161,8 +159,6 @@ namespace G2lib
     return tri_tri_intersection_2d( p1, q1, r1, p2, q2, r2 );
   }
 
-#endif
-
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
   void Triangle2D::rotate( real_type const angle, real_type const cx, real_type const cy )
@@ -211,8 +207,6 @@ namespace G2lib
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-#ifndef DOXYGEN_SHOULD_SKIP_THIS
-
   static real_type distSeg( real_type const x, real_type const y, real_type const A[], real_type const B[] )
   {
     real_type const dx{ x - A[0] };
@@ -237,8 +231,6 @@ namespace G2lib
 
     return hypot( x - X, y - Y );
   }
-
-#endif
 
   real_type Triangle2D::dist_min( real_type x, real_type y ) const
   {

@@ -35,9 +35,6 @@
 
 namespace G2lib
 {
-
-#ifndef DOXYGEN_SHOULD_SKIP_THIS
-
   using std::abs;
   using std::back_inserter;
   using std::copy;
@@ -60,8 +57,6 @@ namespace G2lib
     real_type const a2 = a * a;
     return a2 * a2;
   }
-
-#endif
 
   /*\
    |    ____ ____            _           ____

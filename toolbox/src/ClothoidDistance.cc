@@ -73,7 +73,6 @@ namespace G2lib
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-#ifndef DOXYGEN_SHOULD_SKIP_THIS
   static bool closest_point_QC2(
     real_type const      epsi,
     ClothoidData const & CD,
@@ -144,11 +143,9 @@ namespace G2lib
     }
     return false;
   }
-#endif
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-#ifndef DOXYGEN_SHOULD_SKIP_THIS
   static real_type closest_point_QC1(
     real_type const      epsi,
     ClothoidData const & CD,
@@ -202,11 +199,9 @@ namespace G2lib
     Y = y1;
     return d1;
   }
-#endif
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-#ifndef DOXYGEN_SHOULD_SKIP_THIS
   static real_type closest_point_QC(
     real_type const      epsi,
     ClothoidData const & CD,
@@ -262,11 +257,9 @@ namespace G2lib
 
     return d0;
   }
-#endif
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-#ifndef DOXYGEN_SHOULD_SKIP_THIS
   static bool closest_point_standard3(
     real_type const epsi,
     real_type const a,
@@ -338,11 +331,9 @@ namespace G2lib
     }
     return false;
   }
-#endif
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-#ifndef DOXYGEN_SHOULD_SKIP_THIS
   static real_type closest_point_standard2(
     real_type const epsi,
     real_type const a,
@@ -399,11 +390,9 @@ namespace G2lib
     S = s1;
     return d1;
   }
-#endif
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-#ifndef DOXYGEN_SHOULD_SKIP_THIS
   static real_type closest_point_standard(
     real_type const      epsi,
     ClothoidData const & CD,
@@ -502,11 +491,9 @@ namespace G2lib
     S = sflex + sm / gamma;
     return dm / gamma;
   }
-#endif
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-#ifndef DOXYGEN_SHOULD_SKIP_THIS
   static real_type closest_point1(
     real_type const      epsi,
     ClothoidData const & CD,
@@ -547,7 +534,6 @@ namespace G2lib
     S += ell;
     return d1;
   }
-#endif
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
