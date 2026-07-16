@@ -45,11 +45,13 @@ toolbox/src_mex/.idea
 toolbox/src/.idea
 toolbox/build
 toolbox/bin
+toolbox/src
+toolbox/lib/lib
+toolbox/CMakeFiles
+
 .idea
 cmake-build-debug
-toolbox/CMakeFiles
 Xcode
 *.csv
 .DS_Store
 .cache
-toolbox/lib/lib
