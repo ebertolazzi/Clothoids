@@ -119,6 +119,11 @@ option(CLOTHOIDS_BUILD_BENCHMARKS "Build the micro-benchmarks" ${PROJECT_IS_TOP_
 # Strict warnings are useful for maintenance but are opt-in because they may be
 # too aggressive for users building with newer compilers or vendor toolchains.
 option(CLOTHOIDS_STRICT_WARNINGS "Compile with narrowing/conversion warnings" OFF)
+option(
+  CLOTHOIDS_ENABLE_GENERIC_CONTAINER_JSON
+  "Enable the optional GenericContainer JSON bridge"
+  OFF
+)
 
 # ----------------------------------------------------------------------------
 # Install prefix and directory layout
@@ -247,6 +252,14 @@ set(CLOTHOIDS_QUARTIC_ROOTS_LOCAL_DIR "${CMAKE_CURRENT_SOURCE_DIR}/../quarticRoo
 # ----------------------------------------------------------------------------
 set(GENERIC_CONTAINER_INSTALL OFF CACHE BOOL "Disable GenericContainer install rules inside Clothoids" FORCE)
 set(GENERIC_CONTAINER_BUILD_EXAMPLES OFF CACHE BOOL "Disable GenericContainer examples inside Clothoids" FORCE)
+# Clothoids links only the YAML bridge. Disable the unused JSON bridge before
+# adding GenericContainer so nlohmann_json is neither searched nor downloaded.
+set(
+  GENERIC_CONTAINER_ENABLE_JSON
+  ${CLOTHOIDS_ENABLE_GENERIC_CONTAINER_JSON}
+  CACHE BOOL "Enable GenericContainer JSON bridge inside Clothoids"
+  FORCE
+)
 
 FetchContent_Declare(
   GenericContainer
