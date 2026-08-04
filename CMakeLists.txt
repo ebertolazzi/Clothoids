@@ -125,6 +125,57 @@ option(
   OFF
 )
 
+# CheckIPOSupported is needed by the IPO/LTO probing below.
+include(CheckIPOSupported)
+
+# ----------------------------------------------------------------------------
+# Compilation and optimization options
+# ----------------------------------------------------------------------------
+# Native CPU tuning is enabled for ordinary single-architecture builds, but
+# disabled by default for Apple universal binaries: -march=native cannot
+# describe both arm64 and x86_64 slices in the same artifact.
+set(CLOTHOIDS_APPLE_MULTI_ARCH FALSE)
+if(APPLE AND CMAKE_OSX_ARCHITECTURES)
+  list(LENGTH CMAKE_OSX_ARCHITECTURES CLOTHOIDS_OSX_ARCHITECTURE_COUNT)
+  if(CLOTHOIDS_OSX_ARCHITECTURE_COUNT GREATER 1)
+    set(CLOTHOIDS_APPLE_MULTI_ARCH TRUE)
+  endif()
+endif()
+
+set(CLOTHOIDS_USE_NATIVE_ARCH_DEFAULT ON)
+if(CLOTHOIDS_APPLE_MULTI_ARCH)
+  set(CLOTHOIDS_USE_NATIVE_ARCH_DEFAULT OFF)
+endif()
+
+option(
+  CLOTHOIDS_USE_NATIVE_ARCH
+  "Optimize Release builds for the current CPU architecture"
+  ${CLOTHOIDS_USE_NATIVE_ARCH_DEFAULT}
+)
+option(CLOTHOIDS_ENABLE_LTO "Enable interprocedural optimization / LTO" ON)
+option(CLOTHOIDS_UNROLL_LOOPS "Enable explicit loop unrolling in Release builds" OFF)
+option(
+  CLOTHOIDS_ENABLE_FAST_MATH
+  "Enable aggressive floating-point optimizations; may change IEEE-754 semantics"
+  OFF
+)
+
+# Probe IPO/LTO support once and reuse the result for every Clothoids target.
+set(CLOTHOIDS_IPO_SUPPORTED FALSE)
+set(CLOTHOIDS_IPO_STATUS "disabled")
+if(CLOTHOIDS_ENABLE_LTO)
+  check_ipo_supported(
+    RESULT CLOTHOIDS_IPO_SUPPORTED
+    OUTPUT CLOTHOIDS_IPO_ERROR
+    LANGUAGES CXX
+  )
+  if(CLOTHOIDS_IPO_SUPPORTED)
+    set(CLOTHOIDS_IPO_STATUS "enabled")
+  else()
+    set(CLOTHOIDS_IPO_STATUS "not supported: ${CLOTHOIDS_IPO_ERROR}")
+  endif()
+endif()
+
 # ----------------------------------------------------------------------------
 # Install prefix and directory layout
 # ----------------------------------------------------------------------------
@@ -456,6 +507,102 @@ clothoids_set_target_output_dirs(Clothoids lib/lib)
 target_compile_features(Clothoids PUBLIC cxx_std_20)
 target_compile_definitions(Clothoids PUBLIC FMT_HEADER_ONLY)
 
+# Common target configuration: diagnostics, definitions and optimization policy.
+# Flags are target-local (PRIVATE) so they do not leak into consumers that link
+# this project.
+function(clothoids_configure_target TARGET_NAME)
+  target_compile_options(
+    ${TARGET_NAME}
+    PRIVATE
+      $<$<CXX_COMPILER_ID:GNU,Clang,AppleClang>:-Wall>
+      $<$<CXX_COMPILER_ID:GNU,Clang,AppleClang>:-Wextra>
+      $<$<CXX_COMPILER_ID:GNU,Clang,AppleClang>:-Wpedantic>
+      $<$<CXX_COMPILER_ID:GNU,Clang,AppleClang>:-Wshadow>
+      $<$<CXX_COMPILER_ID:GNU,Clang,AppleClang>:-Wnon-virtual-dtor>
+      $<$<CXX_COMPILER_ID:GNU,Clang,AppleClang>:-Woverloaded-virtual>
+      $<$<CXX_COMPILER_ID:GNU,Clang,AppleClang>:-Wcast-align>
+      $<$<CXX_COMPILER_ID:GNU,Clang,AppleClang>:-Wunused>
+      $<$<CXX_COMPILER_ID:GNU,Clang,AppleClang>:-Wformat=2>
+      $<$<CXX_COMPILER_ID:GNU,Clang,AppleClang>:-Wimplicit-fallthrough>
+      $<$<CXX_COMPILER_ID:GNU>:-Wduplicated-cond>
+      $<$<CXX_COMPILER_ID:GNU>:-Wduplicated-branches>
+      $<$<CXX_COMPILER_ID:GNU>:-Wlogical-op>
+      $<$<CXX_COMPILER_ID:GNU>:-Wnull-dereference>
+      $<$<CXX_COMPILER_ID:GNU>:-Wmisleading-indentation>
+      $<$<CXX_COMPILER_ID:MSVC>:/W4>
+      $<$<CXX_COMPILER_ID:MSVC>:/permissive->
+      $<$<CXX_COMPILER_ID:MSVC>:/bigobj>
+  )
+
+  target_compile_options(
+    ${TARGET_NAME}
+    PRIVATE
+      $<$<AND:$<CONFIG:Release>,$<CXX_COMPILER_ID:GNU,Clang,AppleClang>>:-O3>
+      $<$<AND:$<CONFIG:Release>,$<CXX_COMPILER_ID:MSVC>>:/O2>
+      $<$<AND:$<CONFIG:RelWithDebInfo>,$<CXX_COMPILER_ID:GNU,Clang,AppleClang>>:-O2>
+      $<$<AND:$<CONFIG:RelWithDebInfo>,$<CXX_COMPILER_ID:MSVC>>:/O2>
+  )
+
+  target_compile_definitions(
+    ${TARGET_NAME}
+    PRIVATE
+      $<$<CONFIG:Release>:NDEBUG>
+      $<$<CONFIG:Release>:EIGEN_NO_DEBUG>
+  )
+
+  if(CLOTHOIDS_USE_NATIVE_ARCH)
+    if(CLOTHOIDS_APPLE_MULTI_ARCH)
+      message(STATUS
+        "Skipping native CPU flags for ${TARGET_NAME}: Apple universal build uses "
+        "CMAKE_OSX_ARCHITECTURES=${CMAKE_OSX_ARCHITECTURES}"
+      )
+    else()
+      target_compile_options(
+        ${TARGET_NAME}
+        PRIVATE
+          $<$<AND:$<CONFIG:Release>,$<CXX_COMPILER_ID:GNU,Clang,AppleClang>>:-march=native>
+          $<$<AND:$<CONFIG:Release>,$<CXX_COMPILER_ID:GNU,Clang,AppleClang>>:-mtune=native>
+          $<$<AND:$<CONFIG:Release>,$<CXX_COMPILER_ID:IntelLLVM>>:-xHost>
+          $<$<AND:$<CONFIG:Release>,$<CXX_COMPILER_ID:MSVC>>:/arch:AVX2>
+      )
+    endif()
+  endif()
+
+  if(CLOTHOIDS_UNROLL_LOOPS)
+    target_compile_options(
+      ${TARGET_NAME}
+      PRIVATE
+        $<$<AND:$<CONFIG:Release>,$<CXX_COMPILER_ID:GNU,Clang,AppleClang>>:-funroll-loops>
+    )
+  endif()
+
+  # Deliberately OFF by default because it permits reassociation and other
+  # transformations that weaken strict IEEE-754 behavior.
+  if(CLOTHOIDS_ENABLE_FAST_MATH)
+    target_compile_options(
+      ${TARGET_NAME}
+      PRIVATE
+        $<$<AND:$<CONFIG:Release>,$<CXX_COMPILER_ID:GNU,Clang,AppleClang>>:-ffast-math>
+        $<$<AND:$<CONFIG:Release>,$<CXX_COMPILER_ID:MSVC>>:/fp:fast>
+    )
+  endif()
+
+  if(CLOTHOIDS_IPO_SUPPORTED)
+    set_property(TARGET ${TARGET_NAME} PROPERTY INTERPROCEDURAL_OPTIMIZATION_RELEASE ON)
+    set_property(TARGET ${TARGET_NAME} PROPERTY INTERPROCEDURAL_OPTIMIZATION_RELWITHDEBINFO ON)
+  endif()
+
+  if(APPLE AND UTILS_BUILD_FAT)
+    set_target_properties(
+      ${TARGET_NAME}
+      PROPERTIES
+        OSX_ARCHITECTURES "${CMAKE_OSX_ARCHITECTURES}"
+    )
+  endif()
+endfunction()
+
+clothoids_configure_target(Clothoids)
+
 # Include directories.
 # BUILD_INTERFACE paths are used while building from the source tree.  The
 # INSTALL_INTERFACE path is used by consumers after installation.  The src/
@@ -483,17 +630,15 @@ target_link_libraries(
 )
 
 # Compiler warnings and platform-specific compile options.
-# Baseline warnings are enabled for GCC/Clang-like compilers.  Extra narrowing
-# and conversion diagnostics are guarded by CLOTHOIDS_STRICT_WARNINGS because
-# they can be too noisy for regular development builds.
-if(CMAKE_CXX_COMPILER_ID MATCHES "Clang|AppleClang|GNU")
-  target_compile_options(Clothoids PRIVATE -Wall -Wextra)
-  if(CLOTHOIDS_STRICT_WARNINGS)
-    target_compile_options(
-      Clothoids PRIVATE
-      -Wconversion -Wsign-conversion -Wshadow -Wdouble-promotion
-    )
-  endif()
+# Extra narrowing and conversion diagnostics are guarded by
+# CLOTHOIDS_STRICT_WARNINGS because they can be too noisy for regular
+# development builds.  The baseline warning set comes from
+# clothoids_configure_target() above.
+if(CLOTHOIDS_STRICT_WARNINGS)
+  target_compile_options(
+    Clothoids PRIVATE
+    -Wconversion -Wsign-conversion -Wshadow -Wdouble-promotion
+  )
 endif()
 
 if(CMAKE_CXX_COMPILER_ID MATCHES "Clang")
@@ -885,4 +1030,46 @@ message(STATUS "Clothoids dependency summary:")
 message(STATUS "  GenericContainer  : ${GenericContainer_SOURCE}")
 message(STATUS "  UtilsLite         : ${UtilsLite_SOURCE}")
 message(STATUS "  quarticRootsFlocke: ${quarticRootsFlocke_SOURCE}")
+message(STATUS "  Compiler          : ${CMAKE_CXX_COMPILER_ID}")
+message(STATUS "  Build shared      : ${BUILD_SHARED_LIBS}")
+message(STATUS "  Native arch       : ${CLOTHOIDS_USE_NATIVE_ARCH}")
+message(STATUS "  Apple multi-arch  : ${CLOTHOIDS_APPLE_MULTI_ARCH}")
+message(STATUS "  LTO requested     : ${CLOTHOIDS_ENABLE_LTO}")
+message(STATUS "  LTO status        : ${CLOTHOIDS_IPO_STATUS}")
+message(STATUS "  Loop unrolling    : ${CLOTHOIDS_UNROLL_LOOPS}")
+message(STATUS "  Fast math         : ${CLOTHOIDS_ENABLE_FAST_MATH}")
+
+set(CLOTHOIDS_EFFECTIVE_OPTIMIZATION_FLAGS)
+if(CMAKE_CXX_COMPILER_ID MATCHES "GNU|Clang|AppleClang")
+  list(APPEND CLOTHOIDS_EFFECTIVE_OPTIMIZATION_FLAGS "Release:-O3" "RelWithDebInfo:-O2")
+elseif(CMAKE_CXX_COMPILER_ID STREQUAL "MSVC")
+  list(APPEND CLOTHOIDS_EFFECTIVE_OPTIMIZATION_FLAGS "Release:/O2" "RelWithDebInfo:/O2")
+endif()
+if(CLOTHOIDS_USE_NATIVE_ARCH)
+  if(CLOTHOIDS_APPLE_MULTI_ARCH)
+    list(APPEND CLOTHOIDS_EFFECTIVE_OPTIMIZATION_FLAGS "native-arch:disabled-for-Apple-universal-build")
+  elseif(CMAKE_CXX_COMPILER_ID MATCHES "GNU|Clang|AppleClang")
+    list(APPEND CLOTHOIDS_EFFECTIVE_OPTIMIZATION_FLAGS "Release:-march=native" "Release:-mtune=native")
+  elseif(CMAKE_CXX_COMPILER_ID STREQUAL "IntelLLVM")
+    list(APPEND CLOTHOIDS_EFFECTIVE_OPTIMIZATION_FLAGS "Release:-xHost")
+  elseif(CMAKE_CXX_COMPILER_ID STREQUAL "MSVC")
+    list(APPEND CLOTHOIDS_EFFECTIVE_OPTIMIZATION_FLAGS "Release:/arch:AVX2")
+  endif()
+endif()
+if(CLOTHOIDS_UNROLL_LOOPS AND CMAKE_CXX_COMPILER_ID MATCHES "GNU|Clang|AppleClang")
+  list(APPEND CLOTHOIDS_EFFECTIVE_OPTIMIZATION_FLAGS "Release:-funroll-loops")
+endif()
+if(CLOTHOIDS_ENABLE_FAST_MATH)
+  if(CMAKE_CXX_COMPILER_ID MATCHES "GNU|Clang|AppleClang")
+    list(APPEND CLOTHOIDS_EFFECTIVE_OPTIMIZATION_FLAGS "Release:-ffast-math")
+  elseif(CMAKE_CXX_COMPILER_ID STREQUAL "MSVC")
+    list(APPEND CLOTHOIDS_EFFECTIVE_OPTIMIZATION_FLAGS "Release:/fp:fast")
+  endif()
+endif()
+if(CLOTHOIDS_IPO_SUPPORTED)
+  list(APPEND CLOTHOIDS_EFFECTIVE_OPTIMIZATION_FLAGS "Release/RelWithDebInfo:IPO/LTO")
+endif()
+list(APPEND CLOTHOIDS_EFFECTIVE_OPTIMIZATION_FLAGS "Release:NDEBUG" "Release:EIGEN_NO_DEBUG")
+list(JOIN CLOTHOIDS_EFFECTIVE_OPTIMIZATION_FLAGS " " CLOTHOIDS_EFFECTIVE_OPTIMIZATION_FLAGS_TEXT)
+message(STATUS "  Optimization flags: ${CLOTHOIDS_EFFECTIVE_OPTIMIZATION_FLAGS_TEXT}")
 message(STATUS "")

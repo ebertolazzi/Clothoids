@@ -32,8 +32,6 @@
 
 #include "Utils.hh"
 
-#ifndef DOXYGEN_SHOULD_SKIP_THIS
-
 /**
  * \def UTILS_ERROR_TRACE0(MSG)
  * \brief Macro to throw a Runtime_TraceError with a simple message
@@ -41,7 +39,6 @@
  */
 #ifndef UTILS_ERROR_TRACE0
 #define UTILS_ERROR_TRACE0( MSG ) throw Utils::Runtime_TraceError( MSG, __FILENAME__, __LINE__ )
-#endif
 
 /**
  * \def UTILS_ASSERT_TRACE0(COND, MSG)
@@ -50,8 +47,7 @@
  * \param MSG The error message to display if condition is false
  */
 #ifndef UTILS_ASSERT_TRACE0
-#define UTILS_ASSERT_TRACE0( COND, MSG ) \
-  if ( !( COND ) ) UTILS_ERROR_TRACE0( MSG )
+#define UTILS_ASSERT_TRACE0( COND, MSG ) if ( !( COND ) ) UTILS_ERROR_TRACE0( MSG )
 #endif
 
 /**

@@ -26,12 +26,23 @@
 
 // Include for macOS specific APIs
 #if defined( __APPLE__ )
+#include <cstdio>
+#include <cstring>
+#include <dirent.h>
+#include <ifaddrs.h>
+#include <mach-o/dyld.h>
 #include <mach/mach.h>
 #include <mach/mach_host.h>
+#include <net/if.h>
+#include <net/if_dl.h>
+#include <netdb.h>
 #include <sys/mount.h>
+#include <sys/stat.h>
 #include <sys/sysctl.h>
 #include <sys/statvfs.h>
+#include <sys/types.h>
 #include <unistd.h>
+#include <vector>
 #endif
 
 #if defined( __linux__ )
@@ -1299,19 +1310,6 @@ namespace Utils
 // macOS IMPLEMENTATIONS
 // =========================================================================
 #elif defined( __APPLE__ )
-
-#include <dirent.h>
-#include <ifaddrs.h>
-#include <mach-o/dyld.h>
-#include <net/if.h>
-#include <net/if_dl.h>
-#include <netdb.h>
-#include <sys/stat.h>
-#include <sys/types.h>
-#include <unistd.h>
-#include <cstdio>
-#include <cstring>
-#include <vector>
 
   /**
    * @brief Gets the value of an environment variable (macOS).
