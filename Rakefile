@@ -74,6 +74,9 @@ def cmake_configure_command(enable_tests: false)
     "-DCLOTHOIDS_INSTALL=ON",
     "-DCLOTHOIDS_BUILD_BENCHMARKS=OFF",
     "-DCLOTHOIDS_STRICT_WARNINGS=OFF",
+    "-DCLOTHOIDS_POPULATE_TOOLBOX=OFF",
+    "-DCLOTHOIDS_ALLOW_NETWORK_FETCH=OFF",
+    "-DUTILS_UPDATE_3RDPARTY=OFF",
     project_root
   ]
   args.join(' ')

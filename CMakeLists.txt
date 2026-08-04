@@ -115,6 +115,8 @@ option(BUILD_SHARED_LIBS "Build Clothoids as a shared library" OFF)
 option(BUILD_TESTING "Build the Clothoids test executables" ${PROJECT_IS_TOP_LEVEL})
 option(CLOTHOIDS_INSTALL "Generate the install target" ${PROJECT_IS_TOP_LEVEL})
 option(CLOTHOIDS_BUILD_BENCHMARKS "Build the micro-benchmarks" ${PROJECT_IS_TOP_LEVEL})
+option(CLOTHOIDS_POPULATE_TOOLBOX "Refresh toolbox/src during a normal build" OFF)
+option(CLOTHOIDS_ALLOW_NETWORK_FETCH "Allow FetchContent network fallbacks for missing sibling projects" OFF)
 
 # Strict warnings are useful for maintenance but are opt-in because they may be
 # too aggressive for users building with newer compilers or vendor toolchains.
@@ -214,11 +216,12 @@ include(FetchContent)
 # ----------------------------------------------------------------------------
 # Dependency helper: use a local checkout or fall back to FetchContent
 # ----------------------------------------------------------------------------
-# clothoids_use_local_or_fetch(NAME LOCAL_DIR) centralizes the dependency
+# clothoids_use_local_or_fetch(NAME LOCAL_DIR EXPECTED_REF) centralizes the dependency
 # loading policy used for GenericContainer, UtilsLite, and quarticRootsFlocke.
 #
 # Resolution order:
-#   1. If LOCAL_DIR contains a CMakeLists.txt, use it as a local checkout.
+#   1. If LOCAL_DIR contains a CMakeLists.txt and either belongs to the same
+#      Git worktree as Clothoids or resolves to EXPECTED_REF, use it locally.
 #   2. Otherwise, use the FetchContent declaration already registered by the
 #      caller and let CMake download/populate the dependency.
 #
@@ -227,7 +230,7 @@ include(FetchContent)
 # installing their own files when only the Clothoids install target should
 # control the final layout.
 # ----------------------------------------------------------------------------
-function(clothoids_use_local_or_fetch NAME LOCAL_DIR)
+function(clothoids_use_local_or_fetch NAME LOCAL_DIR EXPECTED_REF)
   # Normalize the user-supplied or default local path so existence checks and
   # diagnostic messages do not depend on the current working directory.
   get_filename_component(
@@ -255,16 +258,104 @@ function(clothoids_use_local_or_fetch NAME LOCAL_DIR)
   set(_saved_skip_install_rules "${CMAKE_SKIP_INSTALL_RULES}")
   set(CMAKE_SKIP_INSTALL_RULES ON)
 
-  if(EXISTS "${_local_abs}/CMakeLists.txt")
-    message(STATUS "Using local ${NAME}: ${_local_abs}")
+  set(_local_matches FALSE)
+  set(_local_branch "not available")
+  set(_local_state "not a compatible Git checkout")
+  if(EXISTS "${_local_abs}/CMakeLists.txt" AND GIT_EXECUTABLE)
+    execute_process(
+      COMMAND "${GIT_EXECUTABLE}" -C "${_local_abs}" symbolic-ref --quiet --short HEAD
+      RESULT_VARIABLE _branch_result
+      OUTPUT_VARIABLE _local_branch
+      OUTPUT_STRIP_TRAILING_WHITESPACE
+      ERROR_QUIET
+    )
+    if(NOT _branch_result EQUAL 0)
+      set(_local_branch "detached HEAD")
+    endif()
+
+    execute_process(
+      COMMAND "${GIT_EXECUTABLE}" -C "${CMAKE_CURRENT_SOURCE_DIR}" rev-parse --show-toplevel
+      RESULT_VARIABLE _project_root_result
+      OUTPUT_VARIABLE _project_git_root
+      OUTPUT_STRIP_TRAILING_WHITESPACE
+      ERROR_QUIET
+    )
+    execute_process(
+      COMMAND "${GIT_EXECUTABLE}" -C "${_local_abs}" rev-parse --show-toplevel
+      RESULT_VARIABLE _local_root_result
+      OUTPUT_VARIABLE _local_git_root
+      OUTPUT_STRIP_TRAILING_WHITESPACE
+      ERROR_QUIET
+    )
+
+    if(
+      _project_root_result EQUAL 0 AND
+      _local_root_result EQUAL 0 AND
+      _project_git_root STREQUAL _local_git_root
+    )
+      set(_local_matches TRUE)
+      set(_local_state "shared Git worktree, branch '${_local_branch}'")
+    elseif(_branch_result EQUAL 0 AND _local_branch STREQUAL EXPECTED_REF)
+      set(_local_matches TRUE)
+      set(_local_state "branch '${_local_branch}'")
+    else()
+      execute_process(
+        COMMAND "${GIT_EXECUTABLE}" -C "${_local_abs}" rev-parse HEAD
+        RESULT_VARIABLE _head_result
+        OUTPUT_VARIABLE _head_commit
+        OUTPUT_STRIP_TRAILING_WHITESPACE
+        ERROR_QUIET
+      )
+      execute_process(
+        COMMAND "${GIT_EXECUTABLE}" -C "${_local_abs}" rev-parse "${EXPECTED_REF}^{commit}"
+        RESULT_VARIABLE _ref_result
+        OUTPUT_VARIABLE _ref_commit
+        OUTPUT_STRIP_TRAILING_WHITESPACE
+        ERROR_QUIET
+      )
+      if(_head_result EQUAL 0 AND _ref_result EQUAL 0 AND _head_commit STREQUAL _ref_commit)
+        set(_local_matches TRUE)
+        set(_local_state "HEAD at ref '${EXPECTED_REF}'")
+      elseif(_head_result EQUAL 0 AND _ref_result EQUAL 0)
+        execute_process(
+          COMMAND "${GIT_EXECUTABLE}" -C "${_local_abs}" merge-base --is-ancestor "${_ref_commit}" "${_head_commit}"
+          RESULT_VARIABLE _ref_is_ancestor
+          ERROR_QUIET
+        )
+        if(_ref_is_ancestor EQUAL 0)
+          set(_local_matches TRUE)
+          set(_local_state "branch '${_local_branch}' contains ref '${EXPECTED_REF}'")
+        else()
+          set(_local_state "branch '${_local_branch}'")
+        endif()
+      else()
+        set(_local_state "branch '${_local_branch}'")
+      endif()
+    endif()
+  endif()
+
+  if(_local_matches)
+    message(STATUS "Clothoids: ${NAME} -> local ${_local_abs} (${_local_state}, requested '${EXPECTED_REF}')")
     set(FETCHCONTENT_SOURCE_DIR_${_name_upper} "${_local_abs}" CACHE PATH "Local ${NAME} checkout" FORCE)
     FetchContent_MakeAvailable(${NAME})
-    set("${NAME}_SOURCE" "local: ${_local_abs}" PARENT_SCOPE)
+    set("${NAME}_SOURCE" "local: ${_local_abs} [${_local_state}]" PARENT_SCOPE)
     set("${NAME}_SOURCE_DIR" "${_local_abs}" PARENT_SCOPE)
   else()
-    message(STATUS "Fetching ${NAME}")
+    unset(FETCHCONTENT_SOURCE_DIR_${_name_upper} CACHE)
+    if(EXISTS "${_local_abs}/CMakeLists.txt")
+      message(STATUS "Clothoids: ${NAME} -> ignoring local ${_local_abs} (${_local_state}, requested '${EXPECTED_REF}')")
+      set(_local_problem "${_local_state} does not match requested ref '${EXPECTED_REF}'")
+    else()
+      set(_local_problem "checkout not found at ${_local_abs}")
+    endif()
+    if(NOT CLOTHOIDS_ALLOW_NETWORK_FETCH)
+      message(FATAL_ERROR
+        "Cannot use local ${NAME}: ${_local_problem}. "
+        "Enable CLOTHOIDS_ALLOW_NETWORK_FETCH to fetch '${EXPECTED_REF}'.")
+    endif()
+    message(STATUS "Clothoids: ${NAME} -> FetchContent (requested '${EXPECTED_REF}')")
     FetchContent_MakeAvailable(${NAME})
-    set("${NAME}_SOURCE" "FetchContent" PARENT_SCOPE)
+    set("${NAME}_SOURCE" "FetchContent: ${EXPECTED_REF}" PARENT_SCOPE)
     if(DEFINED "${_name_lower}_SOURCE_DIR")
       set("${NAME}_SOURCE_DIR" "${${_name_lower}_SOURCE_DIR}" PARENT_SCOPE)
     endif()
@@ -292,6 +383,9 @@ endfunction()
 set(CLOTHOIDS_GC_LOCAL_DIR "${CMAKE_CURRENT_SOURCE_DIR}/../GC" CACHE PATH "Local GenericContainer checkout")
 set(CLOTHOIDS_UTILSLITE_LOCAL_DIR "${CMAKE_CURRENT_SOURCE_DIR}/../UtilsLite" CACHE PATH "Local UtilsLite checkout")
 set(CLOTHOIDS_QUARTIC_ROOTS_LOCAL_DIR "${CMAKE_CURRENT_SOURCE_DIR}/../quarticRootsFlocke" CACHE PATH "Local quarticRootsFlocke checkout")
+set(CLOTHOIDS_GC_REF "GC2.0" CACHE STRING "GenericContainer branch/tag to fetch")
+set(CLOTHOIDS_UTILSLITE_REF "Utils2.0" CACHE STRING "UtilsLite branch/tag to fetch")
+set(CLOTHOIDS_QUARTIC_ROOTS_REF "1.2.0" CACHE STRING "quarticRootsFlocke branch/tag to fetch")
 
 # ----------------------------------------------------------------------------
 # Dependency 1: GenericContainer
@@ -303,22 +397,26 @@ set(CLOTHOIDS_QUARTIC_ROOTS_LOCAL_DIR "${CMAKE_CURRENT_SOURCE_DIR}/../quarticRoo
 # ----------------------------------------------------------------------------
 set(GENERIC_CONTAINER_INSTALL OFF CACHE BOOL "Disable GenericContainer install rules inside Clothoids" FORCE)
 set(GENERIC_CONTAINER_BUILD_EXAMPLES OFF CACHE BOOL "Disable GenericContainer examples inside Clothoids" FORCE)
-# Clothoids links only the YAML bridge. Disable the unused JSON bridge before
-# adding GenericContainer so nlohmann_json is neither searched nor downloaded.
+# Clothoids links only the YAML bridge. Disable the unused JSON, TOML and Lua
+# bridges before adding GenericContainer so their dependencies are neither
+# searched nor downloaded. Force YAML on because its target is required below.
+set(GENERIC_CONTAINER_ENABLE_YAML ON CACHE BOOL "Enable GenericContainer YAML bridge inside Clothoids" FORCE)
 set(
   GENERIC_CONTAINER_ENABLE_JSON
   ${CLOTHOIDS_ENABLE_GENERIC_CONTAINER_JSON}
   CACHE BOOL "Enable GenericContainer JSON bridge inside Clothoids"
   FORCE
 )
+set(GENERIC_CONTAINER_ENABLE_TOML OFF CACHE BOOL "Disable GenericContainer TOML bridge inside Clothoids" FORCE)
+set(GENERIC_CONTAINER_ENABLE_LUA OFF CACHE BOOL "Disable GenericContainer Lua bridge inside Clothoids" FORCE)
 
 FetchContent_Declare(
   GenericContainer
   GIT_REPOSITORY https://github.com/ebertolazzi/GenericContainer.git
-  GIT_TAG        GC2.0
+  GIT_TAG        ${CLOTHOIDS_GC_REF}
   GIT_SHALLOW    TRUE
 )
-clothoids_use_local_or_fetch(GenericContainer "${CLOTHOIDS_GC_LOCAL_DIR}")
+clothoids_use_local_or_fetch(GenericContainer "${CLOTHOIDS_GC_LOCAL_DIR}" "${CLOTHOIDS_GC_REF}")
 
 # Clang compatibility adjustment.
 # Some dependency targets may not propagate the standard C++ library choice in
@@ -356,10 +454,10 @@ set(UTILS_ENABLE_TESTS OFF CACHE BOOL "Disable UtilsLite test suite" FORCE)
 FetchContent_Declare(
   UtilsLite
   GIT_REPOSITORY https://github.com/ebertolazzi/UtilsLite.git
-  GIT_TAG        Utils2.0
+  GIT_TAG        ${CLOTHOIDS_UTILSLITE_REF}
   GIT_SHALLOW    TRUE
 )
-clothoids_use_local_or_fetch(UtilsLite "${CLOTHOIDS_UTILSLITE_LOCAL_DIR}")
+clothoids_use_local_or_fetch(UtilsLite "${CLOTHOIDS_UTILSLITE_LOCAL_DIR}" "${CLOTHOIDS_UTILSLITE_REF}")
 
 # Treat UtilsLite include directories as SYSTEM include directories.
 # This prevents third-party or dependency warnings from being reported as if
@@ -387,10 +485,10 @@ endforeach()
 FetchContent_Declare(
   quarticRootsFlocke
   GIT_REPOSITORY https://github.com/ebertolazzi/quarticRootsFlocke.git
-  GIT_TAG        1.2.0
+  GIT_TAG        ${CLOTHOIDS_QUARTIC_ROOTS_REF}
   GIT_SHALLOW    TRUE
 )
-clothoids_use_local_or_fetch(quarticRootsFlocke "${CLOTHOIDS_QUARTIC_ROOTS_LOCAL_DIR}")
+clothoids_use_local_or_fetch(quarticRootsFlocke "${CLOTHOIDS_QUARTIC_ROOTS_LOCAL_DIR}" "${CLOTHOIDS_QUARTIC_ROOTS_REF}")
 
 # Canonical dependency target names used by the Clothoids target.
 # These variables keep the final target_link_libraries() call compact and make
@@ -745,7 +843,6 @@ endfunction()
 file(MAKE_DIRECTORY
   "@CLOTHOIDS_LOCAL_INCLUDE_DIR@"
   "@CLOTHOIDS_LOCAL_3RD_INCLUDE_DIR@"
-  "@CMAKE_CURRENT_SOURCE_DIR@/toolbox/src"
 )
 
 _clothoids_copy_header_tree("@CMAKE_CURRENT_SOURCE_DIR@/include" "@CLOTHOIDS_LOCAL_INCLUDE_DIR@" "Clothoids include")
@@ -757,10 +854,13 @@ _clothoids_copy_header_tree("@UtilsLite_SOURCE_DIR@/src" "@CLOTHOIDS_LOCAL_3RD_I
 _clothoids_copy_header_tree("@quarticRootsFlocke_SOURCE_DIR@/include" "@CLOTHOIDS_LOCAL_3RD_INCLUDE_DIR@" "quarticRootsFlocke include")
 _clothoids_copy_header_tree("@quarticRootsFlocke_SOURCE_DIR@/src" "@CLOTHOIDS_LOCAL_3RD_INCLUDE_DIR@" "quarticRootsFlocke src")
 
-# Merge the public and implementation trees into the flat toolbox source root.
+# Merge the public and implementation trees into the flat toolbox source root
+# only when explicitly requested. A normal build must not rewrite source files.
 # file(COPY) preserves nested directories (for example Clothoids/, Utils/ and
 # GenericContainer/) while files located at the tree root remain directly in
 # toolbox/src, matching the historical populate_toolbox.rb layout.
+if(@CLOTHOIDS_POPULATE_TOOLBOX@)
+file(MAKE_DIRECTORY "@CMAKE_CURRENT_SOURCE_DIR@/toolbox/src")
 _clothoids_copy_toolbox_tree("@CMAKE_CURRENT_SOURCE_DIR@/include" "@CMAKE_CURRENT_SOURCE_DIR@/toolbox/src" "Clothoids include")
 _clothoids_copy_toolbox_tree("@SOURCE_DIR@" "@CMAKE_CURRENT_SOURCE_DIR@/toolbox/src" "Clothoids src")
 _clothoids_copy_toolbox_tree("@GenericContainer_SOURCE_DIR@/include" "@CMAKE_CURRENT_SOURCE_DIR@/toolbox/src" "GenericContainer include")
@@ -771,6 +871,7 @@ _clothoids_copy_complete_tree("@UtilsLite_SOURCE_DIR@/src/Utils/3rd/Eigen" "@CMA
 _clothoids_copy_complete_tree("@UtilsLite_SOURCE_DIR@/src/Utils/3rd/unsupported" "@CMAKE_CURRENT_SOURCE_DIR@/toolbox/src/Utils/3rd/unsupported" "Eigen unsupported headers")
 _clothoids_copy_toolbox_tree("@quarticRootsFlocke_SOURCE_DIR@/include" "@CMAKE_CURRENT_SOURCE_DIR@/toolbox/src" "quarticRootsFlocke include")
 _clothoids_copy_toolbox_tree("@quarticRootsFlocke_SOURCE_DIR@/src" "@CMAKE_CURRENT_SOURCE_DIR@/toolbox/src" "quarticRootsFlocke src")
+endif()
 ]=])
 configure_file(
   "${CLOTHOIDS_HEADER_COPY_SCRIPT}"
@@ -780,7 +881,7 @@ configure_file(
 
 add_custom_target(Clothoids_copy_headers ALL
   COMMAND "${CMAKE_COMMAND}" -P "${CLOTHOIDS_HEADER_COPY_SCRIPT}"
-  COMMENT "Copying Clothoids/dependency headers and populating toolbox/src"
+  COMMENT "Copying Clothoids/dependency headers (toolbox refresh is opt-in)"
   VERBATIM
 )
 add_dependencies(Clothoids Clothoids_copy_headers)
