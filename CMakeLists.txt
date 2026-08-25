@@ -372,6 +372,81 @@ function(clothoids_use_local_or_fetch NAME LOCAL_DIR EXPECTED_REF)
   set(CMAKE_SKIP_INSTALL_RULES "${_saved_skip_install_rules}")
 endfunction()
 
+# Dependencies loaded by a nested project cannot reliably identify their own
+# branch when all sources have been copied into one aggregate Git worktree.
+# Preselect a local source when it belongs to Clothoids' worktree, or when its
+# standalone checkout resolves to the requested ref.  FetchContent then passes
+# the source directly to the nested project, bypassing its branch-name check.
+function(clothoids_override_nested_source NAME LOCAL_DIR EXPECTED_REF)
+  get_filename_component(
+    _nested_abs
+    "${LOCAL_DIR}"
+    ABSOLUTE
+    BASE_DIR "${CMAKE_CURRENT_SOURCE_DIR}"
+  )
+  if(NOT EXISTS "${_nested_abs}/CMakeLists.txt" OR NOT GIT_EXECUTABLE)
+    return()
+  endif()
+
+  execute_process(
+    COMMAND "${GIT_EXECUTABLE}" -C "${CMAKE_CURRENT_SOURCE_DIR}" rev-parse --show-toplevel
+    RESULT_VARIABLE _project_root_result
+    OUTPUT_VARIABLE _project_git_root
+    OUTPUT_STRIP_TRAILING_WHITESPACE
+    ERROR_QUIET
+  )
+  execute_process(
+    COMMAND "${GIT_EXECUTABLE}" -C "${_nested_abs}" rev-parse --show-toplevel
+    RESULT_VARIABLE _nested_root_result
+    OUTPUT_VARIABLE _nested_git_root
+    OUTPUT_STRIP_TRAILING_WHITESPACE
+    ERROR_QUIET
+  )
+  execute_process(
+    COMMAND "${GIT_EXECUTABLE}" -C "${_nested_abs}" rev-parse HEAD
+    RESULT_VARIABLE _nested_head_result
+    OUTPUT_VARIABLE _nested_head
+    OUTPUT_STRIP_TRAILING_WHITESPACE
+    ERROR_QUIET
+  )
+  execute_process(
+    COMMAND "${GIT_EXECUTABLE}" -C "${_nested_abs}" rev-parse "${EXPECTED_REF}^{commit}"
+    RESULT_VARIABLE _nested_ref_result
+    OUTPUT_VARIABLE _nested_ref
+    OUTPUT_STRIP_TRAILING_WHITESPACE
+    ERROR_QUIET
+  )
+
+  set(_nested_matches FALSE)
+  set(_nested_state "does not match '${EXPECTED_REF}'")
+  if(
+    _project_root_result EQUAL 0 AND
+    _nested_root_result EQUAL 0 AND
+    _project_git_root STREQUAL _nested_git_root
+  )
+    set(_nested_matches TRUE)
+    set(_nested_state "shared Git worktree")
+  elseif(
+    _nested_head_result EQUAL 0 AND
+    _nested_ref_result EQUAL 0 AND
+    _nested_head STREQUAL _nested_ref
+  )
+    set(_nested_matches TRUE)
+    set(_nested_state "HEAD at ref '${EXPECTED_REF}'")
+  endif()
+
+  if(_nested_matches)
+    string(TOUPPER "${NAME}" _nested_name_upper)
+    set(
+      FETCHCONTENT_SOURCE_DIR_${_nested_name_upper}
+      "${_nested_abs}"
+      CACHE PATH "Local source override for nested dependency ${NAME}"
+      FORCE
+    )
+    message(STATUS "Clothoids: nested ${NAME} -> local ${_nested_abs} (${_nested_state})")
+  endif()
+endfunction()
+
 # ----------------------------------------------------------------------------
 # Local dependency checkout paths
 # ----------------------------------------------------------------------------
@@ -383,6 +458,7 @@ endfunction()
 set(CLOTHOIDS_GC_LOCAL_DIR "${CMAKE_CURRENT_SOURCE_DIR}/../GC" CACHE PATH "Local GenericContainer checkout")
 set(CLOTHOIDS_UTILSLITE_LOCAL_DIR "${CMAKE_CURRENT_SOURCE_DIR}/../UtilsLite" CACHE PATH "Local UtilsLite checkout")
 set(CLOTHOIDS_QUARTIC_ROOTS_LOCAL_DIR "${CMAKE_CURRENT_SOURCE_DIR}/../quarticRootsFlocke" CACHE PATH "Local quarticRootsFlocke checkout")
+set(CLOTHOIDS_FKYAML_LOCAL_DIR "${CMAKE_CURRENT_SOURCE_DIR}/../fkYAML" CACHE PATH "Local fkYAML checkout used by GenericContainer")
 set(CLOTHOIDS_GC_REF "GC2.0" CACHE STRING "GenericContainer branch/tag to fetch")
 set(CLOTHOIDS_UTILSLITE_REF "Utils2.0" CACHE STRING "UtilsLite branch/tag to fetch")
 set(CLOTHOIDS_QUARTIC_ROOTS_REF "1.2.0" CACHE STRING "quarticRootsFlocke branch/tag to fetch")
@@ -409,6 +485,12 @@ set(
 )
 set(GENERIC_CONTAINER_ENABLE_TOML OFF CACHE BOOL "Disable GenericContainer TOML bridge inside Clothoids" FORCE)
 set(GENERIC_CONTAINER_ENABLE_LUA OFF CACHE BOOL "Disable GenericContainer Lua bridge inside Clothoids" FORCE)
+
+clothoids_override_nested_source(fkYAML "${CLOTHOIDS_FKYAML_LOCAL_DIR}" "v0.4.3")
+if(FETCHCONTENT_SOURCE_DIR_FKYAML)
+  FetchContent_Declare(fkYAML SOURCE_DIR "${FETCHCONTENT_SOURCE_DIR_FKYAML}")
+  FetchContent_MakeAvailable(fkYAML)
+endif()
 
 FetchContent_Declare(
   GenericContainer
