@@ -22,8 +22,11 @@
 
 #include "PolynomialRoots.hh"
 
-#define A_THRESOLD 0.01
-#define A_SERIE_SIZE 10
+namespace {
+  // File-local series-expansion tuning constants (internal linkage).
+  constexpr double A_THRESOLD   = 0.01;
+  constexpr int    A_SERIE_SIZE = 10;
+}
 
 #ifdef __GNUC__
 #pragma GCC diagnostic push

@@ -55,3 +55,4 @@ Xcode
 *.csv
 .DS_Store
 .cache
+build-debug

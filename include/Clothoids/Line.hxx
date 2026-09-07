@@ -78,6 +78,7 @@ namespace G2lib
       , m_s0( sin( theta0 ) )
       , m_L( L )
     {
+      assert( L >= 0 && "LineSegment: length L must be non-negative" );
     }
 
     void copy( LineSegment const & c )

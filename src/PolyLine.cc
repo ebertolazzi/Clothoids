@@ -880,7 +880,7 @@ namespace G2lib
     for ( const auto & [fst, snd] : intersectList )
     {
       integer i{ fst };
-      Utils::Debug(
+      Utils::Check(
         i >= 0 && i < static_cast<integer>( m_polyline_list.size() ),
         "PolyLine::collision( PL ) i={} out of range [0,{})\n",
         i,
@@ -888,7 +888,7 @@ namespace G2lib
       LineSegment const & LS1{ m_polyline_list[i] };
       for ( auto const & j : snd )
       {
-        Utils::Debug(
+        Utils::Check(
           j >= 0 && j < static_cast<integer>( PL.m_polyline_list.size() ),
           "PolyLine::collision( PL ) j={} out of range [0,{})\n",
           j,
@@ -930,14 +930,14 @@ namespace G2lib
       for ( const auto & [fst, snd] : intersectList )
       {
         integer ipos0{ fst };
-        Utils::Debug(
+        Utils::Check(
           ipos0 < static_cast<integer>( m_polyline_list.size() ),
           "PolyLine::intersect, bad ipos0 = {}\n",
           ipos0 );
         LineSegment const & LS0 = m_polyline_list[ipos0];
         for ( auto const & ipos1 : snd )
         {
-          Utils::Debug(
+          Utils::Check(
             ipos1 < static_cast<integer>( PL.m_polyline_list.size() ),
             "PolyLine::intersect, bad ipos1 = {}\n",
             ipos1 );

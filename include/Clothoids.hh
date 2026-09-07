@@ -65,6 +65,7 @@
 #define PIPAL_EIGEN_EXTERNAL
 #include "Pipal.hh"
 
+#include <cassert>
 #include <string>
 #include <string_view>
 #include <fstream>
@@ -86,6 +87,10 @@
 #define G2LIB_DEBUG_MESSAGE( ... )
 #endif
 
+// Default angular tolerance. Define GLIB2_TOL_ANGLE before including this
+// header to override it at compile time; the value is captured below as a
+// typed `constexpr` (G2lib::TOL_ANGLE) so it is used through the code instead
+// of a raw macro.
 #ifndef GLIB2_TOL_ANGLE
 #define GLIB2_TOL_ANGLE 1e-8
 #endif
@@ -107,6 +112,13 @@ namespace G2lib
   using AABB_SET         = Utils::AABBtree<real_type>::AABB_SET;  //!< Set type used in `AABB` tree object
   using AABB_MAP         = Utils::AABBtree<real_type>::AABB_MAP;  //!< Map type used in `AABB` tree object
   using GenericContainer = GC_namespace::GenericContainer;        //!< Generic container object
+
+  //!
+  //! Angular tolerance used to detect degenerate/aligned configurations.
+  //! Override by defining the `GLIB2_TOL_ANGLE` macro before including
+  //! `Clothoids.hh`.
+  //!
+  inline constexpr real_type TOL_ANGLE = GLIB2_TOL_ANGLE;
 
   //!
   //! Enumeration type for curve type

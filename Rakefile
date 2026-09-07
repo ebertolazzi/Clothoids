@@ -52,19 +52,19 @@ def project_root
   File.expand_path(__dir__)
 end
 
-def build_dir
-  File.join(project_root, 'build')
+def build_dir(name = 'build')
+  File.join(project_root, name)
 end
 
 def cmake_generator
   'Ninja'
 end
 
-def cmake_configure_command(enable_tests: false)
+def cmake_configure_command(enable_tests: false, build_dir: build_dir(), build_type_override: nil, enable_sanitizers: false)
   args = [
     "-G", cmake_generator,
     "-B", build_dir,
-    "-DCMAKE_BUILD_TYPE=#{build_type}",
+    "-DCMAKE_BUILD_TYPE=#{build_type_override || build_type}",
     "-DCMAKE_INSTALL_PREFIX=#{install_prefix}",
     "-DCMAKE_INSTALL_LIBDIR=lib",
     "-DCMAKE_INSTALL_INCLUDEDIR=include",
@@ -76,14 +76,15 @@ def cmake_configure_command(enable_tests: false)
     "-DCLOTHOIDS_STRICT_WARNINGS=OFF",
     "-DCLOTHOIDS_POPULATE_TOOLBOX=OFF",
     "-DCLOTHOIDS_ALLOW_NETWORK_FETCH=OFF",
+    "-DCLOTHOIDS_ENABLE_SANITIZERS=#{enable_sanitizers ? 'ON' : 'OFF'}",
     "-DUTILS_UPDATE_3RDPARTY=OFF",
     project_root
   ]
   args.join(' ')
 end
 
-def cmake_build_command(target = nil)
-  cmd = ["--build", build_dir, "--config", build_type]
+def cmake_build_command(target = nil, build_dir = build_dir(), config = build_type)
+  cmd = ["--build", build_dir, "--config", config]
   cmd += ["--target", target] if target
   cmd += ["--parallel"]
   cmd.join(' ')
@@ -163,6 +164,27 @@ end
 desc "Build and run all tests (alias for test)"
 task :run => :test do
   # same as test
+end
+
+desc "Debug build with AddressSanitizer + UndefinedBehaviorSanitizer, then run all tests"
+task :debug do
+  dbg_dir = build_dir('build-debug')
+  puts "Configuring CMake in #{dbg_dir} (Debug, ASan/UBSan enabled)...".green
+  sh "cmake " + cmake_configure_command(
+    enable_tests: true,
+    build_dir: dbg_dir,
+    build_type_override: 'Debug',
+    enable_sanitizers: true
+  )
+  puts "Compiling test executables (Debug + sanitizers)...".green
+  sh "cmake " + cmake_build_command('Clothoids_all_tests', dbg_dir, 'Debug')
+  puts "Running tests under AddressSanitizer/UndefinedBehaviorSanitizer...".green
+  sh "ctest --test-dir #{dbg_dir} --build-config Debug --output-on-failure"
+end
+
+desc "Alias for debug (compile with AddressSanitizer/UndefinedBehaviorSanitizer and run tests)"
+task :sanitizer => :debug do
+  # same as debug
 end
 
 desc "Clean build artifacts (keeps lib/ and lib3rd/)"

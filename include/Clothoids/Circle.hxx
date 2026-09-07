@@ -91,6 +91,7 @@ namespace G2lib
       , m_k( k )
       , m_L( L )
     {
+      assert( L >= 0 && "CircleArc: length L must be non-negative" );
     }
 
     //!

@@ -1,11 +1,17 @@
 @INCLUDE = Doxyfile
 
 PROJECT_NAME           = "Clothoids"
-INPUT                  = ../src
+# The public headers (and all Doxygen `//!` comments) live under ../include;
+# ../src holds only the .cc implementation files. Both must be scanned, plus
+# the standalone mainpage/tutorial markdown file below. Previously this only
+# listed ../src, so the entire class/namespace reference silently went empty
+# after the headers were moved into include/ -- fixed here.
+INPUT                  = ../include ../src tutorial.md
 FILE_PATTERNS          = *.c *.cc *.h *.hh *.hxx *.cxx
 INCLUDE_FILE_PATTERNS  =
 RECURSIVE              = YES
 IMAGE_PATH             = images
+USE_MDFILE_AS_MAINPAGE = tutorial.md
 USE_MATHJAX            = YES
 MATHJAX_VERSION        = MathJax_3
 SEARCHENGINE           = NO   # deactivate search engine (as sphinx has it's own search)
@@ -35,3 +41,11 @@ PREDEFINED = DOXYGEN_SHOULD_SKIP_THIS
 ALIASES               = html_image{2}="\image html \1' \2"
 HTML_EXTRA_STYLESHEET = doxygen-awesome.css
 HTML_OUTPUT           = html
+
+# Undocumented-symbol warnings are otherwise only printed to stderr during
+# `make doxygen` and easy to miss; keep a log so they can be reviewed/tracked.
+WARN_LOGFILE          = doxygen_warnings.log
+
+# LaTeX/PDF output is never consumed (Sphinx is the published site); skip it
+# to save real time on every doc build.
+GENERATE_LATEX        = NO

@@ -121,6 +121,15 @@ option(CLOTHOIDS_ALLOW_NETWORK_FETCH "Allow FetchContent network fallbacks for m
 # Strict warnings are useful for maintenance but are opt-in because they may be
 # too aggressive for users building with newer compilers or vendor toolchains.
 option(CLOTHOIDS_STRICT_WARNINGS "Compile with narrowing/conversion warnings" OFF)
+# For a numeric geometry library (clothoids, Dubins, root finding), sanitizers
+# are the fastest way to catch UB (divide-by-zero, out-of-range reads, signed
+# overflow) that plain warnings miss. Only meaningful in Debug builds; the
+# `rake debug` task wires this up automatically.
+option(
+  CLOTHOIDS_ENABLE_SANITIZERS
+  "Build Debug configuration with AddressSanitizer + UndefinedBehaviorSanitizer"
+  OFF
+)
 option(
   CLOTHOIDS_ENABLE_GENERIC_CONTAINER_JSON
   "Enable the optional GenericContainer JSON bridge"
@@ -133,9 +142,11 @@ include(CheckIPOSupported)
 # ----------------------------------------------------------------------------
 # Compilation and optimization options
 # ----------------------------------------------------------------------------
-# Native CPU tuning is enabled for ordinary single-architecture builds, but
-# disabled by default for Apple universal binaries: -march=native cannot
-# describe both arm64 and x86_64 slices in the same artifact.
+# Native CPU tuning (-march=native) speeds up local/dev builds but produces a
+# binary that can crash (SIGILL) on any other CPU. It also cannot describe both
+# slices of an Apple universal binary at once. Default is OFF so packaged /
+# distributed / CI-published builds are portable by default; opt in explicitly
+# for local development with -DCLOTHOIDS_USE_NATIVE_ARCH=ON.
 set(CLOTHOIDS_APPLE_MULTI_ARCH FALSE)
 if(APPLE AND CMAKE_OSX_ARCHITECTURES)
   list(LENGTH CMAKE_OSX_ARCHITECTURES CLOTHOIDS_OSX_ARCHITECTURE_COUNT)
@@ -144,15 +155,10 @@ if(APPLE AND CMAKE_OSX_ARCHITECTURES)
   endif()
 endif()
 
-set(CLOTHOIDS_USE_NATIVE_ARCH_DEFAULT ON)
-if(CLOTHOIDS_APPLE_MULTI_ARCH)
-  set(CLOTHOIDS_USE_NATIVE_ARCH_DEFAULT OFF)
-endif()
-
 option(
   CLOTHOIDS_USE_NATIVE_ARCH
-  "Optimize Release builds for the current CPU architecture"
-  ${CLOTHOIDS_USE_NATIVE_ARCH_DEFAULT}
+  "Optimize Release builds for the current CPU architecture (unsafe for distributed binaries)"
+  OFF
 )
 option(CLOTHOIDS_ENABLE_LTO "Enable interprocedural optimization / LTO" ON)
 option(CLOTHOIDS_UNROLL_LOOPS "Enable explicit loop unrolling in Release builds" OFF)
@@ -189,9 +195,15 @@ endif()
 if(CMAKE_INSTALL_PREFIX_INITIALIZED_TO_DEFAULT)
   set(CMAKE_INSTALL_PREFIX "${CMAKE_CURRENT_SOURCE_DIR}/lib" CACHE PATH "Install prefix" FORCE)
 endif()
-set(CMAKE_INSTALL_INCLUDEDIR "include" CACHE PATH "Install include directory" FORCE)
-set(CMAKE_INSTALL_LIBDIR "lib" CACHE PATH "Install library directory" FORCE)
-set(CMAKE_INSTALL_BINDIR "bin" CACHE PATH "Install binary directory" FORCE)
+if(NOT DEFINED CMAKE_INSTALL_INCLUDEDIR)
+  set(CMAKE_INSTALL_INCLUDEDIR "include" CACHE PATH "Install include directory")
+endif()
+if(NOT DEFINED CMAKE_INSTALL_LIBDIR)
+  set(CMAKE_INSTALL_LIBDIR "lib" CACHE PATH "Install library directory")
+endif()
+if(NOT DEFINED CMAKE_INSTALL_BINDIR)
+  set(CMAKE_INSTALL_BINDIR "bin" CACHE PATH "Install binary directory")
+endif()
 
 # These absolute local paths are used by custom build/install helper commands.
 # They make the Rake-style local development layout explicit:
@@ -506,7 +518,22 @@ clothoids_use_local_or_fetch(GenericContainer "${CLOTHOIDS_GC_LOCAL_DIR}" "${CLO
 # libc++ to the GenericContainer targets that Clothoids may link against.  The
 # code distinguishes INTERFACE targets from compiled targets because CMake uses
 # different visibility keywords for those cases.
-if(CMAKE_CXX_COMPILER_ID MATCHES "Clang")
+#
+# libc++ is the natural default on Apple platforms, but forcing it unconditionally
+# on Linux/other Clang toolchains can trigger ABI mismatches when linking against
+# system libraries built against libstdc++. Make it an explicit, overridable
+# option instead of an unconditional choice for every Clang platform.
+set(CLOTHOIDS_CLANG_USE_LIBCXX_DEFAULT OFF)
+if(APPLE)
+  set(CLOTHOIDS_CLANG_USE_LIBCXX_DEFAULT ON)
+endif()
+option(
+  CLOTHOIDS_CLANG_USE_LIBCXX
+  "When compiling with Clang, force -stdlib=libc++ (default: ON on Apple, OFF elsewhere)"
+  ${CLOTHOIDS_CLANG_USE_LIBCXX_DEFAULT}
+)
+
+if(CMAKE_CXX_COMPILER_ID MATCHES "Clang" AND CLOTHOIDS_CLANG_USE_LIBCXX)
   foreach(_gc_target GenericContainer GenericContainerYaml)
     if(TARGET ${_gc_target})
       get_target_property(_gc_type ${_gc_target} TYPE)
@@ -625,20 +652,17 @@ endfunction()
 # ----------------------------------------------------------------------------
 # Source discovery
 # ----------------------------------------------------------------------------
-# Collect all .cc files below src/.  The non-recursive glob preserves the
-# original top-level behavior, while the recursive glob also captures optional
-# implementation files stored in subdirectories.  Duplicates are removed after
-# combining both lists.
-#
+# Collect all .cc files below src/, including any nested subdirectories.
 # CONFIGURE_DEPENDS asks CMake to re-check the glob when the build system is
-# regenerated.  This is convenient for this repository layout, although explicit
-# source lists remain the most reproducible approach for packaged libraries.
+# regenerated, so a newly added .cc file is picked up automatically. Explicit
+# source lists remain the most reproducible approach for packaged libraries,
+# but are more maintenance overhead for this repository layout.
 # ----------------------------------------------------------------------------
 set(SOURCE_DIR "${CMAKE_CURRENT_SOURCE_DIR}/src")
-file(GLOB SOURCES "${SOURCE_DIR}/*.cc")
-# Also include implementation files in nested source directories, if present.
-file(GLOB_RECURSE SOURCES_RECURSE "${SOURCE_DIR}/*.cc")
-list(APPEND SOURCES ${SOURCES_RECURSE})
+# A single recursive glob covers both top-level and nested implementation files;
+# CONFIGURE_DEPENDS makes CMake re-check it on rebuild, so a newly added .cc file
+# is picked up without having to rerun cmake by hand.
+file(GLOB_RECURSE SOURCES CONFIGURE_DEPENDS "${SOURCE_DIR}/*.cc")
 list(REMOVE_DUPLICATES SOURCES)
 
 # Public header discovery.
@@ -685,6 +709,11 @@ add_library(Clothoids::Clothoids ALIAS Clothoids)
 clothoids_set_target_output_dirs(Clothoids lib/lib)
 
 target_compile_features(Clothoids PUBLIC cxx_std_20)
+set_target_properties(
+  Clothoids PROPERTIES
+  CXX_EXTENSIONS OFF                # -std=c++20, not -std=gnu++20
+  POSITION_INDEPENDENT_CODE ON      # safe to embed in a future shared consumer
+)
 target_compile_definitions(Clothoids PUBLIC FMT_HEADER_ONLY)
 
 # Common target configuration: diagnostics, definitions and optimization policy.
@@ -818,10 +847,30 @@ if(CLOTHOIDS_STRICT_WARNINGS)
   target_compile_options(
     Clothoids PRIVATE
     -Wconversion -Wsign-conversion -Wshadow -Wdouble-promotion
+    $<$<CXX_COMPILER_ID:GNU,Clang,AppleClang>:-Wold-style-cast>
+    $<$<CXX_COMPILER_ID:GNU,Clang,AppleClang>:-Wextra-semi>
+    $<$<CXX_COMPILER_ID:GNU>:-Wuseless-cast>
+    $<$<CXX_COMPILER_ID:Clang,AppleClang>:-Wrange-loop-construct>
   )
 endif()
 
-if(CMAKE_CXX_COMPILER_ID MATCHES "Clang")
+# Sanitizers are propagated PUBLIC (compile and link) so that every executable
+# linking against Clothoids -- in particular the test suite built by `rake
+# debug` -- is compiled and linked consistently; mixing sanitized and
+# non-sanitized translation units in the same binary is undefined behavior.
+if(CLOTHOIDS_ENABLE_SANITIZERS)
+  target_compile_options(
+    Clothoids PUBLIC
+    $<$<AND:$<CONFIG:Debug>,$<CXX_COMPILER_ID:GNU,Clang,AppleClang>>:-fsanitize=address,undefined>
+    $<$<AND:$<CONFIG:Debug>,$<CXX_COMPILER_ID:GNU,Clang,AppleClang>>:-fno-omit-frame-pointer>
+  )
+  target_link_options(
+    Clothoids PUBLIC
+    $<$<AND:$<CONFIG:Debug>,$<CXX_COMPILER_ID:GNU,Clang,AppleClang>>:-fsanitize=address,undefined>
+  )
+endif()
+
+if(CMAKE_CXX_COMPILER_ID MATCHES "Clang" AND CLOTHOIDS_CLANG_USE_LIBCXX)
   target_compile_options(Clothoids PUBLIC -stdlib=libc++)
   target_link_options(Clothoids PUBLIC -stdlib=libc++)
 endif()
@@ -1111,7 +1160,7 @@ if(BUILD_TESTING AND PROJECT_IS_TOP_LEVEL)
       ${S} PROPERTIES
       RUNTIME_OUTPUT_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/bin"
     )
-    add_test(NAME "${S}" COMMAND "${CMAKE_CURRENT_SOURCE_DIR}/bin/${S}" WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR})
+    add_test(NAME "${S}" COMMAND $<TARGET_FILE:${S}> WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR})
     add_dependencies("${PROJECT_NAME}_all_tests" ${S})
   endforeach()
 endif()
@@ -1166,7 +1215,11 @@ if(CLOTHOIDS_INSTALL)
               \"${CMAKE_CURRENT_SOURCE_DIR}/lib/${CLOTHOIDS_REAL_LIBRARY_FILENAME}\"
               \"${CMAKE_CURRENT_SOURCE_DIR}/lib/${CLOTHOIDS_GENERIC_LIBRARY_FILENAME}\"
     )\n
-    file(REMOVE_RECURSE \"${CMAKE_CURRENT_SOURCE_DIR}/lib/Users\")"
+    # Workaround disabled (kept for easy restoration if the underlying bug resurfaces):
+    # previously removed a stray lib/Users directory produced by an absolute-path
+    # duplication bug in the install(CODE) prefix handling.
+    # file(REMOVE_RECURSE \"${CMAKE_CURRENT_SOURCE_DIR}/lib/Users\")
+    "
   )
   # Copy project headers during cmake --install as well.  This duplicates the
   # build-time header-copy behavior for users who rely exclusively on install.

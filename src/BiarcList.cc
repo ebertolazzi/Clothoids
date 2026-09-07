@@ -1100,7 +1100,7 @@ namespace G2lib
     for ( const auto & [fst, snd] : intersectList )
     {
       integer i{ fst };
-      Utils::Debug(
+      Utils::Check(
         i >= 0 && i < static_cast<integer>( m_aabb_triangles.size() ),
         "BiarcList::collision_ISO( offs={}, BL, offs_BL={} ) i={} out of range [0,{})\n",
         offs,
@@ -1111,7 +1111,7 @@ namespace G2lib
       Biarc const &      BA1{ m_biarc_list.at( T1.Icurve() ) };
       for ( auto const & j : snd )
       {
-        Utils::Debug(
+        Utils::Check(
           j >= 0 && j < static_cast<integer>( BL.m_aabb_triangles.size() ),
           "BiarcList::collision_ISO( offs={}, BL, offs_BL={} ) j={} out of range [0,{})\n",
           offs,
@@ -1150,7 +1150,7 @@ namespace G2lib
       for ( const auto & [fst, snd] : intersectList )
       {
         integer i{ fst };
-        Utils::Debug(
+        Utils::Check(
           i >= 0 && i < static_cast<integer>( m_aabb_triangles.size() ),
           "BiarcList::intersect_ISO( offs={}, BL, offs_BL={}, ilist ) i={} out of range [0,{})\n",
           offs,
@@ -1162,7 +1162,7 @@ namespace G2lib
 
         for ( integer j : snd )
         {
-          Utils::Debug(
+          Utils::Check(
             j >= 0 && j < static_cast<integer>( BL.m_aabb_triangles.size() ),
             "BiarcList::intersect_ISO( offs={}, BL, offs_BL={}, ilist ) j={} out of range [0,{})\n",
             offs,
@@ -1356,7 +1356,7 @@ namespace G2lib
       DST,
       hypot( qxx, qyy ),
       pt );
-    return pt > GLIB2_TOL_ANGLE * hypot( qxx, qyy ) ? -( icurve + 1 ) : icurve;
+    return pt > TOL_ANGLE * hypot( qxx, qyy ) ? -( icurve + 1 ) : icurve;
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

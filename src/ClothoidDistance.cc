@@ -592,7 +592,7 @@ namespace G2lib
     T = qxx * nx + qyy * ny;  // signed distance
     real_type const pt{ abs( qxx * ny - qyy * nx ) };
     G2LIB_DEBUG_MESSAGE( "ClothoidCurve::closest_point_ISO: ‖P-P₀ = {}, |(P-P₀)•T| = {}\n", dst, pt );
-    return pt > GLIB2_TOL_ANGLE * dst ? -1 : 1;
+    return pt > TOL_ANGLE * dst ? -1 : 1;
   }
 
   /*

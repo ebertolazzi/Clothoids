@@ -104,30 +104,30 @@ namespace G2lib
 
     ClothoidData() = default;
 
-    void theta_adjust( real_type const th )
+    constexpr void theta_adjust( real_type const th )
     {
       while ( m_theta0 > th + Utils::m_pi ) m_theta0 -= Utils::m_2pi;
       while ( m_theta0 < th - Utils::m_pi ) m_theta0 += Utils::m_2pi;
     }
 
-    real_type delta_theta( real_type const s ) const { return s * ( m_kappa0 + 0.5 * s * m_dk ); }
-    real_type deltaTheta( real_type const s ) const { return delta_theta( s ); }
+    constexpr real_type delta_theta( real_type const s ) const { return s * ( m_kappa0 + 0.5 * s * m_dk ); }
+    constexpr real_type deltaTheta( real_type const s ) const { return delta_theta( s ); }
 
     //!
     //! Return angle at curvilinear coordinate \f$s\f$
     //!
-    real_type theta( real_type const s ) const { return m_theta0 + s * ( m_kappa0 + 0.5 * s * m_dk ); }
-    real_type theta_D( real_type const s ) const { return m_kappa0 + s * m_dk; }
-    real_type theta_DD( real_type const ) const { return m_dk; }
-    real_type theta_DDD( real_type const ) const { return 0; }
+    constexpr real_type theta( real_type const s ) const { return m_theta0 + s * ( m_kappa0 + 0.5 * s * m_dk ); }
+    constexpr real_type theta_D( real_type const s ) const { return m_kappa0 + s * m_dk; }
+    constexpr real_type theta_DD( real_type const ) const { return m_dk; }
+    constexpr real_type theta_DDD( real_type const ) const { return 0; }
 
     //!
     //! Return curvature at curvilinear coordinate \f$s\f$
     //!
-    real_type kappa( real_type const s ) const { return m_kappa0 + s * m_dk; }
-    real_type kappa_D( real_type const ) const { return m_dk; }
-    real_type kappa_DD( real_type const ) const { return 0; }
-    real_type kappa_DDD( real_type const ) const { return 0; }
+    constexpr real_type kappa( real_type const s ) const { return m_kappa0 + s * m_dk; }
+    constexpr real_type kappa_D( real_type const ) const { return m_dk; }
+    constexpr real_type kappa_DD( real_type const ) const { return 0; }
+    constexpr real_type kappa_DDD( real_type const ) const { return 0; }
 
     real_type X( real_type const s ) const;
     real_type Y( real_type const s ) const;

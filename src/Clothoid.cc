@@ -652,7 +652,7 @@ namespace G2lib
     for ( const auto & [fst, snd] : intersectList )
     {
       integer i{ fst };
-      Utils::Debug(
+      Utils::Check(
         i >= 0 && i < static_cast<integer>( m_aabb_triangles.size() ),
         "ClothoidCurve::collision_ISO( offs={}, C, offs_C={} ) i={} out of range [0,{})\n",
         offs,
@@ -662,7 +662,7 @@ namespace G2lib
       Triangle2D const & T1 = m_aabb_triangles.at( i );
       for ( integer j : snd )
       {
-        Utils::Debug(
+        Utils::Check(
           j >= 0 && j < static_cast<integer>( C.m_aabb_triangles.size() ),
           "ClothoidCurve::collision_ISO( offs={}, C, offs_C={} ) j={} out of range [0,{})\n",
           offs,
@@ -710,7 +710,7 @@ namespace G2lib
     for ( const auto & [fst, snd] : intersectList )
     {
       integer i{ fst };
-      Utils::Debug(
+      Utils::Check(
         i >= 0 && i < static_cast<integer>( m_aabb_triangles.size() ),
         "ClothoidCurve::collision_ISO( offs={}, C, offs_C={} ) i={} out of range [0,{})\n",
         offs,
@@ -720,7 +720,7 @@ namespace G2lib
       Triangle2D const & T1 = m_aabb_triangles.at( i );
       for ( integer j : snd )
       {
-        Utils::Debug(
+        Utils::Check(
           j >= 0 && j < static_cast<integer>( C.m_aabb_triangles.size() ),
           "ClothoidCurve::collision_ISO( offs={}, C, offs_C={} ) j={} out of range [0,{})\n",
           offs,
@@ -914,7 +914,7 @@ namespace G2lib
       for ( const auto & [fst, snd] : intersectList )
       {
         integer i = fst;
-        Utils::Debug(
+        Utils::Check(
           i >= 0 && i < static_cast<integer>( m_aabb_triangles.size() ),
           "ClothoidCurve::intersect_ISO( offs={}, C, offs_C={}, ilist ) i={} out of range [0,{})\n",
           offs,
@@ -924,7 +924,7 @@ namespace G2lib
         Triangle2D const & T1 = m_aabb_triangles.at( i );
         for ( integer j : snd )
         {
-          Utils::Debug(
+          Utils::Check(
             j >= 0 && j < static_cast<integer>( C.m_aabb_triangles.size() ),
             "ClothoidCurve::intersect_ISO( offs={}, C, offs_C={}, ilist ) j={} out of range [0,{})\n",
             offs,
@@ -1117,7 +1117,7 @@ namespace G2lib
       G2LIB_DEBUG_TIC;
       for ( integer ipos : candidateList )
       {
-        Utils::Debug(
+        Utils::Check(
           ipos >= 0 && ipos < static_cast<integer>( m_aabb_triangles.size() ),
           "ClothoidCurve::closest_point_internal( qx={}, qy={}, offs={}, x, y, s, DST ) ipos={} out of range [0,{})\n",
           qx,
@@ -1197,7 +1197,7 @@ namespace G2lib
       DST,
       hypot( qxx, qyy ),
       pt );
-    return pt > GLIB2_TOL_ANGLE * hypot( qxx, qyy ) ? -1 : 1;
+    return pt > TOL_ANGLE * hypot( qxx, qyy ) ? -1 : 1;
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
