@@ -1461,7 +1461,7 @@ namespace G2lib
     PolynomialRoots::Cubic const cubicSolver( A, B, C, D );
 
     real_type     r[3];
-    integer const nr = cubicSolver.getRealRoots( r );
+    integer const nr = cubicSolver.get_real_roots( r );
 
     // cerco radice reale piu vicina
     real_type theta;

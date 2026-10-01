@@ -345,7 +345,7 @@ namespace G2lib
     if ( qsolve.complex_root() ) return 0;
     real_type const z[2]{ qsolve.real_root0(), qsolve.real_root1() };
     integer         nint{ 0 };
-    for ( integer i{ 0 }; i < qsolve.numRoots(); ++i )
+    for ( integer i{ 0 }; i < qsolve.num_roots(); ++i )
     {
       real_type tmp{ z[i] * ( 4 - kB2 * z[i] ) };
       if ( tmp < 0 ) continue;
