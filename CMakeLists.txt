@@ -89,6 +89,16 @@ project(
   LANGUAGES CXX C
 )
 
+# MSVC: CMake seeds CMAKE_C_FLAGS/CMAKE_CXX_FLAGS with /W3, while the targets
+# below ask for /W4.  cl.exe then prints "command line warning D9025:
+# overriding '/W3' with '/W4'" once per translation unit.  Drop the default
+# level here and let the targets pick the one they want.
+if(MSVC)
+  foreach(_pins_flag_var CMAKE_C_FLAGS CMAKE_CXX_FLAGS)
+    string(REGEX REPLACE "[-/]W[0-4]( |$)" "" ${_pins_flag_var} "${${_pins_flag_var}}")
+  endforeach()
+endif()
+
 # ----------------------------------------------------------------------------
 # Main user-facing build options
 # ----------------------------------------------------------------------------
@@ -473,7 +483,7 @@ set(CLOTHOIDS_QUARTIC_ROOTS_LOCAL_DIR "${CMAKE_CURRENT_SOURCE_DIR}/../quarticRoo
 set(CLOTHOIDS_FKYAML_LOCAL_DIR "${CMAKE_CURRENT_SOURCE_DIR}/../fkYAML" CACHE PATH "Local fkYAML checkout used by GenericContainer")
 set(CLOTHOIDS_GC_REF "GC2.0" CACHE STRING "GenericContainer branch/tag to fetch")
 set(CLOTHOIDS_UTILSLITE_REF "Utils2.0" CACHE STRING "UtilsLite branch/tag to fetch")
-set(CLOTHOIDS_QUARTIC_ROOTS_REF "1.2.0" CACHE STRING "quarticRootsFlocke branch/tag to fetch")
+set(CLOTHOIDS_QUARTIC_ROOTS_REF "master" CACHE STRING "quarticRootsFlocke branch/tag to fetch")
 
 # ----------------------------------------------------------------------------
 # Dependency 1: GenericContainer
@@ -739,6 +749,11 @@ function(clothoids_configure_target TARGET_NAME)
       $<$<CXX_COMPILER_ID:GNU>:-Wnull-dereference>
       $<$<CXX_COMPILER_ID:GNU>:-Wmisleading-indentation>
       $<$<CXX_COMPILER_ID:MSVC>:/W4>
+      # Vendored third-party headers (fmt, Eigen, autodiff, TinyAD, ...) come
+      # in through <> and are not ours to fix: compile them at warning level 0
+      # so /W4 only reports this project's own code.
+      $<$<CXX_COMPILER_ID:MSVC>:/external:anglebrackets>
+      $<$<CXX_COMPILER_ID:MSVC>:/external:W0>
       $<$<CXX_COMPILER_ID:MSVC>:/permissive->
       $<$<CXX_COMPILER_ID:MSVC>:/bigobj>
   )
