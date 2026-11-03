@@ -99,6 +99,14 @@ if(MSVC)
   endforeach()
 endif()
 
+# CMake only emits /external:I for SYSTEM include directories once it knows
+# which flag carries that meaning on this compiler. The vendored third-party
+# headers reach this project through such directories.
+if(MSVC)
+  set(CMAKE_INCLUDE_SYSTEM_FLAG_C   "/external:I ")
+  set(CMAKE_INCLUDE_SYSTEM_FLAG_CXX "/external:I ")
+endif()
+
 # ----------------------------------------------------------------------------
 # Main user-facing build options
 # ----------------------------------------------------------------------------
