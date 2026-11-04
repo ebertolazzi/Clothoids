@@ -955,10 +955,15 @@ clothoids_set_dependency_output_dirs(lib3rd/lib
 set(CLOTHOIDS_HEADER_COPY_SCRIPT "${CMAKE_CURRENT_BINARY_DIR}/copy_clothoids_headers.cmake")
 file(WRITE "${CLOTHOIDS_HEADER_COPY_SCRIPT}" [=[
 function(_clothoids_copy_header_tree source_dir destination_dir label)
+  # Ogni dipendenza viene sondata in due posti, `include/` e `src/`, perche'
+  # le une tengono gli header in uno e le altre nell'altro: l'assenza di un
+  # ramo e' la norma, non un problema.  A STATUS sembrava un errore, quindi
+  # il salto si vede solo con --log-level=debug.
   if(NOT source_dir OR NOT EXISTS "${source_dir}")
-    message(STATUS "Skipping ${label} headers: ${source_dir} not found")
+    message(DEBUG "No ${label} headers in ${source_dir}")
     return()
   endif()
+  message(STATUS "Copying ${label} headers from ${source_dir}")
 
   file(MAKE_DIRECTORY "${destination_dir}")
   file(COPY "${source_dir}/" DESTINATION "${destination_dir}"
@@ -972,9 +977,10 @@ endfunction()
 
 function(_clothoids_copy_toolbox_tree source_dir destination_dir label)
   if(NOT source_dir OR NOT EXISTS "${source_dir}")
-    message(STATUS "Skipping ${label} toolbox sources: ${source_dir} not found")
+    message(DEBUG "No ${label} toolbox sources in ${source_dir}")
     return()
   endif()
+  message(STATUS "Copying ${label} toolbox sources from ${source_dir}")
 
   file(MAKE_DIRECTORY "${destination_dir}")
   file(COPY "${source_dir}/" DESTINATION "${destination_dir}"
@@ -1001,9 +1007,10 @@ endfunction()
 # resolved Eigen trees vendored by UtilsLite must be copied in their entirety.
 function(_clothoids_copy_complete_tree source_dir destination_dir label)
   if(NOT source_dir OR NOT EXISTS "${source_dir}")
-    message(STATUS "Skipping ${label}: ${source_dir} not found")
+    message(DEBUG "No ${label} in ${source_dir}")
     return()
   endif()
+  message(STATUS "Copying ${label} from ${source_dir}")
 
   file(MAKE_DIRECTORY "${destination_dir}")
   file(COPY "${source_dir}/" DESTINATION "${destination_dir}")
