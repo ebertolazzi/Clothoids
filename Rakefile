@@ -29,15 +29,24 @@ end
 # ----------------------------------------------------------------------------
 # Rilevamento OS
 # ----------------------------------------------------------------------------
-case RUBY_PLATFORM
-when /darwin/
-  OS = :mac
-when /linux|cygwin/
-  OS = :linux
-when /msys/
+# MSYS2 non si riconosce dal solo RUBY_PLATFORM: a seconda del pacchetto ruby
+# vale "x86_64-pc-msys", "x64-mingw-ucrt" o "x86_64-w64-mingw32", e in qualche
+# installazione contiene "linux", nel qual caso il ramo /linux|cygwin/ scattava
+# per primo e la build si dichiarava Linux pur usando il toolchain MinGW.
+# MSYSTEM e' esportata da MSYS2 in ogni sua shell, quindi la si guarda prima.
+if !ENV['MSYSTEM'].to_s.empty?
   OS = :mingw
 else
-  OS = :win
+  case RUBY_PLATFORM
+  when /darwin/
+    OS = :mac
+  when /msys/
+    OS = :mingw
+  when /linux|cygwin/
+    OS = :linux
+  else
+    OS = :win
+  end
 end
 
 def build_type
