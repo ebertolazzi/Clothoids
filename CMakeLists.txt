@@ -1124,6 +1124,14 @@ function(clothoids_set_platform_output_name TARGET_NAME BASE_NAME)
     set(_output_name "${BASE_NAME}_${CLOTHOIDS_PLATFORM_SUFFIX}")
   else()
     set(_output_name "${BASE_NAME}_${CLOTHOIDS_PLATFORM_SUFFIX}_static")
+  # Con MSVC CMAKE_STATIC_LIBRARY_PREFIX e' vuoto, quindi senza questo il file
+  # si chiamerebbe <nome>_win64_static.lib mentre il resto della famiglia
+  # (UtilsLite, GenericContainer, embedFiglet, Regularized, CyclicReduction)
+  # produce lib<nome>_win64_static.lib.  Si aggiunge "lib" solo dove CMake non
+  # lo mette da solo, cosi' il nome e' lo stesso su tutte le piattaforme.
+    if(WIN32 AND NOT CMAKE_STATIC_LIBRARY_PREFIX)
+      set(_output_name "lib${_output_name}")
+    endif()
   endif()
 
   set_target_properties(
