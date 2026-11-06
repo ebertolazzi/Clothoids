@@ -500,7 +500,19 @@ endfunction()
 # from the command line with -D<VAR>=<path>.  If the path is absent or invalid,
 # the corresponding FetchContent declaration below is used instead.
 # ----------------------------------------------------------------------------
-set(CLOTHOIDS_GC_LOCAL_DIR "${CMAKE_CURRENT_SOURCE_DIR}/../GC" CACHE PATH "Local GenericContainer checkout")
+# GenericContainer e' clonato a volte come "GC" e a volte col nome del
+# repository upstream, "GenericContainer": si prende la prima directory che
+# esiste davvero, cosi' il default funziona in entrambi i casi senza dover
+# passare il percorso da riga di comando.
+set(_gc_default_dir "${CMAKE_CURRENT_SOURCE_DIR}/../GC")
+foreach(_gc_candidate IN ITEMS "GC" "GenericContainer")
+  if(EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/../${_gc_candidate}/CMakeLists.txt")
+    set(_gc_default_dir "${CMAKE_CURRENT_SOURCE_DIR}/../${_gc_candidate}")
+    break()
+  endif()
+endforeach()
+set(CLOTHOIDS_GC_LOCAL_DIR "${_gc_default_dir}" CACHE PATH "Local GenericContainer checkout")
+unset(_gc_default_dir)
 set(CLOTHOIDS_UTILSLITE_LOCAL_DIR "${CMAKE_CURRENT_SOURCE_DIR}/../UtilsLite" CACHE PATH "Local UtilsLite checkout")
 set(CLOTHOIDS_QUARTIC_ROOTS_LOCAL_DIR "${CMAKE_CURRENT_SOURCE_DIR}/../quarticRootsFlocke" CACHE PATH "Local quarticRootsFlocke checkout")
 set(CLOTHOIDS_FKYAML_LOCAL_DIR "${CMAKE_CURRENT_SOURCE_DIR}/../fkYAML" CACHE PATH "Local fkYAML checkout used by GenericContainer")
