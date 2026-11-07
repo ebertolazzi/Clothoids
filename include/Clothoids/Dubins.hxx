@@ -161,8 +161,15 @@ namespace G2lib
     //! \param[in]  x1     final position \f$x\f$-coordinate
     //! \param[in]  y1     final position \f$y\f$-coordinate
     //! \param[in]  theta1 final angle
+    //! Numero massimo di angoli che get_range_angles_begin() e
+    //! get_range_angles_end() possono scrivere.  Ciascuna risolve due
+    //! quartiche per ognuno dei due segni di d, e una quartica ha al piu'
+    //! quattro radici reali: 2 x 2 x 4 = 16.  Il chiamante DEVE fornire un
+    //! buffer di almeno questa dimensione.
+    static constexpr integer RANGE_ANGLES_MAX{ 16 };
+
     //! \param[in]  k_max  max curvature
-    //! \param[out] angles range points
+    //! \param[out] angles range points, almeno RANGE_ANGLES_MAX elementi
     //! \return     number of range points
     //!
     integer get_range_angles_begin(

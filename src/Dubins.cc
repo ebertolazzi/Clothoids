@@ -1057,6 +1057,9 @@ namespace G2lib
           if ( reciprocal ) std::swap( y, x );
           real_type theta{ 2 * atan2( y, x ) + th };
           minus_pi_pi( theta );
+          // Rete di sicurezza: il limite e' dimostrato (2 x 2 x 4 radici),
+          // ma superarlo scriverebbe fuori dal buffer del chiamante.
+          if ( npts >= RANGE_ANGLES_MAX ) break;
           angles[npts++] = theta;
         }
       }
@@ -1085,6 +1088,9 @@ namespace G2lib
           if ( reciprocal ) std::swap( y, x );
           real_type theta{ 2 * atan2( y, x ) + th };
           minus_pi_pi( theta );
+          // Rete di sicurezza: il limite e' dimostrato (2 x 2 x 4 radici),
+          // ma superarlo scriverebbe fuori dal buffer del chiamante.
+          if ( npts >= RANGE_ANGLES_MAX ) break;
           angles[npts++] = theta;
         }
       }
@@ -1162,6 +1168,9 @@ namespace G2lib
           if ( reciprocal ) std::swap( y, x );
           real_type theta{ 2 * atan2( y, x ) + th };
           minus_pi_pi( theta );
+          // Rete di sicurezza: il limite e' dimostrato (2 x 2 x 4 radici),
+          // ma superarlo scriverebbe fuori dal buffer del chiamante.
+          if ( npts >= RANGE_ANGLES_MAX ) break;
           angles[npts++] = theta;
         }
       }
@@ -1190,6 +1199,9 @@ namespace G2lib
           if ( reciprocal ) std::swap( y, x );
           real_type theta{ 2 * atan2( y, x ) + th };
           minus_pi_pi( theta );
+          // Rete di sicurezza: il limite e' dimostrato (2 x 2 x 4 radici),
+          // ma superarlo scriverebbe fuori dal buffer del chiamante.
+          if ( npts >= RANGE_ANGLES_MAX ) break;
           angles[npts++] = theta;
         }
       }

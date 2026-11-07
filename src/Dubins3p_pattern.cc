@@ -50,9 +50,9 @@ namespace G2lib
     // select angles
     integer const NSEG = static_cast<integer>( std::floor( Utils::m_2pi / sample_angle ) );
     angles.clear();
-    angles.reserve( 2 * NSEG + 12 );
+    angles.reserve( 2 * NSEG + Dubins3p::RANGE_ANGLES_MAX );
 
-    real_type ang[12];
+    real_type ang[Dubins3p::RANGE_ANGLES_MAX];
     integer   npts = this->get_range_angles( xi, yi, thetai, xm, ym, xf, yf, thetaf, k_max, ang );
 
     if ( npts > 0 )

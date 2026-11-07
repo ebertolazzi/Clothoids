@@ -256,7 +256,15 @@ namespace G2lib
     //! \param[in]  yf     final position \f$y\f$-coordinate
     //! \param[in]  thetaf final angle
     //! \param[in]  k_max  max curvature
-    //! \param[out] angles angles of possibile dicontinuity
+    //! Somma dei due contributi di Dubins (end + begin).
+    //! Il buffer passato a get_range_angles() deve avere almeno questa
+    //! dimensione: prima era dimensionato sul caso tipico (12) e una
+    //! configurazione degenere lo faceva traboccare, con corruzione dello
+    //! stack (su Windows: 0xC0000409, STATUS_STACK_BUFFER_OVERRUN).
+    static constexpr integer RANGE_ANGLES_MAX{ 2 * Dubins::RANGE_ANGLES_MAX };
+
+    //! \param[out] angles angles of possibile dicontinuity,
+    //!                    almeno RANGE_ANGLES_MAX elementi
     //! \return     number of point computed
     //!
     integer get_range_angles(
