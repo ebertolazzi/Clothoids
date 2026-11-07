@@ -134,7 +134,16 @@ option(BUILD_TESTING "Build the Clothoids test executables" ${PROJECT_IS_TOP_LEV
 option(CLOTHOIDS_INSTALL "Generate the install target" ${PROJECT_IS_TOP_LEVEL})
 option(CLOTHOIDS_BUILD_BENCHMARKS "Build the micro-benchmarks" ${PROJECT_IS_TOP_LEVEL})
 option(CLOTHOIDS_POPULATE_TOOLBOX "Refresh toolbox/src during a normal build" OFF)
-option(CLOTHOIDS_ALLOW_NETWORK_FETCH "Allow FetchContent network fallbacks for missing sibling projects" OFF)
+# Prefer compatible local sibling checkouts. If absent, fetch the pinned ref.
+# Set OFF for strictly offline/reproducible builds.
+option(CLOTHOIDS_ALLOW_NETWORK_FETCH "Allow FetchContent network fallbacks for missing sibling projects" ON)
+
+# Apply a consistent network policy to nested dependency builds.
+# Users can disable all downloads with CLOTHOIDS_ALLOW_NETWORK_FETCH=OFF.
+set(GENERIC_CONTAINER_ALLOW_NETWORK_FETCH "${CLOTHOIDS_ALLOW_NETWORK_FETCH}"
+    CACHE BOOL "Allow GenericContainer nested dependency fetching" FORCE)
+set(UTILS_ALLOW_NETWORK_FETCH "${CLOTHOIDS_ALLOW_NETWORK_FETCH}"
+    CACHE BOOL "Allow UtilsLite nested dependency fetching" FORCE)
 
 # Strict warnings are useful for maintenance but are opt-in because they may be
 # too aggressive for users building with newer compilers or vendor toolchains.
@@ -146,11 +155,6 @@ option(CLOTHOIDS_STRICT_WARNINGS "Compile with narrowing/conversion warnings" OF
 option(
   CLOTHOIDS_ENABLE_SANITIZERS
   "Build Debug configuration with AddressSanitizer + UndefinedBehaviorSanitizer"
-  OFF
-)
-option(
-  CLOTHOIDS_ENABLE_GENERIC_CONTAINER_JSON
-  "Enable the optional GenericContainer JSON bridge"
   OFF
 )
 
@@ -396,7 +400,7 @@ function(clothoids_use_local_or_fetch NAME LOCAL_DIR EXPECTED_REF)
     if(NOT CLOTHOIDS_ALLOW_NETWORK_FETCH)
       message(FATAL_ERROR
         "Cannot use local ${NAME}: ${_local_problem}. "
-        "Enable CLOTHOIDS_ALLOW_NETWORK_FETCH to fetch '${EXPECTED_REF}'.")
+        "Enable CLOTHOIDS_ALLOW_NETWORK_FETCH=ON (also in Rakefile if set there) to fetch '${EXPECTED_REF}'.")
     endif()
     message(STATUS "Clothoids: ${NAME} -> FetchContent (requested '${EXPECTED_REF}')")
     FetchContent_MakeAvailable(${NAME})
@@ -515,7 +519,6 @@ set(CLOTHOIDS_GC_LOCAL_DIR "${_gc_default_dir}" CACHE PATH "Local GenericContain
 unset(_gc_default_dir)
 set(CLOTHOIDS_UTILSLITE_LOCAL_DIR "${CMAKE_CURRENT_SOURCE_DIR}/../UtilsLite" CACHE PATH "Local UtilsLite checkout")
 set(CLOTHOIDS_QUARTIC_ROOTS_LOCAL_DIR "${CMAKE_CURRENT_SOURCE_DIR}/../quarticRootsFlocke" CACHE PATH "Local quarticRootsFlocke checkout")
-set(CLOTHOIDS_FKYAML_LOCAL_DIR "${CMAKE_CURRENT_SOURCE_DIR}/../fkYAML" CACHE PATH "Local fkYAML checkout used by GenericContainer")
 set(CLOTHOIDS_GC_REF "GC2.0" CACHE STRING "GenericContainer branch/tag to fetch")
 set(CLOTHOIDS_UTILSLITE_REF "Utils2.0" CACHE STRING "UtilsLite branch/tag to fetch")
 set(CLOTHOIDS_QUARTIC_ROOTS_REF "master" CACHE STRING "quarticRootsFlocke branch/tag to fetch")
@@ -523,31 +526,20 @@ set(CLOTHOIDS_QUARTIC_ROOTS_REF "master" CACHE STRING "quarticRootsFlocke branch
 # ----------------------------------------------------------------------------
 # Dependency 1: GenericContainer
 # ----------------------------------------------------------------------------
-# GenericContainer provides heterogeneous container types and YAML/JSON/TOML/Lua
-# bridge targets used by higher-level examples and serialization paths.  Its
+# GenericContainer provides heterogeneous container types. Optional serialization
+# bridges (YAML/JSON/TOML/Lua) are disabled for this build. Its
 # install rules and examples are disabled here because Clothoids is the outer
 # project controlling the build tree and install tree.
 # ----------------------------------------------------------------------------
 set(GENERIC_CONTAINER_INSTALL OFF CACHE BOOL "Disable GenericContainer install rules inside Clothoids" FORCE)
 set(GENERIC_CONTAINER_BUILD_EXAMPLES OFF CACHE BOOL "Disable GenericContainer examples inside Clothoids" FORCE)
-# Clothoids links only the YAML bridge. Disable the unused JSON, TOML and Lua
-# bridges before adding GenericContainer so their dependencies are neither
-# searched nor downloaded. Force YAML on because its target is required below.
-set(GENERIC_CONTAINER_ENABLE_YAML ON CACHE BOOL "Enable GenericContainer YAML bridge inside Clothoids" FORCE)
-set(
-  GENERIC_CONTAINER_ENABLE_JSON
-  ${CLOTHOIDS_ENABLE_GENERIC_CONTAINER_JSON}
-  CACHE BOOL "Enable GenericContainer JSON bridge inside Clothoids"
-  FORCE
-)
+# Clothoids uses only the GenericContainer core library. Disable optional
+# serialization backends before FetchContent_MakeAvailable(GenericContainer),
+# so the build does not require fkYAML or other optional bridge dependencies.
+set(GENERIC_CONTAINER_ENABLE_JSON OFF CACHE BOOL "Disable GenericContainer JSON bridge inside Clothoids" FORCE)
+set(GENERIC_CONTAINER_ENABLE_YAML OFF CACHE BOOL "Disable GenericContainer YAML bridge inside Clothoids" FORCE)
 set(GENERIC_CONTAINER_ENABLE_TOML OFF CACHE BOOL "Disable GenericContainer TOML bridge inside Clothoids" FORCE)
 set(GENERIC_CONTAINER_ENABLE_LUA OFF CACHE BOOL "Disable GenericContainer Lua bridge inside Clothoids" FORCE)
-
-clothoids_override_nested_source(fkYAML "${CLOTHOIDS_FKYAML_LOCAL_DIR}" "v0.4.3")
-if(FETCHCONTENT_SOURCE_DIR_FKYAML)
-  FetchContent_Declare(fkYAML SOURCE_DIR "${FETCHCONTENT_SOURCE_DIR_FKYAML}")
-  FetchContent_MakeAvailable(fkYAML)
-endif()
 
 FetchContent_Declare(
   GenericContainer
@@ -649,7 +641,7 @@ clothoids_use_local_or_fetch(quarticRootsFlocke "${CLOTHOIDS_QUARTIC_ROOTS_LOCAL
 # the expected imported or embedded target names explicit in one place.
 set(ROOTS utils_quarticRootsFlocke_Static)
 set(UTILS utils::UtilsLite_Static)
-set(GC GenericContainer::Yaml)
+set(GC GenericContainer::GenericContainer)
 
 # ----------------------------------------------------------------------------
 # Output directory helper for project targets
@@ -1124,6 +1116,14 @@ function(clothoids_set_platform_output_name TARGET_NAME BASE_NAME)
     set(_output_name "${BASE_NAME}_${CLOTHOIDS_PLATFORM_SUFFIX}")
   else()
     set(_output_name "${BASE_NAME}_${CLOTHOIDS_PLATFORM_SUFFIX}_static")
+  # Con MSVC CMAKE_STATIC_LIBRARY_PREFIX e' vuoto, quindi senza questo il file
+  # si chiamerebbe <nome>_win64_static.lib mentre il resto della famiglia
+  # (UtilsLite, GenericContainer, embedFiglet, Regularized, CyclicReduction)
+  # produce lib<nome>_win64_static.lib.  Si aggiunge "lib" solo dove CMake non
+  # lo mette da solo, cosi' il nome e' lo stesso su tutte le piattaforme.
+    if(WIN32 AND NOT CMAKE_STATIC_LIBRARY_PREFIX)
+      set(_output_name "lib${_output_name}")
+    endif()
   endif()
 
   set_target_properties(
