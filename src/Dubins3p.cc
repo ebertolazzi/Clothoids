@@ -132,10 +132,10 @@ namespace G2lib
     real_type const dangle{ Utils::m_2pi / m_sample_points };
     for ( thetam = dangle; thetam < Utils::m_2pi; thetam += dangle )
     {
-      bool ok{ D0.build( xi, yi, thetai, xm, ym, thetam, k_max ) };
-      if ( ok ) ok = D1.build( xm, ym, thetam, xf, yf, thetaf, k_max );
+      bool sample_ok{ D0.build( xi, yi, thetai, xm, ym, thetam, k_max ) };
+      if ( sample_ok ) sample_ok = D1.build( xm, ym, thetam, xf, yf, thetaf, k_max );
       Utils::Check(
-        ok,
+        sample_ok,
         "Dubins3p::build_sample(\n"
         "  xi             = {}\n"
         "  yi             = {}\n"

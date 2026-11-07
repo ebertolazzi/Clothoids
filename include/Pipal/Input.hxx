@@ -41,7 +41,7 @@ namespace Pipal
     i.name = name;
 
     // Set number of original formulation variables
-    i.n0 = static_cast<Integer>( x0.size() );
+    i.n0 = detail::checked_integer( x0.size(), "Pipal problem dimension" );
 
     // Find indices sets
     static constexpr Real EPSILON{ std::numeric_limits<Real>::epsilon() };
@@ -76,15 +76,15 @@ namespace Pipal
     i.u9 = cu( i.I9 );
 
     // Set sizes of indices sets
-    i.n1 = static_cast<Integer>( i.I1.size() );
-    i.n2 = static_cast<Integer>( i.I2.size() );
-    i.n3 = static_cast<Integer>( i.I3.size() );
-    i.n4 = static_cast<Integer>( i.I4.size() );
-    i.n5 = static_cast<Integer>( i.I5.size() );
-    i.n6 = static_cast<Integer>( i.I6.size() );
-    i.n7 = static_cast<Integer>( i.I7.size() );
-    i.n8 = static_cast<Integer>( i.I8.size() );
-    i.n9 = static_cast<Integer>( i.I9.size() );
+    i.n1 = detail::checked_integer( i.I1.size(), "Pipal variable count" );
+    i.n2 = detail::checked_integer( i.I2.size(), "Pipal variable count" );
+    i.n3 = detail::checked_integer( i.I3.size(), "Pipal variable count" );
+    i.n4 = detail::checked_integer( i.I4.size(), "Pipal variable count" );
+    i.n5 = detail::checked_integer( i.I5.size(), "Pipal variable count" );
+    i.n6 = detail::checked_integer( i.I6.size(), "Pipal constraint count" );
+    i.n7 = detail::checked_integer( i.I7.size(), "Pipal constraint count" );
+    i.n8 = detail::checked_integer( i.I8.size(), "Pipal constraint count" );
+    i.n9 = detail::checked_integer( i.I9.size(), "Pipal constraint count" );
 
     // Initialize number of invalid bounds
     i.vi = 0;
@@ -92,38 +92,44 @@ namespace Pipal
     // Count invalid bounds
     if ( i.n2 > 0 )
     {
-      i.vi += ( i.b2.array() <= -p.rhs_bnd ).count();
-      i.vi += ( i.b2.array() >= p.rhs_bnd ).count();
+      detail::add_count( i.vi, ( i.b2.array() <= -p.rhs_bnd ).count(), "Pipal invalid-bound count" );
+      detail::add_count( i.vi, ( i.b2.array() >= p.rhs_bnd ).count(), "Pipal invalid-bound count" );
     }
-    if ( i.n3 > 0 ) { i.vi += ( i.l3.array() >= p.rhs_bnd ).count(); }
-    if ( i.n4 > 0 ) { i.vi += ( i.u4.array() <= -p.rhs_bnd ).count(); }
+    if ( i.n3 > 0 ) { detail::add_count( i.vi, ( i.l3.array() >= p.rhs_bnd ).count(), "Pipal invalid-bound count" ); }
+    if ( i.n4 > 0 ) { detail::add_count( i.vi, ( i.u4.array() <= -p.rhs_bnd ).count(), "Pipal invalid-bound count" ); }
     if ( i.n5 > 0 )
     {
-      i.vi += ( i.l5.array() >= p.rhs_bnd ).count();
-      i.vi += ( i.u5.array() <= -p.rhs_bnd ).count();
-      i.vi += ( i.l5.array() > i.u5.array() ).count();
+      detail::add_count( i.vi, ( i.l5.array() >= p.rhs_bnd ).count(), "Pipal invalid-bound count" );
+      detail::add_count( i.vi, ( i.u5.array() <= -p.rhs_bnd ).count(), "Pipal invalid-bound count" );
+      detail::add_count( i.vi, ( i.l5.array() > i.u5.array() ).count(), "Pipal invalid-bound count" );
     }
     if ( i.n6 > 0 )
     {
-      i.vi += ( i.b6.array() <= -p.rhs_bnd ).count();
-      i.vi += ( i.b6.array() >= p.rhs_bnd ).count();
+      detail::add_count( i.vi, ( i.b6.array() <= -p.rhs_bnd ).count(), "Pipal invalid-bound count" );
+      detail::add_count( i.vi, ( i.b6.array() >= p.rhs_bnd ).count(), "Pipal invalid-bound count" );
     }
-    if ( i.n7 > 0 ) { i.vi += ( i.l7.array() >= p.rhs_bnd ).count(); }
-    if ( i.n8 > 0 ) { i.vi += ( i.u8.array() <= -p.rhs_bnd ).count(); }
+    if ( i.n7 > 0 ) { detail::add_count( i.vi, ( i.l7.array() >= p.rhs_bnd ).count(), "Pipal invalid-bound count" ); }
+    if ( i.n8 > 0 ) { detail::add_count( i.vi, ( i.u8.array() <= -p.rhs_bnd ).count(), "Pipal invalid-bound count" ); }
     if ( i.n9 > 0 )
     {
-      i.vi += ( i.l9.array() >= p.rhs_bnd ).count();
-      i.vi += ( i.u9.array() <= -p.rhs_bnd ).count();
-      i.vi += ( i.l9.array() > i.u9.array() ).count();
+      detail::add_count( i.vi, ( i.l9.array() >= p.rhs_bnd ).count(), "Pipal invalid-bound count" );
+      detail::add_count( i.vi, ( i.u9.array() <= -p.rhs_bnd ).count(), "Pipal invalid-bound count" );
+      detail::add_count( i.vi, ( i.l9.array() > i.u9.array() ).count(), "Pipal invalid-bound count" );
     }
 
     // Set number of variables and constraints
-    i.nV = i.n1 + i.n3 + i.n4 + i.n5;
-    i.nI = i.n3 + i.n4 + 2 * i.n5 + i.n7 + i.n8 + 2 * i.n9;
+    i.nV = detail::checked_integer(
+      static_cast<Eigen::Index>( i.n1 ) + i.n3 + i.n4 + i.n5, "Pipal internal variable count" );
+    i.nI = detail::checked_integer(
+      static_cast<Eigen::Index>( i.n3 ) + i.n4 + 2 * static_cast<Eigen::Index>( i.n5 ) + i.n7 + i.n8 +
+        2 * static_cast<Eigen::Index>( i.n9 ),
+      "Pipal internal constraint count" );
     i.nE = i.n6;
 
     // Set size of primal-dual matrix
-    i.nA = i.nV + 3 * i.nE + 3 * i.nI;
+    i.nA = detail::checked_integer(
+      static_cast<Eigen::Index>( i.nV ) + 3 * static_cast<Eigen::Index>( i.nE ) + 3 * static_cast<Eigen::Index>( i.nI ),
+      "Pipal primal-dual matrix size" );
 
     // Set initial point
     i.x0.resize( i.nV );

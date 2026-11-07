@@ -27,6 +27,8 @@
 #include <type_traits>
 #include <numeric>
 #include <memory>
+#include <stdexcept>
+#include <utility>
 
 // Eigen library
 #ifndef PIPAL_EIGEN_EXTERNAL
@@ -103,6 +105,32 @@ namespace Pipal
    */
   using Integer = PIPAL_DEFAULT_INTEGER_TYPE;
 
+  namespace detail
+  {
+    inline Integer checked_integer( Eigen::Index value, char const * context )
+    {
+      if ( !std::in_range<Integer>( value ) )
+      {
+        throw std::overflow_error( std::string{ context } + " exceeds the supported integer range" );
+      }
+      return static_cast<Integer>( value );
+    }
+
+    inline void add_count( Integer & total, Eigen::Index count, char const * context )
+    {
+      if ( count < 0 || !std::in_range<Integer>( count ) )
+      {
+        throw std::overflow_error( std::string{ context } + " exceeds the supported integer range" );
+      }
+      Integer const increment{ static_cast<Integer>( count ) };
+      if ( increment > std::numeric_limits<Integer>::max() - total )
+      {
+        throw std::overflow_error( std::string{ context } + " exceeds the supported integer range" );
+      }
+      total += increment;
+    }
+  }  // namespace detail
+
   template <typename Real> using Vector       = Eigen::Vector<Real, Eigen::Dynamic>;
   template <typename Real> using Matrix       = Eigen::Matrix<Real, Eigen::Dynamic, Eigen::Dynamic>;
   template <typename Real> using SparseMatrix = Eigen::SparseMatrix<Real>;
@@ -126,8 +154,10 @@ namespace Pipal
    */
   static Indices find( Mask const & mask )
   {
-    Indices out( mask.count() );
-    for ( Integer i{ 0 }, j{ 0 }; i < mask.size(); ++i )
+    Integer const mask_size{ detail::checked_integer( mask.size(), "Pipal mask size" ) };
+    Integer const match_count{ detail::checked_integer( mask.count(), "Pipal mask match count" ) };
+    Indices       out( match_count );
+    for ( Integer i{ 0 }, j{ 0 }; i < mask_size; ++i )
     {
       if ( mask[i] ) { out[j++] = i; }
     }

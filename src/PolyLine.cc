@@ -155,7 +155,6 @@ namespace G2lib
   real_type PolyLine::length_ISO( real_type ) const
   {
     Utils::Error( "PolyLine::length( offs ) not available!\n" );
-    return 0;  // to mute compiler warning
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -859,7 +858,6 @@ namespace G2lib
   ) const
   {
     Utils::Error( "PolyLine::closest_point_ISO( ... offs ... ) not available!\n" );
-    return 0;  // to mute compiler warning
   }
 
   /*\

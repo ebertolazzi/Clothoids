@@ -1532,9 +1532,9 @@ namespace G2lib
         if ( abs( dth ) < tol && abs( f ) < tol )
         {
           // transform solution
-          G2derivative G;
-          build_G1( x0, y0, theta0, x1, y1, arot + th, G, tol );
-          L = G.L;
+          G2derivative solution_data;
+          build_G1( x0, y0, theta0, x1, y1, arot + th, solution_data, tol );
+          L = solution_data.L;
           return true;
         }
       }

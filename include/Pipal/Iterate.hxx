@@ -242,11 +242,11 @@ namespace Pipal
     {
       Integer col_offset{ 0 };
       Pipal::insert_block<Real>( z.JE, J_orig, i.I6, i.I1, 0, col_offset );
-      col_offset += i.I1.size();
+      col_offset += i.n1;
       Pipal::insert_block<Real>( z.JE, J_orig, i.I6, i.I3, 0, col_offset );
-      col_offset += i.I3.size();
+      col_offset += i.n3;
       Pipal::insert_block<Real>( z.JE, J_orig, i.I6, i.I4, 0, col_offset );
-      col_offset += i.I4.size();
+      col_offset += i.n4;
       Pipal::insert_block<Real>( z.JE, J_orig, i.I6, i.I5, 0, col_offset );
     }
 
@@ -276,42 +276,42 @@ namespace Pipal
     {
       Integer row_offset{ i.n3 + i.n4 + i.n5 + i.n5 }, col_offset{ 0 };
       Pipal::insert_block<Real>( z.JI, -J_orig, i.I7, i.I1, row_offset, col_offset );
-      col_offset += i.I1.size();
+      col_offset += i.n1;
       Pipal::insert_block<Real>( z.JI, J_orig, i.I7, i.I3, row_offset, col_offset );
-      col_offset += i.I3.size();
+      col_offset += i.n3;
       Pipal::insert_block<Real>( z.JI, J_orig, i.I7, i.I4, row_offset, col_offset );
-      col_offset += i.I4.size();
+      col_offset += i.n4;
       Pipal::insert_block<Real>( z.JI, J_orig, i.I7, i.I5, row_offset, col_offset );
     }
     if ( i.n8 > 0 )
     {
       Integer row_offset{ i.n3 + i.n4 + i.n5 + i.n5 + i.n7 }, col_offset{ 0 };
       Pipal::insert_block<Real>( z.JI, J_orig, i.I8, i.I1, row_offset, col_offset );
-      col_offset += i.I1.size();
+      col_offset += i.n1;
       Pipal::insert_block<Real>( z.JI, J_orig, i.I8, i.I3, row_offset, col_offset );
-      col_offset += i.I3.size();
+      col_offset += i.n3;
       Pipal::insert_block<Real>( z.JI, J_orig, i.I8, i.I4, row_offset, col_offset );
-      col_offset += i.I4.size();
+      col_offset += i.n4;
       Pipal::insert_block<Real>( z.JI, J_orig, i.I8, i.I5, row_offset, col_offset );
     }
     if ( i.n9 > 0 )
     {
       Integer row_offset{ i.n3 + i.n4 + i.n5 + i.n5 + i.n7 + i.n8 }, col_offset{ 0 };
       Pipal::insert_block<Real>( z.JI, -J_orig, i.I9, i.I1, row_offset, col_offset );
-      col_offset += i.I1.size();
+      col_offset += i.n1;
       Pipal::insert_block<Real>( z.JI, -J_orig, i.I9, i.I3, row_offset, col_offset );
-      col_offset += i.I3.size();
+      col_offset += i.n3;
       Pipal::insert_block<Real>( z.JI, -J_orig, i.I9, i.I4, row_offset, col_offset );
-      col_offset += i.I4.size();
+      col_offset += i.n4;
       Pipal::insert_block<Real>( z.JI, -J_orig, i.I9, i.I5, row_offset, col_offset );
       row_offset += i.n9;  // Next row block
       col_offset = 0;
       Pipal::insert_block<Real>( z.JI, J_orig, i.I9, i.I1, row_offset, col_offset );
-      col_offset += i.I1.size();
+      col_offset += i.n1;
       Pipal::insert_block<Real>( z.JI, J_orig, i.I9, i.I3, row_offset, col_offset );
-      col_offset += i.I3.size();
+      col_offset += i.n3;
       Pipal::insert_block<Real>( z.JI, J_orig, i.I9, i.I4, row_offset, col_offset );
-      col_offset += i.I4.size();
+      col_offset += i.n4;
       Pipal::insert_block<Real>( z.JI, J_orig, i.I9, i.I5, row_offset, col_offset );
     }
 
@@ -377,42 +377,45 @@ namespace Pipal
     // Set Hessian of the Lagrangian
     Integer row_offset{ 0 }, col_offset{ 0 };
     Pipal::insert_block<Real>( z.H, H_orig, i.I1, i.I1, row_offset, col_offset );
-    col_offset += i.I1.size();
+    col_offset += i.n1;
     Pipal::insert_block<Real>( z.H, H_orig, i.I1, i.I3, row_offset, col_offset );
-    col_offset += i.I3.size();
+    col_offset += i.n3;
     Pipal::insert_block<Real>( z.H, H_orig, i.I1, i.I4, row_offset, col_offset );
-    col_offset += i.I4.size();
+    col_offset += i.n4;
     Pipal::insert_block<Real>( z.H, H_orig, i.I1, i.I5, row_offset, col_offset );
-    row_offset += i.I1.size();
+    row_offset += i.n1;
     col_offset = 0;  // Next row block
     Pipal::insert_block<Real>( z.H, H_orig, i.I3, i.I1, row_offset, col_offset );
-    col_offset += i.I1.size();
+    col_offset += i.n1;
     Pipal::insert_block<Real>( z.H, H_orig, i.I3, i.I3, row_offset, col_offset );
-    col_offset += i.I3.size();
+    col_offset += i.n3;
     Pipal::insert_block<Real>( z.H, H_orig, i.I3, i.I4, row_offset, col_offset );
-    col_offset += i.I4.size();
+    col_offset += i.n4;
     Pipal::insert_block<Real>( z.H, H_orig, i.I3, i.I5, row_offset, col_offset );
-    row_offset += i.I3.size();
+    row_offset += i.n3;
     col_offset = 0;  // Next row block
     Pipal::insert_block<Real>( z.H, H_orig, i.I4, i.I1, row_offset, col_offset );
-    col_offset += i.I1.size();
+    col_offset += i.n1;
     Pipal::insert_block<Real>( z.H, H_orig, i.I4, i.I3, row_offset, col_offset );
-    col_offset += i.I3.size();
+    col_offset += i.n3;
     Pipal::insert_block<Real>( z.H, H_orig, i.I4, i.I4, row_offset, col_offset );
-    col_offset += i.I4.size();
+    col_offset += i.n4;
     Pipal::insert_block<Real>( z.H, H_orig, i.I4, i.I5, row_offset, col_offset );
-    row_offset += i.I4.size();
+    row_offset += i.n4;
     col_offset = 0;  // Next row block
     Pipal::insert_block<Real>( z.H, H_orig, i.I5, i.I1, row_offset, col_offset );
-    col_offset += i.I1.size();
+    col_offset += i.n1;
     Pipal::insert_block<Real>( z.H, H_orig, i.I5, i.I3, row_offset, col_offset );
-    col_offset += i.I3.size();
+    col_offset += i.n3;
     Pipal::insert_block<Real>( z.H, H_orig, i.I5, i.I4, row_offset, col_offset );
-    col_offset += i.I4.size();
+    col_offset += i.n4;
     Pipal::insert_block<Real>( z.H, H_orig, i.I5, i.I5, row_offset, col_offset );
 
     // Workaround to ensure all diagonal entries exist (access or create them)
-    for ( Integer i{ 0 }; i < z.H.rows(); ++i ) { (void) z.H.coeffRef( i, i ); }
+    for ( Eigen::Index diagonal_index{ 0 }; diagonal_index < z.H.rows(); ++diagonal_index )
+    {
+      (void) z.H.coeffRef( diagonal_index, diagonal_index );
+    }
 
     // Rescale H
     z.H *= z.rho * z.fs;
@@ -605,7 +608,7 @@ namespace Pipal
       z.ldlt.compute( z.A );
 
       // Approximate number of negative pivots (inertia)
-      Integer neig{ static_cast<Integer>( ( z.ldlt.vectorD().array() < 0.0 ).count() ) };
+      Integer neig{ detail::checked_integer( ( z.ldlt.vectorD().array() < 0.0 ).count(), "Pipal negative eigenvalue count" ) };
 
       // Increment factorization counter
       incrementFactorizationCount();

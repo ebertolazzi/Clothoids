@@ -628,6 +628,10 @@ endforeach()
 # geometric algorithms.  It is declared through FetchContent but may be resolved
 # to a local sibling checkout by clothoids_use_local_or_fetch().
 # ----------------------------------------------------------------------------
+set(QRF_INSTALL_LOCAL OFF CACHE BOOL "Disable quarticRootsFlocke install rules inside Clothoids" FORCE)
+set(QRF_ENABLE_TESTS OFF CACHE BOOL "Disable quarticRootsFlocke test suite" FORCE)
+set(QRF_BUILD_SHARED OFF CACHE BOOL "Build quarticRootsFlocke statically inside Clothoids" FORCE)
+
 FetchContent_Declare(
   quarticRootsFlocke
   GIT_REPOSITORY https://github.com/ebertolazzi/quarticRootsFlocke.git

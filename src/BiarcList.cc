@@ -1175,10 +1175,10 @@ namespace G2lib
           IntersectList ilist1;
           BA1.intersect_ISO( offs, BA2, offs_BL, ilist1 );
 
-          for ( const auto & [fst, snd] : ilist1 )
+          for ( const auto & [intersection_s1, intersection_s2] : ilist1 )
           {
-            real_type ss1 = fst + m_s0.at( T1.Icurve() );
-            real_type ss2 = snd + BL.m_s0.at( T2.Icurve() );
+            real_type ss1 = intersection_s1 + m_s0.at( T1.Icurve() );
+            real_type ss2 = intersection_s2 + BL.m_s0.at( T2.Icurve() );
             ilist.emplace_back( ss1, ss2 );
           }
         }

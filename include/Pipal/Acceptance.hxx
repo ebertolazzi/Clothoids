@@ -55,13 +55,13 @@ namespace Pipal
         this->evalMerit();
 
         // Check for nonlinear fraction-to-boundary violation
-        Integer    ftb{ 0 };
+        bool       ftb{ false };
         Real const tmp_min{ std::min( p.ls_frac, z.mu ) };
-        if ( i.nE > 0 ) { ftb += ( z.r1 < tmp_min * r1 ).count() + ( z.r2 < tmp_min * r2 ).count(); }
-        if ( i.nI > 0 ) { ftb += ( z.s1 < tmp_min * s1 ).count() + ( z.s2 < tmp_min * s2 ).count(); }
+        if ( i.nE > 0 ) { ftb = ( z.r1 < tmp_min * r1 ).any() || ( z.r2 < tmp_min * r2 ).any(); }
+        if ( i.nI > 0 ) { ftb = ftb || ( z.s1 < tmp_min * s1 ).any() || ( z.s2 < tmp_min * s2 ).any(); }
 
         // Check Armijo condition
-        if ( ftb == 0 && z.phi - phi <= -p.ls_thresh * a.p * std::max( d.qtred, 0.0 ) )
+        if ( !ftb && z.phi - phi <= -p.ls_thresh * a.p * std::max( d.qtred, 0.0 ) )
         {
           // Reset variables and return
           this->setPrimals( x, r1, r2, s1, s2, lE, lI, z.f, z.cE, z.cI, z.phi );
@@ -198,13 +198,13 @@ namespace Pipal
         this->evalMerit();
 
         // Check for nonlinear fraction-to-boundary violation
-        Integer    ftb{ 0 };
+        bool       ftb{ false };
         Real const tmp_min{ std::min( p.ls_frac, z.mu ) };
-        if ( i.nE > 0 ) { ftb += ( z.r1 < tmp_min * r1 ).count() + ( z.r2 < tmp_min * r2 ).count(); }
-        if ( i.nI > 0 ) { ftb += ( z.s1 < tmp_min * s1 ).count() + ( z.s2 < tmp_min * s2 ).count(); }
+        if ( i.nE > 0 ) { ftb = ( z.r1 < tmp_min * r1 ).any() || ( z.r2 < tmp_min * r2 ).any(); }
+        if ( i.nI > 0 ) { ftb = ftb || ( z.s1 < tmp_min * s1 ).any() || ( z.s2 < tmp_min * s2 ).any(); }
 
         // Check Armijo condition
-        if ( ftb == 0 && z.phi - phi <= -p.ls_thresh * a.p * std::max( d.qtred, 0.0 ) )
+        if ( !ftb && z.phi - phi <= -p.ls_thresh * a.p * std::max( d.qtred, 0.0 ) )
         {
           // Reset variables, set boolean, and return
           this->setPrimals( x, r1, r2, s1, s2, lE, lI, z.f, z.cE, z.cI, z.phi );
@@ -300,13 +300,13 @@ namespace Pipal
       this->evalMerit();
 
       // Check for nonlinear fraction-to-boundary violation
-      Integer    ftb{ 0 };
+      bool       ftb{ false };
       Real const tmp_min{ std::min( p.ls_frac, z.mu ) };
-      if ( i.nE > 0 ) { ftb += ( z.r1 < tmp_min * r1 ).count() + ( z.r2 < tmp_min * r2 ).count(); }
-      if ( i.nI > 0 ) { ftb += ( z.s1 < tmp_min * s1 ).count() + ( z.s2 < tmp_min * s2 ).count(); }
+      if ( i.nE > 0 ) { ftb = ( z.r1 < tmp_min * r1 ).any() || ( z.r2 < tmp_min * r2 ).any(); }
+      if ( i.nI > 0 ) { ftb = ftb || ( z.s1 < tmp_min * s1 ).any() || ( z.s2 < tmp_min * s2 ).any(); }
 
       // Check Armijo condition
-      if ( ftb == 0 && z.phi - phi <= -p.ls_thresh * a.p * std::max( d.qtred, 0.0 ) )
+      if ( !ftb && z.phi - phi <= -p.ls_thresh * a.p * std::max( d.qtred, 0.0 ) )
       {
         // Reset variables, set flag, and return
         this->setPrimals( x, r1, r2, s1, s2, lE, lI, z.f, z.cE, z.cI, z.phi );
@@ -368,13 +368,13 @@ namespace Pipal
       this->evalMerit();
 
       // Check for nonlinear fraction-to-boundary violation
-      Integer    ftb{ 0 };
+      bool       ftb{ false };
       Real const tmp_min{ std::min( p.ls_frac, z.mu ) };
-      if ( i.nE > 0 ) { ftb += ( z.r1 < tmp_min * r1 ).count() + ( z.r2 < tmp_min * r2 ).count(); }
-      if ( i.nI > 0 ) { ftb += ( z.s1 < tmp_min * s1 ).count() + ( z.s2 < tmp_min * s2 ).count(); }
+      if ( i.nE > 0 ) { ftb = ( z.r1 < tmp_min * r1 ).any() || ( z.r2 < tmp_min * r2 ).any(); }
+      if ( i.nI > 0 ) { ftb = ftb || ( z.s1 < tmp_min * s1 ).any() || ( z.s2 < tmp_min * s2 ).any(); }
 
       // Check Armijo condition
-      if ( ftb == 0 && z.phi - phi <= -p.ls_thresh * a.p * std::max( d.qtred, 0.0 ) )
+      if ( !ftb && z.phi - phi <= -p.ls_thresh * a.p * std::max( d.qtred, 0.0 ) )
       {
         // Reset variables, set flag, and return
         this->setPrimals( x, r1, r2, s1, s2, lE, lI, z.f, z.cE, z.cI, z.phi );
