@@ -84,6 +84,7 @@ def cmake_configure_command(enable_tests: false, build_dir: build_dir(), build_t
     "-DCLOTHOIDS_BUILD_BENCHMARKS=OFF",
     "-DCLOTHOIDS_STRICT_WARNINGS=OFF",
     "-DCLOTHOIDS_POPULATE_TOOLBOX=OFF",
+    "-DCLOTHOIDS_ALLOW_NETWORK_FETCH=ON",
     "-DCLOTHOIDS_ENABLE_SANITIZERS=#{enable_sanitizers ? 'ON' : 'OFF'}",
     "-DUTILS_UPDATE_3RDPARTY=OFF",
     project_root
