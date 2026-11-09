@@ -12,7 +12,8 @@
 #                                                                          #
 ############################################################################
 
-cmake_minimum_required(VERSION 3.25)
+cmake_minimum_required(VERSION 3.28)
+include("${CMAKE_CURRENT_LIST_DIR}/CMakeLists_compiler.txt")
 
 # --------------------------------------------------------------------------
 # Apple FAT/universal build setup
@@ -88,6 +89,7 @@ project(
   HOMEPAGE_URL "https://ebertolazzi.github.io/Clothoids/"
   LANGUAGES CXX C
 )
+pins_configure_compiler()
 
 # MSVC: CMake seeds CMAKE_C_FLAGS/CMAKE_CXX_FLAGS with /W3, while the targets
 # below ask for /W4.  cl.exe then prints "command line warning D9025:
@@ -791,7 +793,6 @@ function(clothoids_configure_target TARGET_NAME)
       # so /W4 only reports this project's own code.
       $<$<CXX_COMPILER_ID:MSVC>:/external:anglebrackets>
       $<$<CXX_COMPILER_ID:MSVC>:/external:W0>
-      $<$<CXX_COMPILER_ID:MSVC>:/permissive->
       $<$<CXX_COMPILER_ID:MSVC>:/bigobj>
   )
 
@@ -863,6 +864,22 @@ function(clothoids_configure_target TARGET_NAME)
 endfunction()
 
 clothoids_configure_target(Clothoids)
+
+# MSVC diagnoses unreachable branches inside fmt templates when they are
+# instantiated by these translation units. Keep C4702 enabled for the rest of
+# Clothoids and suppress it only where the upstream header triggers it.
+if(MSVC)
+  set_source_files_properties(
+    "${SOURCE_DIR}/BBox.cc"
+    "${SOURCE_DIR}/Circle.cc"
+    "${SOURCE_DIR}/ClothoidList.cc"
+    "${SOURCE_DIR}/ClothoidListG2.cc"
+    "${SOURCE_DIR}/Line.cc"
+    "${SOURCE_DIR}/PolyLine.cc"
+    "${SOURCE_DIR}/Fresnel.cc"
+    PROPERTIES COMPILE_OPTIONS "/wd4702"
+  )
+endif()
 
 # Include directories.
 # BUILD_INTERFACE paths are used while building from the source tree.  The

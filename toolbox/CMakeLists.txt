@@ -10,7 +10,7 @@
 #      email: enrico.bertolazzi@unitn.it                                #
 #-----------------------------------------------------------------------#
 
-cmake_minimum_required(VERSION 3.25)
+cmake_minimum_required(VERSION 3.28)
 
 # --------------------------------------------------------------------------
 # Apple FAT/universal build setup

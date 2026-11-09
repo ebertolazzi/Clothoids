@@ -6,7 +6,7 @@
 #      Enrico Bertolazzi, Marco Frego
 #
 
-cmake_minimum_required(VERSION 3.10.2)
+cmake_minimum_required(VERSION 3.28)
 
 set(CMAKE_ALLOW_LOOSE_LOOP_CONSTRUCTS TRUE)
 set(CMAKE_VERBOSE_MAKEFILE TRUE)
