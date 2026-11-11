@@ -564,7 +564,7 @@ void test_bbox_and_triangles()
 
   fmt::print( fg( fmt::color::gray ), "  Generated {} triangles without offset\n", triangles.size() );
   run_test( !triangles.empty(), "bb_triangles generates triangles" );
-  run_test( triangles.size() >= CL.num_segments(), "Generated at least one triangle per segment" );
+  run_test( triangles.size() >= static_cast<size_t>( CL.num_segments() ), "Generated at least one triangle per segment" );
 
   // Test bounding box with ISO offset
   real_type offset = 1.2;
@@ -1167,17 +1167,17 @@ void test_io_and_info_methods()
   vector<real_type> s_points, kappa_points;
   CL.get_SK( s_points, kappa_points );
 
-  run_test( s_points.size() == CL.num_segments() + 1, "get_SK returns correct number of points" );
-  run_test( kappa_points.size() == CL.num_segments() + 1, "get_SK returns correct number of kappas" );
+  run_test( s_points.size() == static_cast<size_t>( CL.num_segments() ) + 1, "get_SK returns correct number of points" );
+  run_test( kappa_points.size() == static_cast<size_t>( CL.num_segments() ) + 1, "get_SK returns correct number of kappas" );
   fmt::print( fg( fmt::color::gray ), "📊 get_SK: {} points, {} kappas\n", s_points.size(), kappa_points.size() );
 
   // Test get_STK methods
   vector<real_type> s_stk, theta_stk, kappa_stk;
   CL.get_STK( s_stk, theta_stk, kappa_stk );
 
-  run_test( s_stk.size() == CL.num_segments() + 1, "get_STK returns correct number of points" );
-  run_test( theta_stk.size() == CL.num_segments() + 1, "get_STK returns correct number of thetas" );
-  run_test( kappa_stk.size() == CL.num_segments() + 1, "get_STK returns correct number of kappas" );
+  run_test( s_stk.size() == static_cast<size_t>( CL.num_segments() ) + 1, "get_STK returns correct number of points" );
+  run_test( theta_stk.size() == static_cast<size_t>( CL.num_segments() ) + 1, "get_STK returns correct number of thetas" );
+  run_test( kappa_stk.size() == static_cast<size_t>( CL.num_segments() ) + 1, "get_STK returns correct number of kappas" );
 
   // Test get_XY
   vector<real_type> x_points( CL.num_segments() + 1 );
@@ -1195,8 +1195,8 @@ void test_io_and_info_methods()
   CL.get_delta_theta( delta_theta.data() );
   CL.get_delta_kappa( delta_kappa.data() );
 
-  run_test( delta_theta.size() == CL.num_segments(), "get_delta_theta returns correct size" );
-  run_test( delta_kappa.size() == CL.num_segments(), "get_delta_kappa returns correct size" );
+  run_test( delta_theta.size() == static_cast<size_t>( CL.num_segments() ), "get_delta_theta returns correct size" );
+  run_test( delta_kappa.size() == static_cast<size_t>( CL.num_segments() ), "get_delta_kappa returns correct size" );
 
   // Test export_table
   stringstream ss3;

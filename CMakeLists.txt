@@ -785,7 +785,9 @@ function(clothoids_configure_target TARGET_NAME)
       $<$<CXX_COMPILER_ID:GNU>:-Wduplicated-cond>
       $<$<CXX_COMPILER_ID:GNU>:-Wduplicated-branches>
       $<$<CXX_COMPILER_ID:GNU>:-Wlogical-op>
-      $<$<CXX_COMPILER_ID:GNU>:-Wnull-dereference>
+      # GCC reports false-positive null dereferences from Eigen/libstdc++ when
+      # aggressively inlining optimized matrix expressions.
+      $<$<AND:$<CXX_COMPILER_ID:GNU>,$<PLATFORM_ID:Linux>,$<CONFIG:Release,RelWithDebInfo,MinSizeRel>>:-Wno-null-dereference>
       $<$<CXX_COMPILER_ID:GNU>:-Wmisleading-indentation>
       $<$<CXX_COMPILER_ID:MSVC>:/W4>
       # Vendored third-party headers (fmt, Eigen, autodiff, TinyAD, ...) come

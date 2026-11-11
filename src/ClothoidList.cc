@@ -822,23 +822,23 @@ namespace G2lib
     ClothoidCurve CL{ "smooth_quasi_G2-left" };
     ClothoidCurve CR{ "smooth_quasi_G2-right" };
 
-    auto do_smooth = []( ClothoidCurve * CL, ClothoidCurve * CR ) -> real_type
+    auto do_smooth = []( ClothoidCurve * left_curve, ClothoidCurve * right_curve ) -> real_type
     {
-      real_type const theta0 = CL->theta_begin();
-      real_type const x0     = CL->x_begin();
-      real_type const y0     = CL->y_begin();
-      real_type const theta1 = CL->theta_end();
-      real_type const x1     = CL->x_end();
-      real_type const y1     = CL->y_end();
-      real_type const theta2 = CR->theta_end();
-      real_type const x2     = CR->x_end();
-      real_type const y2     = CR->y_end();
-      real_type const dK     = CL->kappa_end() - CR->kappa_begin();
-      auto            fun    = [CL, CR, x0, y0, theta0, x1, y1, x2, y2, theta2]( real_type const theta )
+      real_type const theta0 = left_curve->theta_begin();
+      real_type const x0     = left_curve->x_begin();
+      real_type const y0     = left_curve->y_begin();
+      real_type const theta1 = left_curve->theta_end();
+      real_type const x1     = left_curve->x_end();
+      real_type const y1     = left_curve->y_end();
+      real_type const theta2 = right_curve->theta_end();
+      real_type const x2     = right_curve->x_end();
+      real_type const y2     = right_curve->y_end();
+      real_type const dK     = left_curve->kappa_end() - right_curve->kappa_begin();
+      auto            fun    = [left_curve, right_curve, x0, y0, theta0, x1, y1, x2, y2, theta2]( real_type const theta )
       {
-        CL->build_G1( x0, y0, theta0, x1, y1, theta );
-        CR->build_G1( x1, y1, theta, x2, y2, theta2 );
-        return CL->kappa_end() - CR->kappa_begin();
+        left_curve->build_G1( x0, y0, theta0, x1, y1, theta );
+        right_curve->build_G1( x1, y1, theta, x2, y2, theta2 );
+        return left_curve->kappa_end() - right_curve->kappa_begin();
       };
       Utils::AlgoBracket<real_type> solver;
       real_type const               theta{

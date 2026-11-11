@@ -178,7 +178,7 @@ namespace G2lib
     integer const   n,
     real_type const xvec[],
     real_type const yvec[],
-    real_type       theta[],
+    real_type       theta_out[],
     TargetType      tt )
   {
     using Vector       = Pipal::Vector<real_type>;
@@ -252,7 +252,7 @@ namespace G2lib
     bool ok{ solver->optimize( theta_guess, theta_sol ) };
     Utils::Check( ok, "ClothoidSplineG2::build( n={}, x, y ) failed PIPAL solver", m_npts );
 
-    std::copy_n( theta_sol.data(), n, theta );
+    std::copy_n( theta_sol.data(), n, theta_out );
 
     return true;
   }

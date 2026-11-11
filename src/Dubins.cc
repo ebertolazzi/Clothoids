@@ -287,13 +287,13 @@ namespace G2lib
       {
         real_type const Xsol{ X[ir] };
         real_type const Xsol2{ Xsol * Xsol };
-        real_type const th{ atan2( -2 * Xsol, good ? Xsol2 - 1 : 1 - Xsol2 ) };
-        real_type       l2{ ( d + sasb ) * cos( th ) - cacb * sin( th ) };
+        real_type const theta_mid{ atan2( -2 * Xsol, good ? Xsol2 - 1 : 1 - Xsol2 ) };
+        real_type       l2{ ( d + sasb ) * cos( theta_mid ) - cacb * sin( theta_mid ) };
         if ( l2 >= 0 )
         {
-          real_type l1{ th - alpha };
+          real_type l1{ theta_mid - alpha };
           into_0_2pi( l1 );
-          real_type l3{ th - beta };
+          real_type l3{ theta_mid - beta };
           into_0_2pi( l3 );
           CHECK_DUBINS( LSR );
         }
@@ -312,13 +312,13 @@ namespace G2lib
       {
         real_type const Xsol{ X[ir] };
         real_type const Xsol2{ Xsol * Xsol };
-        real_type const th{ atan2( -2 * Xsol, good ? Xsol2 - 1 : 1 - Xsol2 ) };
-        real_type const l2{ ( d - sasb ) * cos( th ) + cacb * sin( th ) };
+        real_type const theta_mid{ atan2( -2 * Xsol, good ? Xsol2 - 1 : 1 - Xsol2 ) };
+        real_type const l2{ ( d - sasb ) * cos( theta_mid ) + cacb * sin( theta_mid ) };
         if ( l2 >= 0 )
         {
-          real_type l1{ alpha - th };
+          real_type l1{ alpha - theta_mid };
           into_0_2pi( l1 );
-          real_type l3{ beta - th };
+          real_type l3{ beta - theta_mid };
           into_0_2pi( l3 );
           CHECK_DUBINS( RSL );
         }
@@ -335,12 +335,12 @@ namespace G2lib
       {
         real_type const Zsol{ Z[ir] };
         real_type const l3{ Utils::m_pi + 2 * atan( Zsol ) };
-        real_type const th{ l3 + ab };
-        real_type const t{ dca + sab - 2 * sin( th ) };
-        real_type const b{ dsa + 1 - cab + 2 * cos( th ) };
+        real_type const theta_mid{ l3 + ab };
+        real_type const t{ dca + sab - 2 * sin( theta_mid ) };
+        real_type const b{ dsa + 1 - cab + 2 * cos( theta_mid ) };
         real_type       l1{ atan2( t, b ) };
         into_0_2pi( l1 );
-        real_type l2{ l1 + th };
+        real_type l2{ l1 + theta_mid };
         into_0_2pi( l2 );
         CHECK_DUBINS( LRL );
       }
@@ -356,12 +356,12 @@ namespace G2lib
       {
         real_type const Zsol{ Z[ir] };
         real_type const l3{ Utils::m_pi + 2 * atan( Zsol ) };
-        real_type const th{ ab - l3 };
-        real_type const t{ dca - sab + 2 * sin( th ) };
-        real_type const b{ 1 - dsa - cab + 2 * cos( th ) };
+        real_type const theta_mid{ ab - l3 };
+        real_type const t{ dca - sab + 2 * sin( theta_mid ) };
+        real_type const b{ 1 - dsa - cab + 2 * cos( theta_mid ) };
         real_type       l1{ atan2( t, b ) };
         into_0_2pi( l1 );
-        real_type l2{ l1 - th };
+        real_type l2{ l1 - theta_mid };
         into_0_2pi( l2 );
         CHECK_DUBINS( RLR );
       }

@@ -249,7 +249,7 @@ namespace G2lib
 
     if ( m_aabb_done )
     {
-      real_type bb_min[2], bb_max[2];
+      real_type bb_min[2]{}, bb_max[2]{};
       m_aabb_tree.get_root_bbox( bb_min, bb_max );
       xmin = bb_min[0];
       ymin = bb_min[1];

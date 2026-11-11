@@ -96,7 +96,7 @@ namespace G2lib
     integer const   n,
     real_type const xvec[],
     real_type const yvec[],
-    real_type       theta[],
+    real_type       theta_out[],
     real_type       theta_init,
     real_type       theta_end )
   {
@@ -111,7 +111,7 @@ namespace G2lib
         m_npts,
         xvec,
         yvec,
-        theta,
+        theta_out,
         theta_min.data(),
         theta_max.data(),
         omega.data(),
@@ -121,7 +121,7 @@ namespace G2lib
     integer const ne{ m_npts - 1 };
     integer const ne1{ m_npts - 2 };
 
-    auto F = [this, &ne, &ne1, &theta_init, &theta_end]( Vector const & theta, Vector & F ) -> bool
+    auto residual = [this, &ne, &ne1, &theta_init, &theta_end]( Vector const & theta, Vector & F ) -> bool
     {
       this->evaluate_for_NLP( theta.data() );
       for ( integer j{ 0 }; j < ne1; ++j ) F[j] = m_G2_vec[j].k1 - m_G2_vec[j + 1].k0;
@@ -161,12 +161,12 @@ namespace G2lib
       return F.allFinite();
     };
 
-    return Newton( n, m_max_iter, m_dump_min, m_tolerance, theta, F, F_JF );
+    return Newton( n, m_max_iter, m_dump_min, m_tolerance, theta_out, residual, F_JF );
   }
 
   // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-  bool ClothoidSplineG2::build_P2( integer const n, real_type const xvec[], real_type const yvec[], real_type theta[] )
+  bool ClothoidSplineG2::build_P2( integer const n, real_type const xvec[], real_type const yvec[], real_type theta_out[] )
   {
     allocate( n );
 
@@ -179,7 +179,7 @@ namespace G2lib
         m_npts,
         xvec,
         yvec,
-        theta,
+        theta_out,
         theta_min.data(),
         theta_max.data(),
         omega.data(),
@@ -189,7 +189,7 @@ namespace G2lib
     integer const ne{ m_npts - 1 };
     integer const ne1{ m_npts - 2 };
 
-    auto F = [this, &ne, &ne1]( Vector const & theta, Vector & F ) -> bool
+    auto residual = [this, &ne, &ne1]( Vector const & theta, Vector & F ) -> bool
     {
       this->evaluate_for_NLP( theta.data() );
       for ( integer j{ 0 }; j < ne1; ++j ) F[j] = m_G2_vec[j].k1 - m_G2_vec[j + 1].k0;
@@ -236,7 +236,7 @@ namespace G2lib
       return F.allFinite();
     };
 
-    return Newton( n, m_max_iter, m_dump_min, m_tolerance, theta, F, F_JF );
+    return Newton( n, m_max_iter, m_dump_min, m_tolerance, theta_out, residual, F_JF );
   }
 
 }  // namespace G2lib

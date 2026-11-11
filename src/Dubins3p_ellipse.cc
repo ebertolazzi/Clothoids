@@ -44,7 +44,7 @@ namespace G2lib
   {
     m_evaluation = 0;
 
-    typedef struct Dubins3p_data
+    struct Dubins3p_data
     {
       Dubins    D0{ "temporary Dubins A" };
       Dubins    D1{ "temporary Dubins B" };
@@ -65,7 +65,7 @@ namespace G2lib
       //          D1.solution_type() == D.D1.solution_type();
       // }
 
-    } Dubins3p_data;
+    };
 
     auto eval3p = [this, xi, yi, thetai, xm, ym, xf, yf, thetaf, k_max]( Dubins3p_data & D3P ) -> void
     {

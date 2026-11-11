@@ -162,7 +162,7 @@ namespace G2lib
   {
     m_evaluation = 0;
 
-    typedef struct Dubins3p_data
+    struct Dubins3p_data
     {
       Dubins    D0{ "temporary Dubins A" };
       Dubins    D1{ "temporary Dubins B" };
@@ -179,7 +179,7 @@ namespace G2lib
         len_D  = rhs.len_D;
       }
 
-    } Dubins3p_data;
+    };
 
     auto check_change_sign = []( Dubins3p_data const & A, Dubins3p_data const & B ) -> bool
     {
