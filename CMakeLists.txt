@@ -787,7 +787,14 @@ function(clothoids_configure_target TARGET_NAME)
       $<$<CXX_COMPILER_ID:GNU>:-Wlogical-op>
       # GCC reports false-positive null dereferences from Eigen/libstdc++ when
       # aggressively inlining optimized matrix expressions.
-      $<$<AND:$<CXX_COMPILER_ID:GNU>,$<PLATFORM_ID:Linux>,$<CONFIG:Release,RelWithDebInfo,MinSizeRel>>:-Wno-null-dereference>
+      # GCC 15/16 emit false-positive null-dereference diagnostics from Eigen
+      # in optimized builds, once the expression templates are inlined into
+      # this project's translation units: marking Eigen SYSTEM does not help,
+      # because the diagnostic is attributed to the inlining chain and not to
+      # the header. This affects every GCC host (Linux and MinGW/MSYS2 alike),
+      # so the suppression is keyed on the compiler and the optimization
+      # level, not on the platform. Debug builds keep the warning.
+      $<$<AND:$<CXX_COMPILER_ID:GNU>,$<CONFIG:Release,RelWithDebInfo,MinSizeRel>>:-Wno-null-dereference>
       $<$<CXX_COMPILER_ID:GNU>:-Wmisleading-indentation>
       $<$<CXX_COMPILER_ID:MSVC>:/W4>
       # Vendored third-party headers (fmt, Eigen, autodiff, TinyAD, ...) come
