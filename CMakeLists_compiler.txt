@@ -11,6 +11,13 @@ if(POLICY CMP0141)
   set(CMAKE_MSVC_DEBUG_INFORMATION_FORMAT "$<$<CONFIG:Debug,RelWithDebInfo>:Embedded>")
 endif()
 
+# This project uses no C++20 modules, but CMake enables module dependency
+# scanning for every C++20 target built with Ninja, adding -fmodules-ts and
+# -fdeps-format=p1689r5 to each compile. GCC 16.2 crashes in that mode
+# (internal compiler error, segfault in GIMPLE pass 'dom'); the failure is
+# intermittent because it is a segfault. Scanning buys nothing here.
+set(CMAKE_CXX_SCAN_FOR_MODULES OFF CACHE BOOL "Disabled by the shared PINS compiler policy" FORCE)
+
 set(PINS_EIGEN_VERSION "5.0.1" CACHE STRING "Pinned Eigen version shared by PINS" FORCE)
 set(CYCLIC_REDUCTION_EIGEN_VERSION "${PINS_EIGEN_VERSION}" CACHE STRING "Eigen version" FORCE)
 set(SPLINES_EIGEN_VERSION "${PINS_EIGEN_VERSION}" CACHE STRING "Eigen version" FORCE)
