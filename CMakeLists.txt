@@ -1199,10 +1199,11 @@ function(clothoids_add_generic_library_symlink TARGET_NAME BASE_NAME)
       VERBATIM
     )
 
-    install(
-      FILES "$<TARGET_FILE_DIR:${TARGET_NAME}>/${LINK_FILENAME}"
-      DESTINATION ${CMAKE_INSTALL_LIBDIR}
-    )
+    # Niente install(FILES) del nome generico: la libreria e' gia' prodotta in
+    # lib/lib, e il blocco install(CODE) di CLOTHOIDS_INSTALL cancella e poi
+    # ricrea la copia.  Con install(FILES) la seconda installazione falliva
+    # ("file INSTALL cannot find .../libClothoids.a"): il POST_BUILD non gira
+    # se la libreria e' aggiornata, e il file era stato cancellato dalla prima.
   else()
     add_custom_command(
       TARGET ${TARGET_NAME} POST_BUILD
@@ -1312,6 +1313,14 @@ if(CLOTHOIDS_INSTALL)
         COMMAND \"${CMAKE_COMMAND}\" -E create_symlink
                 \"${CLOTHOIDS_REAL_LIBRARY_FILENAME}\"
                 \"\${_clothoids_libdir}/${CLOTHOIDS_GENERIC_LIBRARY_FILENAME}\"
+      )
+    else()
+      # Su Windows il nome generico e' una copia, non un collegamento.
+      execute_process(
+        COMMAND \"${CMAKE_COMMAND}\" -E copy
+                \"\${_clothoids_libdir}/${CLOTHOIDS_REAL_LIBRARY_FILENAME}\"
+                \"\${_clothoids_libdir}/${CLOTHOIDS_GENERIC_LIBRARY_FILENAME}\"
+        COMMAND_ERROR_IS_FATAL ANY
       )
     endif()\n
     execute_process(
